@@ -2,7 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.annotations.Annotation;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,6 +15,7 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.TrapHandler#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.TrapHandler#getTrapExpr <em>Trap Expr</em>}</li>
  * </ul>
  *
@@ -22,6 +25,22 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression;
  */
 public interface TrapHandler extends StatementContainer
 {
+  /**
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrapHandler_Annotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getAnnotations();
+
   /**
    * Returns the value of the '<em><b>Trap Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->

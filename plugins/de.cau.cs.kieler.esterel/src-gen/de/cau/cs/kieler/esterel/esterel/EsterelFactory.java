@@ -41,33 +41,6 @@ public interface EsterelFactory extends EFactory
   Module createModule();
 
   /**
-   * Returns a new object of class '<em>Module Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Module Body</em>'.
-   * @generated
-   */
-  ModuleBody createModuleBody();
-
-  /**
-   * Returns a new object of class '<em>Module Interface</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Module Interface</em>'.
-   * @generated
-   */
-  ModuleInterface createModuleInterface();
-
-  /**
-   * Returns a new object of class '<em>Channel Description</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Channel Description</em>'.
-   * @generated
-   */
-  ChannelDescription createChannelDescription();
-
-  /**
    * Returns a new object of class '<em>Type Identifier</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -75,78 +48,6 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   TypeIdentifier createTypeIdentifier();
-
-  /**
-   * Returns a new object of class '<em>Local Signal Decl</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Signal Decl</em>'.
-   * @generated
-   */
-  LocalSignalDecl createLocalSignalDecl();
-
-  /**
-   * Returns a new object of class '<em>Local Signal List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Signal List</em>'.
-   * @generated
-   */
-  LocalSignalList createLocalSignalList();
-
-  /**
-   * Returns a new object of class '<em>Sensor Decl</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Sensor Decl</em>'.
-   * @generated
-   */
-  SensorDecl createSensorDecl();
-
-  /**
-   * Returns a new object of class '<em>Sensor With Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Sensor With Type</em>'.
-   * @generated
-   */
-  SensorWithType createSensorWithType();
-
-  /**
-   * Returns a new object of class '<em>Relation Decl</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Relation Decl</em>'.
-   * @generated
-   */
-  RelationDecl createRelationDecl();
-
-  /**
-   * Returns a new object of class '<em>Relation Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Relation Type</em>'.
-   * @generated
-   */
-  RelationType createRelationType();
-
-  /**
-   * Returns a new object of class '<em>Relation Implication</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Relation Implication</em>'.
-   * @generated
-   */
-  RelationImplication createRelationImplication();
-
-  /**
-   * Returns a new object of class '<em>Relation Incompatibility</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Relation Incompatibility</em>'.
-   * @generated
-   */
-  RelationIncompatibility createRelationIncompatibility();
 
   /**
    * Returns a new object of class '<em>Type Decl</em>'.
@@ -185,13 +86,13 @@ public interface EsterelFactory extends EFactory
   OneTypeConstantDecls createOneTypeConstantDecls();
 
   /**
-   * Returns a new object of class '<em>Constant With Value</em>'.
+   * Returns a new object of class '<em>Valued Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Constant With Value</em>'.
+   * @return a new object of class '<em>Valued Object</em>'.
    * @generated
    */
-  ConstantWithValue createConstantWithValue();
+  ValuedObject createValuedObject();
 
   /**
    * Returns a new object of class '<em>Function Decl</em>'.
@@ -248,6 +149,78 @@ public interface EsterelFactory extends EFactory
   Task createTask();
 
   /**
+   * Returns a new object of class '<em>Interface Signal Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Interface Signal Decl</em>'.
+   * @generated
+   */
+  InterfaceSignalDecl createInterfaceSignalDecl();
+
+  /**
+   * Returns a new object of class '<em>ISignal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>ISignal</em>'.
+   * @generated
+   */
+  ISignal createISignal();
+
+  /**
+   * Returns a new object of class '<em>Sensor Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Sensor Decl</em>'.
+   * @generated
+   */
+  SensorDecl createSensorDecl();
+
+  /**
+   * Returns a new object of class '<em>Sensor With Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Sensor With Type</em>'.
+   * @generated
+   */
+  SensorWithType createSensorWithType();
+
+  /**
+   * Returns a new object of class '<em>Relation Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relation Decl</em>'.
+   * @generated
+   */
+  RelationDecl createRelationDecl();
+
+  /**
+   * Returns a new object of class '<em>Relation Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relation Type</em>'.
+   * @generated
+   */
+  RelationType createRelationType();
+
+  /**
+   * Returns a new object of class '<em>Relation Implication</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relation Implication</em>'.
+   * @generated
+   */
+  RelationImplication createRelationImplication();
+
+  /**
+   * Returns a new object of class '<em>Relation Incompatibility</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Relation Incompatibility</em>'.
+   * @generated
+   */
+  RelationIncompatibility createRelationIncompatibility();
+
+  /**
    * Returns a new object of class '<em>Statement Container</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -257,13 +230,40 @@ public interface EsterelFactory extends EFactory
   StatementContainer createStatementContainer();
 
   /**
-   * Returns a new object of class '<em>Statement</em>'.
+   * Returns a new object of class '<em>Parallel</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Statement</em>'.
+   * @return a new object of class '<em>Parallel</em>'.
    * @generated
    */
-  Statement createStatement();
+  EsterelParallel createEsterelParallel();
+
+  /**
+   * Returns a new object of class '<em>Thread</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Thread</em>'.
+   * @generated
+   */
+  EsterelThread createEsterelThread();
+
+  /**
+   * Returns a new object of class '<em>Nothing</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Nothing</em>'.
+   * @generated
+   */
+  Nothing createNothing();
+
+  /**
+   * Returns a new object of class '<em>Halt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Halt</em>'.
+   * @generated
+   */
+  Halt createHalt();
 
   /**
    * Returns a new object of class '<em>Block</em>'.
@@ -275,121 +275,31 @@ public interface EsterelFactory extends EFactory
   Block createBlock();
 
   /**
+   * Returns a new object of class '<em>Emit</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Emit</em>'.
+   * @generated
+   */
+  Emit createEmit();
+
+  /**
+   * Returns a new object of class '<em>Sustain</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Sustain</em>'.
+   * @generated
+   */
+  Sustain createSustain();
+
+  /**
    * Returns a new object of class '<em>Assignment</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return a new object of class '<em>Assignment</em>'.
    * @generated
    */
-  Assignment createAssignment();
-
-  /**
-   * Returns a new object of class '<em>Abort</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Abort</em>'.
-   * @generated
-   */
-  Abort createAbort();
-
-  /**
-   * Returns a new object of class '<em>Abort Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Abort Body</em>'.
-   * @generated
-   */
-  AbortBody createAbortBody();
-
-  /**
-   * Returns a new object of class '<em>Abort Instance</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Abort Instance</em>'.
-   * @generated
-   */
-  AbortInstance createAbortInstance();
-
-  /**
-   * Returns a new object of class '<em>Abort Case</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Abort Case</em>'.
-   * @generated
-   */
-  AbortCase createAbortCase();
-
-  /**
-   * Returns a new object of class '<em>Abort Case Single</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Abort Case Single</em>'.
-   * @generated
-   */
-  AbortCaseSingle createAbortCaseSingle();
-
-  /**
-   * Returns a new object of class '<em>Weak Abort Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Weak Abort Body</em>'.
-   * @generated
-   */
-  WeakAbortBody createWeakAbortBody();
-
-  /**
-   * Returns a new object of class '<em>Weak Abort End</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Weak Abort End</em>'.
-   * @generated
-   */
-  WeakAbortEnd createWeakAbortEnd();
-
-  /**
-   * Returns a new object of class '<em>Weak Abort End Alt</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Weak Abort End Alt</em>'.
-   * @generated
-   */
-  WeakAbortEndAlt createWeakAbortEndAlt();
-
-  /**
-   * Returns a new object of class '<em>Await</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Await</em>'.
-   * @generated
-   */
-  Await createAwait();
-
-  /**
-   * Returns a new object of class '<em>Await Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Await Body</em>'.
-   * @generated
-   */
-  AwaitBody createAwaitBody();
-
-  /**
-   * Returns a new object of class '<em>Await Instance</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Await Instance</em>'.
-   * @generated
-   */
-  AwaitInstance createAwaitInstance();
-
-  /**
-   * Returns a new object of class '<em>Await Case</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Await Case</em>'.
-   * @generated
-   */
-  AwaitCase createAwaitCase();
+  EsterelAssignment createEsterelAssignment();
 
   /**
    * Returns a new object of class '<em>Proc Call</em>'.
@@ -401,94 +311,22 @@ public interface EsterelFactory extends EFactory
   ProcCall createProcCall();
 
   /**
-   * Returns a new object of class '<em>Do</em>'.
+   * Returns a new object of class '<em>Present</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Do</em>'.
+   * @return a new object of class '<em>Present</em>'.
    * @generated
    */
-  Do createDo();
+  Present createPresent();
 
   /**
-   * Returns a new object of class '<em>Do Upto</em>'.
+   * Returns a new object of class '<em>Present Case</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Do Upto</em>'.
+   * @return a new object of class '<em>Present Case</em>'.
    * @generated
    */
-  DoUpto createDoUpto();
-
-  /**
-   * Returns a new object of class '<em>Do Watching</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Do Watching</em>'.
-   * @generated
-   */
-  DoWatching createDoWatching();
-
-  /**
-   * Returns a new object of class '<em>Do Watching End</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Do Watching End</em>'.
-   * @generated
-   */
-  DoWatchingEnd createDoWatchingEnd();
-
-  /**
-   * Returns a new object of class '<em>Emit</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Emit</em>'.
-   * @generated
-   */
-  Emit createEmit();
-
-  /**
-   * Returns a new object of class '<em>Un Emit</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Un Emit</em>'.
-   * @generated
-   */
-  UnEmit createUnEmit();
-
-  /**
-   * Returns a new object of class '<em>Reset</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reset</em>'.
-   * @generated
-   */
-  Reset createReset();
-
-  /**
-   * Returns a new object of class '<em>Every Do</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Every Do</em>'.
-   * @generated
-   */
-  EveryDo createEveryDo();
-
-  /**
-   * Returns a new object of class '<em>Exit</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exit</em>'.
-   * @generated
-   */
-  Exit createExit();
-
-  /**
-   * Returns a new object of class '<em>Halt</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Halt</em>'.
-   * @generated
-   */
-  Halt createHalt();
+  PresentCase createPresentCase();
 
   /**
    * Returns a new object of class '<em>If Test</em>'.
@@ -509,24 +347,6 @@ public interface EsterelFactory extends EFactory
   ElsIf createElsIf();
 
   /**
-   * Returns a new object of class '<em>Then Part</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Then Part</em>'.
-   * @generated
-   */
-  ThenPart createThenPart();
-
-  /**
-   * Returns a new object of class '<em>Else Part</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Else Part</em>'.
-   * @generated
-   */
-  ElsePart createElsePart();
-
-  /**
    * Returns a new object of class '<em>Loop</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -536,114 +356,6 @@ public interface EsterelFactory extends EFactory
   Loop createLoop();
 
   /**
-   * Returns a new object of class '<em>End Loop</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>End Loop</em>'.
-   * @generated
-   */
-  EndLoop createEndLoop();
-
-  /**
-   * Returns a new object of class '<em>Loop Each</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Loop Each</em>'.
-   * @generated
-   */
-  LoopEach createLoopEach();
-
-  /**
-   * Returns a new object of class '<em>Loop Delay</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Loop Delay</em>'.
-   * @generated
-   */
-  LoopDelay createLoopDelay();
-
-  /**
-   * Returns a new object of class '<em>Loop Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Loop Body</em>'.
-   * @generated
-   */
-  LoopBody createLoopBody();
-
-  /**
-   * Returns a new object of class '<em>Nothing</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Nothing</em>'.
-   * @generated
-   */
-  Nothing createNothing();
-
-  /**
-   * Returns a new object of class '<em>Pause</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pause</em>'.
-   * @generated
-   */
-  Pause createPause();
-
-  /**
-   * Returns a new object of class '<em>Present</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Present</em>'.
-   * @generated
-   */
-  Present createPresent();
-
-  /**
-   * Returns a new object of class '<em>Present Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Present Body</em>'.
-   * @generated
-   */
-  PresentBody createPresentBody();
-
-  /**
-   * Returns a new object of class '<em>Present Event Body</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Present Event Body</em>'.
-   * @generated
-   */
-  PresentEventBody createPresentEventBody();
-
-  /**
-   * Returns a new object of class '<em>Present Case List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Present Case List</em>'.
-   * @generated
-   */
-  PresentCaseList createPresentCaseList();
-
-  /**
-   * Returns a new object of class '<em>Present Case</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Present Case</em>'.
-   * @generated
-   */
-  PresentCase createPresentCase();
-
-  /**
-   * Returns a new object of class '<em>Present Event</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Present Event</em>'.
-   * @generated
-   */
-  PresentEvent createPresentEvent();
-
-  /**
    * Returns a new object of class '<em>Repeat</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -651,6 +363,132 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   Repeat createRepeat();
+
+  /**
+   * Returns a new object of class '<em>Abort</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Abort</em>'.
+   * @generated
+   */
+  Abort createAbort();
+
+  /**
+   * Returns a new object of class '<em>Case</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Case</em>'.
+   * @generated
+   */
+  Case createCase();
+
+  /**
+   * Returns a new object of class '<em>Await</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Await</em>'.
+   * @generated
+   */
+  Await createAwait();
+
+  /**
+   * Returns a new object of class '<em>Every Do</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Every Do</em>'.
+   * @generated
+   */
+  EveryDo createEveryDo();
+
+  /**
+   * Returns a new object of class '<em>Suspend</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Suspend</em>'.
+   * @generated
+   */
+  Suspend createSuspend();
+
+  /**
+   * Returns a new object of class '<em>Trap</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Trap</em>'.
+   * @generated
+   */
+  Trap createTrap();
+
+  /**
+   * Returns a new object of class '<em>Trap Handler</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Trap Handler</em>'.
+   * @generated
+   */
+  TrapHandler createTrapHandler();
+
+  /**
+   * Returns a new object of class '<em>Exit</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Exit</em>'.
+   * @generated
+   */
+  Exit createExit();
+
+  /**
+   * Returns a new object of class '<em>Exec</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Exec</em>'.
+   * @generated
+   */
+  Exec createExec();
+
+  /**
+   * Returns a new object of class '<em>Exec Case</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Exec Case</em>'.
+   * @generated
+   */
+  ExecCase createExecCase();
+
+  /**
+   * Returns a new object of class '<em>Local Signal Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local Signal Decl</em>'.
+   * @generated
+   */
+  LocalSignalDecl createLocalSignalDecl();
+
+  /**
+   * Returns a new object of class '<em>Local Variable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local Variable</em>'.
+   * @generated
+   */
+  LocalVariable createLocalVariable();
+
+  /**
+   * Returns a new object of class '<em>Variable Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variable Decl</em>'.
+   * @generated
+   */
+  VariableDecl createVariableDecl();
+
+  /**
+   * Returns a new object of class '<em>IVariable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>IVariable</em>'.
+   * @generated
+   */
+  IVariable createIVariable();
 
   /**
    * Returns a new object of class '<em>Run</em>'.
@@ -669,15 +507,6 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   ModuleRenaming createModuleRenaming();
-
-  /**
-   * Returns a new object of class '<em>Renaming List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Renaming List</em>'.
-   * @generated
-   */
-  RenamingList createRenamingList();
 
   /**
    * Returns a new object of class '<em>Renaming</em>'.
@@ -743,85 +572,31 @@ public interface EsterelFactory extends EFactory
   SignalRenaming createSignalRenaming();
 
   /**
-   * Returns a new object of class '<em>Suspend</em>'.
+   * Returns a new object of class '<em>Do</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Suspend</em>'.
+   * @return a new object of class '<em>Do</em>'.
    * @generated
    */
-  Suspend createSuspend();
+  Do createDo();
 
   /**
-   * Returns a new object of class '<em>Weak Suspend</em>'.
+   * Returns a new object of class '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Weak Suspend</em>'.
+   * @return a new object of class '<em>Expression</em>'.
    * @generated
    */
-  WeakSuspend createWeakSuspend();
+  Expression createExpression();
 
   /**
-   * Returns a new object of class '<em>Sustain</em>'.
+   * Returns a new object of class '<em>Valued Object Reference</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Sustain</em>'.
+   * @return a new object of class '<em>Valued Object Reference</em>'.
    * @generated
    */
-  Sustain createSustain();
-
-  /**
-   * Returns a new object of class '<em>Trap</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Trap</em>'.
-   * @generated
-   */
-  Trap createTrap();
-
-  /**
-   * Returns a new object of class '<em>Trap Decl List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Trap Decl List</em>'.
-   * @generated
-   */
-  TrapDeclList createTrapDeclList();
-
-  /**
-   * Returns a new object of class '<em>Trap Handler</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Trap Handler</em>'.
-   * @generated
-   */
-  TrapHandler createTrapHandler();
-
-  /**
-   * Returns a new object of class '<em>Local Variable</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Variable</em>'.
-   * @generated
-   */
-  LocalVariable createLocalVariable();
-
-  /**
-   * Returns a new object of class '<em>Goto</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Goto</em>'.
-   * @generated
-   */
-  Goto createGoto();
-
-  /**
-   * Returns a new object of class '<em>Label</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Label</em>'.
-   * @generated
-   */
-  Label createLabel();
+  ValuedObjectReference createValuedObjectReference();
 
   /**
    * Returns a new object of class '<em>Delay Expr</em>'.
@@ -833,49 +608,40 @@ public interface EsterelFactory extends EFactory
   DelayExpr createDelayExpr();
 
   /**
-   * Returns a new object of class '<em>Delay Event</em>'.
+   * Returns a new object of class '<em>Text Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Delay Event</em>'.
+   * @return a new object of class '<em>Text Expression</em>'.
    * @generated
    */
-  DelayEvent createDelayEvent();
+  TextExpression createTextExpression();
 
   /**
-   * Returns a new object of class '<em>Exec</em>'.
+   * Returns a new object of class '<em>Int Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exec</em>'.
+   * @return a new object of class '<em>Int Value</em>'.
    * @generated
    */
-  Exec createExec();
+  IntValue createIntValue();
 
   /**
-   * Returns a new object of class '<em>Exec Body</em>'.
+   * Returns a new object of class '<em>Float Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exec Body</em>'.
+   * @return a new object of class '<em>Float Value</em>'.
    * @generated
    */
-  ExecBody createExecBody();
+  FloatValue createFloatValue();
 
   /**
-   * Returns a new object of class '<em>Exec Case</em>'.
+   * Returns a new object of class '<em>Boolean Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exec Case</em>'.
+   * @return a new object of class '<em>Boolean Value</em>'.
    * @generated
    */
-  ExecCase createExecCase();
-
-  /**
-   * Returns a new object of class '<em>Type Identifier</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type Identifier</em>'.
-   * @generated
-   */
-  EsterelTypeIdentifier createEsterelTypeIdentifier();
+  BooleanValue createBooleanValue();
 
   /**
    * Returns a new object of class '<em>Type</em>'.
@@ -887,13 +653,49 @@ public interface EsterelFactory extends EFactory
   EsterelType createEsterelType();
 
   /**
-   * Returns a new object of class '<em>Local Signal</em>'.
+   * Returns a new object of class '<em>Constant</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Signal</em>'.
+   * @return a new object of class '<em>Constant</em>'.
    * @generated
    */
-  LocalSignal createLocalSignal();
+  Constant createConstant();
+
+  /**
+   * Returns a new object of class '<em>Input</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Input</em>'.
+   * @generated
+   */
+  Input createInput();
+
+  /**
+   * Returns a new object of class '<em>Output</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Output</em>'.
+   * @generated
+   */
+  Output createOutput();
+
+  /**
+   * Returns a new object of class '<em>Input Output</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Input Output</em>'.
+   * @generated
+   */
+  InputOutput createInputOutput();
+
+  /**
+   * Returns a new object of class '<em>Return</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Return</em>'.
+   * @generated
+   */
+  Return createReturn();
 
   /**
    * Returns a new object of class '<em>Relation</em>'.
@@ -905,67 +707,13 @@ public interface EsterelFactory extends EFactory
   Relation createRelation();
 
   /**
-   * Returns a new object of class '<em>Constant</em>'.
+   * Returns a new object of class '<em>Trap Signal</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Constant</em>'.
+   * @return a new object of class '<em>Trap Signal</em>'.
    * @generated
    */
-  Constant createConstant();
-
-  /**
-   * Returns a new object of class '<em>Parallel</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Parallel</em>'.
-   * @generated
-   */
-  Parallel createParallel();
-
-  /**
-   * Returns a new object of class '<em>Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Sequence</em>'.
-   * @generated
-   */
-  Sequence createSequence();
-
-  /**
-   * Returns a new object of class '<em>Weak Abort</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Weak Abort</em>'.
-   * @generated
-   */
-  WeakAbort createWeakAbort();
-
-  /**
-   * Returns a new object of class '<em>Weak Abort Instance</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Weak Abort Instance</em>'.
-   * @generated
-   */
-  WeakAbortInstance createWeakAbortInstance();
-
-  /**
-   * Returns a new object of class '<em>Weak Abort Case</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Weak Abort Case</em>'.
-   * @generated
-   */
-  WeakAbortCase createWeakAbortCase();
-
-  /**
-   * Returns a new object of class '<em>Trap Decl</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Trap Decl</em>'.
-   * @generated
-   */
-  TrapDecl createTrapDecl();
+  TrapSignal createTrapSignal();
 
   /**
    * Returns a new object of class '<em>Trap Expression</em>'.
@@ -995,6 +743,15 @@ public interface EsterelFactory extends EFactory
   ConstantExpression createConstantExpression();
 
   /**
+   * Returns a new object of class '<em>Operator Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Operator Expression</em>'.
+   * @generated
+   */
+  OperatorExpression createOperatorExpression();
+
+  /**
    * Returns a new object of class '<em>Trap Reference Expr</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1002,6 +759,15 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   TrapReferenceExpr createTrapReferenceExpr();
+
+  /**
+   * Returns a new object of class '<em>Esterel Valued Object Reference</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Esterel Valued Object Reference</em>'.
+   * @generated
+   */
+  Esterel_ValuedObjectReference createEsterel_ValuedObjectReference();
 
   /**
    * Returns the package supported by this factory.

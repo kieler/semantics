@@ -7,7 +7,12 @@
     <package 
        uri = "http://www.cau.de/cs/kieler/esterel/Esterel" 
        class = "de.cau.cs.kieler.esterel.esterel.EsterelPackage"
-       genModel = "de/cau/cs/kieler/esterel/Esterel.genmodel" /> 
+       genModel = "de/cau/cs/kieler/esterel/model/generated/Esterel.genmodel" />
+    <package
+          class="de.cau.cs.kieler.esterel.scest.scest.ScestPackage"
+          genModel="de/cau/cs/kieler/esterel/model/generated/SCEst.genmodel"
+          uri="http://www.cau.de/cs/kieler/esterel/scest/SCEst">
+    </package> 
 	
   </extension>
   <extension
@@ -16,6 +21,12 @@
            ePackageName="esterel"
            editor_id="de.cau.cs.kieler.esterel.Esterel"
            extensionName="strl"
+           isXMI="false">
+     </ExtensionInformation>
+     <ExtensionInformation
+           ePackageName="scest"
+           editor_id="de.cau.cs.kieler.esterel.scest.SCEst"
+           extensionName="scest"
            isXMI="false">
      </ExtensionInformation>
   </extension>

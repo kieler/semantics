@@ -25,7 +25,7 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
-import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.esterel.esterel.ValuedObjectReference;
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression;
 import de.cau.cs.kieler.esterel.esterel.ConstantRenaming;
 import de.cau.cs.kieler.esterel.esterel.Emit;

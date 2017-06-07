@@ -2,13 +2,19 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Exec;
-import de.cau.cs.kieler.esterel.esterel.ExecBody;
 import de.cau.cs.kieler.esterel.esterel.ExecCase;
+import de.cau.cs.kieler.esterel.esterel.Expression;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
+import de.cau.cs.kieler.esterel.esterel.IVariable;
 import de.cau.cs.kieler.esterel.esterel.Task;
 
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.scl.scl.Statement;
 
 import java.util.Collection;
 
@@ -23,6 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -33,17 +40,28 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getTask <em>Task</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getVars <em>Vars</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getKexpressions <em>Kexpressions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getRetSignal <em>Ret Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getExecCaseList <em>Exec Case List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ExecImpl extends StatementContainerImpl implements Exec
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
    * <!-- begin-user-doc -->
@@ -55,14 +73,24 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   protected Task task;
 
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getVars() <em>Vars</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getVars()
    * @generated
    * @ordered
    */
-  protected ExecBody body;
+  protected EList<IVariable> vars;
+
+  /**
+   * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKexpressions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Expression> kexpressions;
 
   /**
    * The cached value of the '{@link #getRetSignal() <em>Ret Signal</em>}' reference.
@@ -85,26 +113,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   protected EList<ExecCase> execCaseList;
 
   /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String OPT_END_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected String optEnd = OPT_END_EDEFAULT;
-
-  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -123,6 +131,20 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.EXEC;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.EXEC__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -173,9 +195,13 @@ public class ExecImpl extends StatementContainerImpl implements Exec
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExecBody getBody()
+  public EList<IVariable> getVars()
   {
-    return body;
+    if (vars == null)
+    {
+      vars = new EObjectResolvingEList<IVariable>(IVariable.class, this, EsterelPackage.EXEC__VARS);
+    }
+    return vars;
   }
 
   /**
@@ -183,37 +209,13 @@ public class ExecImpl extends StatementContainerImpl implements Exec
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(ExecBody newBody, NotificationChain msgs)
+  public EList<Expression> getKexpressions()
   {
-    ExecBody oldBody = body;
-    body = newBody;
-    if (eNotificationRequired())
+    if (kexpressions == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__BODY, oldBody, newBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      kexpressions = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.EXEC__KEXPRESSIONS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBody(ExecBody newBody)
-  {
-    if (newBody != body)
-    {
-      NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__BODY, newBody, newBody));
+    return kexpressions;
   }
 
   /**
@@ -278,9 +280,11 @@ public class ExecImpl extends StatementContainerImpl implements Exec
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOptEnd()
+  public Annotation getAnnotation(String name)
   {
-    return optEnd;
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -288,12 +292,23 @@ public class ExecImpl extends StatementContainerImpl implements Exec
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOptEnd(String newOptEnd)
+  public EList<Annotation> getAllAnnotations(String name)
   {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__OPT_END, oldOptEnd, optEnd));
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void removeAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -306,8 +321,10 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
-      case EsterelPackage.EXEC__BODY:
-        return basicSetBody(null, msgs);
+      case EsterelPackage.EXEC__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.EXEC__KEXPRESSIONS:
+        return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         return ((InternalEList<?>)getExecCaseList()).basicRemove(otherEnd, msgs);
     }
@@ -324,18 +341,20 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.EXEC__TASK:
         if (resolve) return getTask();
         return basicGetTask();
-      case EsterelPackage.EXEC__BODY:
-        return getBody();
+      case EsterelPackage.EXEC__VARS:
+        return getVars();
+      case EsterelPackage.EXEC__KEXPRESSIONS:
+        return getKexpressions();
       case EsterelPackage.EXEC__RET_SIGNAL:
         if (resolve) return getRetSignal();
         return basicGetRetSignal();
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         return getExecCaseList();
-      case EsterelPackage.EXEC__OPT_END:
-        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -351,11 +370,20 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.EXEC__TASK:
         setTask((Task)newValue);
         return;
-      case EsterelPackage.EXEC__BODY:
-        setBody((ExecBody)newValue);
+      case EsterelPackage.EXEC__VARS:
+        getVars().clear();
+        getVars().addAll((Collection<? extends IVariable>)newValue);
+        return;
+      case EsterelPackage.EXEC__KEXPRESSIONS:
+        getKexpressions().clear();
+        getKexpressions().addAll((Collection<? extends Expression>)newValue);
         return;
       case EsterelPackage.EXEC__RET_SIGNAL:
         setRetSignal((ISignal)newValue);
@@ -363,9 +391,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         getExecCaseList().clear();
         getExecCaseList().addAll((Collection<? extends ExecCase>)newValue);
-        return;
-      case EsterelPackage.EXEC__OPT_END:
-        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -381,20 +406,23 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.EXEC__TASK:
         setTask((Task)null);
         return;
-      case EsterelPackage.EXEC__BODY:
-        setBody((ExecBody)null);
+      case EsterelPackage.EXEC__VARS:
+        getVars().clear();
+        return;
+      case EsterelPackage.EXEC__KEXPRESSIONS:
+        getKexpressions().clear();
         return;
       case EsterelPackage.EXEC__RET_SIGNAL:
         setRetSignal((ISignal)null);
         return;
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         getExecCaseList().clear();
-        return;
-      case EsterelPackage.EXEC__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -410,16 +438,18 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.EXEC__TASK:
         return task != null;
-      case EsterelPackage.EXEC__BODY:
-        return body != null;
+      case EsterelPackage.EXEC__VARS:
+        return vars != null && !vars.isEmpty();
+      case EsterelPackage.EXEC__KEXPRESSIONS:
+        return kexpressions != null && !kexpressions.isEmpty();
       case EsterelPackage.EXEC__RET_SIGNAL:
         return retSignal != null;
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         return execCaseList != null && !execCaseList.isEmpty();
-      case EsterelPackage.EXEC__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
   }
@@ -430,15 +460,50 @@ public class ExecImpl extends StatementContainerImpl implements Exec
    * @generated
    */
   @Override
-  public String toString()
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
-    if (eIsProxy()) return super.toString();
+    if (baseClass == Annotatable.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case EsterelPackage.EXEC__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Annotatable.class)
+    {
+      switch (baseFeatureID)
+      {
+        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.EXEC__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //ExecImpl

@@ -314,9 +314,9 @@
           point="de.cau.cs.kieler.kico.ui.transformation">
        <editor
              editor="de.cau.cs.kieler.scl.SCL"
-             features="scg, codegeneration, s, s.target"
+             features="scg, codegeneration, s, s.target, ssc, T_scg.ssa.scssa, T_scg.ssa.cssa, T_scg.ssa.regular"
              label="Netlist Compilation (SCL)"
-             preferred="s.c, scl.scg"
+             preferred="s.c, scl.scg, scg.ssa.scssa"
              priority="100">
        </editor>
     </extension>
@@ -326,6 +326,13 @@
              controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
              editorID="de.cau.cs.kieler.scl.SCL">
        </editor>
+    </extension>
+    <extension
+          point="de.cau.cs.kieler.klighd.diagramSyntheses">
+       <diagramSynthesis
+             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scl.ui.synthesis.SCLSynthesis"
+             id="de.cau.cs.kieler.SCLasSCGSynthesis">
+       </diagramSynthesis>
     </extension>
     <!--<extension
           point="de.cau.cs.kieler.kico.ui.transformation">

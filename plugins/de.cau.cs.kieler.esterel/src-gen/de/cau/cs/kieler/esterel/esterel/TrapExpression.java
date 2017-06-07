@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
 
 /**
  * <!-- begin-user-doc -->

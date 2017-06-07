@@ -13,5 +13,5 @@ package de.cau.cs.kieler.scl.scl;
  * @model
  * @generated
  */
-public interface Thread extends StatementSequence {
+public interface Thread extends Scope {
 } // Thread

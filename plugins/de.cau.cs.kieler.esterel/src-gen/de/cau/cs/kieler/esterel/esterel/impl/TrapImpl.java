@@ -2,22 +2,25 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.Trap;
-import de.cau.cs.kieler.esterel.esterel.TrapDeclList;
 import de.cau.cs.kieler.esterel.esterel.TrapHandler;
+
+import de.cau.cs.kieler.scl.scl.Statement;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -30,9 +33,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getTrapDeclList <em>Trap Decl List</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getTrapSignals <em>Trap Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getTrapHandler <em>Trap Handler</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  *
  * @generated
@@ -40,14 +43,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TrapImpl extends StatementContainerImpl implements Trap
 {
   /**
-   * The cached value of the '{@link #getTrapDeclList() <em>Trap Decl List</em>}' containment reference.
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTrapDeclList()
+   * @see #getAnnotations()
    * @generated
    * @ordered
    */
-  protected TrapDeclList trapDeclList;
+  protected EList<Annotation> annotations;
+
+  /**
+   * The cached value of the '{@link #getTrapSignals() <em>Trap Signals</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTrapSignals()
+   * @generated
+   * @ordered
+   */
+  protected EList<ISignal> trapSignals;
 
   /**
    * The cached value of the '{@link #getTrapHandler() <em>Trap Handler</em>}' containment reference list.
@@ -58,26 +71,6 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * @ordered
    */
   protected EList<TrapHandler> trapHandler;
-
-  /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String OPT_END_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -105,9 +98,13 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * <!-- end-user-doc -->
    * @generated
    */
-  public TrapDeclList getTrapDeclList()
+  public EList<Annotation> getAnnotations()
   {
-    return trapDeclList;
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TRAP__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -115,37 +112,13 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTrapDeclList(TrapDeclList newTrapDeclList, NotificationChain msgs)
+  public EList<ISignal> getTrapSignals()
   {
-    TrapDeclList oldTrapDeclList = trapDeclList;
-    trapDeclList = newTrapDeclList;
-    if (eNotificationRequired())
+    if (trapSignals == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP__TRAP_DECL_LIST, oldTrapDeclList, newTrapDeclList);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      trapSignals = new EObjectContainmentEList<ISignal>(ISignal.class, this, EsterelPackage.TRAP__TRAP_SIGNALS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTrapDeclList(TrapDeclList newTrapDeclList)
-  {
-    if (newTrapDeclList != trapDeclList)
-    {
-      NotificationChain msgs = null;
-      if (trapDeclList != null)
-        msgs = ((InternalEObject)trapDeclList).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP__TRAP_DECL_LIST, null, msgs);
-      if (newTrapDeclList != null)
-        msgs = ((InternalEObject)newTrapDeclList).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP__TRAP_DECL_LIST, null, msgs);
-      msgs = basicSetTrapDeclList(newTrapDeclList, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP__TRAP_DECL_LIST, newTrapDeclList, newTrapDeclList));
+    return trapSignals;
   }
 
   /**
@@ -167,9 +140,11 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOptEnd()
+  public Annotation getAnnotation(String name)
   {
-    return optEnd;
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -177,12 +152,23 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOptEnd(String newOptEnd)
+  public EList<Annotation> getAllAnnotations(String name)
   {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP__OPT_END, oldOptEnd, optEnd));
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void removeAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -195,8 +181,10 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__TRAP_DECL_LIST:
-        return basicSetTrapDeclList(null, msgs);
+      case EsterelPackage.TRAP__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.TRAP__TRAP_SIGNALS:
+        return ((InternalEList<?>)getTrapSignals()).basicRemove(otherEnd, msgs);
       case EsterelPackage.TRAP__TRAP_HANDLER:
         return ((InternalEList<?>)getTrapHandler()).basicRemove(otherEnd, msgs);
     }
@@ -213,12 +201,12 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__TRAP_DECL_LIST:
-        return getTrapDeclList();
+      case EsterelPackage.TRAP__ANNOTATIONS:
+        return getAnnotations();
+      case EsterelPackage.TRAP__TRAP_SIGNALS:
+        return getTrapSignals();
       case EsterelPackage.TRAP__TRAP_HANDLER:
         return getTrapHandler();
-      case EsterelPackage.TRAP__OPT_END:
-        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -234,15 +222,17 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__TRAP_DECL_LIST:
-        setTrapDeclList((TrapDeclList)newValue);
+      case EsterelPackage.TRAP__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.TRAP__TRAP_SIGNALS:
+        getTrapSignals().clear();
+        getTrapSignals().addAll((Collection<? extends ISignal>)newValue);
         return;
       case EsterelPackage.TRAP__TRAP_HANDLER:
         getTrapHandler().clear();
         getTrapHandler().addAll((Collection<? extends TrapHandler>)newValue);
-        return;
-      case EsterelPackage.TRAP__OPT_END:
-        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -258,14 +248,14 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__TRAP_DECL_LIST:
-        setTrapDeclList((TrapDeclList)null);
+      case EsterelPackage.TRAP__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
+      case EsterelPackage.TRAP__TRAP_SIGNALS:
+        getTrapSignals().clear();
         return;
       case EsterelPackage.TRAP__TRAP_HANDLER:
         getTrapHandler().clear();
-        return;
-      case EsterelPackage.TRAP__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -281,12 +271,12 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__TRAP_DECL_LIST:
-        return trapDeclList != null;
+      case EsterelPackage.TRAP__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
+      case EsterelPackage.TRAP__TRAP_SIGNALS:
+        return trapSignals != null && !trapSignals.isEmpty();
       case EsterelPackage.TRAP__TRAP_HANDLER:
         return trapHandler != null && !trapHandler.isEmpty();
-      case EsterelPackage.TRAP__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
   }
@@ -297,15 +287,50 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * @generated
    */
   @Override
-  public String toString()
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
-    if (eIsProxy()) return super.toString();
+    if (baseClass == Annotatable.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case EsterelPackage.TRAP__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Annotatable.class)
+    {
+      switch (baseFeatureID)
+      {
+        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.TRAP__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //TrapImpl

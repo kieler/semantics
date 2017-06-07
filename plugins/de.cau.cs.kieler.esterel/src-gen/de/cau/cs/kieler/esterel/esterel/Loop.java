@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.scl.scl.Statement;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,93 +13,39 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getBody <em>Body</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd1 <em>End1</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd <em>End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getDelay <em>Delay</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLoop()
  * @model
  * @generated
  */
-public interface Loop extends Statement
+public interface Loop extends StatementContainer, Statement
 {
   /**
-   * Returns the value of the '<em><b>Body</b></em>' containment reference.
+   * Returns the value of the '<em><b>Delay</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Body</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Delay</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Body</em>' containment reference.
-   * @see #setBody(LoopBody)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLoop_Body()
+   * @return the value of the '<em>Delay</em>' containment reference.
+   * @see #setDelay(DelayExpr)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLoop_Delay()
    * @model containment="true"
    * @generated
    */
-  LoopBody getBody();
+  DelayExpr getDelay();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Loop#getBody <em>Body</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Loop#getDelay <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Body</em>' containment reference.
-   * @see #getBody()
+   * @param value the new value of the '<em>Delay</em>' containment reference.
+   * @see #getDelay()
    * @generated
    */
-  void setBody(LoopBody value);
-
-  /**
-   * Returns the value of the '<em><b>End1</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>End1</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>End1</em>' containment reference.
-   * @see #setEnd1(EndLoop)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLoop_End1()
-   * @model containment="true"
-   * @generated
-   */
-  EndLoop getEnd1();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd1 <em>End1</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End1</em>' containment reference.
-   * @see #getEnd1()
-   * @generated
-   */
-  void setEnd1(EndLoop value);
-
-  /**
-   * Returns the value of the '<em><b>End</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>End</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>End</em>' containment reference.
-   * @see #setEnd(LoopEach)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLoop_End()
-   * @model containment="true"
-   * @generated
-   */
-  LoopEach getEnd();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd <em>End</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End</em>' containment reference.
-   * @see #getEnd()
-   * @generated
-   */
-  void setEnd(LoopEach value);
+  void setDelay(DelayExpr value);
 
 } // Loop

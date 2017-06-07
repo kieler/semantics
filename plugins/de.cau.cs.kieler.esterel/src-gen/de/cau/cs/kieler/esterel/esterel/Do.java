@@ -2,7 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import org.eclipse.emf.ecore.EObject;
+import de.cau.cs.kieler.annotations.Annotation;
+
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,7 +17,10 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getEnd <em>End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getEndingAnnotations <em>Ending Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getWatchingStatements <em>Watching Statements</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo()
@@ -23,29 +30,87 @@ import org.eclipse.emf.ecore.EObject;
 public interface Do extends StatementContainer, Statement
 {
   /**
-   * Returns the value of the '<em><b>End</b></em>' containment reference.
+   * Returns the value of the '<em><b>Ending Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>End</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Ending Annotations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>End</em>' containment reference.
-   * @see #setEnd(EObject)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_End()
+   * @return the value of the '<em>Ending Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_EndingAnnotations()
    * @model containment="true"
    * @generated
    */
-  EObject getEnd();
+  EList<Annotation> getEndingAnnotations();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getEnd <em>End</em>}' containment reference.
+   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End</em>' containment reference.
-   * @see #getEnd()
+   * @return the value of the '<em>Expr</em>' containment reference.
+   * @see #setExpr(DelayExpr)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_Expr()
+   * @model containment="true"
    * @generated
    */
-  void setEnd(EObject value);
+  DelayExpr getExpr();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getExpr <em>Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Expr</em>' containment reference.
+   * @see #getExpr()
+   * @generated
+   */
+  void setExpr(DelayExpr value);
+
+  /**
+   * Returns the value of the '<em><b>Delay</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Delay</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Delay</em>' containment reference.
+   * @see #setDelay(DelayExpr)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_Delay()
+   * @model containment="true"
+   * @generated
+   */
+  DelayExpr getDelay();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getDelay <em>Delay</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Delay</em>' containment reference.
+   * @see #getDelay()
+   * @generated
+   */
+  void setDelay(DelayExpr value);
+
+  /**
+   * Returns the value of the '<em><b>Watching Statements</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Watching Statements</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Watching Statements</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_WatchingStatements()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Statement> getWatchingStatements();
 
 } // Do

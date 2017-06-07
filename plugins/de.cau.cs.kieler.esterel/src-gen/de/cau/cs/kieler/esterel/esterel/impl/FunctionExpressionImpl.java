@@ -3,12 +3,9 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
-
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
-
-import de.cau.cs.kieler.esterel.kexpressions.impl.ExpressionImpl;
 
 import java.util.Collection;
 

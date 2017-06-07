@@ -5,8 +5,6 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
 
-import de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectReferenceImpl;
-
 import org.eclipse.emf.ecore.EClass;
 
 /**

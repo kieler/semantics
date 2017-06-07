@@ -2,6 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,9 +17,13 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getBody <em>Body</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getElsePart <em>Else Part</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getOptEnd <em>Opt End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getTick <em>Tick</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getThenAnnotations <em>Then Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getThenStatements <em>Then Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getCases <em>Cases</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getElseAnnotations <em>Else Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent()
@@ -24,81 +33,135 @@ package de.cau.cs.kieler.esterel.esterel;
 public interface Present extends Statement
 {
   /**
-   * Returns the value of the '<em><b>Body</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Body</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Body</em>' containment reference.
-   * @see #setBody(PresentBody)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_Body()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_Expression()
    * @model containment="true"
    * @generated
    */
-  PresentBody getBody();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Present#getBody <em>Body</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Present#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Body</em>' containment reference.
-   * @see #getBody()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setBody(PresentBody value);
+  void setExpression(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Else Part</b></em>' containment reference.
+   * Returns the value of the '<em><b>Tick</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Else Part</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Tick</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Else Part</em>' containment reference.
-   * @see #setElsePart(ElsePart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_ElsePart()
+   * @return the value of the '<em>Tick</em>' containment reference.
+   * @see #setTick(ValuedObject)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_Tick()
    * @model containment="true"
    * @generated
    */
-  ElsePart getElsePart();
+  ValuedObject getTick();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Present#getElsePart <em>Else Part</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Present#getTick <em>Tick</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Else Part</em>' containment reference.
-   * @see #getElsePart()
+   * @param value the new value of the '<em>Tick</em>' containment reference.
+   * @see #getTick()
    * @generated
    */
-  void setElsePart(ElsePart value);
+  void setTick(ValuedObject value);
 
   /**
-   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
+   * Returns the value of the '<em><b>Then Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
+   * If the meaning of the '<em>Then Annotations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Opt End</em>' attribute.
-   * @see #setOptEnd(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_OptEnd()
-   * @model
+   * @return the value of the '<em>Then Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_ThenAnnotations()
+   * @model containment="true"
    * @generated
    */
-  String getOptEnd();
+  EList<Annotation> getThenAnnotations();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Present#getOptEnd <em>Opt End</em>}' attribute.
+   * Returns the value of the '<em><b>Then Statements</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Then Statements</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Opt End</em>' attribute.
-   * @see #getOptEnd()
+   * @return the value of the '<em>Then Statements</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_ThenStatements()
+   * @model containment="true"
    * @generated
    */
-  void setOptEnd(String value);
+  EList<Statement> getThenStatements();
+
+  /**
+   * Returns the value of the '<em><b>Cases</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.PresentCase}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Cases</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Cases</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_Cases()
+   * @model containment="true"
+   * @generated
+   */
+  EList<PresentCase> getCases();
+
+  /**
+   * Returns the value of the '<em><b>Else Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Else Annotations</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Else Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_ElseAnnotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getElseAnnotations();
+
+  /**
+   * Returns the value of the '<em><b>Else Statements</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Else Statements</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Else Statements</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_ElseStatements()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Statement> getElseStatements();
 
 } // Present

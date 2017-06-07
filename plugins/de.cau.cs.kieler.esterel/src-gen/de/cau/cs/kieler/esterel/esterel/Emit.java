@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.scl.scl.Statement;
 
 /**
  * <!-- begin-user-doc -->
@@ -52,30 +51,30 @@ public interface Emit extends Statement
   void setSignal(ISignal value);
 
   /**
-   * Returns the value of the '<em><b>Tick</b></em>' attribute.
+   * Returns the value of the '<em><b>Tick</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Tick</em>' attribute isn't clear,
+   * If the meaning of the '<em>Tick</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Tick</em>' attribute.
-   * @see #setTick(String)
+   * @return the value of the '<em>Tick</em>' containment reference.
+   * @see #setTick(ValuedObject)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEmit_Tick()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getTick();
+  ValuedObject getTick();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Emit#getTick <em>Tick</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Emit#getTick <em>Tick</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Tick</em>' attribute.
+   * @param value the new value of the '<em>Tick</em>' containment reference.
    * @see #getTick()
    * @generated
    */
-  void setTick(String value);
+  void setTick(ValuedObject value);
 
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.

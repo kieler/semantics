@@ -5,6 +5,8 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Nothing;
 
+import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
+
 import org.eclipse.emf.ecore.EClass;
 
 /**

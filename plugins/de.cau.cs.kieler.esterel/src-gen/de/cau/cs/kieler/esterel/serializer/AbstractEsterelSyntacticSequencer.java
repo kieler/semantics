@@ -11,6 +11,7 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -21,26 +22,90 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected EsterelGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Abort_DoKeyword_4_0_1_0_q;
+	protected AbstractElementAlias match_Abort___AbortKeyword_4_0_3_1_or___WeakKeyword_4_0_3_0_0_AbortKeyword_4_0_3_0_1____q;
+	protected AbstractElementAlias match_Abort___AbortKeyword_4_2_2_1_or___WeakKeyword_4_2_2_0_0_AbortKeyword_4_2_2_0_1____q;
+	protected AbstractElementAlias match_Abort___EndKeyword_4_1_1_0_or___EndKeyword_4_1_1_1_0_WeakKeyword_4_1_1_1_1_q_AbortKeyword_4_1_1_1_2____q;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q;
 	protected AbstractElementAlias match_AtomicExpression_LeftParenthesisKeyword_5_0_a;
 	protected AbstractElementAlias match_AtomicExpression_LeftParenthesisKeyword_5_0_p;
 	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a;
 	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p;
-	protected AbstractElementAlias match_Sequence_SemicolonKeyword_2_q;
+	protected AbstractElementAlias match_Await_AwaitKeyword_2_0_1_3_q;
+	protected AbstractElementAlias match_Await_AwaitKeyword_2_1_2_q;
+	protected AbstractElementAlias match_Await___DoKeyword_2_0_1_0_EndKeyword_2_0_1_2_AwaitKeyword_2_0_1_3_q__q;
+	protected AbstractElementAlias match_Case_DoKeyword_3_0_q;
+	protected AbstractElementAlias match_Conditional_ThenKeyword_3_0_q;
+	protected AbstractElementAlias match_Do_TimeoutKeyword_3_1_3_3_q;
+	protected AbstractElementAlias match_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q;
+	protected AbstractElementAlias match_ElsIf_ThenKeyword_3_1_q;
+	protected AbstractElementAlias match_EveryDo_EveryKeyword_6_q;
+	protected AbstractElementAlias match_ExecCase_DoKeyword_11_0_q;
+	protected AbstractElementAlias match_Exec_DoKeyword_1_0_10_0_q;
+	protected AbstractElementAlias match_Exec_ExecKeyword_3_q;
+	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q;
+	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
+	protected AbstractElementAlias match_IfTest_ElseKeyword_5_1_q;
+	protected AbstractElementAlias match_IfTest_IfKeyword_7_q;
+	protected AbstractElementAlias match_IfTest_ThenKeyword_3_1_q;
+	protected AbstractElementAlias match_LocalSignalDecl_SignalKeyword_7_q;
+	protected AbstractElementAlias match_LocalVariable_VarKeyword_7_q;
+	protected AbstractElementAlias match_Loop_LoopKeyword_4_0_1_q;
+	protected AbstractElementAlias match_Module_FullStopKeyword_6_1_or___EndKeyword_6_0_0_ModuleKeyword_6_0_1__;
+	protected AbstractElementAlias match_PresentCase_DoKeyword_3_0_q;
+	protected AbstractElementAlias match_Present_ElseKeyword_3_1_q;
+	protected AbstractElementAlias match_Present_PresentKeyword_5_q;
+	protected AbstractElementAlias match_Present_ThenKeyword_2_0_1_1_q;
+	protected AbstractElementAlias match_Repeat_RepeatKeyword_7_q;
+	protected AbstractElementAlias match_SCLProgram_ColonKeyword_3_q;
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a;
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p;
+	protected AbstractElementAlias match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q;
+	protected AbstractElementAlias match_Trap_TrapKeyword_8_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (EsterelGrammarAccess) access;
+		match_Abort_DoKeyword_4_0_1_0_q = new TokenAlias(false, true, grammarAccess.getAbortAccess().getDoKeyword_4_0_1_0());
+		match_Abort___AbortKeyword_4_0_3_1_or___WeakKeyword_4_0_3_0_0_AbortKeyword_4_0_3_0_1____q = new AlternativeAlias(false, true, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getAbortAccess().getWeakKeyword_4_0_3_0_0()), new TokenAlias(false, false, grammarAccess.getAbortAccess().getAbortKeyword_4_0_3_0_1())), new TokenAlias(false, false, grammarAccess.getAbortAccess().getAbortKeyword_4_0_3_1()));
+		match_Abort___AbortKeyword_4_2_2_1_or___WeakKeyword_4_2_2_0_0_AbortKeyword_4_2_2_0_1____q = new AlternativeAlias(false, true, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getAbortAccess().getWeakKeyword_4_2_2_0_0()), new TokenAlias(false, false, grammarAccess.getAbortAccess().getAbortKeyword_4_2_2_0_1())), new TokenAlias(false, false, grammarAccess.getAbortAccess().getAbortKeyword_4_2_2_1()));
+		match_Abort___EndKeyword_4_1_1_0_or___EndKeyword_4_1_1_1_0_WeakKeyword_4_1_1_1_1_q_AbortKeyword_4_1_1_1_2____q = new AlternativeAlias(false, true, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getAbortAccess().getEndKeyword_4_1_1_1_0()), new TokenAlias(false, true, grammarAccess.getAbortAccess().getWeakKeyword_4_1_1_1_1()), new TokenAlias(false, false, grammarAccess.getAbortAccess().getAbortKeyword_4_1_1_1_2())), new TokenAlias(false, false, grammarAccess.getAbortAccess().getEndKeyword_4_1_1_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q = new GroupAlias(false, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(true, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0()));
 		match_AtomicExpression_LeftParenthesisKeyword_5_0_a = new TokenAlias(true, true, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0());
 		match_AtomicExpression_LeftParenthesisKeyword_5_0_p = new TokenAlias(true, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0());
 		match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a = new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
 		match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p = new TokenAlias(true, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
-		match_Sequence_SemicolonKeyword_2_q = new TokenAlias(false, true, grammarAccess.getSequenceAccess().getSemicolonKeyword_2());
+		match_Await_AwaitKeyword_2_0_1_3_q = new TokenAlias(false, true, grammarAccess.getAwaitAccess().getAwaitKeyword_2_0_1_3());
+		match_Await_AwaitKeyword_2_1_2_q = new TokenAlias(false, true, grammarAccess.getAwaitAccess().getAwaitKeyword_2_1_2());
+		match_Await___DoKeyword_2_0_1_0_EndKeyword_2_0_1_2_AwaitKeyword_2_0_1_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAwaitAccess().getDoKeyword_2_0_1_0()), new TokenAlias(false, false, grammarAccess.getAwaitAccess().getEndKeyword_2_0_1_2()), new TokenAlias(false, true, grammarAccess.getAwaitAccess().getAwaitKeyword_2_0_1_3()));
+		match_Case_DoKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getCaseAccess().getDoKeyword_3_0());
+		match_Conditional_ThenKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getConditionalAccess().getThenKeyword_3_0());
+		match_Do_TimeoutKeyword_3_1_3_3_q = new TokenAlias(false, true, grammarAccess.getDoAccess().getTimeoutKeyword_3_1_3_3());
+		match_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDoAccess().getTimeoutKeyword_3_1_3_0()), new TokenAlias(false, false, grammarAccess.getDoAccess().getEndKeyword_3_1_3_2()), new TokenAlias(false, true, grammarAccess.getDoAccess().getTimeoutKeyword_3_1_3_3()));
+		match_ElsIf_ThenKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getElsIfAccess().getThenKeyword_3_1());
+		match_EveryDo_EveryKeyword_6_q = new TokenAlias(false, true, grammarAccess.getEveryDoAccess().getEveryKeyword_6());
+		match_ExecCase_DoKeyword_11_0_q = new TokenAlias(false, true, grammarAccess.getExecCaseAccess().getDoKeyword_11_0());
+		match_Exec_DoKeyword_1_0_10_0_q = new TokenAlias(false, true, grammarAccess.getExecAccess().getDoKeyword_1_0_10_0());
+		match_Exec_ExecKeyword_3_q = new TokenAlias(false, true, grammarAccess.getExecAccess().getExecKeyword_3());
+		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
+		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
+		match_IfTest_ElseKeyword_5_1_q = new TokenAlias(false, true, grammarAccess.getIfTestAccess().getElseKeyword_5_1());
+		match_IfTest_IfKeyword_7_q = new TokenAlias(false, true, grammarAccess.getIfTestAccess().getIfKeyword_7());
+		match_IfTest_ThenKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getIfTestAccess().getThenKeyword_3_1());
+		match_LocalSignalDecl_SignalKeyword_7_q = new TokenAlias(false, true, grammarAccess.getLocalSignalDeclAccess().getSignalKeyword_7());
+		match_LocalVariable_VarKeyword_7_q = new TokenAlias(false, true, grammarAccess.getLocalVariableAccess().getVarKeyword_7());
+		match_Loop_LoopKeyword_4_0_1_q = new TokenAlias(false, true, grammarAccess.getLoopAccess().getLoopKeyword_4_0_1());
+		match_Module_FullStopKeyword_6_1_or___EndKeyword_6_0_0_ModuleKeyword_6_0_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getModuleAccess().getEndKeyword_6_0_0()), new TokenAlias(false, false, grammarAccess.getModuleAccess().getModuleKeyword_6_0_1())), new TokenAlias(false, false, grammarAccess.getModuleAccess().getFullStopKeyword_6_1()));
+		match_PresentCase_DoKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getPresentCaseAccess().getDoKeyword_3_0());
+		match_Present_ElseKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getPresentAccess().getElseKeyword_3_1());
+		match_Present_PresentKeyword_5_q = new TokenAlias(false, true, grammarAccess.getPresentAccess().getPresentKeyword_5());
+		match_Present_ThenKeyword_2_0_1_1_q = new TokenAlias(false, true, grammarAccess.getPresentAccess().getThenKeyword_2_0_1_1());
+		match_Repeat_RepeatKeyword_7_q = new TokenAlias(false, true, grammarAccess.getRepeatAccess().getRepeatKeyword_7());
+		match_SCLProgram_ColonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getSCLProgramAccess().getColonKeyword_3());
 		match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a = new TokenAlias(true, true, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
 		match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p = new TokenAlias(true, false, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
+		match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getThreadAccess().getLeftCurlyBracketKeyword_1_0_1()), new TokenAlias(false, false, grammarAccess.getThreadAccess().getRightCurlyBracketKeyword_1_0_5()));
+		match_Trap_TrapKeyword_8_q = new TokenAlias(false, true, grammarAccess.getTrapAccess().getTrapKeyword_8());
 	}
 	
 	@Override
@@ -55,7 +120,15 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q.equals(syntax))
+			if (match_Abort_DoKeyword_4_0_1_0_q.equals(syntax))
+				emit_Abort_DoKeyword_4_0_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Abort___AbortKeyword_4_0_3_1_or___WeakKeyword_4_0_3_0_0_AbortKeyword_4_0_3_0_1____q.equals(syntax))
+				emit_Abort___AbortKeyword_4_0_3_1_or___WeakKeyword_4_0_3_0_0_AbortKeyword_4_0_3_0_1____q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Abort___AbortKeyword_4_2_2_1_or___WeakKeyword_4_2_2_0_0_AbortKeyword_4_2_2_0_1____q.equals(syntax))
+				emit_Abort___AbortKeyword_4_2_2_1_or___WeakKeyword_4_2_2_0_0_AbortKeyword_4_2_2_0_1____q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Abort___EndKeyword_4_1_1_0_or___EndKeyword_4_1_1_1_0_WeakKeyword_4_1_1_1_1_q_AbortKeyword_4_1_1_1_2____q.equals(syntax))
+				emit_Abort___EndKeyword_4_1_1_0_or___EndKeyword_4_1_1_1_0_WeakKeyword_4_1_1_1_1_q_AbortKeyword_4_1_1_1_2____q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_LeftParenthesisKeyword_5_0_a.equals(syntax))
 				emit_AtomicExpression_LeftParenthesisKeyword_5_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
@@ -65,22 +138,125 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
 				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Sequence_SemicolonKeyword_2_q.equals(syntax))
-				emit_Sequence_SemicolonKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Await_AwaitKeyword_2_0_1_3_q.equals(syntax))
+				emit_Await_AwaitKeyword_2_0_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Await_AwaitKeyword_2_1_2_q.equals(syntax))
+				emit_Await_AwaitKeyword_2_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Await___DoKeyword_2_0_1_0_EndKeyword_2_0_1_2_AwaitKeyword_2_0_1_3_q__q.equals(syntax))
+				emit_Await___DoKeyword_2_0_1_0_EndKeyword_2_0_1_2_AwaitKeyword_2_0_1_3_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Case_DoKeyword_3_0_q.equals(syntax))
+				emit_Case_DoKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Conditional_ThenKeyword_3_0_q.equals(syntax))
+				emit_Conditional_ThenKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Do_TimeoutKeyword_3_1_3_3_q.equals(syntax))
+				emit_Do_TimeoutKeyword_3_1_3_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q.equals(syntax))
+				emit_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ElsIf_ThenKeyword_3_1_q.equals(syntax))
+				emit_ElsIf_ThenKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_EveryDo_EveryKeyword_6_q.equals(syntax))
+				emit_EveryDo_EveryKeyword_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ExecCase_DoKeyword_11_0_q.equals(syntax))
+				emit_ExecCase_DoKeyword_11_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Exec_DoKeyword_1_0_10_0_q.equals(syntax))
+				emit_Exec_DoKeyword_1_0_10_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Exec_ExecKeyword_3_q.equals(syntax))
+				emit_Exec_ExecKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
+				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
+				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_IfTest_ElseKeyword_5_1_q.equals(syntax))
+				emit_IfTest_ElseKeyword_5_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_IfTest_IfKeyword_7_q.equals(syntax))
+				emit_IfTest_IfKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_IfTest_ThenKeyword_3_1_q.equals(syntax))
+				emit_IfTest_ThenKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_LocalSignalDecl_SignalKeyword_7_q.equals(syntax))
+				emit_LocalSignalDecl_SignalKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_LocalVariable_VarKeyword_7_q.equals(syntax))
+				emit_LocalVariable_VarKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Loop_LoopKeyword_4_0_1_q.equals(syntax))
+				emit_Loop_LoopKeyword_4_0_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Module_FullStopKeyword_6_1_or___EndKeyword_6_0_0_ModuleKeyword_6_0_1__.equals(syntax))
+				emit_Module_FullStopKeyword_6_1_or___EndKeyword_6_0_0_ModuleKeyword_6_0_1__(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PresentCase_DoKeyword_3_0_q.equals(syntax))
+				emit_PresentCase_DoKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Present_ElseKeyword_3_1_q.equals(syntax))
+				emit_Present_ElseKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Present_PresentKeyword_5_q.equals(syntax))
+				emit_Present_PresentKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Present_ThenKeyword_2_0_1_1_q.equals(syntax))
+				emit_Present_ThenKeyword_2_0_1_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Repeat_RepeatKeyword_7_q.equals(syntax))
+				emit_Repeat_RepeatKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SCLProgram_ColonKeyword_3_q.equals(syntax))
+				emit_SCLProgram_ColonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a.equals(syntax))
 				emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p.equals(syntax))
 				emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q.equals(syntax))
+				emit_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Trap_TrapKeyword_8_q.equals(syntax))
+				emit_Trap_TrapKeyword_8_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
 	/**
 	 * Ambiguous syntax:
+	 *     'do'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     delay=DelayExpr (ambiguity) 'end' ('abort' | ('weak' 'abort'))? (rule end)
+	 *     delay=DelayExpr (ambiguity) 'end' (('weak' 'abort') | 'abort')? (rule end)
+	 */
+	protected void emit_Abort_DoKeyword_4_0_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('abort' | ('weak' 'abort'))?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     delay=DelayExpr 'do'? 'end' (ambiguity) (rule end)
+	 *     doStatements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     doStatements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Abort___AbortKeyword_4_0_3_1_or___WeakKeyword_4_0_3_0_0_AbortKeyword_4_0_3_0_1____q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('abort' | ('weak' 'abort'))?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cases+=Case 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Abort___AbortKeyword_4_2_2_1_or___WeakKeyword_4_2_2_0_0_AbortKeyword_4_2_2_0_1____q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('end' | ('end' 'weak'? 'abort'))?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     delay=DelayExpr (ambiguity) (rule end)
+	 */
+	protected void emit_Abort___EndKeyword_4_1_1_0_or___EndKeyword_4_1_1_1_0_WeakKeyword_4_1_1_1_1_q_AbortKeyword_4_1_1_1_2____q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
 	 *     ('('* '('+)?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=NotOperator
+	 *     (rule start) (ambiguity) operator=Esterel_NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -96,20 +272,20 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) '('* (ambiguity) code=HOSTCODE
 	 *     (rule start) '('* (ambiguity) constant=[Constant|ID]
 	 *     (rule start) '('* (ambiguity) function=[Function|ID]
-	 *     (rule start) '('* (ambiguity) operator=PreOperator
-	 *     (rule start) '('* (ambiguity) operator=ValueTestOperator
+	 *     (rule start) '('* (ambiguity) operator=Esterel_PreOperator
+	 *     (rule start) '('* (ambiguity) operator=Esterel_ValueTestOperator
 	 *     (rule start) '('* (ambiguity) value=BOOLEAN
-	 *     (rule start) '('* (ambiguity) value=ConstantAtom
+	 *     (rule start) '('* (ambiguity) value=ConstantValue
 	 *     (rule start) '('* (ambiguity) valuedObject=[ValuedObject|ID]
 	 *     (rule start) (ambiguity) '??' trap=[ISignal|ID]
 	 *     (rule start) (ambiguity) code=HOSTCODE
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
 	 *     (rule start) (ambiguity) function=[Function|ID]
-	 *     (rule start) (ambiguity) operator=NotOperator
-	 *     (rule start) (ambiguity) operator=PreOperator
-	 *     (rule start) (ambiguity) operator=ValueTestOperator
+	 *     (rule start) (ambiguity) operator=Esterel_NotOperator
+	 *     (rule start) (ambiguity) operator=Esterel_PreOperator
+	 *     (rule start) (ambiguity) operator=Esterel_ValueTestOperator
 	 *     (rule start) (ambiguity) value=BOOLEAN
-	 *     (rule start) (ambiguity) value=ConstantAtom
+	 *     (rule start) (ambiguity) value=ConstantValue
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
@@ -122,9 +298,9 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     '('+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) '('* (ambiguity) operator=NotOperator
+	 *     (rule start) '('* (ambiguity) operator=Esterel_NotOperator
 	 *     (rule start) '('* (ambiguity) {OperatorExpression.subExpressions+=}
-	 *     (rule start) (ambiguity) operator=NotOperator
+	 *     (rule start) (ambiguity) operator=Esterel_NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_LeftParenthesisKeyword_5_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -140,14 +316,14 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) (ambiguity) '('* code=HOSTCODE
 	 *     (rule start) (ambiguity) '('* constant=[Constant|ID]
 	 *     (rule start) (ambiguity) '('* function=[Function|ID]
-	 *     (rule start) (ambiguity) '('* operator=PreOperator
-	 *     (rule start) (ambiguity) '('* operator=ValueTestOperator
+	 *     (rule start) (ambiguity) '('* operator=Esterel_PreOperator
+	 *     (rule start) (ambiguity) '('* operator=Esterel_ValueTestOperator
 	 *     (rule start) (ambiguity) '('* value=BOOLEAN
-	 *     (rule start) (ambiguity) '('* value=ConstantAtom
+	 *     (rule start) (ambiguity) '('* value=ConstantValue
 	 *     (rule start) (ambiguity) '('* valuedObject=[ValuedObject|ID]
-	 *     (rule start) (ambiguity) '('+ operator=NotOperator
+	 *     (rule start) (ambiguity) '('+ operator=Esterel_NotOperator
 	 *     (rule start) (ambiguity) '('+ {OperatorExpression.subExpressions+=}
-	 *     (rule start) (ambiguity) operator=SubOperator
+	 *     (rule start) (ambiguity) operator=Esterel_SubOperator
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
@@ -161,7 +337,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     '('+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=SubOperator
+	 *     (rule start) (ambiguity) operator=Esterel_SubOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -170,52 +346,372 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ';'?
+	 *     'await'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'halt' (ambiguity) (rule start)
-	 *     (rule start) 'nothing' (ambiguity) (rule start)
-	 *     (rule start) 'pause' (ambiguity) (rule start)
-	 *     body=AbortBody (ambiguity) (rule end)
-	 *     body=AwaitBody (ambiguity) (rule end)
-	 *     body=PresentBody 'end' (ambiguity) (rule end)
-	 *     body=WeakAbortBody (ambiguity) (rule end)
-	 *     delay=DelayExpr (ambiguity) (rule end)
-	 *     elsePart=ElsePart 'end' (ambiguity) (rule end)
-	 *     elsif+=ElsIf 'end' (ambiguity) (rule end)
-	 *     end1=EndLoop (ambiguity) (rule end)
-	 *     end=DoUpto (ambiguity) (rule end)
-	 *     end=DoWatching (ambiguity) (rule end)
-	 *     end=LoopEach (ambiguity) (rule end)
-	 *     execCaseList+=ExecCase 'end' (ambiguity) (rule end)
-	 *     expr=Expression ')' (ambiguity) (rule end)
-	 *     expr=Expression 'end' (ambiguity) (rule end)
-	 *     expr=Expression (ambiguity) (rule end)
-	 *     expression=Expression ')' (ambiguity) (rule end)
-	 *     kexpressions+=Expression ')' (ambiguity) (rule end)
-	 *     list+=AtomicStatement (ambiguity) (rule end)
-	 *     list=RenamingList ']' (ambiguity) (rule end)
-	 *     module=ModuleRenaming (ambiguity) (rule end)
-	 *     optEnd='every' (ambiguity) (rule end)
-	 *     optEnd='exec' (ambiguity) (rule end)
-	 *     optEnd='if' (ambiguity) (rule end)
-	 *     optEnd='present' (ambiguity) (rule end)
-	 *     optEnd='repeat' (ambiguity) (rule end)
-	 *     optEnd='signal' (ambiguity) (rule end)
-	 *     optEnd='trap' (ambiguity) (rule end)
-	 *     optEnd='var' (ambiguity) (rule end)
-	 *     proc=[Procedure|ID] '(' ')' '(' ')' (ambiguity) (rule end)
-	 *     retSignal=[ISignal|ID] 'end' (ambiguity) (rule end)
-	 *     signal=[ISignal|ID] (ambiguity) (rule end)
-	 *     statement=Statement ']' (ambiguity) (rule end)
-	 *     statement=Statement 'end' (ambiguity) (rule end)
-	 *     thenPart=ThenPart 'end' (ambiguity) (rule end)
-	 *     tick=Tick (ambiguity) (rule end)
-	 *     trap=[TrapDecl|ID] (ambiguity) (rule end)
-	 *     trapHandler+=TrapHandler 'end' (ambiguity) (rule end)
-	 *     varList+=[IVariable|ID] ')' '(' ')' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
 	 */
-	protected void emit_Sequence_SemicolonKeyword_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Await_AwaitKeyword_2_0_1_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'await'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cases+=Case 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Await_AwaitKeyword_2_1_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('do' 'end' 'await'?)?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     delay=DelayExpr (ambiguity) (rule end)
+	 */
+	protected void emit_Await___DoKeyword_2_0_1_0_EndKeyword_2_0_1_2_AwaitKeyword_2_0_1_3_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'do'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     delay=DelayExpr (ambiguity) (rule end)
+	 */
+	protected void emit_Case_DoKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'then'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expression=Expression (ambiguity) '{' '}' (rule end)
+	 *     expression=Expression (ambiguity) '{' '}' else=ElseScope
+	 *     expression=Expression (ambiguity) '{' declarations+=Declaration
+	 *     expression=Expression (ambiguity) '{' statements+=InstructionStatement
+	 *     expression=Expression (ambiguity) '{' statements+=MetaStatement
+	 *     expression=Expression (ambiguity) '{' statements+=Statement
+	 */
+	protected void emit_Conditional_ThenKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'timeout'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     watchingStatements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     watchingStatements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Do_TimeoutKeyword_3_1_3_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('timeout' 'end' 'timeout'?)?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     delay=DelayExpr (ambiguity) (rule end)
+	 */
+	protected void emit_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'then'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expr=Expression (ambiguity) (rule end)
+	 */
+	protected void emit_ElsIf_ThenKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'every'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     delay=DelayExpr 'do' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_EveryDo_EveryKeyword_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'do'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     retSignal=[ISignal|ID] (ambiguity) (rule end)
+	 */
+	protected void emit_ExecCase_DoKeyword_11_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'do'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     retSignal=[ISignal|ID] (ambiguity) 'end' 'exec'? (rule end)
+	 */
+	protected void emit_Exec_DoKeyword_1_0_10_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'exec'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     execCaseList+=ExecCase 'end' (ambiguity) (rule end)
+	 *     retSignal=[ISignal|ID] 'do'? 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Exec_ExecKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     functionName=ExtendedID (ambiguity) '>' (rule end)
+	 */
+	protected void emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     functionName=ExtendedID (ambiguity) '>' (rule end)
+	 */
+	protected void emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'else'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     elseif+=ElsIf (ambiguity) 'end' 'if'? (rule end)
+	 *     expr=Expression 'then'? (ambiguity) 'end' 'if'? (rule end)
+	 *     thenAnnotations+=Annotation 'then' (ambiguity) 'end' 'if'? (rule end)
+	 *     thenStatements+=EsterelStatement ';' (ambiguity) 'end' 'if'? (rule end)
+	 *     thenStatements+=EsterelStatement (ambiguity) 'end' 'if'? (rule end)
+	 */
+	protected void emit_IfTest_ElseKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'if'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     elseAnnotations+=Annotation 'else' 'end' (ambiguity) (rule end)
+	 *     elseStatements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     elseStatements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 *     elseif+=ElsIf 'else'? 'end' (ambiguity) (rule end)
+	 *     expr=Expression 'then'? 'else'? 'end' (ambiguity) (rule end)
+	 *     thenAnnotations+=Annotation 'then' 'else'? 'end' (ambiguity) (rule end)
+	 *     thenStatements+=EsterelStatement ';' 'else'? 'end' (ambiguity) (rule end)
+	 *     thenStatements+=EsterelStatement 'else'? 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_IfTest_IfKeyword_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'then'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expr=Expression (ambiguity) 'else' elseStatements+=EsterelStatement
+	 *     expr=Expression (ambiguity) 'else'? 'end' 'if'? (rule end)
+	 *     expr=Expression (ambiguity) elseAnnotations+=Annotation
+	 *     expr=Expression (ambiguity) elseif+=ElsIf
+	 */
+	protected void emit_IfTest_ThenKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'signal'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     signals+=ISignal 'in' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_LocalSignalDecl_SignalKeyword_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'var'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 *     varDecls+=VariableDecl 'in' 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_LocalVariable_VarKeyword_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'loop'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) 'loop' 'end' (ambiguity) (rule start)
+	 *     annotations+=Annotation 'loop' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Loop_LoopKeyword_4_0_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('end' 'module') | '.'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     intConstantDecls+=ConstantDecls (ambiguity) (rule end)
+	 *     intFunctionDecls+=FunctionDecl (ambiguity) (rule end)
+	 *     intProcedureDecls+=ProcedureDecl (ambiguity) (rule end)
+	 *     intRelationDecls+=RelationDecl (ambiguity) (rule end)
+	 *     intSensorDecls+=SensorDecl (ambiguity) (rule end)
+	 *     intSignalDecls+=InterfaceSignalDecl (ambiguity) (rule end)
+	 *     intTaskDecls+=TaskDecl (ambiguity) (rule end)
+	 *     intTypeDecls+=TypeDecl (ambiguity) (rule end)
+	 *     name=ID ':' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement ';' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement (ambiguity) (rule end)
+	 */
+	protected void emit_Module_FullStopKeyword_6_1_or___EndKeyword_6_0_0_ModuleKeyword_6_0_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'do'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expression=SignalExpression ']' (ambiguity) (rule end)
+	 *     expression=SignalExpression (ambiguity) (rule end)
+	 *     tick=Tick (ambiguity) (rule end)
+	 */
+	protected void emit_PresentCase_DoKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'else'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cases+=PresentCase (ambiguity) 'end' 'present'? (rule end)
+	 *     expression=SignalExpression ']' 'then'? (ambiguity) 'end' 'present'? (rule end)
+	 *     expression=SignalExpression 'then'? (ambiguity) 'end' 'present'? (rule end)
+	 *     thenAnnotations+=Annotation 'then' (ambiguity) 'end' 'present'? (rule end)
+	 *     thenStatements+=EsterelStatement ';' (ambiguity) 'end' 'present'? (rule end)
+	 *     thenStatements+=EsterelStatement (ambiguity) 'end' 'present'? (rule end)
+	 *     tick=Tick 'then'? (ambiguity) 'end' 'present'? (rule end)
+	 */
+	protected void emit_Present_ElseKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'present'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     cases+=PresentCase 'else'? 'end' (ambiguity) (rule end)
+	 *     elseAnnotations+=Annotation 'else' 'end' (ambiguity) (rule end)
+	 *     elseStatements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     elseStatements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 *     expression=SignalExpression ']' 'then'? 'else'? 'end' (ambiguity) (rule end)
+	 *     expression=SignalExpression 'then'? 'else'? 'end' (ambiguity) (rule end)
+	 *     thenAnnotations+=Annotation 'then' 'else'? 'end' (ambiguity) (rule end)
+	 *     thenStatements+=EsterelStatement ';' 'else'? 'end' (ambiguity) (rule end)
+	 *     thenStatements+=EsterelStatement 'else'? 'end' (ambiguity) (rule end)
+	 *     tick=Tick 'then'? 'else'? 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Present_PresentKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'then'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expression=SignalExpression ']' (ambiguity) 'else' elseStatements+=EsterelStatement
+	 *     expression=SignalExpression ']' (ambiguity) 'else'? 'end' 'present'? (rule end)
+	 *     expression=SignalExpression ']' (ambiguity) elseAnnotations+=Annotation
+	 *     expression=SignalExpression (ambiguity) 'else' elseStatements+=EsterelStatement
+	 *     expression=SignalExpression (ambiguity) 'else'? 'end' 'present'? (rule end)
+	 *     expression=SignalExpression (ambiguity) elseAnnotations+=Annotation
+	 *     tick=Tick (ambiguity) 'else' elseStatements+=EsterelStatement
+	 *     tick=Tick (ambiguity) 'else'? 'end' 'present'? (rule end)
+	 *     tick=Tick (ambiguity) elseAnnotations+=Annotation
+	 */
+	protected void emit_Present_ThenKeyword_2_0_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'repeat'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expression=Expression 'times' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Repeat_RepeatKeyword_7_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ':'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) (rule end)
+	 *     name=ID (ambiguity) declarations+=Declaration
+	 *     name=ID (ambiguity) statements+=InstructionStatement
+	 *     name=ID (ambiguity) statements+=MetaStatement
+	 *     name=ID (ambiguity) statements+=Statement
+	 */
+	protected void emit_SCLProgram_ColonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -224,10 +720,10 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     '('*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=NotOperator
-	 *     (rule start) (ambiguity) operator=PreOperator
+	 *     (rule start) (ambiguity) operator=Esterel_NotOperator
+	 *     (rule start) (ambiguity) operator=Esterel_PreOperator
 	 *     (rule start) (ambiguity) valuedObject=[ISignal|ID]
-	 *     (rule start) (ambiguity) valuedObject=[TrapDecl|ID]
+	 *     (rule start) (ambiguity) valuedObject=[TrapSignal|ID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -239,10 +735,35 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     '('+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=NotOperator
+	 *     (rule start) (ambiguity) operator=Esterel_NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 */
+	protected void emit_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'trap'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     statements+=EsterelStatement ';' 'end' (ambiguity) (rule end)
+	 *     statements+=EsterelStatement 'end' (ambiguity) (rule end)
+	 *     trapHandler+=TrapHandler 'end' (ambiguity) (rule end)
+	 *     trapSignals+=TrapSignal 'in' 'end' (ambiguity) (rule end)
+	 */
+	protected void emit_Trap_TrapKeyword_8_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

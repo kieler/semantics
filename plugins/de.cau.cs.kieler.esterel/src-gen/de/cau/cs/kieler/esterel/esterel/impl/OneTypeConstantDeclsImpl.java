@@ -2,10 +2,10 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.ConstantWithValue;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
+import de.cau.cs.kieler.esterel.esterel.ValuedObject;
 
 import java.util.Collection;
 
@@ -47,7 +47,7 @@ public class OneTypeConstantDeclsImpl extends MinimalEObjectImpl.Container imple
    * @generated
    * @ordered
    */
-  protected EList<ConstantWithValue> constants;
+  protected EList<ValuedObject> constants;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
@@ -85,11 +85,11 @@ public class OneTypeConstantDeclsImpl extends MinimalEObjectImpl.Container imple
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ConstantWithValue> getConstants()
+  public EList<ValuedObject> getConstants()
   {
     if (constants == null)
     {
-      constants = new EObjectContainmentEList<ConstantWithValue>(ConstantWithValue.class, this, EsterelPackage.ONE_TYPE_CONSTANT_DECLS__CONSTANTS);
+      constants = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, EsterelPackage.ONE_TYPE_CONSTANT_DECLS__CONSTANTS);
     }
     return constants;
   }
@@ -191,7 +191,7 @@ public class OneTypeConstantDeclsImpl extends MinimalEObjectImpl.Container imple
     {
       case EsterelPackage.ONE_TYPE_CONSTANT_DECLS__CONSTANTS:
         getConstants().clear();
-        getConstants().addAll((Collection<? extends ConstantWithValue>)newValue);
+        getConstants().addAll((Collection<? extends ValuedObject>)newValue);
         return;
       case EsterelPackage.ONE_TYPE_CONSTANT_DECLS__TYPE:
         setType((TypeIdentifier)newValue);

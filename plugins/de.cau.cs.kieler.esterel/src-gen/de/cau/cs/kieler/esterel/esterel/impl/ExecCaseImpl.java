@@ -2,20 +2,30 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.ExecBody;
 import de.cau.cs.kieler.esterel.esterel.ExecCase;
+import de.cau.cs.kieler.esterel.esterel.Expression;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
+import de.cau.cs.kieler.esterel.esterel.IVariable;
 import de.cau.cs.kieler.esterel.esterel.Task;
 
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,8 +35,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getTask <em>Task</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getVars <em>Vars</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getKexpressions <em>Kexpressions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getRetSignal <em>Ret Signal</em>}</li>
  * </ul>
  *
@@ -34,6 +46,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
    * <!-- begin-user-doc -->
@@ -45,14 +67,24 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
   protected Task task;
 
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getVars() <em>Vars</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getVars()
    * @generated
    * @ordered
    */
-  protected ExecBody body;
+  protected EList<IVariable> vars;
+
+  /**
+   * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKexpressions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Expression> kexpressions;
 
   /**
    * The cached value of the '{@link #getRetSignal() <em>Ret Signal</em>}' reference.
@@ -83,6 +115,20 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.EXEC_CASE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.EXEC_CASE__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -133,9 +179,13 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExecBody getBody()
+  public EList<IVariable> getVars()
   {
-    return body;
+    if (vars == null)
+    {
+      vars = new EObjectResolvingEList<IVariable>(IVariable.class, this, EsterelPackage.EXEC_CASE__VARS);
+    }
+    return vars;
   }
 
   /**
@@ -143,37 +193,13 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(ExecBody newBody, NotificationChain msgs)
+  public EList<Expression> getKexpressions()
   {
-    ExecBody oldBody = body;
-    body = newBody;
-    if (eNotificationRequired())
+    if (kexpressions == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC_CASE__BODY, oldBody, newBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      kexpressions = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.EXEC_CASE__KEXPRESSIONS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBody(ExecBody newBody)
-  {
-    if (newBody != body)
-    {
-      NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC_CASE__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC_CASE__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC_CASE__BODY, newBody, newBody));
+    return kexpressions;
   }
 
   /**
@@ -229,8 +255,10 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
   {
     switch (featureID)
     {
-      case EsterelPackage.EXEC_CASE__BODY:
-        return basicSetBody(null, msgs);
+      case EsterelPackage.EXEC_CASE__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.EXEC_CASE__KEXPRESSIONS:
+        return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -245,11 +273,15 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC_CASE__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.EXEC_CASE__TASK:
         if (resolve) return getTask();
         return basicGetTask();
-      case EsterelPackage.EXEC_CASE__BODY:
-        return getBody();
+      case EsterelPackage.EXEC_CASE__VARS:
+        return getVars();
+      case EsterelPackage.EXEC_CASE__KEXPRESSIONS:
+        return getKexpressions();
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         if (resolve) return getRetSignal();
         return basicGetRetSignal();
@@ -262,16 +294,26 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC_CASE__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.EXEC_CASE__TASK:
         setTask((Task)newValue);
         return;
-      case EsterelPackage.EXEC_CASE__BODY:
-        setBody((ExecBody)newValue);
+      case EsterelPackage.EXEC_CASE__VARS:
+        getVars().clear();
+        getVars().addAll((Collection<? extends IVariable>)newValue);
+        return;
+      case EsterelPackage.EXEC_CASE__KEXPRESSIONS:
+        getKexpressions().clear();
+        getKexpressions().addAll((Collection<? extends Expression>)newValue);
         return;
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         setRetSignal((ISignal)newValue);
@@ -290,11 +332,17 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC_CASE__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.EXEC_CASE__TASK:
         setTask((Task)null);
         return;
-      case EsterelPackage.EXEC_CASE__BODY:
-        setBody((ExecBody)null);
+      case EsterelPackage.EXEC_CASE__VARS:
+        getVars().clear();
+        return;
+      case EsterelPackage.EXEC_CASE__KEXPRESSIONS:
+        getKexpressions().clear();
         return;
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         setRetSignal((ISignal)null);
@@ -313,10 +361,14 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
   {
     switch (featureID)
     {
+      case EsterelPackage.EXEC_CASE__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.EXEC_CASE__TASK:
         return task != null;
-      case EsterelPackage.EXEC_CASE__BODY:
-        return body != null;
+      case EsterelPackage.EXEC_CASE__VARS:
+        return vars != null && !vars.isEmpty();
+      case EsterelPackage.EXEC_CASE__KEXPRESSIONS:
+        return kexpressions != null && !kexpressions.isEmpty();
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         return retSignal != null;
     }

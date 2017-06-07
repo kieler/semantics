@@ -24,32 +24,33 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
-import de.cau.cs.kieler.esterel.kexpressions.IVariable;
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
-import de.cau.cs.kieler.esterel.kexpressions.VariableDecl;
-import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
-import de.cau.cs.kieler.esterel.esterel.ConstantWithValue;
-import de.cau.cs.kieler.esterel.esterel.Function;
-import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
-import de.cau.cs.kieler.esterel.esterel.LocalSignal;
-import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
-import de.cau.cs.kieler.esterel.esterel.LocalSignalList;
-import de.cau.cs.kieler.esterel.esterel.LocalVariable;
-import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.esterel.ModuleBody;
-import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls;
-import de.cau.cs.kieler.esterel.esterel.Procedure;
-import de.cau.cs.kieler.esterel.esterel.ProcedureDecl;
-import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.esterel.esterel.SensorDecl;
-import de.cau.cs.kieler.esterel.esterel.SensorWithType;
-import de.cau.cs.kieler.esterel.esterel.Task;
-import de.cau.cs.kieler.esterel.esterel.TaskDecl;
-import de.cau.cs.kieler.esterel.esterel.Trap;
-import de.cau.cs.kieler.esterel.esterel.Type;
-import de.cau.cs.kieler.esterel.esterel.TypeDecl;
+import de.cau.cs.kieler.esterel.esterel.*;
+//import de.cau.cs.kieler.esterel.kexpressions.Signal;
+//import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+//import de.cau.cs.kieler.esterel.kexpressions.IVariable;
+//import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
+//import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
+//import de.cau.cs.kieler.esterel.kexpressions.VariableDecl;
+//import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
+//import de.cau.cs.kieler.esterel.esterel.ConstantWithValue;
+//import de.cau.cs.kieler.esterel.esterel.Function;
+//import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
+//import de.cau.cs.kieler.esterel.esterel.LocalSignal;
+//import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
+//import de.cau.cs.kieler.esterel.esterel.LocalSignalList;
+//import de.cau.cs.kieler.esterel.esterel.LocalVariable;
+//import de.cau.cs.kieler.esterel.esterel.Module;
+//import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls;
+//import de.cau.cs.kieler.esterel.esterel.Procedure;
+//import de.cau.cs.kieler.esterel.esterel.ProcedureDecl;
+//import de.cau.cs.kieler.esterel.esterel.Program;
+//import de.cau.cs.kieler.esterel.esterel.SensorDecl;
+//import de.cau.cs.kieler.esterel.esterel.SensorWithType;
+//import de.cau.cs.kieler.esterel.esterel.Task;
+//import de.cau.cs.kieler.esterel.esterel.TaskDecl;
+//import de.cau.cs.kieler.esterel.esterel.Trap;
+//import de.cau.cs.kieler.esterel.esterel.Type;
+//import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 
 /**
  * Supplies some convenient methods for scoping of the esterel grammar.
@@ -68,8 +69,8 @@ public final class EsterelScopeProviderUtil {
     /** collecting all sensors of a passed module. */
     protected static final ScopeFunction<Module> COLLECT_SENSORS = new ScopeFunction<Module>() {
         public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
-            if (m.getInterface() != null && m.getInterface().getIntSensorDecls() != null) {
-                for (SensorDecl sd : m.getInterface().getIntSensorDecls()) {
+            if (m.getIntSensorDecls() != null) {
+                for (SensorDecl sd : m.getIntSensorDecls()) {
                     for (SensorWithType swt : sd.getSensors()) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(swt.getSensor()
                                 .getName()), swt.getSensor(), getEmptyMap(String.class)));
@@ -82,12 +83,12 @@ public final class EsterelScopeProviderUtil {
     /** collecting all constants of a passed module. */
     protected static final ScopeFunction<Module> COLLECT_CONSTANTS = new ScopeFunction<Module>() {
         public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
-            if (m.getInterface() != null && m.getInterface().getIntConstantDecls() != null) {
-                for (ConstantDecls decls : m.getInterface().getIntConstantDecls()) {
+            if (m.getIntConstantDecls() != null) {
+                for (ConstantDecls decls : m.getIntConstantDecls()) {
                     for (OneTypeConstantDecls otcd : decls.getConstants()) {
-                        for (ConstantWithValue constant : otcd.getConstants()) {
-                            scopeElems.add(new EObjectDescription(QualifiedName.create(constant
-                                    .getConstant().getName()), constant.getConstant(),
+                        for (ValuedObject constant : otcd.getConstants()) {
+                            scopeElems.add(new EObjectDescription(QualifiedName.create( ((Constant) constant)
+                                    .getName()), (Constant) constant,
                                     getEmptyMap(String.class)));
                         }
                     }
@@ -99,8 +100,8 @@ public final class EsterelScopeProviderUtil {
     /** collecting all functions of a passed module. */
     protected static final ScopeFunction<Module> COLLECT_FUNCTIONS = new ScopeFunction<Module>() {
         public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
-            if (m.getInterface() != null && m.getInterface().getIntFunctionDecls() != null) {
-                for (FunctionDecl fd : m.getInterface().getIntFunctionDecls()) {
+            if (m.getIntFunctionDecls() != null) {
+                for (FunctionDecl fd : m.getIntFunctionDecls()) {
                     for (Function f : fd.getFunctions()) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(f.getName()), f,
                                 getEmptyMap(String.class)));
@@ -113,8 +114,8 @@ public final class EsterelScopeProviderUtil {
     /** collecting all procedures of a passed module. */
     protected static final ScopeFunction<Module> COLLECT_PROCEDURES = new ScopeFunction<Module>() {
         public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
-            if (m.getInterface() != null && m.getInterface().getIntProcedureDecls() != null) {
-                for (ProcedureDecl procDecl : m.getInterface().getIntProcedureDecls()) {
+            if (m.getIntProcedureDecls() != null) {
+                for (ProcedureDecl procDecl : m.getIntProcedureDecls()) {
                     EList<Procedure> procList = procDecl.getProcedures();
                     for (Procedure proc : procList) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(proc.getName()),
@@ -128,8 +129,8 @@ public final class EsterelScopeProviderUtil {
     /** collecting all signals of a passed module. */
     protected static final ScopeFunction<Module> COLLECT_SIGNALS = new ScopeFunction<Module>() {
         public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
-            if (m.getInterface() != null && m.getInterface().getIntSignalDecls() != null) {
-                for (InterfaceSignalDecl isd : m.getInterface().getIntSignalDecls()) {
+            if (m.getIntSignalDecls() != null) {
+                for (InterfaceSignalDecl isd : m.getIntSignalDecls()) {
                     for (ISignal s : isd.getSignals()) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                                 getEmptyMap(String.class)));
@@ -141,8 +142,8 @@ public final class EsterelScopeProviderUtil {
     /** collecting all types of a passed module. */
     protected static final ScopeFunction<Module> COLLECT_TYPES = new ScopeFunction<Module>() {
         public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
-            if (m.getInterface() != null && m.getInterface().getIntTypeDecls() != null) {
-                for (TypeDecl typeDecl : m.getInterface().getIntTypeDecls()) {
+            if (m.getIntTypeDecls() != null) {
+                for (TypeDecl typeDecl : m.getIntTypeDecls()) {
                     for (Type type : typeDecl.getTypes()) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(type.getName()),
                                 type, getEmptyMap(String.class)));
@@ -154,8 +155,8 @@ public final class EsterelScopeProviderUtil {
     /** collecting all tasks of a passed module. */
     protected static final ScopeFunction<Module> COLLECT_TASKS = new ScopeFunction<Module>() {
         public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
-            if (m.getInterface() != null && m.getInterface().getIntTaskDecls() != null) {
-                for (TaskDecl taskDecl : m.getInterface().getIntTaskDecls()) {
+            if (m.getIntTaskDecls() != null) {
+                for (TaskDecl taskDecl : m.getIntTaskDecls()) {
                     for (Task task : taskDecl.getTasks()) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(task.getName()),
                                 task, getEmptyMap(String.class)));
@@ -196,7 +197,14 @@ public final class EsterelScopeProviderUtil {
         while (!(parent instanceof Module)) {
             parent = parent.eContainer();
         }
-        if (((Module) parent).getInterface() != null) {
+        if (       (((Module) parent).getIntSignalDecls() != null)
+                || (((Module) parent).getIntTypeDecls() != null)
+                || (((Module) parent).getIntSensorDecls() != null)
+                || (((Module) parent).getIntConstantDecls() != null)
+                || (((Module) parent).getIntRelationDecls() != null)
+                || (((Module) parent).getIntTaskDecls() != null)
+                || (((Module) parent).getIntFunctionDecls() != null)
+                || (((Module) parent).getIntProcedureDecls() != null)  ) {
             function.collect((Module) parent, scopeElems);
         }
         return scopeElems;
@@ -221,7 +229,14 @@ public final class EsterelScopeProviderUtil {
         while (!(parent instanceof Module)) {
             parent = parent.eContainer();
         }
-        if (((Module) parent).getInterface() != null) {
+        if (       (((Module) parent).getIntSignalDecls() != null)
+                || (((Module) parent).getIntTypeDecls() != null)
+                || (((Module) parent).getIntSensorDecls() != null)
+                || (((Module) parent).getIntConstantDecls() != null)
+                || (((Module) parent).getIntRelationDecls() != null)
+                || (((Module) parent).getIntTaskDecls() != null)
+                || (((Module) parent).getIntFunctionDecls() != null)
+                || (((Module) parent).getIntProcedureDecls() != null)  ) {
             function.collect((Module) parent, scopeElems);
         }
         // collect from possible other modules
@@ -245,11 +260,10 @@ public final class EsterelScopeProviderUtil {
 
         EObject parent = context.eContainer();
         // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof ModuleBody) && !(parent instanceof Module)) {
+        while (!(parent instanceof Module)) {
             // Get the local signals into the scope
             if (parent instanceof LocalSignalDecl) {
-                LocalSignalList localSigList = ((LocalSignalDecl) parent).getSignalList();
-                EList<ISignal> signals = ((LocalSignal) localSigList).getSignal();
+                EList<ISignal> signals = ((LocalSignalDecl) parent).getSignals();
                 for (ISignal s : signals) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                             getEmptyMap(String.class)));
@@ -273,11 +287,10 @@ public final class EsterelScopeProviderUtil {
 
         EObject parent = context.eContainer();
         // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof ModuleBody) && !(parent instanceof Module)) {
+        while (!(parent instanceof Module)) {
             // Get the local variables into the scope
             if (parent instanceof LocalVariable) {
-                InterfaceVariableDecl varDecl = ((LocalVariable) parent).getVar();
-                EList<VariableDecl> decl = varDecl.getVarDecls();
+                EList<VariableDecl> decl = ((LocalVariable) parent).getVarDecls();
                 for (VariableDecl vdecl : decl) {
                     for (IVariable varSingle : vdecl.getVariables()) {
                         scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
@@ -303,9 +316,9 @@ public final class EsterelScopeProviderUtil {
 
         EObject parent = context.eContainer();
         // find all Traps
-        while (!(parent instanceof ModuleBody) && !(parent instanceof Module)) {
+        while (!(parent instanceof Module)) {
             if (parent instanceof Trap) {
-                EList<ISignal> trapDecl = ((Trap) parent).getTrapDeclList().getTrapDecls();
+                EList<ISignal> trapDecl = ((Trap) parent).getTrapSignals();
                 // add Trap to the scope
                 for (ISignal trap : trapDecl) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(trap.getName()),

@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionDeclImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionDeclImpl#getFunctions <em>Functions</em>}</li>
  * </ul>
  *
@@ -35,6 +38,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class FunctionDeclImpl extends MinimalEObjectImpl.Container implements FunctionDecl
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getFunctions() <em>Functions</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -71,6 +84,20 @@ public class FunctionDeclImpl extends MinimalEObjectImpl.Container implements Fu
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.FUNCTION_DECL__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Function> getFunctions()
   {
     if (functions == null)
@@ -90,6 +117,8 @@ public class FunctionDeclImpl extends MinimalEObjectImpl.Container implements Fu
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_DECL__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.FUNCTION_DECL__FUNCTIONS:
         return ((InternalEList<?>)getFunctions()).basicRemove(otherEnd, msgs);
     }
@@ -106,6 +135,8 @@ public class FunctionDeclImpl extends MinimalEObjectImpl.Container implements Fu
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_DECL__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.FUNCTION_DECL__FUNCTIONS:
         return getFunctions();
     }
@@ -123,6 +154,10 @@ public class FunctionDeclImpl extends MinimalEObjectImpl.Container implements Fu
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.FUNCTION_DECL__FUNCTIONS:
         getFunctions().clear();
         getFunctions().addAll((Collection<? extends Function>)newValue);
@@ -141,6 +176,9 @@ public class FunctionDeclImpl extends MinimalEObjectImpl.Container implements Fu
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.FUNCTION_DECL__FUNCTIONS:
         getFunctions().clear();
         return;
@@ -158,6 +196,8 @@ public class FunctionDeclImpl extends MinimalEObjectImpl.Container implements Fu
   {
     switch (featureID)
     {
+      case EsterelPackage.FUNCTION_DECL__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.FUNCTION_DECL__FUNCTIONS:
         return functions != null && !functions.isEmpty();
     }

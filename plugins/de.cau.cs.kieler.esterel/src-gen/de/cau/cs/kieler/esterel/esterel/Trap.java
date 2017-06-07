@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.scl.scl.Statement;
+
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -13,9 +15,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Trap#getTrapDeclList <em>Trap Decl List</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Trap#getTrapSignals <em>Trap Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Trap#getTrapHandler <em>Trap Handler</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Trap#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap()
@@ -25,30 +26,20 @@ import org.eclipse.emf.common.util.EList;
 public interface Trap extends StatementContainer, Statement
 {
   /**
-   * Returns the value of the '<em><b>Trap Decl List</b></em>' containment reference.
+   * Returns the value of the '<em><b>Trap Signals</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ISignal}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Trap Decl List</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Trap Signals</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Trap Decl List</em>' containment reference.
-   * @see #setTrapDeclList(TrapDeclList)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap_TrapDeclList()
+   * @return the value of the '<em>Trap Signals</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap_TrapSignals()
    * @model containment="true"
    * @generated
    */
-  TrapDeclList getTrapDeclList();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Trap#getTrapDeclList <em>Trap Decl List</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Trap Decl List</em>' containment reference.
-   * @see #getTrapDeclList()
-   * @generated
-   */
-  void setTrapDeclList(TrapDeclList value);
+  EList<ISignal> getTrapSignals();
 
   /**
    * Returns the value of the '<em><b>Trap Handler</b></em>' containment reference list.
@@ -65,31 +56,5 @@ public interface Trap extends StatementContainer, Statement
    * @generated
    */
   EList<TrapHandler> getTrapHandler();
-
-  /**
-   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Opt End</em>' attribute.
-   * @see #setOptEnd(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrap_OptEnd()
-   * @model
-   * @generated
-   */
-  String getOptEnd();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Trap#getOptEnd <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Opt End</em>' attribute.
-   * @see #getOptEnd()
-   * @generated
-   */
-  void setOptEnd(String value);
 
 } // Trap

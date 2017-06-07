@@ -2,26 +2,19 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.Statement;
-
-import java.util.Collection;
+import de.cau.cs.kieler.scl.scl.Scope;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,13 +25,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getDeclarations <em>Declarations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getElseStatements <em>Else Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getElse <em>Else</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ConditionalImpl extends StatementSequenceImpl implements Conditional {
+public class ConditionalImpl extends ScopeImpl implements Conditional {
     /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
      * <!-- begin-user-doc -->
@@ -50,24 +42,14 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
     protected Expression expression;
 
     /**
-     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+     * The cached value of the '{@link #getElse() <em>Else</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDeclarations()
+     * @see #getElse()
      * @generated
      * @ordered
      */
-    protected EList<Declaration> declarations;
-
-    /**
-     * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getElseStatements()
-     * @generated
-     * @ordered
-     */
-    protected EList<Statement> elseStatements;
+    protected Scope else_;
 
     /**
      * <!-- begin-user-doc -->
@@ -136,11 +118,8 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Declaration> getDeclarations() {
-        if (declarations == null) {
-            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.CONDITIONAL__DECLARATIONS);
-        }
-        return declarations;
+    public Scope getElse() {
+        return else_;
     }
 
     /**
@@ -148,11 +127,33 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Statement> getElseStatements() {
-        if (elseStatements == null) {
-            elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.CONDITIONAL__ELSE_STATEMENTS);
+    public NotificationChain basicSetElse(Scope newElse, NotificationChain msgs) {
+        Scope oldElse = else_;
+        else_ = newElse;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__ELSE, oldElse, newElse);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
-        return elseStatements;
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setElse(Scope newElse) {
+        if (newElse != else_) {
+            NotificationChain msgs = null;
+            if (else_ != null)
+                msgs = ((InternalEObject)else_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.CONDITIONAL__ELSE, null, msgs);
+            if (newElse != null)
+                msgs = ((InternalEObject)newElse).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.CONDITIONAL__ELSE, null, msgs);
+            msgs = basicSetElse(newElse, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__ELSE, newElse, newElse));
     }
 
     /**
@@ -165,10 +166,8 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
         switch (featureID) {
             case SclPackage.CONDITIONAL__EXPRESSION:
                 return basicSetExpression(null, msgs);
-            case SclPackage.CONDITIONAL__DECLARATIONS:
-                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
-            case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
-                return ((InternalEList<?>)getElseStatements()).basicRemove(otherEnd, msgs);
+            case SclPackage.CONDITIONAL__ELSE:
+                return basicSetElse(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -183,10 +182,8 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
         switch (featureID) {
             case SclPackage.CONDITIONAL__EXPRESSION:
                 return getExpression();
-            case SclPackage.CONDITIONAL__DECLARATIONS:
-                return getDeclarations();
-            case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
-                return getElseStatements();
+            case SclPackage.CONDITIONAL__ELSE:
+                return getElse();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -196,20 +193,14 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
      * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SclPackage.CONDITIONAL__EXPRESSION:
                 setExpression((Expression)newValue);
                 return;
-            case SclPackage.CONDITIONAL__DECLARATIONS:
-                getDeclarations().clear();
-                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
-                return;
-            case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
-                getElseStatements().clear();
-                getElseStatements().addAll((Collection<? extends Statement>)newValue);
+            case SclPackage.CONDITIONAL__ELSE:
+                setElse((Scope)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -226,11 +217,8 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
             case SclPackage.CONDITIONAL__EXPRESSION:
                 setExpression((Expression)null);
                 return;
-            case SclPackage.CONDITIONAL__DECLARATIONS:
-                getDeclarations().clear();
-                return;
-            case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
-                getElseStatements().clear();
+            case SclPackage.CONDITIONAL__ELSE:
+                setElse((Scope)null);
                 return;
         }
         super.eUnset(featureID);
@@ -246,10 +234,8 @@ public class ConditionalImpl extends StatementSequenceImpl implements Conditiona
         switch (featureID) {
             case SclPackage.CONDITIONAL__EXPRESSION:
                 return expression != null;
-            case SclPackage.CONDITIONAL__DECLARATIONS:
-                return declarations != null && !declarations.isEmpty();
-            case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
-                return elseStatements != null && !elseStatements.isEmpty();
+            case SclPackage.CONDITIONAL__ELSE:
+                return else_ != null;
         }
         return super.eIsSet(featureID);
     }

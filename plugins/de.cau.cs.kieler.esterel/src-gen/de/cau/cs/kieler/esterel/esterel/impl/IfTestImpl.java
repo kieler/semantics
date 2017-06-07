@@ -2,13 +2,16 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.ElsIf;
-import de.cau.cs.kieler.esterel.esterel.ElsePart;
-import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.IfTest;
-import de.cau.cs.kieler.esterel.esterel.ThenPart;
+import de.cau.cs.kieler.annotations.Annotation;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.esterel.esterel.ElsIf;
+import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.Expression;
+import de.cau.cs.kieler.esterel.esterel.IfTest;
+
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
 
 import java.util.Collection;
 
@@ -34,10 +37,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThenPart <em>Then Part</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElsif <em>Elsif</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElsePart <em>Else Part</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getOptEnd <em>Opt End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThenAnnotations <em>Then Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThenStatements <em>Then Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElseif <em>Elseif</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElseAnnotations <em>Else Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
  *
  * @generated
@@ -55,54 +59,54 @@ public class IfTestImpl extends StatementImpl implements IfTest
   protected Expression expr;
 
   /**
-   * The cached value of the '{@link #getThenPart() <em>Then Part</em>}' containment reference.
+   * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getThenPart()
+   * @see #getThenAnnotations()
    * @generated
    * @ordered
    */
-  protected ThenPart thenPart;
+  protected EList<Annotation> thenAnnotations;
 
   /**
-   * The cached value of the '{@link #getElsif() <em>Elsif</em>}' containment reference list.
+   * The cached value of the '{@link #getThenStatements() <em>Then Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getElsif()
+   * @see #getThenStatements()
    * @generated
    * @ordered
    */
-  protected EList<ElsIf> elsif;
+  protected EList<Statement> thenStatements;
 
   /**
-   * The cached value of the '{@link #getElsePart() <em>Else Part</em>}' containment reference.
+   * The cached value of the '{@link #getElseif() <em>Elseif</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getElsePart()
+   * @see #getElseif()
    * @generated
    * @ordered
    */
-  protected ElsePart elsePart;
+  protected EList<ElsIf> elseif;
 
   /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * The cached value of the '{@link #getElseAnnotations() <em>Else Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOptEnd()
+   * @see #getElseAnnotations()
    * @generated
    * @ordered
    */
-  protected static final String OPT_END_EDEFAULT = null;
+  protected EList<Annotation> elseAnnotations;
 
   /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOptEnd()
+   * @see #getElseStatements()
    * @generated
    * @ordered
    */
-  protected String optEnd = OPT_END_EDEFAULT;
+  protected EList<Statement> elseStatements;
 
   /**
    * <!-- begin-user-doc -->
@@ -178,26 +182,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public ThenPart getThenPart()
+  public EList<Annotation> getThenAnnotations()
   {
-    return thenPart;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetThenPart(ThenPart newThenPart, NotificationChain msgs)
-  {
-    ThenPart oldThenPart = thenPart;
-    thenPart = newThenPart;
-    if (eNotificationRequired())
+    if (thenAnnotations == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__THEN_PART, oldThenPart, newThenPart);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      thenAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.IF_TEST__THEN_ANNOTATIONS);
     }
-    return msgs;
+    return thenAnnotations;
   }
 
   /**
@@ -205,20 +196,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setThenPart(ThenPart newThenPart)
+  public EList<Statement> getThenStatements()
   {
-    if (newThenPart != thenPart)
+    if (thenStatements == null)
     {
-      NotificationChain msgs = null;
-      if (thenPart != null)
-        msgs = ((InternalEObject)thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__THEN_PART, null, msgs);
-      if (newThenPart != null)
-        msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__THEN_PART, null, msgs);
-      msgs = basicSetThenPart(newThenPart, msgs);
-      if (msgs != null) msgs.dispatch();
+      thenStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.IF_TEST__THEN_STATEMENTS);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__THEN_PART, newThenPart, newThenPart));
+    return thenStatements;
   }
 
   /**
@@ -226,13 +210,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ElsIf> getElsif()
+  public EList<ElsIf> getElseif()
   {
-    if (elsif == null)
+    if (elseif == null)
     {
-      elsif = new EObjectContainmentEList<ElsIf>(ElsIf.class, this, EsterelPackage.IF_TEST__ELSIF);
+      elseif = new EObjectContainmentEList<ElsIf>(ElsIf.class, this, EsterelPackage.IF_TEST__ELSEIF);
     }
-    return elsif;
+    return elseif;
   }
 
   /**
@@ -240,26 +224,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public ElsePart getElsePart()
+  public EList<Annotation> getElseAnnotations()
   {
-    return elsePart;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetElsePart(ElsePart newElsePart, NotificationChain msgs)
-  {
-    ElsePart oldElsePart = elsePart;
-    elsePart = newElsePart;
-    if (eNotificationRequired())
+    if (elseAnnotations == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__ELSE_PART, oldElsePart, newElsePart);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      elseAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.IF_TEST__ELSE_ANNOTATIONS);
     }
-    return msgs;
+    return elseAnnotations;
   }
 
   /**
@@ -267,43 +238,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setElsePart(ElsePart newElsePart)
+  public EList<Statement> getElseStatements()
   {
-    if (newElsePart != elsePart)
+    if (elseStatements == null)
     {
-      NotificationChain msgs = null;
-      if (elsePart != null)
-        msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__ELSE_PART, null, msgs);
-      if (newElsePart != null)
-        msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__ELSE_PART, null, msgs);
-      msgs = basicSetElsePart(newElsePart, msgs);
-      if (msgs != null) msgs.dispatch();
+      elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.IF_TEST__ELSE_STATEMENTS);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__ELSE_PART, newElsePart, newElsePart));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getOptEnd()
-  {
-    return optEnd;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOptEnd(String newOptEnd)
-  {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__OPT_END, oldOptEnd, optEnd));
+    return elseStatements;
   }
 
   /**
@@ -318,12 +259,16 @@ public class IfTestImpl extends StatementImpl implements IfTest
     {
       case EsterelPackage.IF_TEST__EXPR:
         return basicSetExpr(null, msgs);
-      case EsterelPackage.IF_TEST__THEN_PART:
-        return basicSetThenPart(null, msgs);
-      case EsterelPackage.IF_TEST__ELSIF:
-        return ((InternalEList<?>)getElsif()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.IF_TEST__ELSE_PART:
-        return basicSetElsePart(null, msgs);
+      case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
+        return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.IF_TEST__THEN_STATEMENTS:
+        return ((InternalEList<?>)getThenStatements()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.IF_TEST__ELSEIF:
+        return ((InternalEList<?>)getElseif()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.IF_TEST__ELSE_ANNOTATIONS:
+        return ((InternalEList<?>)getElseAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.IF_TEST__ELSE_STATEMENTS:
+        return ((InternalEList<?>)getElseStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -340,14 +285,16 @@ public class IfTestImpl extends StatementImpl implements IfTest
     {
       case EsterelPackage.IF_TEST__EXPR:
         return getExpr();
-      case EsterelPackage.IF_TEST__THEN_PART:
-        return getThenPart();
-      case EsterelPackage.IF_TEST__ELSIF:
-        return getElsif();
-      case EsterelPackage.IF_TEST__ELSE_PART:
-        return getElsePart();
-      case EsterelPackage.IF_TEST__OPT_END:
-        return getOptEnd();
+      case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
+        return getThenAnnotations();
+      case EsterelPackage.IF_TEST__THEN_STATEMENTS:
+        return getThenStatements();
+      case EsterelPackage.IF_TEST__ELSEIF:
+        return getElseif();
+      case EsterelPackage.IF_TEST__ELSE_ANNOTATIONS:
+        return getElseAnnotations();
+      case EsterelPackage.IF_TEST__ELSE_STATEMENTS:
+        return getElseStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -366,18 +313,25 @@ public class IfTestImpl extends StatementImpl implements IfTest
       case EsterelPackage.IF_TEST__EXPR:
         setExpr((Expression)newValue);
         return;
-      case EsterelPackage.IF_TEST__THEN_PART:
-        setThenPart((ThenPart)newValue);
+      case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
+        getThenAnnotations().clear();
+        getThenAnnotations().addAll((Collection<? extends Annotation>)newValue);
         return;
-      case EsterelPackage.IF_TEST__ELSIF:
-        getElsif().clear();
-        getElsif().addAll((Collection<? extends ElsIf>)newValue);
+      case EsterelPackage.IF_TEST__THEN_STATEMENTS:
+        getThenStatements().clear();
+        getThenStatements().addAll((Collection<? extends Statement>)newValue);
         return;
-      case EsterelPackage.IF_TEST__ELSE_PART:
-        setElsePart((ElsePart)newValue);
+      case EsterelPackage.IF_TEST__ELSEIF:
+        getElseif().clear();
+        getElseif().addAll((Collection<? extends ElsIf>)newValue);
         return;
-      case EsterelPackage.IF_TEST__OPT_END:
-        setOptEnd((String)newValue);
+      case EsterelPackage.IF_TEST__ELSE_ANNOTATIONS:
+        getElseAnnotations().clear();
+        getElseAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.IF_TEST__ELSE_STATEMENTS:
+        getElseStatements().clear();
+        getElseStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -396,17 +350,20 @@ public class IfTestImpl extends StatementImpl implements IfTest
       case EsterelPackage.IF_TEST__EXPR:
         setExpr((Expression)null);
         return;
-      case EsterelPackage.IF_TEST__THEN_PART:
-        setThenPart((ThenPart)null);
+      case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
+        getThenAnnotations().clear();
         return;
-      case EsterelPackage.IF_TEST__ELSIF:
-        getElsif().clear();
+      case EsterelPackage.IF_TEST__THEN_STATEMENTS:
+        getThenStatements().clear();
         return;
-      case EsterelPackage.IF_TEST__ELSE_PART:
-        setElsePart((ElsePart)null);
+      case EsterelPackage.IF_TEST__ELSEIF:
+        getElseif().clear();
         return;
-      case EsterelPackage.IF_TEST__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
+      case EsterelPackage.IF_TEST__ELSE_ANNOTATIONS:
+        getElseAnnotations().clear();
+        return;
+      case EsterelPackage.IF_TEST__ELSE_STATEMENTS:
+        getElseStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -424,33 +381,18 @@ public class IfTestImpl extends StatementImpl implements IfTest
     {
       case EsterelPackage.IF_TEST__EXPR:
         return expr != null;
-      case EsterelPackage.IF_TEST__THEN_PART:
-        return thenPart != null;
-      case EsterelPackage.IF_TEST__ELSIF:
-        return elsif != null && !elsif.isEmpty();
-      case EsterelPackage.IF_TEST__ELSE_PART:
-        return elsePart != null;
-      case EsterelPackage.IF_TEST__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
+      case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
+        return thenAnnotations != null && !thenAnnotations.isEmpty();
+      case EsterelPackage.IF_TEST__THEN_STATEMENTS:
+        return thenStatements != null && !thenStatements.isEmpty();
+      case EsterelPackage.IF_TEST__ELSEIF:
+        return elseif != null && !elseif.isEmpty();
+      case EsterelPackage.IF_TEST__ELSE_ANNOTATIONS:
+        return elseAnnotations != null && !elseAnnotations.isEmpty();
+      case EsterelPackage.IF_TEST__ELSE_STATEMENTS:
+        return elseStatements != null && !elseStatements.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
   }
 
 } //IfTestImpl

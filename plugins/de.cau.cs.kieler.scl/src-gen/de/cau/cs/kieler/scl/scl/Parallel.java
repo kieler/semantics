@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Parallel extends Instruction {
+public interface Parallel extends Statement {
     /**
      * Returns the value of the '<em><b>Threads</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Thread}.

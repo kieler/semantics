@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,7 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick <em>Tick</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getSignalExpr <em>Signal Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}</li>
  * </ul>
  *
@@ -53,30 +52,56 @@ public interface DelayExpr extends EObject
   void setExpr(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Event</b></em>' containment reference.
+   * Returns the value of the '<em><b>Tick</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Event</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Tick</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Event</em>' containment reference.
-   * @see #setEvent(DelayEvent)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Event()
+   * @return the value of the '<em>Tick</em>' containment reference.
+   * @see #setTick(ValuedObject)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Tick()
    * @model containment="true"
    * @generated
    */
-  DelayEvent getEvent();
+  ValuedObject getTick();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEvent <em>Event</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick <em>Tick</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Event</em>' containment reference.
-   * @see #getEvent()
+   * @param value the new value of the '<em>Tick</em>' containment reference.
+   * @see #getTick()
    * @generated
    */
-  void setEvent(DelayEvent value);
+  void setTick(ValuedObject value);
+
+  /**
+   * Returns the value of the '<em><b>Signal Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signal Expr</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signal Expr</em>' containment reference.
+   * @see #setSignalExpr(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_SignalExpr()
+   * @model containment="true"
+   * @generated
+   */
+  Expression getSignalExpr();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getSignalExpr <em>Signal Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Signal Expr</em>' containment reference.
+   * @see #getSignalExpr()
+   * @generated
+   */
+  void setSignalExpr(Expression value);
 
   /**
    * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.

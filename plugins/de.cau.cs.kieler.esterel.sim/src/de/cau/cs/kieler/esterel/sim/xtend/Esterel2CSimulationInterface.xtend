@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.esterel.sim.xtend
 
-import de.cau.cs.kieler.esterel.kexpressions.Input
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
-import de.cau.cs.kieler.esterel.kexpressions.Output
+import de.cau.cs.kieler.esterel.esterel.Input
+import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl
+import de.cau.cs.kieler.esterel.esterel.Output
 import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.esterel.ValueType
 
 /**
  * Transformation of Esterel code into a c simulation interface wrapper
@@ -37,7 +37,7 @@ class Esterel2CSimulationInterface {
        «esterelHeader()»
 
 	   «/* Generate output functions for each Esterel signal */» 
-	   «'''«FOR intSignalDecl : module.interface.intSignalDecls»
+	   «'''«FOR intSignalDecl : module.intSignalDecls»
 	       		«intSignalDecl.outputFunctions(module.name)»
 	       «ENDFOR»'''»
 
@@ -93,7 +93,7 @@ void setInputs(){
 
 	object = cJSON_Parse(buffer);
 	
-   «'''«FOR intSignalDecl : module.interface.intSignalDecls»
+   «'''«FOR intSignalDecl : module.intSignalDecls»
 	       		«intSignalDecl.callInputs(module.name)»
    «ENDFOR»'''»	
    }'''

@@ -2,17 +2,30 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Suspend;
 
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,6 +35,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SuspendImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SuspendImpl#isWeak <em>Weak</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SuspendImpl#getDelay <em>Delay</em>}</li>
  * </ul>
  *
@@ -29,6 +44,36 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class SuspendImpl extends StatementContainerImpl implements Suspend
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
+  /**
+   * The default value of the '{@link #isWeak() <em>Weak</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isWeak()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean WEAK_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isWeak() <em>Weak</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isWeak()
+   * @generated
+   * @ordered
+   */
+  protected boolean weak = WEAK_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -58,6 +103,43 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.SUSPEND;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.SUSPEND__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isWeak()
+  {
+    return weak;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setWeak(boolean newWeak)
+  {
+    boolean oldWeak = weak;
+    weak = newWeak;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSPEND__WEAK, oldWeak, weak));
   }
 
   /**
@@ -113,11 +195,49 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
    * <!-- end-user-doc -->
    * @generated
    */
+  public Annotation getAnnotation(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void removeAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.SUSPEND__DELAY:
         return basicSetDelay(null, msgs);
     }
@@ -134,6 +254,10 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__ANNOTATIONS:
+        return getAnnotations();
+      case EsterelPackage.SUSPEND__WEAK:
+        return isWeak();
       case EsterelPackage.SUSPEND__DELAY:
         return getDelay();
     }
@@ -145,11 +269,19 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.SUSPEND__WEAK:
+        setWeak((Boolean)newValue);
+        return;
       case EsterelPackage.SUSPEND__DELAY:
         setDelay((DelayExpr)newValue);
         return;
@@ -167,6 +299,12 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
+      case EsterelPackage.SUSPEND__WEAK:
+        setWeak(WEAK_EDEFAULT);
+        return;
       case EsterelPackage.SUSPEND__DELAY:
         setDelay((DelayExpr)null);
         return;
@@ -184,10 +322,83 @@ public class SuspendImpl extends StatementContainerImpl implements Suspend
   {
     switch (featureID)
     {
+      case EsterelPackage.SUSPEND__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
+      case EsterelPackage.SUSPEND__WEAK:
+        return weak != WEAK_EDEFAULT;
       case EsterelPackage.SUSPEND__DELAY:
         return delay != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Annotatable.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case EsterelPackage.SUSPEND__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Annotatable.class)
+    {
+      switch (baseFeatureID)
+      {
+        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.SUSPEND__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (weak: ");
+    result.append(weak);
+    result.append(')');
+    return result.toString();
   }
 
 } //SuspendImpl

@@ -4,9 +4,10 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Exit;
-import de.cau.cs.kieler.esterel.esterel.TrapDecl;
+import de.cau.cs.kieler.esterel.esterel.Expression;
+import de.cau.cs.kieler.esterel.esterel.TrapSignal;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -40,7 +41,7 @@ public class ExitImpl extends StatementImpl implements Exit
    * @generated
    * @ordered
    */
-  protected TrapDecl trap;
+  protected TrapSignal trap;
 
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -78,12 +79,12 @@ public class ExitImpl extends StatementImpl implements Exit
    * <!-- end-user-doc -->
    * @generated
    */
-  public TrapDecl getTrap()
+  public TrapSignal getTrap()
   {
     if (trap != null && trap.eIsProxy())
     {
       InternalEObject oldTrap = (InternalEObject)trap;
-      trap = (TrapDecl)eResolveProxy(oldTrap);
+      trap = (TrapSignal)eResolveProxy(oldTrap);
       if (trap != oldTrap)
       {
         if (eNotificationRequired())
@@ -98,7 +99,7 @@ public class ExitImpl extends StatementImpl implements Exit
    * <!-- end-user-doc -->
    * @generated
    */
-  public TrapDecl basicGetTrap()
+  public TrapSignal basicGetTrap()
   {
     return trap;
   }
@@ -108,9 +109,9 @@ public class ExitImpl extends StatementImpl implements Exit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTrap(TrapDecl newTrap)
+  public void setTrap(TrapSignal newTrap)
   {
-    TrapDecl oldTrap = trap;
+    TrapSignal oldTrap = trap;
     trap = newTrap;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXIT__TRAP, oldTrap, trap));
@@ -210,7 +211,7 @@ public class ExitImpl extends StatementImpl implements Exit
     switch (featureID)
     {
       case EsterelPackage.EXIT__TRAP:
-        setTrap((TrapDecl)newValue);
+        setTrap((TrapSignal)newValue);
         return;
       case EsterelPackage.EXIT__EXPRESSION:
         setExpression((Expression)newValue);
@@ -230,7 +231,7 @@ public class ExitImpl extends StatementImpl implements Exit
     switch (featureID)
     {
       case EsterelPackage.EXIT__TRAP:
-        setTrap((TrapDecl)null);
+        setTrap((TrapSignal)null);
         return;
       case EsterelPackage.EXIT__EXPRESSION:
         setExpression((Expression)null);

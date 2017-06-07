@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.scl.scl.Statement;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,12 +32,12 @@ public interface Exit extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Trap</em>' reference.
-   * @see #setTrap(TrapDecl)
+   * @see #setTrap(TrapSignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExit_Trap()
    * @model
    * @generated
    */
-  TrapDecl getTrap();
+  TrapSignal getTrap();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Exit#getTrap <em>Trap</em>}' reference.
@@ -47,7 +47,7 @@ public interface Exit extends Statement
    * @see #getTrap()
    * @generated
    */
-  void setTrap(TrapDecl value);
+  void setTrap(TrapSignal value);
 
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.

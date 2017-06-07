@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.scl.scl.Statement;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -16,10 +16,10 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getTask <em>Task</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getVars <em>Vars</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getKexpressions <em>Kexpressions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getRetSignal <em>Ret Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getExecCaseList <em>Exec Case List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExec()
@@ -55,30 +55,36 @@ public interface Exec extends StatementContainer, Statement
   void setTask(Task value);
 
   /**
-   * Returns the value of the '<em><b>Body</b></em>' containment reference.
+   * Returns the value of the '<em><b>Vars</b></em>' reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.IVariable}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Body</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Vars</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Body</em>' containment reference.
-   * @see #setBody(ExecBody)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExec_Body()
+   * @return the value of the '<em>Vars</em>' reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExec_Vars()
+   * @model
+   * @generated
+   */
+  EList<IVariable> getVars();
+
+  /**
+   * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Expression}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Kexpressions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Kexpressions</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExec_Kexpressions()
    * @model containment="true"
    * @generated
    */
-  ExecBody getBody();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Exec#getBody <em>Body</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Body</em>' containment reference.
-   * @see #getBody()
-   * @generated
-   */
-  void setBody(ExecBody value);
+  EList<Expression> getKexpressions();
 
   /**
    * Returns the value of the '<em><b>Ret Signal</b></em>' reference.
@@ -121,31 +127,5 @@ public interface Exec extends StatementContainer, Statement
    * @generated
    */
   EList<ExecCase> getExecCaseList();
-
-  /**
-   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Opt End</em>' attribute.
-   * @see #setOptEnd(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExec_OptEnd()
-   * @model
-   * @generated
-   */
-  String getOptEnd();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Exec#getOptEnd <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Opt End</em>' attribute.
-   * @see #getOptEnd()
-   * @generated
-   */
-  void setOptEnd(String value);
 
 } // Exec

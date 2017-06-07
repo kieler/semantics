@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.scl.scl.Statement;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,6 +13,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Suspend#isWeak <em>Weak</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Suspend#getDelay <em>Delay</em>}</li>
  * </ul>
  *
@@ -21,6 +23,32 @@ package de.cau.cs.kieler.esterel.esterel;
  */
 public interface Suspend extends StatementContainer, Statement
 {
+  /**
+   * Returns the value of the '<em><b>Weak</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Weak</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Weak</em>' attribute.
+   * @see #setWeak(boolean)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSuspend_Weak()
+   * @model
+   * @generated
+   */
+  boolean isWeak();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Suspend#isWeak <em>Weak</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Weak</em>' attribute.
+   * @see #isWeak()
+   * @generated
+   */
+  void setWeak(boolean value);
+
   /**
    * Returns the value of the '<em><b>Delay</b></em>' containment reference.
    * <!-- begin-user-doc -->

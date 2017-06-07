@@ -14,14 +14,20 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.antlr.runtime,
  de.cau.cs.kieler.annotations.ui,
  de.cau.cs.kieler.esterel,
- de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.1",
- de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1",
  org.eclipse.xtext.xtext.ui,
- de.cau.cs.kieler.klighd.ui.view
+ de.cau.cs.kieler.klighd.ui.view,
+ de.cau.cs.kieler.scl;bundle-version="0.12.0",
+ de.cau.cs.kieler.scl.ui;bundle-version="0.12.0",
+ de.cau.cs.kieler.kexpressions;bundle-version="0.12.0",
+ de.cau.cs.kieler.kexpressions.ui;bundle-version="0.12.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.esterel.ui.contentassist.antlr,
  de.cau.cs.kieler.esterel.ui.contentassist,
  de.cau.cs.kieler.esterel.ui.quickfix,
- de.cau.cs.kieler.esterel.ui.contentassist.antlr.internal
+ de.cau.cs.kieler.esterel.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.esterel.scest.ui.contentassist,
+ de.cau.cs.kieler.esterel.scest.ui.quickfix,
+ de.cau.cs.kieler.esterel.scest.ui.contentassist.antlr,
+ de.cau.cs.kieler.esterel.scest.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.esterel.ui.internal.EsterelActivator

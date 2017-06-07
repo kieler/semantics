@@ -3,17 +3,23 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Statement;
 import de.cau.cs.kieler.esterel.esterel.StatementContainer;
 
-import org.eclipse.emf.common.notify.Notification;
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +29,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.StatementContainerImpl#getStatement <em>Statement</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.StatementContainerImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @generated
@@ -31,14 +37,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class StatementContainerImpl extends MinimalEObjectImpl.Container implements StatementContainer
 {
   /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStatement()
+   * @see #getStatements()
    * @generated
    * @ordered
    */
-  protected Statement statement;
+  protected EList<Statement> statements;
 
   /**
    * <!-- begin-user-doc -->
@@ -66,47 +72,13 @@ public class StatementContainerImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
+  public EList<Statement> getStatements()
   {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
+    if (statements == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.STATEMENT_CONTAINER__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.STATEMENT_CONTAINER__STATEMENTS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.STATEMENT_CONTAINER__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.STATEMENT_CONTAINER__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.STATEMENT_CONTAINER__STATEMENT, newStatement, newStatement));
+    return statements;
   }
 
   /**
@@ -119,8 +91,8 @@ public class StatementContainerImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        return basicSetStatement(null, msgs);
+      case EsterelPackage.STATEMENT_CONTAINER__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -135,8 +107,8 @@ public class StatementContainerImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        return getStatement();
+      case EsterelPackage.STATEMENT_CONTAINER__STATEMENTS:
+        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -146,13 +118,15 @@ public class StatementContainerImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        setStatement((Statement)newValue);
+      case EsterelPackage.STATEMENT_CONTAINER__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -168,8 +142,8 @@ public class StatementContainerImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        setStatement((Statement)null);
+      case EsterelPackage.STATEMENT_CONTAINER__STATEMENTS:
+        getStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -185,8 +159,8 @@ public class StatementContainerImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        return statement != null;
+      case EsterelPackage.STATEMENT_CONTAINER__STATEMENTS:
+        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

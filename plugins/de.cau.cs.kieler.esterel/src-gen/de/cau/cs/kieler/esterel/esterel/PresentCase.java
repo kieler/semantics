@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,7 +15,9 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getTick <em>Tick</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase()
@@ -22,29 +27,71 @@ package de.cau.cs.kieler.esterel.esterel;
 public interface PresentCase extends StatementContainer
 {
   /**
-   * Returns the value of the '<em><b>Event</b></em>' containment reference.
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Event</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Event</em>' containment reference.
-   * @see #setEvent(PresentEvent)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Event()
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Annotations()
    * @model containment="true"
    * @generated
    */
-  PresentEvent getEvent();
+  EList<Annotation> getAnnotations();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getEvent <em>Event</em>}' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Event</em>' containment reference.
-   * @see #getEvent()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Expression()
+   * @model containment="true"
    * @generated
    */
-  void setEvent(PresentEvent value);
+  Expression getExpression();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getExpression <em>Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
+   * @generated
+   */
+  void setExpression(Expression value);
+
+  /**
+   * Returns the value of the '<em><b>Tick</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Tick</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Tick</em>' containment reference.
+   * @see #setTick(ValuedObject)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Tick()
+   * @model containment="true"
+   * @generated
+   */
+  ValuedObject getTick();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getTick <em>Tick</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tick</em>' containment reference.
+   * @see #getTick()
+   * @generated
+   */
+  void setTick(ValuedObject value);
 
 } // PresentCase

@@ -2,7 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.annotations.Annotation;
+
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -15,8 +19,10 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenPart <em>Then Part</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenAnnotations <em>Then Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenStatements <em>Then Statements</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf()
@@ -25,6 +31,22 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ElsIf extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_Annotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getAnnotations();
+
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
@@ -52,29 +74,35 @@ public interface ElsIf extends EObject
   void setExpr(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Then Part</b></em>' containment reference.
+   * Returns the value of the '<em><b>Then Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Then Part</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Then Annotations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Then Part</em>' containment reference.
-   * @see #setThenPart(ThenPart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_ThenPart()
+   * @return the value of the '<em>Then Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_ThenAnnotations()
    * @model containment="true"
    * @generated
    */
-  ThenPart getThenPart();
+  EList<Annotation> getThenAnnotations();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenPart <em>Then Part</em>}' containment reference.
+   * Returns the value of the '<em><b>Then Statements</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Then Statements</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Then Part</em>' containment reference.
-   * @see #getThenPart()
+   * @return the value of the '<em>Then Statements</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_ThenStatements()
+   * @model containment="true"
    * @generated
    */
-  void setThenPart(ThenPart value);
+  EList<Statement> getThenStatements();
 
 } // ElsIf

@@ -2,17 +2,30 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.EveryDo;
 
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,14 +35,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class EveryDoImpl extends StatementContainerImpl implements EveryDo
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -39,26 +62,6 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
    * @ordered
    */
   protected DelayExpr delay;
-
-  /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String OPT_END_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
-  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -79,6 +82,20 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.EVERY_DO;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.EVERY_DO__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -134,9 +151,11 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOptEnd()
+  public Annotation getAnnotation(String name)
   {
-    return optEnd;
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -144,12 +163,23 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOptEnd(String newOptEnd)
+  public EList<Annotation> getAllAnnotations(String name)
   {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EVERY_DO__OPT_END, oldOptEnd, optEnd));
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void removeAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -162,6 +192,8 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
   {
     switch (featureID)
     {
+      case EsterelPackage.EVERY_DO__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.EVERY_DO__DELAY:
         return basicSetDelay(null, msgs);
     }
@@ -178,10 +210,10 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
   {
     switch (featureID)
     {
+      case EsterelPackage.EVERY_DO__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.EVERY_DO__DELAY:
         return getDelay();
-      case EsterelPackage.EVERY_DO__OPT_END:
-        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -191,16 +223,18 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case EsterelPackage.EVERY_DO__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.EVERY_DO__DELAY:
         setDelay((DelayExpr)newValue);
-        return;
-      case EsterelPackage.EVERY_DO__OPT_END:
-        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -216,11 +250,11 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
   {
     switch (featureID)
     {
+      case EsterelPackage.EVERY_DO__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.EVERY_DO__DELAY:
         setDelay((DelayExpr)null);
-        return;
-      case EsterelPackage.EVERY_DO__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -236,10 +270,10 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
   {
     switch (featureID)
     {
+      case EsterelPackage.EVERY_DO__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.EVERY_DO__DELAY:
         return delay != null;
-      case EsterelPackage.EVERY_DO__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
   }
@@ -250,15 +284,50 @@ public class EveryDoImpl extends StatementContainerImpl implements EveryDo
    * @generated
    */
   @Override
-  public String toString()
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
-    if (eIsProxy()) return super.toString();
+    if (baseClass == Annotatable.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case EsterelPackage.EVERY_DO__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Annotatable.class)
+    {
+      switch (baseFeatureID)
+      {
+        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.EVERY_DO__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Statement.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //EveryDoImpl

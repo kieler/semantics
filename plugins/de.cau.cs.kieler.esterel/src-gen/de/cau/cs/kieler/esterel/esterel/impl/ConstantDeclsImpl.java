@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ConstantDeclsImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ConstantDeclsImpl#getConstants <em>Constants</em>}</li>
  * </ul>
  *
@@ -35,6 +38,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements ConstantDecls
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -71,6 +84,20 @@ public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements C
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.CONSTANT_DECLS__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<OneTypeConstantDecls> getConstants()
   {
     if (constants == null)
@@ -90,6 +117,8 @@ public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
         return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
     }
@@ -106,6 +135,8 @@ public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
         return getConstants();
     }
@@ -123,6 +154,10 @@ public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
         getConstants().clear();
         getConstants().addAll((Collection<? extends OneTypeConstantDecls>)newValue);
@@ -141,6 +176,9 @@ public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
         getConstants().clear();
         return;
@@ -158,6 +196,8 @@ public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements C
   {
     switch (featureID)
     {
+      case EsterelPackage.CONSTANT_DECLS__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
         return constants != null && !constants.isEmpty();
     }

@@ -4,16 +4,25 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.ModuleRenaming;
-import de.cau.cs.kieler.esterel.esterel.RenamingList;
+import de.cau.cs.kieler.esterel.esterel.Renaming;
 import de.cau.cs.kieler.esterel.esterel.Run;
+
+import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,14 +51,14 @@ public class RunImpl extends StatementImpl implements Run
   protected ModuleRenaming module;
 
   /**
-   * The cached value of the '{@link #getList() <em>List</em>}' containment reference.
+   * The cached value of the '{@link #getList() <em>List</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getList()
    * @generated
    * @ordered
    */
-  protected RenamingList list;
+  protected EList<Renaming> list;
 
   /**
    * <!-- begin-user-doc -->
@@ -125,47 +134,13 @@ public class RunImpl extends StatementImpl implements Run
    * <!-- end-user-doc -->
    * @generated
    */
-  public RenamingList getList()
+  public EList<Renaming> getList()
   {
+    if (list == null)
+    {
+      list = new EObjectContainmentEList<Renaming>(Renaming.class, this, EsterelPackage.RUN__LIST);
+    }
     return list;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetList(RenamingList newList, NotificationChain msgs)
-  {
-    RenamingList oldList = list;
-    list = newList;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__LIST, oldList, newList);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setList(RenamingList newList)
-  {
-    if (newList != list)
-    {
-      NotificationChain msgs = null;
-      if (list != null)
-        msgs = ((InternalEObject)list).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__LIST, null, msgs);
-      if (newList != null)
-        msgs = ((InternalEObject)newList).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__LIST, null, msgs);
-      msgs = basicSetList(newList, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__LIST, newList, newList));
   }
 
   /**
@@ -181,7 +156,7 @@ public class RunImpl extends StatementImpl implements Run
       case EsterelPackage.RUN__MODULE:
         return basicSetModule(null, msgs);
       case EsterelPackage.RUN__LIST:
-        return basicSetList(null, msgs);
+        return ((InternalEList<?>)getList()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -209,6 +184,7 @@ public class RunImpl extends StatementImpl implements Run
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -218,7 +194,8 @@ public class RunImpl extends StatementImpl implements Run
         setModule((ModuleRenaming)newValue);
         return;
       case EsterelPackage.RUN__LIST:
-        setList((RenamingList)newValue);
+        getList().clear();
+        getList().addAll((Collection<? extends Renaming>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -238,7 +215,7 @@ public class RunImpl extends StatementImpl implements Run
         setModule((ModuleRenaming)null);
         return;
       case EsterelPackage.RUN__LIST:
-        setList((RenamingList)null);
+        getList().clear();
         return;
     }
     super.eUnset(featureID);
@@ -257,7 +234,7 @@ public class RunImpl extends StatementImpl implements Run
       case EsterelPackage.RUN__MODULE:
         return module != null;
       case EsterelPackage.RUN__LIST:
-        return list != null;
+        return list != null && !list.isEmpty();
     }
     return super.eIsSet(featureID);
   }

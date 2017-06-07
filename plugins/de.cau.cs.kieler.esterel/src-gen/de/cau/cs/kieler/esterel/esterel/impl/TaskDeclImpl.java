@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Task;
 import de.cau.cs.kieler.esterel.esterel.TaskDecl;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TaskDeclImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TaskDeclImpl#getTasks <em>Tasks</em>}</li>
  * </ul>
  *
@@ -35,6 +38,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDecl
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -71,6 +84,20 @@ public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDe
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TASK_DECL__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Task> getTasks()
   {
     if (tasks == null)
@@ -90,6 +117,8 @@ public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TASK_DECL__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.TASK_DECL__TASKS:
         return ((InternalEList<?>)getTasks()).basicRemove(otherEnd, msgs);
     }
@@ -106,6 +135,8 @@ public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TASK_DECL__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.TASK_DECL__TASKS:
         return getTasks();
     }
@@ -123,6 +154,10 @@ public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TASK_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.TASK_DECL__TASKS:
         getTasks().clear();
         getTasks().addAll((Collection<? extends Task>)newValue);
@@ -141,6 +176,9 @@ public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TASK_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.TASK_DECL__TASKS:
         getTasks().clear();
         return;
@@ -158,6 +196,8 @@ public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDe
   {
     switch (featureID)
     {
+      case EsterelPackage.TASK_DECL__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.TASK_DECL__TASKS:
         return tasks != null && !tasks.isEmpty();
     }

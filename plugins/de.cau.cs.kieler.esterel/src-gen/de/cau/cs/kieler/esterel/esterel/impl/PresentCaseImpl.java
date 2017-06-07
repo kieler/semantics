@@ -2,17 +2,27 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
-import de.cau.cs.kieler.esterel.esterel.PresentEvent;
+import de.cau.cs.kieler.esterel.esterel.ValuedObject;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +32,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getTick <em>Tick</em>}</li>
  * </ul>
  *
  * @generated
@@ -30,14 +42,34 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class PresentCaseImpl extends StatementContainerImpl implements PresentCase
 {
   /**
-   * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference.
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEvent()
+   * @see #getAnnotations()
    * @generated
    * @ordered
    */
-  protected PresentEvent event;
+  protected EList<Annotation> annotations;
+
+  /**
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpression()
+   * @generated
+   * @ordered
+   */
+  protected Expression expression;
+
+  /**
+   * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTick()
+   * @generated
+   * @ordered
+   */
+  protected ValuedObject tick;
 
   /**
    * <!-- begin-user-doc -->
@@ -65,9 +97,13 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public PresentEvent getEvent()
+  public EList<Annotation> getAnnotations()
   {
-    return event;
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT_CASE__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -75,13 +111,23 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetEvent(PresentEvent newEvent, NotificationChain msgs)
+  public Expression getExpression()
   {
-    PresentEvent oldEvent = event;
-    event = newEvent;
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
+  {
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, oldEvent, newEvent);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -92,20 +138,68 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEvent(PresentEvent newEvent)
+  public void setExpression(Expression newExpression)
   {
-    if (newEvent != event)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (event != null)
-        msgs = ((InternalEObject)event).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
-      if (newEvent != null)
-        msgs = ((InternalEObject)newEvent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
-      msgs = basicSetEvent(newEvent, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, newEvent, newEvent));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EXPRESSION, newExpression, newExpression));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ValuedObject getTick()
+  {
+    return tick;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetTick(ValuedObject newTick, NotificationChain msgs)
+  {
+    ValuedObject oldTick = tick;
+    tick = newTick;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__TICK, oldTick, newTick);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTick(ValuedObject newTick)
+  {
+    if (newTick != tick)
+    {
+      NotificationChain msgs = null;
+      if (tick != null)
+        msgs = ((InternalEObject)tick).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__TICK, null, msgs);
+      if (newTick != null)
+        msgs = ((InternalEObject)newTick).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__TICK, null, msgs);
+      msgs = basicSetTick(newTick, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__TICK, newTick, newTick));
   }
 
   /**
@@ -118,8 +212,12 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return basicSetEvent(null, msgs);
+      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        return basicSetExpression(null, msgs);
+      case EsterelPackage.PRESENT_CASE__TICK:
+        return basicSetTick(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,8 +232,12 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return getEvent();
+      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
+        return getAnnotations();
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        return getExpression();
+      case EsterelPackage.PRESENT_CASE__TICK:
+        return getTick();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -145,13 +247,21 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        setEvent((PresentEvent)newValue);
+      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        setExpression((Expression)newValue);
+        return;
+      case EsterelPackage.PRESENT_CASE__TICK:
+        setTick((ValuedObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -167,8 +277,14 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        setEvent((PresentEvent)null);
+      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        setExpression((Expression)null);
+        return;
+      case EsterelPackage.PRESENT_CASE__TICK:
+        setTick((ValuedObject)null);
         return;
     }
     super.eUnset(featureID);
@@ -184,8 +300,12 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return event != null;
+      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
+      case EsterelPackage.PRESENT_CASE__EXPRESSION:
+        return expression != null;
+      case EsterelPackage.PRESENT_CASE__TICK:
+        return tick != null;
     }
     return super.eIsSet(featureID);
   }

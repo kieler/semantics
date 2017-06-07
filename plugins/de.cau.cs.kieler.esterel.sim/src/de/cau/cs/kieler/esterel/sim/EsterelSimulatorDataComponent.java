@@ -56,10 +56,10 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.esterel.kexpressions.Input;
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.esterel.kexpressions.Output;
-import de.cau.cs.kieler.esterel.kexpressions.Signal;
+import de.cau.cs.kieler.esterel.esterel.Input;
+import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.esterel.Output;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
@@ -938,16 +938,15 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
                 if (myModel.getModules() != null && myModel.getModules().size() > 0) {
                     Module module = myModel.getModules().get(0);
 
-                    if (module.getInterface() != null
-                            && module.getInterface().getIntSignalDecls() != null) {
-                        for (InterfaceSignalDecl sig : module.getInterface().getIntSignalDecls()) {
+                    if (module.getIntSignalDecls() != null) {
+                        for (InterfaceSignalDecl sig : module.getIntSignalDecls()) {
                             if (sig instanceof Input) {
-                                for (Signal s : sig.getSignals()) {
+                                for (ISignal s : sig.getSignals()) {
                                     res.accumulate(s.getName(), JSONSignalValues.newValue(false));
                                 }
                             }
                             if (sig instanceof Output) {
-                                for (Signal signal : sig.getSignals()) {
+                                for (ISignal signal : sig.getSignals()) {
                                     String signalName = signal.getName();
                                     if (!signalName
                                             .startsWith(EsterelSimPlugin.AUXILIARY_VARIABLE_TAG)) {

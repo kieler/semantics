@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.esterel.eso;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -15,9 +16,9 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.esterel.kexpressions.Input;
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.esterel.kexpressions.Signal;
+import de.cau.cs.kieler.esterel.esterel.Input;
+import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 
 /**
@@ -101,8 +102,8 @@ public class EsterelModelFileHandler extends AbstractConvertModelHandler {
             builder.append("! reset;\n");
             for (int tick = 0; tick < ticks; tick++) {
 
-                for (InterfaceSignalDecl declaration : module.getInterface().getIntSignalDecls()) {
-                    for (Signal signal : declaration.getSignals()) {
+                for (InterfaceSignalDecl declaration : module.getIntSignalDecls()) {
+                    for (ISignal signal : declaration.getSignals()) {
                         if (declaration instanceof Input) {
                             String type = signal.getType().getLiteral();
                             

@@ -12,38 +12,38 @@ package de.cau.cs.kieler.scl.scl;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Goto#getTargetLabel <em>Target Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Goto#getTarget <em>Target</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getGoto()
  * @model
  * @generated
  */
-public interface Goto extends Instruction {
+public interface Goto extends Statement {
     /**
-     * Returns the value of the '<em><b>Target Label</b></em>' attribute.
+     * Returns the value of the '<em><b>Target</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Target Label</em>' attribute isn't clear,
+     * If the meaning of the '<em>Target</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Target Label</em>' attribute.
-     * @see #setTargetLabel(String)
-     * @see de.cau.cs.kieler.scl.scl.SclPackage#getGoto_TargetLabel()
-     * @model
+     * @return the value of the '<em>Target</em>' reference.
+     * @see #setTarget(Label)
+     * @see de.cau.cs.kieler.scl.scl.SclPackage#getGoto_Target()
+     * @model required="true"
      * @generated
      */
-    String getTargetLabel();
+    Label getTarget();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.Goto#getTargetLabel <em>Target Label</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.Goto#getTarget <em>Target</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Target Label</em>' attribute.
-     * @see #getTargetLabel()
+     * @param value the new value of the '<em>Target</em>' reference.
+     * @see #getTarget()
      * @generated
      */
-    void setTargetLabel(String value);
+    void setTarget(Label value);
 
 } // Goto

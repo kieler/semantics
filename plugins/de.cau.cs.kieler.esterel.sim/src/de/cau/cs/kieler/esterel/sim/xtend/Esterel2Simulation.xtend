@@ -15,8 +15,7 @@ package de.cau.cs.kieler.esterel.sim.xtend
 
 import de.cau.cs.kieler.esterel.sim.EsterelSimPlugin
 
-import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.esterel.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.esterel.ValueType
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.Do
@@ -26,26 +25,25 @@ import de.cau.cs.kieler.esterel.esterel.EveryDo
 import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.esterel.esterel.Halt
 import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.LocalSignalList
+import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.esterel.ModuleBody
 import de.cau.cs.kieler.esterel.esterel.Nothing
-import de.cau.cs.kieler.esterel.esterel.Parallel
-import de.cau.cs.kieler.esterel.esterel.Pause
+import de.cau.cs.kieler.esterel.esterel.EsterelParallel
+import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Repeat
 import de.cau.cs.kieler.esterel.esterel.Run
-import de.cau.cs.kieler.esterel.esterel.Sequence
-import de.cau.cs.kieler.esterel.esterel.Statement
+import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.esterel.esterel.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.esterel.esterel.Block
 import de.cau.cs.kieler.esterel.esterel.Trap
-import de.cau.cs.kieler.esterel.esterel.UnEmit
+import de.cau.cs.kieler.esterel.scest.scest.UnEmit
+import de.cau.cs.kieler.esterel.esterel.EsterelThread
 
 /**
  * Transformation of Esterel code into Esterel code that is 
@@ -87,10 +85,10 @@ class Esterel2Simulation {
         val targetMainmoduleStatementsCopy = targetMainmoduleStatements.toList;
 
         // Ensure an interface declaration
-        if (targetMainmodule.interface == null) {
-            val moduleInterface = EsterelFactory::eINSTANCE.createModuleInterface();
-            targetMainmodule.setInterface(moduleInterface);
-        }
+//        if (targetMainmodule.interface == null) {
+//            val moduleInterface = EsterelFactory::eINSTANCE.createModuleInterface();
+//            targetMainmodule.setInterface(moduleInterface);
+//        }
 
         // For every statement in the Esterel program do the transformation
         // Iterate over a copy of the list	
@@ -123,90 +121,102 @@ class Esterel2Simulation {
             (statement instanceof Loop) || (statement instanceof Nothing) || (statement instanceof Pause) ||
             (statement instanceof Present) || (statement instanceof Repeat) || (statement instanceof Run) ||
             (statement instanceof Suspend) || (statement instanceof Sustain) || (statement instanceof Block) 
-// Other statements that currently are not visualized in an Esterel debug session		   
-//		   ||(statement instanceof ProcCall)
-//		   ||(statement instanceof LoopDelay)
-//		   ||(statement instanceof LocalSignalDecl)
-//		   ||(statement instanceof Assignment)
-//         || (statement instanceof Trap)	   ||(statement instanceof LocalVariable)
-//		   ||(statement instanceof Exec)
+// Other statements that currently are not visualized in an Esterel debug session          
+//         ||(statement instanceof ProcCall)
+//         ||(statement instanceof LoopDelay)
+//         ||(statement instanceof LocalSignalDecl)
+//         ||(statement instanceof Assignment)
+//         || (statement instanceof Trap)      ||(statement instanceof LocalVariable)
+//         ||(statement instanceof Exec)
         )) {
 
-            var parallelStatement = EsterelFactory::eINSTANCE.createParallel()
-            var sequenceStatement1 = EsterelFactory::eINSTANCE.createSequence()
-            var sequenceStatement2 = EsterelFactory::eINSTANCE.createSequence()
+            var parallelStatement = EsterelFactory::eINSTANCE.createEsterelParallel()
+            var thread1 = EsterelFactory::eINSTANCE.createEsterelThread()
+            var thread2 = EsterelFactory::eINSTANCE.createEsterelThread()
+//            var sequenceStatement1 = EsterelFactory::eINSTANCE.createSequence()
+//            var sequenceStatement2 = EsterelFactory::eINSTANCE.createSequence()
             var blockStatement = EsterelFactory::eINSTANCE.createBlock()
             var blockStatement2 = EsterelFactory::eINSTANCE.createBlock()
 
             // abort signal
             var abortSignalDecl = EsterelFactory::eINSTANCE.createLocalSignalDecl()
-            var abortSignalLink = EsterelFactory::eINSTANCE.createLocalSignal()
-            var abortISignal = KExpressionsFactory::eINSTANCE.createISignal();
+//            var abortSignalLink = EsterelFactory::eINSTANCE.createLocalSignal()
+            var abortISignal = EsterelFactory::eINSTANCE.createISignal();
             var abortEmitStatement = EsterelFactory::eINSTANCE.createEmit();
 
             // auxiliary signal
             // Must be linked in Output
-            var auxiliarySignalISignal = KExpressionsFactory::eINSTANCE.createISignal();
+            var auxiliarySignalISignal = EsterelFactory::eINSTANCE.createISignal();
             // Must be linked in ModuleBody->interface
-            var auxiliarySignalOutput = KExpressionsFactory::eINSTANCE.createOutput();
+            var auxiliarySignalOutput = EsterelFactory::eINSTANCE.createOutput();
             var auxiliaryEmitStatement = EsterelFactory::eINSTANCE.createEmit();
             var auxiliarySustainStatement = EsterelFactory::eINSTANCE.createSustain();
 
             var abortStatement = EsterelFactory::eINSTANCE.createAbort();
-            var abortInstanceStatement = EsterelFactory::eINSTANCE.createAbortInstance();
+//            var abortInstanceStatement = EsterelFactory::eINSTANCE.createAbortInstance();
             var abortDelay = EsterelFactory::eINSTANCE.createDelayExpr();
-            var abortDelayEvent = EsterelFactory::eINSTANCE.createDelayEvent();
-            var abortValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference();
+//            var abortDelayEvent = EsterelFactory::eINSTANCE.createDelayEvent();
+            var abortValuedObjectReference = EsterelFactory::eINSTANCE.createValuedObjectReference();
 
             // Setup the abortSignal using an unique name
             abortISignal.setName("AP" + statement.hashCode.toString().replace("-", "M"));
-            abortISignal.setIsInput(false);
-            abortISignal.setIsOutput(false);
+//            abortISignal.setIsInput(false);
+//            abortISignal.setIsOutput(false);
             abortISignal.setType(ValueType::PURE);
-            abortSignalLink.signal.add(abortISignal);
-            abortSignalDecl.setSignalList(abortSignalLink as LocalSignalList);
+//            abortSignalLink.signal.add(abortISignal);
+//            abortSignalDecl.setSignalList(abortSignalLink as LocalSignalList);
             // Set the abortSignal for emission (to abort parallel sustain)
             abortEmitStatement.setSignal(abortISignal);
 
             // Setup the auxiliarySignal as an OUTPUT to the module
             auxiliarySignalISignal.setName(UID);
-            auxiliarySignalISignal.setIsInput(false);
-            auxiliarySignalISignal.setIsOutput(false);
+//            auxiliarySignalISignal.setIsInput(false);
+//            auxiliarySignalISignal.setIsOutput(false);
             auxiliarySignalISignal.setType(ValueType::PURE);
             // Add auxiliarySignal to module
             auxiliarySignalOutput.signals.add(auxiliarySignalISignal);
-            mainmodule.interface.intSignalDecls.add(auxiliarySignalOutput);
+            mainmodule.getIntSignalDecls.add(auxiliarySignalOutput);
             // Set the auxliiarySignal for emission and for sustain
             auxiliaryEmitStatement.setSignal(auxiliarySignalISignal);
             auxiliarySustainStatement.setSignal(auxiliarySignalISignal);
 
             // Build immediate abort
-            abortStatement.setStatement(auxiliarySustainStatement);
+            abortStatement.statements.add(auxiliarySustainStatement);
             abortValuedObjectReference.setValuedObject(abortISignal);
-            abortDelayEvent.setExpr(abortValuedObjectReference);
-            abortDelay.setEvent(abortDelayEvent);
+//            abortDelayEvent.setExpr(abortValuedObjectReference);
+            abortDelay.setSignalExpr(abortValuedObjectReference);
+            abortDelay.setSignalExpr(abortValuedObjectReference);
+//            abortDelay.setEvent(abortDelayEvent);
             abortDelay.setIsImmediate(true);
-            abortInstanceStatement.setDelay(abortDelay)
-            abortStatement.setBody(abortInstanceStatement);
+//            abortInstanceStatement.setDelay(abortDelay)
+            abortStatement.setDelay(abortDelay);
 
             // Sequence of sustain statement
-            sequenceStatement2.list.add(auxiliaryEmitStatement)
-            sequenceStatement2.list.add(abortStatement)
+//            sequenceStatement2.list.add(auxiliaryEmitStatement)
+//            sequenceStatement2.list.add(abortStatement)
 
             // Sequence of original statement followed by the emit of the strong abort signal
-            sequenceStatement1.list.add(statement);
-            sequenceStatement1.list.add(abortEmitStatement);
+//            sequenceStatement1.list.add(statement);
+//            sequenceStatement1.list.add(abortEmitStatement);
 
             // After this statement will have a new EContainer (wrapperStatement)
-            parallelStatement.list.add(sequenceStatement1)
-            parallelStatement.list.add(sequenceStatement2)
-            blockStatement.addStatement(parallelStatement)
+            parallelStatement.threads.add(thread1)
+            parallelStatement.threads.add(thread2)
+            thread1.getStatements.add(statement)
+            thread1.getStatements.add(abortEmitStatement)
+            thread2.getStatements.add(auxiliaryEmitStatement)
+            thread2.getStatements.add(abortStatement)
+//            parallelStatement.threads.statements.add(sequenceStatement1)
+//            parallelStatement.list.add(sequenceStatement2)
+//            blockStatement.addStatement(parallelStatement)
+            blockStatement.getStatements.add(parallelStatement)
 
-            abortSignalDecl.addStatement(blockStatement)
-
+//            abortSignalDecl.addStatement(blockStatement)
+            abortSignalDecl.getStatements.add(blockStatement)
             // Encapsulate inner [ || ] in local abort signal declaration
             // Add outer [] to this
-            blockStatement2.addStatement(abortSignalDecl)
+//            blockStatement2.addStatement(abortSignalDecl)
+            blockStatement2.getStatements.add(abortSignalDecl)
             // Add it to initial container
             container.addStatement(blockStatement2);
         } else {
@@ -220,30 +230,29 @@ class Esterel2Simulation {
 
     // -------------------------------------------------------------------------
     // Multiple statements
-    def dispatch void addStatement(ModuleBody parent, Statement addStatement) {
+    def dispatch void addStatement(Module parent, Statement addStatement) {
         // Replace current statements with addStatement
         // parent.statements.clear();
         System::out.println("ADD MODULEBODY " + parent.class.name + " <- " + addStatement.class.name)
         parent.statements.add(addStatement);
     }
 
-    def dispatch void addStatement(Parallel parent, Statement addStatement) {
+    def dispatch void addStatement(EsterelThread parent, Statement addStatement) {
         System::out.println("ADD PARALLEL  " + parent.class.name + " <- " + addStatement.class.name)
-        parent.list.add(addStatement);
+        parent.statements.add(addStatement);
     }
 
-    def dispatch void addStatement(Sequence parent, Statement addStatement) {
-        System::out.println("ADD SEQUENCE  " + parent.class.name + " <- " + addStatement.class.name)
-        parent.list.add(addStatement);
-    }
+//    def dispatch void addStatement(Sequence parent, Statement addStatement) {
+//        System::out.println("ADD SEQUENCE  " + parent.class.name + " <- " + addStatement.class.name)
+//        parent.list.add(addStatement);
+//    }
 
     // -------------------------------------------------------------------------
     // Single statement
     def dispatch void addStatement(StatementContainer parent, Statement addStatement) {
         System::out.println("ADD SIMPLE   " + parent.class.name + " <- " + addStatement.class.name)
-        parent.setStatement(addStatement);
+        parent.statements.add(addStatement);
     }
-
 // -------------------------------------------------------------------------
 }
 

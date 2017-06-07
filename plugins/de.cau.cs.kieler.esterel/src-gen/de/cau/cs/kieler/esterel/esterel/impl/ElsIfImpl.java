@@ -2,20 +2,29 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.ElsIf;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.ThenPart;
+import de.cau.cs.kieler.esterel.esterel.Expression;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,14 +34,26 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenPart <em>Then Part</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenAnnotations <em>Then Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenStatements <em>Then Statements</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -44,14 +65,24 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   protected Expression expr;
 
   /**
-   * The cached value of the '{@link #getThenPart() <em>Then Part</em>}' containment reference.
+   * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getThenPart()
+   * @see #getThenAnnotations()
    * @generated
    * @ordered
    */
-  protected ThenPart thenPart;
+  protected EList<Annotation> thenAnnotations;
+
+  /**
+   * The cached value of the '{@link #getThenStatements() <em>Then Statements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getThenStatements()
+   * @generated
+   * @ordered
+   */
+  protected EList<Statement> thenStatements;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,6 +103,20 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.ELS_IF;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.ELS_IF__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -127,9 +172,13 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public ThenPart getThenPart()
+  public EList<Annotation> getThenAnnotations()
   {
-    return thenPart;
+    if (thenAnnotations == null)
+    {
+      thenAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.ELS_IF__THEN_ANNOTATIONS);
+    }
+    return thenAnnotations;
   }
 
   /**
@@ -137,37 +186,13 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetThenPart(ThenPart newThenPart, NotificationChain msgs)
+  public EList<Statement> getThenStatements()
   {
-    ThenPart oldThenPart = thenPart;
-    thenPart = newThenPart;
-    if (eNotificationRequired())
+    if (thenStatements == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__THEN_PART, oldThenPart, newThenPart);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      thenStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.ELS_IF__THEN_STATEMENTS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setThenPart(ThenPart newThenPart)
-  {
-    if (newThenPart != thenPart)
-    {
-      NotificationChain msgs = null;
-      if (thenPart != null)
-        msgs = ((InternalEObject)thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__THEN_PART, null, msgs);
-      if (newThenPart != null)
-        msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__THEN_PART, null, msgs);
-      msgs = basicSetThenPart(newThenPart, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__THEN_PART, newThenPart, newThenPart));
+    return thenStatements;
   }
 
   /**
@@ -180,10 +205,14 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   {
     switch (featureID)
     {
+      case EsterelPackage.ELS_IF__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.ELS_IF__EXPR:
         return basicSetExpr(null, msgs);
-      case EsterelPackage.ELS_IF__THEN_PART:
-        return basicSetThenPart(null, msgs);
+      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
+        return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.ELS_IF__THEN_STATEMENTS:
+        return ((InternalEList<?>)getThenStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -198,10 +227,14 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   {
     switch (featureID)
     {
+      case EsterelPackage.ELS_IF__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.ELS_IF__EXPR:
         return getExpr();
-      case EsterelPackage.ELS_IF__THEN_PART:
-        return getThenPart();
+      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
+        return getThenAnnotations();
+      case EsterelPackage.ELS_IF__THEN_STATEMENTS:
+        return getThenStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -211,16 +244,26 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case EsterelPackage.ELS_IF__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.ELS_IF__EXPR:
         setExpr((Expression)newValue);
         return;
-      case EsterelPackage.ELS_IF__THEN_PART:
-        setThenPart((ThenPart)newValue);
+      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
+        getThenAnnotations().clear();
+        getThenAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.ELS_IF__THEN_STATEMENTS:
+        getThenStatements().clear();
+        getThenStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,11 +279,17 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   {
     switch (featureID)
     {
+      case EsterelPackage.ELS_IF__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.ELS_IF__EXPR:
         setExpr((Expression)null);
         return;
-      case EsterelPackage.ELS_IF__THEN_PART:
-        setThenPart((ThenPart)null);
+      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
+        getThenAnnotations().clear();
+        return;
+      case EsterelPackage.ELS_IF__THEN_STATEMENTS:
+        getThenStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -256,10 +305,14 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   {
     switch (featureID)
     {
+      case EsterelPackage.ELS_IF__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.ELS_IF__EXPR:
         return expr != null;
-      case EsterelPackage.ELS_IF__THEN_PART:
-        return thenPart != null;
+      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
+        return thenAnnotations != null && !thenAnnotations.isEmpty();
+      case EsterelPackage.ELS_IF__THEN_STATEMENTS:
+        return thenStatements != null && !thenStatements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

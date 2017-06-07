@@ -2,9 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import org.eclipse.emf.common.util.EList;
-
-import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 
 /**
@@ -17,15 +14,14 @@ import de.cau.cs.kieler.kexpressions.Expression;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getDeclarations <em>Declarations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getElseStatements <em>Else Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getElse <em>Else</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional()
  * @model
  * @generated
  */
-public interface Conditional extends StatementSequence, Instruction {
+public interface Conditional extends Scope, Statement {
     /**
      * Returns the value of the '<em><b>Expression</b></em>' containment reference.
      * <!-- begin-user-doc -->
@@ -53,35 +49,29 @@ public interface Conditional extends StatementSequence, Instruction {
     void setExpression(Expression value);
 
     /**
-     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
+     * Returns the value of the '<em><b>Else</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Else</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional_Declarations()
+     * @return the value of the '<em>Else</em>' containment reference.
+     * @see #setElse(Scope)
+     * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional_Else()
      * @model containment="true"
      * @generated
      */
-    EList<Declaration> getDeclarations();
+    Scope getElse();
 
     /**
-     * Returns the value of the '<em><b>Else Statements</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
+     * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.Conditional#getElse <em>Else</em>}' containment reference.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Else Statements</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Else Statements</em>' containment reference list.
-     * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional_ElseStatements()
-     * @model containment="true"
+     * @param value the new value of the '<em>Else</em>' containment reference.
+     * @see #getElse()
      * @generated
      */
-    EList<Statement> getElseStatements();
+    void setElse(Scope value);
 
 } // Conditional

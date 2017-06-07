@@ -43,10 +43,10 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.esterel.kexpressions.Input;
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.esterel.kexpressions.Output;
-import de.cau.cs.kieler.esterel.kexpressions.Signal;
+import de.cau.cs.kieler.esterel.esterel.Input;
+import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.esterel.Output;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -336,16 +336,15 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                 if (program.getModules() != null && program.getModules().size() > 0) {
                     Module module = program.getModules().get(0);
 
-                    if (module.getInterface() != null
-                            && module.getInterface().getIntSignalDecls() != null) {
-                        for (InterfaceSignalDecl sig : module.getInterface().getIntSignalDecls()) {
+                    if (module.getIntSignalDecls() != null) {
+                        for (InterfaceSignalDecl sig : module.getIntSignalDecls()) {
                             if (sig instanceof Input) {
-                                for (Signal s : sig.getSignals()) {
+                                for (ISignal s : sig.getSignals()) {
                                     res.accumulate(s.getName(), JSONSignalValues.newValue(false));
                                 }
                             }
                             if (sig instanceof Output) {
-                                for (Signal signal : sig.getSignals()) {
+                                for (ISignal signal : sig.getSignals()) {
                                     String signalName = signal.getName();
                                     if (!signalName
                                             .startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {

@@ -2,7 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.annotations.Annotation;
+
+import de.cau.cs.kieler.scl.scl.Statement;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -16,10 +18,11 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart <em>Then Part</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsif <em>Elsif</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart <em>Else Part</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getOptEnd <em>Opt End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenAnnotations <em>Then Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenStatements <em>Then Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseif <em>Elseif</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseAnnotations <em>Else Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest()
@@ -55,97 +58,83 @@ public interface IfTest extends Statement
   void setExpr(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Then Part</b></em>' containment reference.
+   * Returns the value of the '<em><b>Then Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Then Part</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Then Annotations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Then Part</em>' containment reference.
-   * @see #setThenPart(ThenPart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ThenPart()
+   * @return the value of the '<em>Then Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ThenAnnotations()
    * @model containment="true"
    * @generated
    */
-  ThenPart getThenPart();
+  EList<Annotation> getThenAnnotations();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart <em>Then Part</em>}' containment reference.
+   * Returns the value of the '<em><b>Then Statements</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Then Statements</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Then Part</em>' containment reference.
-   * @see #getThenPart()
+   * @return the value of the '<em>Then Statements</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ThenStatements()
+   * @model containment="true"
    * @generated
    */
-  void setThenPart(ThenPart value);
+  EList<Statement> getThenStatements();
 
   /**
-   * Returns the value of the '<em><b>Elsif</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Elseif</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ElsIf}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Elsif</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Elseif</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Elsif</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Elsif()
+   * @return the value of the '<em>Elseif</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Elseif()
    * @model containment="true"
    * @generated
    */
-  EList<ElsIf> getElsif();
+  EList<ElsIf> getElseif();
 
   /**
-   * Returns the value of the '<em><b>Else Part</b></em>' containment reference.
+   * Returns the value of the '<em><b>Else Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Else Part</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Else Annotations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Else Part</em>' containment reference.
-   * @see #setElsePart(ElsePart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ElsePart()
+   * @return the value of the '<em>Else Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ElseAnnotations()
    * @model containment="true"
    * @generated
    */
-  ElsePart getElsePart();
+  EList<Annotation> getElseAnnotations();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart <em>Else Part</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Else Part</em>' containment reference.
-   * @see #getElsePart()
-   * @generated
-   */
-  void setElsePart(ElsePart value);
-
-  /**
-   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
+   * Returns the value of the '<em><b>Else Statements</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
+   * If the meaning of the '<em>Else Statements</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Opt End</em>' attribute.
-   * @see #setOptEnd(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_OptEnd()
-   * @model
+   * @return the value of the '<em>Else Statements</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ElseStatements()
+   * @model containment="true"
    * @generated
    */
-  String getOptEnd();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getOptEnd <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Opt End</em>' attribute.
-   * @see #getOptEnd()
-   * @generated
-   */
-  void setOptEnd(String value);
+  EList<Statement> getElseStatements();
 
 } // IfTest

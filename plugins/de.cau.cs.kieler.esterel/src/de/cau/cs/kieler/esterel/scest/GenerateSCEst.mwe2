@@ -1,0 +1,123 @@
+module de.cau.cs.kieler.esterel.scest.SCEst
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+
+var grammarURI = "classpath:/de/cau/cs/kieler/esterel/scest/SCEst.xtext"
+var file.extensions = "scest"
+var projectName = "de.cau.cs.kieler.esterel"
+var runtimeProject = "../${projectName}"
+
+Workflow {
+    bean = StandaloneSetup {
+        scanClassPath = true
+        platformUri = "${runtimeProject}/.."
+        registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.kext.KExtPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.scl.scl.SclPackage"
+        registerGeneratedEPackage = "de.cau.cs.kieler.esterel.esterel.EsterelPackage"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kext.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.scl/model/scl.genmodel"
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.esterel/model/generated/Esterel.genmodel"
+//        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.esterel/model/generated/SCEst.genmodel"
+    }
+    
+//    component = DirectoryCleaner {
+//        directory = "${runtimeProject}/src-gen"
+//    }
+//    
+//    component = DirectoryCleaner {
+//        directory = "${runtimeProject}.ui/src-gen"
+//    }
+    
+    component = Generator {
+        pathRtProject = runtimeProject
+        pathUiProject = "${runtimeProject}.ui"
+        projectNameRt = projectName
+        projectNameUi = "${projectName}.ui"
+        
+        language = {
+            uri = grammarURI
+            fileExtensions = file.extensions
+
+            // Java API to access grammar elements (required by several other fragments)
+            fragment = grammarAccess.GrammarAccessFragment {}
+
+            // generates Java API for the generated EPackages
+            fragment = ecore.EMFGeneratorFragment  {
+//              genModel = "${runtimeProject}/model/SCEst.genmodel"
+//                xmiModelDirectory = "${runtimeProject}/model"
+            }
+
+            // the serialization component
+            // Old serializer           
+            //fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+            // New Serializer 2.0
+            fragment = serializer.SerializerFragment {}
+
+            // a custom ResourceFactory for use with EMF 
+            fragment = resourceFactory.ResourceFactoryFragment {
+                fileExtensions = file.extensions
+            }
+
+            // the Antlr parser
+            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
+              //  antlrParam = "-Xconversiontimeout" antlrParam = "1000" 
+                options = {
+                    classSplitting = true
+                    backtrack = true
+                }
+            }
+
+            // java-based API for validation 
+            fragment = validation.JavaValidatorFragment {
+
+                composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+                //composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+            }
+
+            // scoping and exporting API
+            //          fragment = scoping.ImportURIScopingFragment {}
+            //          fragment = exporting.SimpleNamesFragment {}
+
+            // scoping and exporting API 
+            fragment = scoping.ImportNamespacesScopingFragment {}
+            fragment = exporting.QualifiedNamesFragment {}
+
+            // formatter API 
+            fragment = ecore2xtext.FormatterFragment {}
+
+            // labeling API 
+            fragment = labeling.LabelProviderFragment {}
+
+            // outline API 
+            fragment = outline.OutlineTreeProviderFragment {}
+            fragment = outline.QuickOutlineFragment {}
+
+            // java-based API for content assistance 
+            fragment = contentAssist.JavaBasedContentAssistFragment {}
+
+            // the following fragment tries to use the Antlr based content assist 
+            //     fragment which can be downloaded from http://www.itemis.com 
+            //     and will be ignored if it's not available. 
+            fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment {
+                antlrParam = "-Xconversiontimeout" antlrParam = "30000" 
+                options = {
+                    classSplitting = true
+                    backtrack = true
+                }
+              //  partialParsing=true
+            }
+            
+            // quickfix API
+            fragment = quickfix.QuickfixProviderFragment {}
+            
+        }
+    }
+}

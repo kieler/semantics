@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getIdList1 <em>Id List1</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getIdList2 <em>Id List2</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getVariables <em>Variables</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getExpressions <em>Expressions</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure()
@@ -53,35 +53,35 @@ public interface Procedure extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Id List1</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id List1</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id List1</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_IdList1()
+   * @return the value of the '<em>Variables</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_Variables()
    * @model containment="true"
    * @generated
    */
-  EList<TypeIdentifier> getIdList1();
+  EList<TypeIdentifier> getVariables();
 
   /**
-   * Returns the value of the '<em><b>Id List2</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id List2</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Expressions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id List2</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_IdList2()
+   * @return the value of the '<em>Expressions</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_Expressions()
    * @model containment="true"
    * @generated
    */
-  EList<TypeIdentifier> getIdList2();
+  EList<TypeIdentifier> getExpressions();
 
 } // Procedure

@@ -2,18 +2,26 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.TrapHandler;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapHandlerImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapHandlerImpl#getTrapExpr <em>Trap Expr</em>}</li>
  * </ul>
  *
@@ -30,6 +39,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandler
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getTrapExpr() <em>Trap Expr</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -59,6 +78,20 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.TRAP_HANDLER;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TRAP_HANDLER__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -119,6 +152,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
   {
     switch (featureID)
     {
+      case EsterelPackage.TRAP_HANDLER__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         return basicSetTrapExpr(null, msgs);
     }
@@ -135,6 +170,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
   {
     switch (featureID)
     {
+      case EsterelPackage.TRAP_HANDLER__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         return getTrapExpr();
     }
@@ -146,11 +183,16 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case EsterelPackage.TRAP_HANDLER__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         setTrapExpr((Expression)newValue);
         return;
@@ -168,6 +210,9 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
   {
     switch (featureID)
     {
+      case EsterelPackage.TRAP_HANDLER__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         setTrapExpr((Expression)null);
         return;
@@ -185,6 +230,8 @@ public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandl
   {
     switch (featureID)
     {
+      case EsterelPackage.TRAP_HANDLER__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         return trapExpr != null;
     }

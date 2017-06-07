@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,8 +15,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.LocalSignalDecl#getSignalList <em>Signal List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.LocalSignalDecl#getOptEnd <em>Opt End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.LocalSignalDecl#getSignals <em>Signals</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalSignalDecl()
@@ -23,55 +25,19 @@ package de.cau.cs.kieler.esterel.esterel;
 public interface LocalSignalDecl extends StatementContainer, Statement
 {
   /**
-   * Returns the value of the '<em><b>Signal List</b></em>' containment reference.
+   * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ISignal}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Signal List</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Signal List</em>' containment reference.
-   * @see #setSignalList(LocalSignalList)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalSignalDecl_SignalList()
+   * @return the value of the '<em>Signals</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalSignalDecl_Signals()
    * @model containment="true"
    * @generated
    */
-  LocalSignalList getSignalList();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.LocalSignalDecl#getSignalList <em>Signal List</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Signal List</em>' containment reference.
-   * @see #getSignalList()
-   * @generated
-   */
-  void setSignalList(LocalSignalList value);
-
-  /**
-   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Opt End</em>' attribute.
-   * @see #setOptEnd(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalSignalDecl_OptEnd()
-   * @model
-   * @generated
-   */
-  String getOptEnd();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.LocalSignalDecl#getOptEnd <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Opt End</em>' attribute.
-   * @see #getOptEnd()
-   * @generated
-   */
-  void setOptEnd(String value);
+  EList<ISignal> getSignals();
 
 } // LocalSignalDecl

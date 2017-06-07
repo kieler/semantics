@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.ISignal;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

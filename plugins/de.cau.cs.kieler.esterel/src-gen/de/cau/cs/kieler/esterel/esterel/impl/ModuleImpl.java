@@ -2,19 +2,36 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
+import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
+import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl;
 import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.esterel.ModuleBody;
-import de.cau.cs.kieler.esterel.esterel.ModuleInterface;
+import de.cau.cs.kieler.esterel.esterel.ProcedureDecl;
+import de.cau.cs.kieler.esterel.esterel.RelationDecl;
+import de.cau.cs.kieler.esterel.esterel.SensorDecl;
+import de.cau.cs.kieler.esterel.esterel.TaskDecl;
+import de.cau.cs.kieler.esterel.esterel.TypeDecl;
+
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,16 +41,33 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getInterface <em>Interface</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getBody <em>Body</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getEnd <em>End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntSignalDecls <em>Int Signal Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntTypeDecls <em>Int Type Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntSensorDecls <em>Int Sensor Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntConstantDecls <em>Int Constant Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntRelationDecls <em>Int Relation Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntTaskDecls <em>Int Task Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntFunctionDecls <em>Int Function Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntProcedureDecls <em>Int Procedure Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -55,44 +89,94 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getInterface() <em>Interface</em>}' containment reference.
+   * The cached value of the '{@link #getIntSignalDecls() <em>Int Signal Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInterface()
+   * @see #getIntSignalDecls()
    * @generated
    * @ordered
    */
-  protected ModuleInterface interface_;
+  protected EList<InterfaceSignalDecl> intSignalDecls;
 
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getIntTypeDecls() <em>Int Type Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getIntTypeDecls()
    * @generated
    * @ordered
    */
-  protected ModuleBody body;
+  protected EList<TypeDecl> intTypeDecls;
 
   /**
-   * The default value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * The cached value of the '{@link #getIntSensorDecls() <em>Int Sensor Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEnd()
+   * @see #getIntSensorDecls()
    * @generated
    * @ordered
    */
-  protected static final String END_EDEFAULT = null;
+  protected EList<SensorDecl> intSensorDecls;
 
   /**
-   * The cached value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * The cached value of the '{@link #getIntConstantDecls() <em>Int Constant Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEnd()
+   * @see #getIntConstantDecls()
    * @generated
    * @ordered
    */
-  protected String end = END_EDEFAULT;
+  protected EList<ConstantDecls> intConstantDecls;
+
+  /**
+   * The cached value of the '{@link #getIntRelationDecls() <em>Int Relation Decls</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIntRelationDecls()
+   * @generated
+   * @ordered
+   */
+  protected EList<RelationDecl> intRelationDecls;
+
+  /**
+   * The cached value of the '{@link #getIntTaskDecls() <em>Int Task Decls</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIntTaskDecls()
+   * @generated
+   * @ordered
+   */
+  protected EList<TaskDecl> intTaskDecls;
+
+  /**
+   * The cached value of the '{@link #getIntFunctionDecls() <em>Int Function Decls</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIntFunctionDecls()
+   * @generated
+   * @ordered
+   */
+  protected EList<FunctionDecl> intFunctionDecls;
+
+  /**
+   * The cached value of the '{@link #getIntProcedureDecls() <em>Int Procedure Decls</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIntProcedureDecls()
+   * @generated
+   * @ordered
+   */
+  protected EList<ProcedureDecl> intProcedureDecls;
+
+  /**
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStatements()
+   * @generated
+   * @ordered
+   */
+  protected EList<Statement> statements;
 
   /**
    * <!-- begin-user-doc -->
@@ -113,6 +197,20 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.MODULE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.MODULE__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -143,26 +241,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public ModuleInterface getInterface()
+  public EList<InterfaceSignalDecl> getIntSignalDecls()
   {
-    return interface_;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetInterface(ModuleInterface newInterface, NotificationChain msgs)
-  {
-    ModuleInterface oldInterface = interface_;
-    interface_ = newInterface;
-    if (eNotificationRequired())
+    if (intSignalDecls == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__INTERFACE, oldInterface, newInterface);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      intSignalDecls = new EObjectContainmentEList<InterfaceSignalDecl>(InterfaceSignalDecl.class, this, EsterelPackage.MODULE__INT_SIGNAL_DECLS);
     }
-    return msgs;
+    return intSignalDecls;
   }
 
   /**
@@ -170,20 +255,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInterface(ModuleInterface newInterface)
+  public EList<TypeDecl> getIntTypeDecls()
   {
-    if (newInterface != interface_)
+    if (intTypeDecls == null)
     {
-      NotificationChain msgs = null;
-      if (interface_ != null)
-        msgs = ((InternalEObject)interface_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__INTERFACE, null, msgs);
-      if (newInterface != null)
-        msgs = ((InternalEObject)newInterface).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__INTERFACE, null, msgs);
-      msgs = basicSetInterface(newInterface, msgs);
-      if (msgs != null) msgs.dispatch();
+      intTypeDecls = new EObjectContainmentEList<TypeDecl>(TypeDecl.class, this, EsterelPackage.MODULE__INT_TYPE_DECLS);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__INTERFACE, newInterface, newInterface));
+    return intTypeDecls;
   }
 
   /**
@@ -191,26 +269,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public ModuleBody getBody()
+  public EList<SensorDecl> getIntSensorDecls()
   {
-    return body;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetBody(ModuleBody newBody, NotificationChain msgs)
-  {
-    ModuleBody oldBody = body;
-    body = newBody;
-    if (eNotificationRequired())
+    if (intSensorDecls == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__BODY, oldBody, newBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      intSensorDecls = new EObjectContainmentEList<SensorDecl>(SensorDecl.class, this, EsterelPackage.MODULE__INT_SENSOR_DECLS);
     }
-    return msgs;
+    return intSensorDecls;
   }
 
   /**
@@ -218,20 +283,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setBody(ModuleBody newBody)
+  public EList<ConstantDecls> getIntConstantDecls()
   {
-    if (newBody != body)
+    if (intConstantDecls == null)
     {
-      NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
-      if (msgs != null) msgs.dispatch();
+      intConstantDecls = new EObjectContainmentEList<ConstantDecls>(ConstantDecls.class, this, EsterelPackage.MODULE__INT_CONSTANT_DECLS);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__BODY, newBody, newBody));
+    return intConstantDecls;
   }
 
   /**
@@ -239,9 +297,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getEnd()
+  public EList<RelationDecl> getIntRelationDecls()
   {
-    return end;
+    if (intRelationDecls == null)
+    {
+      intRelationDecls = new EObjectContainmentEList<RelationDecl>(RelationDecl.class, this, EsterelPackage.MODULE__INT_RELATION_DECLS);
+    }
+    return intRelationDecls;
   }
 
   /**
@@ -249,12 +311,55 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEnd(String newEnd)
+  public EList<TaskDecl> getIntTaskDecls()
   {
-    String oldEnd = end;
-    end = newEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__END, oldEnd, end));
+    if (intTaskDecls == null)
+    {
+      intTaskDecls = new EObjectContainmentEList<TaskDecl>(TaskDecl.class, this, EsterelPackage.MODULE__INT_TASK_DECLS);
+    }
+    return intTaskDecls;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<FunctionDecl> getIntFunctionDecls()
+  {
+    if (intFunctionDecls == null)
+    {
+      intFunctionDecls = new EObjectContainmentEList<FunctionDecl>(FunctionDecl.class, this, EsterelPackage.MODULE__INT_FUNCTION_DECLS);
+    }
+    return intFunctionDecls;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<ProcedureDecl> getIntProcedureDecls()
+  {
+    if (intProcedureDecls == null)
+    {
+      intProcedureDecls = new EObjectContainmentEList<ProcedureDecl>(ProcedureDecl.class, this, EsterelPackage.MODULE__INT_PROCEDURE_DECLS);
+    }
+    return intProcedureDecls;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Statement> getStatements()
+  {
+    if (statements == null)
+    {
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.MODULE__STATEMENTS);
+    }
+    return statements;
   }
 
   /**
@@ -267,10 +372,26 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE__INTERFACE:
-        return basicSetInterface(null, msgs);
-      case EsterelPackage.MODULE__BODY:
-        return basicSetBody(null, msgs);
+      case EsterelPackage.MODULE__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
+        return ((InternalEList<?>)getIntSignalDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_TYPE_DECLS:
+        return ((InternalEList<?>)getIntTypeDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_SENSOR_DECLS:
+        return ((InternalEList<?>)getIntSensorDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_CONSTANT_DECLS:
+        return ((InternalEList<?>)getIntConstantDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_RELATION_DECLS:
+        return ((InternalEList<?>)getIntRelationDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_TASK_DECLS:
+        return ((InternalEList<?>)getIntTaskDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_FUNCTION_DECLS:
+        return ((InternalEList<?>)getIntFunctionDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
+        return ((InternalEList<?>)getIntProcedureDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -285,14 +406,28 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
+      case EsterelPackage.MODULE__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.MODULE__NAME:
         return getName();
-      case EsterelPackage.MODULE__INTERFACE:
-        return getInterface();
-      case EsterelPackage.MODULE__BODY:
-        return getBody();
-      case EsterelPackage.MODULE__END:
-        return getEnd();
+      case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
+        return getIntSignalDecls();
+      case EsterelPackage.MODULE__INT_TYPE_DECLS:
+        return getIntTypeDecls();
+      case EsterelPackage.MODULE__INT_SENSOR_DECLS:
+        return getIntSensorDecls();
+      case EsterelPackage.MODULE__INT_CONSTANT_DECLS:
+        return getIntConstantDecls();
+      case EsterelPackage.MODULE__INT_RELATION_DECLS:
+        return getIntRelationDecls();
+      case EsterelPackage.MODULE__INT_TASK_DECLS:
+        return getIntTaskDecls();
+      case EsterelPackage.MODULE__INT_FUNCTION_DECLS:
+        return getIntFunctionDecls();
+      case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
+        return getIntProcedureDecls();
+      case EsterelPackage.MODULE__STATEMENTS:
+        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -302,22 +437,54 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case EsterelPackage.MODULE__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.MODULE__NAME:
         setName((String)newValue);
         return;
-      case EsterelPackage.MODULE__INTERFACE:
-        setInterface((ModuleInterface)newValue);
+      case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
+        getIntSignalDecls().clear();
+        getIntSignalDecls().addAll((Collection<? extends InterfaceSignalDecl>)newValue);
         return;
-      case EsterelPackage.MODULE__BODY:
-        setBody((ModuleBody)newValue);
+      case EsterelPackage.MODULE__INT_TYPE_DECLS:
+        getIntTypeDecls().clear();
+        getIntTypeDecls().addAll((Collection<? extends TypeDecl>)newValue);
         return;
-      case EsterelPackage.MODULE__END:
-        setEnd((String)newValue);
+      case EsterelPackage.MODULE__INT_SENSOR_DECLS:
+        getIntSensorDecls().clear();
+        getIntSensorDecls().addAll((Collection<? extends SensorDecl>)newValue);
+        return;
+      case EsterelPackage.MODULE__INT_CONSTANT_DECLS:
+        getIntConstantDecls().clear();
+        getIntConstantDecls().addAll((Collection<? extends ConstantDecls>)newValue);
+        return;
+      case EsterelPackage.MODULE__INT_RELATION_DECLS:
+        getIntRelationDecls().clear();
+        getIntRelationDecls().addAll((Collection<? extends RelationDecl>)newValue);
+        return;
+      case EsterelPackage.MODULE__INT_TASK_DECLS:
+        getIntTaskDecls().clear();
+        getIntTaskDecls().addAll((Collection<? extends TaskDecl>)newValue);
+        return;
+      case EsterelPackage.MODULE__INT_FUNCTION_DECLS:
+        getIntFunctionDecls().clear();
+        getIntFunctionDecls().addAll((Collection<? extends FunctionDecl>)newValue);
+        return;
+      case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
+        getIntProcedureDecls().clear();
+        getIntProcedureDecls().addAll((Collection<? extends ProcedureDecl>)newValue);
+        return;
+      case EsterelPackage.MODULE__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -333,17 +500,38 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
+      case EsterelPackage.MODULE__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.MODULE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case EsterelPackage.MODULE__INTERFACE:
-        setInterface((ModuleInterface)null);
+      case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
+        getIntSignalDecls().clear();
         return;
-      case EsterelPackage.MODULE__BODY:
-        setBody((ModuleBody)null);
+      case EsterelPackage.MODULE__INT_TYPE_DECLS:
+        getIntTypeDecls().clear();
         return;
-      case EsterelPackage.MODULE__END:
-        setEnd(END_EDEFAULT);
+      case EsterelPackage.MODULE__INT_SENSOR_DECLS:
+        getIntSensorDecls().clear();
+        return;
+      case EsterelPackage.MODULE__INT_CONSTANT_DECLS:
+        getIntConstantDecls().clear();
+        return;
+      case EsterelPackage.MODULE__INT_RELATION_DECLS:
+        getIntRelationDecls().clear();
+        return;
+      case EsterelPackage.MODULE__INT_TASK_DECLS:
+        getIntTaskDecls().clear();
+        return;
+      case EsterelPackage.MODULE__INT_FUNCTION_DECLS:
+        getIntFunctionDecls().clear();
+        return;
+      case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
+        getIntProcedureDecls().clear();
+        return;
+      case EsterelPackage.MODULE__STATEMENTS:
+        getStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -359,14 +547,28 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
+      case EsterelPackage.MODULE__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.MODULE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case EsterelPackage.MODULE__INTERFACE:
-        return interface_ != null;
-      case EsterelPackage.MODULE__BODY:
-        return body != null;
-      case EsterelPackage.MODULE__END:
-        return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
+      case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
+        return intSignalDecls != null && !intSignalDecls.isEmpty();
+      case EsterelPackage.MODULE__INT_TYPE_DECLS:
+        return intTypeDecls != null && !intTypeDecls.isEmpty();
+      case EsterelPackage.MODULE__INT_SENSOR_DECLS:
+        return intSensorDecls != null && !intSensorDecls.isEmpty();
+      case EsterelPackage.MODULE__INT_CONSTANT_DECLS:
+        return intConstantDecls != null && !intConstantDecls.isEmpty();
+      case EsterelPackage.MODULE__INT_RELATION_DECLS:
+        return intRelationDecls != null && !intRelationDecls.isEmpty();
+      case EsterelPackage.MODULE__INT_TASK_DECLS:
+        return intTaskDecls != null && !intTaskDecls.isEmpty();
+      case EsterelPackage.MODULE__INT_FUNCTION_DECLS:
+        return intFunctionDecls != null && !intFunctionDecls.isEmpty();
+      case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
+        return intProcedureDecls != null && !intProcedureDecls.isEmpty();
+      case EsterelPackage.MODULE__STATEMENTS:
+        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -384,8 +586,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", end: ");
-    result.append(end);
     result.append(')');
     return result.toString();
   }

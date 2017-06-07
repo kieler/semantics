@@ -5,8 +5,7 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Type;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
-
-import de.cau.cs.kieler.esterel.kexpressions.ValueType;
+import de.cau.cs.kieler.esterel.esterel.ValueType;
 
 import org.eclipse.emf.common.notify.Notification;
 

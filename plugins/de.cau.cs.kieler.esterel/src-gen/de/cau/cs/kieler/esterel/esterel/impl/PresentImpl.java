@@ -2,18 +2,32 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.ElsePart;
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.Present;
-import de.cau.cs.kieler.esterel.esterel.PresentBody;
+import de.cau.cs.kieler.esterel.esterel.PresentCase;
+import de.cau.cs.kieler.esterel.esterel.ValuedObject;
+
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,9 +37,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getBody <em>Body</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getElsePart <em>Else Part</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getOptEnd <em>Opt End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getTick <em>Tick</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getThenAnnotations <em>Then Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getThenStatements <em>Then Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getCases <em>Cases</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getElseAnnotations <em>Else Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
  *
  * @generated
@@ -33,44 +51,74 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class PresentImpl extends StatementImpl implements Present
 {
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected PresentBody body;
+  protected Expression expression;
 
   /**
-   * The cached value of the '{@link #getElsePart() <em>Else Part</em>}' containment reference.
+   * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getElsePart()
+   * @see #getTick()
    * @generated
    * @ordered
    */
-  protected ElsePart elsePart;
+  protected ValuedObject tick;
 
   /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOptEnd()
+   * @see #getThenAnnotations()
    * @generated
    * @ordered
    */
-  protected static final String OPT_END_EDEFAULT = null;
+  protected EList<Annotation> thenAnnotations;
 
   /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * The cached value of the '{@link #getThenStatements() <em>Then Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOptEnd()
+   * @see #getThenStatements()
    * @generated
    * @ordered
    */
-  protected String optEnd = OPT_END_EDEFAULT;
+  protected EList<Statement> thenStatements;
+
+  /**
+   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCases()
+   * @generated
+   * @ordered
+   */
+  protected EList<PresentCase> cases;
+
+  /**
+   * The cached value of the '{@link #getElseAnnotations() <em>Else Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getElseAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> elseAnnotations;
+
+  /**
+   * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getElseStatements()
+   * @generated
+   * @ordered
+   */
+  protected EList<Statement> elseStatements;
 
   /**
    * <!-- begin-user-doc -->
@@ -98,9 +146,9 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public PresentBody getBody()
+  public Expression getExpression()
   {
-    return body;
+    return expression;
   }
 
   /**
@@ -108,13 +156,13 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(PresentBody newBody, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    PresentBody oldBody = body;
-    body = newBody;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__BODY, oldBody, newBody);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -125,20 +173,20 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setBody(PresentBody newBody)
+  public void setExpression(Expression newExpression)
   {
-    if (newBody != body)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__BODY, newBody, newBody));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -146,9 +194,9 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public ElsePart getElsePart()
+  public ValuedObject getTick()
   {
-    return elsePart;
+    return tick;
   }
 
   /**
@@ -156,13 +204,13 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetElsePart(ElsePart newElsePart, NotificationChain msgs)
+  public NotificationChain basicSetTick(ValuedObject newTick, NotificationChain msgs)
   {
-    ElsePart oldElsePart = elsePart;
-    elsePart = newElsePart;
+    ValuedObject oldTick = tick;
+    tick = newTick;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__ELSE_PART, oldElsePart, newElsePart);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__TICK, oldTick, newTick);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -173,20 +221,20 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setElsePart(ElsePart newElsePart)
+  public void setTick(ValuedObject newTick)
   {
-    if (newElsePart != elsePart)
+    if (newTick != tick)
     {
       NotificationChain msgs = null;
-      if (elsePart != null)
-        msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__ELSE_PART, null, msgs);
-      if (newElsePart != null)
-        msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__ELSE_PART, null, msgs);
-      msgs = basicSetElsePart(newElsePart, msgs);
+      if (tick != null)
+        msgs = ((InternalEObject)tick).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__TICK, null, msgs);
+      if (newTick != null)
+        msgs = ((InternalEObject)newTick).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__TICK, null, msgs);
+      msgs = basicSetTick(newTick, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__ELSE_PART, newElsePart, newElsePart));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__TICK, newTick, newTick));
   }
 
   /**
@@ -194,9 +242,13 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOptEnd()
+  public EList<Annotation> getThenAnnotations()
   {
-    return optEnd;
+    if (thenAnnotations == null)
+    {
+      thenAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT__THEN_ANNOTATIONS);
+    }
+    return thenAnnotations;
   }
 
   /**
@@ -204,12 +256,55 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOptEnd(String newOptEnd)
+  public EList<Statement> getThenStatements()
   {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__OPT_END, oldOptEnd, optEnd));
+    if (thenStatements == null)
+    {
+      thenStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__THEN_STATEMENTS);
+    }
+    return thenStatements;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<PresentCase> getCases()
+  {
+    if (cases == null)
+    {
+      cases = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT__CASES);
+    }
+    return cases;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getElseAnnotations()
+  {
+    if (elseAnnotations == null)
+    {
+      elseAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT__ELSE_ANNOTATIONS);
+    }
+    return elseAnnotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Statement> getElseStatements()
+  {
+    if (elseStatements == null)
+    {
+      elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__ELSE_STATEMENTS);
+    }
+    return elseStatements;
   }
 
   /**
@@ -222,10 +317,20 @@ public class PresentImpl extends StatementImpl implements Present
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT__BODY:
-        return basicSetBody(null, msgs);
-      case EsterelPackage.PRESENT__ELSE_PART:
-        return basicSetElsePart(null, msgs);
+      case EsterelPackage.PRESENT__EXPRESSION:
+        return basicSetExpression(null, msgs);
+      case EsterelPackage.PRESENT__TICK:
+        return basicSetTick(null, msgs);
+      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+        return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PRESENT__THEN_STATEMENTS:
+        return ((InternalEList<?>)getThenStatements()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PRESENT__CASES:
+        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+        return ((InternalEList<?>)getElseAnnotations()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+        return ((InternalEList<?>)getElseStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -240,12 +345,20 @@ public class PresentImpl extends StatementImpl implements Present
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT__BODY:
-        return getBody();
-      case EsterelPackage.PRESENT__ELSE_PART:
-        return getElsePart();
-      case EsterelPackage.PRESENT__OPT_END:
-        return getOptEnd();
+      case EsterelPackage.PRESENT__EXPRESSION:
+        return getExpression();
+      case EsterelPackage.PRESENT__TICK:
+        return getTick();
+      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+        return getThenAnnotations();
+      case EsterelPackage.PRESENT__THEN_STATEMENTS:
+        return getThenStatements();
+      case EsterelPackage.PRESENT__CASES:
+        return getCases();
+      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+        return getElseAnnotations();
+      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+        return getElseStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -255,19 +368,37 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT__BODY:
-        setBody((PresentBody)newValue);
+      case EsterelPackage.PRESENT__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
-      case EsterelPackage.PRESENT__ELSE_PART:
-        setElsePart((ElsePart)newValue);
+      case EsterelPackage.PRESENT__TICK:
+        setTick((ValuedObject)newValue);
         return;
-      case EsterelPackage.PRESENT__OPT_END:
-        setOptEnd((String)newValue);
+      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+        getThenAnnotations().clear();
+        getThenAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.PRESENT__THEN_STATEMENTS:
+        getThenStatements().clear();
+        getThenStatements().addAll((Collection<? extends Statement>)newValue);
+        return;
+      case EsterelPackage.PRESENT__CASES:
+        getCases().clear();
+        getCases().addAll((Collection<? extends PresentCase>)newValue);
+        return;
+      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+        getElseAnnotations().clear();
+        getElseAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
+      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+        getElseStatements().clear();
+        getElseStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -283,14 +414,26 @@ public class PresentImpl extends StatementImpl implements Present
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT__BODY:
-        setBody((PresentBody)null);
+      case EsterelPackage.PRESENT__EXPRESSION:
+        setExpression((Expression)null);
         return;
-      case EsterelPackage.PRESENT__ELSE_PART:
-        setElsePart((ElsePart)null);
+      case EsterelPackage.PRESENT__TICK:
+        setTick((ValuedObject)null);
         return;
-      case EsterelPackage.PRESENT__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
+      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+        getThenAnnotations().clear();
+        return;
+      case EsterelPackage.PRESENT__THEN_STATEMENTS:
+        getThenStatements().clear();
+        return;
+      case EsterelPackage.PRESENT__CASES:
+        getCases().clear();
+        return;
+      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+        getElseAnnotations().clear();
+        return;
+      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+        getElseStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -306,31 +449,22 @@ public class PresentImpl extends StatementImpl implements Present
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT__BODY:
-        return body != null;
-      case EsterelPackage.PRESENT__ELSE_PART:
-        return elsePart != null;
-      case EsterelPackage.PRESENT__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
+      case EsterelPackage.PRESENT__EXPRESSION:
+        return expression != null;
+      case EsterelPackage.PRESENT__TICK:
+        return tick != null;
+      case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
+        return thenAnnotations != null && !thenAnnotations.isEmpty();
+      case EsterelPackage.PRESENT__THEN_STATEMENTS:
+        return thenStatements != null && !thenStatements.isEmpty();
+      case EsterelPackage.PRESENT__CASES:
+        return cases != null && !cases.isEmpty();
+      case EsterelPackage.PRESENT__ELSE_ANNOTATIONS:
+        return elseAnnotations != null && !elseAnnotations.isEmpty();
+      case EsterelPackage.PRESENT__ELSE_STATEMENTS:
+        return elseStatements != null && !elseStatements.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
   }
 
 } //PresentImpl

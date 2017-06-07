@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.esterel/src-gen" editDirectory="/de.cau.cs.kieler.esterel.edit/src"
+    editorDirectory="/de.cau.cs.kieler.esterel.editor/src" modelPluginID="de.cau.cs.kieler.esterel"
+    forceOverwrite="true" modelName="Esterel" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.esterel.edit"
+    editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions platform:/resource/de.cau.cs.kieler.scl/model/scl.genmodel#//scl">
+  <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler.esterel" disposableProviderFactory="true"
+      ecorePackage="Esterel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Esterel.ecore#//OperatorType">
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/LEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/GEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/NE"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/PRE"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/NOT"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/SUB"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/MOD"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/DIV"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/VAL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Esterel.ecore#//ValueType">
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/PURE"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/BOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/UNSIGNED"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/STRING"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Esterel.ecore#//CombineOperator">
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/MAX"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/MIN"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/HOST"/>
+    </genEnums>
+    <genClasses ecoreClass="Esterel.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Program/modules"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Module">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/annotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Module/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intSignalDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intTypeDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intSensorDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intConstantDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intRelationDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intTaskDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intFunctionDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/intProcedureDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TypeIdentifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeIdentifier/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeIdentifier/typeID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeIdentifier/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TypeDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeDecl/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeDecl/types"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Type/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ConstantDecls">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantDecls/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantDecls/constants"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//OneTypeConstantDecls">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/constants"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ValuedObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ValuedObject/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//FunctionDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionDecl/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionDecl/functions"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Function/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Function/idList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Function/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ProcedureDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcedureDecl/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcedureDecl/procedures"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Procedure">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Procedure/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Procedure/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Procedure/expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TaskDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TaskDecl/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TaskDecl/tasks"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Task">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Task/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Task/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Task/expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//InterfaceSignalDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//InterfaceSignalDecl/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//InterfaceSignalDecl/signals"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ISignal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/typeID"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ISignal/func"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ISignal/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//SensorDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorDecl/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorDecl/sensors"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//SensorWithType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/sensor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//RelationDecl"/>
+    <genClasses ecoreClass="Esterel.ecore#//RelationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//RelationType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//RelationImplication">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//RelationImplication/first"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//RelationImplication/second"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//RelationIncompatibility">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//RelationIncompatibility/incomp"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//StatementContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//StatementContainer/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//EsterelParallel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelParallel/threads"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//EsterelThread"/>
+    <genClasses ecoreClass="Esterel.ecore#//Nothing"/>
+    <genClasses ecoreClass="Esterel.ecore#//Halt"/>
+    <genClasses ecoreClass="Esterel.ecore#//Block"/>
+    <genClasses ecoreClass="Esterel.ecore#//Emit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/signal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Sustain">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/signal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//EsterelAssignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelAssignment/var"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelAssignment/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ProcCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/proc"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/varList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/kexpressions"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Present">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/thenAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/thenStatements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/cases"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/elseAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/elseStatements"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//PresentCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentCase/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentCase/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentCase/tick"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//IfTest">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/thenAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/thenStatements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/elseif"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/elseAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/elseStatements"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ElsIf">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ElsIf/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ElsIf/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ElsIf/thenAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ElsIf/thenStatements"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Loop">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Loop/delay"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Repeat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Repeat/positive"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Repeat/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Abort">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Abort/weak"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Abort/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Abort/doStatements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Abort/cases"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Case">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Case/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Case/delay"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Await">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Await/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Await/cases"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//EveryDo">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EveryDo/delay"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Suspend">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Suspend/weak"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Suspend/delay"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Trap">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Trap/trapSignals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Trap/trapHandler"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TrapHandler">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapHandler/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapHandler/trapExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Exit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exit/trap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exit/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Exec">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/task"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/vars"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/kexpressions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/retSignal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/execCaseList"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ExecCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/annotations"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/task"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/vars"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/kexpressions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/retSignal"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//LocalSignalDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalSignalDecl/signals"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//LocalVariable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalVariable/varDecls"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//VariableDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableDecl/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableDecl/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//IVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//IVariable/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IVariable/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Run">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Run/module"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Run/list"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ModuleRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleRenaming/module"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ModuleRenaming/newName"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Renaming">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Renaming/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Renaming/renamings"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TypeRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeRenaming/newType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ConstantRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantRenaming/newValue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//FunctionRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//FunctionRenaming/newFunc"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ProcedureRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcedureRenaming/newName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcedureRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TaskRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TaskRenaming/newName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TaskRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//SignalRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//SignalRenaming/newName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//SignalRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Do">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/endingAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/watchingStatements"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Expression"/>
+    <genClasses ecoreClass="Esterel.ecore#//ValuedObjectReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ValuedObjectReference/valuedObject"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//DelayExpr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/signalExpr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayExpr/isImmediate"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TextExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TextExpression/code"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TextExpression/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//IntValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//FloatValue"/>
+    <genClasses ecoreClass="Esterel.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//BooleanValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//EsterelType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelType/estType"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Constant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Constant/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Input"/>
+    <genClasses ecoreClass="Esterel.ecore#//Output"/>
+    <genClasses ecoreClass="Esterel.ecore#//InputOutput"/>
+    <genClasses ecoreClass="Esterel.ecore#//Return"/>
+    <genClasses ecoreClass="Esterel.ecore#//Relation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Relation/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Relation/relations"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TrapSignal"/>
+    <genClasses ecoreClass="Esterel.ecore#//TrapExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapExpression/trap"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//FunctionExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionExpression/function"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionExpression/kexpressions"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ConstantExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantExpression/constant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantExpression/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//OperatorExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OperatorExpression/subExpressions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//OperatorExpression/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//TrapReferenceExpr"/>
+    <genClasses ecoreClass="Esterel.ecore#//Esterel_ValuedObjectReference"/>
+  </genPackages>
+</genmodel:GenModel>

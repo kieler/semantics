@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.annotations.Annotation;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SensorDeclImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SensorDeclImpl#getSensors <em>Sensors</em>}</li>
  * </ul>
  *
@@ -35,6 +38,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SensorDeclImpl extends MinimalEObjectImpl.Container implements SensorDecl
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getSensors() <em>Sensors</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -71,6 +84,20 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.SENSOR_DECL__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<SensorWithType> getSensors()
   {
     if (sensors == null)
@@ -90,6 +117,8 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
+      case EsterelPackage.SENSOR_DECL__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.SENSOR_DECL__SENSORS:
         return ((InternalEList<?>)getSensors()).basicRemove(otherEnd, msgs);
     }
@@ -106,6 +135,8 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
+      case EsterelPackage.SENSOR_DECL__ANNOTATIONS:
+        return getAnnotations();
       case EsterelPackage.SENSOR_DECL__SENSORS:
         return getSensors();
     }
@@ -123,6 +154,10 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
+      case EsterelPackage.SENSOR_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case EsterelPackage.SENSOR_DECL__SENSORS:
         getSensors().clear();
         getSensors().addAll((Collection<? extends SensorWithType>)newValue);
@@ -141,6 +176,9 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
+      case EsterelPackage.SENSOR_DECL__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case EsterelPackage.SENSOR_DECL__SENSORS:
         getSensors().clear();
         return;
@@ -158,6 +196,8 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
+      case EsterelPackage.SENSOR_DECL__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.SENSOR_DECL__SENSORS:
         return sensors != null && !sensors.isEmpty();
     }

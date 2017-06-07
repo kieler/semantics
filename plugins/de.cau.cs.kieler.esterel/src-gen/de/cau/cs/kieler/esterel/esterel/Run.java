@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.scl.scl.Statement;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,29 +52,19 @@ public interface Run extends Statement
   void setModule(ModuleRenaming value);
 
   /**
-   * Returns the value of the '<em><b>List</b></em>' containment reference.
+   * Returns the value of the '<em><b>List</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Renaming}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>List</em>' containment reference isn't clear,
+   * If the meaning of the '<em>List</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>List</em>' containment reference.
-   * @see #setList(RenamingList)
+   * @return the value of the '<em>List</em>' containment reference list.
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRun_List()
    * @model containment="true"
    * @generated
    */
-  RenamingList getList();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Run#getList <em>List</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>List</em>' containment reference.
-   * @see #getList()
-   * @generated
-   */
-  void setList(RenamingList value);
+  EList<Renaming> getList();
 
 } // Run

@@ -3,11 +3,15 @@
  */
 package de.cau.cs.kieler.esterel.formatting;
 
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
+import org.eclipse.xtext.util.Pair;
 
+import de.cau.cs.kieler.annotations.formatting.AnnotationsFormatter;
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 
 /**
@@ -28,245 +32,326 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
         EsterelGrammarAccess g = (EsterelGrammarAccess) getGrammarAccess();
 
         // mandatory! otherwise if (1=1) serializes to if1=1
-        c.setSpace(" ").after(g.getIfTestAccess().getIfKeyword_0());
-
-        // testing
-       c.setSpace(" ").after(g.getPauseAccess().getPauseKeyword_0());
-
-        c.setLinewrap().after(g.getSequenceAccess().getSemicolonKeyword_1_1_0());
-        c.setLinewrap().after(g.getSequenceAccess().getSemicolonKeyword_2());
-        c.setLinewrap().after(g.getSequenceRule());
-
-        c.setLinewrap(1).after(g.getModuleAccess().getColonKeyword_2());
-
-        c.setSpace(" ").after(g.getModuleAccess().getModuleKeyword_0());
-        c.setSpace(" ").before(g.getModuleRule());
+        c.setSpace(" ").after(g.getIfTestAccess().getIfKeyword_1());
 
          de.cau.cs.kieler.esterel.services.EsterelGrammarAccess f =
          (de.cau.cs.kieler.esterel.services.EsterelGrammarAccess) getGrammarAccess();
-         Iterable<Keyword> keywords = GrammarUtil.containedKeywords(f
-         .getGrammar());
+         Iterable<Keyword> keywords = GrammarUtil.containedKeywords(f.getGrammar());
+         
          // remove space before ";" and "," . Add linewrap after ","
          for (Keyword keyword : keywords) {
-         if ((";".equals(keyword.getValue()))
-         | (",".equals(keyword.getValue()))) {
-         c.setNoSpace().before(keyword);
+             if ((";".equals(keyword.getValue())) | (",".equals(keyword.getValue()))) {
+                 c.setNoSpace().before(keyword);
+             }
+             if (",".equals(keyword.getValue())) {
+                 c.setNoSpace().before(keyword);
+                 c.setNoLinewrap().before(keyword);
+                 c.setLinewrap().after(keyword);
+             }
          }
-         if (",".equals(keyword.getValue())) {
-         c.setLinewrap().after(keyword);
+         
+         // have no space between '@' and the annotation name
+         for (Keyword at : f.findKeywords("@")) {
+             c.setNoSpace().after(at);
          }
+
+         
+        /* ********************************************************************
+         * Formatting for comments
+         * ********************************************************************
+         */
+         c.setLinewrap(2).before(f.getML_COMMENTRule());
+         c.setNoLinewrap().before(f.getSL_COMMENTRule());
+        
+        /* ********************************************************************
+         * Formatting for Module/MainModule
+         * ********************************************************************
+         */
+         c.setLinewrap().before(f.getModuleAccess().getModuleKeyword_1());
+         c.setLinewrap().after(f.getModuleAccess().getColonKeyword_3());
+         c.setNoSpace().before(f.getModuleAccess().getColonKeyword_3());
+         c.setLinewrap().before(f.getModuleAccess().getEndKeyword_6_0_0());
+         c.setLinewrap().before(f.getModuleAccess().getFullStopKeyword_6_1());
+        
+        /* ********************************************************************
+         * Formatting for ModuleInterface
+         * ********************************************************************
+         */
+        
+      // ==> Interface Signal Declaration <==
+         // Input    
+         c.setLinewrap().before(f.getInterfaceSignalDeclAccess().getInputKeyword_0_2());
+         c.setLinewrap().after(f.getInterfaceSignalDeclAccess().getCommaKeyword_0_4_0());
+         c.setIndentation(f.getInterfaceSignalDeclAccess().getInputKeyword_0_2(), f.getInterfaceSignalDeclAccess().getSemicolonKeyword_0_5());
+         // Output         
+         c.setLinewrap().before(f.getInterfaceSignalDeclAccess().getOutputKeyword_1_2());
+         c.setLinewrap().after(f.getInterfaceSignalDeclAccess().getCommaKeyword_1_4_0());
+         c.setIndentation(f.getInterfaceSignalDeclAccess().getInputoutputKeyword_2_2(), f.getInterfaceSignalDeclAccess().getSemicolonKeyword_1_5());
+         // InputOutput         
+         c.setLinewrap().before(f.getInterfaceSignalDeclAccess().getInputoutputKeyword_2_2());
+         c.setLinewrap().after(f.getInterfaceSignalDeclAccess().getCommaKeyword_2_4_0());
+         c.setIndentation(f.getInterfaceSignalDeclAccess().getInputoutputKeyword_2_2(), f.getInterfaceSignalDeclAccess().getSemicolonKeyword_2_5());
+         // Return         
+         c.setLinewrap().before(f.getInterfaceSignalDeclAccess().getReturnKeyword_3_2());
+         c.setLinewrap().after(f.getInterfaceSignalDeclAccess().getCommaKeyword_3_4_0());
+         c.setIndentation(f.getInterfaceSignalDeclAccess().getReturnKeyword_3_2(), f.getInterfaceSignalDeclAccess().getSemicolonKeyword_3_5());
+
+      // ==> Sensor <==
+         c.setLinewrap().before(f.getSensorDeclAccess().getSensorKeyword_1());
+         c.setLinewrap().after(f.getSensorDeclAccess().getCommaKeyword_3_0());
+         c.setIndentation(f.getSensorDeclAccess().getSensorKeyword_1(), f.getSensorDeclAccess().getSemicolonKeyword_4());
+         
+      // ==> Relation <==
+         c.setLinewrap().before(f.getRelationDeclAccess().getRelationKeyword_2());
+         c.setLinewrap().after(f.getRelationDeclAccess().getCommaKeyword_4_0());
+         c.setIndentation(f.getRelationDeclAccess().getRelationKeyword_2(), f.getRelationDeclAccess().getSemicolonKeyword_5());
+         
+      // ==> Type <==
+         c.setLinewrap().before(f.getTypeDeclAccess().getTypeKeyword_1());
+         c.setLinewrap().after(f.getTypeDeclAccess().getCommaKeyword_3_0());
+         c.setIndentation(f.getTypeDeclAccess().getTypeKeyword_1(), f.getTypeDeclAccess().getSemicolonKeyword_4());
+         
+      // ==> Constant <==
+         c.setLinewrap().before(f.getConstantDeclsAccess().getConstantKeyword_1());
+         c.setLinewrap().after(f.getConstantDeclsAccess().getCommaKeyword_3_0());
+         c.setIndentation(f.getConstantDeclsAccess().getConstantKeyword_1(), f.getConstantDeclsAccess().getSemicolonKeyword_4());
+         // OneTypeConstant
+         c.setIndentation(f.getOneTypeConstantDeclsAccess().getConstantsAssignment_0(), f.getOneTypeConstantDeclsAccess().getTypeAssignment_3());
+         c.setLinewrap().after(f.getOneTypeConstantDeclsAccess().getCommaKeyword_1_0());
+
+      // ==> Procedure <==
+         c.setLinewrap().before(f.getProcedureDeclAccess().getProcedureKeyword_1());
+         c.setLinewrap().after(f.getProcedureDeclAccess().getCommaKeyword_3_0());
+         c.setIndentation(f.getProcedureDeclAccess().getProcedureKeyword_1(), f.getProcedureDeclAccess().getSemicolonKeyword_4());
+         
+      // ==> Task <==
+         c.setLinewrap().before(f.getTaskDeclAccess().getTaskKeyword_1());
+         c.setLinewrap().after(f.getTaskDeclAccess().getCommaKeyword_3_0());
+         c.setIndentation(f.getTaskDeclAccess().getTaskKeyword_1(), f.getTaskDeclAccess().getSemicolonKeyword_4());
+             
+      // ==> Local Signal <==
+         c.setLinewrap().before(f.getLocalSignalDeclAccess().getSignalKeyword_1());
+         c.setIndentationIncrement().after(f.getLocalSignalDeclAccess().getSignalKeyword_1());
+         c.setLinewrap().after(f.getLocalSignalDeclAccess().getCommaKeyword_3_0());
+         c.setLinewrap().after(f.getLocalSignalDeclAccess().getInKeyword_4());
+         c.setIndentationIncrement().after(f.getLocalSignalDeclAccess().getInKeyword_4());
+         c.setIndentationDecrement().before(f.getLocalSignalDeclAccess().getEndKeyword_6());
+         c.setIndentationDecrement().before(f.getLocalSignalDeclAccess().getEndKeyword_6());
+         c.setLinewrap().before(f.getLocalSignalDeclAccess().getEndKeyword_6());
+     
+      // ==> Parallel <==
+         c.setLinewrap().before(f.getEsterelParallelAccess().getVerticalLineVerticalLineKeyword_1_0());
+         
+      // ==> Block <==
+         c.setLinewrap().before(f.getBlockAccess().getLeftSquareBracketKeyword_2());
+         c.setLinewrap().before(f.getBlockAccess().getRightSquareBracketKeyword_4());
+         c.setIndentation(f.getBlockAccess().getLeftSquareBracketKeyword_2(), f.getBlockAccess().getRightSquareBracketKeyword_4());
+      
+      // ==> Assignment <==
+         c.setLinewrap().before(f.getEsterelAssignmentAccess().getVarAssignment_0());
+         
+      // ==> Abort <==
+         c.setLinewrap().before(f.getAbortAccess().getGroup_1());
+         c.setIndentation(f.getAbortAccess().getAbortKeyword_1_1(), f.getAbortAccess().getWhenKeyword_3());
+         c.setLinewrap().before(f.getAbortAccess().getWhenKeyword_3());
+         c.setIndentationIncrement().after(f.getAbortAccess().getDoKeyword_4_0_1_0());
+         c.setIndentationDecrement().before(f.getAbortAccess().getEndKeyword_4_0_2());
+         c.setLinewrap().before(f.getAbortAccess().getEndKeyword_4_0_2());
+         c.setLinewrap().before(f.getAbortAccess().getEndKeyword_4_1_1_0());
+         c.setLinewrap().before(f.getAbortAccess().getEndKeyword_4_1_1_1_0());
+         c.setLinewrap().before(f.getAbortAccess().getEndKeyword_4_2_1());
+         // AbortCase        
+         c.setIndentationIncrement().before(f.getCaseAccess().getCaseKeyword_1());
+         c.setLinewrap().before(f.getCaseAccess().getCaseKeyword_1());
+         c.setIndentationIncrement().after(f.getCaseAccess().getDoKeyword_3_0());
+         c.setIndentationDecrement().after(f.getCaseRule());
+         c.setIndentationDecrement().after(f.getCaseRule());
+         
+      // ==> Await <==
+         c.setLinewrap().before(f.getAwaitAccess().getAwaitKeyword_1());
+         // AwaitInstance
+         c.setLinewrap().after(f.getAwaitAccess().getDoKeyword_2_0_1_0());
+         c.setIndentationIncrement().after(f.getAwaitAccess().getDoKeyword_2_0_1_0());
+         c.setIndentationDecrement().before(f.getAwaitAccess().getEndKeyword_2_0_1_2());
+         c.setLinewrap().before(f.getAwaitAccess().getEndKeyword_2_0_1_2());
+         // Cases
+         c.setLinewrap().before(f.getAwaitAccess().getEndKeyword_2_1_1());
+         
+      // ==> Procedure Call <==
+         c.setLinewrap().before(f.getProcCallAccess().getCallKeyword_1());
+
+      // ==> Do <==
+         c.setLinewrap().before(f.getDoAccess().getDoKeyword_1());
+         c.setIndentationIncrement().after(f.getDoAccess().getDoKeyword_1());
+         c.setIndentationDecrement().before(f.getDoAccess().getAlternatives_3());
+         // DoUpTo
+         c.setLinewrap().before(f.getDoAccess().getUptoKeyword_3_0_1());
+         // DoWatching
+         c.setLinewrap().before(f.getDoAccess().getWatchingKeyword_3_1_1());
+         c.setIndentationIncrement().after(f.getDoAccess().getTimeoutKeyword_3_1_3_0());
+         c.setIndentationDecrement().before(f.getDoAccess().getEndKeyword_3_1_3_2());
+         c.setLinewrap().before(f.getDoAccess().getEndKeyword_3_1_3_2());
+
+      // ==> Emit <==
+         c.setLinewrap().before(f.getEmitAccess().getEmitKeyword_1());
+
+      // ==> EveryDo <==
+         c.setLinewrap().before(f.getEveryDoAccess().getEveryKeyword_1());
+         c.setIndentation(f.getEveryDoAccess().getDoKeyword_3(), f.getEveryDoAccess().getEndKeyword_5());
+
+      // ==> Exit <==
+         c.setLinewrap().before(f.getExitAccess().getExitKeyword_1());
+
+      // ==> Halt <==
+         c.setLinewrap().before(f.getHaltAccess().getHaltKeyword_2());
+
+      // ==> IfTest <==
+         c.setLinewrap().before(f.getIfTestAccess().getIfKeyword_1());
+         c.setLinewrap().before(f.getIfTestAccess().getEndKeyword_6());
+         // ElsIf
+         c.setLinewrap().before(f.getElsIfAccess().getElsifKeyword_1());
+         c.setIndentationIncrement().after(f.getElsIfAccess().getThenKeyword_3_1());
+         c.setIndentationDecrement().after(f.getElsIfAccess().getThenStatementsAssignment_3_2_1());
+         // Then
+         c.setIndentationIncrement().after(f.getIfTestAccess().getThenKeyword_3_1());
+         c.setIndentationDecrement().after(f.getIfTestAccess().getThenStatementsAssignment_3_2_1());
+         // Else
+         c.setLinewrap().before(f.getIfTestAccess().getElseKeyword_5_1());
+         c.setIndentationIncrement().after(f.getIfTestAccess().getElseKeyword_5_1());
+         c.setIndentationDecrement().after(f.getIfTestAccess().getElseStatementsAssignment_5_2_1());
+
+      // ==> Loop <==
+         c.setLinewrap().before(f.getLoopAccess().getLoopKeyword_2());
+         c.setIndentationIncrement().after(f.getLoopAccess().getLoopKeyword_2());
+         c.setIndentationDecrement().before(f.getLoopAccess().getAlternatives_4());
+         c.setLinewrap().before(f.getLoopAccess().getEndKeyword_4_0_0());
+         c.setLinewrap().before(f.getLoopAccess().getEachKeyword_4_1_0());
+
+      // ==> Nothing <==
+         c.setLinewrap().before(f.getNothingAccess().getNothingKeyword_2());
+
+      // ==> Pause <==
+         c.setLinewrap().before(f.getPauseAccess().getPauseKeyword_2());
+
+      // ==> Present <==
+         c.setLinewrap().before(f.getPresentAccess().getPresentKeyword_1());
+         c.setLinewrap().before(f.getPresentAccess().getEndKeyword_4());
+         c.setIndentationIncrement().after(f.getPresentAccess().getThenKeyword_2_0_1_1());
+         c.setIndentationDecrement().after(f.getPresentAccess().getGroup_2_0_1_2());
+         c.setLinewrap().before(f.getPresentAccess().getElseKeyword_3_1());
+         c.setIndentationIncrement().after(f.getPresentAccess().getElseKeyword_3_1());
+         c.setIndentationDecrement().after(f.getPresentAccess().getGroup_3_2());
+         // PresentCase
+         c.setLinewrap().before(f.getPresentCaseAccess().getCaseKeyword_1());
+         c.setIndentationIncrement().before(f.getPresentCaseAccess().getCaseKeyword_1());
+         c.setIndentationIncrement().after(f.getPresentCaseAccess().getDoKeyword_3_0());
+         c.setIndentationDecrement().after(f.getPresentCaseAccess().getRule());
+         c.setIndentationDecrement().after(f.getPresentCaseAccess().getRule());
+
+      // ==> Repeat <==
+         c.setLinewrap().before(f.getRepeatAccess().getRule());
+         c.setIndentationIncrement().after(f.getRepeatAccess().getTimesKeyword_4());
+         c.setIndentationDecrement().before(f.getRepeatAccess().getEndKeyword_6());
+         c.setLinewrap().before(f.getRepeatAccess().getEndKeyword_6());
+        
+      // ==> Run <==
+         c.setLinewrap().before(f.getRunAccess().getRunKeyword_1_0_0());
+         c.setLinewrap().before(f.getRunAccess().getCopymoduleKeyword_1_1_0());
+         c.setLinewrap().after(f.getRunAccess().getSemicolonKeyword_1_0_2_2_0());
+         c.setLinewrap().after(f.getRunAccess().getSemicolonKeyword_1_1_2_2_0());
+         c.setIndentationIncrement().after(f.getRunAccess().getLeftSquareBracketKeyword_1_0_2_0());
+         c.setIndentationIncrement().after(f.getRunAccess().getLeftSquareBracketKeyword_1_1_2_0());
+         c.setIndentationDecrement().after(f.getRunAccess().getRightSquareBracketKeyword_1_0_2_3());
+         c.setIndentationDecrement().after(f.getRunAccess().getRightSquareBracketKeyword_1_1_2_3());
+         // Renaming
+         c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_0_2_0());
+         c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_1_2_0());
+         c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_2_2_0());
+         c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_3_2_0());
+         c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_4_2_0());
+         c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_5_2_0());
+              
+         // ==> Suspend <==
+         c.setLinewrap().before(f.getSuspendAccess().getGroup_1());
+         c.setIndentationIncrement().after(f.getSuspendAccess().getSuspendKeyword_1_1());
+         c.setIndentationDecrement().before(f.getSuspendAccess().getWhenKeyword_3());
+         c.setLinewrap().before(f.getSuspendAccess().getWhenKeyword_3());
+         c.setIndentationIncrement().after(f.getSuspendAccess().getWhenKeyword_3());
+         c.setIndentationDecrement().after(f.getSuspendAccess().getRule());
+      
+      // ==> Sustain <==
+         c.setLinewrap().before(f.getSustainAccess().getSustainKeyword_1());
+
+      // ==> Trap <==
+         c.setLinewrap().before(f.getTrapAccess().getTrapKeyword_1());
+         c.setIndentationIncrement().after(f.getTrapAccess().getTrapKeyword_1());
+         c.setLinewrap().after(f.getTrapAccess().getCommaKeyword_3_0());
+         c.setIndentationIncrement().after(f.getTrapAccess().getInKeyword_4());
+         c.setIndentationDecrement().after(f.getTrapAccess().getGroup_5());
+         c.setIndentationDecrement().after(f.getTrapAccess().getGroup_5());
+         // TrapHandler
+         c.setLinewrap().before(f.getTrapHandlerAccess().getHandleKeyword_1());
+         c.setIndentationIncrement().after(f.getTrapHandlerAccess().getHandleKeyword_1());
+         c.setIndentationDecrement().after(f.getTrapHandlerAccess().getRule());
+         c.setLinewrap().before(f.getTrapAccess().getEndKeyword_7());
+
+      // ==> Local Variable <==
+         c.setLinewrap().before(f.getLocalVariableAccess().getVarKeyword_1());
+         c.setIndentationIncrement().after(f.getLocalVariableAccess().getVarKeyword_1());
+         c.setLinewrap().after(f.getLocalVariableAccess().getCommaKeyword_3_0());
+         c.setLinewrap().after(f.getLocalVariableAccess().getInKeyword_4());
+         c.setIndentationIncrement().after(f.getLocalVariableAccess().getInKeyword_4());
+         c.setIndentationDecrement().before(f.getLocalVariableAccess().getEndKeyword_6());
+         c.setIndentationDecrement().before(f.getLocalVariableAccess().getEndKeyword_6());
+         c.setLinewrap().before(f.getLocalVariableAccess().getEndKeyword_6());
+         
+//      // ==> UnEmit <==
+//         c.setLinewrap().before(f.getUnEmitRule());
+//         
+//      // ==> Reset <==
+//         c.setLinewrap().before(f.getResetAccess().getResetKeyword_1());
+//         
+//      // ==> Goto <==
+//         c.setLinewrap().before(f.getGotoAccess().getGotoKeyword_1());
+//         
+//      // ==> Label <==
+//         c.setLinewrap().before(f.getLabelRule());
+
+      // ==> Exec <==
+         c.setLinewrap().before(f.getExecAccess().getExecKeyword_1_0_0());
+         c.setLinewrap().before(f.getExecAccess().getDoKeyword_1_0_10_0());
+         c.setIndentationIncrement().after(f.getExecAccess().getDoKeyword_1_0_10_0());
+         c.setIndentationDecrement().after(f.getExecAccess().getStatementsAssignment_1_0_10_1_1());
+         c.setLinewrap().before(f.getExecAccess().getExecKeyword_1_1_0());
+         c.setLinewrap().before(f.getExecAccess().getEndKeyword_2());
+         // ExecCase
+         c.setLinewrap().before(f.getExecCaseAccess().getCaseKeyword_1());
+         c.setIndentationIncrement().before(f.getExecCaseAccess().getCaseKeyword_1());
+         c.setIndentationDecrement().after(f.getExecCaseRule());
+      
+      // ==> Annotation <==
+         c.setLinewrap().before(f.getAnnotationAccess().getRule());
+                  
+      // ==> ValueTestOperator <==
+         c.setNoSpace().after(f.getEsterel_ValueTestOperatorRule());
+         
+      // ==> PreOperator <==
+         c.setNoSpace().after(f.getPreOperatorRule());
+         
+         for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("(", ")")) {
+             Grammar gr = EcoreUtil2.getContainerOfType(pair.getFirst(), Grammar.class);
+
+             // For all pairs '(' ')' that are introduced in KExpression and Grammars
+             //  leveraging KExpressions (i.e. not Annotations) ...
+             if (gr != null && !gr.getName().equals(AnnotationsFormatter.LANGUAGE_NAME)) {
+                 // ... don't insert space after left parenthesis
+                 c.setNoSpace().after(pair.getFirst());
+                 // ... don't insert space before right parenthesis
+                 c.setNoSpace().before(pair.getSecond());
+                 c.setNoLinewrap().after(pair.getSecond());
+             }
          }
-        // /* ********************************************************************
-        // * Formatting for comments
-        // * ********************************************************************
-        // */
-        //
-         c.setLinewrap(2).before(f.getESTEREL_ML_COMMENTRule());
-         c.setNoLinewrap().before(f.getESTEREL_SL_COMMENTRule());
-         c.setLinewrap().after(f.getESTEREL_SL_COMMENTRule());
-        //
-        // /* ********************************************************************
-        // * Formatting for Module/MainModule
-        // * ********************************************************************
-        // */
-         c.setLinewrap(2).before(f.getModuleAccess().getModuleKeyword_0());
-         c.setLinewrap().after(f.getModuleAccess().getColonKeyword_2());
-         c.setNoSpace().before(f.getModuleAccess().getColonKeyword_2());
-          c.setLinewrap().before(f.getEndModuleAccess().getEndKeyword_0_0());
-          c.setLinewrap().before(f.getEndModuleAccess().getFullStopKeyword_1());
-        //
-        // /* ********************************************************************
-        // * Formatting for ModuleInterface
-        // * ********************************************************************
-        // */
-        //
-        // // ==> Input <==
-          c.setLinewrap()
-          .after(f.getInterfaceSignalDeclAccess().getSemicolonKeyword_0_4());
-          c.setLinewrap().after(f.getInterfaceSignalDeclAccess().getCommaKeyword_0_3_0());
-//           c.setIndentationSpace(getMaxIndentation(f.getInterfaceSignalDeclAccess()
-//           .getInputKeyword_0_1().getValue()));
-          c.setIndentation(f.getInterfaceSignalDeclAccess().getInputKeyword_0_1(), f
-          .getInterfaceSignalDeclAccess().getSemicolonKeyword_0_4());
-        // // // ==> Output <==
-        // // c.setLinewrap()
-        // // .after(f.getSignalDeclAccess().getSemicolonKeyword_1_4());
-        // // c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_1_3_0());
-        // // c.setIndentation(f.getSignalDeclAccess().getOutputKeyword_1_1(), f
-        // // .getSignalDeclAccess().getSemicolonKeyword_1_4());
-        // // // ==> InputOutput <==
-        // // c.setLinewrap()
-        // // .after(f.getSignalDeclAccess().getSemicolonKeyword_2_4());
-        // // c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_2_3_0());
-        // // c.setIndentation(f.getSignalDeclAccess().getInputoutputKeyword_2_1(), f
-        // // .getSignalDeclAccess().getSemicolonKeyword_2_4());
-        // // // ==> Return <==
-        // // c.setLinewrap()
-        // // .after(f.getSignalDeclAccess().getSemicolonKeyword_3_4());
-        // // c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_3_3_0());
-        // // c.setIndentation(f.getSignalDeclAccess().getReturnKeyword_3_1(), f
-        // // .getSignalDeclAccess().getSemicolonKeyword_3_4());
-        // // // ==> Type <==
-        // // c.setLinewrap().after(f.getTypeDeclAccess().getSemicolonKeyword_3());
-        // // c.setLinewrap().after(f.getTypeDeclAccess().getCommaKeyword_2_0());
-        // // c.setIndentation(f.getTypeDeclAccess().getTypeKeyword_0(), f
-        // // .getTypeDeclAccess().getSemicolonKeyword_3());
-        // // // ==> Sensor <==
-        // // c.setLinewrap().after(f.getSensorDeclAccess().getSemicolonKeyword_3());
-        // // c.setLinewrap().after(f.getSensorDeclAccess().getCommaKeyword_2_0());
-        // // c.setIndentation(f.getSensorDeclAccess().getSensorKeyword_0(), f
-        // // .getSensorDeclAccess().getSemicolonKeyword_3());
-        // // // ==> Constant <==
-        // // c.setLinewrap()
-        // // .after(f.getConstantDeclAccess().getSemicolonKeyword_3());
-        // // c.setLinewrap().after(f.getConstantDeclAccess().getCommaKeyword_2_0());
-        // // c.setIndentation(f.getConstantDeclAccess().getConstantKeyword_0(), f
-        // // .getConstantDeclAccess().getSemicolonKeyword_3());
-        // // // ==> Relation <==
-        // // c.setLinewrap()
-        // // .after(f.getRelationDeclAccess().getSemicolonKeyword_4());
-        // // c.setLinewrap().after(f.getRelationDeclAccess().getCommaKeyword_3_0());
-        // // c.setIndentation(f.getRelationDeclAccess().getRelationKeyword_1(), f
-        // // .getRelationDeclAccess().getSemicolonKeyword_4());
-        // // // ==> Function <==
-        // // c.setLinewrap()
-        // // .after(f.getFunctionDeclAccess().getSemicolonKeyword_3());
-        // // c.setLinewrap().after(f.getFunctionDeclAccess().getCommaKeyword_2_0());
-        // // c.setIndentation(f.getFunctionDeclAccess().getFunctionKeyword_0(), f
-        // // .getFunctionDeclAccess().getSemicolonKeyword_3());
-        // // // ==> Procedure <==
-        // // c.setLinewrap().after(
-        // // f.getProcedureDeclAccess().getSemicolonKeyword_3());
-        // // c.setLinewrap().after(f.getProcedureDeclAccess().getCommaKeyword_2_0());
-        // // c.setIndentation(f.getProcedureDeclAccess().getProcedureKeyword_0(), f
-        // // .getProcedureDeclAccess().getSemicolonKeyword_3());
-        //
-        // /* ********************************************************************
-        // * Formatting for ModuleBody
-        // * ********************************************************************
-        // */
-//         // c.setIndentationSpace("  "); // reset indentation for the module body
-//         // c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_1_1());
-//         // c.setLinewrap().after(f.getSequenceAccess().getSemicolonKeyword_2());
-//        
-//         // ==> Parallel <==
-         c.setLinewrap()
-         .before(
-         f.getStatementAccess()
-         .getVerticalLineVerticalLineKeyword_1_1_0());
-//         // ==> Block <==
-         c.setLinewrap().before(
-         f.getBlockAccess().getLeftSquareBracketKeyword_0());
-         c.setLinewrap().before(
-         f.getBlockAccess().getRightSquareBracketKeyword_2());
-         c.setIndentation(f.getBlockAccess().getLeftSquareBracketKeyword_0(), f
-         .getBlockAccess().getRightSquareBracketKeyword_2());
-//         // ==> Assignment <==
-          c.setLinewrap().before(
-          f.getAssignmentAccess().getVarAssignment_0());
-//         // ==> Abort <==
-         c.setLinewrap().before(f.getAbortAccess().getAbortKeyword_0());
-         c.setLinewrap().before(f.getAbortAccess().getWhenKeyword_2());
-         c.setIndentation(f.getAbortAccess().getAbortKeyword_0(), f
-         .getAbortAccess().getWhenKeyword_2());
-//          c.setLinewrap().before(f.getAbortEndAccess().getEndKeyword_0());
-         c.setLinewrap().before(f.getAbortCaseSingleAccess().getCaseKeyword_0());
-         c.setIndentation(f.getAbortCaseSingleAccess().getDoKeyword_2_0(), f
-         .getAbortCaseSingleAccess().getGroup_2());
-         c.setLinewrap().before(f.getAbortInstanceAccess().getDoKeyword_1_0());
-//          c.setIndentation(f.getAbortInstanceAccess().getDoKeyword_1_0(), f
-         // .getAbortInstanceAccess().getEndAssignment_1_2());
-//         // TODO AbortBody
-//         // ==> Await <==
-         c.setLinewrap().before(f.getAwaitAccess().getAwaitKeyword_0());
-//         // TODO AwaitBody
-//         // ==> Do <==
-         c.setLinewrap().before(f.getDoAccess().getDoKeyword_0());
-         c.setLinewrap().before(f.getDoUptoAccess().getUptoKeyword_0());
-         c.setIndentation(f.getDoAccess().getDoKeyword_0(), f.getDoUptoAccess()
-         .getUptoKeyword_0());
-         c.setLinewrap().before(f.getDoWatchingAccess().getWatchingKeyword_0());
-         c.setIndentation(f.getDoAccess().getDoKeyword_0(), f
-         .getDoWatchingAccess().getWatchingKeyword_0());
-         c.setLinewrap()
-         .before(f.getDoWatchingEndAccess().getTimeoutKeyword_0());
-         // c.setLinewrap().before(f.getDoWatchingEndAccess().getEndKeyword_2());
-         // c.setIndentation(f.getDoWatchingEndAccess().getTimeoutKeyword_0(), f
-         // .getDoWatchingEndAccess().getEndKeyword_2());
-//         // ==> Emit <==
-         c.setLinewrap().before(f.getEmitAccess().getEmitKeyword_0());
-//         // ==> EveryDo <==
-         c.setLinewrap().before(f.getEveryDoAccess().getEveryKeyword_0());
-         // c.setIndentation(f.getEveryDoAccess().getDoKeyword_2(), f
-         // .getEveryDoAccess().getEndKeyword_4());
-//         // ==> Exit <==
-         c.setLinewrap().before(f.getExitAccess().getExitKeyword_0());
-//         // ==> Halt <==
-         c.setLinewrap().before(f.getHaltAccess().getHaltKeyword_1());
-//         // ==> If <==
-         c.setLinewrap().before(f.getIfTestAccess().getIfKeyword_0());
-         // c.setLinewrap().before(f.getIfTestAccess().getEndKeyword_5());
-         c.setLinewrap().before(f.getElsIfAccess().getElsifKeyword_0());
-         c.setLinewrap().before(f.getElsePartAccess().getElseKeyword_0());
-         c.setLinewrap().before(f.getThenPartAccess().getThenKeyword_0());
-//         // TODO If indentation
-//         // ==> Loop <==
-         // TODO Indentation for Loop
-         c.setLinewrap().before(f.getLoopAccess().getLoopKeyword_0());
-         c.setLinewrap().before(f.getEndLoopAccess().getEndKeyword_1());
-         // c.setIndentation(f.getLoopAccess().getLoopKeyword_0(), f
-         // .getEndLoopAccess().getEndKeyword_0());
-         c.setLinewrap().before(f.getLoopEachAccess().getEachKeyword_0());
-         // c.setIndentation(f.getLoopAccess().getLoopKeyword_0(), f
-         // .getLoopEachAccess().getEachKeyword_0());
-//         // ==> Nothing <==
-         c.setLinewrap().before(f.getNothingAccess().getNothingKeyword_0());
-//         // ==> Pause <==
-         c.setLinewrap().before(f.getPauseAccess().getPauseKeyword_0());
-//         // ==> Present <==
-         c.setLinewrap().before(f.getPresentAccess().getPresentKeyword_0());
-//         // c.setLinewrap().before(f.getPresentAccess().getEndKeyword_3());
-//         // TODO Present indents
-//         // ==> Repeat <==
-         c.setLinewrap().before(f.getRepeatAccess().getGroup());
-         c.setLinewrap().before(f.getRepeatAccess().getTimesKeyword_3());
-         c.setLinewrap().before(f.getRepeatAccess().getEndKeyword_5());
-//         // TODO test repeat
-//         // ==> Run <==
-         c.setLinewrap().before(f.getRunAccess().getRunKeyword_0_0());
-         c.setLinewrap().before(f.getRunAccess().getCopymoduleKeyword_1_0());
-//         // TODO formatting for renaming
-//         // ==> Local Signal <==
-         c.setLinewrap().before(
-         f.getLocalSignalDeclAccess().getSignalKeyword_0());
-         c.setLinewrap().before(f.getLocalSignalDeclAccess().getInKeyword_2());
-         // c.setLinewrap().before(f.getLocalSignalDeclAccess().getEndKeyword_4());
-         // c.setIndentation(f.getLocalSignalDeclAccess().getSignalKeyword_0(), f
-         // .getLocalSignalDeclAccess().getEndKeyword_4());
-         // c.setIndentation(f.getLocalSignalDeclAccess().getInKeyword_2(), f
-         // .getLocalSignalDeclAccess().getEndKeyword_4());
-//         // ==> Suspend <==
-         c.setLinewrap().before(f.getSuspendAccess().getSuspendKeyword_0());
-         c.setLinewrap().before(f.getSuspendAccess().getWhenKeyword_2());
-         c.setIndentation(f.getSuspendAccess().getSuspendKeyword_0(), f
-         .getSuspendAccess().getWhenKeyword_2());
-//         // ==> Sustain <==
-         c.setLinewrap().before(f.getSustainAccess().getSustainKeyword_0());
-//         // ==> Trap <==
-         c.setLinewrap().before(f.getTrapAccess().getTrapKeyword_0());
-         c.setLinewrap().before(f.getTrapAccess().getInKeyword_2());
-         c.setLinewrap().before(f.getTrapAccess().getEndKeyword_5());
-//         // ==> Var <==
-         // c.setLinewrap().before(f.getVariableAccess().getVarKeyword_0());
-         // c.setLinewrap().before(f.getVariableAccess().getInKeyword_2());
-         // c.setLinewrap().before(f.getVariableAccess().getEndKeyword_4());
-//         // ==> Weak Abort <==
-         c.setLinewrap().before(f.getWeakAbortAccess().getWeakKeyword_1());
-         c.setLinewrap().before(f.getWeakAbortAccess().getWhenKeyword_4());
-         c.setIndentation(f.getWeakAbortAccess().getWeakKeyword_1(), f
-         .getWeakAbortAccess().getWhenKeyword_4());
-         c.setLinewrap().before(f.getWeakAbortEndAccess().getEndKeyword_1());
-        // // ...
+         
     }
 
     protected String getMaxIndentation(final String keyword) {

@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference;
 
 /**
  * <!-- begin-user-doc -->
