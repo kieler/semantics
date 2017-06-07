@@ -96,7 +96,9 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
     
     private def void launch() {
         // Show data pool view
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(DataPoolView.VIEW_ID);
+        if(DataPoolView.instance != null) {
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().bringToTop(DataPoolView.instance);
+        }
         
         // TODO: Hard coded stuff
         if(files.size == 1) {
