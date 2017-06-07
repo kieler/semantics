@@ -142,10 +142,8 @@ class SCChartsExtension {
 
     // Return the list of all contained States.
     def Iterator<State> getAllContainedStates(Scope scope) {
-        //TODO:  getAllContainedStates iterator
-        //scope.sccAllContainedStates; 
-        scope.eAllContents().filter(typeof(State))
-    //        scope.eAllContents().filter(typeof(State))
+        scope.sccAllContainedStates; 
+//        scope.eAllContents().filter(typeof(State))
     }
 
     // Return the list of all contained Regions.
@@ -169,11 +167,12 @@ class SCChartsExtension {
 
     // Return the list of all contained States and the root state if the scope is already a state.
     def Iterator<State> getAllStates(Scope scope) {
-        if (scope instanceof State) {
-            return Iterators.singletonIterator(scope as State) + scope.getAllContainedStates
-        } else {
-            return scope.getAllContainedStates
-        }
+        return scope.sccAllStates
+//        if (scope instanceof State) {
+//            return Iterators.singletonIterator(scope as State) + scope.getAllContainedStates
+//        } else {
+//            return scope.getAllContainedStates
+//        }
     }
     
     def Iterator<Scope> getAllScopes(Scope scope) {
