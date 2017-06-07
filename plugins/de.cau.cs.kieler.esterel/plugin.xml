@@ -38,11 +38,17 @@
      <featureClass
            class="de.cau.cs.kieler.esterel.features.SimulationVisualization">
      </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.EsterelParallel">
+     </featureClass>
+     <featureGroupClass
+           class="de.cau.cs.kieler.esterel.scest.features.SCEstFeature">
+     </featureGroupClass>
   </extension>
   <extension
         point="de.cau.cs.kieler.kico.transformation">
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.transformations.EsterelDummy">
+           class="de.cau.cs.kieler.esterel.scest.transformations.EsterelParallel">
      </expansionTransformationClass>
   </extension>
   <!--extension

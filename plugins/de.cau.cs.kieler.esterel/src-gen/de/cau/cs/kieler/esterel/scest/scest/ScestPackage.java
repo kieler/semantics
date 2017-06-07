@@ -260,14 +260,14 @@ public interface ScestPackage extends EPackage
   int UN_EMIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.ResetImpl <em>Reset</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl <em>Set</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.esterel.scest.scest.impl.ResetImpl
-   * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getReset()
+   * @see de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl
+   * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getSet()
    * @generated
    */
-  int RESET = 3;
+  int SET = 3;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -276,7 +276,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RESET__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
+  int SET__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -285,7 +285,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RESET__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int SET__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Tick</b></em>' containment reference.
@@ -294,7 +294,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RESET__TICK = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int SET__TICK = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -303,16 +303,16 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RESET__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int SET__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>Reset</em>' class.
+   * The number of structural features of the '<em>Set</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RESET_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int SET_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 3;
 
 
   /**
@@ -511,47 +511,47 @@ public interface ScestPackage extends EPackage
   EReference getUnEmit_Tick();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.scest.scest.Reset <em>Reset</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.scest.scest.Set <em>Set</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Reset</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.Reset
+   * @return the meta object for class '<em>Set</em>'.
+   * @see de.cau.cs.kieler.esterel.scest.scest.Set
    * @generated
    */
-  EClass getReset();
+  EClass getSet();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.scest.scest.Reset#getSignal <em>Signal</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getSignal <em>Signal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Signal</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.Reset#getSignal()
-   * @see #getReset()
+   * @see de.cau.cs.kieler.esterel.scest.scest.Set#getSignal()
+   * @see #getSet()
    * @generated
    */
-  EReference getReset_Signal();
+  EReference getSet_Signal();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Reset#getTick <em>Tick</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getTick <em>Tick</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.Reset#getTick()
-   * @see #getReset()
+   * @see de.cau.cs.kieler.esterel.scest.scest.Set#getTick()
+   * @see #getSet()
    * @generated
    */
-  EReference getReset_Tick();
+  EReference getSet_Tick();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Reset#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpr <em>Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.Reset#getExpr()
-   * @see #getReset()
+   * @see de.cau.cs.kieler.esterel.scest.scest.Set#getExpr()
+   * @see #getSet()
    * @generated
    */
-  EReference getReset_Expr();
+  EReference getSet_Expr();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -727,14 +727,14 @@ public interface ScestPackage extends EPackage
     EReference UN_EMIT__TICK = eINSTANCE.getUnEmit_Tick();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.ResetImpl <em>Reset</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl <em>Set</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.esterel.scest.scest.impl.ResetImpl
-     * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getReset()
+     * @see de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl
+     * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getSet()
      * @generated
      */
-    EClass RESET = eINSTANCE.getReset();
+    EClass SET = eINSTANCE.getSet();
 
     /**
      * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
@@ -742,7 +742,7 @@ public interface ScestPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference RESET__SIGNAL = eINSTANCE.getReset_Signal();
+    EReference SET__SIGNAL = eINSTANCE.getSet_Signal();
 
     /**
      * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
@@ -750,7 +750,7 @@ public interface ScestPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference RESET__TICK = eINSTANCE.getReset_Tick();
+    EReference SET__TICK = eINSTANCE.getSet_Tick();
 
     /**
      * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
@@ -758,7 +758,7 @@ public interface ScestPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference RESET__EXPR = eINSTANCE.getReset_Expr();
+    EReference SET__EXPR = eINSTANCE.getSet_Expr();
 
   }
 

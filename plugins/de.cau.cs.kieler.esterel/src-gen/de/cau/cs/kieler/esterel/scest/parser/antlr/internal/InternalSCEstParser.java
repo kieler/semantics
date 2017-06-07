@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCEstParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'module'", "':'", "';'", "'end'", "'.'", "'{'", "'}'", "'||'", "'['", "']'", "'present'", "'then'", "'else'", "'case'", "'do'", "'if'", "'elsif'", "'loop'", "'each'", "'positive'", "'repeat'", "'times'", "'weak'", "'abort'", "'when'", "'await'", "'every'", "'suspend'", "'trap'", "','", "'in'", "'handle'", "'exec'", "'('", "')'", "'return'", "'signal'", "'var'", "'upto'", "'watching'", "'timeout'", "'unemit'", "'reset'", "'fork'", "'par'", "'join'", "'combine'", "'with'", "'type'", "'constant'", "'='", "'function'", "'procedure'", "'task'", "'input'", "'output'", "'inputoutput'", "':='", "'tick'", "'sensor'", "'relation'", "'=>'", "'#'", "'nothing'", "'halt'", "'emit'", "'sustain'", "'call'", "'exit'", "'run'", "'copymodule'", "'/'", "'*'", "'+'", "'-'", "'mod'", "'<>'", "'>'", "'<'", "'<='", "'>='", "'not'", "'and'", "'or'", "'??'", "'immediate'", "'pause'", "'goto'", "'expression'", "'const'", "'extern'", "'volatile'", "'static'", "'()'", "'!'", "'&'", "'@'", "'pre'", "'?'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'++'", "'--'", "'|'", "'&&'", "'bool'", "'int'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'module'", "':'", "';'", "'end'", "'.'", "'{'", "'}'", "'||'", "'['", "']'", "'present'", "'then'", "'else'", "'case'", "'do'", "'if'", "'elsif'", "'loop'", "'each'", "'positive'", "'repeat'", "'times'", "'weak'", "'abort'", "'when'", "'await'", "'every'", "'suspend'", "'trap'", "','", "'in'", "'handle'", "'exec'", "'('", "')'", "'return'", "'signal'", "'var'", "'upto'", "'watching'", "'timeout'", "'unemit'", "'set'", "'fork'", "'par'", "'join'", "'combine'", "'with'", "'type'", "'constant'", "'='", "'function'", "'procedure'", "'task'", "'input'", "'output'", "'inputoutput'", "':='", "'tick'", "'sensor'", "'relation'", "'=>'", "'#'", "'nothing'", "'halt'", "'emit'", "'sustain'", "'call'", "'exit'", "'run'", "'copymodule'", "'/'", "'*'", "'+'", "'-'", "'mod'", "'<>'", "'>'", "'<'", "'<='", "'>='", "'not'", "'and'", "'or'", "'??'", "'immediate'", "'pause'", "'goto'", "'expression'", "'const'", "'extern'", "'volatile'", "'static'", "'()'", "'!'", "'&'", "'@'", "'pre'", "'?'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'++'", "'--'", "'|'", "'&&'", "'bool'", "'int'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -1552,7 +1552,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSCEstAtomicStatement"
-    // InternalSCEst.g:561:1: ruleSCEstAtomicStatement returns [EObject current=null] : (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Reset_25= ruleReset | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional ) ;
+    // InternalSCEst.g:561:1: ruleSCEstAtomicStatement returns [EObject current=null] : (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Set_25= ruleSet | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional ) ;
     public final EObject ruleSCEstAtomicStatement() throws RecognitionException {
         EObject current = null;
 
@@ -1606,7 +1606,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
         EObject this_UnEmit_24 = null;
 
-        EObject this_Reset_25 = null;
+        EObject this_Set_25 = null;
 
         EObject this_Assignment_26 = null;
 
@@ -1618,10 +1618,10 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCEst.g:564:28: ( (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Reset_25= ruleReset | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional ) )
-            // InternalSCEst.g:565:1: (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Reset_25= ruleReset | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional )
+            // InternalSCEst.g:564:28: ( (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Set_25= ruleSet | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional ) )
+            // InternalSCEst.g:565:1: (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Set_25= ruleSet | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional )
             {
-            // InternalSCEst.g:565:1: (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Reset_25= ruleReset | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional )
+            // InternalSCEst.g:565:1: (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Set_25= ruleSet | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional )
             int alt12=29;
             alt12 = dfa12.predict(input);
             switch (alt12) {
@@ -2301,7 +2301,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 26 :
-                    // InternalSCEst.g:891:2: this_Reset_25= ruleReset
+                    // InternalSCEst.g:891:2: this_Set_25= ruleSet
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -2310,17 +2310,17 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getSCEstAtomicStatementAccess().getResetParserRuleCall_25()); 
+                              newCompositeNode(grammarAccess.getSCEstAtomicStatementAccess().getSetParserRuleCall_25()); 
                           
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_Reset_25=ruleReset();
+                    this_Set_25=ruleSet();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
                        
-                              current = this_Reset_25; 
+                              current = this_Set_25; 
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -13414,28 +13414,28 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleUnEmit"
 
 
-    // $ANTLR start "entryRuleReset"
-    // InternalSCEst.g:4640:1: entryRuleReset returns [EObject current=null] : iv_ruleReset= ruleReset EOF ;
-    public final EObject entryRuleReset() throws RecognitionException {
+    // $ANTLR start "entryRuleSet"
+    // InternalSCEst.g:4640:1: entryRuleSet returns [EObject current=null] : iv_ruleSet= ruleSet EOF ;
+    public final EObject entryRuleSet() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleReset = null;
+        EObject iv_ruleSet = null;
 
 
         try {
-            // InternalSCEst.g:4641:2: (iv_ruleReset= ruleReset EOF )
-            // InternalSCEst.g:4642:2: iv_ruleReset= ruleReset EOF
+            // InternalSCEst.g:4641:2: (iv_ruleSet= ruleSet EOF )
+            // InternalSCEst.g:4642:2: iv_ruleSet= ruleSet EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getResetRule()); 
+               newCompositeNode(grammarAccess.getSetRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleReset=ruleReset();
+            iv_ruleSet=ruleSet();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleReset; 
+               current =iv_ruleSet; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -13451,12 +13451,12 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleReset"
+    // $ANTLR end "entryRuleSet"
 
 
-    // $ANTLR start "ruleReset"
-    // InternalSCEst.g:4649:1: ruleReset returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'reset' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) ) ;
-    public final EObject ruleReset() throws RecognitionException {
+    // $ANTLR start "ruleSet"
+    // InternalSCEst.g:4649:1: ruleSet returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'set' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) ) ;
+    public final EObject ruleSet() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -13473,11 +13473,11 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCEst.g:4652:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'reset' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) ) )
-            // InternalSCEst.g:4653:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'reset' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) )
+            // InternalSCEst.g:4652:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'set' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) ) )
+            // InternalSCEst.g:4653:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'set' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) )
             {
-            // InternalSCEst.g:4653:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'reset' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) )
-            // InternalSCEst.g:4653:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'reset' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' )
+            // InternalSCEst.g:4653:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'set' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' ) )
+            // InternalSCEst.g:4653:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'set' ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) ) (otherlv_4= '(' ( (lv_expr_5_0= ruleExpression ) ) otherlv_6= ')' )
             {
             // InternalSCEst.g:4653:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop146:
@@ -13499,7 +13499,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getResetAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+            	      	        newCompositeNode(grammarAccess.getSetAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_98);
@@ -13510,7 +13510,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getResetRule());
+            	      	            current = createModelElementForParent(grammarAccess.getSetRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -13535,7 +13535,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             otherlv_1=(Token)match(input,58,FollowSets000.FOLLOW_36); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getResetAccess().getResetKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getSetAccess().getSetKeyword_1());
                   
             }
             // InternalSCEst.g:4675:1: ( ( (otherlv_2= RULE_ID ) ) | ( (lv_tick_3_0= ruleTick ) ) )
@@ -13573,14 +13573,14 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       			if (current==null) {
-                      	            current = createModelElement(grammarAccess.getResetRule());
+                      	            current = createModelElement(grammarAccess.getSetRule());
                       	        }
                               
                     }
                     otherlv_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_80); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		newLeafNode(otherlv_2, grammarAccess.getResetAccess().getSignalISignalCrossReference_2_0_0()); 
+                      		newLeafNode(otherlv_2, grammarAccess.getSetAccess().getSignalISignalCrossReference_2_0_0()); 
                       	
                     }
 
@@ -13603,7 +13603,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getResetAccess().getTickTickParserRuleCall_2_1_0()); 
+                      	        newCompositeNode(grammarAccess.getSetAccess().getTickTickParserRuleCall_2_1_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_80);
@@ -13614,7 +13614,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getResetRule());
+                      	            current = createModelElementForParent(grammarAccess.getSetRule());
                       	        }
                              		set(
                              			current, 
@@ -13642,7 +13642,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             otherlv_4=(Token)match(input,49,FollowSets000.FOLLOW_40); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getResetAccess().getLeftParenthesisKeyword_3_0());
+                  	newLeafNode(otherlv_4, grammarAccess.getSetAccess().getLeftParenthesisKeyword_3_0());
                   
             }
             // InternalSCEst.g:4714:1: ( (lv_expr_5_0= ruleExpression ) )
@@ -13653,7 +13653,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getResetAccess().getExprExpressionParserRuleCall_3_1_0()); 
+              	        newCompositeNode(grammarAccess.getSetAccess().getExprExpressionParserRuleCall_3_1_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_99);
@@ -13664,7 +13664,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getResetRule());
+              	            current = createModelElementForParent(grammarAccess.getSetRule());
               	        }
                      		set(
                      			current, 
@@ -13683,7 +13683,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             otherlv_6=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_6, grammarAccess.getResetAccess().getRightParenthesisKeyword_3_2());
+                  	newLeafNode(otherlv_6, grammarAccess.getSetAccess().getRightParenthesisKeyword_3_2());
                   
             }
 
@@ -13708,7 +13708,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleReset"
+    // $ANTLR end "ruleSet"
 
 
     // $ANTLR start "entryRuleConditional"
@@ -49265,11 +49265,11 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
 
     // $ANTLR start synpred46_InternalSCEst
     public final void synpred46_InternalSCEst_fragment() throws RecognitionException {   
-        EObject this_Reset_25 = null;
+        EObject this_Set_25 = null;
 
 
-        // InternalSCEst.g:891:2: (this_Reset_25= ruleReset )
-        // InternalSCEst.g:891:2: this_Reset_25= ruleReset
+        // InternalSCEst.g:891:2: (this_Set_25= ruleSet )
+        // InternalSCEst.g:891:2: this_Set_25= ruleSet
         {
         if ( state.backtracking==0 ) {
            
@@ -49277,7 +49277,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
           	
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        this_Reset_25=ruleReset();
+        this_Set_25=ruleSet();
 
         state._fsp--;
         if (state.failed) return ;
@@ -58401,7 +58401,7 @@ public class InternalSCEstParser extends AbstractInternalAntlrParser {
             this.transition = dfa_36;
         }
         public String getDescription() {
-            return "565:1: (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Reset_25= ruleReset | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional )";
+            return "565:1: (this_Abort_0= ruleAbort | this_EsterelAssignment_1= ruleEsterelAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_Goto_23= ruleGoto | this_UnEmit_24= ruleUnEmit | this_Set_25= ruleSet | this_Assignment_26= ruleAssignment | this_Parallel_27= ruleParallel | this_Conditional_28= ruleConditional )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;

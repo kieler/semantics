@@ -85,10 +85,10 @@
 'pure'=115
 'relation'=76
 'repeat'=36
-'reset'=58
 'return'=51
 'run'=85
 'sensor'=75
+'set'=58
 'signal'=52
 'static'=108
 'string'=121

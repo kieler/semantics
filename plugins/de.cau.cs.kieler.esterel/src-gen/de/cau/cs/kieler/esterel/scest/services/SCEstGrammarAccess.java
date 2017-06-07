@@ -361,7 +361,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLocalVariableParserRuleCall_22 = (RuleCall)cAlternatives.eContents().get(22);
 		private final RuleCall cGotoParserRuleCall_23 = (RuleCall)cAlternatives.eContents().get(23);
 		private final RuleCall cUnEmitParserRuleCall_24 = (RuleCall)cAlternatives.eContents().get(24);
-		private final RuleCall cResetParserRuleCall_25 = (RuleCall)cAlternatives.eContents().get(25);
+		private final RuleCall cSetParserRuleCall_25 = (RuleCall)cAlternatives.eContents().get(25);
 		private final RuleCall cAssignmentParserRuleCall_26 = (RuleCall)cAlternatives.eContents().get(26);
 		private final RuleCall cParallelParserRuleCall_27 = (RuleCall)cAlternatives.eContents().get(27);
 		private final RuleCall cConditionalParserRuleCall_28 = (RuleCall)cAlternatives.eContents().get(28);
@@ -371,12 +371,12 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//SCEstAtomicStatement scl::Statement:
 		//	Abort | EsterelAssignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest |
 		//	LocalSignalDecl | Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | Goto |
-		//	UnEmit | Reset | Assignment | Parallel | Conditional
+		//	UnEmit | Set | Assignment | Parallel | Conditional
 		@Override public ParserRule getRule() { return rule; }
 
 		//Abort | EsterelAssignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest |
 		//LocalSignalDecl | Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | Goto |
-		//UnEmit | Reset | Assignment | Parallel | Conditional
+		//UnEmit | Set | Assignment | Parallel | Conditional
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Abort
@@ -454,8 +454,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//UnEmit
 		public RuleCall getUnEmitParserRuleCall_24() { return cUnEmitParserRuleCall_24; }
 
-		//Reset
-		public RuleCall getResetParserRuleCall_25() { return cResetParserRuleCall_25; }
+		//Set
+		public RuleCall getSetParserRuleCall_25() { return cSetParserRuleCall_25; }
 
 		//Assignment
 		public RuleCall getAssignmentParserRuleCall_26() { return cAssignmentParserRuleCall_26; }
@@ -3167,12 +3167,12 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTickTickParserRuleCall_2_1_0() { return cTickTickParserRuleCall_2_1_0; }
 	}
 
-	public class ResetElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Reset");
+	public class SetElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Set");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Keyword cResetKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cSetKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Assignment cSignalAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
 		private final CrossReference cSignalISignalCrossReference_2_0_0 = (CrossReference)cSignalAssignment_2_0.eContents().get(0);
@@ -3187,12 +3187,12 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ==> reset: Signal value reset (absolute write)
 		//// -------------------------------------
-		//Reset:
+		//Set:
 		//	annotations+=Annotation*
-		//	"reset" (signal=[esterel::ISignal] | tick=Tick) ("(" expr=Expression ")");
+		//	"set" (signal=[esterel::ISignal] | tick=Tick) ("(" expr=Expression ")");
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* "reset" (signal=[esterel::ISignal] | tick=Tick) ("(" expr=Expression ")")
+		//annotations+=Annotation* "set" (signal=[esterel::ISignal] | tick=Tick) ("(" expr=Expression ")")
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -3201,8 +3201,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//"reset"
-		public Keyword getResetKeyword_1() { return cResetKeyword_1; }
+		//"set"
+		public Keyword getSetKeyword_1() { return cSetKeyword_1; }
 
 		//(signal=[esterel::ISignal] | tick=Tick)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
@@ -3765,7 +3765,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	private final LocalVariableElements pLocalVariable;
 	private final DoElements pDo;
 	private final UnEmitElements pUnEmit;
-	private final ResetElements pReset;
+	private final SetElements pSet;
 	private final ConditionalElements pConditional;
 	private final ElseScopeElements pElseScope;
 	private final MetaStatementElements pMetaStatement;
@@ -3834,7 +3834,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		this.pLocalVariable = new LocalVariableElements();
 		this.pDo = new DoElements();
 		this.pUnEmit = new UnEmitElements();
-		this.pReset = new ResetElements();
+		this.pSet = new SetElements();
 		this.pConditional = new ConditionalElements();
 		this.pElseScope = new ElseScopeElements();
 		this.pMetaStatement = new MetaStatementElements();
@@ -3953,7 +3953,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//SCEstAtomicStatement scl::Statement:
 	//	Abort | EsterelAssignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest |
 	//	LocalSignalDecl | Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | Goto |
-	//	UnEmit | Reset | Assignment | Parallel | Conditional
+	//	UnEmit | Set | Assignment | Parallel | Conditional
 	public SCEstAtomicStatementElements getSCEstAtomicStatementAccess() {
 		return pSCEstAtomicStatement;
 	}
@@ -4314,15 +4314,15 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ==> reset: Signal value reset (absolute write)
 	//// -------------------------------------
-	//Reset:
+	//Set:
 	//	annotations+=Annotation*
-	//	"reset" (signal=[esterel::ISignal] | tick=Tick) ("(" expr=Expression ")");
-	public ResetElements getResetAccess() {
-		return pReset;
+	//	"set" (signal=[esterel::ISignal] | tick=Tick) ("(" expr=Expression ")");
+	public SetElements getSetAccess() {
+		return pSet;
 	}
 	
-	public ParserRule getResetRule() {
-		return getResetAccess().getRule();
+	public ParserRule getSetRule() {
+		return getSetAccess().getRule();
 	}
 
 	/// * ###################################################

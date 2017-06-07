@@ -73,6 +73,7 @@ public class SCEstFormatter extends AbstractDeclarativeFormatter {
          c.setIndentationIncrement().after(f.getSCEstModuleAccess().getLeftCurlyBracketKeyword_5_1_1());
          c.setIndentationDecrement().before(f.getSCEstModuleAccess().getRightCurlyBracketKeyword_5_1_3());
          c.setLinewrap().before(f.getSCEstModuleAccess().getRightCurlyBracketKeyword_5_1_3());
+         c.setLinewrap().after(f.getSCEstModuleAccess().getRightCurlyBracketKeyword_5_1_3());
         
         /* ********************************************************************
          * Formatting for ModuleInterface
@@ -318,8 +319,8 @@ public class SCEstFormatter extends AbstractDeclarativeFormatter {
       // ==> UnEmit <==
          c.setLinewrap().before(f.getUnEmitAccess().getUnemitKeyword_1());
          
-      // ==> Reset <==
-         c.setLinewrap().before(f.getResetAccess().getResetKeyword_1());
+      // ==> Set <==
+         c.setLinewrap().before(f.getSetAccess().getSetKeyword_1());
          
       // ==> Goto <==
          c.setLinewrap().before(f.getGotoAccess().getGotoKeyword_0());

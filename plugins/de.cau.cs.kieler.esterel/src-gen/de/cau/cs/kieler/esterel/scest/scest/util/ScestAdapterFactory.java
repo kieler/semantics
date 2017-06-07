@@ -94,9 +94,9 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
         return createUnEmitAdapter();
       }
       @Override
-      public Adapter caseReset(Reset object)
+      public Adapter caseSet(Set object)
       {
-        return createResetAdapter();
+        return createSetAdapter();
       }
       @Override
       public Adapter caseAnnotatable(Annotatable object)
@@ -176,16 +176,16 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.scest.scest.Reset <em>Reset</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.scest.scest.Set <em>Set</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.scest.scest.Reset
+   * @see de.cau.cs.kieler.esterel.scest.scest.Set
    * @generated
    */
-  public Adapter createResetAdapter()
+  public Adapter createSetAdapter()
   {
     return null;
   }

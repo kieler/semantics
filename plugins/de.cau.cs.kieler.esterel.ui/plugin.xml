@@ -342,6 +342,13 @@
             label="All Transformations"
             priority="80">
       </editor>
+      <editor
+            editor="de.cau.cs.kieler.esterel.scest.SCEst"
+            features="ESTERELPARALLEL"
+            label="SCEst to SCL Transformation"
+            preferred="EsterelParallel"
+            priority="100">
+      </editor>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.editor">

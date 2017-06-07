@@ -67,7 +67,7 @@ public class ScestFactoryImpl extends EFactoryImpl implements ScestFactory
       case ScestPackage.SC_EST_PROGRAM: return createSCEstProgram();
       case ScestPackage.SC_EST_MODULE: return createSCEstModule();
       case ScestPackage.UN_EMIT: return createUnEmit();
-      case ScestPackage.RESET: return createReset();
+      case ScestPackage.SET: return createSet();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -111,10 +111,10 @@ public class ScestFactoryImpl extends EFactoryImpl implements ScestFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Reset createReset()
+  public Set createSet()
   {
-    ResetImpl reset = new ResetImpl();
-    return reset;
+    SetImpl set = new SetImpl();
+    return set;
   }
 
   /**

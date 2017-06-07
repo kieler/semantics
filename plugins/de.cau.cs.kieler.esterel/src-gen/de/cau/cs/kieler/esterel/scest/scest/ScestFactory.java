@@ -50,13 +50,13 @@ public interface ScestFactory extends EFactory
   UnEmit createUnEmit();
 
   /**
-   * Returns a new object of class '<em>Reset</em>'.
+   * Returns a new object of class '<em>Set</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reset</em>'.
+   * @return a new object of class '<em>Set</em>'.
    * @generated
    */
-  Reset createReset();
+  Set createSet();
 
   /**
    * Returns the package supported by this factory.

@@ -62,7 +62,7 @@ SCEstStatement returns scl::Statement:
 SCEstAtomicStatement returns scl::Statement:
     Abort | EsterelAssignment | Await | Block | ProcCall | Do | Emit | EveryDo | 
     Exit | Exec | Halt | IfTest | LocalSignalDecl | Loop | Nothing | Pause | Present | 
-    Repeat | Run | Suspend | Sustain | Trap | LocalVariable | Goto | UnEmit | Reset | 
+    Repeat | Run | Suspend | Sustain | Trap | LocalVariable | Goto | UnEmit | Set | 
     Assignment | Parallel | Conditional ;
         
 // ==> Parallel: at least two threads
@@ -326,7 +326,7 @@ Do returns esterel::Do:
         )?
     );
       
- /* ###################################################
+/* ###################################################
  * ###                   SCEst                     ###
  * ###################################################
  */
@@ -340,9 +340,9 @@ UnEmit:
 
 // ==> reset: Signal value reset (absolute write)
 // -------------------------------------
-Reset:
+Set:
     (annotations += Annotation)*
-    "reset" 
+    "set" 
     ((signal=[esterel::ISignal|ID]) | tick=Tick) 
     ("("expr=Expression")");
      

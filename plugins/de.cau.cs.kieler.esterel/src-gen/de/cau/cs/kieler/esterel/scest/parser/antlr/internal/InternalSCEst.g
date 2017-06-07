@@ -892,11 +892,11 @@ ruleSCEstAtomicStatement returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSCEstAtomicStatementAccess().getResetParserRuleCall_25()); 
+        newCompositeNode(grammarAccess.getSCEstAtomicStatementAccess().getSetParserRuleCall_25()); 
     }
-    this_Reset_25=ruleReset
+    this_Set_25=ruleSet
     { 
-        $current = $this_Reset_25.current; 
+        $current = $this_Set_25.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -4636,28 +4636,28 @@ ruleUnEmit returns [EObject current=null]
 
 
 
-// Entry rule entryRuleReset
-entryRuleReset returns [EObject current=null] 
+// Entry rule entryRuleSet
+entryRuleSet returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getResetRule()); }
-	 iv_ruleReset=ruleReset 
-	 { $current=$iv_ruleReset.current; } 
+	{ newCompositeNode(grammarAccess.getSetRule()); }
+	 iv_ruleSet=ruleSet 
+	 { $current=$iv_ruleSet.current; } 
 	 EOF 
 ;
 
-// Rule Reset
-ruleReset returns [EObject current=null] 
+// Rule Set
+ruleSet returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getResetAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getSetAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
 	    }
 		lv_annotations_0_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getResetRule());
+	            $current = createModelElementForParent(grammarAccess.getSetRule());
 	        }
        		add(
        			$current, 
@@ -4668,9 +4668,9 @@ ruleReset returns [EObject current=null]
 	    }
 
 )
-)*	otherlv_1='reset' 
+)*	otherlv_1='set' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getResetAccess().getResetKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getSetAccess().getSetKeyword_1());
     }
 ((
 (
@@ -4679,12 +4679,12 @@ ruleReset returns [EObject current=null]
 		}
 		{
 			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getResetRule());
+	            $current = createModelElement(grammarAccess.getSetRule());
 	        }
         }
 	otherlv_2=RULE_ID
 	{
-		newLeafNode(otherlv_2, grammarAccess.getResetAccess().getSignalISignalCrossReference_2_0_0()); 
+		newLeafNode(otherlv_2, grammarAccess.getSetAccess().getSignalISignalCrossReference_2_0_0()); 
 	}
 
 )
@@ -4692,11 +4692,11 @@ ruleReset returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getResetAccess().getTickTickParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getSetAccess().getTickTickParserRuleCall_2_1_0()); 
 	    }
 		lv_tick_3_0=ruleTick		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getResetRule());
+	            $current = createModelElementForParent(grammarAccess.getSetRule());
 	        }
        		set(
        			$current, 
@@ -4709,16 +4709,16 @@ ruleReset returns [EObject current=null]
 )
 ))(	otherlv_4='(' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getResetAccess().getLeftParenthesisKeyword_3_0());
+    	newLeafNode(otherlv_4, grammarAccess.getSetAccess().getLeftParenthesisKeyword_3_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getResetAccess().getExprExpressionParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getSetAccess().getExprExpressionParserRuleCall_3_1_0()); 
 	    }
 		lv_expr_5_0=ruleExpression		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getResetRule());
+	            $current = createModelElementForParent(grammarAccess.getSetRule());
 	        }
        		set(
        			$current, 
@@ -4731,7 +4731,7 @@ ruleReset returns [EObject current=null]
 )
 )	otherlv_6=')' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getResetAccess().getRightParenthesisKeyword_3_2());
+    	newLeafNode(otherlv_6, grammarAccess.getSetAccess().getRightParenthesisKeyword_3_2());
     }
 ))
 ;

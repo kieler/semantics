@@ -39,7 +39,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="ecore:EClass Esterel.ecore#//ValuedObject"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Reset" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Set" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass Esterel.ecore#//ISignal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="ecore:EClass Esterel.ecore#//ValuedObject"
         containment="true"/>

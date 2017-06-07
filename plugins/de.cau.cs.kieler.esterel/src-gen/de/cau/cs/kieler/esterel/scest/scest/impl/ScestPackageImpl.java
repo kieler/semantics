@@ -6,11 +6,11 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
-import de.cau.cs.kieler.esterel.scest.scest.Reset;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram;
 import de.cau.cs.kieler.esterel.scest.scest.ScestFactory;
 import de.cau.cs.kieler.esterel.scest.scest.ScestPackage;
+import de.cau.cs.kieler.esterel.scest.scest.Set;
 import de.cau.cs.kieler.esterel.scest.scest.UnEmit;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
@@ -58,7 +58,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass resetEClass = null;
+  private EClass setEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -311,9 +311,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getReset()
+  public EClass getSet()
   {
-    return resetEClass;
+    return setEClass;
   }
 
   /**
@@ -321,9 +321,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReset_Signal()
+  public EReference getSet_Signal()
   {
-    return (EReference)resetEClass.getEStructuralFeatures().get(0);
+    return (EReference)setEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -331,9 +331,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReset_Tick()
+  public EReference getSet_Tick()
   {
-    return (EReference)resetEClass.getEStructuralFeatures().get(1);
+    return (EReference)setEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -341,9 +341,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReset_Expr()
+  public EReference getSet_Expr()
   {
-    return (EReference)resetEClass.getEStructuralFeatures().get(2);
+    return (EReference)setEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -397,10 +397,10 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     createEReference(unEmitEClass, UN_EMIT__SIGNAL);
     createEReference(unEmitEClass, UN_EMIT__TICK);
 
-    resetEClass = createEClass(RESET);
-    createEReference(resetEClass, RESET__SIGNAL);
-    createEReference(resetEClass, RESET__TICK);
-    createEReference(resetEClass, RESET__EXPR);
+    setEClass = createEClass(SET);
+    createEReference(setEClass, SET__SIGNAL);
+    createEReference(setEClass, SET__TICK);
+    createEReference(setEClass, SET__EXPR);
   }
 
   /**
@@ -439,7 +439,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
 
     // Add supertypes to classes
     unEmitEClass.getESuperTypes().add(theSclPackage.getStatement());
-    resetEClass.getESuperTypes().add(theSclPackage.getStatement());
+    setEClass.getESuperTypes().add(theSclPackage.getStatement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(scEstProgramEClass, SCEstProgram.class, "SCEstProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -463,10 +463,10 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     initEReference(getUnEmit_Signal(), theEsterelPackage.getISignal(), null, "signal", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUnEmit_Tick(), theEsterelPackage.getValuedObject(), null, "tick", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(resetEClass, Reset.class, "Reset", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReset_Signal(), theEsterelPackage.getISignal(), null, "signal", null, 0, 1, Reset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReset_Tick(), theEsterelPackage.getValuedObject(), null, "tick", null, 0, 1, Reset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReset_Expr(), theEsterelPackage.getExpression(), null, "expr", null, 0, 1, Reset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(setEClass, Set.class, "Set", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSet_Signal(), theEsterelPackage.getISignal(), null, "signal", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSet_Tick(), theEsterelPackage.getValuedObject(), null, "tick", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSet_Expr(), theEsterelPackage.getExpression(), null, "expr", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

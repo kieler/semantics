@@ -92,7 +92,6 @@ import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
 import de.cau.cs.kieler.esterel.esterel.ValuedObject;
 import de.cau.cs.kieler.esterel.esterel.ValuedObjectReference;
 import de.cau.cs.kieler.esterel.esterel.VariableDecl;
-import de.cau.cs.kieler.esterel.scest.scest.Reset;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram;
 import de.cau.cs.kieler.esterel.scest.scest.ScestPackage;
@@ -568,14 +567,14 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			}
 		else if (epackage == ScestPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case ScestPackage.RESET:
-				sequence_Reset(context, (Reset) semanticObject); 
-				return; 
 			case ScestPackage.SC_EST_MODULE:
 				sequence_SCEstModule(context, (SCEstModule) semanticObject); 
 				return; 
 			case ScestPackage.SC_EST_PROGRAM:
 				sequence_SCEstProgram(context, (SCEstProgram) semanticObject); 
+				return; 
+			case ScestPackage.SET:
+				sequence_Set(context, (de.cau.cs.kieler.esterel.scest.scest.Set) semanticObject); 
 				return; 
 			case ScestPackage.UN_EMIT:
 				sequence_UnEmit(context, (UnEmit) semanticObject); 
@@ -1051,20 +1050,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     SCEstStatement returns Reset
-	 *     SCEstAtomicStatement returns Reset
-	 *     Reset returns Reset
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* (signal=[ISignal|ID] | tick=Tick) expr=Expression)
-	 */
-	protected void sequence_Reset(ISerializationContext context, Reset semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     SCEstModule returns SCEstModule
 	 *
 	 * Constraint:
@@ -1118,6 +1103,20 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     (annotations+=Annotation* declarations+=Declaration* (statements+=SCEstStatement | statements+=MetaStatement)* statements+=SCEstStatement?)
 	 */
 	protected void sequence_ScopeStatement(ISerializationContext context, ScopeStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SCEstStatement returns Set
+	 *     SCEstAtomicStatement returns Set
+	 *     Set returns Set
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* (signal=[ISignal|ID] | tick=Tick) expr=Expression)
+	 */
+	protected void sequence_Set(ISerializationContext context, de.cau.cs.kieler.esterel.scest.scest.Set semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
