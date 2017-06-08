@@ -3,6 +3,47 @@
  */
 package de.cau.cs.kieler.esterel.scest.scoping;
 
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.COLLECT_CONSTANTS;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.COLLECT_FUNCTIONS;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.COLLECT_PROCEDURES;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.COLLECT_SENSORS;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.COLLECT_SIGNALS;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.COLLECT_TASKS;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.COLLECT_TYPES;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.getAllElements;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.getAllSignals;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.getElements;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.getLocalSignals;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.getLocalTraps;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.getLocalVariables;
+import static de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProviderUtil.getModules;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.impl.SimpleScope;
+
+import de.cau.cs.kieler.esterel.esterel.ConstantExpression;
+import de.cau.cs.kieler.esterel.esterel.ConstantRenaming;
+import de.cau.cs.kieler.esterel.esterel.Emit;
+import de.cau.cs.kieler.esterel.esterel.Exit;
+import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
+import de.cau.cs.kieler.esterel.esterel.FunctionRenaming;
+import de.cau.cs.kieler.esterel.esterel.ModuleRenaming;
+import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming;
+import de.cau.cs.kieler.esterel.esterel.RelationImplication;
+import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility;
+import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
+import de.cau.cs.kieler.esterel.esterel.Sustain;
+import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
+import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
+import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
+import de.cau.cs.kieler.esterel.esterel.ValuedObjectReference;
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,5 +51,139 @@ package de.cau.cs.kieler.esterel.scest.scoping;
  * on how and when to use it.
  */
 public class SCEstScopeProvider extends de.cau.cs.kieler.esterel.scoping.EsterelScopeProvider {
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IScope getScope(final EObject context, final EReference reference) {
+        return super.getScope(context, reference);
+    }
+
+    /* ************************************************************************
+     * Scopes for references in one module
+     * ************************************************************************
+     */
+
+    public IScope scope_RelationImplication_first(final RelationImplication context,
+            final EReference ref) {
+        return new SimpleScope(getElements(context, COLLECT_SIGNALS));
+    }
+
+    public IScope scope_RelationImplication_second(final RelationImplication context,
+            final EReference ref) {
+        return new SimpleScope(getElements(context, COLLECT_SIGNALS));
+    }
+
+    public IScope scope_RelationIncompatibility_incomp(final RelationIncompatibility context,
+            final EReference ref) {
+        return new SimpleScope(getElements(context, COLLECT_SIGNALS));
+    }
+
+    public IScope scope_Emit_signal(final Emit context, final EReference ref) {
+        return new SimpleScope(getAllSignals(context));
+    }
+
+    public IScope scope_Sustain_signal(final Sustain context, final EReference ref) {
+        return new SimpleScope(getAllSignals(context));
+    }
+
+    public IScope scope_ValuedObjectReference_valuedObject(final ValuedObjectReference context,
+            final EReference ref) {
+        ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
+        // there are several elements which are scoped as valued object
+        scopeElems.addAll(getLocalSignals(context));
+        scopeElems.addAll(getLocalVariables(context));
+        scopeElems.addAll(getLocalTraps(context));
+        scopeElems.addAll(getAllElements(context,
+                COLLECT_CONSTANTS.merge(COLLECT_SENSORS).merge(COLLECT_SIGNALS)));
+        return new SimpleScope(scopeElems);
+    }
+
+    public IScope scope_TrapReferenceExpr_valuedObject(final TrapReferenceExpr context,
+            final EReference ref) {
+        return new SimpleScope(getLocalTraps(context));
+    }
+
+    public IScope scope_Exit_trap(final Exit context, final EReference ref) {
+        return new SimpleScope(getLocalTraps(context));
+    }
+
+    public IScope scope_FunctionExpression_function(final FunctionExpression context,
+            final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_FUNCTIONS));
+    }
+
+    public IScope scope_DataConstant_constant(final ConstantExpression context, final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_CONSTANTS));
+    }
+
+    /* ************************************************************************
+     * ********* Scopes for renaming
+     */
+
+    public IScope scope_SignalRenaming_oldName(final SignalRenaming context, final EReference ref) {
+        List<IEObjectDescription> scopeElems = getAllSignals(context);
+        // sensors are treated as signals
+        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS));
+        return new SimpleScope(scopeElems);
+    }
+
+    public IScope scope_SignalRenaming_newName(final SignalRenaming context, final EReference ref) {
+        List<IEObjectDescription> scopeElems = getAllSignals(context);
+        // sensors are treated as signals
+        scopeElems.addAll(getAllElements(context, COLLECT_SENSORS));
+        return new SimpleScope(scopeElems);
+    }
+
+    public IScope scope_ConstantRenaming_oldName(final ConstantRenaming context,
+            final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_CONSTANTS));
+    }
+
+    public IScope scope_ConstantRenaming_newName(final ConstantRenaming context,
+            final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_CONSTANTS));
+    }
+
+    public IScope scope_TypeRenaming_oldName(final TypeRenaming context, final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_TYPES));
+    }
+
+    public IScope scope_TypeRenaming_newName(final TypeRenaming context, final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_TYPES));
+    }
+
+    public IScope scope_FunctionRenaming_oldName(final FunctionRenaming context,
+            final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_FUNCTIONS));
+    }
+
+    public IScope scope_FunctionRenaming_newName(final FunctionRenaming context,
+            final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_FUNCTIONS));
+    }
+
+    public IScope scope_ProcedureRenaming_oldName(final ProcedureRenaming context,
+            final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_PROCEDURES));
+    }
+
+    public IScope scope_ProcedureRenaming_newName(final ProcedureRenaming context,
+            final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_PROCEDURES));
+    }
+
+    public IScope scope_TaskRenaming_oldName(final TaskRenaming context, final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_TASKS));
+    }
+
+    public IScope scope_TaskRenaming_newName(final TaskRenaming context, final EReference ref) {
+        return new SimpleScope(getAllElements(context, COLLECT_TASKS));
+    }
+
+    public IScope scope_ModuleRenaming_module(final ModuleRenaming context, final EReference ref) {
+        return new SimpleScope(getModules(context));
+    }
 
 }

@@ -19,21 +19,21 @@ import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
  * @author mrb
  *
  */
-class EsterelParallel extends Feature {
+class Await extends Feature {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCEstFeature::ESTERELPARALLEL_ID
+        return SCEstFeature::AWAIT_ID
     }
     
     override getName() {
-        return SCEstFeature::ESTERELPARALLEL_NAME
+        return SCEstFeature::AWAIT_NAME
     }
     
     def isContained(SCEstProgram program) {
-        !program.eAllContents.filter(de.cau.cs.kieler.esterel.esterel.EsterelParallel).empty
+        !program.eAllContents.filter(de.cau.cs.kieler.esterel.esterel.Await).empty
     }
     
 }

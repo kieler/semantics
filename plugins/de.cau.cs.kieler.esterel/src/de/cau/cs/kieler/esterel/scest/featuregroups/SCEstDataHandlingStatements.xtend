@@ -10,30 +10,35 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest.features
+package de.cau.cs.kieler.esterel.scest.featuregroups
 
-import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
+import com.google.common.collect.Sets
+import de.cau.cs.kieler.kico.features.FeatureGroup
+import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
 
 /**
  * @author mrb
  *
  */
-class EsterelParallel extends Feature {
-    
+class SCEstDataHandlingStatements extends FeatureGroup {
+
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCEstFeature::ESTERELPARALLEL_ID
+        return SCEstFeatureGroup::SCESTDATAHANDLINGSTATEMENTS_ID
     }
-    
+
     override getName() {
-        return SCEstFeature::ESTERELPARALLEL_NAME
+        return SCEstFeatureGroup::SCESTDATAHANDLINGSTATEMENTS_NAME
     }
-    
-    def isContained(SCEstProgram program) {
-        !program.eAllContents.filter(de.cau.cs.kieler.esterel.esterel.EsterelParallel).empty
+
+    override getFeatureIds() {
+        Sets.newHashSet(
+             SCEstFeature::SET_ID,
+             SCEstFeature::EXEC_ID,
+             SCEstFeature::PROCCALL_ID,
+             SCEstFeature::RUN_ID
+        )
     }
-    
 }

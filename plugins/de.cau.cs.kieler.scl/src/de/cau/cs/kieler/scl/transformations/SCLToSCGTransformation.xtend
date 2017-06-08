@@ -270,21 +270,21 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
 
     private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Assignment assignment, SCGraph scg,
         List<ControlFlow> incoming) {
-        if (assignment.hasAnnotation("IS_JOIN")) {
-            new SCLContinuation => [ cont |
-                val join = createJoin.trace(assignment).createNodeList(assignment) as Join => [
-                    scg.nodes += it
-                    it.controlFlowTarget(incoming)
-                    it.incoming.forEach[
-                        annotations += createAnnotation => [
-                            name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
-                        ]
-                    ]
-                ]
-                cont.node = join
-                cont.controlFlows += join.createControlFlow
-            ]    
-        } else {
+//        if (assignment.hasAnnotation("IS_JOIN")) {
+//            new SCLContinuation => [ cont |
+//                val join = createJoin.trace(assignment).createNodeList(assignment) as Join => [
+//                    scg.nodes += it
+//                    it.controlFlowTarget(incoming)
+//                    it.incoming.forEach[
+//                        annotations += createAnnotation => [
+//                            name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
+//                        ]
+//                    ]
+//                ]
+//                cont.node = join
+//                cont.controlFlows += join.createControlFlow
+//            ]    
+//        } else {
             new SCLContinuation => [
                 node = createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
                     scg.nodes += it
@@ -297,7 +297,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
                 ]
                 controlFlows += node.createControlFlow
             ]
-        }
+//        }
     }
 
     private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Conditional conditional, SCGraph scg,

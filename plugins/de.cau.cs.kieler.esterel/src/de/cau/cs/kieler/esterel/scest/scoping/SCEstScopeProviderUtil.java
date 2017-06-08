@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.scoping;
+package de.cau.cs.kieler.esterel.scest.scoping;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,15 +29,13 @@ import de.cau.cs.kieler.esterel.esterel.*;
 /**
  * Supplies some convenient methods for scoping of the esterel grammar.
  * 
- * @author uru
- * @kieler.design 2012-10-08 proposed cmot
- * @kieler.rating 2012-10-08 proposed yellow cmot
+ * @author mrb
  * 
  */
-public final class EsterelScopeProviderUtil {
+public final class SCEstScopeProviderUtil {
 
     /** utility class, private constructor. */
-    private EsterelScopeProviderUtil() {
+    private SCEstScopeProviderUtil() {
     }
 
     /** collecting all sensors of a passed module. */
