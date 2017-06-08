@@ -81,4 +81,12 @@ class SystemSelectionManager {
         view.updateToolbar
     }
     
+    def onSystemChange() {
+        val editorReference = CompilerView.getActiveEditorReference
+        val editor = editorReference.getEditor(false)
+        if (editorReference != null && editor != null) {
+            view.editPartSystemManager.remove(editor)
+            view.partListener.partActivated(editorReference)
+        }
+    }
 }

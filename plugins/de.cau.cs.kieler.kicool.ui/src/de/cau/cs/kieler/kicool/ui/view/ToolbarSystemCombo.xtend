@@ -19,6 +19,7 @@ import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.function.Function
 
 /**
  * @author ssm
@@ -32,6 +33,7 @@ class ToolbarSystemCombo extends ControlContribution {
     
     @Accessors var String selectedText
     @Accessors var int selectedIndex
+    @Accessors var SystemSelectionManager systemSelectionManager = null
 
     protected new(String id) {
         super(id)
@@ -65,7 +67,10 @@ class ToolbarSystemCombo extends ControlContribution {
 
             public override void widgetSelected(SelectionEvent e) {
                 selectedIndex = combo.selectionIndex
-                selectedText = e.text
+                selectedText = combo.text
+                if (systemSelectionManager != null) {
+                    systemSelectionManager.onSystemChange
+                }
             }
 
             public override void widgetDefaultSelected(SelectionEvent e) {

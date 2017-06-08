@@ -36,6 +36,8 @@ import org.eclipse.ui.IViewSite
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.IPartListener2
+import org.eclipse.ui.IEditorReference
 
 /**
  * @author ssm
@@ -44,6 +46,7 @@ import org.eclipse.ui.PlatformUI
  */
 class CompilerView extends DiagramViewPart {
     
+    @Accessors private IPartListener2 partListener
     @Accessors private IMemento memento
     @Accessors private ToolbarSystemCombo combo
     @Accessors private System activeSystem = null 
@@ -69,7 +72,7 @@ class CompilerView extends DiagramViewPart {
         addContributions(toolBarManager, menuManager)
         addButtons()
 
-        new CompilerViewPartListener(this, parent)
+        partListener = new CompilerViewPartListener(this, parent)
     }
     
     protected override addButtons() {
@@ -91,6 +94,7 @@ class CompilerView extends DiagramViewPart {
         combo = new ToolbarSystemCombo("System Combo")
         toolBar.add(combo)
         systemSelectionManager = new SystemSelectionManager(this)
+        combo.systemSelectionManager = systemSelectionManager
         
         developerToggle = new DeveloperToggle(this)
         developerToggle.addContributions(toolBar, menu)
@@ -175,4 +179,14 @@ class CompilerView extends DiagramViewPart {
     public static def IEditorPart getActiveEditor() {
         PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage.getActiveEditor
     } 
+    
+    public static def IEditorReference getActiveEditorReference() {
+        val activePage = PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage
+        val activeEditor = activePage.activeEditor
+        for(reference : activePage.editorReferences) {
+            val editor = reference.getEditor(false)
+            if (editor.equals(activeEditor)) return reference
+        }
+        return null
+    }     
 }

@@ -62,7 +62,7 @@ class LoadSystemAction {
         if (editor instanceof XtextEditor) {
             val systemModel = editor.createModelInMemoryResource
             if (systemModel != null) {
-                view.systemSelectionManager.temporarySystem = systemModel
+                view.systemSelectionManager.setTemporarySystem(systemModel)
             }
         }
     }
