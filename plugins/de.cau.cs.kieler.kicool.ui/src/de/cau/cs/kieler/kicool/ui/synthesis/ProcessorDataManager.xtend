@@ -33,6 +33,7 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis.uniqueProcessorId
 
 /**
  * @author ssm
@@ -67,7 +68,12 @@ class ProcessorDataManager {
     static def void resetProcessor(AbstractProcessorNotification processorNotification, KNode node) {
         val processorEntry = processorNotification.processorEntry
         val processorUnit = processorNotification.processorUnit
-        val processorNode = node.findNode(processorEntry.id)
+        val processorNode = node.findNode(processorEntry.uniqueProcessorId)
+        if (processorNode == null) {
+            System.err.println("There was an update notification for an non-existing processor (" + processorEntry.uniqueProcessorId + 
+                "). This should not happen. I'm very sorry.")
+            return
+        }
         val nodeIdMap = processorNode.createNodeIdMap
         
         NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(BUSY)
@@ -79,7 +85,12 @@ class ProcessorDataManager {
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node) {
         val processorEntry = processorNotification.processorEntry
         val processorUnit = processorNotification.processorUnit
-        val processorNode = node.findNode(processorEntry.id)
+        val processorNode = node.findNode(processorEntry.uniqueProcessorId)
+        if (processorNode == null) {
+            System.err.println("There was an update notification for an non-existing processor system (" + processorEntry.uniqueProcessorId + 
+                "). This should not happen. I'm sorry.")
+            return
+        }
         val nodeIdMap = processorNode.createNodeIdMap
         
         if (processorUnit.environment.status == ProcessorStatus.ERRORS) {

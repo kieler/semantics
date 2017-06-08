@@ -24,8 +24,8 @@ class Delay extends Processor {
     
     static val MINIMUM_DELAY = "minimumDelay"
     static val MAXIMUM_DELAY = "maximumDelay"
-    static int DEFAULT_MINIMUM_DELAY = 1000
-    static int DEFAULT_MAXIMUM_DELAY = DEFAULT_MINIMUM_DELAY * 5
+    static int DEFAULT_MINIMUM_DELAY = 500
+    static int DEFAULT_MAXIMUM_DELAY = DEFAULT_MINIMUM_DELAY * 10
     static int INTERVAL_LENGTH = 100
     
     override getId() {

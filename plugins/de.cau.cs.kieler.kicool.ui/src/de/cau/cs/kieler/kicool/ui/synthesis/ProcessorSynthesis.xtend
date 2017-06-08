@@ -57,9 +57,13 @@ class ProcessorSynthesis {
     @Inject extension KiCoolSynthesis
     @Inject IResourceServiceProvider.Registry regXtext;      
     
-    private def setID(KNode node, String id) {
+    private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
         node
+    }
+    
+    static def uniqueProcessorId(Processor processor) {
+        processor.id + "#" + processor.hashCode
     }
     
     protected def getProcessorKGT() {
@@ -84,7 +88,9 @@ class ProcessorSynthesis {
     
     dispatch def List<KNode> transform(Processor processor) {
         val processorNode = getProcessorKGT
-        processorNode.setID(processor.id)
+        val nodeId = processor.uniqueProcessorId
+        println("New node id: " + nodeId )
+        processorNode.setId(nodeId)
         processor.populateProcessorData(processorNode)
         
         newArrayList(processorNode)

@@ -27,7 +27,8 @@ class Compile {
     
     static def CompilationContext createCompilationContext(System system, Object sourceModel) {
         val cc = new CompilationContext => [
-            it.system = system.copy
+//            it.system = system.copy
+            it.system = system
             it.sourceModel = sourceModel
         ]
         
