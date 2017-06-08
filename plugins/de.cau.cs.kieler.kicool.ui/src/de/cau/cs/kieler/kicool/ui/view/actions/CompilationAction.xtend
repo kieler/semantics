@@ -52,7 +52,7 @@ class CompilationAction {
     def void invokeCompile() {
         val model = CompilationActionSimSalabim.SIM_MODEL
         
-        val cc = Compile.createCompilationContext("de.cau.cs.kieler.kicool.identity", model)
+        val cc = Compile.createCompilationContext(view.activeSystem, model)
         
         val updateObserver = new CompilationUpdate(view)
         cc.addObserver(updateObserver)
