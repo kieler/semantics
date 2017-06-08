@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
+import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 
 /**
  * @author ssm
@@ -49,6 +50,10 @@ abstract class Processor implements IKiCoolCloneable {
     protected def void updateProgress(double progress) {
         val compilationContext = environments.key.getCompilationContext
         val metaProcessor = environments.key.data.get(Environment.META_PROCESSOR) as de.cau.cs.kieler.kicool.Processor
+        
+        val startTimestamp = (environments.value.getData(START_TIMESTAMP, 0.0d) as Long).longValue
+        val intermediateTimestamp = java.lang.System.nanoTime
+        environments.value.setData(PTIME, (intermediateTimestamp - startTimestamp) / 1000_000)
         
         compilationContext.notify(
             new ProcessorProgress(progress, compilationContext, metaProcessor, this)

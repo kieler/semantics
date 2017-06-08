@@ -90,7 +90,6 @@ class ProcessorSynthesis {
     dispatch def List<KNode> transform(Processor processor) {
         val processorNode = getProcessorKGT
         val nodeId = processor.uniqueProcessorId
-        println("New node id: " + nodeId )
         processorNode.setId(nodeId)
         processor.populateProcessorData(processorNode)
         

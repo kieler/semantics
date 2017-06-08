@@ -29,7 +29,10 @@ class Environment {
     public static val CONTEXT = "context"
     public static val META_PROCESSOR = "metaProcessor"
     public static val COMPILATION__UNIT = "compilationUnit"
-    public static val ERRORS = "errors"        
+    public static val ERRORS = "errors"     
+    public static val START_TIMESTAMP = "startTimestamp"
+    public static val STOP_TIMESTAMP = "stopTimestamp"
+    public static val PTIME = "pTime"   
         
     @Accessors Map<String, Object> data
     
@@ -38,9 +41,9 @@ class Environment {
         data.put(ERRORS, <String> newLinkedList)
     }
     
-//    def setData(String key, Object data) {
-//        this.data.put(key, data)
-//    }
+    def setData(String key, Object data) {
+        this.data.put(key, data)
+    }
     
     def Object getData(String key, Object ^default) {
         val obj = data.get(key)

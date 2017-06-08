@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 
 /**
  * @author ssm
@@ -80,7 +81,14 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         compilationUnit.setEnvironment(environment, environmentPrime)
         
         notify(new ProcessorStart(this, processor, compilationUnit))
+        val startTimestamp = java.lang.System.nanoTime
+        environmentPrime.setData(START_TIMESTAMP, startTimestamp)
         compilationUnit.process
+        val stopTimestamp = java.lang.System.nanoTime
+        environmentPrime.setData(STOP_TIMESTAMP, stopTimestamp)
+        environmentPrime.setData(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
+        
+        
         // Add Metric code
         
         notify(new ProcessorFinished(this, processor, compilationUnit))

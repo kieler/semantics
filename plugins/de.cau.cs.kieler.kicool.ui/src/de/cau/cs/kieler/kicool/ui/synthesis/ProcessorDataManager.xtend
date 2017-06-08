@@ -35,6 +35,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis.uniqueProcessorId
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractCompilationNotification
+import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 
 /**
  * @author ssm
@@ -49,6 +50,7 @@ class ProcessorDataManager {
     static val NODE_ACTIVITY_STATUS = "status"
     static val NODE_NAME = "name"
     static val NODE_PROGRESS = #["p1", "p2", "p3", "p4", "p5"]
+    static val NODE_ENVIRONMENT = "environment"
         
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
         val rtProcessor = RuntimeSystems.getProcessorInstance(processor)
@@ -122,6 +124,9 @@ class ProcessorDataManager {
                 NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(OK)
             }        
         }
+        
+        val pTime = processorUnit.environment.getData(PTIME, 0)
+        NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel("pTime: " + pTime + "ms")
     }
     
     static def void updateProgressbar(int progress, Map<String, KNode> nodeIdMap) {
@@ -142,6 +147,10 @@ class ProcessorDataManager {
     
     
     
+    
+    static def void setLabel(KNode node, String string) {
+        node.labels.head.text = string
+    }    
     
     static def void setFBColor(KContainerRendering container, ColorSystem colorSystem) {
         container.setFBColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color)
@@ -206,6 +215,10 @@ class ProcessorDataManager {
     }
     
     private static def KNode findNode(Map<String, KNode> idMap, String id) {
+        idMap.get(id)
+    }
+    
+    private static def KNode findNode(String id, Map<String, KNode> idMap) {
         idMap.get(id)
     }
     

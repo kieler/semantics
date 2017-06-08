@@ -41,9 +41,9 @@ public class ColorStore {
         BUSY_BACKGROUND(255, 222, 222),
         BUSY_BACKGROUND_TARGET(177, 177, 177),        
 
-        OK_FOREGROUND(0, 200, 0),
-        OK_BACKGROUND(222, 255, 222),
-        OK_BACKGROUND_TARGET(177, 222, 177),
+        OK_FOREGROUND(0, 255, 0),
+        OK_BACKGROUND(0, 255, 0),
+        OK_BACKGROUND_TARGET(0, 128, 0),
         
         WARNING_FOREGROUND(200, 200, 0),
         WARNING_BACKGROUND(255, 255, 170),

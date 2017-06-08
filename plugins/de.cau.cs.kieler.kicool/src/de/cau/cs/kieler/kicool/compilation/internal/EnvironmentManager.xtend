@@ -68,6 +68,8 @@ class EnvironmentManager {
                     prime.data.put(k, new Boolean(v))
                 } else if (v instanceof Double) {
                     prime.data.put(k, new Double(v))
+                } else if (v instanceof Long) {
+                    prime.data.put(k, new Long(v))
                 } else if (v instanceof String) {
                     prime.data.put(k, new String(v))
                 } else if (v instanceof IKiCoolCloneable) {
