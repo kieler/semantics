@@ -24,6 +24,7 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManage
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 
 /**
  * @author ssm
@@ -43,13 +44,13 @@ class CompilationUpdate extends KiCoolUIObserver {
     }
     
     override update(AbstractContextNotification notification) {
-        CompilationActionSimSalabim.simSalabim(notification)
         
         switch notification {
             ProcessorProgress: notification.updateProcessor(view.viewContext.viewModel)
             ProcessorStart: notification.resetProcessor(view.viewContext.viewModel)
             ProcessorFinished: notification.updateProcessor(view.viewContext.viewModel) 
             CompilationStart: notification.resetSystem(view.viewContext.viewModel)
+            CompilationFinished: CompilationActionSimSalabim.simSalabim(notification) 
         }
         
     }

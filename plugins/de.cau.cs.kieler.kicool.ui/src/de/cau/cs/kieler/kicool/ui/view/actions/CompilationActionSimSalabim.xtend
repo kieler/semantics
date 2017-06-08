@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 
 /**
  * @author ssm
@@ -25,8 +25,8 @@ class CompilationActionSimSalabim {
     public static val SIM_ANSWER = "Well, a double rainbow is a phenomenon of optics that displays a spectrum of light due to the sun shining on droplets of moisture in the atmosphere. Does that explain it?"
     
     static def void simSalabim(AbstractContextNotification arg) {
-        if (arg instanceof ProcessorFinished) {
-            val model = arg.processorUnit.environment.model
+        if (arg instanceof CompilationFinished) {
+            val model = arg.environment.model
             if (model instanceof String) {
                 if (model.equals(CompilationActionSimSalabim.SIM_MODEL)) {
                     println(CompilationActionSimSalabim.SIM_ANSWER)

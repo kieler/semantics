@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.compilation.observer
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -21,8 +22,11 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
  */
 class CompilationFinished extends AbstractCompilationNotification {
     
-    new(CompilationContext compilationContext) {
+    @Accessors val de.cau.cs.kieler.kicool.compilation.Environment environment
+    
+    new(CompilationContext compilationContext, de.cau.cs.kieler.kicool.compilation.Environment environment) {
         super(compilationContext)
+        this.environment = environment
     }
     
 }

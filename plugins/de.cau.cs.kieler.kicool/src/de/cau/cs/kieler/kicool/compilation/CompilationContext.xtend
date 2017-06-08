@@ -67,8 +67,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environment.inplaceCompilation = false
         
         notify(new CompilationStart(this))
-        processorEntry.compileEntry(environment)
-        notify(new CompilationFinished(this))        
+        val EPrime = processorEntry.compileEntry(environment)
+        notify(new CompilationFinished(this, EPrime))        
     }
     
     
