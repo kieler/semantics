@@ -15,19 +15,19 @@
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//OperatorType/GEQ"/>
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//OperatorType/NE"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//AnimationType">
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/COLOR"/>
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/TEXT"/>
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/ROTATE"/>
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/MOVE"/>
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/VISIBILITY"/>
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/OPACITY"/>
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/ROTATION"/>
-      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/MOVEMENT"/>
-    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//BooleanOperatorType">
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//BooleanOperatorType/AND"/>
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//BooleanOperatorType/OR"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//AnimationType">
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/COLOR"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/TEXT"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/VISIBILITY"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/ROTATE"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/MOVE"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/OPACITY"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/ROTATION"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationType/MOVEMENT"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//AnimationTypeName">
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationTypeName/OPACITY"/>
@@ -47,10 +47,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Element/animations"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Animation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Animation/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/mappings"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Animation/type"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//AttributeMapping">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AttributeMapping/attribute"/>
@@ -61,15 +61,14 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Mapping/variableDomain"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Mapping/attributeDomain"/>
     </genClasses>
-    <genClasses ecoreClass="KVis.ecore#//VariableDomain">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//VariableDomain/value"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//VariableDomain/range"/>
+    <genClasses ecoreClass="KVis.ecore#//Domain">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Domain/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Domain/range"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Interval">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Interval/from"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Interval/to"/>
     </genClasses>
-    <genClasses ecoreClass="KVis.ecore#//AttributeDomain"/>
     <genClasses ecoreClass="KVis.ecore#//Condition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Condition/expression"/>
     </genClasses>
@@ -90,6 +89,26 @@
     <genClasses ecoreClass="KVis.ecore#//Operand">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Operand/variable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Operand/literal"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//ColorAnimation"/>
+    <genClasses ecoreClass="KVis.ecore#//TextAnimation"/>
+    <genClasses ecoreClass="KVis.ecore#//VisibleAnimation"/>
+    <genClasses ecoreClass="KVis.ecore#//RotateAnimation"/>
+    <genClasses ecoreClass="KVis.ecore#//MoveAnimation"/>
+    <genClasses ecoreClass="KVis.ecore#//AndOrExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndOrExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AndOrExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndOrExpression/right"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//VariableDomain">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//VariableDomain/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//VariableDomain/range"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//AttributeDomain"/>
+    <genClasses ecoreClass="KVis.ecore#//AnimationInstance">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AnimationInstance/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AnimationInstance/mappings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AnimationInstance/condition"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Model">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Model/greetings"/>

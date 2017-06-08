@@ -36,7 +36,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    * @ordered
    */
-  protected static final String FROM_EDEFAULT = null;
+  protected static final int FROM_EDEFAULT = 0;
 
   /**
    * The cached value of the '{@link #getFrom() <em>From</em>}' attribute.
@@ -46,7 +46,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    * @ordered
    */
-  protected String from = FROM_EDEFAULT;
+  protected int from = FROM_EDEFAULT;
 
   /**
    * The default value of the '{@link #getTo() <em>To</em>}' attribute.
@@ -56,7 +56,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    * @ordered
    */
-  protected static final String TO_EDEFAULT = null;
+  protected static final int TO_EDEFAULT = 0;
 
   /**
    * The cached value of the '{@link #getTo() <em>To</em>}' attribute.
@@ -66,7 +66,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    * @ordered
    */
-  protected String to = TO_EDEFAULT;
+  protected int to = TO_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -94,7 +94,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getFrom()
+  public int getFrom()
   {
     return from;
   }
@@ -104,9 +104,9 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFrom(String newFrom)
+  public void setFrom(int newFrom)
   {
-    String oldFrom = from;
+    int oldFrom = from;
     from = newFrom;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__FROM, oldFrom, from));
@@ -117,7 +117,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getTo()
+  public int getTo()
   {
     return to;
   }
@@ -127,9 +127,9 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTo(String newTo)
+  public void setTo(int newTo)
   {
-    String oldTo = to;
+    int oldTo = to;
     to = newTo;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__TO, oldTo, to));
@@ -164,10 +164,10 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     switch (featureID)
     {
       case KvisPackage.INTERVAL__FROM:
-        setFrom((String)newValue);
+        setFrom((Integer)newValue);
         return;
       case KvisPackage.INTERVAL__TO:
-        setTo((String)newValue);
+        setTo((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -204,9 +204,9 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     switch (featureID)
     {
       case KvisPackage.INTERVAL__FROM:
-        return FROM_EDEFAULT == null ? from != null : !FROM_EDEFAULT.equals(from);
+        return from != FROM_EDEFAULT;
       case KvisPackage.INTERVAL__TO:
-        return TO_EDEFAULT == null ? to != null : !TO_EDEFAULT.equals(to);
+        return to != TO_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }

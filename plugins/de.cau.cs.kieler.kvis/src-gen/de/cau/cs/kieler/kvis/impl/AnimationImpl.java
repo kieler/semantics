@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.kvis.impl;
 
 import de.cau.cs.kieler.kvis.Animation;
-import de.cau.cs.kieler.kvis.AnimationType;
 import de.cau.cs.kieler.kvis.AttributeMapping;
 import de.cau.cs.kieler.kvis.Condition;
 import de.cau.cs.kieler.kvis.KvisPackage;
@@ -33,7 +32,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getVariable <em>Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getMappings <em>Mappings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getCondition <em>Condition</em>}</li>
@@ -43,26 +41,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class AnimationImpl extends MinimalEObjectImpl.Container implements Animation
 {
-  /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected static final AnimationType TYPE_EDEFAULT = AnimationType.COLOR;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected AnimationType type = TYPE_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -112,29 +90,6 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   protected EClass eStaticClass()
   {
     return KvisPackage.Literals.ANIMATION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AnimationType getType()
-  {
-    return type;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setType(AnimationType newType)
-  {
-    AnimationType oldType = type;
-    type = newType == null ? TYPE_EDEFAULT : newType;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.ANIMATION__TYPE, oldType, type));
   }
 
   /**
@@ -277,8 +232,6 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
-      case KvisPackage.ANIMATION__TYPE:
-        return getType();
       case KvisPackage.ANIMATION__VARIABLE:
         return getVariable();
       case KvisPackage.ANIMATION__MAPPINGS:
@@ -300,9 +253,6 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
-      case KvisPackage.ANIMATION__TYPE:
-        setType((AnimationType)newValue);
-        return;
       case KvisPackage.ANIMATION__VARIABLE:
         setVariable((VariableReference)newValue);
         return;
@@ -327,9 +277,6 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
-      case KvisPackage.ANIMATION__TYPE:
-        setType(TYPE_EDEFAULT);
-        return;
       case KvisPackage.ANIMATION__VARIABLE:
         setVariable((VariableReference)null);
         return;
@@ -353,8 +300,6 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
-      case KvisPackage.ANIMATION__TYPE:
-        return type != TYPE_EDEFAULT;
       case KvisPackage.ANIMATION__VARIABLE:
         return variable != null;
       case KvisPackage.ANIMATION__MAPPINGS:
@@ -363,23 +308,6 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
         return condition != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
-    result.append(')');
-    return result.toString();
   }
 
 } //AnimationImpl

@@ -70,15 +70,20 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
       case KvisPackage.ANIMATION: return createAnimation();
       case KvisPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
       case KvisPackage.MAPPING: return createMapping();
-      case KvisPackage.VARIABLE_DOMAIN: return createVariableDomain();
+      case KvisPackage.DOMAIN: return createDomain();
       case KvisPackage.INTERVAL: return createInterval();
-      case KvisPackage.ATTRIBUTE_DOMAIN: return createAttributeDomain();
       case KvisPackage.CONDITION: return createCondition();
       case KvisPackage.VARIABLE_REFERENCE: return createVariableReference();
       case KvisPackage.MODEL_REFERENCE: return createModelReference();
       case KvisPackage.BOOLEAN_EXPRESSION: return createBooleanExpression();
       case KvisPackage.EXPRESSION: return createExpression();
       case KvisPackage.OPERAND: return createOperand();
+      case KvisPackage.COLOR_ANIMATION: return createColorAnimation();
+      case KvisPackage.TEXT_ANIMATION: return createTextAnimation();
+      case KvisPackage.VISIBLE_ANIMATION: return createVisibleAnimation();
+      case KvisPackage.ROTATE_ANIMATION: return createRotateAnimation();
+      case KvisPackage.MOVE_ANIMATION: return createMoveAnimation();
+      case KvisPackage.AND_OR_EXPRESSION: return createAndOrExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -96,8 +101,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
     {
       case KvisPackage.OPERATOR_TYPE:
         return createOperatorTypeFromString(eDataType, initialValue);
-      case KvisPackage.ANIMATION_TYPE:
-        return createAnimationTypeFromString(eDataType, initialValue);
       case KvisPackage.BOOLEAN_OPERATOR_TYPE:
         return createBooleanOperatorTypeFromString(eDataType, initialValue);
       default:
@@ -117,8 +120,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
     {
       case KvisPackage.OPERATOR_TYPE:
         return convertOperatorTypeToString(eDataType, instanceValue);
-      case KvisPackage.ANIMATION_TYPE:
-        return convertAnimationTypeToString(eDataType, instanceValue);
       case KvisPackage.BOOLEAN_OPERATOR_TYPE:
         return convertBooleanOperatorTypeToString(eDataType, instanceValue);
       default:
@@ -186,10 +187,10 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableDomain createVariableDomain()
+  public Domain createDomain()
   {
-    VariableDomainImpl variableDomain = new VariableDomainImpl();
-    return variableDomain;
+    DomainImpl domain = new DomainImpl();
+    return domain;
   }
 
   /**
@@ -201,17 +202,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
   {
     IntervalImpl interval = new IntervalImpl();
     return interval;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AttributeDomain createAttributeDomain()
-  {
-    AttributeDomainImpl attributeDomain = new AttributeDomainImpl();
-    return attributeDomain;
   }
 
   /**
@@ -285,6 +275,72 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public ColorAnimation createColorAnimation()
+  {
+    ColorAnimationImpl colorAnimation = new ColorAnimationImpl();
+    return colorAnimation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TextAnimation createTextAnimation()
+  {
+    TextAnimationImpl textAnimation = new TextAnimationImpl();
+    return textAnimation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VisibleAnimation createVisibleAnimation()
+  {
+    VisibleAnimationImpl visibleAnimation = new VisibleAnimationImpl();
+    return visibleAnimation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RotateAnimation createRotateAnimation()
+  {
+    RotateAnimationImpl rotateAnimation = new RotateAnimationImpl();
+    return rotateAnimation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MoveAnimation createMoveAnimation()
+  {
+    MoveAnimationImpl moveAnimation = new MoveAnimationImpl();
+    return moveAnimation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AndOrExpression createAndOrExpression()
+  {
+    AndOrExpressionImpl andOrExpression = new AndOrExpressionImpl();
+    return andOrExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public OperatorType createOperatorTypeFromString(EDataType eDataType, String initialValue)
   {
     OperatorType result = OperatorType.get(initialValue);
@@ -298,28 +354,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * @generated
    */
   public String convertOperatorTypeToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AnimationType createAnimationTypeFromString(EDataType eDataType, String initialValue)
-  {
-    AnimationType result = AnimationType.get(initialValue);
-    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertAnimationTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

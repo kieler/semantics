@@ -32,12 +32,12 @@ public interface Mapping extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variable Domain</em>' containment reference.
-   * @see #setVariableDomain(VariableDomain)
+   * @see #setVariableDomain(Domain)
    * @see de.cau.cs.kieler.kvis.KvisPackage#getMapping_VariableDomain()
    * @model containment="true"
    * @generated
    */
-  VariableDomain getVariableDomain();
+  Domain getVariableDomain();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.Mapping#getVariableDomain <em>Variable Domain</em>}' containment reference.
@@ -47,7 +47,7 @@ public interface Mapping extends EObject
    * @see #getVariableDomain()
    * @generated
    */
-  void setVariableDomain(VariableDomain value);
+  void setVariableDomain(Domain value);
 
   /**
    * Returns the value of the '<em><b>Attribute Domain</b></em>' containment reference.
@@ -58,12 +58,12 @@ public interface Mapping extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Attribute Domain</em>' containment reference.
-   * @see #setAttributeDomain(AttributeDomain)
+   * @see #setAttributeDomain(Domain)
    * @see de.cau.cs.kieler.kvis.KvisPackage#getMapping_AttributeDomain()
    * @model containment="true"
    * @generated
    */
-  AttributeDomain getAttributeDomain();
+  Domain getAttributeDomain();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.Mapping#getAttributeDomain <em>Attribute Domain</em>}' containment reference.
@@ -73,6 +73,6 @@ public interface Mapping extends EObject
    * @see #getAttributeDomain()
    * @generated
    */
-  void setAttributeDomain(AttributeDomain value);
+  void setAttributeDomain(Domain value);
 
 } // Mapping

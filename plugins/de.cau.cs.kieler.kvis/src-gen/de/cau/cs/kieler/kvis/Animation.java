@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kvis.Animation#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.Animation#getVariable <em>Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.Animation#getMappings <em>Mappings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.Animation#getCondition <em>Condition</em>}</li>
@@ -27,35 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Animation extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.kvis.AnimationType}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see de.cau.cs.kieler.kvis.AnimationType
-   * @see #setType(AnimationType)
-   * @see de.cau.cs.kieler.kvis.KvisPackage#getAnimation_Type()
-   * @model
-   * @generated
-   */
-  AnimationType getType();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.Animation#getType <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
-   * @see de.cau.cs.kieler.kvis.AnimationType
-   * @see #getType()
-   * @generated
-   */
-  void setType(AnimationType value);
-
   /**
    * Returns the value of the '<em><b>Variable</b></em>' containment reference.
    * <!-- begin-user-doc -->

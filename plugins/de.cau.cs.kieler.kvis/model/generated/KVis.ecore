@@ -12,7 +12,6 @@
         eType="#//Animation" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Animation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//AnimationType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableReference"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappings" upperBound="-1"
@@ -27,21 +26,20 @@
         eType="#//Mapping" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variableDomain" eType="#//VariableDomain"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variableDomain" eType="#//Domain"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDomain" eType="#//AttributeDomain"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDomain" eType="#//Domain"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableDomain" eSuperTypes="#//AttributeDomain">
+  <eClassifiers xsi:type="ecore:EClass" name="Domain">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="range" eType="#//Interval"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Interval">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="from" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="to" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="from" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="to" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeDomain"/>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//BooleanExpression"
         containment="true"/>
@@ -77,15 +75,20 @@
     <eLiterals name="GEQ" value="4" literal=">="/>
     <eLiterals name="NE" value="5" literal="!="/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="AnimationType">
-    <eLiterals name="COLOR" literal="set color"/>
-    <eLiterals name="TEXT" value="1" literal="set text"/>
-    <eLiterals name="ROTATE" value="2" literal="rotate"/>
-    <eLiterals name="MOVE" value="3" literal="move"/>
-    <eLiterals name="VISIBILITY" value="4" literal="set visible"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="BooleanOperatorType">
     <eLiterals name="AND" literal="and"/>
     <eLiterals name="OR" value="1" literal="or"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ColorAnimation" eSuperTypes="#//Animation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextAnimation" eSuperTypes="#//Animation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VisibleAnimation" eSuperTypes="#//Animation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RotateAnimation" eSuperTypes="#//Animation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MoveAnimation" eSuperTypes="#//Animation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AndOrExpression" eSuperTypes="#//BooleanExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//BooleanExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//BooleanOperatorType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

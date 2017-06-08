@@ -308,5 +308,16 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
+    <extension
+          point="org.eclipse.ui.views">
+       <view
+             category="de.cau.cs.kieler.sim"
+             class="de.cau.cs.kieler.kvis.ui.views.KVisView"
+             icon="icons/kvisViewIcon.png"
+             id="de.cau.cs.kieler.kvis.ui.kvisView"
+             name="Simulation Visualization"
+             restorable="true">
+       </view>
+    </extension>
 
 </plugin>

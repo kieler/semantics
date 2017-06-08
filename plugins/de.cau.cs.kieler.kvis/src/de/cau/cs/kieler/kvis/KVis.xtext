@@ -11,14 +11,22 @@ Visualization:
 
 Element:
 	'animate' name=ID '{'
-        (animations+=Animation)+
+        (animations+=AnimationRule)+
 	'}'
 ;
 
-Animation:
-    type=AnimationType ('using' variable=VariableReference)? '{'
+AnimationRule returns Animation:
+    'set' Animation ('using' variable=VariableReference)? '{'
         (mappings+=AttributeMapping)*
     '}' (condition=Condition)?
+;
+
+Animation returns Animation:
+     'color' {ColorAnimation}
+    | 'text' {TextAnimation}
+    | 'visible' {VisibleAnimation}
+    | 'rotation' {RotateAnimation}
+    | 'movement' {MoveAnimation}
 ;
 
 AttributeMapping:
@@ -29,16 +37,16 @@ Mapping:
     variableDomain = VariableDomain 'is' attributeDomain = AttributeDomain
 ;
 
-VariableDomain:
+VariableDomain returns Domain:
     value = Literal
     | range = Interval
 ;
 
 Interval:
-    from = Literal '..' to = Literal
+    from = INT '..' to = INT
 ;
 
-AttributeDomain:
+AttributeDomain returns Domain:
     VariableDomain
 ;
 
@@ -58,7 +66,7 @@ ModelReference:
 
 BooleanExpression:
     Comparison 
-//    (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
+    (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
 ;
 
 Comparison returns Expression:
@@ -83,11 +91,6 @@ Literal:
 // Relational operators
 enum CompareOperator returns OperatorType:
     EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!="
-;
-
-// Animation types
-enum AnimationType returns AnimationType:
-    COLOR='set color' | TEXT='set text' | VISIBILITY='set visible' | ROTATE='rotate' | MOVE='move'
 ;
 
 // Boolean operators

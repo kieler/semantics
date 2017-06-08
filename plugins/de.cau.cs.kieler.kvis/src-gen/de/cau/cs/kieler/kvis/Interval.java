@@ -32,12 +32,12 @@ public interface Interval extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>From</em>' attribute.
-   * @see #setFrom(String)
+   * @see #setFrom(int)
    * @see de.cau.cs.kieler.kvis.KvisPackage#getInterval_From()
    * @model
    * @generated
    */
-  String getFrom();
+  int getFrom();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.Interval#getFrom <em>From</em>}' attribute.
@@ -47,7 +47,7 @@ public interface Interval extends EObject
    * @see #getFrom()
    * @generated
    */
-  void setFrom(String value);
+  void setFrom(int value);
 
   /**
    * Returns the value of the '<em><b>To</b></em>' attribute.
@@ -58,12 +58,12 @@ public interface Interval extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>To</em>' attribute.
-   * @see #setTo(String)
+   * @see #setTo(int)
    * @see de.cau.cs.kieler.kvis.KvisPackage#getInterval_To()
    * @model
    * @generated
    */
-  String getTo();
+  int getTo();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.Interval#getTo <em>To</em>}' attribute.
@@ -73,6 +73,6 @@ public interface Interval extends EObject
    * @see #getTo()
    * @generated
    */
-  void setTo(String value);
+  void setTo(int value);
 
 } // Interval

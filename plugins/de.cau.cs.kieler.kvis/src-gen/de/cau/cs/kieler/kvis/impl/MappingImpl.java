@@ -2,10 +2,9 @@
  */
 package de.cau.cs.kieler.kvis.impl;
 
-import de.cau.cs.kieler.kvis.AttributeDomain;
+import de.cau.cs.kieler.kvis.Domain;
 import de.cau.cs.kieler.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.Mapping;
-import de.cau.cs.kieler.kvis.VariableDomain;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -40,7 +39,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * @generated
    * @ordered
    */
-  protected VariableDomain variableDomain;
+  protected Domain variableDomain;
 
   /**
    * The cached value of the '{@link #getAttributeDomain() <em>Attribute Domain</em>}' containment reference.
@@ -50,7 +49,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * @generated
    * @ordered
    */
-  protected AttributeDomain attributeDomain;
+  protected Domain attributeDomain;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,7 +77,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableDomain getVariableDomain()
+  public Domain getVariableDomain()
   {
     return variableDomain;
   }
@@ -88,9 +87,9 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetVariableDomain(VariableDomain newVariableDomain, NotificationChain msgs)
+  public NotificationChain basicSetVariableDomain(Domain newVariableDomain, NotificationChain msgs)
   {
-    VariableDomain oldVariableDomain = variableDomain;
+    Domain oldVariableDomain = variableDomain;
     variableDomain = newVariableDomain;
     if (eNotificationRequired())
     {
@@ -105,7 +104,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setVariableDomain(VariableDomain newVariableDomain)
+  public void setVariableDomain(Domain newVariableDomain)
   {
     if (newVariableDomain != variableDomain)
     {
@@ -126,7 +125,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * <!-- end-user-doc -->
    * @generated
    */
-  public AttributeDomain getAttributeDomain()
+  public Domain getAttributeDomain()
   {
     return attributeDomain;
   }
@@ -136,9 +135,9 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetAttributeDomain(AttributeDomain newAttributeDomain, NotificationChain msgs)
+  public NotificationChain basicSetAttributeDomain(Domain newAttributeDomain, NotificationChain msgs)
   {
-    AttributeDomain oldAttributeDomain = attributeDomain;
+    Domain oldAttributeDomain = attributeDomain;
     attributeDomain = newAttributeDomain;
     if (eNotificationRequired())
     {
@@ -153,7 +152,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setAttributeDomain(AttributeDomain newAttributeDomain)
+  public void setAttributeDomain(Domain newAttributeDomain)
   {
     if (newAttributeDomain != attributeDomain)
     {
@@ -216,10 +215,10 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
     switch (featureID)
     {
       case KvisPackage.MAPPING__VARIABLE_DOMAIN:
-        setVariableDomain((VariableDomain)newValue);
+        setVariableDomain((Domain)newValue);
         return;
       case KvisPackage.MAPPING__ATTRIBUTE_DOMAIN:
-        setAttributeDomain((AttributeDomain)newValue);
+        setAttributeDomain((Domain)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,10 +235,10 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
     switch (featureID)
     {
       case KvisPackage.MAPPING__VARIABLE_DOMAIN:
-        setVariableDomain((VariableDomain)null);
+        setVariableDomain((Domain)null);
         return;
       case KvisPackage.MAPPING__ATTRIBUTE_DOMAIN:
-        setAttributeDomain((AttributeDomain)null);
+        setAttributeDomain((Domain)null);
         return;
     }
     super.eUnset(featureID);

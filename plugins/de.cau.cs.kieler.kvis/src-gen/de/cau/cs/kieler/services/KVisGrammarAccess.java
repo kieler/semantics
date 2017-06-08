@@ -63,16 +63,16 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cAnimationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cAnimationsAnimationParserRuleCall_3_0 = (RuleCall)cAnimationsAssignment_3.eContents().get(0);
+		private final RuleCall cAnimationsAnimationRuleParserRuleCall_3_0 = (RuleCall)cAnimationsAssignment_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Element:
 		//	'animate' name=ID '{'
-		//	animations+=Animation+
+		//	animations+=AnimationRule+
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'animate' name=ID '{' animations+=Animation+ '}'
+		//'animate' name=ID '{' animations+=AnimationRule+ '}'
 		public Group getGroup() { return cGroup; }
 
 		//'animate'
@@ -87,76 +87,150 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//animations+=Animation+
+		//animations+=AnimationRule+
 		public Assignment getAnimationsAssignment_3() { return cAnimationsAssignment_3; }
 
-		//Animation
-		public RuleCall getAnimationsAnimationParserRuleCall_3_0() { return cAnimationsAnimationParserRuleCall_3_0; }
+		//AnimationRule
+		public RuleCall getAnimationsAnimationRuleParserRuleCall_3_0() { return cAnimationsAnimationRuleParserRuleCall_3_0; }
 
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
 	}
 
-	public class AnimationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.Animation");
+	public class AnimationRuleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.AnimationRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cTypeAnimationTypeEnumRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cUsingKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cVariableAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cVariableVariableReferenceParserRuleCall_1_1_0 = (RuleCall)cVariableAssignment_1_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cMappingsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cMappingsAttributeMappingParserRuleCall_3_0 = (RuleCall)cMappingsAssignment_3.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cConditionAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cConditionConditionParserRuleCall_5_0 = (RuleCall)cConditionAssignment_5.eContents().get(0);
+		private final Keyword cSetKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cAnimationParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cUsingKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cVariableAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cVariableVariableReferenceParserRuleCall_2_1_0 = (RuleCall)cVariableAssignment_2_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cMappingsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cMappingsAttributeMappingParserRuleCall_4_0 = (RuleCall)cMappingsAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cConditionAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cConditionConditionParserRuleCall_6_0 = (RuleCall)cConditionAssignment_6.eContents().get(0);
 		
-		//Animation:
-		//	type=AnimationType ('using' variable=VariableReference)? '{'
+		//AnimationRule Animation:
+		//	'set' Animation ('using' variable=VariableReference)? '{'
 		//	mappings+=AttributeMapping*
-		//	'}' condition=Condition?;
+		//	'}' condition=Condition?
 		@Override public ParserRule getRule() { return rule; }
 
-		//type=AnimationType ('using' variable=VariableReference)? '{' mappings+=AttributeMapping* '}' condition=Condition?
+		//'set' Animation ('using' variable=VariableReference)? '{' mappings+=AttributeMapping* '}' condition=Condition?
 		public Group getGroup() { return cGroup; }
 
-		//type=AnimationType
-		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
+		//'set'
+		public Keyword getSetKeyword_0() { return cSetKeyword_0; }
 
-		//AnimationType
-		public RuleCall getTypeAnimationTypeEnumRuleCall_0_0() { return cTypeAnimationTypeEnumRuleCall_0_0; }
+		//Animation
+		public RuleCall getAnimationParserRuleCall_1() { return cAnimationParserRuleCall_1; }
 
 		//('using' variable=VariableReference)?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//'using'
-		public Keyword getUsingKeyword_1_0() { return cUsingKeyword_1_0; }
+		public Keyword getUsingKeyword_2_0() { return cUsingKeyword_2_0; }
 
 		//variable=VariableReference
-		public Assignment getVariableAssignment_1_1() { return cVariableAssignment_1_1; }
+		public Assignment getVariableAssignment_2_1() { return cVariableAssignment_2_1; }
 
 		//VariableReference
-		public RuleCall getVariableVariableReferenceParserRuleCall_1_1_0() { return cVariableVariableReferenceParserRuleCall_1_1_0; }
+		public RuleCall getVariableVariableReferenceParserRuleCall_2_1_0() { return cVariableVariableReferenceParserRuleCall_2_1_0; }
 
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
 		//mappings+=AttributeMapping*
-		public Assignment getMappingsAssignment_3() { return cMappingsAssignment_3; }
+		public Assignment getMappingsAssignment_4() { return cMappingsAssignment_4; }
 
 		//AttributeMapping
-		public RuleCall getMappingsAttributeMappingParserRuleCall_3_0() { return cMappingsAttributeMappingParserRuleCall_3_0; }
+		public RuleCall getMappingsAttributeMappingParserRuleCall_4_0() { return cMappingsAttributeMappingParserRuleCall_4_0; }
 
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 
 		//condition=Condition?
-		public Assignment getConditionAssignment_5() { return cConditionAssignment_5; }
+		public Assignment getConditionAssignment_6() { return cConditionAssignment_6; }
 
 		//Condition
-		public RuleCall getConditionConditionParserRuleCall_5_0() { return cConditionConditionParserRuleCall_5_0; }
+		public RuleCall getConditionConditionParserRuleCall_6_0() { return cConditionConditionParserRuleCall_6_0; }
+	}
+
+	public class AnimationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.Animation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Keyword cColorKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Action cColorAnimationAction_0_1 = (Action)cGroup_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cTextKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Action cTextAnimationAction_1_1 = (Action)cGroup_1.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cVisibleKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Action cVisibleAnimationAction_2_1 = (Action)cGroup_2.eContents().get(1);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Keyword cRotationKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Action cRotateAnimationAction_3_1 = (Action)cGroup_3.eContents().get(1);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Keyword cMovementKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Action cMoveAnimationAction_4_1 = (Action)cGroup_4.eContents().get(1);
+		
+		//Animation:
+		//	'color' {ColorAnimation} | 'text' {TextAnimation} | 'visible' {VisibleAnimation} | 'rotation' {RotateAnimation} |
+		//	'movement' {MoveAnimation};
+		@Override public ParserRule getRule() { return rule; }
+
+		//'color' {ColorAnimation} | 'text' {TextAnimation} | 'visible' {VisibleAnimation} | 'rotation' {RotateAnimation} |
+		//'movement' {MoveAnimation}
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//'color' {ColorAnimation}
+		public Group getGroup_0() { return cGroup_0; }
+
+		//'color'
+		public Keyword getColorKeyword_0_0() { return cColorKeyword_0_0; }
+
+		//{ColorAnimation}
+		public Action getColorAnimationAction_0_1() { return cColorAnimationAction_0_1; }
+
+		//'text' {TextAnimation}
+		public Group getGroup_1() { return cGroup_1; }
+
+		//'text'
+		public Keyword getTextKeyword_1_0() { return cTextKeyword_1_0; }
+
+		//{TextAnimation}
+		public Action getTextAnimationAction_1_1() { return cTextAnimationAction_1_1; }
+
+		//'visible' {VisibleAnimation}
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'visible'
+		public Keyword getVisibleKeyword_2_0() { return cVisibleKeyword_2_0; }
+
+		//{VisibleAnimation}
+		public Action getVisibleAnimationAction_2_1() { return cVisibleAnimationAction_2_1; }
+
+		//'rotation' {RotateAnimation}
+		public Group getGroup_3() { return cGroup_3; }
+
+		//'rotation'
+		public Keyword getRotationKeyword_3_0() { return cRotationKeyword_3_0; }
+
+		//{RotateAnimation}
+		public Action getRotateAnimationAction_3_1() { return cRotateAnimationAction_3_1; }
+
+		//'movement' {MoveAnimation}
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'movement'
+		public Keyword getMovementKeyword_4_0() { return cMovementKeyword_4_0; }
+
+		//{MoveAnimation}
+		public Action getMoveAnimationAction_4_1() { return cMoveAnimationAction_4_1; }
 	}
 
 	public class AttributeMappingElements extends AbstractParserRuleElementFinder {
@@ -263,9 +337,9 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cRangeAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cRangeIntervalParserRuleCall_1_0 = (RuleCall)cRangeAssignment_1.eContents().get(0);
 		
-		//VariableDomain:
+		//VariableDomain Domain:
 		//	value=Literal
-		//	| range=Interval;
+		//	| range=Interval
 		@Override public ParserRule getRule() { return rule; }
 
 		//value=Literal | range=Interval
@@ -288,40 +362,40 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.Interval");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cFromAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cFromLiteralParserRuleCall_0_0 = (RuleCall)cFromAssignment_0.eContents().get(0);
+		private final RuleCall cFromINTTerminalRuleCall_0_0 = (RuleCall)cFromAssignment_0.eContents().get(0);
 		private final Keyword cFullStopFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cToAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cToLiteralParserRuleCall_2_0 = (RuleCall)cToAssignment_2.eContents().get(0);
+		private final RuleCall cToINTTerminalRuleCall_2_0 = (RuleCall)cToAssignment_2.eContents().get(0);
 		
 		//Interval:
-		//	from=Literal '..' to=Literal;
+		//	from=INT '..' to=INT;
 		@Override public ParserRule getRule() { return rule; }
 
-		//from=Literal '..' to=Literal
+		//from=INT '..' to=INT
 		public Group getGroup() { return cGroup; }
 
-		//from=Literal
+		//from=INT
 		public Assignment getFromAssignment_0() { return cFromAssignment_0; }
 
-		//Literal
-		public RuleCall getFromLiteralParserRuleCall_0_0() { return cFromLiteralParserRuleCall_0_0; }
+		//INT
+		public RuleCall getFromINTTerminalRuleCall_0_0() { return cFromINTTerminalRuleCall_0_0; }
 
 		//'..'
 		public Keyword getFullStopFullStopKeyword_1() { return cFullStopFullStopKeyword_1; }
 
-		//to=Literal
+		//to=INT
 		public Assignment getToAssignment_2() { return cToAssignment_2; }
 
-		//Literal
-		public RuleCall getToLiteralParserRuleCall_2_0() { return cToLiteralParserRuleCall_2_0; }
+		//INT
+		public RuleCall getToINTTerminalRuleCall_2_0() { return cToINTTerminalRuleCall_2_0; }
 	}
 
 	public class AttributeDomainElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.AttributeDomain");
 		private final RuleCall cVariableDomainParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//AttributeDomain:
-		//	VariableDomain;
+		//AttributeDomain Domain:
+		//	VariableDomain
 		@Override public ParserRule getRule() { return rule; }
 
 		//VariableDomain
@@ -427,16 +501,46 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class BooleanExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.BooleanExpression");
-		private final RuleCall cComparisonParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cComparisonParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
+		private final Action cAndOrExpressionLeftAction_1_0_0 = (Action)cGroup_1_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cOperatorBooleanOperatorEnumRuleCall_1_0_1_0 = (RuleCall)cOperatorAssignment_1_0_1.eContents().get(0);
+		private final Assignment cRightAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cRightComparisonParserRuleCall_1_1_0 = (RuleCall)cRightAssignment_1_1.eContents().get(0);
 		
 		//BooleanExpression:
-		//	Comparison
-		//	//    (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
-		//;
+		//	Comparison (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*;
 		@Override public ParserRule getRule() { return rule; }
 
+		//Comparison (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
+		public Group getGroup() { return cGroup; }
+
 		//Comparison
-		public RuleCall getComparisonParserRuleCall() { return cComparisonParserRuleCall; }
+		public RuleCall getComparisonParserRuleCall_0() { return cComparisonParserRuleCall_0; }
+
+		//(({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//({AndOrExpression.left=current} operator=BooleanOperator)
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//{AndOrExpression.left=current}
+		public Action getAndOrExpressionLeftAction_1_0_0() { return cAndOrExpressionLeftAction_1_0_0; }
+
+		//operator=BooleanOperator
+		public Assignment getOperatorAssignment_1_0_1() { return cOperatorAssignment_1_0_1; }
+
+		//BooleanOperator
+		public RuleCall getOperatorBooleanOperatorEnumRuleCall_1_0_1_0() { return cOperatorBooleanOperatorEnumRuleCall_1_0_1_0; }
+
+		//right=Comparison
+		public Assignment getRightAssignment_1_1() { return cRightAssignment_1_1; }
+
+		//Comparison
+		public RuleCall getRightComparisonParserRuleCall_1_1_0() { return cRightComparisonParserRuleCall_1_1_0; }
 	}
 
 	public class ComparisonElements extends AbstractParserRuleElementFinder {
@@ -591,58 +695,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getNEExclamationMarkEqualsSignKeyword_5_0() { return cNEExclamationMarkEqualsSignKeyword_5_0; }
 	}
 
-	public class AnimationTypeElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.AnimationType");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cCOLOREnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cCOLORSetColorKeyword_0_0 = (Keyword)cCOLOREnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cTEXTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cTEXTSetTextKeyword_1_0 = (Keyword)cTEXTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cROTATEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cROTATERotateKeyword_2_0 = (Keyword)cROTATEEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cMOVEEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cMOVEMoveKeyword_3_0 = (Keyword)cMOVEEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cVISIBILITYEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cVISIBILITYSetVisibleKeyword_4_0 = (Keyword)cVISIBILITYEnumLiteralDeclaration_4.eContents().get(0);
-		
-		//enum AnimationType:
-		//	COLOR='set color' | TEXT='set text' | ROTATE='rotate' | MOVE='move' | VISIBILITY='set visible';
-		public EnumRule getRule() { return rule; }
-
-		//COLOR='set color' | TEXT='set text' | ROTATE='rotate' | MOVE='move' | VISIBILITY='set visible'
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//COLOR='set color'
-		public EnumLiteralDeclaration getCOLOREnumLiteralDeclaration_0() { return cCOLOREnumLiteralDeclaration_0; }
-
-		//'set color'
-		public Keyword getCOLORSetColorKeyword_0_0() { return cCOLORSetColorKeyword_0_0; }
-
-		//TEXT='set text'
-		public EnumLiteralDeclaration getTEXTEnumLiteralDeclaration_1() { return cTEXTEnumLiteralDeclaration_1; }
-
-		//'set text'
-		public Keyword getTEXTSetTextKeyword_1_0() { return cTEXTSetTextKeyword_1_0; }
-
-		//ROTATE='rotate'
-		public EnumLiteralDeclaration getROTATEEnumLiteralDeclaration_2() { return cROTATEEnumLiteralDeclaration_2; }
-
-		//'rotate'
-		public Keyword getROTATERotateKeyword_2_0() { return cROTATERotateKeyword_2_0; }
-
-		//MOVE='move'
-		public EnumLiteralDeclaration getMOVEEnumLiteralDeclaration_3() { return cMOVEEnumLiteralDeclaration_3; }
-
-		//'move'
-		public Keyword getMOVEMoveKeyword_3_0() { return cMOVEMoveKeyword_3_0; }
-
-		//VISIBILITY='set visible'
-		public EnumLiteralDeclaration getVISIBILITYEnumLiteralDeclaration_4() { return cVISIBILITYEnumLiteralDeclaration_4; }
-
-		//'set visible'
-		public Keyword getVISIBILITYSetVisibleKeyword_4_0() { return cVISIBILITYSetVisibleKeyword_4_0; }
-	}
-
 	public class BooleanOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.BooleanOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -673,6 +725,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final VisualizationElements pVisualization;
 	private final ElementElements pElement;
+	private final AnimationRuleElements pAnimationRule;
 	private final AnimationElements pAnimation;
 	private final AttributeMappingElements pAttributeMapping;
 	private final MappingElements pMapping;
@@ -687,7 +740,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final OperandElements pOperand;
 	private final LiteralElements pLiteral;
 	private final CompareOperatorElements eCompareOperator;
-	private final AnimationTypeElements eAnimationType;
 	private final BooleanOperatorElements eBooleanOperator;
 	private final TerminalRule tDIGIT;
 	private final TerminalRule tINT;
@@ -705,6 +757,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pVisualization = new VisualizationElements();
 		this.pElement = new ElementElements();
+		this.pAnimationRule = new AnimationRuleElements();
 		this.pAnimation = new AnimationElements();
 		this.pAttributeMapping = new AttributeMappingElements();
 		this.pMapping = new MappingElements();
@@ -719,7 +772,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.pOperand = new OperandElements();
 		this.pLiteral = new LiteralElements();
 		this.eCompareOperator = new CompareOperatorElements();
-		this.eAnimationType = new AnimationTypeElements();
 		this.eBooleanOperator = new BooleanOperatorElements();
 		this.tDIGIT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.DIGIT");
 		this.tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.KVis.INT");
@@ -767,7 +819,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Element:
 	//	'animate' name=ID '{'
-	//	animations+=Animation+
+	//	animations+=AnimationRule+
 	//	'}';
 	public ElementElements getElementAccess() {
 		return pElement;
@@ -777,10 +829,21 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getElementAccess().getRule();
 	}
 
-	//Animation:
-	//	type=AnimationType ('using' variable=VariableReference)? '{'
+	//AnimationRule Animation:
+	//	'set' Animation ('using' variable=VariableReference)? '{'
 	//	mappings+=AttributeMapping*
-	//	'}' condition=Condition?;
+	//	'}' condition=Condition?
+	public AnimationRuleElements getAnimationRuleAccess() {
+		return pAnimationRule;
+	}
+	
+	public ParserRule getAnimationRuleRule() {
+		return getAnimationRuleAccess().getRule();
+	}
+
+	//Animation:
+	//	'color' {ColorAnimation} | 'text' {TextAnimation} | 'visible' {VisibleAnimation} | 'rotation' {RotateAnimation} |
+	//	'movement' {MoveAnimation};
 	public AnimationElements getAnimationAccess() {
 		return pAnimation;
 	}
@@ -809,9 +872,9 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getMappingAccess().getRule();
 	}
 
-	//VariableDomain:
+	//VariableDomain Domain:
 	//	value=Literal
-	//	| range=Interval;
+	//	| range=Interval
 	public VariableDomainElements getVariableDomainAccess() {
 		return pVariableDomain;
 	}
@@ -821,7 +884,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Interval:
-	//	from=Literal '..' to=Literal;
+	//	from=INT '..' to=INT;
 	public IntervalElements getIntervalAccess() {
 		return pInterval;
 	}
@@ -830,8 +893,8 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntervalAccess().getRule();
 	}
 
-	//AttributeDomain:
-	//	VariableDomain;
+	//AttributeDomain Domain:
+	//	VariableDomain
 	public AttributeDomainElements getAttributeDomainAccess() {
 		return pAttributeDomain;
 	}
@@ -872,9 +935,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BooleanExpression:
-	//	Comparison
-	//	//    (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
-	//;
+	//	Comparison (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*;
 	public BooleanExpressionElements getBooleanExpressionAccess() {
 		return pBooleanExpression;
 	}
@@ -924,16 +985,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getCompareOperatorRule() {
 		return getCompareOperatorAccess().getRule();
-	}
-
-	//enum AnimationType:
-	//	COLOR='set color' | TEXT='set text' | ROTATE='rotate' | MOVE='move' | VISIBILITY='set visible';
-	public AnimationTypeElements getAnimationTypeAccess() {
-		return eAnimationType;
-	}
-	
-	public EnumRule getAnimationTypeRule() {
-		return getAnimationTypeAccess().getRule();
 	}
 
 	//enum BooleanOperator returns BooleanOperatorType:

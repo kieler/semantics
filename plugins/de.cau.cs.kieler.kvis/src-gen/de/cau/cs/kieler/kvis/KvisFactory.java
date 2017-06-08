@@ -68,13 +68,13 @@ public interface KvisFactory extends EFactory
   Mapping createMapping();
 
   /**
-   * Returns a new object of class '<em>Variable Domain</em>'.
+   * Returns a new object of class '<em>Domain</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Domain</em>'.
+   * @return a new object of class '<em>Domain</em>'.
    * @generated
    */
-  VariableDomain createVariableDomain();
+  Domain createDomain();
 
   /**
    * Returns a new object of class '<em>Interval</em>'.
@@ -84,15 +84,6 @@ public interface KvisFactory extends EFactory
    * @generated
    */
   Interval createInterval();
-
-  /**
-   * Returns a new object of class '<em>Attribute Domain</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Domain</em>'.
-   * @generated
-   */
-  AttributeDomain createAttributeDomain();
 
   /**
    * Returns a new object of class '<em>Condition</em>'.
@@ -147,6 +138,60 @@ public interface KvisFactory extends EFactory
    * @generated
    */
   Operand createOperand();
+
+  /**
+   * Returns a new object of class '<em>Color Animation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Color Animation</em>'.
+   * @generated
+   */
+  ColorAnimation createColorAnimation();
+
+  /**
+   * Returns a new object of class '<em>Text Animation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Text Animation</em>'.
+   * @generated
+   */
+  TextAnimation createTextAnimation();
+
+  /**
+   * Returns a new object of class '<em>Visible Animation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Visible Animation</em>'.
+   * @generated
+   */
+  VisibleAnimation createVisibleAnimation();
+
+  /**
+   * Returns a new object of class '<em>Rotate Animation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Rotate Animation</em>'.
+   * @generated
+   */
+  RotateAnimation createRotateAnimation();
+
+  /**
+   * Returns a new object of class '<em>Move Animation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Move Animation</em>'.
+   * @generated
+   */
+  MoveAnimation createMoveAnimation();
+
+  /**
+   * Returns a new object of class '<em>And Or Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>And Or Expression</em>'.
+   * @generated
+   */
+  AndOrExpression createAndOrExpression();
 
   /**
    * Returns the package supported by this factory.

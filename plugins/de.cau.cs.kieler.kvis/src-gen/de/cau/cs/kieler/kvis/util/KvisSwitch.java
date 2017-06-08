@@ -107,11 +107,10 @@ public class KvisSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KvisPackage.VARIABLE_DOMAIN:
+      case KvisPackage.DOMAIN:
       {
-        VariableDomain variableDomain = (VariableDomain)theEObject;
-        T result = caseVariableDomain(variableDomain);
-        if (result == null) result = caseAttributeDomain(variableDomain);
+        Domain domain = (Domain)theEObject;
+        T result = caseDomain(domain);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -119,13 +118,6 @@ public class KvisSwitch<T> extends Switch<T>
       {
         Interval interval = (Interval)theEObject;
         T result = caseInterval(interval);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KvisPackage.ATTRIBUTE_DOMAIN:
-      {
-        AttributeDomain attributeDomain = (AttributeDomain)theEObject;
-        T result = caseAttributeDomain(attributeDomain);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -169,6 +161,54 @@ public class KvisSwitch<T> extends Switch<T>
       {
         Operand operand = (Operand)theEObject;
         T result = caseOperand(operand);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.COLOR_ANIMATION:
+      {
+        ColorAnimation colorAnimation = (ColorAnimation)theEObject;
+        T result = caseColorAnimation(colorAnimation);
+        if (result == null) result = caseAnimation(colorAnimation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.TEXT_ANIMATION:
+      {
+        TextAnimation textAnimation = (TextAnimation)theEObject;
+        T result = caseTextAnimation(textAnimation);
+        if (result == null) result = caseAnimation(textAnimation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.VISIBLE_ANIMATION:
+      {
+        VisibleAnimation visibleAnimation = (VisibleAnimation)theEObject;
+        T result = caseVisibleAnimation(visibleAnimation);
+        if (result == null) result = caseAnimation(visibleAnimation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.ROTATE_ANIMATION:
+      {
+        RotateAnimation rotateAnimation = (RotateAnimation)theEObject;
+        T result = caseRotateAnimation(rotateAnimation);
+        if (result == null) result = caseAnimation(rotateAnimation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.MOVE_ANIMATION:
+      {
+        MoveAnimation moveAnimation = (MoveAnimation)theEObject;
+        T result = caseMoveAnimation(moveAnimation);
+        if (result == null) result = caseAnimation(moveAnimation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.AND_OR_EXPRESSION:
+      {
+        AndOrExpression andOrExpression = (AndOrExpression)theEObject;
+        T result = caseAndOrExpression(andOrExpression);
+        if (result == null) result = caseBooleanExpression(andOrExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -257,17 +297,17 @@ public class KvisSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable Domain</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Domain</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable Domain</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Domain</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseVariableDomain(VariableDomain object)
+  public T caseDomain(Domain object)
   {
     return null;
   }
@@ -284,22 +324,6 @@ public class KvisSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseInterval(Interval object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Domain</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Domain</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAttributeDomain(AttributeDomain object)
   {
     return null;
   }
@@ -396,6 +420,102 @@ public class KvisSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseOperand(Operand object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Color Animation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Color Animation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseColorAnimation(ColorAnimation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Text Animation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Text Animation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTextAnimation(TextAnimation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Visible Animation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Visible Animation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVisibleAnimation(VisibleAnimation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Rotate Animation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Rotate Animation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRotateAnimation(RotateAnimation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Move Animation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Move Animation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMoveAnimation(MoveAnimation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>And Or Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>And Or Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAndOrExpression(AndOrExpression object)
   {
     return null;
   }

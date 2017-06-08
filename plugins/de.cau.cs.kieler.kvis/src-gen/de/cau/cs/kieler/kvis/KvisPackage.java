@@ -142,22 +142,13 @@ public interface KvisPackage extends EPackage
   int ANIMATION = 2;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANIMATION__TYPE = 0;
-
-  /**
    * The feature id for the '<em><b>Variable</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANIMATION__VARIABLE = 1;
+  int ANIMATION__VARIABLE = 0;
 
   /**
    * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
@@ -166,7 +157,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANIMATION__MAPPINGS = 2;
+  int ANIMATION__MAPPINGS = 1;
 
   /**
    * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -175,7 +166,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANIMATION__CONDITION = 3;
+  int ANIMATION__CONDITION = 2;
 
   /**
    * The number of structural features of the '<em>Animation</em>' class.
@@ -184,7 +175,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANIMATION_FEATURE_COUNT = 4;
+  int ANIMATION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.AttributeMappingImpl <em>Attribute Mapping</em>}' class.
@@ -270,33 +261,14 @@ public interface KvisPackage extends EPackage
   int MAPPING_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.AttributeDomainImpl <em>Attribute Domain</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.DomainImpl <em>Domain</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.impl.AttributeDomainImpl
-   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getAttributeDomain()
+   * @see de.cau.cs.kieler.kvis.impl.DomainImpl
+   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getDomain()
    * @generated
    */
-  int ATTRIBUTE_DOMAIN = 7;
-
-  /**
-   * The number of structural features of the '<em>Attribute Domain</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_DOMAIN_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.VariableDomainImpl <em>Variable Domain</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.impl.VariableDomainImpl
-   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getVariableDomain()
-   * @generated
-   */
-  int VARIABLE_DOMAIN = 5;
+  int DOMAIN = 5;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -305,7 +277,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DOMAIN__VALUE = ATTRIBUTE_DOMAIN_FEATURE_COUNT + 0;
+  int DOMAIN__VALUE = 0;
 
   /**
    * The feature id for the '<em><b>Range</b></em>' containment reference.
@@ -314,16 +286,16 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DOMAIN__RANGE = ATTRIBUTE_DOMAIN_FEATURE_COUNT + 1;
+  int DOMAIN__RANGE = 1;
 
   /**
-   * The number of structural features of the '<em>Variable Domain</em>' class.
+   * The number of structural features of the '<em>Domain</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DOMAIN_FEATURE_COUNT = ATTRIBUTE_DOMAIN_FEATURE_COUNT + 2;
+  int DOMAIN_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.IntervalImpl <em>Interval</em>}' class.
@@ -370,7 +342,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getCondition()
    * @generated
    */
-  int CONDITION = 8;
+  int CONDITION = 7;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -398,7 +370,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getVariableReference()
    * @generated
    */
-  int VARIABLE_REFERENCE = 9;
+  int VARIABLE_REFERENCE = 8;
 
   /**
    * The feature id for the '<em><b>Model</b></em>' containment reference.
@@ -444,7 +416,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getModelReference()
    * @generated
    */
-  int MODEL_REFERENCE = 10;
+  int MODEL_REFERENCE = 9;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -472,7 +444,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getBooleanExpression()
    * @generated
    */
-  int BOOLEAN_EXPRESSION = 11;
+  int BOOLEAN_EXPRESSION = 10;
 
   /**
    * The number of structural features of the '<em>Boolean Expression</em>' class.
@@ -491,7 +463,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getExpression()
    * @generated
    */
-  int EXPRESSION = 12;
+  int EXPRESSION = 11;
 
   /**
    * The feature id for the '<em><b>Left Side</b></em>' containment reference.
@@ -537,7 +509,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getOperand()
    * @generated
    */
-  int OPERAND = 13;
+  int OPERAND = 12;
 
   /**
    * The feature id for the '<em><b>Variable</b></em>' containment reference.
@@ -567,6 +539,282 @@ public interface KvisPackage extends EPackage
   int OPERAND_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.ColorAnimationImpl <em>Color Animation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.impl.ColorAnimationImpl
+   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getColorAnimation()
+   * @generated
+   */
+  int COLOR_ANIMATION = 13;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLOR_ANIMATION__VARIABLE = ANIMATION__VARIABLE;
+
+  /**
+   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLOR_ANIMATION__MAPPINGS = ANIMATION__MAPPINGS;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLOR_ANIMATION__CONDITION = ANIMATION__CONDITION;
+
+  /**
+   * The number of structural features of the '<em>Color Animation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLOR_ANIMATION_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.TextAnimationImpl <em>Text Animation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.impl.TextAnimationImpl
+   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getTextAnimation()
+   * @generated
+   */
+  int TEXT_ANIMATION = 14;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TEXT_ANIMATION__VARIABLE = ANIMATION__VARIABLE;
+
+  /**
+   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TEXT_ANIMATION__MAPPINGS = ANIMATION__MAPPINGS;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TEXT_ANIMATION__CONDITION = ANIMATION__CONDITION;
+
+  /**
+   * The number of structural features of the '<em>Text Animation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TEXT_ANIMATION_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.VisibleAnimationImpl <em>Visible Animation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.impl.VisibleAnimationImpl
+   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getVisibleAnimation()
+   * @generated
+   */
+  int VISIBLE_ANIMATION = 15;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VISIBLE_ANIMATION__VARIABLE = ANIMATION__VARIABLE;
+
+  /**
+   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VISIBLE_ANIMATION__MAPPINGS = ANIMATION__MAPPINGS;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VISIBLE_ANIMATION__CONDITION = ANIMATION__CONDITION;
+
+  /**
+   * The number of structural features of the '<em>Visible Animation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VISIBLE_ANIMATION_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.RotateAnimationImpl <em>Rotate Animation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.impl.RotateAnimationImpl
+   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getRotateAnimation()
+   * @generated
+   */
+  int ROTATE_ANIMATION = 16;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROTATE_ANIMATION__VARIABLE = ANIMATION__VARIABLE;
+
+  /**
+   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROTATE_ANIMATION__MAPPINGS = ANIMATION__MAPPINGS;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROTATE_ANIMATION__CONDITION = ANIMATION__CONDITION;
+
+  /**
+   * The number of structural features of the '<em>Rotate Animation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROTATE_ANIMATION_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.MoveAnimationImpl <em>Move Animation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.impl.MoveAnimationImpl
+   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getMoveAnimation()
+   * @generated
+   */
+  int MOVE_ANIMATION = 17;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MOVE_ANIMATION__VARIABLE = ANIMATION__VARIABLE;
+
+  /**
+   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MOVE_ANIMATION__MAPPINGS = ANIMATION__MAPPINGS;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MOVE_ANIMATION__CONDITION = ANIMATION__CONDITION;
+
+  /**
+   * The number of structural features of the '<em>Move Animation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MOVE_ANIMATION_FEATURE_COUNT = ANIMATION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.impl.AndOrExpressionImpl <em>And Or Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.impl.AndOrExpressionImpl
+   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getAndOrExpression()
+   * @generated
+   */
+  int AND_OR_EXPRESSION = 18;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_OR_EXPRESSION__LEFT = BOOLEAN_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_OR_EXPRESSION__OPERATOR = BOOLEAN_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_OR_EXPRESSION__RIGHT = BOOLEAN_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>And Or Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_OR_EXPRESSION_FEATURE_COUNT = BOOLEAN_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.OperatorType <em>Operator Type</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -574,17 +822,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getOperatorType()
    * @generated
    */
-  int OPERATOR_TYPE = 14;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.AnimationType <em>Animation Type</em>}' enum.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.AnimationType
-   * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getAnimationType()
-   * @generated
-   */
-  int ANIMATION_TYPE = 15;
+  int OPERATOR_TYPE = 19;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.BooleanOperatorType <em>Boolean Operator Type</em>}' enum.
@@ -594,7 +832,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getBooleanOperatorType()
    * @generated
    */
-  int BOOLEAN_OPERATOR_TYPE = 16;
+  int BOOLEAN_OPERATOR_TYPE = 20;
 
 
   /**
@@ -670,17 +908,6 @@ public interface KvisPackage extends EPackage
    * @generated
    */
   EClass getAnimation();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.Animation#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.kvis.Animation#getType()
-   * @see #getAnimation()
-   * @generated
-   */
-  EAttribute getAnimation_Type();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.Animation#getVariable <em>Variable</em>}'.
@@ -791,36 +1018,36 @@ public interface KvisPackage extends EPackage
   EReference getMapping_AttributeDomain();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.VariableDomain <em>Variable Domain</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.Domain <em>Domain</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable Domain</em>'.
-   * @see de.cau.cs.kieler.kvis.VariableDomain
+   * @return the meta object for class '<em>Domain</em>'.
+   * @see de.cau.cs.kieler.kvis.Domain
    * @generated
    */
-  EClass getVariableDomain();
+  EClass getDomain();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.VariableDomain#getValue <em>Value</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.Domain#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Value</em>'.
-   * @see de.cau.cs.kieler.kvis.VariableDomain#getValue()
-   * @see #getVariableDomain()
+   * @see de.cau.cs.kieler.kvis.Domain#getValue()
+   * @see #getDomain()
    * @generated
    */
-  EAttribute getVariableDomain_Value();
+  EAttribute getDomain_Value();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.VariableDomain#getRange <em>Range</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.Domain#getRange <em>Range</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Range</em>'.
-   * @see de.cau.cs.kieler.kvis.VariableDomain#getRange()
-   * @see #getVariableDomain()
+   * @see de.cau.cs.kieler.kvis.Domain#getRange()
+   * @see #getDomain()
    * @generated
    */
-  EReference getVariableDomain_Range();
+  EReference getDomain_Range();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.Interval <em>Interval</em>}'.
@@ -853,16 +1080,6 @@ public interface KvisPackage extends EPackage
    * @generated
    */
   EAttribute getInterval_To();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.AttributeDomain <em>Attribute Domain</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Attribute Domain</em>'.
-   * @see de.cau.cs.kieler.kvis.AttributeDomain
-   * @generated
-   */
-  EClass getAttributeDomain();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.Condition <em>Condition</em>}'.
@@ -1035,6 +1252,99 @@ public interface KvisPackage extends EPackage
   EAttribute getOperand_Literal();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.ColorAnimation <em>Color Animation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Color Animation</em>'.
+   * @see de.cau.cs.kieler.kvis.ColorAnimation
+   * @generated
+   */
+  EClass getColorAnimation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.TextAnimation <em>Text Animation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Text Animation</em>'.
+   * @see de.cau.cs.kieler.kvis.TextAnimation
+   * @generated
+   */
+  EClass getTextAnimation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.VisibleAnimation <em>Visible Animation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Visible Animation</em>'.
+   * @see de.cau.cs.kieler.kvis.VisibleAnimation
+   * @generated
+   */
+  EClass getVisibleAnimation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.RotateAnimation <em>Rotate Animation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Rotate Animation</em>'.
+   * @see de.cau.cs.kieler.kvis.RotateAnimation
+   * @generated
+   */
+  EClass getRotateAnimation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.MoveAnimation <em>Move Animation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Move Animation</em>'.
+   * @see de.cau.cs.kieler.kvis.MoveAnimation
+   * @generated
+   */
+  EClass getMoveAnimation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.AndOrExpression <em>And Or Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>And Or Expression</em>'.
+   * @see de.cau.cs.kieler.kvis.AndOrExpression
+   * @generated
+   */
+  EClass getAndOrExpression();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.AndOrExpression#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see de.cau.cs.kieler.kvis.AndOrExpression#getLeft()
+   * @see #getAndOrExpression()
+   * @generated
+   */
+  EReference getAndOrExpression_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.AndOrExpression#getOperator <em>Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Operator</em>'.
+   * @see de.cau.cs.kieler.kvis.AndOrExpression#getOperator()
+   * @see #getAndOrExpression()
+   * @generated
+   */
+  EAttribute getAndOrExpression_Operator();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.AndOrExpression#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see de.cau.cs.kieler.kvis.AndOrExpression#getRight()
+   * @see #getAndOrExpression()
+   * @generated
+   */
+  EReference getAndOrExpression_Right();
+
+  /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.kvis.OperatorType <em>Operator Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1043,16 +1353,6 @@ public interface KvisPackage extends EPackage
    * @generated
    */
   EEnum getOperatorType();
-
-  /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.kvis.AnimationType <em>Animation Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Animation Type</em>'.
-   * @see de.cau.cs.kieler.kvis.AnimationType
-   * @generated
-   */
-  EEnum getAnimationType();
 
   /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.kvis.BooleanOperatorType <em>Boolean Operator Type</em>}'.
@@ -1150,14 +1450,6 @@ public interface KvisPackage extends EPackage
     EClass ANIMATION = eINSTANCE.getAnimation();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ANIMATION__TYPE = eINSTANCE.getAnimation_Type();
-
-    /**
      * The meta object literal for the '<em><b>Variable</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1242,14 +1534,14 @@ public interface KvisPackage extends EPackage
     EReference MAPPING__ATTRIBUTE_DOMAIN = eINSTANCE.getMapping_AttributeDomain();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.VariableDomainImpl <em>Variable Domain</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.DomainImpl <em>Domain</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.impl.VariableDomainImpl
-     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getVariableDomain()
+     * @see de.cau.cs.kieler.kvis.impl.DomainImpl
+     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getDomain()
      * @generated
      */
-    EClass VARIABLE_DOMAIN = eINSTANCE.getVariableDomain();
+    EClass DOMAIN = eINSTANCE.getDomain();
 
     /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
@@ -1257,7 +1549,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_DOMAIN__VALUE = eINSTANCE.getVariableDomain_Value();
+    EAttribute DOMAIN__VALUE = eINSTANCE.getDomain_Value();
 
     /**
      * The meta object literal for the '<em><b>Range</b></em>' containment reference feature.
@@ -1265,7 +1557,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VARIABLE_DOMAIN__RANGE = eINSTANCE.getVariableDomain_Range();
+    EReference DOMAIN__RANGE = eINSTANCE.getDomain_Range();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.IntervalImpl <em>Interval</em>}' class.
@@ -1292,16 +1584,6 @@ public interface KvisPackage extends EPackage
      * @generated
      */
     EAttribute INTERVAL__TO = eINSTANCE.getInterval_To();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.AttributeDomainImpl <em>Attribute Domain</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.impl.AttributeDomainImpl
-     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getAttributeDomain()
-     * @generated
-     */
-    EClass ATTRIBUTE_DOMAIN = eINSTANCE.getAttributeDomain();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.ConditionImpl <em>Condition</em>}' class.
@@ -1444,6 +1726,90 @@ public interface KvisPackage extends EPackage
     EAttribute OPERAND__LITERAL = eINSTANCE.getOperand_Literal();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.ColorAnimationImpl <em>Color Animation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.impl.ColorAnimationImpl
+     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getColorAnimation()
+     * @generated
+     */
+    EClass COLOR_ANIMATION = eINSTANCE.getColorAnimation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.TextAnimationImpl <em>Text Animation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.impl.TextAnimationImpl
+     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getTextAnimation()
+     * @generated
+     */
+    EClass TEXT_ANIMATION = eINSTANCE.getTextAnimation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.VisibleAnimationImpl <em>Visible Animation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.impl.VisibleAnimationImpl
+     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getVisibleAnimation()
+     * @generated
+     */
+    EClass VISIBLE_ANIMATION = eINSTANCE.getVisibleAnimation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.RotateAnimationImpl <em>Rotate Animation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.impl.RotateAnimationImpl
+     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getRotateAnimation()
+     * @generated
+     */
+    EClass ROTATE_ANIMATION = eINSTANCE.getRotateAnimation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.MoveAnimationImpl <em>Move Animation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.impl.MoveAnimationImpl
+     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getMoveAnimation()
+     * @generated
+     */
+    EClass MOVE_ANIMATION = eINSTANCE.getMoveAnimation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.impl.AndOrExpressionImpl <em>And Or Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.impl.AndOrExpressionImpl
+     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getAndOrExpression()
+     * @generated
+     */
+    EClass AND_OR_EXPRESSION = eINSTANCE.getAndOrExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AND_OR_EXPRESSION__LEFT = eINSTANCE.getAndOrExpression_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AND_OR_EXPRESSION__OPERATOR = eINSTANCE.getAndOrExpression_Operator();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AND_OR_EXPRESSION__RIGHT = eINSTANCE.getAndOrExpression_Right();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.OperatorType <em>Operator Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1452,16 +1818,6 @@ public interface KvisPackage extends EPackage
      * @generated
      */
     EEnum OPERATOR_TYPE = eINSTANCE.getOperatorType();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.AnimationType <em>Animation Type</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.AnimationType
-     * @see de.cau.cs.kieler.kvis.impl.KvisPackageImpl#getAnimationType()
-     * @generated
-     */
-    EEnum ANIMATION_TYPE = eINSTANCE.getAnimationType();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.BooleanOperatorType <em>Boolean Operator Type</em>}' enum.
