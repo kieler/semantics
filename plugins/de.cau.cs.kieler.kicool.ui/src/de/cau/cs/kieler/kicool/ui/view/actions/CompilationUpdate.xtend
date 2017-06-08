@@ -17,12 +17,13 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.ui.KiCoolUIObserver
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import java.util.Observable
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetProcessor
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 
 /**
  * @author ssm
@@ -44,15 +45,13 @@ class CompilationUpdate extends KiCoolUIObserver {
     override update(AbstractContextNotification notification) {
         CompilationActionSimSalabim.simSalabim(notification)
         
-        if (notification instanceof ProcessorStart) {
-            notification.resetProcessor(view.viewContext.viewModel)
+        switch notification {
+            ProcessorProgress: notification.updateProcessor(view.viewContext.viewModel)
+            ProcessorStart: notification.resetProcessor(view.viewContext.viewModel)
+            ProcessorFinished: notification.updateProcessor(view.viewContext.viewModel) 
+            CompilationStart: notification.resetSystem(view.viewContext.viewModel)
         }
-        else if (notification instanceof ProcessorFinished) {
-            notification.updateProcessor(view.viewContext.viewModel)
-        }
-        else if (notification instanceof ProcessorProgress) {
-            notification.updateProcessor(view.viewContext.viewModel)
-        }
+        
     }
     
 }

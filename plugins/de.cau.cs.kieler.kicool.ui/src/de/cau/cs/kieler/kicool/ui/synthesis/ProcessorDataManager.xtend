@@ -34,6 +34,7 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis.uniqueProcessorId
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractCompilationNotification
 
 /**
  * @author ssm
@@ -64,6 +65,17 @@ class ProcessorDataManager {
     }
     
     
+    static def void resetSystem(AbstractCompilationNotification compilationNotification, KNode node) {
+        val allProcessors = compilationNotification.compilationContext.processorMap.keySet
+        for(processor : allProcessors) {
+            val processorNode = node.findNode(processor.uniqueProcessorId)    
+            if (processorNode == null) {
+                // This can happen because metrics are also listed in the processor map.
+            } else {
+                processorNode.resetProcessorNode(node)
+            }
+        }
+    }
     
     static def void resetProcessor(AbstractProcessorNotification processorNotification, KNode node) {
         val processorEntry = processorNotification.processorEntry
@@ -74,13 +86,18 @@ class ProcessorDataManager {
                 "). This should not happen. I'm very sorry.")
             return
         }
+        
+        processorNode.resetProcessorNode(node)
+    }   
+    
+    static private def void resetProcessorNode(KNode processorNode, KNode node) {
         val nodeIdMap = processorNode.createNodeIdMap
         
         NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(BUSY)
         for(i : 0..NODE_PROGRESS.length -1 ) {
             NODE_PROGRESS.get(i).getContainer(nodeIdMap).setFBAColor(PROGRESSBAR, 0)
         }
-    }    
+    } 
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node) {
         val processorEntry = processorNotification.processorEntry

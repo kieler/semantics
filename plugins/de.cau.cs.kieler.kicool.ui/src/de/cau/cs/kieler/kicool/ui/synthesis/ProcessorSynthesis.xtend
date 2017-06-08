@@ -39,6 +39,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.osgi.framework.Bundle
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.*
+import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -62,7 +63,7 @@ class ProcessorSynthesis {
         node
     }
     
-    static def uniqueProcessorId(Processor processor) {
+    static def uniqueProcessorId(ProcessorEntry processor) {
         processor.id + "#" + processor.hashCode
     }
     
