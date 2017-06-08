@@ -31,7 +31,8 @@ import de.cau.cs.kieler.klighd.krendering.KColoring
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
-
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 
 /**
  * @author ssm
@@ -45,7 +46,8 @@ class ProcessorDataManager {
     static val NODE_PROCESSOR_BODY = "processorbody"
     static val NODE_ACTIVITY_STATUS = "status"
     static val NODE_NAME = "name"
-    
+    static val NODE_PROGRESS = #["p1", "p2", "p3", "p4", "p5"]
+        
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
         val rtProcessor = RuntimeSystems.getProcessorInstance(processor)
         
@@ -69,6 +71,9 @@ class ProcessorDataManager {
         val nodeIdMap = processorNode.createNodeIdMap
         
         NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(BUSY)
+        for(i : 0..NODE_PROGRESS.length -1 ) {
+            NODE_PROGRESS.get(i).getContainer(nodeIdMap).setFBAColor(PROGRESSBAR, 0)
+        }
     }    
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node) {
@@ -77,10 +82,26 @@ class ProcessorDataManager {
         val processorNode = node.findNode(processorEntry.id)
         val nodeIdMap = processorNode.createNodeIdMap
         
-        if (processorUnit.environment.status == ProcessorStatus.OK) {
-            NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(WARNING)        
-        } else if (processorUnit.environment.status == ProcessorStatus.ERRORS) {
+        if (processorUnit.environment.status == ProcessorStatus.ERRORS) {
             NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
+        }
+        
+        if (processorNotification instanceof ProcessorProgress) {
+            updateProgressbar((processorNotification.progress * 100) as int, nodeIdMap)
+        } else if (processorNotification instanceof ProcessorFinished) {
+            updateProgressbar(100, nodeIdMap)
+            if (processorUnit.environment.status == ProcessorStatus.OK) {
+                NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(OK)
+            }        
+        }
+    }
+    
+    static def void updateProgressbar(int progress, Map<String, KNode> nodeIdMap) {
+        var s = "" + progress + " =  "
+        for(i : 0..NODE_PROGRESS.length - 1) {
+            val p = (range(progress, 20 * i, 20 * i + 20) - i * 20) * 5    
+            NODE_PROGRESS.get(i).getContainer(nodeIdMap).setBAlpha(255 * p / 100)
+            s += " p" + i + ":" + p
         }
     }
     
@@ -97,6 +118,21 @@ class ProcessorDataManager {
     static def void setFBColor(KContainerRendering container, ColorSystem colorSystem) {
         container.setFBColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color)
     }
+
+    static def void setFBAColor(KContainerRendering container, ColorSystem colorSystem, int alpha) {
+        container.setFBAColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color, alpha)
+    }
+    
+    static def void setBAlpha(KContainerRendering container, int alpha) {
+        container.styles.filter(KColoring).forEach[ c |
+            if (c instanceof KBackground) { 
+                c.alpha = alpha
+                c.targetAlpha = alpha
+            }
+        ]
+    }
+    
+
     
     /**
      * Private because KColors are not copied.
@@ -107,6 +143,18 @@ class ProcessorDataManager {
             if (c instanceof KBackground) { 
                 c.color = background
                 c.targetColor = backgroundTarget
+            }
+        ]
+    }
+
+    private static def void setFBAColors(KContainerRendering container, KColor foreground, KColor background, KColor backgroundTarget, int alpha) {
+        container.styles.filter(KColoring).forEach[ c |
+            if (c instanceof KForeground) c.color = foreground
+            if (c instanceof KBackground) { 
+                c.color = background
+                c.targetColor = backgroundTarget
+                c.alpha = alpha
+                c.targetAlpha = alpha
             }
         ]
     }
@@ -139,5 +187,11 @@ class ProcessorDataManager {
     
     private static def KLabel getLabel(KNode node) {
         node.eContents.filter(KLabel).head
+    }
+    
+    private static def int range(int value, int min, int max) {
+        if (value < min) return min
+        else if (value > max) return max
+        else return value
     }
 }

@@ -51,7 +51,10 @@ public class ColorStore {
         
         ERROR_FOREGROUND(200, 0, 0),
         ERROR_BACKGROUND(255, 222, 222),
-        ERROR_BACKGROUND_TARGET(222, 177, 177);        
+        ERROR_BACKGROUND_TARGET(222, 177, 177),      
+        
+        PROGRESSBAR_FOREGROUND(200, 200, 200),
+        PROGRESSBAR_BACKGROUND(120, 120, 200);
         
 
         private final KColor color = KRenderingFactory.eINSTANCE.createKColor();
@@ -61,7 +64,7 @@ public class ColorStore {
             color.setGreen(green);
             color.setBlue(blue);
         }
-
+        
         private Color(final Colors color) {
             this.color.setColor(color);
         }

@@ -24,8 +24,8 @@ class Delay extends Processor {
     
     static val MINIMUM_DELAY = "minimumDelay"
     static val MAXIMUM_DELAY = "maximumDelay"
-    static int DEFAULT_MINIMUM_DELAY = 2000
-    static int DEFAULT_MAXIMUM_DELAY = DEFAULT_MINIMUM_DELAY * 3
+    static int DEFAULT_MINIMUM_DELAY = 1000
+    static int DEFAULT_MAXIMUM_DELAY = DEFAULT_MINIMUM_DELAY * 5
     static int INTERVAL_LENGTH = 100
     
     override getId() {
@@ -46,7 +46,7 @@ class Delay extends Processor {
         val delay = (Math.random * (maximumDelay.intValue - minimumDelay.intValue)) as int + minimumDelay.intValue
         println("Delaying... " + delay)
         System.out.flush
-        val totalSteps = (delay / INTERVAL_LENGTH) as int
+        val totalSteps = (delay / INTERVAL_LENGTH) as double
         var steps = 0
         while(steps < totalSteps) {
             Thread.sleep(INTERVAL_LENGTH)
