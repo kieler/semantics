@@ -78,26 +78,31 @@ class KiCoolRegistration {
         modelsMap.clear
         modelsIdMap.clear
         for(system : systems) {
-            val model = loadEObjectFromResourceLocation(system)
-            modelList += model
-            modelsMap.put(system, model as System) 
-            modelsIdMap.put((model as System).id, model as System)
+            try {
+                val model = loadEObjectFromResourceLocation(system.key, system.value)
+                modelList += model
+                modelsMap.put(system.key, model as System) 
+                modelsIdMap.put((model as System).id, model as System)
+            } catch (Exception e) {
+                java.lang.System.err.println("The processor system " + system.toString + " is registered. " + 
+                    "However, there was an error while loading the resource! I'm sorry!")
+            }
         }
         modelList
     }
 
     static def getRegisteredSystems() {
-        val resourceList = <String> newArrayList
+        val resourceList = <Pair<String, String>> newArrayList
         val systems = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_SYSTEM);
         for(system : systems) {
-            resourceList += system.getAttribute("system")
+            resourceList += new Pair<String, String>(system.getAttribute("system"), system.contributor.name)
         }
         resourceList       
     }
     
-    static def EObject loadEObjectFromResourceLocation(String resourceLocation) throws IOException {
+    static def EObject loadEObjectFromResourceLocation(String resourceLocation, String bundleId) throws IOException {
         
-        val Bundle bundle = Platform.getBundle(KiCoolActivator.PLUGIN_ID);
+        val Bundle bundle = Platform.getBundle(bundleId);
         val URL bundleFileUrl = bundle.getEntry(resourceLocation.toString()); 
         
         val uri = URI.createURI(bundleFileUrl.toString, false)
