@@ -154,6 +154,10 @@ class KiCoolRegistration {
         processorList
     }
     
+    static def getProcessorIds() {
+        processorMap.keySet
+    }
+    
     static def getProcessorInstance(String id) {
         val clazz = processorMap.get(id)
         if (clazz == null) return null;

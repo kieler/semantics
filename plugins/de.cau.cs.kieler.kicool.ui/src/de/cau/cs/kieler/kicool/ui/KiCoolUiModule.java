@@ -14,4 +14,10 @@ public class KiCoolUiModule extends de.cau.cs.kieler.kicool.ui.AbstractKiCoolUiM
 		super(plugin);
 	}
 	
+	@Override
+    public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
+        return de.cau.cs.kieler.kicool.ui.contentassist.KiCoolProposalProviderX.class;
+    }
+	
+	
 }

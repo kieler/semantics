@@ -27,7 +27,7 @@ class KiCoolProposalProviderX extends KiCoolProposalProvider {
     override completeProcessor_Id(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
         val prefix = context.prefix
-        if (!"".equals(prefix)) { 
+        if (!"".equals(prefix)) {  
             for(processor : KiCoolRegistration.getProcessorIds) {
                 if (processor.contains(prefix)) {
                     val proposal = doCreateProposal(processor, null, null, getPriorityHelper.getDefaultPriority, context)

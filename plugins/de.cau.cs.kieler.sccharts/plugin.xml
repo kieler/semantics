@@ -224,6 +224,63 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.TriggerEffectWrapper">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.AbortWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ComplexFinalStateWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ConnectorWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.WeakSuspendWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.SuspendWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.StaticWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.SignalWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ReferenceWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.PreWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.MapWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.InitializationWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.HistoryWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ForWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ExitWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.EntryActionWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.DuringActionWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.DeferredWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.CountDelayWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ConstWrapper">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
