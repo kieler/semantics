@@ -3,9 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.rtsys.peu.railsl.ide
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: de.cau.rtsys.peu.railsl.ide; singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.railsl.ide;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: de.cau.rtsys.peu.railsl,
+Require-Bundle: de.cau.cs.kieler.railsl,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

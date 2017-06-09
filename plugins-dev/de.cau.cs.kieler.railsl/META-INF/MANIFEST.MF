@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.rtsys.peu.railsl
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: de.cau.rtsys.peu.railsl; singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.railsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,

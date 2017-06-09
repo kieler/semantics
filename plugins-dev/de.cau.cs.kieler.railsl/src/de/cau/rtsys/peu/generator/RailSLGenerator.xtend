@@ -667,6 +667,7 @@ ${outputs}
         signalsDecl.output = true
         val signals = createValuedObject("signals")
         signals.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
+        signals.cardinalities.add(createIntValue(2))
         signalsDecl.attach(signals)
         signalsDecl.annotations.add(createStringAnnotation("Wrapper", "signals"))
 
