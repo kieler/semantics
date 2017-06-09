@@ -13,6 +13,10 @@
 package de.cau.cs.kieler.kicool.registration
 
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Platform
+import org.osgi.framework.BundleContext
+import org.osgi.framework.FrameworkUtil
+import org.osgi.framework.Bundle
 
 /**
  * @author ssm
@@ -46,7 +50,14 @@ class Register {
         }
         val classFilename = file.location.toString.replaceFirst("/" + SRC_FOLDER_NAME + "/", "/" + BIN_FOLDER_NAME + "/").replaceFirst("\\.xtend", ".class")
         
-        val classLoader = new KiCoolClassLoader(this.getClass().getClassLoader());     
+        val classLoader = new KiCoolClassLoader(Thread.currentThread().getContextClassLoader())
+        val BundleContext ctx = FrameworkUtil.getBundle(this.class).getBundleContext() 
+        val Bundle[] bundles = ctx.getBundles();
+        for(b : bundles) {
+            val cl = b.class.classLoader
+            classLoader.addAdditionalClassLoader(cl)
+            classLoader.addAdditionalBundle(b)
+        }
         
         var className = ""
         for (var i = 2; i < file.fullPath.segmentCount; i++) {
