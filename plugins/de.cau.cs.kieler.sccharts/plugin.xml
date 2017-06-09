@@ -219,9 +219,18 @@
      <extension
            point="de.cau.cs.kieler.kicool.processor">
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.SplitTED">
+              class="de.cau.cs.kieler.sccharts.processors.transformators.SurfaceDepthWrapper">
         </Processor>
-     </extension>   
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.TriggerEffectWrapper">
+        </Processor>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.kicool.system">
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.core.kico">
+        </TransformationSystem>
+     </extension>
 
 
 </plugin>

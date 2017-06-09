@@ -31,3 +31,4 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.kitt,
  de.cau.cs.kieler.kicool
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: de.cau.cs.kieler.sccharts.SCChartsPlugin
