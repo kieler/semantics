@@ -193,6 +193,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 	
     protected def String combineOperatorsHR(Iterator<Expression> expressions, String separator) {
         var s = ""
+        if (!expressions.hasNext) {
+            System.err.println("Serialization: An operator expression without sub-expressions occurred! " + 
+                "This should not happen! Check your transformation!")
+        }
         while (expressions.hasNext) {
             s = s + expressions.next.serializeHR
             if(expressions.hasNext) s = s + separator;
