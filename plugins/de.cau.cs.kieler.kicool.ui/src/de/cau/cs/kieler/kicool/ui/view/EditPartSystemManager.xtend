@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.kicool.ui.view
 
 import java.util.HashMap
-import org.eclipse.ui.IWorkbenchPart
 import de.cau.cs.kieler.kicool.System
+import org.eclipse.ui.IEditorPart
 
 /**
  * @author ssm
@@ -23,17 +23,25 @@ import de.cau.cs.kieler.kicool.System
  */
 class EditPartSystemManager {
     
-    private val editPartSystemMap = new HashMap<IWorkbenchPart, System>
+    private val editPartSystemMap = new HashMap<IEditorPart, System>
     
-    def attachSystemToEditPart(IWorkbenchPart part, System system) {
+    def attachSystemToEditPart(IEditorPart part, System system) {
         editPartSystemMap.put(part, system)
     }
     
-    def System get(IWorkbenchPart part) {
+    def System get(IEditorPart part) {
         editPartSystemMap.get(part)
     }
     
-    def remove(IWorkbenchPart part) {
+    def remove(IEditorPart part) {
         editPartSystemMap.remove(part)
+    }
+    
+    def findEditorFor(System system) {
+        for(key : editPartSystemMap.keySet) {
+            if (editPartSystemMap.get(key).equals(system)) return key
+        }
+        
+        return null
     }
 }

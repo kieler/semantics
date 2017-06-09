@@ -28,7 +28,7 @@ class Environment {
     public static val MODEL = "model"
     public static val CONTEXT = "context"
     public static val META_PROCESSOR = "metaProcessor"
-    public static val COMPILATION__UNIT = "compilationUnit"
+    public static val COMPILATION_UNIT = "compilationUnit"
     public static val ERRORS = "errors"     
     public static val START_TIMESTAMP = "startTimestamp"
     public static val STOP_TIMESTAMP = "stopTimestamp"

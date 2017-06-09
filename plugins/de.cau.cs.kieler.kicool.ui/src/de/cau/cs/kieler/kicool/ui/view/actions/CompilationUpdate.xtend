@@ -26,6 +26,9 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 
+import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
+import de.cau.cs.kieler.kicool.ui.synthesis.Container
+
 /**
  * @author ssm
  * @kieler.design 2017-02-24 proposed
@@ -50,7 +53,16 @@ class CompilationUpdate extends KiCoolUIObserver {
             ProcessorStart: notification.resetProcessor(view.viewContext.viewModel)
             ProcessorFinished: notification.updateProcessor(view.viewContext.viewModel) 
             CompilationStart: notification.resetSystem(view.viewContext.viewModel)
-            CompilationFinished: CompilationActionSimSalabim.simSalabim(notification) 
+            CompilationFinished: {
+                    CompilationActionSimSalabim.simSalabim(notification)
+                    
+                    val editor = view.editPartSystemManager.findEditorFor(notification.compilationContext.system)
+                    var model = notification.environment.model
+                    if (model instanceof String) {
+                        model = new Container<String>(model)
+                    }
+                    KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+                } 
         }
         
     }

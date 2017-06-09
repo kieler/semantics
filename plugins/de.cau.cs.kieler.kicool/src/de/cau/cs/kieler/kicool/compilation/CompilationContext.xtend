@@ -75,7 +75,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.Processor processor, Environment environment) {
         val compilationUnit = processorMap.get(processor)
         environment.data.put(Environment.META_PROCESSOR, processor)
-        environment.data.put(Environment.COMPILATION__UNIT, compilationUnit)
+        environment.data.put(Environment.COMPILATION_UNIT, compilationUnit)
         val environmentPrime = environment.preparePrimeEnvironment
         
         compilationUnit.setEnvironment(environment, environmentPrime)

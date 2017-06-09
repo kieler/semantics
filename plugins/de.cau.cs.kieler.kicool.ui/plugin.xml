@@ -321,6 +321,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.GenericStringSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.synthesis.GenericStringSynthesis">
+      </diagramSynthesis>
    </extension>
        <extension
              point="org.eclipse.ui.views">

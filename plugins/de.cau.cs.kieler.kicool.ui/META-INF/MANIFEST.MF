@@ -24,7 +24,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.elk.core,
  de.cau.cs.kieler.kico.ui,
  org.eclipse.ui.ide,
- org.eclipse.xtext.xbase.ui
+ org.eclipse.xtext.xbase.ui,
+ de.cau.cs.kieler.kico.klighd
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui.contentassist,
