@@ -38,7 +38,7 @@ class SurfaceDepthWrapper extends Processor {
     }
     
     override getName() {
-        "Trigger / Effect"
+        "Surface / Depth"
     }
     
     override process() {

@@ -19,7 +19,10 @@ import org.eclipse.jface.resource.ImageDescriptor
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import de.cau.cs.kieler.kicool.compilation.AsynchronousCompilation
+import org.eclipse.xtext.ui.editor.XtextEditor
+import org.eclipse.xtext.util.concurrent.IUnitOfWork
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.XtextResource
 
 /**
  * @author ssm
@@ -50,7 +53,10 @@ class CompilationAction {
     }
     
     def void invokeCompile() {
-        val model = CompilationActionSimSalabim.SIM_MODEL
+        var model = getEditorModel
+        if (model == null) {
+            model = CompilationActionSimSalabim.SIM_MODEL
+        }
         
         val cc = Compile.createCompilationContext(view.activeSystem, model)
         
@@ -58,5 +64,23 @@ class CompilationAction {
         cc.addObserver(updateObserver)
         
         cc.compileAsynchronously
+    }
+    
+    protected def Object getEditorModel() {
+        val editor = CompilerView.getActiveEditor
+        
+        if (editor instanceof XtextEditor) {
+            return editor.retrieveModelFromXtextEditor
+        }        
+    }
+    
+    static def retrieveModelFromXtextEditor(XtextEditor editor) {
+        val doc = editor.getDocument
+        var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
+            override exec(XtextResource state) throws Exception {
+                state.contents.head
+            }
+        });   
+        return m     
     }
 }
