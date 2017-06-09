@@ -264,7 +264,7 @@
               class="de.cau.cs.kieler.sccharts.processors.transformators.ForWrapper">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.ExitWrapper">
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ExitActionWrapper">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.EntryActionWrapper">
@@ -286,6 +286,9 @@
            point="de.cau.cs.kieler.kicool.system">
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.core.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.extended.simple.kico">
         </TransformationSystem>
      </extension>
 
