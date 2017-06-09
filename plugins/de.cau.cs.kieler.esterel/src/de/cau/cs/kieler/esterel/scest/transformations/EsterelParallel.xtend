@@ -26,6 +26,8 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Label
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.esterel.esterel.StatementContainer
 
 /**
  * @author mrb
@@ -62,40 +64,30 @@ class EsterelParallel extends AbstractExpansionTransformation implements Traceab
     extension SCEstExtension
     
     def SCEstProgram transform(SCEstProgram prog) {
-//        for (var j=0; j<prog.modules.length ; j++) {
-//            var module = prog.modules.get(j)
-//            if (module.statements != null) {
-//                var statements = module.statements
-//                for (var i=0; i<statements.length ; i++) {
-//                    var statement = statements.get(i)
-//                    if (statement instanceof de.cau.cs.kieler.esterel.esterel.EsterelParallel) {
-//                        var Parallel parallel SclFactory::eINSTANCE.createParallel()
-//                        var threads = (statement as de.cau.cs.kieler.esterel.esterel.EsterelParallel).threads
-//                        for (EsterelThread et : threads) {
-//                            var Thread t = SclFactory::eINSTANCE.createThread()
-//                            t.statements += et.statements
-//                            parallel.threads += t
-//                        }
-//                        module.statements.set(i, parallel)
-//                    }
-//                }
-//            }
-//            prog.modules.set(j, module)            
-//        }
-//        return prog
-       
-        for (var j=0; j<prog.modules.length ; j++) {
-            for (var i=0; i<prog.modules.get(j).statements.length; i++) {
-                if (prog.modules.get(j).statements.get(i) instanceof Pause) {
-                    prog.modules.get(j).statements.set(i, SclFactory::eINSTANCE.createGoto)
-                    var Label l = SclFactory::eINSTANCE.createLabel
-                    l.name = "bla"
-                    var Goto g = prog.modules.get(j).statements.get(i) as Goto
-                    g.target = l
-                }
+        for (module : prog.modules) {
+            var statements = module.statements
+            for (var i=0; i<statements.length; i++) {
+                statements.set(i, statements.get(i).transformStatement)
             }
         }
         return prog
+    }
+    
+    def Statement transformStatement(Statement statement) {
+        if (statement instanceof de.cau.cs.kieler.esterel.esterel.EsterelParallel) {
+            var parallel = createParallel
+            for (thread : (statement as de.cau.cs.kieler.esterel.esterel.EsterelParallel).threads) {
+                parallel.threads.add(createThread => [ statements.add(thread.statements) ])
+            }
+            return parallel
+        }
+        else if (statement instanceof StatementContainer) {
+            var statements = (statement as StatementContainer).statements
+            for (var i=0; i<statements.length; i++) {
+                statements.set(i, statements.get(i).transformStatement)
+            }
+        }
+        return statement
     }
     
 }
