@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.scest.scest.impl;
 
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule;
@@ -161,19 +159,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSCEstModule_Annotations()
-  {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getSCEstModule_Name()
   {
-    return (EAttribute)scEstModuleEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)scEstModuleEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -183,7 +171,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntSignalDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(2);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -193,7 +181,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntTypeDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(3);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -203,7 +191,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntSensorDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(4);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -213,7 +201,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntConstantDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(5);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -223,7 +211,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntRelationDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(6);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -233,7 +221,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntTaskDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(7);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -243,7 +231,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntFunctionDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(8);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -253,17 +241,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_IntProcedureDecls()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(9);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSCEstModule_Statements()
-  {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(10);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -273,7 +251,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    */
   public EReference getSCEstModule_Declarations()
   {
-    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(11);
+    return (EReference)scEstModuleEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -380,7 +358,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     createEReference(scEstProgramEClass, SC_EST_PROGRAM__MODULES);
 
     scEstModuleEClass = createEClass(SC_EST_MODULE);
-    createEReference(scEstModuleEClass, SC_EST_MODULE__ANNOTATIONS);
     createEAttribute(scEstModuleEClass, SC_EST_MODULE__NAME);
     createEReference(scEstModuleEClass, SC_EST_MODULE__INT_SIGNAL_DECLS);
     createEReference(scEstModuleEClass, SC_EST_MODULE__INT_TYPE_DECLS);
@@ -390,7 +367,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     createEReference(scEstModuleEClass, SC_EST_MODULE__INT_TASK_DECLS);
     createEReference(scEstModuleEClass, SC_EST_MODULE__INT_FUNCTION_DECLS);
     createEReference(scEstModuleEClass, SC_EST_MODULE__INT_PROCEDURE_DECLS);
-    createEReference(scEstModuleEClass, SC_EST_MODULE__STATEMENTS);
     createEReference(scEstModuleEClass, SC_EST_MODULE__DECLARATIONS);
 
     unEmitEClass = createEClass(UN_EMIT);
@@ -428,9 +404,8 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
-    EsterelPackage theEsterelPackage = (EsterelPackage)EPackage.Registry.INSTANCE.getEPackage(EsterelPackage.eNS_URI);
     SclPackage theSclPackage = (SclPackage)EPackage.Registry.INSTANCE.getEPackage(SclPackage.eNS_URI);
+    EsterelPackage theEsterelPackage = (EsterelPackage)EPackage.Registry.INSTANCE.getEPackage(EsterelPackage.eNS_URI);
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
     // Create type parameters
@@ -438,6 +413,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    scEstModuleEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
     unEmitEClass.getESuperTypes().add(theSclPackage.getStatement());
     setEClass.getESuperTypes().add(theSclPackage.getStatement());
 
@@ -446,7 +422,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     initEReference(getSCEstProgram_Modules(), this.getSCEstModule(), null, "modules", null, 0, -1, SCEstProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scEstModuleEClass, SCEstModule.class, "SCEstModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSCEstModule_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSCEstModule_Name(), ecorePackage.getEString(), "name", null, 0, 1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSCEstModule_IntSignalDecls(), theEsterelPackage.getInterfaceSignalDecl(), null, "intSignalDecls", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSCEstModule_IntTypeDecls(), theEsterelPackage.getTypeDecl(), null, "intTypeDecls", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -456,7 +431,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     initEReference(getSCEstModule_IntTaskDecls(), theEsterelPackage.getTaskDecl(), null, "intTaskDecls", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSCEstModule_IntFunctionDecls(), theEsterelPackage.getFunctionDecl(), null, "intFunctionDecls", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSCEstModule_IntProcedureDecls(), theEsterelPackage.getProcedureDecl(), null, "intProcedureDecls", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSCEstModule_Statements(), theSclPackage.getStatement(), null, "statements", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSCEstModule_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unEmitEClass, UnEmit.class, "UnEmit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

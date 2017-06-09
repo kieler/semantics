@@ -2,10 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Exec;
 import de.cau.cs.kieler.esterel.esterel.ExecCase;
@@ -14,7 +10,7 @@ import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.IVariable;
 import de.cau.cs.kieler.esterel.esterel.Task;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -40,7 +36,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getTask <em>Task</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getVars <em>Vars</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getKexpressions <em>Kexpressions</em>}</li>
@@ -52,16 +47,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ExecImpl extends StatementContainerImpl implements Exec
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
    * <!-- begin-user-doc -->
@@ -131,20 +116,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.EXEC;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.EXEC__ANNOTATIONS);
-    }
-    return annotations;
   }
 
   /**
@@ -280,49 +251,11 @@ public class ExecImpl extends StatementContainerImpl implements Exec
    * <!-- end-user-doc -->
    * @generated
    */
-  public Annotation getAnnotation(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void removeAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.EXEC__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.EXEC__KEXPRESSIONS:
         return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
@@ -341,8 +274,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
-      case EsterelPackage.EXEC__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.EXEC__TASK:
         if (resolve) return getTask();
         return basicGetTask();
@@ -370,10 +301,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
-      case EsterelPackage.EXEC__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.EXEC__TASK:
         setTask((Task)newValue);
         return;
@@ -406,9 +333,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
-      case EsterelPackage.EXEC__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.EXEC__TASK:
         setTask((Task)null);
         return;
@@ -438,8 +362,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
   {
     switch (featureID)
     {
-      case EsterelPackage.EXEC__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.EXEC__TASK:
         return task != null;
       case EsterelPackage.EXEC__VARS:
@@ -452,58 +374,6 @@ public class ExecImpl extends StatementContainerImpl implements Exec
         return execCaseList != null && !execCaseList.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case EsterelPackage.EXEC__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (derivedFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (baseFeatureID)
-      {
-        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.EXEC__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (baseFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //ExecImpl

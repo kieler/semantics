@@ -42,6 +42,7 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -236,6 +237,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 			case SclPackage.SCOPE_STATEMENT:
 				sequence_ScopeStatement(context, (ScopeStatement) semanticObject); 
 				return; 
+			case SclPackage.STATEMENT_CONTAINER:
+				sequence_StatementContainer(context, (StatementContainer) semanticObject); 
+				return; 
 			case SclPackage.THREAD:
 				sequence_Thread(context, (de.cau.cs.kieler.scl.scl.Thread) semanticObject); 
 				return; 
@@ -261,6 +265,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     StatementContainerInterface returns Conditional
 	 *     Statement returns Conditional
 	 *     InstructionStatement returns Conditional
 	 *     Conditional returns Conditional
@@ -282,6 +287,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     StatementContainerInterface returns ElseScope
 	 *     ElseScope returns ElseScope
 	 *
 	 * Constraint:
@@ -374,6 +380,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     StatementContainerInterface returns ScopeStatement
 	 *     Statement returns ScopeStatement
 	 *     MetaStatement returns ScopeStatement
 	 *     ScopeStatement returns ScopeStatement
@@ -388,6 +395,19 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     StatementContainer returns StatementContainer
+	 *
+	 * Constraint:
+	 *     statements+=Statement
+	 */
+	protected void sequence_StatementContainer(ISerializationContext context, StatementContainer semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StatementContainerInterface returns Thread
 	 *     Thread returns Thread
 	 *
 	 * Constraint:

@@ -9,6 +9,7 @@ import de.cau.cs.kieler.esterel.esterel.*;
 import de.cau.cs.kieler.kexpressions.Value;
 
 import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -89,6 +90,8 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         Module module = (Module)theEObject;
         T result = caseModule(module);
+        if (result == null) result = caseStatementContainer(module);
+        if (result == null) result = caseAnnotatable(module);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -234,13 +237,6 @@ public class EsterelSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.STATEMENT_CONTAINER:
-      {
-        StatementContainer statementContainer = (StatementContainer)theEObject;
-        T result = caseStatementContainer(statementContainer);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsterelPackage.ESTEREL_PARALLEL:
       {
         EsterelParallel esterelParallel = (EsterelParallel)theEObject;
@@ -255,6 +251,7 @@ public class EsterelSwitch<T> extends Switch<T>
         EsterelThread esterelThread = (EsterelThread)theEObject;
         T result = caseEsterelThread(esterelThread);
         if (result == null) result = caseStatementContainer(esterelThread);
+        if (result == null) result = caseAnnotatable(esterelThread);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -336,6 +333,7 @@ public class EsterelSwitch<T> extends Switch<T>
         PresentCase presentCase = (PresentCase)theEObject;
         T result = casePresentCase(presentCase);
         if (result == null) result = caseStatementContainer(presentCase);
+        if (result == null) result = caseAnnotatable(presentCase);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -390,6 +388,7 @@ public class EsterelSwitch<T> extends Switch<T>
         Case case_ = (Case)theEObject;
         T result = caseCase(case_);
         if (result == null) result = caseStatementContainer(case_);
+        if (result == null) result = caseAnnotatable(case_);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -438,6 +437,7 @@ public class EsterelSwitch<T> extends Switch<T>
         TrapHandler trapHandler = (TrapHandler)theEObject;
         T result = caseTrapHandler(trapHandler);
         if (result == null) result = caseStatementContainer(trapHandler);
+        if (result == null) result = caseAnnotatable(trapHandler);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -465,6 +465,7 @@ public class EsterelSwitch<T> extends Switch<T>
         ExecCase execCase = (ExecCase)theEObject;
         T result = caseExecCase(execCase);
         if (result == null) result = caseStatementContainer(execCase);
+        if (result == null) result = caseAnnotatable(execCase);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1112,22 +1113,6 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseRelationIncompatibility(RelationIncompatibility object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Statement Container</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Statement Container</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStatementContainer(StatementContainer object)
   {
     return null;
   }
@@ -2104,6 +2089,22 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAnnotatable(Annotatable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStatementContainer(StatementContainer object)
   {
     return null;
   }

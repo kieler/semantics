@@ -6,10 +6,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
         eType="#//SCEstModule" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SCEstModule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SCEstModule" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intSignalDecls" upperBound="-1"
         eType="ecore:EClass Esterel.ecore#//InterfaceSignalDecl" containment="true"/>
@@ -27,9 +24,6 @@
         eType="ecore:EClass Esterel.ecore#//FunctionDecl" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intProcedureDecls" upperBound="-1"
         eType="ecore:EClass Esterel.ecore#//ProcedureDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>

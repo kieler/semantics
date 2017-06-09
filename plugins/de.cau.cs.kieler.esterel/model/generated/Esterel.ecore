@@ -6,10 +6,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
         eType="#//Module" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Module">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intSignalDecls" upperBound="-1"
         eType="#//InterfaceSignalDecl" containment="true"/>
@@ -27,9 +24,6 @@
         eType="#//FunctionDecl" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intProcedureDecls" upperBound="-1"
         eType="#//ProcedureDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeIdentifier">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ValueType"/>
@@ -145,19 +139,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomp" unique="false"
         upperBound="-1" eType="#//ISignal"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EsterelParallel" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="threads" upperBound="-1"
         eType="#//EsterelThread" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EsterelThread" eSuperTypes="#//StatementContainer"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EsterelThread" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer"/>
   <eClassifiers xsi:type="ecore:EClass" name="Nothing" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Halt" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Block" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Block" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Emit" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="#//ISignal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="#//ValuedObject"
@@ -204,10 +193,7 @@
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PresentCase" eSuperTypes="#//StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PresentCase" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="#//ValuedObject"
@@ -244,16 +230,16 @@
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Loop" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Loop" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Repeat" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Repeat" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="positive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Abort" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Abort" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="weak" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
@@ -263,38 +249,32 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="cases" upperBound="-1"
         eType="#//Case" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Case" eSuperTypes="#//StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Case" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Await" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Await" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cases" upperBound="-1"
         eType="#//Case" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EveryDo" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="EveryDo" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Suspend" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Suspend" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="weak" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Trap" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Trap" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="trapSignals" upperBound="-1"
         eType="#//ISignal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="trapHandler" upperBound="-1"
         eType="#//TrapHandler" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TrapHandler" eSuperTypes="#//StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TrapHandler" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="trapExpr" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
@@ -303,7 +283,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Exec" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Exec" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" unique="false" upperBound="-1"
         eType="#//IVariable"/>
@@ -313,10 +293,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="execCaseList" upperBound="-1"
         eType="#//ExecCase" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExecCase" eSuperTypes="#//StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecCase" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//Task"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" unique="false" upperBound="-1"
         eType="#//IVariable"/>
@@ -324,11 +301,11 @@
         eType="#//Expression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="retSignal" eType="#//ISignal"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalSignalDecl" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="LocalSignalDecl" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
         eType="#//ISignal" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalVariable" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="LocalVariable" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="varDecls" upperBound="-1"
         eType="#//VariableDecl" containment="true"/>
   </eClassifiers>
@@ -387,7 +364,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//ISignal"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//ISignal"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Do" eSuperTypes="#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
+  <eClassifiers xsi:type="ecore:EClass" name="Do" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="endingAnnotations" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
         containment="true"/>

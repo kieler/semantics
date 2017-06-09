@@ -73,7 +73,6 @@ import de.cau.cs.kieler.esterel.esterel.Run;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
-import de.cau.cs.kieler.esterel.esterel.StatementContainer;
 import de.cau.cs.kieler.esterel.esterel.Suspend;
 import de.cau.cs.kieler.esterel.esterel.Sustain;
 import de.cau.cs.kieler.esterel.esterel.Task;
@@ -116,6 +115,7 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import de.cau.cs.kieler.scl.serializer.SCLSemanticSequencer;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -429,9 +429,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case EsterelPackage.SIGNAL_RENAMING:
 				sequence_SignalRenaming(context, (SignalRenaming) semanticObject); 
 				return; 
-			case EsterelPackage.STATEMENT_CONTAINER:
-				sequence_StatementContainer(context, (StatementContainer) semanticObject); 
-				return; 
 			case EsterelPackage.SUSPEND:
 				sequence_Suspend(context, (Suspend) semanticObject); 
 				return; 
@@ -591,6 +588,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case SclPackage.SCOPE_STATEMENT:
 				sequence_ScopeStatement(context, (ScopeStatement) semanticObject); 
+				return; 
+			case SclPackage.STATEMENT_CONTAINER:
+				sequence_StatementContainer(context, (StatementContainer) semanticObject); 
 				return; 
 			case SclPackage.THREAD:
 				sequence_Thread(context, (de.cau.cs.kieler.scl.scl.Thread) semanticObject); 
@@ -1521,6 +1521,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     Module returns Module
+	 *     StatementContainerInterface returns Module
 	 *
 	 * Constraint:
 	 *     (
@@ -1907,18 +1908,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     (newName=[ISignal|ID]? oldName=[ISignal|ID])
 	 */
 	protected void sequence_SignalRenaming(ISerializationContext context, SignalRenaming semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     StatementContainer returns StatementContainer
-	 *
-	 * Constraint:
-	 *     statements+=EsterelStatement
-	 */
-	protected void sequence_StatementContainer(ISerializationContext context, StatementContainer semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -42,6 +42,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSCEstModuleAccess().getAlternatives_5_0_1_0(), "rule__SCEstModule__Alternatives_5_0_1_0");
 					put(grammarAccess.getSCEstModuleAccess().getAlternatives_5_0_2(), "rule__SCEstModule__Alternatives_5_0_2");
 					put(grammarAccess.getSCEstModuleAccess().getAlternatives_5_1_2_0(), "rule__SCEstModule__Alternatives_5_1_2_0");
+					put(grammarAccess.getStatementContainerInterfaceAccess().getAlternatives(), "rule__StatementContainerInterface__Alternatives");
 					put(grammarAccess.getSCEstStatementAccess().getAlternatives(), "rule__SCEstStatement__Alternatives");
 					put(grammarAccess.getSCEstAtomicStatementAccess().getAlternatives(), "rule__SCEstAtomicStatement__Alternatives");
 					put(grammarAccess.getEsterelThreadAccess().getAlternatives_1(), "rule__EsterelThread__Alternatives_1");
@@ -106,7 +107,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getISignalAccess().getAlternatives_2_2_2_3(), "rule__ISignal__Alternatives_2_2_2_3");
 					put(grammarAccess.getSensorWithTypeAccess().getAlternatives_1(), "rule__SensorWithType__Alternatives_1");
 					put(grammarAccess.getRelationTypeAccess().getAlternatives(), "rule__RelationType__Alternatives");
-					put(grammarAccess.getStatementContainerInterfaceAccess().getAlternatives(), "rule__StatementContainerInterface__Alternatives");
 					put(grammarAccess.getEsterelStatementAccess().getAlternatives(), "rule__EsterelStatement__Alternatives");
 					put(grammarAccess.getAtomicStatementAccess().getAlternatives(), "rule__AtomicStatement__Alternatives");
 					put(grammarAccess.getEmitAccess().getAlternatives_2(), "rule__Emit__Alternatives_2");
@@ -827,7 +827,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRelationIncompatibilityAccess().getTypeAssignment_1(), "rule__RelationIncompatibility__TypeAssignment_1");
 					put(grammarAccess.getRelationIncompatibilityAccess().getIncompAssignment_2(), "rule__RelationIncompatibility__IncompAssignment_2");
 					put(grammarAccess.getRelationIncompatibilityAccess().getIncompAssignment_3_1(), "rule__RelationIncompatibility__IncompAssignment_3_1");
-					put(grammarAccess.getStatementContainerAccess().getStatementsAssignment(), "rule__StatementContainer__StatementsAssignment");
 					put(grammarAccess.getNothingAccess().getAnnotationsAssignment_1(), "rule__Nothing__AnnotationsAssignment_1");
 					put(grammarAccess.getHaltAccess().getAnnotationsAssignment_1(), "rule__Halt__AnnotationsAssignment_1");
 					put(grammarAccess.getEmitAccess().getAnnotationsAssignment_0(), "rule__Emit__AnnotationsAssignment_0");
@@ -975,6 +974,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_0(), "rule__SCLProgram__StatementsAssignment_5_0_0");
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1(), "rule__SCLProgram__StatementsAssignment_5_1");
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_6(), "rule__SCLProgram__StatementsAssignment_6");
+					put(grammarAccess.getStatementContainerAccess().getStatementsAssignment(), "rule__StatementContainer__StatementsAssignment");
 					put(grammarAccess.getPauseAccess().getAnnotationsAssignment_1(), "rule__Pause__AnnotationsAssignment_1");
 					put(grammarAccess.getLabelAccess().getAnnotationsAssignment_0(), "rule__Label__AnnotationsAssignment_0");
 					put(grammarAccess.getLabelAccess().getNameAssignment_1_0(), "rule__Label__NameAssignment_1_0");

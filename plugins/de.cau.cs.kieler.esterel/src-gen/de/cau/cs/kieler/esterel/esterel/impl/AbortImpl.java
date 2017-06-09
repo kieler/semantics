@@ -2,16 +2,14 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.esterel.esterel.Abort;
 import de.cau.cs.kieler.esterel.esterel.Case;
 import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
 import de.cau.cs.kieler.scl.scl.Statement;
+
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -36,7 +34,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortImpl#isWeak <em>Weak</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortImpl#getDoStatements <em>Do Statements</em>}</li>
@@ -47,16 +44,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class AbortImpl extends StatementContainerImpl implements Abort
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The default value of the '{@link #isWeak() <em>Weak</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -126,20 +113,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.ABORT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.ABORT__ANNOTATIONS);
-    }
-    return annotations;
   }
 
   /**
@@ -246,49 +219,11 @@ public class AbortImpl extends StatementContainerImpl implements Abort
    * <!-- end-user-doc -->
    * @generated
    */
-  public Annotation getAnnotation(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void removeAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.ABORT__DELAY:
         return basicSetDelay(null, msgs);
       case EsterelPackage.ABORT__DO_STATEMENTS:
@@ -309,8 +244,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.ABORT__WEAK:
         return isWeak();
       case EsterelPackage.ABORT__DELAY:
@@ -334,10 +267,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.ABORT__WEAK:
         setWeak((Boolean)newValue);
         return;
@@ -366,9 +295,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.ABORT__WEAK:
         setWeak(WEAK_EDEFAULT);
         return;
@@ -395,8 +321,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.ABORT__WEAK:
         return weak != WEAK_EDEFAULT;
       case EsterelPackage.ABORT__DELAY:
@@ -407,58 +331,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
         return cases != null && !cases.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case EsterelPackage.ABORT__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (derivedFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (baseFeatureID)
-      {
-        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.ABORT__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (baseFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
   /**

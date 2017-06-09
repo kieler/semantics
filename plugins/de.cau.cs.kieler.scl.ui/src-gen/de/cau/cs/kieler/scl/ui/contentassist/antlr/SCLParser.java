@@ -38,6 +38,7 @@ public class SCLParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getSCLProgramAccess().getAlternatives_5(), "rule__SCLProgram__Alternatives_5");
+					put(grammarAccess.getStatementContainerInterfaceAccess().getAlternatives(), "rule__StatementContainerInterface__Alternatives");
 					put(grammarAccess.getStatementAccess().getAlternatives(), "rule__Statement__Alternatives");
 					put(grammarAccess.getInstructionStatementAccess().getAlternatives(), "rule__InstructionStatement__Alternatives");
 					put(grammarAccess.getMetaStatementAccess().getAlternatives(), "rule__MetaStatement__Alternatives");
@@ -176,6 +177,7 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_0(), "rule__SCLProgram__StatementsAssignment_5_0_0");
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1(), "rule__SCLProgram__StatementsAssignment_5_1");
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_6(), "rule__SCLProgram__StatementsAssignment_6");
+					put(grammarAccess.getStatementContainerAccess().getStatementsAssignment(), "rule__StatementContainer__StatementsAssignment");
 					put(grammarAccess.getPauseAccess().getAnnotationsAssignment_1(), "rule__Pause__AnnotationsAssignment_1");
 					put(grammarAccess.getLabelAccess().getAnnotationsAssignment_0(), "rule__Label__AnnotationsAssignment_0");
 					put(grammarAccess.getLabelAccess().getNameAssignment_1_0(), "rule__Label__NameAssignment_1_0");

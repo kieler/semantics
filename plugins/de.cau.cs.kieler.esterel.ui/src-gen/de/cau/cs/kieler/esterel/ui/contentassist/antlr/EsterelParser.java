@@ -580,7 +580,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRelationIncompatibilityAccess().getTypeAssignment_1(), "rule__RelationIncompatibility__TypeAssignment_1");
 					put(grammarAccess.getRelationIncompatibilityAccess().getIncompAssignment_2(), "rule__RelationIncompatibility__IncompAssignment_2");
 					put(grammarAccess.getRelationIncompatibilityAccess().getIncompAssignment_3_1(), "rule__RelationIncompatibility__IncompAssignment_3_1");
-					put(grammarAccess.getStatementContainerAccess().getStatementsAssignment(), "rule__StatementContainer__StatementsAssignment");
 					put(grammarAccess.getEsterelParallelAccess().getThreadsAssignment_0(), "rule__EsterelParallel__ThreadsAssignment_0");
 					put(grammarAccess.getEsterelParallelAccess().getThreadsAssignment_1_1(), "rule__EsterelParallel__ThreadsAssignment_1_1");
 					put(grammarAccess.getEsterelThreadAccess().getStatementsAssignment_1_0(), "rule__EsterelThread__StatementsAssignment_1_0");
@@ -850,6 +849,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_0(), "rule__SCLProgram__StatementsAssignment_5_0_0");
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1(), "rule__SCLProgram__StatementsAssignment_5_1");
 					put(grammarAccess.getSCLProgramAccess().getStatementsAssignment_6(), "rule__SCLProgram__StatementsAssignment_6");
+					put(grammarAccess.getStatementContainerAccess().getStatementsAssignment(), "rule__StatementContainer__StatementsAssignment");
 					put(grammarAccess.getPauseAccess().getAnnotationsAssignment_1(), "rule__Pause__AnnotationsAssignment_1");
 					put(grammarAccess.getLabelAccess().getAnnotationsAssignment_0(), "rule__Label__AnnotationsAssignment_0");
 					put(grammarAccess.getLabelAccess().getNameAssignment_1_0(), "rule__Label__NameAssignment_1_0");

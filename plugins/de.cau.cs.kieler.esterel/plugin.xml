@@ -42,76 +42,76 @@
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstGroup">
      </featureGroupClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Abort">
+           class="de.cau.cs.kieler.esterel.scest.features.AbortFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Await">
+           class="de.cau.cs.kieler.esterel.scest.features.AwaitFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Block">
+           class="de.cau.cs.kieler.esterel.scest.features.BlockFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Do">
+           class="de.cau.cs.kieler.esterel.scest.features.DoFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Emit">
+           class="de.cau.cs.kieler.esterel.scest.features.EmitFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.EsterelAssignment">
+           class="de.cau.cs.kieler.esterel.scest.features.EsterelAssignmentFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.EsterelParallel">
+           class="de.cau.cs.kieler.esterel.scest.features.EsterelParallelFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.EveryDo">
+           class="de.cau.cs.kieler.esterel.scest.features.EveryDoFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Exec">
+           class="de.cau.cs.kieler.esterel.scest.features.ExecFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Halt">
+           class="de.cau.cs.kieler.esterel.scest.features.HaltFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.IfTest">
+           class="de.cau.cs.kieler.esterel.scest.features.IfTestFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.LocalSignalDecl">
+           class="de.cau.cs.kieler.esterel.scest.features.LocalSignalDeclFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.LocalVariable">
+           class="de.cau.cs.kieler.esterel.scest.features.LocalVariableFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Loop">
+           class="de.cau.cs.kieler.esterel.scest.features.LoopFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Nothing">
+           class="de.cau.cs.kieler.esterel.scest.features.NothingFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Present">
+           class="de.cau.cs.kieler.esterel.scest.features.PresentFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.ProcCall">
+           class="de.cau.cs.kieler.esterel.scest.features.ProcCallFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Repeat">
+           class="de.cau.cs.kieler.esterel.scest.features.RepeatFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Run">
+           class="de.cau.cs.kieler.esterel.scest.features.RunFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Set">
+           class="de.cau.cs.kieler.esterel.scest.features.SetFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Suspend">
+           class="de.cau.cs.kieler.esterel.scest.features.SuspendFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Sustain">
+           class="de.cau.cs.kieler.esterel.scest.features.SustainFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.Trap">
+           class="de.cau.cs.kieler.esterel.scest.features.TrapFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.UnEmit">
+           class="de.cau.cs.kieler.esterel.scest.features.UnEmitFeature">
      </featureClass>
      <featureGroupClass
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstControlFlowStatements">
@@ -132,76 +132,76 @@
   <extension
         point="de.cau.cs.kieler.kico.transformation">
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Abort">
+           class="de.cau.cs.kieler.esterel.scest.transformations.AbortTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Await">
+           class="de.cau.cs.kieler.esterel.scest.transformations.AwaitTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Block">
+           class="de.cau.cs.kieler.esterel.scest.transformations.BlockTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Do">
+           class="de.cau.cs.kieler.esterel.scest.transformations.DoTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Emit">
+           class="de.cau.cs.kieler.esterel.scest.transformations.EmitTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.EsterelAssignment">
+           class="de.cau.cs.kieler.esterel.scest.transformations.EsterelAssignmentTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.EsterelParallel">
+           class="de.cau.cs.kieler.esterel.scest.transformations.EsterelParallelTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.EveryDo">
+           class="de.cau.cs.kieler.esterel.scest.transformations.EveryDoTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Exec">
+           class="de.cau.cs.kieler.esterel.scest.transformations.ExecTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Halt">
+           class="de.cau.cs.kieler.esterel.scest.transformations.HaltTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.IfTest">
+           class="de.cau.cs.kieler.esterel.scest.transformations.IfTestTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.LocalSignalDecl">
+           class="de.cau.cs.kieler.esterel.scest.transformations.LocalSignalDeclTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.LocalVariable">
+           class="de.cau.cs.kieler.esterel.scest.transformations.LocalVariableTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Loop">
+           class="de.cau.cs.kieler.esterel.scest.transformations.LoopTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Nothing">
+           class="de.cau.cs.kieler.esterel.scest.transformations.NothingTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Present">
+           class="de.cau.cs.kieler.esterel.scest.transformations.PresentTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.ProcCall">
+           class="de.cau.cs.kieler.esterel.scest.transformations.ProcCallTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Repeat">
+           class="de.cau.cs.kieler.esterel.scest.transformations.RepeatTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Run">
+           class="de.cau.cs.kieler.esterel.scest.transformations.RunTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Set">
+           class="de.cau.cs.kieler.esterel.scest.transformations.SetTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Suspend">
+           class="de.cau.cs.kieler.esterel.scest.transformations.SuspendTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Sustain">
+           class="de.cau.cs.kieler.esterel.scest.transformations.SustainTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.Trap">
+           class="de.cau.cs.kieler.esterel.scest.transformations.TrapTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.UnEmit">
+           class="de.cau.cs.kieler.esterel.scest.transformations.UnEmitTransformation">
      </expansionTransformationClass>
   </extension>
   <!--extension

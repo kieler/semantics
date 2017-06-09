@@ -103,88 +103,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SC_EST_MODULE__ANNOTATIONS = 0;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__NAME = 1;
-
-  /**
-   * The feature id for the '<em><b>Int Signal Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_SIGNAL_DECLS = 2;
-
-  /**
-   * The feature id for the '<em><b>Int Type Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_TYPE_DECLS = 3;
-
-  /**
-   * The feature id for the '<em><b>Int Sensor Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_SENSOR_DECLS = 4;
-
-  /**
-   * The feature id for the '<em><b>Int Constant Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_CONSTANT_DECLS = 5;
-
-  /**
-   * The feature id for the '<em><b>Int Relation Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_RELATION_DECLS = 6;
-
-  /**
-   * The feature id for the '<em><b>Int Task Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_TASK_DECLS = 7;
-
-  /**
-   * The feature id for the '<em><b>Int Function Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_FUNCTION_DECLS = 8;
-
-  /**
-   * The feature id for the '<em><b>Int Procedure Decls</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_EST_MODULE__INT_PROCEDURE_DECLS = 9;
+  int SC_EST_MODULE__ANNOTATIONS = SclPackage.STATEMENT_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -193,7 +112,88 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SC_EST_MODULE__STATEMENTS = 10;
+  int SC_EST_MODULE__STATEMENTS = SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__NAME = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Int Signal Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_SIGNAL_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Int Type Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_TYPE_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Int Sensor Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_SENSOR_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Int Constant Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_CONSTANT_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Int Relation Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_RELATION_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Int Task Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_TASK_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Int Function Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_FUNCTION_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Int Procedure Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_EST_MODULE__INT_PROCEDURE_DECLS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -202,7 +202,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SC_EST_MODULE__DECLARATIONS = 11;
+  int SC_EST_MODULE__DECLARATIONS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 9;
 
   /**
    * The number of structural features of the '<em>SC Est Module</em>' class.
@@ -211,7 +211,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SC_EST_MODULE_FEATURE_COUNT = 12;
+  int SC_EST_MODULE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 10;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.UnEmitImpl <em>Un Emit</em>}' class.
@@ -347,17 +347,6 @@ public interface ScestPackage extends EPackage
   EClass getSCEstModule();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getAnnotations <em>Annotations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Annotations</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getAnnotations()
-   * @see #getSCEstModule()
-   * @generated
-   */
-  EReference getSCEstModule_Annotations();
-
-  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -455,17 +444,6 @@ public interface ScestPackage extends EPackage
    * @generated
    */
   EReference getSCEstModule_IntProcedureDecls();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getStatements <em>Statements</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Statements</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getStatements()
-   * @see #getSCEstModule()
-   * @generated
-   */
-  EReference getSCEstModule_Statements();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getDeclarations <em>Declarations</em>}'.
@@ -605,14 +583,6 @@ public interface ScestPackage extends EPackage
     EClass SC_EST_MODULE = eINSTANCE.getSCEstModule();
 
     /**
-     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SC_EST_MODULE__ANNOTATIONS = eINSTANCE.getSCEstModule_Annotations();
-
-    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -683,14 +653,6 @@ public interface ScestPackage extends EPackage
      * @generated
      */
     EReference SC_EST_MODULE__INT_PROCEDURE_DECLS = eINSTANCE.getSCEstModule_IntProcedureDecls();
-
-    /**
-     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SC_EST_MODULE__STATEMENTS = eINSTANCE.getSCEstModule_Statements();
 
     /**
      * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.

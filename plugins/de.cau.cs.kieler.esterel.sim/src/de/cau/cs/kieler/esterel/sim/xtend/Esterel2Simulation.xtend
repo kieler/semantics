@@ -36,7 +36,7 @@ import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Repeat
 import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.esterel.esterel.StatementContainer
+import de.cau.cs.kieler.scl.scl.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*

@@ -2,16 +2,12 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.esterel.esterel.Await;
 import de.cau.cs.kieler.esterel.esterel.Case;
 import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -36,7 +32,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitImpl#getCases <em>Cases</em>}</li>
  * </ul>
@@ -45,16 +40,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class AwaitImpl extends StatementContainerImpl implements Await
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -94,20 +79,6 @@ public class AwaitImpl extends StatementContainerImpl implements Await
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.AWAIT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.AWAIT__ANNOTATIONS);
-    }
-    return annotations;
   }
 
   /**
@@ -177,49 +148,11 @@ public class AwaitImpl extends StatementContainerImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public Annotation getAnnotation(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void removeAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.AWAIT__DELAY:
         return basicSetDelay(null, msgs);
       case EsterelPackage.AWAIT__CASES:
@@ -238,8 +171,6 @@ public class AwaitImpl extends StatementContainerImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.AWAIT__DELAY:
         return getDelay();
       case EsterelPackage.AWAIT__CASES:
@@ -259,10 +190,6 @@ public class AwaitImpl extends StatementContainerImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.AWAIT__DELAY:
         setDelay((DelayExpr)newValue);
         return;
@@ -284,9 +211,6 @@ public class AwaitImpl extends StatementContainerImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.AWAIT__DELAY:
         setDelay((DelayExpr)null);
         return;
@@ -307,66 +231,12 @@ public class AwaitImpl extends StatementContainerImpl implements Await
   {
     switch (featureID)
     {
-      case EsterelPackage.AWAIT__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.AWAIT__DELAY:
         return delay != null;
       case EsterelPackage.AWAIT__CASES:
         return cases != null && !cases.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case EsterelPackage.AWAIT__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (derivedFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (baseFeatureID)
-      {
-        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.AWAIT__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (baseFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //AwaitImpl

@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.scest.scest.impl;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
 import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl;
@@ -18,7 +16,7 @@ import de.cau.cs.kieler.esterel.scest.scest.ScestPackage;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -31,7 +29,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -44,7 +41,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getIntSignalDecls <em>Int Signal Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getIntTypeDecls <em>Int Type Decls</em>}</li>
@@ -54,24 +50,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getIntTaskDecls <em>Int Task Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getIntFunctionDecls <em>Int Function Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getIntProcedureDecls <em>Int Procedure Decls</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SCEstModuleImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCEstModule
+public class SCEstModuleImpl extends StatementContainerImpl implements SCEstModule
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -173,16 +158,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
   protected EList<ProcedureDecl> intProcedureDecls;
 
   /**
-   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatements()
-   * @generated
-   * @ordered
-   */
-  protected EList<Statement> statements;
-
-  /**
    * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -211,20 +186,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
   protected EClass eStaticClass()
   {
     return ScestPackage.Literals.SC_EST_MODULE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, ScestPackage.SC_EST_MODULE__ANNOTATIONS);
-    }
-    return annotations;
   }
 
   /**
@@ -367,20 +328,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Statement> getStatements()
-  {
-    if (statements == null)
-    {
-      statements = new EObjectContainmentEList<Statement>(Statement.class, this, ScestPackage.SC_EST_MODULE__STATEMENTS);
-    }
-    return statements;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Declaration> getDeclarations()
   {
     if (declarations == null)
@@ -400,8 +347,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
   {
     switch (featureID)
     {
-      case ScestPackage.SC_EST_MODULE__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case ScestPackage.SC_EST_MODULE__INT_SIGNAL_DECLS:
         return ((InternalEList<?>)getIntSignalDecls()).basicRemove(otherEnd, msgs);
       case ScestPackage.SC_EST_MODULE__INT_TYPE_DECLS:
@@ -418,8 +363,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
         return ((InternalEList<?>)getIntFunctionDecls()).basicRemove(otherEnd, msgs);
       case ScestPackage.SC_EST_MODULE__INT_PROCEDURE_DECLS:
         return ((InternalEList<?>)getIntProcedureDecls()).basicRemove(otherEnd, msgs);
-      case ScestPackage.SC_EST_MODULE__STATEMENTS:
-        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
       case ScestPackage.SC_EST_MODULE__DECLARATIONS:
         return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
     }
@@ -436,8 +379,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
   {
     switch (featureID)
     {
-      case ScestPackage.SC_EST_MODULE__ANNOTATIONS:
-        return getAnnotations();
       case ScestPackage.SC_EST_MODULE__NAME:
         return getName();
       case ScestPackage.SC_EST_MODULE__INT_SIGNAL_DECLS:
@@ -456,8 +397,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
         return getIntFunctionDecls();
       case ScestPackage.SC_EST_MODULE__INT_PROCEDURE_DECLS:
         return getIntProcedureDecls();
-      case ScestPackage.SC_EST_MODULE__STATEMENTS:
-        return getStatements();
       case ScestPackage.SC_EST_MODULE__DECLARATIONS:
         return getDeclarations();
     }
@@ -475,10 +414,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
   {
     switch (featureID)
     {
-      case ScestPackage.SC_EST_MODULE__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case ScestPackage.SC_EST_MODULE__NAME:
         setName((String)newValue);
         return;
@@ -514,10 +449,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
         getIntProcedureDecls().clear();
         getIntProcedureDecls().addAll((Collection<? extends ProcedureDecl>)newValue);
         return;
-      case ScestPackage.SC_EST_MODULE__STATEMENTS:
-        getStatements().clear();
-        getStatements().addAll((Collection<? extends Statement>)newValue);
-        return;
       case ScestPackage.SC_EST_MODULE__DECLARATIONS:
         getDeclarations().clear();
         getDeclarations().addAll((Collection<? extends Declaration>)newValue);
@@ -536,9 +467,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
   {
     switch (featureID)
     {
-      case ScestPackage.SC_EST_MODULE__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case ScestPackage.SC_EST_MODULE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -566,9 +494,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
       case ScestPackage.SC_EST_MODULE__INT_PROCEDURE_DECLS:
         getIntProcedureDecls().clear();
         return;
-      case ScestPackage.SC_EST_MODULE__STATEMENTS:
-        getStatements().clear();
-        return;
       case ScestPackage.SC_EST_MODULE__DECLARATIONS:
         getDeclarations().clear();
         return;
@@ -586,8 +511,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
   {
     switch (featureID)
     {
-      case ScestPackage.SC_EST_MODULE__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case ScestPackage.SC_EST_MODULE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case ScestPackage.SC_EST_MODULE__INT_SIGNAL_DECLS:
@@ -606,8 +529,6 @@ public class SCEstModuleImpl extends MinimalEObjectImpl.Container implements SCE
         return intFunctionDecls != null && !intFunctionDecls.isEmpty();
       case ScestPackage.SC_EST_MODULE__INT_PROCEDURE_DECLS:
         return intProcedureDecls != null && !intProcedureDecls.isEmpty();
-      case ScestPackage.SC_EST_MODULE__STATEMENTS:
-        return statements != null && !statements.isEmpty();
       case ScestPackage.SC_EST_MODULE__DECLARATIONS:
         return declarations != null && !declarations.isEmpty();
     }

@@ -67,7 +67,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getScope()
      * @generated
      */
-    int SCOPE = 2;
+    int SCOPE = 3;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -79,22 +79,22 @@ public interface SclPackage extends EPackage {
     int SCOPE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__STATEMENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int SCOPE__STATEMENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -125,15 +125,6 @@ public interface SclPackage extends EPackage {
     int SCL_PROGRAM__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCL_PROGRAM__DECLARATIONS = SCOPE__DECLARATIONS;
-
-    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -141,6 +132,15 @@ public interface SclPackage extends EPackage {
      * @ordered
      */
     int SCL_PROGRAM__STATEMENTS = SCOPE__STATEMENTS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCL_PROGRAM__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -189,6 +189,43 @@ public interface SclPackage extends EPackage {
     int STATEMENT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl <em>Statement Container</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl
+     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementContainer()
+     * @generated
+     */
+    int STATEMENT_CONTAINER = 2;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATEMENT_CONTAINER__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATEMENT_CONTAINER__STATEMENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Statement Container</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATEMENT_CONTAINER_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.PauseImpl <em>Pause</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -196,7 +233,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getPause()
      * @generated
      */
-    int PAUSE = 3;
+    int PAUSE = 4;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -224,7 +261,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getLabel()
      * @generated
      */
-    int LABEL = 4;
+    int LABEL = 5;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -261,7 +298,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getGoto()
      * @generated
      */
-    int GOTO = 5;
+    int GOTO = 6;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -298,7 +335,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAssignment()
      * @generated
      */
-    int ASSIGNMENT = 6;
+    int ASSIGNMENT = 7;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -362,7 +399,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getConditional()
      * @generated
      */
-    int CONDITIONAL = 7;
+    int CONDITIONAL = 8;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -374,15 +411,6 @@ public interface SclPackage extends EPackage {
     int CONDITIONAL__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL__DECLARATIONS = SCOPE__DECLARATIONS;
-
-    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -390,6 +418,15 @@ public interface SclPackage extends EPackage {
      * @ordered
      */
     int CONDITIONAL__STATEMENTS = SCOPE__STATEMENTS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -426,7 +463,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getParallel()
      * @generated
      */
-    int PARALLEL = 8;
+    int PARALLEL = 9;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -463,7 +500,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getThread()
      * @generated
      */
-    int THREAD = 9;
+    int THREAD = 10;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -475,15 +512,6 @@ public interface SclPackage extends EPackage {
     int THREAD__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int THREAD__DECLARATIONS = SCOPE__DECLARATIONS;
-
-    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -491,6 +519,15 @@ public interface SclPackage extends EPackage {
      * @ordered
      */
     int THREAD__STATEMENTS = SCOPE__STATEMENTS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int THREAD__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The number of structural features of the '<em>Thread</em>' class.
@@ -509,7 +546,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getScopeStatement()
      * @generated
      */
-    int SCOPE_STATEMENT = 10;
+    int SCOPE_STATEMENT = 11;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -521,22 +558,22 @@ public interface SclPackage extends EPackage {
     int SCOPE_STATEMENT__ANNOTATIONS = STATEMENT__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE_STATEMENT__DECLARATIONS = STATEMENT_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_STATEMENT__STATEMENTS = STATEMENT_FEATURE_COUNT + 1;
+    int SCOPE_STATEMENT__STATEMENTS = STATEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE_STATEMENT__DECLARATIONS = STATEMENT_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Scope Statement</em>' class.
@@ -555,7 +592,7 @@ public interface SclPackage extends EPackage {
      * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getElseScope()
      * @generated
      */
-    int ELSE_SCOPE = 11;
+    int ELSE_SCOPE = 12;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -567,15 +604,6 @@ public interface SclPackage extends EPackage {
     int ELSE_SCOPE__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ELSE_SCOPE__DECLARATIONS = SCOPE__DECLARATIONS;
-
-    /**
      * The feature id for the '<em><b>Statements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -583,6 +611,15 @@ public interface SclPackage extends EPackage {
      * @ordered
      */
     int ELSE_SCOPE__STATEMENTS = SCOPE__STATEMENTS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ELSE_SCOPE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The number of structural features of the '<em>Else Scope</em>' class.
@@ -626,6 +663,27 @@ public interface SclPackage extends EPackage {
     EClass getStatement();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.StatementContainer <em>Statement Container</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Statement Container</em>'.
+     * @see de.cau.cs.kieler.scl.scl.StatementContainer
+     * @generated
+     */
+    EClass getStatementContainer();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementContainer#getStatements <em>Statements</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Statements</em>'.
+     * @see de.cau.cs.kieler.scl.scl.StatementContainer#getStatements()
+     * @see #getStatementContainer()
+     * @generated
+     */
+    EReference getStatementContainer_Statements();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Scope <em>Scope</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -645,17 +703,6 @@ public interface SclPackage extends EPackage {
      * @generated
      */
     EReference getScope_Declarations();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Scope#getStatements <em>Statements</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Statements</em>'.
-     * @see de.cau.cs.kieler.scl.scl.Scope#getStatements()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_Statements();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Pause <em>Pause</em>}'.
@@ -853,6 +900,24 @@ public interface SclPackage extends EPackage {
         EClass STATEMENT = eINSTANCE.getStatement();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl <em>Statement Container</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl
+         * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementContainer()
+         * @generated
+         */
+        EClass STATEMENT_CONTAINER = eINSTANCE.getStatementContainer();
+
+        /**
+         * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference STATEMENT_CONTAINER__STATEMENTS = eINSTANCE.getStatementContainer_Statements();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl <em>Scope</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -869,14 +934,6 @@ public interface SclPackage extends EPackage {
          * @generated
          */
         EReference SCOPE__DECLARATIONS = eINSTANCE.getScope_Declarations();
-
-        /**
-         * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__STATEMENTS = eINSTANCE.getScope_Statements();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.PauseImpl <em>Pause</em>}' class.

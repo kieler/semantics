@@ -502,6 +502,8 @@ ruleSCEstModule returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleSCEstStatement
 entryRuleSCEstStatement returns [EObject current=null] 
 	:
@@ -8303,10 +8305,6 @@ ruleRelationIncompatibility returns [EObject current=null]
 
 
 
-
-
-
-
 // Entry rule entryRuleEsterelStatement
 entryRuleEsterelStatement returns [EObject current=null] 
 	:
@@ -13422,6 +13420,8 @@ ruleBooleanValue returns [EObject current=null]
 )
 )
 ;
+
+
 
 
 

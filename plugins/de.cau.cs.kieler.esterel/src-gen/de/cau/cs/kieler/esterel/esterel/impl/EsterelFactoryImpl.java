@@ -87,7 +87,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.RELATION_TYPE: return createRelationType();
       case EsterelPackage.RELATION_IMPLICATION: return createRelationImplication();
       case EsterelPackage.RELATION_INCOMPATIBILITY: return createRelationIncompatibility();
-      case EsterelPackage.STATEMENT_CONTAINER: return createStatementContainer();
       case EsterelPackage.ESTEREL_PARALLEL: return createEsterelParallel();
       case EsterelPackage.ESTEREL_THREAD: return createEsterelThread();
       case EsterelPackage.NOTHING: return createNothing();
@@ -435,17 +434,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     RelationIncompatibilityImpl relationIncompatibility = new RelationIncompatibilityImpl();
     return relationIncompatibility;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StatementContainer createStatementContainer()
-  {
-    StatementContainerImpl statementContainer = new StatementContainerImpl();
-    return statementContainer;
   }
 
   /**

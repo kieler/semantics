@@ -10,6 +10,7 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.Statement;
 
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,23 +31,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
  * @generated
  */
 public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
-    /**
-     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDeclarations()
-     * @generated
-     * @ordered
-     */
-    protected EList<Declaration> declarations;
-
     /**
      * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -56,6 +47,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @ordered
      */
     protected EList<Statement> statements;
+
+    /**
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDeclarations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Declaration> declarations;
 
     /**
      * <!-- begin-user-doc -->
@@ -108,10 +109,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SclPackage.SCOPE__DECLARATIONS:
-                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
             case SclPackage.SCOPE__STATEMENTS:
                 return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
+            case SclPackage.SCOPE__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -124,10 +125,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SclPackage.SCOPE__DECLARATIONS:
-                return getDeclarations();
             case SclPackage.SCOPE__STATEMENTS:
                 return getStatements();
+            case SclPackage.SCOPE__DECLARATIONS:
+                return getDeclarations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -141,13 +142,13 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SclPackage.SCOPE__DECLARATIONS:
-                getDeclarations().clear();
-                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
-                return;
             case SclPackage.SCOPE__STATEMENTS:
                 getStatements().clear();
                 getStatements().addAll((Collection<? extends Statement>)newValue);
+                return;
+            case SclPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -161,11 +162,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SclPackage.SCOPE__DECLARATIONS:
-                getDeclarations().clear();
-                return;
             case SclPackage.SCOPE__STATEMENTS:
                 getStatements().clear();
+                return;
+            case SclPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -179,12 +180,44 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SclPackage.SCOPE__DECLARATIONS:
-                return declarations != null && !declarations.isEmpty();
             case SclPackage.SCOPE__STATEMENTS:
                 return statements != null && !statements.isEmpty();
+            case SclPackage.SCOPE__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == StatementContainer.class) {
+            switch (derivedFeatureID) {
+                case SclPackage.SCOPE__STATEMENTS: return SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == StatementContainer.class) {
+            switch (baseFeatureID) {
+                case SclPackage.STATEMENT_CONTAINER__STATEMENTS: return SclPackage.SCOPE__STATEMENTS;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
 } //ScopeImpl

@@ -52,6 +52,9 @@ SCEstModule:
  * ###################################################
  */
     
+StatementContainerInterface returns scl::StatementContainer:
+    SCEstModule | Conditional | ElseScope | Thread | ScopeStatement;    
+    
 // ==> Statement
 // -------------------------------------
 SCEstStatement returns scl::Statement:

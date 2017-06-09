@@ -9,6 +9,7 @@ import de.cau.cs.kieler.esterel.esterel.*;
 import de.cau.cs.kieler.kexpressions.Value;
 
 import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -189,11 +190,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseRelationIncompatibility(RelationIncompatibility object)
       {
         return createRelationIncompatibilityAdapter();
-      }
-      @Override
-      public Adapter caseStatementContainer(StatementContainer object)
-      {
-        return createStatementContainerAdapter();
       }
       @Override
       public Adapter caseEsterelParallel(EsterelParallel object)
@@ -499,6 +495,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAnnotatable(Annotatable object)
       {
         return createAnnotatableAdapter();
+      }
+      @Override
+      public Adapter caseStatementContainer(StatementContainer object)
+      {
+        return createStatementContainerAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -873,21 +874,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createRelationIncompatibilityAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.StatementContainer <em>Statement Container</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.StatementContainer
-   * @generated
-   */
-  public Adapter createStatementContainerAdapter()
   {
     return null;
   }
@@ -1803,6 +1789,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAnnotatableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementContainer <em>Statement Container</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.StatementContainer
+   * @generated
+   */
+  public Adapter createStatementContainerAdapter()
   {
     return null;
   }

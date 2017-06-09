@@ -1861,27 +1861,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getIncompISignalIDTerminalRuleCall_3_1_0_1() { return cIncompISignalIDTerminalRuleCall_3_1_0_1; }
 	}
 
-	public class StatementContainerElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.StatementContainer");
-		private final Assignment cStatementsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cStatementsEsterelStatementParserRuleCall_0 = (RuleCall)cStatementsAssignment.eContents().get(0);
-		
-		/// * ###################################################
-		// * ###               7.5 Statements                ###
-		// * ###################################################
-		// * / // ==> Statement Container : statements which have a list of statements
-		//// -------------------------------------
-		//StatementContainer:
-		//	statements+=EsterelStatement;
-		@Override public ParserRule getRule() { return rule; }
-
-		//statements+=EsterelStatement
-		public Assignment getStatementsAssignment() { return cStatementsAssignment; }
-
-		//EsterelStatement
-		public RuleCall getStatementsEsterelStatementParserRuleCall_0() { return cStatementsEsterelStatementParserRuleCall_0; }
-	}
-
 	public class StatementContainerInterfaceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.StatementContainerInterface");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1902,14 +1881,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEsterelThreadParserRuleCall_14 = (RuleCall)cAlternatives.eContents().get(14);
 		private final RuleCall cTrapParserRuleCall_15 = (RuleCall)cAlternatives.eContents().get(15);
 		private final RuleCall cTrapHandlerParserRuleCall_16 = (RuleCall)cAlternatives.eContents().get(16);
+		private final RuleCall cModuleParserRuleCall_17 = (RuleCall)cAlternatives.eContents().get(17);
 		
-		//StatementContainerInterface StatementContainer:
+		/// * ###################################################
+		// * ###               7.5 Statements                ###
+		// * ###################################################
+		// * / StatementContainerInterface scl::StatementContainer:
 		//	Abort | Await | Block | Case | Do | EveryDo | Exec | ExecCase | LocalSignalDecl | LocalVariable | Loop | PresentCase |
-		//	Repeat | Suspend | EsterelThread | Trap | TrapHandler
+		//	Repeat | Suspend | EsterelThread | Trap | TrapHandler | Module
 		@Override public ParserRule getRule() { return rule; }
 
 		//Abort | Await | Block | Case | Do | EveryDo | Exec | ExecCase | LocalSignalDecl | LocalVariable | Loop | PresentCase |
-		//Repeat | Suspend | EsterelThread | Trap | TrapHandler
+		//Repeat | Suspend | EsterelThread | Trap | TrapHandler | Module
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Abort
@@ -1962,6 +1945,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//TrapHandler
 		public RuleCall getTrapHandlerParserRuleCall_16() { return cTrapHandlerParserRuleCall_16; }
+
+		//Module
+		public RuleCall getModuleParserRuleCall_17() { return cModuleParserRuleCall_17; }
 	}
 
 	public class EsterelStatementElements extends AbstractParserRuleElementFinder {
@@ -7851,7 +7837,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private final RelationTypeElements pRelationType;
 	private final RelationImplicationElements pRelationImplication;
 	private final RelationIncompatibilityElements pRelationIncompatibility;
-	private final StatementContainerElements pStatementContainer;
 	private final StatementContainerInterfaceElements pStatementContainerInterface;
 	private final EsterelStatementElements pEsterelStatement;
 	private final AtomicStatementElements pAtomicStatement;
@@ -8003,7 +7988,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		this.pRelationType = new RelationTypeElements();
 		this.pRelationImplication = new RelationImplicationElements();
 		this.pRelationIncompatibility = new RelationIncompatibilityElements();
-		this.pStatementContainer = new StatementContainerElements();
 		this.pStatementContainerInterface = new StatementContainerInterfaceElements();
 		this.pEsterelStatement = new EsterelStatementElements();
 		this.pAtomicStatement = new AtomicStatementElements();
@@ -8482,21 +8466,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	/// * ###################################################
 	// * ###               7.5 Statements                ###
 	// * ###################################################
-	// * / // ==> Statement Container : statements which have a list of statements
-	//// -------------------------------------
-	//StatementContainer:
-	//	statements+=EsterelStatement;
-	public StatementContainerElements getStatementContainerAccess() {
-		return pStatementContainer;
-	}
-	
-	public ParserRule getStatementContainerRule() {
-		return getStatementContainerAccess().getRule();
-	}
-
-	//StatementContainerInterface StatementContainer:
+	// * / StatementContainerInterface scl::StatementContainer:
 	//	Abort | Await | Block | Case | Do | EveryDo | Exec | ExecCase | LocalSignalDecl | LocalVariable | Loop | PresentCase |
-	//	Repeat | Suspend | EsterelThread | Trap | TrapHandler
+	//	Repeat | Suspend | EsterelThread | Trap | TrapHandler | Module
 	public StatementContainerInterfaceElements getStatementContainerInterfaceAccess() {
 		return pStatementContainerInterface;
 	}
@@ -9692,6 +9664,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSCLProgramRule() {
 		return getSCLProgramAccess().getRule();
+	}
+
+	//StatementContainer:
+	//	statements+=Statement;
+	public SCLGrammarAccess.StatementContainerElements getStatementContainerAccess() {
+		return gaSCL.getStatementContainerAccess();
+	}
+	
+	public ParserRule getStatementContainerRule() {
+		return getStatementContainerAccess().getRule();
 	}
 
 	//Statement:

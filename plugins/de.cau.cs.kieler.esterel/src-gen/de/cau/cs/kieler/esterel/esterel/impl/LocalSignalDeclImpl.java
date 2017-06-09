@@ -2,15 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -32,7 +28,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LocalSignalDeclImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LocalSignalDeclImpl#getSignals <em>Signals</em>}</li>
  * </ul>
  *
@@ -40,16 +35,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class LocalSignalDeclImpl extends StatementContainerImpl implements LocalSignalDecl
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -86,20 +71,6 @@ public class LocalSignalDeclImpl extends StatementContainerImpl implements Local
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS);
-    }
-    return annotations;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<ISignal> getSignals()
   {
     if (signals == null)
@@ -114,49 +85,11 @@ public class LocalSignalDeclImpl extends StatementContainerImpl implements Local
    * <!-- end-user-doc -->
    * @generated
    */
-  public Annotation getAnnotation(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void removeAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNALS:
         return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
     }
@@ -173,8 +106,6 @@ public class LocalSignalDeclImpl extends StatementContainerImpl implements Local
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNALS:
         return getSignals();
     }
@@ -192,10 +123,6 @@ public class LocalSignalDeclImpl extends StatementContainerImpl implements Local
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNALS:
         getSignals().clear();
         getSignals().addAll((Collection<? extends ISignal>)newValue);
@@ -214,9 +141,6 @@ public class LocalSignalDeclImpl extends StatementContainerImpl implements Local
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNALS:
         getSignals().clear();
         return;
@@ -234,64 +158,10 @@ public class LocalSignalDeclImpl extends StatementContainerImpl implements Local
   {
     switch (featureID)
     {
-      case EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNALS:
         return signals != null && !signals.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (derivedFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (baseFeatureID)
-      {
-        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.LOCAL_SIGNAL_DECL__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (baseFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //LocalSignalDeclImpl

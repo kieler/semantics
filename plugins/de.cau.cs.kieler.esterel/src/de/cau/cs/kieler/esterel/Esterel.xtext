@@ -192,16 +192,11 @@ RelationIncompatibility:
  * ###################################################
  */
 
-// ==> Statement Container : statements which have a list of statements
-// -------------------------------------
-StatementContainer:
-    statements+=EsterelStatement;
-
-StatementContainerInterface returns StatementContainer:
+StatementContainerInterface returns scl::StatementContainer:
     Abort | Await |  Block | Case | Do | EveryDo | Exec | 
     ExecCase | LocalSignalDecl | LocalVariable | Loop | 
     PresentCase |  Repeat | Suspend | EsterelThread | 
-    Trap | TrapHandler ;
+    Trap | TrapHandler | Module;
     
 // ==> Statement
 // -------------------------------------

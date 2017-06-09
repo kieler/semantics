@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
@@ -15,7 +13,7 @@ import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.TaskDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -28,7 +26,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -41,7 +38,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntSignalDecls <em>Int Signal Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntTypeDecls <em>Int Type Decls</em>}</li>
@@ -51,23 +47,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntTaskDecls <em>Int Task Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntFunctionDecls <em>Int Function Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getIntProcedureDecls <em>Int Procedure Decls</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
+public class ModuleImpl extends StatementContainerImpl implements Module
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -169,16 +154,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   protected EList<ProcedureDecl> intProcedureDecls;
 
   /**
-   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatements()
-   * @generated
-   * @ordered
-   */
-  protected EList<Statement> statements;
-
-  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -197,20 +172,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.MODULE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.MODULE__ANNOTATIONS);
-    }
-    return annotations;
   }
 
   /**
@@ -353,27 +314,11 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Statement> getStatements()
-  {
-    if (statements == null)
-    {
-      statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.MODULE__STATEMENTS);
-    }
-    return statements;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
         return ((InternalEList<?>)getIntSignalDecls()).basicRemove(otherEnd, msgs);
       case EsterelPackage.MODULE__INT_TYPE_DECLS:
@@ -390,8 +335,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return ((InternalEList<?>)getIntFunctionDecls()).basicRemove(otherEnd, msgs);
       case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
         return ((InternalEList<?>)getIntProcedureDecls()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.MODULE__STATEMENTS:
-        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -406,8 +349,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.MODULE__NAME:
         return getName();
       case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
@@ -426,8 +367,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return getIntFunctionDecls();
       case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
         return getIntProcedureDecls();
-      case EsterelPackage.MODULE__STATEMENTS:
-        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -443,10 +382,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.MODULE__NAME:
         setName((String)newValue);
         return;
@@ -482,10 +417,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         getIntProcedureDecls().clear();
         getIntProcedureDecls().addAll((Collection<? extends ProcedureDecl>)newValue);
         return;
-      case EsterelPackage.MODULE__STATEMENTS:
-        getStatements().clear();
-        getStatements().addAll((Collection<? extends Statement>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -500,9 +431,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.MODULE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -530,9 +458,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
         getIntProcedureDecls().clear();
         return;
-      case EsterelPackage.MODULE__STATEMENTS:
-        getStatements().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -547,8 +472,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.MODULE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case EsterelPackage.MODULE__INT_SIGNAL_DECLS:
@@ -567,8 +490,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return intFunctionDecls != null && !intFunctionDecls.isEmpty();
       case EsterelPackage.MODULE__INT_PROCEDURE_DECLS:
         return intProcedureDecls != null && !intProcedureDecls.isEmpty();
-      case EsterelPackage.MODULE__STATEMENTS:
-        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

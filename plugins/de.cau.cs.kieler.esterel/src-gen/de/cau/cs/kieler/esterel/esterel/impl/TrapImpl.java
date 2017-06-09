@@ -2,16 +2,12 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.Trap;
 import de.cau.cs.kieler.esterel.esterel.TrapHandler;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -33,7 +29,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getTrapSignals <em>Trap Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl#getTrapHandler <em>Trap Handler</em>}</li>
  * </ul>
@@ -42,16 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class TrapImpl extends StatementContainerImpl implements Trap
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The cached value of the '{@link #getTrapSignals() <em>Trap Signals</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -98,20 +83,6 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.TRAP__ANNOTATIONS);
-    }
-    return annotations;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<ISignal> getTrapSignals()
   {
     if (trapSignals == null)
@@ -140,49 +111,11 @@ public class TrapImpl extends StatementContainerImpl implements Trap
    * <!-- end-user-doc -->
    * @generated
    */
-  public Annotation getAnnotation(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void removeAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.TRAP__TRAP_SIGNALS:
         return ((InternalEList<?>)getTrapSignals()).basicRemove(otherEnd, msgs);
       case EsterelPackage.TRAP__TRAP_HANDLER:
@@ -201,8 +134,6 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.TRAP__TRAP_SIGNALS:
         return getTrapSignals();
       case EsterelPackage.TRAP__TRAP_HANDLER:
@@ -222,10 +153,6 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.TRAP__TRAP_SIGNALS:
         getTrapSignals().clear();
         getTrapSignals().addAll((Collection<? extends ISignal>)newValue);
@@ -248,9 +175,6 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.TRAP__TRAP_SIGNALS:
         getTrapSignals().clear();
         return;
@@ -271,66 +195,12 @@ public class TrapImpl extends StatementContainerImpl implements Trap
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.TRAP__TRAP_SIGNALS:
         return trapSignals != null && !trapSignals.isEmpty();
       case EsterelPackage.TRAP__TRAP_HANDLER:
         return trapHandler != null && !trapHandler.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case EsterelPackage.TRAP__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (derivedFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (baseFeatureID)
-      {
-        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.TRAP__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (baseFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //TrapImpl

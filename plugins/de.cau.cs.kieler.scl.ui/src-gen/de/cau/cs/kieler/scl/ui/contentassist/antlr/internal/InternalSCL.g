@@ -85,6 +85,10 @@ finally {
 
 
 
+
+
+
+
 // Entry rule entryRuleStatement
 entryRuleStatement 
 :
@@ -2233,6 +2237,7 @@ rule__SCLProgram__Alternatives_5
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__Statement__Alternatives
     @init {
@@ -12111,6 +12116,7 @@ rule__SCLProgram__StatementsAssignment_6
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__Pause__AnnotationsAssignment_1
     @init {

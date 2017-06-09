@@ -19,6 +19,7 @@ import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
 import de.cau.cs.kieler.scl.scl.Statement;
 
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -85,6 +86,7 @@ public class SclSwitch<T> extends Switch<T> {
                 SCLProgram sclProgram = (SCLProgram)theEObject;
                 T result = caseSCLProgram(sclProgram);
                 if (result == null) result = caseScope(sclProgram);
+                if (result == null) result = caseStatementContainer(sclProgram);
                 if (result == null) result = caseAnnotatable(sclProgram);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -96,9 +98,17 @@ public class SclSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SclPackage.STATEMENT_CONTAINER: {
+                StatementContainer statementContainer = (StatementContainer)theEObject;
+                T result = caseStatementContainer(statementContainer);
+                if (result == null) result = caseAnnotatable(statementContainer);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case SclPackage.SCOPE: {
                 Scope scope = (Scope)theEObject;
                 T result = caseScope(scope);
+                if (result == null) result = caseStatementContainer(scope);
                 if (result == null) result = caseAnnotatable(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -142,6 +152,7 @@ public class SclSwitch<T> extends Switch<T> {
                 T result = caseConditional(conditional);
                 if (result == null) result = caseScope(conditional);
                 if (result == null) result = caseStatement(conditional);
+                if (result == null) result = caseStatementContainer(conditional);
                 if (result == null) result = caseAnnotatable(conditional);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -158,6 +169,7 @@ public class SclSwitch<T> extends Switch<T> {
                 de.cau.cs.kieler.scl.scl.Thread thread = (de.cau.cs.kieler.scl.scl.Thread)theEObject;
                 T result = caseThread(thread);
                 if (result == null) result = caseScope(thread);
+                if (result == null) result = caseStatementContainer(thread);
                 if (result == null) result = caseAnnotatable(thread);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -167,6 +179,7 @@ public class SclSwitch<T> extends Switch<T> {
                 T result = caseScopeStatement(scopeStatement);
                 if (result == null) result = caseStatement(scopeStatement);
                 if (result == null) result = caseScope(scopeStatement);
+                if (result == null) result = caseStatementContainer(scopeStatement);
                 if (result == null) result = caseAnnotatable(scopeStatement);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -175,6 +188,7 @@ public class SclSwitch<T> extends Switch<T> {
                 ElseScope elseScope = (ElseScope)theEObject;
                 T result = caseElseScope(elseScope);
                 if (result == null) result = caseScope(elseScope);
+                if (result == null) result = caseStatementContainer(elseScope);
                 if (result == null) result = caseAnnotatable(elseScope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -210,6 +224,21 @@ public class SclSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseStatement(Statement object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseStatementContainer(StatementContainer object) {
         return null;
     }
 

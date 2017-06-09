@@ -9,6 +9,7 @@ import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
 import de.cau.cs.kieler.scl.scl.Statement;
 
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -29,23 +30,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeStatementImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeStatementImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeStatementImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ScopeStatementImpl extends StatementImpl implements ScopeStatement {
-    /**
-     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDeclarations()
-     * @generated
-     * @ordered
-     */
-    protected EList<Declaration> declarations;
-
     /**
      * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -55,6 +46,16 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
      * @ordered
      */
     protected EList<Statement> statements;
+
+    /**
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDeclarations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Declaration> declarations;
 
     /**
      * <!-- begin-user-doc -->
@@ -107,10 +108,10 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
-                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
             case SclPackage.SCOPE_STATEMENT__STATEMENTS:
                 return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
+            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -123,10 +124,10 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
-                return getDeclarations();
             case SclPackage.SCOPE_STATEMENT__STATEMENTS:
                 return getStatements();
+            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
+                return getDeclarations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -140,13 +141,13 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
-                getDeclarations().clear();
-                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
-                return;
             case SclPackage.SCOPE_STATEMENT__STATEMENTS:
                 getStatements().clear();
                 getStatements().addAll((Collection<? extends Statement>)newValue);
+                return;
+            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -160,11 +161,11 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
-                getDeclarations().clear();
-                return;
             case SclPackage.SCOPE_STATEMENT__STATEMENTS:
                 getStatements().clear();
+                return;
+            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
+                getDeclarations().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -178,10 +179,10 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
-                return declarations != null && !declarations.isEmpty();
             case SclPackage.SCOPE_STATEMENT__STATEMENTS:
                 return statements != null && !statements.isEmpty();
+            case SclPackage.SCOPE_STATEMENT__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -193,10 +194,15 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
      */
     @Override
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == StatementContainer.class) {
+            switch (derivedFeatureID) {
+                case SclPackage.SCOPE_STATEMENT__STATEMENTS: return SclPackage.STATEMENT_CONTAINER__STATEMENTS;
+                default: return -1;
+            }
+        }
         if (baseClass == Scope.class) {
             switch (derivedFeatureID) {
                 case SclPackage.SCOPE_STATEMENT__DECLARATIONS: return SclPackage.SCOPE__DECLARATIONS;
-                case SclPackage.SCOPE_STATEMENT__STATEMENTS: return SclPackage.SCOPE__STATEMENTS;
                 default: return -1;
             }
         }
@@ -210,10 +216,15 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
      */
     @Override
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == StatementContainer.class) {
+            switch (baseFeatureID) {
+                case SclPackage.STATEMENT_CONTAINER__STATEMENTS: return SclPackage.SCOPE_STATEMENT__STATEMENTS;
+                default: return -1;
+            }
+        }
         if (baseClass == Scope.class) {
             switch (baseFeatureID) {
                 case SclPackage.SCOPE__DECLARATIONS: return SclPackage.SCOPE_STATEMENT__DECLARATIONS;
-                case SclPackage.SCOPE__STATEMENTS: return SclPackage.SCOPE_STATEMENT__STATEMENTS;
                 default: return -1;
             }
         }

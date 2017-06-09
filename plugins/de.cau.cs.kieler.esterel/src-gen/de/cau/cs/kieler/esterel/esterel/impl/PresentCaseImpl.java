@@ -2,27 +2,20 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
 import de.cau.cs.kieler.esterel.esterel.ValuedObject;
 
-import java.util.Collection;
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +25,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getTick <em>Tick</em>}</li>
  * </ul>
@@ -41,16 +33,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class PresentCaseImpl extends StatementContainerImpl implements PresentCase
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -90,20 +72,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.PRESENT_CASE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.PRESENT_CASE__ANNOTATIONS);
-    }
-    return annotations;
   }
 
   /**
@@ -212,8 +180,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         return basicSetExpression(null, msgs);
       case EsterelPackage.PRESENT_CASE__TICK:
@@ -232,8 +198,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         return getExpression();
       case EsterelPackage.PRESENT_CASE__TICK:
@@ -247,16 +211,11 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         setExpression((Expression)newValue);
         return;
@@ -277,9 +236,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         setExpression((Expression)null);
         return;
@@ -300,8 +256,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         return expression != null;
       case EsterelPackage.PRESENT_CASE__TICK:

@@ -2,9 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
-import org.eclipse.emf.common.util.EList;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +13,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getTick <em>Tick</em>}</li>
  * </ul>
@@ -26,22 +23,6 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface PresentCase extends StatementContainer
 {
-  /**
-   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Annotations</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Annotations()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Annotation> getAnnotations();
-
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->

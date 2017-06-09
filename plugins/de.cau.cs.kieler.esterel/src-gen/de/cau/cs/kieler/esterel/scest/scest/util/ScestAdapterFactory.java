@@ -7,6 +7,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.esterel.scest.scest.*;
 
 import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -102,6 +103,11 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAnnotatable(Annotatable object)
       {
         return createAnnotatableAdapter();
+      }
+      @Override
+      public Adapter caseStatementContainer(StatementContainer object)
+      {
+        return createStatementContainerAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -201,6 +207,21 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAnnotatableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementContainer <em>Statement Container</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.StatementContainer
+   * @generated
+   */
+  public Adapter createStatementContainerAdapter()
   {
     return null;
   }

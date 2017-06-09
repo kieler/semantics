@@ -73,7 +73,6 @@ import de.cau.cs.kieler.esterel.esterel.Run;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
-import de.cau.cs.kieler.esterel.esterel.StatementContainer;
 import de.cau.cs.kieler.esterel.esterel.Suspend;
 import de.cau.cs.kieler.esterel.esterel.Sustain;
 import de.cau.cs.kieler.esterel.esterel.Task;
@@ -121,6 +120,7 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -431,9 +431,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.SIGNAL_RENAMING:
 				sequence_SignalRenaming(context, (SignalRenaming) semanticObject); 
 				return; 
-			case EsterelPackage.STATEMENT_CONTAINER:
-				sequence_StatementContainer(context, (StatementContainer) semanticObject); 
-				return; 
 			case EsterelPackage.SUSPEND:
 				sequence_Suspend(context, (Suspend) semanticObject); 
 				return; 
@@ -609,6 +606,9 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case SclPackage.SCOPE_STATEMENT:
 				sequence_ScopeStatement(context, (ScopeStatement) semanticObject); 
 				return; 
+			case SclPackage.STATEMENT_CONTAINER:
+				sequence_StatementContainer(context, (StatementContainer) semanticObject); 
+				return; 
 			case SclPackage.THREAD:
 				sequence_Thread(context, (de.cau.cs.kieler.scl.scl.Thread) semanticObject); 
 				return; 
@@ -622,7 +622,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Abort
 	 *     SCEstAtomicStatement returns Abort
 	 *     Abort returns Abort
-	 *     StatementContainerInterface returns Abort
 	 *     EsterelStatement returns Abort
 	 *     AtomicStatement returns Abort
 	 *
@@ -645,7 +644,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Await
 	 *     SCEstAtomicStatement returns Await
 	 *     Await returns Await
-	 *     StatementContainerInterface returns Await
 	 *     EsterelStatement returns Await
 	 *     AtomicStatement returns Await
 	 *
@@ -665,7 +663,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Block
 	 *     SCEstAtomicStatement returns Block
 	 *     Block returns Block
-	 *     StatementContainerInterface returns Block
 	 *     EsterelStatement returns Block
 	 *     AtomicStatement returns Block
 	 *
@@ -680,7 +677,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     Case returns Case
-	 *     StatementContainerInterface returns Case
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* delay=DelayExpr (statements+=SCEstStatement | statements+=MetaStatement)* statements+=SCEstStatement?)
@@ -692,6 +688,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     StatementContainerInterface returns Conditional
 	 *     SCEstStatement returns Conditional
 	 *     SCEstAtomicStatement returns Conditional
 	 *     Conditional returns Conditional
@@ -718,7 +715,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Do
 	 *     SCEstAtomicStatement returns Do
 	 *     Do returns Do
-	 *     StatementContainerInterface returns Do
 	 *     EsterelStatement returns Do
 	 *     AtomicStatement returns Do
 	 *
@@ -763,6 +759,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     StatementContainerInterface returns ElseScope
 	 *     ElseScope returns ElseScope
 	 *
 	 * Constraint:
@@ -790,7 +787,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     EsterelThread returns EsterelThread
-	 *     StatementContainerInterface returns EsterelThread
 	 *
 	 * Constraint:
 	 *     ((statements+=SCEstAtomicStatement | statements+=MetaStatement)* statements+=SCEstAtomicStatement?)
@@ -805,7 +801,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns EveryDo
 	 *     SCEstAtomicStatement returns EveryDo
 	 *     EveryDo returns EveryDo
-	 *     StatementContainerInterface returns EveryDo
 	 *     EsterelStatement returns EveryDo
 	 *     AtomicStatement returns EveryDo
 	 *
@@ -820,7 +815,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     ExecCase returns ExecCase
-	 *     StatementContainerInterface returns ExecCase
 	 *
 	 * Constraint:
 	 *     (
@@ -843,7 +837,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Exec
 	 *     SCEstAtomicStatement returns Exec
 	 *     Exec returns Exec
-	 *     StatementContainerInterface returns Exec
 	 *     EsterelStatement returns Exec
 	 *     AtomicStatement returns Exec
 	 *
@@ -900,7 +893,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns LocalSignalDecl
 	 *     SCEstAtomicStatement returns LocalSignalDecl
 	 *     LocalSignalDecl returns LocalSignalDecl
-	 *     StatementContainerInterface returns LocalSignalDecl
 	 *     EsterelStatement returns LocalSignalDecl
 	 *     AtomicStatement returns LocalSignalDecl
 	 *
@@ -923,7 +915,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns LocalVariable
 	 *     SCEstAtomicStatement returns LocalVariable
 	 *     LocalVariable returns LocalVariable
-	 *     StatementContainerInterface returns LocalVariable
 	 *     EsterelStatement returns LocalVariable
 	 *     AtomicStatement returns LocalVariable
 	 *
@@ -946,7 +937,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Loop
 	 *     SCEstAtomicStatement returns Loop
 	 *     Loop returns Loop
-	 *     StatementContainerInterface returns Loop
 	 *     EsterelStatement returns Loop
 	 *     AtomicStatement returns Loop
 	 *
@@ -977,7 +967,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     PresentCase returns PresentCase
-	 *     StatementContainerInterface returns PresentCase
 	 *
 	 * Constraint:
 	 *     (
@@ -1030,7 +1019,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Repeat
 	 *     SCEstAtomicStatement returns Repeat
 	 *     Repeat returns Repeat
-	 *     StatementContainerInterface returns Repeat
 	 *     EsterelStatement returns Repeat
 	 *     AtomicStatement returns Repeat
 	 *
@@ -1051,6 +1039,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     SCEstModule returns SCEstModule
+	 *     StatementContainerInterface returns SCEstModule
 	 *
 	 * Constraint:
 	 *     (
@@ -1095,6 +1084,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     StatementContainerInterface returns ScopeStatement
 	 *     MetaStatement returns ScopeStatement
 	 *     ScopeStatement returns ScopeStatement
 	 *     Statement returns ScopeStatement
@@ -1126,7 +1116,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Suspend
 	 *     SCEstAtomicStatement returns Suspend
 	 *     Suspend returns Suspend
-	 *     StatementContainerInterface returns Suspend
 	 *     EsterelStatement returns Suspend
 	 *     AtomicStatement returns Suspend
 	 *
@@ -1140,6 +1129,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     StatementContainerInterface returns Thread
 	 *     Thread returns Thread
 	 *
 	 * Constraint:
@@ -1156,7 +1146,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     TrapHandler returns TrapHandler
-	 *     StatementContainerInterface returns TrapHandler
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* trapExpr=TrapExpr (statements+=SCEstStatement | statements+=MetaStatement)* statements+=SCEstStatement?)
@@ -1171,7 +1160,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     SCEstStatement returns Trap
 	 *     SCEstAtomicStatement returns Trap
 	 *     Trap returns Trap
-	 *     StatementContainerInterface returns Trap
 	 *     EsterelStatement returns Trap
 	 *     AtomicStatement returns Trap
 	 *

@@ -2,13 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getIntSignalDecls <em>Int Signal Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getIntTypeDecls <em>Int Type Decls</em>}</li>
@@ -29,31 +24,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getIntTaskDecls <em>Int Task Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getIntFunctionDecls <em>Int Function Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getIntProcedureDecls <em>Int Procedure Decls</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule()
  * @model
  * @generated
  */
-public interface Module extends EObject
+public interface Module extends StatementContainer
 {
-  /**
-   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Annotations</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule_Annotations()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Annotation> getAnnotations();
-
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -207,21 +185,5 @@ public interface Module extends EObject
    * @generated
    */
   EList<ProcedureDecl> getIntProcedureDecls();
-
-  /**
-   * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statements</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statements</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule_Statements()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Statement> getStatements();
 
 } // Module

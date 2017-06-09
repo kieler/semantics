@@ -19,6 +19,7 @@ import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
 import de.cau.cs.kieler.scl.scl.Statement;
 
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -89,6 +90,10 @@ public class SclAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseStatement(Statement object) {
                 return createStatementAdapter();
+            }
+            @Override
+            public Adapter caseStatementContainer(StatementContainer object) {
+                return createStatementContainerAdapter();
             }
             @Override
             public Adapter caseScope(Scope object) {
@@ -187,6 +192,20 @@ public class SclAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createStatementAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementContainer <em>Statement Container</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.scl.StatementContainer
+     * @generated
+     */
+    public Adapter createStatementContainerAdapter() {
         return null;
     }
 

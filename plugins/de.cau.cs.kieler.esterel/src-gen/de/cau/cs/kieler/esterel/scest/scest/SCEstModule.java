@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.scest.scest;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
 import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl;
@@ -15,11 +13,9 @@ import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 
-import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getIntSignalDecls <em>Int Signal Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getIntTypeDecls <em>Int Type Decls</em>}</li>
@@ -40,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getIntTaskDecls <em>Int Task Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getIntFunctionDecls <em>Int Function Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getIntProcedureDecls <em>Int Procedure Decls</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.SCEstModule#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
@@ -48,24 +42,8 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface SCEstModule extends EObject
+public interface SCEstModule extends StatementContainer
 {
-  /**
-   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Annotations</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.scest.scest.ScestPackage#getSCEstModule_Annotations()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Annotation> getAnnotations();
-
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -219,22 +197,6 @@ public interface SCEstModule extends EObject
    * @generated
    */
   EList<ProcedureDecl> getIntProcedureDecls();
-
-  /**
-   * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statements</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statements</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.scest.scest.ScestPackage#getSCEstModule_Statements()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Statement> getStatements();
 
   /**
    * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.

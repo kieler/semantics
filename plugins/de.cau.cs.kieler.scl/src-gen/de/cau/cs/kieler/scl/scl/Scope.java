@@ -18,14 +18,13 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Scope#getDeclarations <em>Declarations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Scope#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getScope()
  * @model abstract="true"
  * @generated
  */
-public interface Scope extends Annotatable {
+public interface Scope extends Annotatable, StatementContainer {
     /**
      * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
@@ -41,21 +40,5 @@ public interface Scope extends Annotatable {
      * @generated
      */
     EList<Declaration> getDeclarations();
-
-    /**
-     * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Statements</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Statements</em>' containment reference list.
-     * @see de.cau.cs.kieler.scl.scl.SclPackage#getScope_Statements()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Statement> getStatements();
 
 } // Scope

@@ -121,6 +121,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleSCEstStatement
 entryRuleSCEstStatement 
 :
@@ -1660,10 +1662,6 @@ ruleRelationIncompatibility
 finally {
 	restoreStackSize(stackSize);
 }
-
-
-
-
 
 
 
@@ -3232,6 +3230,8 @@ ruleBooleanValue
 finally {
 	restoreStackSize(stackSize);
 }
+
+
 
 
 
@@ -4913,6 +4913,7 @@ rule__SCEstModule__Alternatives_5_1_2_0
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__SCEstStatement__Alternatives
     @init {
@@ -6618,7 +6619,6 @@ rule__RelationType__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
-
 
 rule__EsterelStatement__Alternatives
     @init {
@@ -45708,7 +45708,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-
 rule__Nothing__AnnotationsAssignment_1
     @init {
 		int stackSize = keepStackSize();
@@ -47951,6 +47950,7 @@ rule__BooleanValue__ValueAssignment
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 

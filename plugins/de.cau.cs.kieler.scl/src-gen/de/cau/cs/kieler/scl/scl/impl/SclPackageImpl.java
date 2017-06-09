@@ -22,6 +22,7 @@ import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
 import de.cau.cs.kieler.scl.scl.Statement;
 
+import de.cau.cs.kieler.scl.scl.StatementContainer;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -49,6 +50,13 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage {
      * @generated
      */
     private EClass statementEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass statementContainerEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -216,6 +224,24 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getStatementContainer() {
+        return statementContainerEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getStatementContainer_Statements() {
+        return (EReference)statementContainerEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getScope() {
         return scopeEClass;
     }
@@ -227,15 +253,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage {
      */
     public EReference getScope_Declarations() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getScope_Statements() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -397,9 +414,11 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage {
 
         statementEClass = createEClass(STATEMENT);
 
+        statementContainerEClass = createEClass(STATEMENT_CONTAINER);
+        createEReference(statementContainerEClass, STATEMENT_CONTAINER__STATEMENTS);
+
         scopeEClass = createEClass(SCOPE);
         createEReference(scopeEClass, SCOPE__DECLARATIONS);
-        createEReference(scopeEClass, SCOPE__STATEMENTS);
 
         pauseEClass = createEClass(PAUSE);
 
@@ -460,7 +479,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage {
         // Add supertypes to classes
         sclProgramEClass.getESuperTypes().add(this.getScope());
         statementEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        statementContainerEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        scopeEClass.getESuperTypes().add(this.getStatementContainer());
         pauseEClass.getESuperTypes().add(this.getStatement());
         labelEClass.getESuperTypes().add(this.getStatement());
         gotoEClass.getESuperTypes().add(this.getStatement());
@@ -480,9 +501,11 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage {
 
         initEClass(statementEClass, Statement.class, "Statement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+        initEClass(statementContainerEClass, StatementContainer.class, "StatementContainer", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getStatementContainer_Statements(), this.getStatement(), null, "statements", null, 0, -1, StatementContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(scopeEClass, Scope.class, "Scope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Statements(), this.getStatement(), null, "statements", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

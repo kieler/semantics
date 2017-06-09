@@ -308,16 +308,48 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_5_1_3() { return cRightCurlyBracketKeyword_5_1_3; }
 	}
 
+	public class StatementContainerInterfaceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.StatementContainerInterface");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSCEstModuleParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cConditionalParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cElseScopeParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cThreadParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cScopeStatementParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		
+		/// * ###################################################
+		// * ###               7.5 Statements                ###
+		// * ###################################################
+		// * / StatementContainerInterface scl::StatementContainer:
+		//	SCEstModule | Conditional | ElseScope | Thread | ScopeStatement
+		@Override public ParserRule getRule() { return rule; }
+
+		//SCEstModule | Conditional | ElseScope | Thread | ScopeStatement
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//SCEstModule
+		public RuleCall getSCEstModuleParserRuleCall_0() { return cSCEstModuleParserRuleCall_0; }
+
+		//Conditional
+		public RuleCall getConditionalParserRuleCall_1() { return cConditionalParserRuleCall_1; }
+
+		//ElseScope
+		public RuleCall getElseScopeParserRuleCall_2() { return cElseScopeParserRuleCall_2; }
+
+		//Thread
+		public RuleCall getThreadParserRuleCall_3() { return cThreadParserRuleCall_3; }
+
+		//ScopeStatement
+		public RuleCall getScopeStatementParserRuleCall_4() { return cScopeStatementParserRuleCall_4; }
+	}
+
 	public class SCEstStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.SCEstStatement");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cEsterelParallelParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cSCEstAtomicStatementParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		/// * ###################################################
-		// * ###               7.5 Statements                ###
-		// * ###################################################
-		// * / // ==> Statement
+		//// ==> Statement
 		//// -------------------------------------
 		//SCEstStatement scl::Statement:
 		//	EsterelParallel | SCEstAtomicStatement
@@ -3741,6 +3773,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final SCEstProgramElements pSCEstProgram;
 	private final SCEstModuleElements pSCEstModule;
+	private final StatementContainerInterfaceElements pStatementContainerInterface;
 	private final SCEstStatementElements pSCEstStatement;
 	private final SCEstAtomicStatementElements pSCEstAtomicStatement;
 	private final EsterelParallelElements pEsterelParallel;
@@ -3810,6 +3843,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pSCEstProgram = new SCEstProgramElements();
 		this.pSCEstModule = new SCEstModuleElements();
+		this.pStatementContainerInterface = new StatementContainerInterfaceElements();
 		this.pSCEstStatement = new SCEstStatementElements();
 		this.pSCEstAtomicStatement = new SCEstAtomicStatementElements();
 		this.pEsterelParallel = new EsterelParallelElements();
@@ -3936,7 +3970,17 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	/// * ###################################################
 	// * ###               7.5 Statements                ###
 	// * ###################################################
-	// * / // ==> Statement
+	// * / StatementContainerInterface scl::StatementContainer:
+	//	SCEstModule | Conditional | ElseScope | Thread | ScopeStatement
+	public StatementContainerInterfaceElements getStatementContainerInterfaceAccess() {
+		return pStatementContainerInterface;
+	}
+	
+	public ParserRule getStatementContainerInterfaceRule() {
+		return getStatementContainerInterfaceAccess().getRule();
+	}
+
+	//// ==> Statement
 	//// -------------------------------------
 	//SCEstStatement scl::Statement:
 	//	EsterelParallel | SCEstAtomicStatement
@@ -4416,7 +4460,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return tSL_COMMENT;
 	} 
 
-	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.esterel.scest.SCEst'.rules[34]->TerminalRule'SL_COMMENT'
+	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.esterel.scest.SCEst'.rules[35]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.esterel.Esterel'.rules[0]->ParserRule'Program'
 	//URI: file:/home/mrb/kieler-semantics-master/git/semantics/plugins/de.cau.cs.kieler.esterel/bin/de/cau/cs/kieler/esterel/Esterel.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
@@ -4745,33 +4789,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getRelationIncompatibilityRule() {
 		return getRelationIncompatibilityAccess().getRule();
-	}
-
-	/// * ###################################################
-	// * ###               7.5 Statements                ###
-	// * ###################################################
-	// * / // ==> Statement Container : statements which have a list of statements
-	//// -------------------------------------
-	//StatementContainer:
-	//	statements+=EsterelStatement;
-	public EsterelGrammarAccess.StatementContainerElements getStatementContainerAccess() {
-		return gaEsterel.getStatementContainerAccess();
-	}
-	
-	public ParserRule getStatementContainerRule() {
-		return getStatementContainerAccess().getRule();
-	}
-
-	//StatementContainerInterface StatementContainer:
-	//	super::Abort | super::Await | super::Block | super::Case | super::Do | super::EveryDo | super::Exec | super::ExecCase
-	//	| super::LocalSignalDecl | super::LocalVariable | super::Loop | super::PresentCase | super::Repeat | super::Suspend |
-	//	super::EsterelThread | super::Trap | super::TrapHandler
-	public EsterelGrammarAccess.StatementContainerInterfaceElements getStatementContainerInterfaceAccess() {
-		return gaEsterel.getStatementContainerInterfaceAccess();
-	}
-	
-	public ParserRule getStatementContainerInterfaceRule() {
-		return getStatementContainerInterfaceAccess().getRule();
 	}
 
 	//// ==> Statement
@@ -5628,6 +5645,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSCLProgramRule() {
 		return getSCLProgramAccess().getRule();
+	}
+
+	//StatementContainer:
+	//	statements+=Statement;
+	public SCLGrammarAccess.StatementContainerElements getStatementContainerAccess() {
+		return gaSCL.getStatementContainerAccess();
+	}
+	
+	public ParserRule getStatementContainerRule() {
+		return getStatementContainerAccess().getRule();
 	}
 
 	//Statement:

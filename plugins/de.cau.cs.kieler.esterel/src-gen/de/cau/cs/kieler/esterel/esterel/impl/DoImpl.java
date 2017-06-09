@@ -2,15 +2,15 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.Do;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
 import de.cau.cs.kieler.scl.scl.Statement;
+
+import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
 import java.util.Collection;
 
@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getEndingAnnotations <em>Ending Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getDelay <em>Delay</em>}</li>
@@ -46,16 +45,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class DoImpl extends StatementContainerImpl implements Do
 {
-  /**
-   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> annotations;
-
   /**
    * The cached value of the '{@link #getEndingAnnotations() <em>Ending Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -115,20 +104,6 @@ public class DoImpl extends StatementContainerImpl implements Do
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.DO;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAnnotations()
-  {
-    if (annotations == null)
-    {
-      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.DO__ANNOTATIONS);
-    }
-    return annotations;
   }
 
   /**
@@ -260,49 +235,11 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public Annotation getAnnotation(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Annotation> getAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void removeAllAnnotations(String name)
-  {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__ANNOTATIONS:
-        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         return ((InternalEList<?>)getEndingAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.DO__EXPR:
@@ -325,8 +262,6 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__ANNOTATIONS:
-        return getAnnotations();
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         return getEndingAnnotations();
       case EsterelPackage.DO__EXPR:
@@ -350,10 +285,6 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__ANNOTATIONS:
-        getAnnotations().clear();
-        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-        return;
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         getEndingAnnotations().clear();
         getEndingAnnotations().addAll((Collection<? extends Annotation>)newValue);
@@ -382,9 +313,6 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__ANNOTATIONS:
-        getAnnotations().clear();
-        return;
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         getEndingAnnotations().clear();
         return;
@@ -411,8 +339,6 @@ public class DoImpl extends StatementContainerImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__ANNOTATIONS:
-        return annotations != null && !annotations.isEmpty();
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         return endingAnnotations != null && !endingAnnotations.isEmpty();
       case EsterelPackage.DO__EXPR:
@@ -423,58 +349,6 @@ public class DoImpl extends StatementContainerImpl implements Do
         return watchingStatements != null && !watchingStatements.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case EsterelPackage.DO__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (derivedFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Annotatable.class)
-    {
-      switch (baseFeatureID)
-      {
-        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return EsterelPackage.DO__ANNOTATIONS;
-        default: return -1;
-      }
-    }
-    if (baseClass == Statement.class)
-    {
-      switch (baseFeatureID)
-      {
-        default: return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //DoImpl
