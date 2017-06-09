@@ -723,7 +723,7 @@ ${outputs}
             if (currentState != region.initialState) {
                 var connectorState = region.createState("");
                 var termTransition = currentState.createTransitionTo(connectorState)
-                var transition = connectorState.createTransitionTo(state)
+                connectorState.createTransitionTo(state)
                 termTransition.setTypeTermination
             } else {
                 var transition = currentState.createTransitionTo(state)
@@ -883,8 +883,7 @@ ${outputs}
      * Transforms an empty state into a track statement state.
      * 
      * This state sets one or multiple tracks to a certain setting.
-     * 
-     * @TODO Make this set signals as well
+     * It will also update their signals accordingly.
      */
     def void makeSetTrackStatement(State state, SetTrackStatement stStatement) {
         state.label = "_" + getStateID() + "_SetTrack"
@@ -898,6 +897,7 @@ ${outputs}
         var i = 0
 
         val tracks = valObjects.get("tracks")
+        val signals = valObjects.get("signals")
 
         for (segment : stStatement.segments) {
             var nextState = region.createState("_S" + i)
@@ -905,6 +905,15 @@ ${outputs}
 
             val trackIndex = segment.parseTrackSegment
 
+            val signalValue = if (speed == SPEED_FULL) {
+                4 // green signal
+            } else if (speed == SPEED_SLOW) {
+                2 // yellow signal
+            } else {
+                1 // red signal
+            }
+
+            // Set the track speed and direction
             transition.addEffect(tracks.assign(createIntValue(speed)) => [
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(0)
@@ -912,6 +921,16 @@ ${outputs}
             transition.addEffect(tracks.assign(createIntValue(direction)) => [
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(1)
+            ])
+            
+            // Set the signals accordingly
+            transition.addEffect(signals.assign(createIntValue(signalValue)) => [
+                indices += createIntValue(trackIndex)
+                indices += createIntValue(direction)
+            ])
+            transition.addEffect(signals.assign(createIntValue(0)) => [
+                indices += createIntValue(trackIndex)
+                indices += createIntValue(if (direction == 0) 1 else 0)
             ])
             currentState = nextState
             i++
@@ -1033,9 +1052,9 @@ ${outputs}
      */
     def int parseDirection(SetTrackStatement stStatement) {
         if (stStatement.mode.contains("reverse")) {
-            return 2;
-        } else {
             return 1;
+        } else {
+            return 0;
         }
     }
 
