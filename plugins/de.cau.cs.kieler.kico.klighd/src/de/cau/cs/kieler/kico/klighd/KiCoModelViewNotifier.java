@@ -70,7 +70,7 @@ public class KiCoModelViewNotifier {
      * @param editor the related editor
      * @param model the new compilation result
      */
-    public void notifyCompilationChanged(final IEditorPart editor, final Object model) {
+    public static void notifyCompilationChanged(final IEditorPart editor, final Object model) {
         notifyCompilationChanged(editor, model, null);
     }
     
@@ -81,7 +81,7 @@ public class KiCoModelViewNotifier {
      * @param model the new compilation result
      * @param context the used compilation context
      */
-    public void notifyCompilationChanged(final IEditorPart editor, final Object model, final CompilationResult context) {
+    public static void notifyCompilationChanged(final IEditorPart editor, final Object model, final CompilationResult context) {
         for (KiCoModelUpdateController controller : CONTROLLERS) {
             if (controller.isActive() &&
                 controller.getEditor() != null &&
