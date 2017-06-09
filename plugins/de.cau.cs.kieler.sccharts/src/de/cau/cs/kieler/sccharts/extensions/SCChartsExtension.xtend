@@ -134,7 +134,7 @@ class SCChartsExtension {
     // no outgoing normal termination Transition.
     def Transition getTerminationTransitions(State state) {
         val allTerminationTransitions = state.outgoingTransitions.filter[ type == TransitionType::TERMINATION ]
-        if (allTerminationTransitions.size == 0) {
+        if (allTerminationTransitions.empty) {
             return null;
         }
         allTerminationTransitions.head;
@@ -330,11 +330,11 @@ class SCChartsExtension {
 
     //========== UNIQUE NAMES ===========
     def private dispatch boolean uniqueNameTest(State state, String newName) {
-        state.parentRegion.states.filter[it != state && id == newName].size == 0
+        state.parentRegion.states.filter[it != state && id == newName].empty
     }
 
     def private dispatch boolean uniqueNameTest(ControlflowRegion region, String newName) {
-        region.parentState.regions.filter[it != region && id == newName].size == 0
+        region.parentState.regions.filter[it != region && id == newName].empty
     }
 
     def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
@@ -343,7 +343,7 @@ class SCChartsExtension {
             return true
         }
         
-        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
+        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].empty
         return notFoundOtherValuedObjectInState
     }
 
@@ -512,8 +512,8 @@ class SCChartsExtension {
 
     def State[] getFinalStates(ControlflowRegion region) {
         region.allFinalStates.filter[
-            outgoingTransitions.size == 0 && !hasInnerStatesOrControlflowRegions && entryActions.size == 0 &&
-                duringActions.size == 0 && exitActions.size == 0]
+            outgoingTransitions.empty && !hasInnerStatesOrControlflowRegions && entryActions.empty &&
+                duringActions.empty && exitActions.empty]
     }
 
     // Get the first (simple) final state if the region contains any, otherwise return null.
@@ -580,7 +580,7 @@ class SCChartsExtension {
 //        val region = createControlflowRegion(id)
 //        // ATTENTION: if this is the first region and there already is an IMPLICIT region,
 //        // e.g., because of inner actions, then return THIS region only!
-//        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0 &&
+//        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.empty &&
 //            state.regions.get(0) instanceof ControlflowRegion) {
 //            return state.regions.get(0) as ControlflowRegion
 //        }
@@ -598,7 +598,7 @@ class SCChartsExtension {
         // e.g., because of inner actions, then return THIS region only!
         if (state.regions.size == 1 &&
             state.regions.head instanceof ControlflowRegion && 
-            state.regions.head.allContainedStates.size == 0) {
+            state.regions.head.allContainedStates.empty) {
             val implicitRegion = state.regions.get(0) as ControlflowRegion;
             implicitRegion.id = id;
             return implicitRegion;
@@ -620,7 +620,7 @@ class SCChartsExtension {
     }
 
     def boolean empty(ControlflowRegion region) {
-        region.states.size == 0
+        region.states.empty
     }
 
     def boolean hasInnerStatesOrControlflowRegions(State state) {
@@ -1195,9 +1195,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
     def State fixDeadCode(State rootState) {
-        val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable].toList
-
-        for (nonReachabledState : nonReachabledStates.immutableCopy) {
+        for (nonReachabledState : rootState.allContainedStates.filter[!isStateReachable].immutableCopy) {
             val parentRegion = (nonReachabledState.eContainer as ControlflowRegion)
             parentRegion.states.remove(nonReachabledState)
         }

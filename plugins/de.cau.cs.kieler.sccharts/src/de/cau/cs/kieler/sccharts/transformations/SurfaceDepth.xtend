@@ -98,7 +98,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.allStates.toList.forEach [ targetState |
+        targetRootState.allStates.immutableCopy.forEach [ targetState |
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
