@@ -86,15 +86,6 @@ public interface KvisFactory extends EFactory
   Interval createInterval();
 
   /**
-   * Returns a new object of class '<em>Condition</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Condition</em>'.
-   * @generated
-   */
-  Condition createCondition();
-
-  /**
    * Returns a new object of class '<em>Variable Reference</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -111,87 +102,6 @@ public interface KvisFactory extends EFactory
    * @generated
    */
   ModelReference createModelReference();
-
-  /**
-   * Returns a new object of class '<em>Boolean Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Expression</em>'.
-   * @generated
-   */
-  BooleanExpression createBooleanExpression();
-
-  /**
-   * Returns a new object of class '<em>Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression</em>'.
-   * @generated
-   */
-  Expression createExpression();
-
-  /**
-   * Returns a new object of class '<em>Operand</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Operand</em>'.
-   * @generated
-   */
-  Operand createOperand();
-
-  /**
-   * Returns a new object of class '<em>Color Animation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Color Animation</em>'.
-   * @generated
-   */
-  ColorAnimation createColorAnimation();
-
-  /**
-   * Returns a new object of class '<em>Text Animation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Text Animation</em>'.
-   * @generated
-   */
-  TextAnimation createTextAnimation();
-
-  /**
-   * Returns a new object of class '<em>Visible Animation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Visible Animation</em>'.
-   * @generated
-   */
-  VisibleAnimation createVisibleAnimation();
-
-  /**
-   * Returns a new object of class '<em>Rotate Animation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Rotate Animation</em>'.
-   * @generated
-   */
-  RotateAnimation createRotateAnimation();
-
-  /**
-   * Returns a new object of class '<em>Move Animation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Move Animation</em>'.
-   * @generated
-   */
-  MoveAnimation createMoveAnimation();
-
-  /**
-   * Returns a new object of class '<em>And Or Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>And Or Expression</em>'.
-   * @generated
-   */
-  AndOrExpression createAndOrExpression();
 
   /**
    * Returns the package supported by this factory.

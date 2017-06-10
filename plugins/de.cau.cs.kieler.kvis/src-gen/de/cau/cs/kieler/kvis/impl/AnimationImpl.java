@@ -2,9 +2,10 @@
  */
 package de.cau.cs.kieler.kvis.impl;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.kvis.Animation;
 import de.cau.cs.kieler.kvis.AttributeMapping;
-import de.cau.cs.kieler.kvis.Condition;
 import de.cau.cs.kieler.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.VariableReference;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getVariable <em>Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getMappings <em>Mappings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.impl.AnimationImpl#getCondition <em>Condition</em>}</li>
@@ -41,6 +43,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class AnimationImpl extends MinimalEObjectImpl.Container implements Animation
 {
+  /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final String TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected String type = TYPE_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -69,7 +91,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * @generated
    * @ordered
    */
-  protected Condition condition;
+  protected Expression condition;
 
   /**
    * <!-- begin-user-doc -->
@@ -90,6 +112,29 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   protected EClass eStaticClass()
   {
     return KvisPackage.Literals.ANIMATION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(String newType)
+  {
+    String oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.ANIMATION__TYPE, oldType, type));
   }
 
   /**
@@ -159,7 +204,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * <!-- end-user-doc -->
    * @generated
    */
-  public Condition getCondition()
+  public Expression getCondition()
   {
     return condition;
   }
@@ -169,9 +214,9 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetCondition(Condition newCondition, NotificationChain msgs)
+  public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs)
   {
-    Condition oldCondition = condition;
+    Expression oldCondition = condition;
     condition = newCondition;
     if (eNotificationRequired())
     {
@@ -186,7 +231,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setCondition(Condition newCondition)
+  public void setCondition(Expression newCondition)
   {
     if (newCondition != condition)
     {
@@ -232,6 +277,8 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
+      case KvisPackage.ANIMATION__TYPE:
+        return getType();
       case KvisPackage.ANIMATION__VARIABLE:
         return getVariable();
       case KvisPackage.ANIMATION__MAPPINGS:
@@ -253,6 +300,9 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
+      case KvisPackage.ANIMATION__TYPE:
+        setType((String)newValue);
+        return;
       case KvisPackage.ANIMATION__VARIABLE:
         setVariable((VariableReference)newValue);
         return;
@@ -261,7 +311,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
         getMappings().addAll((Collection<? extends AttributeMapping>)newValue);
         return;
       case KvisPackage.ANIMATION__CONDITION:
-        setCondition((Condition)newValue);
+        setCondition((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -277,6 +327,9 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
+      case KvisPackage.ANIMATION__TYPE:
+        setType(TYPE_EDEFAULT);
+        return;
       case KvisPackage.ANIMATION__VARIABLE:
         setVariable((VariableReference)null);
         return;
@@ -284,7 +337,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
         getMappings().clear();
         return;
       case KvisPackage.ANIMATION__CONDITION:
-        setCondition((Condition)null);
+        setCondition((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -300,6 +353,8 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
   {
     switch (featureID)
     {
+      case KvisPackage.ANIMATION__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case KvisPackage.ANIMATION__VARIABLE:
         return variable != null;
       case KvisPackage.ANIMATION__MAPPINGS:
@@ -308,6 +363,23 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
         return condition != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (type: ");
+    result.append(type);
+    result.append(')');
+    return result.toString();
   }
 
 } //AnimationImpl

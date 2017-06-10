@@ -4,23 +4,33 @@
 package de.cau.cs.kieler.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.kvis.AndOrExpression;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.BooleanAnnotation;
+import de.cau.cs.kieler.annotations.CommentAnnotation;
+import de.cau.cs.kieler.annotations.FloatAnnotation;
+import de.cau.cs.kieler.annotations.IntAnnotation;
+import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.TypedStringAnnotation;
+import de.cau.cs.kieler.kexpressions.BoolValue;
+import de.cau.cs.kieler.kexpressions.FloatValue;
+import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.StringValue;
+import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
+import de.cau.cs.kieler.kvis.Animation;
 import de.cau.cs.kieler.kvis.AttributeMapping;
-import de.cau.cs.kieler.kvis.ColorAnimation;
-import de.cau.cs.kieler.kvis.Condition;
 import de.cau.cs.kieler.kvis.Domain;
 import de.cau.cs.kieler.kvis.Element;
-import de.cau.cs.kieler.kvis.Expression;
 import de.cau.cs.kieler.kvis.Interval;
 import de.cau.cs.kieler.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.Mapping;
 import de.cau.cs.kieler.kvis.ModelReference;
-import de.cau.cs.kieler.kvis.MoveAnimation;
-import de.cau.cs.kieler.kvis.Operand;
-import de.cau.cs.kieler.kvis.RotateAnimation;
-import de.cau.cs.kieler.kvis.TextAnimation;
 import de.cau.cs.kieler.kvis.VariableReference;
-import de.cau.cs.kieler.kvis.VisibleAnimation;
 import de.cau.cs.kieler.kvis.Visualization;
 import de.cau.cs.kieler.services.KVisGrammarAccess;
 import java.util.Set;
@@ -31,11 +41,10 @@ import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractKVisSemanticSequencer extends AbstractDelegatingSemanticSequencer {
+public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemanticSequencer {
 
 	@Inject
 	private KVisGrammarAccess grammarAccess;
@@ -46,35 +55,128 @@ public abstract class AbstractKVisSemanticSequencer extends AbstractDelegatingSe
 		ParserRule rule = context.getParserRule();
 		Action action = context.getAssignedAction();
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
-		if (epackage == KvisPackage.eINSTANCE)
+		if (epackage == AnnotationsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case KvisPackage.AND_OR_EXPRESSION:
-				sequence_BooleanExpression(context, (AndOrExpression) semanticObject); 
+			case AnnotationsPackage.ANNOTATION:
+				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
-			case KvisPackage.ATTRIBUTE_MAPPING:
-				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
+			case AnnotationsPackage.BOOLEAN_ANNOTATION:
+				sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
 				return; 
-			case KvisPackage.COLOR_ANIMATION:
-				if (rule == grammarAccess.getAnimationRuleRule()) {
-					sequence_Animation_AnimationRule(context, (ColorAnimation) semanticObject); 
+			case AnnotationsPackage.COMMENT_ANNOTATION:
+				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+				return; 
+			case AnnotationsPackage.FLOAT_ANNOTATION:
+				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
+				return; 
+			case AnnotationsPackage.INT_ANNOTATION:
+				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
+				return; 
+			case AnnotationsPackage.STRING_ANNOTATION:
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getKeyStringValueAnnotationRule()) {
+					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getAnimationRule()) {
-					sequence_Animation(context, (ColorAnimation) semanticObject); 
+				else if (rule == grammarAccess.getRestrictedAnnotationRule()
+						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
+					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
-			case KvisPackage.CONDITION:
-				sequence_Condition(context, (Condition) semanticObject); 
+			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
+				if (rule == grammarAccess.getRestrictedAnnotationRule()
+						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
+					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getTypedKeyStringValueAnnotationRule()) {
+					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if (epackage == KExpressionsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KExpressionsPackage.BOOL_VALUE:
+				sequence_BoolValue(context, (BoolValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.FLOAT_VALUE:
+				sequence_FloatValue(context, (FloatValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.FUNCTION_CALL:
+				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.INT_VALUE:
+				sequence_IntValue(context, (IntValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.OPERATOR_EXPRESSION:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
+					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.PARAMETER:
+				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+				return; 
+			case KExpressionsPackage.STRING_VALUE:
+				sequence_StringValue(context, (StringValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.TEXT_EXPRESSION:
+				sequence_TextExpression(context, (TextExpression) semanticObject); 
+				return; 
+			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
+				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+				return; 
+			}
+		else if (epackage == KvisPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KvisPackage.ANIMATION:
+				sequence_Animation(context, (Animation) semanticObject); 
+				return; 
+			case KvisPackage.ATTRIBUTE_MAPPING:
+				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
 				return; 
 			case KvisPackage.DOMAIN:
 				sequence_VariableDomain(context, (Domain) semanticObject); 
 				return; 
 			case KvisPackage.ELEMENT:
 				sequence_Element(context, (Element) semanticObject); 
-				return; 
-			case KvisPackage.EXPRESSION:
-				sequence_Comparison(context, (Expression) semanticObject); 
 				return; 
 			case KvisPackage.INTERVAL:
 				sequence_Interval(context, (Interval) semanticObject); 
@@ -85,52 +187,9 @@ public abstract class AbstractKVisSemanticSequencer extends AbstractDelegatingSe
 			case KvisPackage.MODEL_REFERENCE:
 				sequence_ModelReference(context, (ModelReference) semanticObject); 
 				return; 
-			case KvisPackage.MOVE_ANIMATION:
-				if (rule == grammarAccess.getAnimationRuleRule()) {
-					sequence_Animation_AnimationRule(context, (MoveAnimation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getAnimationRule()) {
-					sequence_Animation(context, (MoveAnimation) semanticObject); 
-					return; 
-				}
-				else break;
-			case KvisPackage.OPERAND:
-				sequence_Operand(context, (Operand) semanticObject); 
-				return; 
-			case KvisPackage.ROTATE_ANIMATION:
-				if (rule == grammarAccess.getAnimationRuleRule()) {
-					sequence_Animation_AnimationRule(context, (RotateAnimation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getAnimationRule()) {
-					sequence_Animation(context, (RotateAnimation) semanticObject); 
-					return; 
-				}
-				else break;
-			case KvisPackage.TEXT_ANIMATION:
-				if (rule == grammarAccess.getAnimationRuleRule()) {
-					sequence_Animation_AnimationRule(context, (TextAnimation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getAnimationRule()) {
-					sequence_Animation(context, (TextAnimation) semanticObject); 
-					return; 
-				}
-				else break;
 			case KvisPackage.VARIABLE_REFERENCE:
 				sequence_VariableReference(context, (VariableReference) semanticObject); 
 				return; 
-			case KvisPackage.VISIBLE_ANIMATION:
-				if (rule == grammarAccess.getAnimationRuleRule()) {
-					sequence_Animation_AnimationRule(context, (VisibleAnimation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getAnimationRule()) {
-					sequence_Animation(context, (VisibleAnimation) semanticObject); 
-					return; 
-				}
-				else break;
 			case KvisPackage.VISUALIZATION:
 				sequence_Visualization(context, (Visualization) semanticObject); 
 				return; 
@@ -141,120 +200,12 @@ public abstract class AbstractKVisSemanticSequencer extends AbstractDelegatingSe
 	
 	/**
 	 * Contexts:
-	 *     AnimationRule returns ColorAnimation
+	 *     Animation returns Animation
 	 *
 	 * Constraint:
-	 *     (variable=VariableReference? mappings+=AttributeMapping* condition=Condition?)
+	 *     (type=ID variable=VariableReference? mappings+=AttributeMapping* condition=BoolExpression?)
 	 */
-	protected void sequence_Animation_AnimationRule(ISerializationContext context, ColorAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AnimationRule returns MoveAnimation
-	 *
-	 * Constraint:
-	 *     (variable=VariableReference? mappings+=AttributeMapping* condition=Condition?)
-	 */
-	protected void sequence_Animation_AnimationRule(ISerializationContext context, MoveAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AnimationRule returns RotateAnimation
-	 *
-	 * Constraint:
-	 *     (variable=VariableReference? mappings+=AttributeMapping* condition=Condition?)
-	 */
-	protected void sequence_Animation_AnimationRule(ISerializationContext context, RotateAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AnimationRule returns TextAnimation
-	 *
-	 * Constraint:
-	 *     (variable=VariableReference? mappings+=AttributeMapping* condition=Condition?)
-	 */
-	protected void sequence_Animation_AnimationRule(ISerializationContext context, TextAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AnimationRule returns VisibleAnimation
-	 *
-	 * Constraint:
-	 *     (variable=VariableReference? mappings+=AttributeMapping* condition=Condition?)
-	 */
-	protected void sequence_Animation_AnimationRule(ISerializationContext context, VisibleAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Animation returns ColorAnimation
-	 *
-	 * Constraint:
-	 *     {ColorAnimation}
-	 */
-	protected void sequence_Animation(ISerializationContext context, ColorAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Animation returns MoveAnimation
-	 *
-	 * Constraint:
-	 *     {MoveAnimation}
-	 */
-	protected void sequence_Animation(ISerializationContext context, MoveAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Animation returns RotateAnimation
-	 *
-	 * Constraint:
-	 *     {RotateAnimation}
-	 */
-	protected void sequence_Animation(ISerializationContext context, RotateAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Animation returns TextAnimation
-	 *
-	 * Constraint:
-	 *     {TextAnimation}
-	 */
-	protected void sequence_Animation(ISerializationContext context, TextAnimation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Animation returns VisibleAnimation
-	 *
-	 * Constraint:
-	 *     {VisibleAnimation}
-	 */
-	protected void sequence_Animation(ISerializationContext context, VisibleAnimation semanticObject) {
+	protected void sequence_Animation(ISerializationContext context, Animation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -273,79 +224,10 @@ public abstract class AbstractKVisSemanticSequencer extends AbstractDelegatingSe
 	
 	/**
 	 * Contexts:
-	 *     BooleanExpression returns AndOrExpression
-	 *     BooleanExpression.AndOrExpression_1_0_0 returns AndOrExpression
-	 *
-	 * Constraint:
-	 *     (left=BooleanExpression_AndOrExpression_1_0_0 operator=BooleanOperator right=Comparison)
-	 */
-	protected void sequence_BooleanExpression(ISerializationContext context, AndOrExpression semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__LEFT));
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__OPERATOR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__OPERATOR));
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getBooleanExpressionAccess().getAndOrExpressionLeftAction_1_0_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getBooleanExpressionAccess().getOperatorBooleanOperatorEnumRuleCall_1_0_1_0(), semanticObject.getOperator());
-		feeder.accept(grammarAccess.getBooleanExpressionAccess().getRightComparisonParserRuleCall_1_1_0(), semanticObject.getRight());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     BooleanExpression returns Expression
-	 *     BooleanExpression.AndOrExpression_1_0_0 returns Expression
-	 *     Comparison returns Expression
-	 *
-	 * Constraint:
-	 *     (leftSide=VariableReference relation=CompareOperator rightSide=Operand)
-	 */
-	protected void sequence_Comparison(ISerializationContext context, Expression semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.EXPRESSION__LEFT_SIDE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.EXPRESSION__LEFT_SIDE));
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.EXPRESSION__RELATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.EXPRESSION__RELATION));
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.EXPRESSION__RIGHT_SIDE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.EXPRESSION__RIGHT_SIDE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getComparisonAccess().getLeftSideVariableReferenceParserRuleCall_0_0(), semanticObject.getLeftSide());
-		feeder.accept(grammarAccess.getComparisonAccess().getRelationCompareOperatorEnumRuleCall_1_0(), semanticObject.getRelation());
-		feeder.accept(grammarAccess.getComparisonAccess().getRightSideOperandParserRuleCall_2_0(), semanticObject.getRightSide());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Condition returns Condition
-	 *
-	 * Constraint:
-	 *     expression=BooleanExpression
-	 */
-	protected void sequence_Condition(ISerializationContext context, Condition semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.CONDITION__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.CONDITION__EXPRESSION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConditionAccess().getExpressionBooleanExpressionParserRuleCall_1_0(), semanticObject.getExpression());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Element returns Element
 	 *
 	 * Constraint:
-	 *     (name=ID animations+=AnimationRule+)
+	 *     (name=ID animations+=Animation+)
 	 */
 	protected void sequence_Element(ISerializationContext context, Element semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -357,19 +239,10 @@ public abstract class AbstractKVisSemanticSequencer extends AbstractDelegatingSe
 	 *     Interval returns Interval
 	 *
 	 * Constraint:
-	 *     (from=INT to=INT)
+	 *     ((from=Integer | from=Integer) (to=Integer | to=Integer))
 	 */
 	protected void sequence_Interval(ISerializationContext context, Interval semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.INTERVAL__FROM) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.INTERVAL__FROM));
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.INTERVAL__TO) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.INTERVAL__TO));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getIntervalAccess().getFromINTTerminalRuleCall_0_0(), semanticObject.getFrom());
-		feeder.accept(grammarAccess.getIntervalAccess().getToINTTerminalRuleCall_2_0(), semanticObject.getTo());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -409,18 +282,6 @@ public abstract class AbstractKVisSemanticSequencer extends AbstractDelegatingSe
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getModelReferenceAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Operand returns Operand
-	 *
-	 * Constraint:
-	 *     (variable=VariableReference | literal=Literal)
-	 */
-	protected void sequence_Operand(ISerializationContext context, Operand semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

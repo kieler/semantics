@@ -110,11 +110,6 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
         return createIntervalAdapter();
       }
       @Override
-      public Adapter caseCondition(Condition object)
-      {
-        return createConditionAdapter();
-      }
-      @Override
       public Adapter caseVariableReference(VariableReference object)
       {
         return createVariableReferenceAdapter();
@@ -123,51 +118,6 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
       public Adapter caseModelReference(ModelReference object)
       {
         return createModelReferenceAdapter();
-      }
-      @Override
-      public Adapter caseBooleanExpression(BooleanExpression object)
-      {
-        return createBooleanExpressionAdapter();
-      }
-      @Override
-      public Adapter caseExpression(Expression object)
-      {
-        return createExpressionAdapter();
-      }
-      @Override
-      public Adapter caseOperand(Operand object)
-      {
-        return createOperandAdapter();
-      }
-      @Override
-      public Adapter caseColorAnimation(ColorAnimation object)
-      {
-        return createColorAnimationAdapter();
-      }
-      @Override
-      public Adapter caseTextAnimation(TextAnimation object)
-      {
-        return createTextAnimationAdapter();
-      }
-      @Override
-      public Adapter caseVisibleAnimation(VisibleAnimation object)
-      {
-        return createVisibleAnimationAdapter();
-      }
-      @Override
-      public Adapter caseRotateAnimation(RotateAnimation object)
-      {
-        return createRotateAnimationAdapter();
-      }
-      @Override
-      public Adapter caseMoveAnimation(MoveAnimation object)
-      {
-        return createMoveAnimationAdapter();
-      }
-      @Override
-      public Adapter caseAndOrExpression(AndOrExpression object)
-      {
-        return createAndOrExpressionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -297,21 +247,6 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.Condition <em>Condition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.Condition
-   * @generated
-   */
-  public Adapter createConditionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.VariableReference <em>Variable Reference</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -337,141 +272,6 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModelReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.BooleanExpression <em>Boolean Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.BooleanExpression
-   * @generated
-   */
-  public Adapter createBooleanExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.Expression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.Expression
-   * @generated
-   */
-  public Adapter createExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.Operand <em>Operand</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.Operand
-   * @generated
-   */
-  public Adapter createOperandAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.ColorAnimation <em>Color Animation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.ColorAnimation
-   * @generated
-   */
-  public Adapter createColorAnimationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.TextAnimation <em>Text Animation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.TextAnimation
-   * @generated
-   */
-  public Adapter createTextAnimationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.VisibleAnimation <em>Visible Animation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.VisibleAnimation
-   * @generated
-   */
-  public Adapter createVisibleAnimationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.RotateAnimation <em>Rotate Animation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.RotateAnimation
-   * @generated
-   */
-  public Adapter createRotateAnimationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.MoveAnimation <em>Move Animation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.MoveAnimation
-   * @generated
-   */
-  public Adapter createMoveAnimationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.AndOrExpression <em>And Or Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.AndOrExpression
-   * @generated
-   */
-  public Adapter createAndOrExpressionAdapter()
   {
     return null;
   }

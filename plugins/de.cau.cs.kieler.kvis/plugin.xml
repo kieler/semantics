@@ -7,7 +7,7 @@
     <package 
        uri = "http://www.cau.de/cs/kieler/KVis" 
        class = "de.cau.cs.kieler.kvis.KVisPackage"
-       genModel = "model/generated/kvis.genmodel" /> 
+       genModel = "model/generated/KVis.genmodel" /> 
 	
   </extension>
 

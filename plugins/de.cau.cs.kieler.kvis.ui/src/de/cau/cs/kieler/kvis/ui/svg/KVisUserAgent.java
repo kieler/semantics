@@ -104,7 +104,7 @@ public class KVisUserAgent implements SVGUserAgent {
         final String fMessage = message;
         getShell().getDisplay().syncExec(new Runnable() {
             public void run() {
-                canvas.log(fMessage);
+                KVisCanvas.log(fMessage);
                 //MessageDialog.openWarning(shell, Messages.getString("SVGView.40"), fMessage); //$NON-NLS-1$
             }
         });

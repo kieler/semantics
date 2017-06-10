@@ -23,7 +23,9 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.apache.batik.transcoder;bundle-version="[1.6.0,1.7.0)",
  org.w3c.dom.svg,
  de.cau.cs.kieler.kvis,
- de.cau.cs.kieler.prom
+ de.cau.cs.kieler.prom,
+ de.cau.cs.kieler.kexpressions.ui;bundle-version="0.12.0",
+ de.cau.cs.kieler.annotations.ui;bundle-version="0.12.0"
 Export-Package: de.cau.cs.kieler.ui.contentassist,
  de.cau.cs.kieler.ui.quickfix,
  de.cau.cs.kieler.ui.contentassist.antlr,

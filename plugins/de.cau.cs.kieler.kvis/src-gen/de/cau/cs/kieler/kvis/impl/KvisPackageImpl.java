@@ -2,33 +2,22 @@
  */
 package de.cau.cs.kieler.kvis.impl;
 
-import de.cau.cs.kieler.kvis.AndOrExpression;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+
 import de.cau.cs.kieler.kvis.Animation;
 import de.cau.cs.kieler.kvis.AttributeMapping;
-import de.cau.cs.kieler.kvis.BooleanExpression;
-import de.cau.cs.kieler.kvis.BooleanOperatorType;
-import de.cau.cs.kieler.kvis.ColorAnimation;
-import de.cau.cs.kieler.kvis.Condition;
 import de.cau.cs.kieler.kvis.Domain;
 import de.cau.cs.kieler.kvis.Element;
-import de.cau.cs.kieler.kvis.Expression;
 import de.cau.cs.kieler.kvis.Interval;
 import de.cau.cs.kieler.kvis.KvisFactory;
 import de.cau.cs.kieler.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.Mapping;
 import de.cau.cs.kieler.kvis.ModelReference;
-import de.cau.cs.kieler.kvis.MoveAnimation;
-import de.cau.cs.kieler.kvis.Operand;
-import de.cau.cs.kieler.kvis.OperatorType;
-import de.cau.cs.kieler.kvis.RotateAnimation;
-import de.cau.cs.kieler.kvis.TextAnimation;
 import de.cau.cs.kieler.kvis.VariableReference;
-import de.cau.cs.kieler.kvis.VisibleAnimation;
 import de.cau.cs.kieler.kvis.Visualization;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -96,13 +85,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass conditionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass variableReferenceEClass = null;
 
   /**
@@ -111,83 +93,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * @generated
    */
   private EClass modelReferenceEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass booleanExpressionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass expressionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass operandEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass colorAnimationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass textAnimationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass visibleAnimationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass rotateAnimationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass moveAnimationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass andOrExpressionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EEnum operatorTypeEEnum = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EEnum booleanOperatorTypeEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -236,6 +141,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     KvisPackageImpl theKvisPackage = (KvisPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KvisPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KvisPackageImpl());
 
     isInited = true;
+
+    // Initialize simple dependencies
+    KExpressionsPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theKvisPackage.createPackageContents();
@@ -327,9 +235,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAnimation_Variable()
+  public EAttribute getAnimation_Type()
   {
-    return (EReference)animationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)animationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -337,7 +245,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAnimation_Mappings()
+  public EReference getAnimation_Variable()
   {
     return (EReference)animationEClass.getEStructuralFeatures().get(1);
   }
@@ -347,9 +255,19 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAnimation_Condition()
+  public EReference getAnimation_Mappings()
   {
     return (EReference)animationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAnimation_Condition()
+  {
+    return (EReference)animationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -487,26 +405,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getCondition()
-  {
-    return conditionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getCondition_Expression()
-  {
-    return (EReference)conditionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getVariableReference()
   {
     return variableReferenceEClass;
@@ -567,196 +465,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getBooleanExpression()
-  {
-    return booleanExpressionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getExpression()
-  {
-    return expressionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression_LeftSide()
-  {
-    return (EReference)expressionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getExpression_Relation()
-  {
-    return (EAttribute)expressionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExpression_RightSide()
-  {
-    return (EReference)expressionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getOperand()
-  {
-    return operandEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getOperand_Variable()
-  {
-    return (EReference)operandEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getOperand_Literal()
-  {
-    return (EAttribute)operandEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getColorAnimation()
-  {
-    return colorAnimationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getTextAnimation()
-  {
-    return textAnimationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getVisibleAnimation()
-  {
-    return visibleAnimationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getRotateAnimation()
-  {
-    return rotateAnimationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getMoveAnimation()
-  {
-    return moveAnimationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAndOrExpression()
-  {
-    return andOrExpressionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAndOrExpression_Left()
-  {
-    return (EReference)andOrExpressionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getAndOrExpression_Operator()
-  {
-    return (EAttribute)andOrExpressionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAndOrExpression_Right()
-  {
-    return (EReference)andOrExpressionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EEnum getOperatorType()
-  {
-    return operatorTypeEEnum;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EEnum getBooleanOperatorType()
-  {
-    return booleanOperatorTypeEEnum;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public KvisFactory getKvisFactory()
   {
     return (KvisFactory)getEFactoryInstance();
@@ -791,6 +499,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     createEReference(elementEClass, ELEMENT__ANIMATIONS);
 
     animationEClass = createEClass(ANIMATION);
+    createEAttribute(animationEClass, ANIMATION__TYPE);
     createEReference(animationEClass, ANIMATION__VARIABLE);
     createEReference(animationEClass, ANIMATION__MAPPINGS);
     createEReference(animationEClass, ANIMATION__CONDITION);
@@ -812,9 +521,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     createEAttribute(intervalEClass, INTERVAL__FROM);
     createEAttribute(intervalEClass, INTERVAL__TO);
 
-    conditionEClass = createEClass(CONDITION);
-    createEReference(conditionEClass, CONDITION__EXPRESSION);
-
     variableReferenceEClass = createEClass(VARIABLE_REFERENCE);
     createEReference(variableReferenceEClass, VARIABLE_REFERENCE__MODEL);
     createEAttribute(variableReferenceEClass, VARIABLE_REFERENCE__NAME);
@@ -822,36 +528,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     modelReferenceEClass = createEClass(MODEL_REFERENCE);
     createEAttribute(modelReferenceEClass, MODEL_REFERENCE__NAME);
-
-    booleanExpressionEClass = createEClass(BOOLEAN_EXPRESSION);
-
-    expressionEClass = createEClass(EXPRESSION);
-    createEReference(expressionEClass, EXPRESSION__LEFT_SIDE);
-    createEAttribute(expressionEClass, EXPRESSION__RELATION);
-    createEReference(expressionEClass, EXPRESSION__RIGHT_SIDE);
-
-    operandEClass = createEClass(OPERAND);
-    createEReference(operandEClass, OPERAND__VARIABLE);
-    createEAttribute(operandEClass, OPERAND__LITERAL);
-
-    colorAnimationEClass = createEClass(COLOR_ANIMATION);
-
-    textAnimationEClass = createEClass(TEXT_ANIMATION);
-
-    visibleAnimationEClass = createEClass(VISIBLE_ANIMATION);
-
-    rotateAnimationEClass = createEClass(ROTATE_ANIMATION);
-
-    moveAnimationEClass = createEClass(MOVE_ANIMATION);
-
-    andOrExpressionEClass = createEClass(AND_OR_EXPRESSION);
-    createEReference(andOrExpressionEClass, AND_OR_EXPRESSION__LEFT);
-    createEAttribute(andOrExpressionEClass, AND_OR_EXPRESSION__OPERATOR);
-    createEReference(andOrExpressionEClass, AND_OR_EXPRESSION__RIGHT);
-
-    // Create enums
-    operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
-    booleanOperatorTypeEEnum = createEEnum(BOOLEAN_OPERATOR_TYPE);
   }
 
   /**
@@ -878,18 +554,14 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
+    // Obtain other dependent packages
+    KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+
     // Create type parameters
 
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    expressionEClass.getESuperTypes().add(this.getBooleanExpression());
-    colorAnimationEClass.getESuperTypes().add(this.getAnimation());
-    textAnimationEClass.getESuperTypes().add(this.getAnimation());
-    visibleAnimationEClass.getESuperTypes().add(this.getAnimation());
-    rotateAnimationEClass.getESuperTypes().add(this.getAnimation());
-    moveAnimationEClass.getESuperTypes().add(this.getAnimation());
-    andOrExpressionEClass.getESuperTypes().add(this.getBooleanExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(visualizationEClass, Visualization.class, "Visualization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -901,9 +573,10 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     initEReference(getElement_Animations(), this.getAnimation(), null, "animations", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(animationEClass, Animation.class, "Animation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAnimation_Type(), ecorePackage.getEString(), "type", null, 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnimation_Variable(), this.getVariableReference(), null, "variable", null, 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnimation_Mappings(), this.getAttributeMapping(), null, "mappings", null, 0, -1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAnimation_Condition(), this.getCondition(), null, "condition", null, 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnimation_Condition(), theKExpressionsPackage.getExpression(), null, "condition", null, 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(attributeMappingEClass, AttributeMapping.class, "AttributeMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttributeMapping_Attribute(), ecorePackage.getEString(), "attribute", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -922,9 +595,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     initEAttribute(getInterval_From(), ecorePackage.getEInt(), "from", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInterval_To(), ecorePackage.getEInt(), "to", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCondition_Expression(), this.getBooleanExpression(), null, "expression", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(variableReferenceEClass, VariableReference.class, "VariableReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVariableReference_Model(), this.getModelReference(), null, "model", null, 0, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -932,45 +602,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     initEClass(modelReferenceEClass, ModelReference.class, "ModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModelReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, ModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(booleanExpressionEClass, BooleanExpression.class, "BooleanExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExpression_LeftSide(), this.getVariableReference(), null, "leftSide", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getExpression_Relation(), this.getOperatorType(), "relation", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression_RightSide(), this.getOperand(), null, "rightSide", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(operandEClass, Operand.class, "Operand", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOperand_Variable(), this.getVariableReference(), null, "variable", null, 0, 1, Operand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getOperand_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, Operand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(colorAnimationEClass, ColorAnimation.class, "ColorAnimation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(textAnimationEClass, TextAnimation.class, "TextAnimation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(visibleAnimationEClass, VisibleAnimation.class, "VisibleAnimation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(rotateAnimationEClass, RotateAnimation.class, "RotateAnimation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(moveAnimationEClass, MoveAnimation.class, "MoveAnimation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(andOrExpressionEClass, AndOrExpression.class, "AndOrExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAndOrExpression_Left(), this.getBooleanExpression(), null, "left", null, 0, 1, AndOrExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAndOrExpression_Operator(), this.getBooleanOperatorType(), "operator", null, 0, 1, AndOrExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAndOrExpression_Right(), this.getExpression(), null, "right", null, 0, 1, AndOrExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    // Initialize enums and add enum literals
-    initEEnum(operatorTypeEEnum, OperatorType.class, "OperatorType");
-    addEEnumLiteral(operatorTypeEEnum, OperatorType.EQ);
-    addEEnumLiteral(operatorTypeEEnum, OperatorType.LT);
-    addEEnumLiteral(operatorTypeEEnum, OperatorType.LEQ);
-    addEEnumLiteral(operatorTypeEEnum, OperatorType.GT);
-    addEEnumLiteral(operatorTypeEEnum, OperatorType.GEQ);
-    addEEnumLiteral(operatorTypeEEnum, OperatorType.NE);
-
-    initEEnum(booleanOperatorTypeEEnum, BooleanOperatorType.class, "BooleanOperatorType");
-    addEEnumLiteral(booleanOperatorTypeEEnum, BooleanOperatorType.AND);
-    addEEnumLiteral(booleanOperatorTypeEEnum, BooleanOperatorType.OR);
 
     // Create resource
     createResource(eNS_URI);

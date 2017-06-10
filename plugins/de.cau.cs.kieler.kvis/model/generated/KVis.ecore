@@ -12,11 +12,12 @@
         eType="#//Animation" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Animation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableReference"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappings" upperBound="-1"
         eType="#//AttributeMapping" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Condition"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeMapping">
@@ -40,10 +41,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="from" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="to" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Condition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//BooleanExpression"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableReference">
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//ModelReference"
         containment="true"/>
@@ -53,42 +50,5 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BooleanExpression"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Expression" eSuperTypes="#//BooleanExpression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="leftSide" eType="#//VariableReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relation" eType="#//OperatorType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rightSide" eType="#//Operand"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Operand">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="OperatorType">
-    <eLiterals name="EQ" literal="="/>
-    <eLiterals name="LT" value="1" literal="&lt;"/>
-    <eLiterals name="LEQ" value="2" literal="&lt;="/>
-    <eLiterals name="GT" value="3" literal=">"/>
-    <eLiterals name="GEQ" value="4" literal=">="/>
-    <eLiterals name="NE" value="5" literal="!="/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="BooleanOperatorType">
-    <eLiterals name="AND" literal="and"/>
-    <eLiterals name="OR" value="1" literal="or"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ColorAnimation" eSuperTypes="#//Animation"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TextAnimation" eSuperTypes="#//Animation"/>
-  <eClassifiers xsi:type="ecore:EClass" name="VisibleAnimation" eSuperTypes="#//Animation"/>
-  <eClassifiers xsi:type="ecore:EClass" name="RotateAnimation" eSuperTypes="#//Animation"/>
-  <eClassifiers xsi:type="ecore:EClass" name="MoveAnimation" eSuperTypes="#//Animation"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AndOrExpression" eSuperTypes="#//BooleanExpression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//BooleanExpression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//BooleanOperatorType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
-        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

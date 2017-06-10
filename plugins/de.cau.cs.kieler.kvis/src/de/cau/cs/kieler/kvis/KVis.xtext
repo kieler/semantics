@@ -1,7 +1,9 @@
-grammar de.cau.cs.kieler.KVis with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.KVis with de.cau.cs.kieler.kexpressions.KExpressions
 
 generate kvis "http://www.cau.de/cs/kieler/kvis/KVis"
+
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 
 Visualization:
 	'image' ':' image=STRING
@@ -11,22 +13,14 @@ Visualization:
 
 Element:
 	'animate' name=ID '{'
-        (animations+=AnimationRule)+
+        (animations+=Animation)+
 	'}'
 ;
 
-AnimationRule returns Animation:
-    'set' Animation ('using' variable=VariableReference)? '{'
-        (mappings+=AttributeMapping)*
-    '}' (condition=Condition)?
-;
-
 Animation returns Animation:
-     'color' {ColorAnimation}
-    | 'text' {TextAnimation}
-    | 'visible' {VisibleAnimation}
-    | 'rotation' {RotateAnimation}
-    | 'movement' {MoveAnimation}
+    'apply' type=ID ('using' variable=VariableReference)? '{'
+        (mappings+=AttributeMapping)*
+    '}' ('when' condition=BoolExpression)?
 ;
 
 AttributeMapping:
@@ -43,15 +37,17 @@ VariableDomain returns Domain:
 ;
 
 Interval:
-    from = INT '..' to = INT
+    (from=Integer | '('from=Integer')')
+    Range
+    (to=Integer | '('to=Integer')')
+;
+
+Range:
+    '-'
 ;
 
 AttributeDomain returns Domain:
     VariableDomain
-;
-
-Condition:
-    'when' expression=BooleanExpression
 ;
 
 VariableReference:
@@ -64,48 +60,6 @@ ModelReference:
     name=ID '.'
 ;
 
-BooleanExpression:
-    Comparison 
-    (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
-;
-
-Comparison returns Expression:
-   (leftSide = VariableReference
-    relation = CompareOperator
-    rightSide = Operand)
-;
-
-Operand:
-    variable = VariableReference
-    | literal = Literal
-;
-
 Literal:
-    INT | FLOAT | STRING
+    Integer | Floateger | STRING
 ;
-
-//-----------------------------------------------------------
-//---                  ENUMS                              ---
-//-----------------------------------------------------------
-
-// Relational operators
-enum CompareOperator returns OperatorType:
-    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!="
-;
-
-// Boolean operators
-enum BooleanOperator returns BooleanOperatorType:
-    AND="and" | OR="or"
-;
-
-
-// Primitive types
-terminal fragment DIGIT :
-    '0'..'9';
-terminal INT returns ecore::EInt:
-    DIGIT+;
-terminal FLOAT returns ecore::EFloatObject :
-    DIGIT+ ('.' DIGIT*) (("e"|"E") ("+"|"-")? DIGIT+)? 'f'? |
-    DIGIT+ 'f';
-terminal BOOLEAN returns ecore::EBooleanObject :
-    'true' | 'false';

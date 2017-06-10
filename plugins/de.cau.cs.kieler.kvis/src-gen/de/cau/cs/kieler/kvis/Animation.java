@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kvis;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -15,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kvis.Animation#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.Animation#getVariable <em>Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.Animation#getMappings <em>Mappings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.Animation#getCondition <em>Condition</em>}</li>
@@ -26,6 +29,32 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Animation extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Type</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Type</em>' attribute.
+   * @see #setType(String)
+   * @see de.cau.cs.kieler.kvis.KvisPackage#getAnimation_Type()
+   * @model
+   * @generated
+   */
+  String getType();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.Animation#getType <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Type</em>' attribute.
+   * @see #getType()
+   * @generated
+   */
+  void setType(String value);
+
   /**
    * Returns the value of the '<em><b>Variable</b></em>' containment reference.
    * <!-- begin-user-doc -->
@@ -77,12 +106,12 @@ public interface Animation extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Condition</em>' containment reference.
-   * @see #setCondition(Condition)
+   * @see #setCondition(Expression)
    * @see de.cau.cs.kieler.kvis.KvisPackage#getAnimation_Condition()
    * @model containment="true"
    * @generated
    */
-  Condition getCondition();
+  Expression getCondition();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.Animation#getCondition <em>Condition</em>}' containment reference.
@@ -92,6 +121,6 @@ public interface Animation extends EObject
    * @see #getCondition()
    * @generated
    */
-  void setCondition(Condition value);
+  void setCondition(Expression value);
 
 } // Animation

@@ -18,7 +18,7 @@ public class KVisStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
