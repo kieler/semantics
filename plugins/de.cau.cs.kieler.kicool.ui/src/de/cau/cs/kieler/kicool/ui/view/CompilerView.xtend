@@ -38,6 +38,7 @@ import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.IPartListener2
 import org.eclipse.ui.IEditorReference
+import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
 
 /**
  * @author ssm
@@ -56,9 +57,10 @@ class CompilerView extends DiagramViewPart {
     
     // Must be initialized in the view contributions. Hence, maybe null!
     @Accessors private var SystemSelectionManager systemSelectionManager = null
-    @Accessors private var SmartSystemSelectionToggle smartSystemSelectionToggle = null
+//    @Accessors private var SmartSystemSelectionToggle smartSystemSelectionToggle = null
     @Accessors private var DeveloperToggle developerToggle = null
-    @Accessors private var DebugToggle debugToggle = null
+//    @Accessors private var DebugToggle debugToggle = null
+    @Accessors private var ForwardResultToggle forwardResultToggle = null
     
     /**
      * {@inheritDoc}
@@ -96,21 +98,27 @@ class CompilerView extends DiagramViewPart {
         systemSelectionManager = new SystemSelectionManager(this)
         combo.systemSelectionManager = systemSelectionManager
         
+        forwardResultToggle = new ForwardResultToggle(this)
+        toolBar.add(new Separator)
+        
+        
         developerToggle = new DeveloperToggle(this)
         developerToggle.addContributions(toolBar, menu)
-        smartSystemSelectionToggle = new SmartSystemSelectionToggle(this)
-        debugToggle = new DebugToggle(this)
+//        smartSystemSelectionToggle = new SmartSystemSelectionToggle(this)
+//        debugToggle = new DebugToggle(this)
         
         toolBar.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
 
-        menu.add(smartSystemSelectionToggle.action)
+        menu.add(forwardResultToggle.action)
+//        menu.add(smartSystemSelectionToggle.action)
         menu.add(developerToggle.action)
-        menu.add(debugToggle.action)
+//        menu.add(debugToggle.action)
         
+        memento?.loadCheckedValue(forwardResultToggle)
         memento?.loadCheckedValue(developerToggle)
-        memento?.loadCheckedValue(debugToggle)
-        memento?.loadCheckedValue(smartSystemSelectionToggle)
+//        memento?.loadCheckedValue(debugToggle)
+//        memento?.loadCheckedValue(smartSystemSelectionToggle)
         
         menu.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
@@ -123,9 +131,10 @@ class CompilerView extends DiagramViewPart {
     
     override saveState(IMemento memento) {
         super.saveState(memento)
-        memento.saveCheckedValue(smartSystemSelectionToggle)
+        memento.saveCheckedValue(forwardResultToggle)
         memento.saveCheckedValue(developerToggle)
-        memento.saveCheckedValue(debugToggle)
+//        memento.saveCheckedValue(smartSystemSelectionToggle)
+//        memento.saveCheckedValue(debugToggle)
     }
     
     def void updateView() {

@@ -12,8 +12,9 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
-import java.util.HashMap
+import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.ui.IEditorPart
 
 /**
@@ -21,27 +22,50 @@ import org.eclipse.ui.IEditorPart
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow  
  */
-class EditPartSystemManager {
+class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener, 
+    EditorActionAdapter.EditorCloseListener {
     
-    private val editPartSystemMap = new HashMap<IEditorPart, System>
+    private val editPartSystemMap = <IEditorPart, System> newHashMap
+    private val editPartCompilationContextMap = <IEditorPart, CompilationContext> newHashMap
+    private val editorActionAdapters = <IEditorPart, EditorActionAdapter> newHashMap
     
     def attachSystemToEditPart(IEditorPart part, System system) {
         editPartSystemMap.put(part, system)
     }
     
-    def System get(IEditorPart part) {
+    def System getSystem(IEditorPart part) {
         editPartSystemMap.get(part)
     }
     
-    def remove(IEditorPart part) {
+    def removeSystem(IEditorPart part) {
         editPartSystemMap.remove(part)
     }
     
-    def findEditorFor(System system) {
+    def findEditorForSystem(System system) {
         for(key : editPartSystemMap.keySet) {
             if (editPartSystemMap.get(key).equals(system)) return key
         }
         
         return null
     }
+    
+    def attachCompilationContextToEditorPart(IEditorPart part, CompilationContext context) {
+        editPartCompilationContextMap.put(part, context)
+        editorActionAdapters.put(part, new EditorActionAdapter(this, this))
+    }
+    
+    def removeAttachedContextFromEditor(IEditorPart part) {
+        editorActionAdapters.remove(part)
+        editPartCompilationContextMap.remove(part)
+        KiCoModelViewNotifier.notifyCompilationChanged(part, null)
+    }
+    
+    override onEditorSaved(IEditorPart editor) {
+        removeAttachedContextFromEditor(editor)
+    }
+    
+    override onEditorClosed(IEditorPart editor) {
+        removeAttachedContextFromEditor(editor)
+    }
+    
 }

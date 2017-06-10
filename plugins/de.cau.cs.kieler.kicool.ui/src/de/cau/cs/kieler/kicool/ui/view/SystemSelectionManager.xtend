@@ -85,7 +85,7 @@ class SystemSelectionManager {
         val editorReference = CompilerView.getActiveEditorReference
         val editor = editorReference.getEditor(false)
         if (editorReference != null && editor != null) {
-            view.editPartSystemManager.remove(editor)
+            view.editPartSystemManager.removeSystem(editor)
             view.partListener.partActivated(editorReference)
         }
     }

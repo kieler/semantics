@@ -56,12 +56,15 @@ class CompilationUpdate extends KiCoolUIObserver {
             CompilationFinished: {
                     CompilationActionSimSalabim.simSalabim(notification)
                     
-                    val editor = view.editPartSystemManager.findEditorFor(notification.compilationContext.system)
-                    var model = notification.environment.model
-                    if (model instanceof String) {
-                        model = new Container<String>(model)
+                    if (view.forwardResultToggle.checked) {
+                        val editor = view.editPartSystemManager.findEditorForSystem(notification.compilationContext.system)
+                        var model = notification.environment.model
+                        if (model instanceof String) {
+                            model = new Container<String>(model)
+                        }
+                        view.editPartSystemManager.attachCompilationContextToEditorPart(editor, notification.compilationContext)
+                        KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                     }
-                    KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                 } 
         }
         
