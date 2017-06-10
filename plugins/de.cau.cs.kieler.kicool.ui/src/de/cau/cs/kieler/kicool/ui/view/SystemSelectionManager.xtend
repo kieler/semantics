@@ -33,11 +33,9 @@ class SystemSelectionManager {
     
     new(CompilerView view) {
         this.view = view
-        
-        createSystemComboList()        
     }
     
-    private def createSystemComboList() {
+    def createSystemComboList() {
         view.combo.items.clear
         indexMap.clear
         var int i = 0
@@ -86,7 +84,7 @@ class SystemSelectionManager {
         val editor = editorReference.getEditor(false)
         if (editorReference != null && editor != null) {
             view.editPartSystemManager.removeSystem(editor)
-            view.partListener.partActivated(editorReference)
+            view.partListener.updateCompilerView(editorReference)
         }
     }
 }

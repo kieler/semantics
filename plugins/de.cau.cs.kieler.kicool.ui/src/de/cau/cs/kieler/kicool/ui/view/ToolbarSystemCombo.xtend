@@ -57,7 +57,7 @@ class ToolbarSystemCombo extends ControlContribution {
         items.forEach[ combo.add(it) ]
         combo.setTextLimit(26 + 10)
         combo.select(defaultIndex)
-        selectedText = items.get(defaultIndex)
+        selectedText = if (items.size > 0) items.get(defaultIndex)
         selectedIndex = 0
         combo.layout()
         combo.redraw()

@@ -12,33 +12,31 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
+import de.cau.cs.kieler.kico.ui.KiCoSelectionView
+import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
+import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
+import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
+import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.core.runtime.IStatus
-import de.cau.cs.kieler.klighd.ui.DiagramViewManager
-import org.eclipse.ui.progress.UIJob
-import de.cau.cs.kieler.kico.ui.KiCoSelectionView
-import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 import org.eclipse.jface.action.IMenuManager
-import org.eclipse.jface.action.Separator
 import org.eclipse.jface.action.IToolBarManager
-import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.actions.SmartSystemSelectionToggle
-import de.cau.cs.kieler.kicool.ui.view.actions.DebugToggle
-import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
+import org.eclipse.jface.action.Separator
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.ui.IEditorPart
+import org.eclipse.ui.IEditorReference
 import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
-import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
-import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
-import org.eclipse.ui.IPartListener2
-import org.eclipse.ui.IEditorReference
-import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
+import org.eclipse.ui.progress.UIJob
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -47,11 +45,11 @@ import de.cau.cs.kieler.kicool.ui.view.actions.ForwardResultToggle
  */
 class CompilerView extends DiagramViewPart {
     
-    @Accessors private IPartListener2 partListener
+    @Accessors private CompilerViewPartListener partListener
     @Accessors private IMemento memento
     @Accessors private ToolbarSystemCombo combo
     @Accessors private System activeSystem = null 
-    @Accessors private EditPartSystemManager editPartSystemManager = new EditPartSystemManager
+    @Accessors private EditPartSystemManager editPartSystemManager = null
     
     private var addButtonsDelay = true
     
@@ -61,17 +59,24 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var DeveloperToggle developerToggle = null
 //    @Accessors private var DebugToggle debugToggle = null
     @Accessors private var ForwardResultToggle forwardResultToggle = null
+    @Accessors private var AutoCompileToggle autoCompileToggle = null
+    
+    @Accessors private var CompilationAction compilationAction = null
     
     /**
      * {@inheritDoc}
      */
     override createPartControl(Composite parent) {
+        editPartSystemManager = new EditPartSystemManager(this)
+        systemSelectionManager = new SystemSelectionManager(this)
+        
         super.createPartControl(parent)
 
         val toolBarManager = getViewSite.getActionBars.getToolBarManager
         val menuManager = getViewSite.getActionBars.getMenuManager
         
         addContributions(toolBarManager, menuManager)
+        systemSelectionManager.createSystemComboList
         addButtons()
 
         partListener = new CompilerViewPartListener(this, parent)
@@ -91,15 +96,15 @@ class CompilerView extends DiagramViewPart {
     protected def void addContributions(IToolBarManager toolBar, IMenuManager menu) {
         
         // Compile
-        toolBar.add(new CompilationAction(this).action)        
+        compilationAction = new CompilationAction(this) 
+        toolBar.add(compilationAction.action)        
        
         combo = new ToolbarSystemCombo("System Combo")
         toolBar.add(combo)
-        systemSelectionManager = new SystemSelectionManager(this)
         combo.systemSelectionManager = systemSelectionManager
         
         forwardResultToggle = new ForwardResultToggle(this)
-        toolBar.add(new Separator)
+        autoCompileToggle = new AutoCompileToggle(this)
         
         
         developerToggle = new DeveloperToggle(this)
@@ -111,11 +116,14 @@ class CompilerView extends DiagramViewPart {
         // The standard klighd view part menu entries will be inserted after this separator.    
 
         menu.add(forwardResultToggle.action)
+        menu.add(autoCompileToggle.action)
+        menu.add(new Separator)
 //        menu.add(smartSystemSelectionToggle.action)
         menu.add(developerToggle.action)
 //        menu.add(debugToggle.action)
         
         memento?.loadCheckedValue(forwardResultToggle)
+        memento?.loadCheckedValue(autoCompileToggle)
         memento?.loadCheckedValue(developerToggle)
 //        memento?.loadCheckedValue(debugToggle)
 //        memento?.loadCheckedValue(smartSystemSelectionToggle)
@@ -132,6 +140,7 @@ class CompilerView extends DiagramViewPart {
     override saveState(IMemento memento) {
         super.saveState(memento)
         memento.saveCheckedValue(forwardResultToggle)
+        memento.saveCheckedValue(autoCompileToggle)
         memento.saveCheckedValue(developerToggle)
 //        memento.saveCheckedValue(smartSystemSelectionToggle)
 //        memento.saveCheckedValue(debugToggle)

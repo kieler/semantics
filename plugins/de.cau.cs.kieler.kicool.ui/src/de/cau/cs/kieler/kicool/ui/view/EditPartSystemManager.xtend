@@ -29,6 +29,12 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     private val editPartCompilationContextMap = <IEditorPart, CompilationContext> newHashMap
     private val editorActionAdapters = <IEditorPart, EditorActionAdapter> newHashMap
     
+    private var CompilerView view
+    
+    new(CompilerView view) {
+        this.view = view
+    }
+    
     def attachSystemToEditPart(IEditorPart part, System system) {
         editPartSystemMap.put(part, system)
     }
@@ -50,11 +56,13 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     }
     
     def attachCompilationContextToEditorPart(IEditorPart part, CompilationContext context) {
+        removeAttachedContextFromEditor(part)
         editPartCompilationContextMap.put(part, context)
-        editorActionAdapters.put(part, new EditorActionAdapter(this, this))
+        editorActionAdapters.put(part, new EditorActionAdapter(this, this) => [ activate(part) ])
     }
     
     def removeAttachedContextFromEditor(IEditorPart part) {
+        editorActionAdapters.get(part)?.deactivate
         editorActionAdapters.remove(part)
         editPartCompilationContextMap.remove(part)
         KiCoModelViewNotifier.notifyCompilationChanged(part, null)
@@ -62,6 +70,9 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     
     override onEditorSaved(IEditorPart editor) {
         removeAttachedContextFromEditor(editor)
+        if (view.autoCompileToggle.checked) {
+            view.compilationAction.invokeCompile
+        }
     }
     
     override onEditorClosed(IEditorPart editor) {
