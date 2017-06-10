@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import de.cau.cs.kieler.kicool.ProcessorGroup
 
 /**
  * @author ssm
@@ -47,6 +48,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     def de.cau.cs.kieler.kicool.compilation.Processor getCompilationUnit(de.cau.cs.kieler.kicool.ProcessorEntry entry) {
         processorMap.get(entry)
+    }
+    
+    def de.cau.cs.kieler.kicool.compilation.Processor getFirstProcessorInstance() {
+        val processor = (system.processors as ProcessorGroup).processors.head
+        processorMap.get(processor)
     }
     
     public def notify(Object arg) {

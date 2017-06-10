@@ -99,7 +99,7 @@ class ProcessorDataManager {
         if (compilationNotification instanceof CompilationStart) {
             // Set source model
             val sourceNode = node.findNode(NODE_SOURCE)
-            val processorUnit = compilationNotification.compilationContext.processorInstances.last
+            val processorUnit = compilationNotification.compilationContext.getFirstProcessorInstance
             knodeProcessorMap.put(sourceNode, processorUnit)
             processorViewMap.put(processorUnit, view)
             sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
@@ -153,11 +153,13 @@ class ProcessorDataManager {
         // Test for snapshots
         // Final result
         val finalResultNode = intermediateKGT.copy
-        val container = finalResultNode.container
-        container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+        finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
         knodeProcessorMap.put(finalResultNode, processorUnit)
         processorViewMap.put(processorUnit, view)
+        val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
+        processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+        knodeProcessorMap.put(processorBodyNode, processorUnit)
         
         if (processorNotification instanceof ProcessorProgress) {
             updateProgressbar((processorNotification.progress * 100) as int, nodeIdMap)
