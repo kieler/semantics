@@ -40,6 +40,8 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.osgi.framework.Bundle
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.*
 import de.cau.cs.kieler.kicool.ProcessorEntry
+import org.eclipse.elk.core.util.ElkUtil
+import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -58,6 +60,8 @@ class ProcessorSynthesis {
     @Inject extension KiCoolSynthesis
     @Inject IResourceServiceProvider.Registry regXtext;      
     
+    private val PROCESSOR_KGT = "resources/processor.kgt"
+    
     private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
         node
@@ -67,28 +71,26 @@ class ProcessorSynthesis {
         processor.id + "#" + processor.hashCode
     }
     
-    protected def getProcessorKGT() {
-        val Bundle bundle = Platform.getBundle("de.cau.cs.kieler.kicool.ui");
-        val URL fileURL = bundle.getEntry("resources/processor.kgt");
+    protected def static getKGTFromBundle(String bundleId, String resourceLocation) {
+        val Bundle bundle = Platform.getBundle(bundleId)
+        val URL fileURL = bundle.getEntry(resourceLocation)
         val absFile = FileLocator.resolve(fileURL)
         val newURI = URI.createFileURI(absFile.getFile)
-        val provider = regXtext.getResourceServiceProvider(newURI)
+        val provider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(newURI)
         val newResourceSet = provider.get(XtextResourceSet)
         newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
         val res = newResourceSet.createResource(newURI)
         try {
             res.load(newResourceSet.loadOptions)
             val node = (res.getContents().get(0) as KNode).children.head
-//            val node = res.getContents().get(0) as KNode
             return node
         } catch (Exception e) {
-            // 
         }         
-        return createNode
+        return ElkUtil::createInitializedNode
     }
     
     dispatch def List<KNode> transform(Processor processor) {
-        val processorNode = getProcessorKGT
+        val processorNode = getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
         val nodeId = processor.uniqueProcessorId
         processorNode.setId(nodeId)
         processor.populateProcessorData(processorNode)

@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.ui.IEditorPart
+import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager
 
 /**
  * @author ssm
@@ -62,6 +63,11 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     }
     
     def removeAttachedContextFromEditor(IEditorPart part) {
+        val context = editPartCompilationContextMap.get(part)
+        if (context != null) {
+            ProcessorDataManager.removeAllCompilationContextEntries(context)
+        }
+        
         editorActionAdapters.get(part)?.deactivate
         editorActionAdapters.remove(part)
         editPartCompilationContextMap.remove(part)

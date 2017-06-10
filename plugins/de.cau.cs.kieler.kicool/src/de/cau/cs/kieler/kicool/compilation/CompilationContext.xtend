@@ -41,6 +41,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         processorMap = new HashMap<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor>()
     }
     
+    def getProcessorInstances() {
+        processorMap.values.toList
+    }
+    
     def de.cau.cs.kieler.kicool.compilation.Processor getCompilationUnit(de.cau.cs.kieler.kicool.ProcessorEntry entry) {
         processorMap.get(entry)
     }

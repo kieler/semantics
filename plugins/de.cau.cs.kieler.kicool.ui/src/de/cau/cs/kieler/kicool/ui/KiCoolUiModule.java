@@ -10,6 +10,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class KiCoolUiModule extends de.cau.cs.kieler.kicool.ui.AbstractKiCoolUiModule {
     
+    public static final String BUNDLE_ID = "de.cau.cs.kieler.kicool.ui";
+    
 	public KiCoolUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}

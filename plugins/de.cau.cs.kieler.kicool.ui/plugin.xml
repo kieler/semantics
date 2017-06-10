@@ -336,4 +336,11 @@
                 restorable="true">
           </view>
        </extension>
+       <extension
+             point="de.cau.cs.kieler.klighd.extensions">
+          <action
+                class="de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction"
+                id="de.cau.cs.kieler.kicool.ui.synthesis.actions.selectIntermediateAction">
+          </action>
+       </extension>
 </plugin>

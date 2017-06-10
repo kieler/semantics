@@ -36,6 +36,15 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis.uniqueProcessorId
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractCompilationNotification
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
+import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * @author ssm
@@ -51,6 +60,13 @@ class ProcessorDataManager {
     static val NODE_NAME = "name"
     static val NODE_PROGRESS = #["p1", "p2", "p3", "p4", "p5"]
     static val NODE_ENVIRONMENT = "environment"
+    static val NODE_INTERMEDIATE = "intermediate"
+    
+    static val INTERMEDIATE_KGT = "resources/intermediate.kgt"
+    
+    static val knodeProcessorMap = <KNode, de.cau.cs.kieler.kicool.compilation.Processor> newHashMap
+    static val processorViewMap = <de.cau.cs.kieler.kicool.compilation.Processor, CompilerView> newHashMap
+    
         
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
         val rtProcessor = RuntimeSystems.getProcessorInstance(processor)
@@ -96,12 +112,12 @@ class ProcessorDataManager {
         val nodeIdMap = processorNode.createNodeIdMap
         
         NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(BUSY)
-        for(i : 0..NODE_PROGRESS.length -1 ) {
+        for(i : 0..NODE_PROGRESS.length-1) {
             NODE_PROGRESS.get(i).getContainer(nodeIdMap).setFBAColor(PROGRESSBAR, 0)
         }
     } 
     
-    static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node) {
+    static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {
         val processorEntry = processorNotification.processorEntry
         val processorUnit = processorNotification.processorUnit
         val processorNode = node.findNode(processorEntry.uniqueProcessorId)
@@ -116,6 +132,22 @@ class ProcessorDataManager {
             NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
         }
         
+        val pTime = processorUnit.environment.getData(PTIME, 0)
+        NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel("pTime: " + pTime + "ms")
+
+        val intermediateRootNode = NODE_INTERMEDIATE.findNode(nodeIdMap)
+        val intermediateKGT = ProcessorSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)
+        intermediateRootNode.children.clear
+        // Test for infos, warnings and errors
+        // Test for snapshots
+        // Final result
+        val finalResultNode = intermediateKGT.copy
+        val container = finalResultNode.container
+        container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+        intermediateRootNode.children += finalResultNode 
+        knodeProcessorMap.put(finalResultNode, processorUnit)
+        processorViewMap.put(processorUnit, view)
+        
         if (processorNotification instanceof ProcessorProgress) {
             updateProgressbar((processorNotification.progress * 100) as int, nodeIdMap)
         } else if (processorNotification instanceof ProcessorFinished) {
@@ -124,9 +156,6 @@ class ProcessorDataManager {
                 NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(OK)
             }        
         }
-        
-        val pTime = processorUnit.environment.getData(PTIME, 0)
-        NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel("pTime: " + pTime + "ms")
     }
     
     static def void updateProgressbar(int progress, Map<String, KNode> nodeIdMap) {
@@ -138,6 +167,26 @@ class ProcessorDataManager {
         }
     }
     
+    static def de.cau.cs.kieler.kicool.compilation.Processor getProcessorFromKNode(KNode kNode) {
+        knodeProcessorMap.get(kNode)
+    }
+    
+    static def CompilerView getViewFromProcessor(de.cau.cs.kieler.kicool.compilation.Processor processor) {
+        processorViewMap.get(processor)
+    }
+    
+    static def void removeAllCompilationContextEntries(CompilationContext context) {
+        context.processorInstances.forEach[ removeAllProcessorEntries ]
+    }
+
+    static def void removeAllProcessorEntries(de.cau.cs.kieler.kicool.compilation.Processor processor) {
+        knodeProcessorMap.keySet.filter[ k | knodeProcessorMap.get(k).equals(processor) ].toList.forEach[ k |
+            knodeProcessorMap.remove(k)
+            println("Removed " + k + " of " + processor)
+        ]
+        processorViewMap.remove(processor)
+    }
+
 
     static def void setFrameErrorColor(KNode node) {
         val rect = node.getData(KContainerRendering) as KContainerRendering
@@ -205,6 +254,10 @@ class ProcessorDataManager {
         node.getData(KContainerRendering) as KContainerRendering
     }
     
+    private static def getActionContainer(KNode node) {
+        node.getData(KRectangle)
+    }    
+    
     private static def Map<String, KNode> createNodeIdMap(KNode node) {
         <String, KNode> newHashMap => [ map |
             node.eAllContents.filter(KNode).forEach[
@@ -235,4 +288,14 @@ class ProcessorDataManager {
         else if (value > max) return max
         else return value
     }
+    
+    static private def <T extends KRendering> T addAction(T rendering, Trigger trigger, String actionId) {
+
+        rendering.actions += KRenderingFactory.eINSTANCE.createKAction() => [
+            it.trigger = trigger;
+            it.actionId = actionId;
+        ];
+        return rendering;
+    }    
+    
 }

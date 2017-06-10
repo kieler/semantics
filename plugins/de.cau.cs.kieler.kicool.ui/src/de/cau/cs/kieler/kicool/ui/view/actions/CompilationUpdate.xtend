@@ -49,9 +49,11 @@ class CompilationUpdate extends KiCoolUIObserver {
     override update(AbstractContextNotification notification) {
         
         switch notification {
-            ProcessorProgress: notification.updateProcessor(view.viewContext.viewModel)
+            ProcessorProgress: notification.updateProcessor(view.viewContext.viewModel, view)
             ProcessorStart: notification.resetProcessor(view.viewContext.viewModel)
-            ProcessorFinished: notification.updateProcessor(view.viewContext.viewModel) 
+            ProcessorFinished: {
+                    notification.updateProcessor(view.viewContext.viewModel, view)
+                } 
             CompilationStart: notification.resetSystem(view.viewContext.viewModel)
             CompilationFinished: {
                     CompilationActionSimSalabim.simSalabim(notification)

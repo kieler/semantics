@@ -37,6 +37,7 @@ import org.eclipse.ui.IViewSite
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
 
 /**
  * @author ssm
@@ -203,7 +204,7 @@ class CompilerView extends DiagramViewPart {
         val activeEditor = activePage.activeEditor
         for(reference : activePage.editorReferences) {
             val editor = reference.getEditor(false)
-            if (editor.equals(activeEditor)) return reference
+            if (editor?.equals(activeEditor)) return reference
         }
         return null
     }     
