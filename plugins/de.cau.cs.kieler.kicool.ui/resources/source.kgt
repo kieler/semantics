@@ -7,7 +7,7 @@ knode source {
             invisible = true            
         }           
         
-    knode processorbody {
+    knode sourcebody {
         size: width = 16.5 height = 16.5 
     
         properties:

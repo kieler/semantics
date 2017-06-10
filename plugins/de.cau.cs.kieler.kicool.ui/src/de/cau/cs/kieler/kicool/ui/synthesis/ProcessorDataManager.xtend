@@ -45,6 +45,7 @@ import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 
 /**
  * @author ssm
@@ -61,6 +62,7 @@ class ProcessorDataManager {
     static val NODE_PROGRESS = #["p1", "p2", "p3", "p4", "p5"]
     static val NODE_ENVIRONMENT = "environment"
     static val NODE_INTERMEDIATE = "intermediate"
+    static val NODE_SOURCE = "sourcebody"
     
     static val INTERMEDIATE_KGT = "resources/intermediate.kgt"
     
@@ -83,7 +85,7 @@ class ProcessorDataManager {
     }
     
     
-    static def void resetSystem(AbstractCompilationNotification compilationNotification, KNode node) {
+    static def void resetSystem(AbstractCompilationNotification compilationNotification, KNode node, CompilerView view) {
         val allProcessors = compilationNotification.compilationContext.processorMap.keySet
         for(processor : allProcessors) {
             val processorNode = node.findNode(processor.uniqueProcessorId)    
@@ -92,6 +94,15 @@ class ProcessorDataManager {
             } else {
                 processorNode.resetProcessorNode(node)
             }
+        }
+        
+        if (compilationNotification instanceof CompilationStart) {
+            // Set source model
+            val sourceNode = node.findNode(NODE_SOURCE)
+            val processorUnit = compilationNotification.compilationContext.processorInstances.last
+            knodeProcessorMap.put(sourceNode, processorUnit)
+            processorViewMap.put(processorUnit, view)
+            sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         }
     }
     
@@ -136,7 +147,7 @@ class ProcessorDataManager {
         NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel("pTime: " + pTime + "ms")
 
         val intermediateRootNode = NODE_INTERMEDIATE.findNode(nodeIdMap)
-        val intermediateKGT = ProcessorSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)
+        val intermediateKGT = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)
         intermediateRootNode.children.clear
         // Test for infos, warnings and errors
         // Test for snapshots
@@ -246,19 +257,15 @@ class ProcessorDataManager {
     }
     
     
-    private static def getContainer(String id, Map<String, KNode> nodeIdMap) {
+    static def getContainer(String id, Map<String, KNode> nodeIdMap) {
         nodeIdMap.findNode(id).getContainer
     }
     
-    private static def getContainer(KNode node) {
+    static def getContainer(KNode node) {
         node.getData(KContainerRendering) as KContainerRendering
     }
     
-    private static def getActionContainer(KNode node) {
-        node.getData(KRectangle)
-    }    
-    
-    private static def Map<String, KNode> createNodeIdMap(KNode node) {
+    static def Map<String, KNode> createNodeIdMap(KNode node) {
         <String, KNode> newHashMap => [ map |
             node.eAllContents.filter(KNode).forEach[
                 val identifier = getData(KIdentifier)
@@ -267,19 +274,23 @@ class ProcessorDataManager {
         ]
     }
     
-    private static def KNode findNode(Map<String, KNode> idMap, String id) {
+    static def KNode findNode(Map<String, KNode> idMap, String id) {
         idMap.get(id)
     }
     
-    private static def KNode findNode(String id, Map<String, KNode> idMap) {
+    static def KNode findNode(String id, Map<String, KNode> idMap) {
         idMap.get(id)
     }
     
-    private static def KNode findNode(KNode node, String id) {
+    static def KNode findNode(KNode node, String id) {
         node.eAllContents.filter(KNode).filter[ id.equals(getData(KIdentifier)?.id) ]?.head
     }
     
-    private static def KLabel getLabel(KNode node) {
+    static def getId(KNode node) {
+        node.eContents.filter(KIdentifier).head.id
+    }    
+    
+    static def KLabel getLabel(KNode node) {
         node.eContents.filter(KLabel).head
     }
     

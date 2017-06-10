@@ -27,8 +27,8 @@ import de.cau.cs.kieler.kicool.compilation.IKiCoolCloneable
  */
 class EnvironmentManager {
     
-    static val ENVIRONMENT_SOURCEMODEL = "sourceModel"
-    static val ENVIRONMENT_INPLACE = "inplace"
+    public static val ENVIRONMENT_SOURCEMODEL = "sourceModel"
+    public static val ENVIRONMENT_INPLACE = "inplace"
     
     static def setSourceModel(Environment environment, Object model) {
         environment.data.put(ENVIRONMENT_SOURCEMODEL, model)

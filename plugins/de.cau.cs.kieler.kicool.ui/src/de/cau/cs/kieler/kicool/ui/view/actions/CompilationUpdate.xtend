@@ -54,7 +54,7 @@ class CompilationUpdate extends KiCoolUIObserver {
             ProcessorFinished: {
                     notification.updateProcessor(view.viewContext.viewModel, view)
                 } 
-            CompilationStart: notification.resetSystem(view.viewContext.viewModel)
+            CompilationStart: notification.resetSystem(view.viewContext.viewModel, view)
             CompilationFinished: {
                     CompilationActionSimSalabim.simSalabim(notification)
                     

@@ -44,7 +44,7 @@ import org.eclipse.elk.core.util.ElkUtil
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 
 /**
- * Main diagram synthesis for SCCharts.
+ * Main diagram synthesis for processors in KiCool.
  * 
  * @author ssm
  * @kieler.design 2016-10-20 proposed 
@@ -71,26 +71,9 @@ class ProcessorSynthesis {
         processor.id + "#" + processor.hashCode
     }
     
-    protected def static getKGTFromBundle(String bundleId, String resourceLocation) {
-        val Bundle bundle = Platform.getBundle(bundleId)
-        val URL fileURL = bundle.getEntry(resourceLocation)
-        val absFile = FileLocator.resolve(fileURL)
-        val newURI = URI.createFileURI(absFile.getFile)
-        val provider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(newURI)
-        val newResourceSet = provider.get(XtextResourceSet)
-        newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-        val res = newResourceSet.createResource(newURI)
-        try {
-            res.load(newResourceSet.loadOptions)
-            val node = (res.getContents().get(0) as KNode).children.head
-            return node
-        } catch (Exception e) {
-        }         
-        return ElkUtil::createInitializedNode
-    }
-    
+
     dispatch def List<KNode> transform(Processor processor) {
-        val processorNode = getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
+        val processorNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
         val nodeId = processor.uniqueProcessorId
         processorNode.setId(nodeId)
         processor.populateProcessorData(processorNode)

@@ -18,6 +18,8 @@ import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager
 import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.getId
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager
 
 /**
  * @author ssm
@@ -30,18 +32,18 @@ class SelectIntermediateAction implements IAction {
     public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.selectIntermediateAction"
     
     override execute(ActionContext context) {
-        println("Action context: " + context.KNode.toString)
-        
-        val processor = ProcessorDataManager.getProcessorFromKNode(context.KNode)
-        println("Associated Processor: " + processor.toString)
-        
-        
+        val kNode = context.KNode
+        val processor = ProcessorDataManager.getProcessorFromKNode(kNode)
         if (processor != null) {
             val view = ProcessorDataManager.getViewFromProcessor(processor)
             if (view != null) {
                 val compilationContext = processor.environment.compilationContext
                 val editor = view.editPartSystemManager.findEditorForSystem(compilationContext.system)
+                                
                 var model = processor.environment.model
+                if (kNode.getId.equals("sourcebody")) {
+                    model = processor.environment.getData(EnvironmentManager.ENVIRONMENT_SOURCEMODEL, null)    
+                }
                 if (model instanceof String) {
                     model = new Container<String>(model)
                 }
