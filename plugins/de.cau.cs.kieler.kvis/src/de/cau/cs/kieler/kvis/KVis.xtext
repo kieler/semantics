@@ -61,5 +61,5 @@ ModelReference:
 ;
 
 Literal:
-    Integer | Floateger | STRING
+    Integer | Floateger | STRING | BOOLEAN
 ;

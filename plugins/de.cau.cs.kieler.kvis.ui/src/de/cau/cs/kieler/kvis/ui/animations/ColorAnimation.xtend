@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kvis.ui.animations
 
-import de.cau.cs.kieler.kvis.animations.AnimationHandler
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.ui.svg.EclipseJSVGCanvas
@@ -41,24 +40,14 @@ class ColorAnimation extends AnimationHandler {
     
     private def void apply(Object value, AttributeMapping attributeMapping) {
         val attributeName = attributeMapping.attribute
-        if(attributeMapping.literal != null) {
-            val svgDoc = EclipseJSVGCanvas.getInstance()?.getSVGDocument();
-            val elem = svgDoc?.getElementById(svgElementId);
-            if(elem != null) {
-                var styleAttribute = elem.getAttribute("style");
-                if(attributeName.equals("fillColor")) {
-                    val fillColor = attributeMapping.literal.replaceQuotes
-                    println("changing fill color:" + fillColor)
-                    styleAttribute = styleAttribute.replaceAll("fill:[^;]*[;]?", "");
-                    styleAttribute = "fill:" + fillColor + ";" + styleAttribute;
-                }
-                println("new style:"+styleAttribute)
-                elem.setAttributeNS(null, "style", styleAttribute);
+        val svgDoc = EclipseJSVGCanvas.getInstance()?.getSVGDocument();
+        val elem = svgDoc?.getElementById(svgElementId);
+        if(elem != null) {
+            val newValue = getMappedValue(value, attributeMapping)
+//            println("new value:" + newValue)
+            if(newValue != null && attributeName.equals("fillColor")) {
+                elem.setAttributeField("style", "fill", newValue)
             }
         }
-    }
-    
-    private def String replaceQuotes(String txt) {
-        return txt.replaceAll("\"", "")
     }
 }

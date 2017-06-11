@@ -143,9 +143,6 @@ public class KVisCanvas extends Composite implements ISelectionListener {
         try {
             userAgent = new KVisUserAgent(this);
             if (EclipseJSVGCanvas.getInstance() == null) {
-                // while (!EclipseJSVGCanvas.createSingleInstance(userAgent, true, true)) {
-                // //Do nothing until the single instance is successfully created
-                // }
                 if (!EclipseJSVGCanvas.createSingleInstance(userAgent, true, true)) {
                     log("Creation of single instance of KEV-View failed!");
                     return;
@@ -155,54 +152,12 @@ public class KVisCanvas extends Composite implements ISelectionListener {
                 // svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
                 svgCanvas.setLayout(new BorderLayout());
 
-                // taken from original modelgui
                 svgCanvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
                 svgCanvas.setDoubleBufferedRendering(false);
                 svgCanvas.setDisableInteractions(true);
-                // svgCanvas.enableInputMethods(false);
                 // this.canvas.setAnimationLimitingCPU(0.5f);
-                // svgCanvas.setDoubleBuffered(true);
 
-                // Set the JSVGCanvas listeners. (NOT USED HERE ANYMORE @see
-                // de.cau.cs.kieler.kev.mapping.animations#SVGLoadingStatusListener)
-                // svgCanvas.addSVGDocumentLoaderListener(loadingStatusListener);
-                // svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderAdapter() {
-                // public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
-                // System.out.println("Loading svg file...");
-                // }
-                //
-                // public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
-                // System.out.println("Loading svg file... complete!");
-                // }
-                //
-                // public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
-                // System.out.println("Loading svg file... cancelled!");
-                //
-                // }
-                //
-                // public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
-                // System.out.println("Loading svg file... failed!");
-                // }
-                // });
-                svgCanvas.addGVTTreeBuilderListener(new GVTTreeBuilderAdapter() {
-                    public void gvtBuildStarted(GVTTreeBuilderEvent e) {
-                    }
-
-                    public void gvtBuildCompleted(GVTTreeBuilderEvent e) {
-                    }
-                });
-
-                svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter() {
-                    public void gvtRenderingPrepare(GVTTreeRendererEvent e) {
-                    }
-
-                    public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
-                        // Here we can receive the updatemanager
-                        log("Image rendering done.");
-//                        MapAnimations.getInstance().createHashMap();
-                    }
-                });
-
+                // Save current SVG Document via Shift + Alt + Mouse click
                 svgCanvas.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         int onmask = MouseEvent.SHIFT_DOWN_MASK | MouseEvent.ALT_DOWN_MASK;
@@ -214,18 +169,7 @@ public class KVisCanvas extends Composite implements ISelectionListener {
                             }
                         }
                     }
-
                 });
-
-                // svgCanvas.addMouseMotionListener(new MouseMotionAdapter() {
-                //
-                // public void mouseMoved(MouseEvent arg0) {
-                // // TODO Auto-generated method stub
-                // System.out.println(arg0.getX()+","+arg0.getY());
-                // }
-                //
-                // });
-
             } else {// Otherwise set the sourcepath to the current document uri
                 svgCanvas = EclipseJSVGCanvas.getInstance();
                 // If svgDocument already exists, set the current svgURI for the refresh button

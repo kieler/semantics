@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalKVisLexer extends Lexer {
     public static final int T__50=50;
-    public static final int RULE_BOOLEAN=9;
+    public static final int RULE_BOOLEAN=7;
     public static final int T__19=19;
     public static final int T__16=16;
     public static final int T__17=17;
@@ -21,7 +21,7 @@ public class InternalKVisLexer extends Lexer {
     public static final int T__51=51;
     public static final int RULE_ID=5;
     public static final int T__26=26;
-    public static final int RULE_HOSTCODE=7;
+    public static final int RULE_HOSTCODE=8;
     public static final int T__27=27;
     public static final int T__28=28;
     public static final int RULE_INT=6;
@@ -54,7 +54,7 @@ public class InternalKVisLexer extends Lexer {
     public static final int T__49=49;
     public static final int T__44=44;
     public static final int T__45=45;
-    public static final int RULE_FLOAT=8;
+    public static final int RULE_FLOAT=9;
     public static final int T__46=46;
     public static final int T__47=47;
     public static final int T__40=40;
@@ -815,11 +815,11 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3795:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // InternalKVis.g:3795:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // InternalKVis.g:3803:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalKVis.g:3803:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // InternalKVis.g:3795:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // InternalKVis.g:3803:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -835,7 +835,7 @@ public class InternalKVisLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalKVis.g:3795:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKVis.g:3803:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -851,7 +851,7 @@ public class InternalKVisLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKVis.g:3795:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // InternalKVis.g:3803:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -888,12 +888,12 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3797:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // InternalKVis.g:3797:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalKVis.g:3805:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalKVis.g:3805:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // InternalKVis.g:3797:33: ( options {greedy=false; } : . )*
+            // InternalKVis.g:3805:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -918,7 +918,7 @@ public class InternalKVisLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalKVis.g:3797:61: .
+            	    // InternalKVis.g:3805:61: .
             	    {
             	    matchAny(); 
 
@@ -948,8 +948,8 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3799:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // InternalKVis.g:3799:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalKVis.g:3807:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalKVis.g:3807:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -962,7 +962,7 @@ public class InternalKVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKVis.g:3799:31: ( options {greedy=false; } : . )*
+            // InternalKVis.g:3807:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -987,7 +987,7 @@ public class InternalKVisLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalKVis.g:3799:59: .
+            	    // InternalKVis.g:3807:59: .
             	    {
             	    matchAny(); 
 
@@ -1015,8 +1015,8 @@ public class InternalKVisLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalKVis.g:3801:22: ( '0' .. '9' )
-            // InternalKVis.g:3801:24: '0' .. '9'
+            // InternalKVis.g:3809:22: ( '0' .. '9' )
+            // InternalKVis.g:3809:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1033,10 +1033,10 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3803:10: ( ( RULE_NUMBER )+ )
-            // InternalKVis.g:3803:12: ( RULE_NUMBER )+
+            // InternalKVis.g:3811:10: ( ( RULE_NUMBER )+ )
+            // InternalKVis.g:3811:12: ( RULE_NUMBER )+
             {
-            // InternalKVis.g:3803:12: ( RULE_NUMBER )+
+            // InternalKVis.g:3811:12: ( RULE_NUMBER )+
             int cnt4=0;
             loop4:
             do {
@@ -1050,7 +1050,7 @@ public class InternalKVisLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalKVis.g:3803:12: RULE_NUMBER
+            	    // InternalKVis.g:3811:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -1082,17 +1082,17 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3805:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // InternalKVis.g:3805:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKVis.g:3813:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalKVis.g:3813:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // InternalKVis.g:3805:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKVis.g:3813:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt12=2;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // InternalKVis.g:3805:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalKVis.g:3813:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // InternalKVis.g:3805:15: ( RULE_NUMBER )+
+                    // InternalKVis.g:3813:15: ( RULE_NUMBER )+
                     int cnt5=0;
                     loop5:
                     do {
@@ -1106,7 +1106,7 @@ public class InternalKVisLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // InternalKVis.g:3805:15: RULE_NUMBER
+                    	    // InternalKVis.g:3813:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1123,7 +1123,7 @@ public class InternalKVisLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // InternalKVis.g:3805:32: ( RULE_NUMBER )*
+                    // InternalKVis.g:3813:32: ( RULE_NUMBER )*
                     loop6:
                     do {
                         int alt6=2;
@@ -1136,7 +1136,7 @@ public class InternalKVisLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // InternalKVis.g:3805:32: RULE_NUMBER
+                    	    // InternalKVis.g:3813:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1148,7 +1148,7 @@ public class InternalKVisLexer extends Lexer {
                         }
                     } while (true);
 
-                    // InternalKVis.g:3805:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalKVis.g:3813:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1157,7 +1157,7 @@ public class InternalKVisLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // InternalKVis.g:3805:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalKVis.g:3813:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -1168,7 +1168,7 @@ public class InternalKVisLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // InternalKVis.g:3805:56: ( '+' | '-' )?
+                            // InternalKVis.g:3813:56: ( '+' | '-' )?
                             int alt7=2;
                             int LA7_0 = input.LA(1);
 
@@ -1194,7 +1194,7 @@ public class InternalKVisLexer extends Lexer {
 
                             }
 
-                            // InternalKVis.g:3805:67: ( RULE_NUMBER )+
+                            // InternalKVis.g:3813:67: ( RULE_NUMBER )+
                             int cnt8=0;
                             loop8:
                             do {
@@ -1208,7 +1208,7 @@ public class InternalKVisLexer extends Lexer {
 
                                 switch (alt8) {
                             	case 1 :
-                            	    // InternalKVis.g:3805:67: RULE_NUMBER
+                            	    // InternalKVis.g:3813:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -1230,7 +1230,7 @@ public class InternalKVisLexer extends Lexer {
 
                     }
 
-                    // InternalKVis.g:3805:82: ( 'f' )?
+                    // InternalKVis.g:3813:82: ( 'f' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1239,7 +1239,7 @@ public class InternalKVisLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // InternalKVis.g:3805:82: 'f'
+                            // InternalKVis.g:3813:82: 'f'
                             {
                             match('f'); 
 
@@ -1252,9 +1252,9 @@ public class InternalKVisLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKVis.g:3805:87: ( RULE_NUMBER )+ 'f'
+                    // InternalKVis.g:3813:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // InternalKVis.g:3805:87: ( RULE_NUMBER )+
+                    // InternalKVis.g:3813:87: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -1268,7 +1268,7 @@ public class InternalKVisLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // InternalKVis.g:3805:87: RULE_NUMBER
+                    	    // InternalKVis.g:3813:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1307,10 +1307,10 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3807:14: ( ( 'true' | 'false' ) )
-            // InternalKVis.g:3807:16: ( 'true' | 'false' )
+            // InternalKVis.g:3815:14: ( ( 'true' | 'false' ) )
+            // InternalKVis.g:3815:16: ( 'true' | 'false' )
             {
-            // InternalKVis.g:3807:16: ( 'true' | 'false' )
+            // InternalKVis.g:3815:16: ( 'true' | 'false' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1328,7 +1328,7 @@ public class InternalKVisLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalKVis.g:3807:17: 'true'
+                    // InternalKVis.g:3815:17: 'true'
                     {
                     match("true"); 
 
@@ -1336,7 +1336,7 @@ public class InternalKVisLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKVis.g:3807:24: 'false'
+                    // InternalKVis.g:3815:24: 'false'
                     {
                     match("false"); 
 
@@ -1362,11 +1362,11 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3809:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalKVis.g:3809:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalKVis.g:3817:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalKVis.g:3817:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // InternalKVis.g:3809:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalKVis.g:3817:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop14:
             do {
                 int alt14=3;
@@ -1382,7 +1382,7 @@ public class InternalKVisLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // InternalKVis.g:3809:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKVis.g:3817:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1398,7 +1398,7 @@ public class InternalKVisLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKVis.g:3809:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalKVis.g:3817:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1435,10 +1435,10 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3811:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalKVis.g:3811:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKVis.g:3819:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalKVis.g:3819:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalKVis.g:3811:11: ( '^' )?
+            // InternalKVis.g:3819:11: ( '^' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1447,7 +1447,7 @@ public class InternalKVisLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // InternalKVis.g:3811:11: '^'
+                    // InternalKVis.g:3819:11: '^'
                     {
                     match('^'); 
 
@@ -1465,7 +1465,7 @@ public class InternalKVisLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKVis.g:3811:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKVis.g:3819:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop16:
             do {
                 int alt16=2;
@@ -1514,12 +1514,12 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3813:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKVis.g:3813:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKVis.g:3821:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKVis.g:3821:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // InternalKVis.g:3813:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKVis.g:3821:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop17:
             do {
                 int alt17=2;
@@ -1532,7 +1532,7 @@ public class InternalKVisLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // InternalKVis.g:3813:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKVis.g:3821:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1552,7 +1552,7 @@ public class InternalKVisLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKVis.g:3813:40: ( ( '\\r' )? '\\n' )?
+            // InternalKVis.g:3821:40: ( ( '\\r' )? '\\n' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1561,9 +1561,9 @@ public class InternalKVisLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalKVis.g:3813:41: ( '\\r' )? '\\n'
+                    // InternalKVis.g:3821:41: ( '\\r' )? '\\n'
                     {
-                    // InternalKVis.g:3813:41: ( '\\r' )?
+                    // InternalKVis.g:3821:41: ( '\\r' )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -1572,7 +1572,7 @@ public class InternalKVisLexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // InternalKVis.g:3813:41: '\\r'
+                            // InternalKVis.g:3821:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1604,10 +1604,10 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3815:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalKVis.g:3815:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKVis.g:3823:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalKVis.g:3823:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalKVis.g:3815:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKVis.g:3823:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt20=0;
             loop20:
             do {
@@ -1661,8 +1661,8 @@ public class InternalKVisLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKVis.g:3817:16: ( . )
-            // InternalKVis.g:3817:18: .
+            // InternalKVis.g:3825:16: ( . )
+            // InternalKVis.g:3825:18: .
             {
             matchAny(); 
 
@@ -2067,7 +2067,7 @@ public class InternalKVisLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "3805:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "3813:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA21_eotS =

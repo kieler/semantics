@@ -1936,6 +1936,12 @@ rule__Literal__Alternatives
 { after(grammarAccess.getLiteralAccess().getSTRINGTerminalRuleCall_2()); }
 )
 
+    |(
+{ before(grammarAccess.getLiteralAccess().getBOOLEANTerminalRuleCall_3()); }
+	RULE_BOOLEAN
+{ after(grammarAccess.getLiteralAccess().getBOOLEANTerminalRuleCall_3()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);

@@ -482,12 +482,13 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIntegerParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFloategerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cSTRINGTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cBOOLEANTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//Literal:
-		//	Integer | Floateger | STRING;
+		//	Integer | Floateger | STRING | BOOLEAN;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Integer | Floateger | STRING
+		//Integer | Floateger | STRING | BOOLEAN
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Integer
@@ -498,6 +499,9 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_2() { return cSTRINGTerminalRuleCall_2; }
+
+		//BOOLEAN
+		public RuleCall getBOOLEANTerminalRuleCall_3() { return cBOOLEANTerminalRuleCall_3; }
 	}
 	
 	
@@ -698,7 +702,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Literal:
-	//	Integer | Floateger | STRING;
+	//	Integer | Floateger | STRING | BOOLEAN;
 	public LiteralElements getLiteralAccess() {
 		return pLiteral;
 	}
