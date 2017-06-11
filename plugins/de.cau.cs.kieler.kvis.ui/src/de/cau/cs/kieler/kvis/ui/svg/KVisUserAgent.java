@@ -26,7 +26,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.w3c.dom.Element;
 
-import de.cau.cs.kieler.ui.internal.KVisActivator;
+import de.cau.cs.kieler.kvis.ui.internal.KVisActivator;
 
 /**
  * This class implements a SVG user agent.

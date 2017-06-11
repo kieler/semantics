@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.KVis with de.cau.cs.kieler.kexpressions.KExpressions
+grammar de.cau.cs.kieler.kvis.KVis with de.cau.cs.kieler.kexpressions.KExpressions
 
 generate kvis "http://www.cau.de/cs/kieler/kvis/KVis"
 
@@ -19,7 +19,7 @@ Element:
 
 Animation returns Animation:
     'apply' type=ID ('using' variable=VariableReference)? '{'
-        (mappings+=AttributeMapping)*
+        (attributeMappings+=AttributeMapping)*
     '}' ('when' condition=BoolExpression)?
 ;
 

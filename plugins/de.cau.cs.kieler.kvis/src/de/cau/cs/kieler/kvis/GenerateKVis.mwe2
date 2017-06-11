@@ -1,4 +1,4 @@
-module de.cau.cs.kieler.GenerateKvis
+module de.cau.cs.kieler.kvis.GenerateKvis
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*

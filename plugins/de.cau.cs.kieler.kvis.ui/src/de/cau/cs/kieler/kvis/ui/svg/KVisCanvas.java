@@ -75,7 +75,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.ui.internal.KVisActivator;
+import de.cau.cs.kieler.kvis.ui.internal.KVisActivator;
 
 /**
  * The adapted KEV-Composite class.
@@ -272,7 +272,7 @@ public class KVisCanvas extends Composite implements ISelectionListener {
             workspace.addResourceChangeListener(updater);
 
         } catch (Throwable t) {
-            Status s = new Status(IStatus.ERROR, KVisActivator.DE_CAU_CS_KIELER_KVIS, t.getMessage(), t);
+            Status s = new Status(IStatus.ERROR, KVisActivator.DE_CAU_CS_KIELER_KVIS_KVIS, t.getMessage(), t);
             StatusManager.getManager().handle(s, StatusManager.SHOW);
             StatusManager.getManager().handle(s, StatusManager.LOG);
             // ErrorDialog d = new
@@ -507,13 +507,17 @@ public class KVisCanvas extends Composite implements ISelectionListener {
             }
         }
     }
+    
+    public JSVGCanvas getSvgCanvas() {
+        return svgCanvas;
+    }
 
     protected static void log(String msg) {
         log(msg, null);
     }
     
     protected static void log(String msg, Exception e) {
-        Status status = new Status(Status.INFO, KVisActivator.DE_CAU_CS_KIELER_KVIS, msg, e);
+        Status status = new Status(Status.INFO, KVisActivator.DE_CAU_CS_KIELER_KVIS_KVIS, msg, e);
         KVisActivator.getInstance().getLog().log(status);
     }
 }

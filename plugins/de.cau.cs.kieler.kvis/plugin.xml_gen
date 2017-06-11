@@ -6,7 +6,7 @@
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://www.cau.de/cs/kieler/kvis/KVis" 
-       class = "de.cau.cs.kieler.kvis.KvisPackage"
+       class = "de.cau.cs.kieler.kvis.kvis.KvisPackage"
        genModel = "model/generated/KVis.genmodel" /> 
 	
   </extension>

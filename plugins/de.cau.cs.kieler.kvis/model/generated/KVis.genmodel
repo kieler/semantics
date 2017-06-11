@@ -5,7 +5,7 @@
     forceOverwrite="true" modelName="KVis" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.kvis.edit"
     editorPluginID="de.cau.cs.kieler.kvis.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions">
-  <genPackages prefix="Kvis" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+  <genPackages prefix="Kvis" basePackage="de.cau.cs.kieler.kvis" disposableProviderFactory="true"
       ecorePackage="KVis.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//OperatorType">
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//OperatorType/EQ"/>
@@ -49,8 +49,9 @@
     <genClasses ecoreClass="KVis.ecore#//Animation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Animation/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/variable"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/mappings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/attributeMappings"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Animation/mappings"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//AttributeMapping">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AttributeMapping/attribute"/>
