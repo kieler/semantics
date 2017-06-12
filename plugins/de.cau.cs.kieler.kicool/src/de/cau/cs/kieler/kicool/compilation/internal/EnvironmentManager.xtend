@@ -34,6 +34,10 @@ class EnvironmentManager {
         environment.data.put(ENVIRONMENT_SOURCEMODEL, model)
     }
     
+    static def getSourceModel(Environment environment) {
+        environment.data.get(ENVIRONMENT_SOURCEMODEL)
+    }
+    
     static def setInplaceCompilation(Environment environment, boolean inplace) {
         environment.data.put(ENVIRONMENT_INPLACE, inplace)
     }

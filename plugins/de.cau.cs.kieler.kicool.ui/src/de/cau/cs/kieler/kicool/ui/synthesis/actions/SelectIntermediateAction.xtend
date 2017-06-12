@@ -19,6 +19,8 @@ import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager
 import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.getId
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.getShapeLayout
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager
 
 /**
@@ -33,23 +35,33 @@ class SelectIntermediateAction implements IAction {
     
     override execute(ActionContext context) {
         val kNode = context.KNode
-        val processor = ProcessorDataManager.getProcessorFromKNode(kNode)
-        if (processor != null) {
-            val view = ProcessorDataManager.getViewFromProcessor(processor)
-            if (view != null) {
-                val compilationContext = processor.environment.compilationContext
-                val editor = view.editPartSystemManager.findEditorForSystem(compilationContext.system)
-                                
-                var model = processor.environment.model
-                if (kNode.getId.equals("sourcebody")) {
-                    model = processor.environment.getData(EnvironmentManager.ENVIRONMENT_SOURCEMODEL, null)    
-                }
-                if (model instanceof String) {
-                    model = new Container<String>(model)
-                }
-                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-            }     
-        }   
+        
+        val intermediateData = kNode.shapeLayout.getProperty(INTERMEDIATE_DATA)
+        val compilationContext = intermediateData.processor.environment.compilationContext
+        val editor = intermediateData.view.editPartSystemManager.findEditorForSystem(compilationContext.system)
+        var model = intermediateData.model
+        if (model instanceof String) {
+            model = new Container<String>(model)
+        }
+        KiCoModelViewNotifier.notifyCompilationChanged(editor, model)        
+        
+//        val processor = ProcessorDataManager.getProcessorFromKNode(kNode)
+//        if (processor != null) {
+//            val view = ProcessorDataManager.getViewFromProcessor(processor)
+//            if (view != null) {
+//                val compilationContext = processor.environment.compilationContext
+//                val editor = view.editPartSystemManager.findEditorForSystem(compilationContext.system)
+//                                
+//                var model = processor.environment.model
+//                if (kNode.getId.equals("sourcebody")) {
+//                    model = processor.environment.getData(EnvironmentManager.ENVIRONMENT_SOURCEMODEL, null)    
+//                }
+//                if (model instanceof String) {
+//                    model = new Container<String>(model)
+//                }
+//                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+//            }     
+//        }   
         
         ActionResult.createResult(true).dontAnimateLayout()
     }

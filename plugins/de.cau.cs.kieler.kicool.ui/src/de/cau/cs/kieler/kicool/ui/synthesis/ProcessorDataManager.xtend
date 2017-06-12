@@ -48,6 +48,8 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 import org.eclipse.elk.core.klayoutdata.KShapeLayout
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
+import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager.*
 
 /**
  * @author ssm
@@ -68,10 +70,6 @@ class ProcessorDataManager {
     
     static val INTERMEDIATE_KGT = "resources/intermediate.kgt"
     
-    static val knodeProcessorMap = <KNode, de.cau.cs.kieler.kicool.compilation.Processor> newHashMap
-    static val processorViewMap = <de.cau.cs.kieler.kicool.compilation.Processor, CompilerView> newHashMap
-    
-        
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
         val rtProcessor = RuntimeSystems.getProcessorInstance(processor)
         
@@ -102,9 +100,10 @@ class ProcessorDataManager {
             // Set source model
             val sourceNode = node.findNode(NODE_SOURCE)
             val processorUnit = compilationNotification.compilationContext.getFirstProcessorInstance
-            knodeProcessorMap.put(sourceNode, processorUnit)
-            processorViewMap.put(processorUnit, view)
             sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+            sourceNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+                new IntermediateData(processorUnit, processorUnit.environment.getSourceModel, view))
+            
         }
     }
     
@@ -160,8 +159,9 @@ class ProcessorDataManager {
                 val intermediateNode = intermediateKGT.copy
                 intermediateNode.shapeLayout.xpos = intermediatePosX
                 intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-                intermediateRootNode.children += intermediateNode 
-                knodeProcessorMap.put(intermediateNode, processorUnit)
+                intermediateRootNode.children += intermediateNode
+                intermediateNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorUnit, snapshot, view))
                 intermediatePosX += 3.5f
             }
         }
@@ -171,11 +171,14 @@ class ProcessorDataManager {
         finalResultNode.shapeLayout.xpos = intermediatePosX
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
-        knodeProcessorMap.put(finalResultNode, processorUnit)
-        processorViewMap.put(processorUnit, view)
+        finalResultNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+            new IntermediateData(processorUnit, processorUnit.environment.getModel, view))
+
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-        knodeProcessorMap.put(processorBodyNode, processorUnit)
+        processorBodyNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+            new IntermediateData(processorUnit, processorUnit.environment.getModel, view))
+
         
         if (processorNotification instanceof ProcessorProgress) {
             updateProgressbar((processorNotification.progress * 100) as int, nodeIdMap)
@@ -196,27 +199,7 @@ class ProcessorDataManager {
         }
     }
     
-    static def de.cau.cs.kieler.kicool.compilation.Processor getProcessorFromKNode(KNode kNode) {
-        knodeProcessorMap.get(kNode)
-    }
     
-    static def CompilerView getViewFromProcessor(de.cau.cs.kieler.kicool.compilation.Processor processor) {
-        processorViewMap.get(processor)
-    }
-    
-    static def void removeAllCompilationContextEntries(CompilationContext context) {
-        context.processorInstances.forEach[ removeAllProcessorEntries ]
-    }
-
-    static def void removeAllProcessorEntries(de.cau.cs.kieler.kicool.compilation.Processor processor) {
-        knodeProcessorMap.keySet.filter[ k | knodeProcessorMap.get(k).equals(processor) ].toList.forEach[ k |
-            knodeProcessorMap.remove(k)
-            println("Removed " + k + " of " + processor)
-        ]
-        processorViewMap.remove(processor)
-    }
-
-
     static def void setFrameErrorColor(KNode node) {
         val rect = node.getData(KContainerRendering) as KContainerRendering
         rect.setFBColor(ERROR)

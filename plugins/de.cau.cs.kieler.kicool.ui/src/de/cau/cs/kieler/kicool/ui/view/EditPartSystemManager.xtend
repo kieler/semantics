@@ -64,9 +64,6 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     
     def removeAttachedContextFromEditor(IEditorPart part) {
         val context = editPartCompilationContextMap.get(part)
-        if (context != null) {
-            ProcessorDataManager.removeAllCompilationContextEntries(context)
-        }
         
         editorActionAdapters.get(part)?.deactivate
         editorActionAdapters.remove(part)
