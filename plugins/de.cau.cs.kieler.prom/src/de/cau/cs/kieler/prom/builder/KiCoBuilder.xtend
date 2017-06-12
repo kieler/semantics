@@ -133,7 +133,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             delta.accept(new IResourceDeltaVisitor() {
                 override visit(IResourceDelta delta) throws CoreException {
                     val res = delta.getResource()
-                    if(res.type == IResource.FILE && res.fileExtension != null) {
+                    if(res.type == IResource.FILE && res.exists && res.fileExtension != null) {
                         // Only take care of files with the following extensions
                         switch(res.fileExtension.toLowerCase) {
                             case "sct",
