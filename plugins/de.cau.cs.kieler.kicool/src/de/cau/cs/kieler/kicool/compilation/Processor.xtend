@@ -59,15 +59,6 @@ abstract class Processor implements IKiCoolCloneable {
         environments.key.data.get(Environment.META_PROCESSOR) as de.cau.cs.kieler.kicool.Processor
     }
     
-    protected def getModel() {
-        environment.model
-    }
-    
-    protected def Object setModel(Object model) {
-        environment.model = model
-        model
-    }
-    
     protected def void updateProgress(double progress) {
         val startTimestamp = (environments.value.getData(START_TIMESTAMP, 0.0d) as Long).longValue
         val intermediateTimestamp = java.lang.System.nanoTime
@@ -93,7 +84,7 @@ abstract class Processor implements IKiCoolCloneable {
     }
     
     protected def void snapshot() {
-        getModel.snapshot
+        environment.model.snapshot
     }
     
     abstract public def String getId()
