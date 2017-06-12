@@ -68,7 +68,10 @@ abstract class AnimationHandler {
     protected def String changeField(String attribute, String fieldName, String fieldValue) {
         val newField = (fieldName + ":" + fieldValue + ";")
         // Replace the current field from the attribute. That is, replace everything from 'FIELD_NAME:' to ';'
-        val newAttribute = attribute.replaceAll(fieldName+":[^;]*[;]?", newField);
+        println("old:"+attribute)
+        var newAttribute = attribute.replaceAll(fieldName+":[^;]*[;]?", "");
+        newAttribute += ";"+newField
+        println("new:"+newAttribute)
         return newAttribute
     }
     

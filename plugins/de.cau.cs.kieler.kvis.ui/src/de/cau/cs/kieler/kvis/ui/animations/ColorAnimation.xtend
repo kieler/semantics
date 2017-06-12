@@ -44,9 +44,21 @@ class ColorAnimation extends AnimationHandler {
         val elem = svgDoc?.getElementById(svgElementId);
         if(elem != null) {
             val newValue = getMappedValue(value, attributeMapping)
-//            println("new value:" + newValue)
-            if(newValue != null && attributeName.equals("fillColor")) {
-                elem.setAttributeField("style", "fill", newValue)
+            if(newValue != null) {
+                if(attributeName.equals("fillColor")) {
+                    elem.setAttributeField("style", "fill", newValue)
+                } else if(attributeName.equals("strokeColor")) {
+                    elem.setAttributeField("style", "stroke", newValue)
+                } else if(attributeName.equals("strokeWidth")) {
+                    elem.setAttributeField("style", "stroke-width", newValue)
+                } else if(attributeName.equals("opacity")) {
+                    elem.setAttributeField("style", "opacity", newValue)
+                } else {
+                    throw new Exception("Attribute '"+attributeName+"' is not handled in color visualization.\n"
+                        + "Handled attributes are:\n"
+                        + "fillColor, strokeColor, strokeWidth, opacity."
+                    )
+                }
             }
         }
     }

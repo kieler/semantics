@@ -35,6 +35,10 @@ import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.IStatus
+import de.cau.cs.kieler.kvis.ui.internal.KVisActivator
+import org.eclipse.ui.statushandlers.StatusManager
 
 /**
  * @author aas
@@ -201,8 +205,13 @@ class KVisView extends ViewPart {
         lastPool = pool
         canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
             override run() {
-                for (animation : animationHandlers) {
-                    animation.apply(pool)
+                try {
+                    for (animation : animationHandlers) {
+                        animation.apply(pool)
+                    }    
+                } catch (Exception e) {
+                    val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.getMessage(), e);
+                    StatusManager.getManager().handle(s, StatusManager.SHOW);
                 }
             }
         })
