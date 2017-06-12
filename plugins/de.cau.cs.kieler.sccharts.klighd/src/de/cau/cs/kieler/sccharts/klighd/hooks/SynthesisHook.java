@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.klighd.DisplayedActionData;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
@@ -54,6 +55,15 @@ public abstract class SynthesisHook {
      * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getDisplayedSynthesisOptions()
      */
     public List<SynthesisOption> getDisplayedSynthesisOptions() {
+        return Collections.emptyList();
+    }
+    
+    /**
+     * The {@link de.cau.cs.kieler.klighd.IActionIAction IActions} this hook contributes to the synthesis.
+     * 
+     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getDisplayedActions()
+     */
+    public List<DisplayedActionData> getDisplayedActions() {
         return Collections.emptyList();
     }
 

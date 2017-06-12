@@ -115,7 +115,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
+        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
             targetState.transformTermination(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
