@@ -54,26 +54,29 @@ class  BlockTransformation extends AbstractExpansionTransformation implements Tr
     }
         
 //    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
+//        return Sets.newHashSet()
 //    }
 //
 //    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::COUNTDELAY_ID, SCEstTransformation::COMPLEXFINALSTATE_ID, SCEstTransformation::HISTORY_ID,
-//            SCEstTransformation::EXPANSION_ID)
+//        return Sets.newHashSet()
 //    }
 
     @Inject
     extension SCEstExtension
     
     def SCEstProgram transform(SCEstProgram prog) {
-        for (module : prog.modules) {
-            var statements = module.statements
-            for (var i=0; i<statements.length; i++) {
-                statements.set(i, statements.get(i).transformStatement)
+        prog.modules.forEach [ m | transformStatements(m.statements)]
+        return prog
+    }
+    
+    def EList<Statement> transformStatements(EList<Statement> statements) {
+        for (var i=0; i<statements.length; i++) {
+            var statement = statements.get(i).transformStatement
+            if (statement!=null) {
+                statements.set(i, statement)
             }
         }
-        return prog
+        return statements
     }
     
     def Statement transformStatement(Statement statement) {
@@ -124,13 +127,6 @@ class  BlockTransformation extends AbstractExpansionTransformation implements Tr
             ]
         }
         return statement
-    }
-    
-    def EList<Statement> transformStatements(EList<Statement> statements) {
-        for (var i=0; i<statements.length; i++) {
-                statements.set(i, statements.get(i).transformStatement)
-        }
-        return statements
     }
     
 }

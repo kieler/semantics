@@ -217,12 +217,12 @@ class SCEstExtension {
 //    }
 
     /**
-     * Creates an EmptyStatement
+     * Creates a new Label
      * 
      * @param label The label of the EmptyStatement
      * @return The created EmptyStatement
      */
-    def createEmptyStatement(String label) {
+    def createLabel(String label) {
         SclFactory::eINSTANCE.createLabel => [
             it.name = label
         ]
@@ -777,6 +777,31 @@ class SCEstExtension {
 
         statementSequence
     }
+    
+    /**
+     * Adds all statements of a StatementSequence to another StatementSequence
+     * 
+     * @param statementSequence The StatementSequence to add the other to
+     * @param statementSequenceToAdd The StatementSequence which should be added to the other one
+     * @return The StatementSequence with the statements of the other one added
+     */
+    def dispatch add(EList<Statement> statementSequence, int pos, EList<Statement> statementSequenceToAdd) {
+        var length = statementSequenceToAdd.length
+        for (var i=0; i<length; i++) {
+            statementSequence.add(pos+i, statementSequenceToAdd.get(0))
+        }
+        statementSequence
+    }
+    
+    /**
+     * Returns the list in which the given Statement is contained.
+     * 
+     * @param statement A Statement which is in the returned list 
+     * @return The Statement list which includes the given Statement
+     */
+    def getContainingList(Statement statement) {
+        statement.eContainer.eGet(statement.eContainingFeature) as EList<Statement>
+    }
 
     /**
      * Creates an assignment
@@ -829,4 +854,50 @@ class SCEstExtension {
     def createParallel() {
         SclFactory::eINSTANCE.createParallel
     }
+    
+    /**
+     * Creates a new SCL Pause
+     * 
+     * @return The newly created SCL Pause
+     */
+    def createPause() {
+        SclFactory::eINSTANCE.createPause
+    }
+    
+    /**
+     * Creates a new Esterel Abort
+     * 
+     * @return The newly created Esterel Abort
+     */
+    def createAbort() {
+        EsterelFactory::eINSTANCE.createAbort
+    }
+    
+    /**
+     * Creates a new Esterel Halt
+     * 
+     * @return The newly created Esterel Halt
+     */
+    def createHalt() {
+        EsterelFactory::eINSTANCE.createHalt
+    }
+    
+    /**
+     * Creates a new Esterel Loop/LoopEach
+     * 
+     * @return The newly created Esterel Loop/LoopEach
+     */
+    def createLoop() {
+        EsterelFactory::eINSTANCE.createLoop
+    }
+    
+    /**
+     * Creates a new Esterel Await
+     * 
+     * @return The newly created Esterel Await
+     */
+    def createAwait() {
+        EsterelFactory::eINSTANCE.createAwait
+    }
+ 
 }
