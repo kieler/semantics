@@ -174,6 +174,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             for(res : resources) {
                 // Compile, generate simulation code, fetch wrapper code annotations
                 if(!monitor.isCanceled) {
+                    // Remove all warnings and errors from a previous KiCo build.
+                    deleteMarkers(res)
+                    // Compile model files
                     switch(res.fileExtension.toLowerCase) {
                         case "sct",
                         case "strl" : {
@@ -350,14 +353,14 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     }
     
     private def IMarker createWarningMarker(IFile file, String message) {
-        val marker = createMarker(file,message)
+        val marker = createMarker(file, message)
         marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
         return marker
     }
     
     private def IMarker createErrorMarker(IFile file, String message) {
-        val marker = createMarker(file,message)
+        val marker = createMarker(file, message)
         marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
         return marker
@@ -458,6 +461,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
         
         // Get simulation code
+        monitor.subTask("Processing simulation template")
         val modelName = Files.getNameWithoutExtension(res.name)
         val generator = new WrapperCodeGenerator(project, launchData)
         val simulationCode = generator.generateWrapperCode(simTemplate,
@@ -527,6 +531,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * @param simPath the path to the simulation file
      */
     private def void createExecutableFromCCode(String simTargetPath) {
+        monitor.subTask("Compiling simulation via gcc")
+        
         val slash = File.separator
         val currentDir = "." + slash
         val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
@@ -573,6 +579,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * @param simPath the path to the simulation file
      */
     private def void createExecutableFromJavaCode(String simPath) {
+        monitor.subTask("Compiling simulation into jar file")
+        
         // Create jar file
         // Example command: jar cvfe ../output.jar JavaSimulationJSimple *.class
         val filePath = new Path(simPath)
