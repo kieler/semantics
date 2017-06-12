@@ -32,9 +32,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import java.util.List
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.core.util.nodespacing.Spacing.Margins
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
@@ -42,6 +39,9 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import org.eclipse.elk.core.math.ElkMargin
 
 /**
  * Styles for {@link Equations}.
@@ -184,7 +184,7 @@ class EquationStyles {
 
 
     def KEdge addWireBusFigure(KEdge edge) {
-        edge.addLayoutParam(CoreOptions.EDGE_THICKNESS, 4f)
+        edge.addLayoutParam(CoreOptions.EDGE_THICKNESS, 4d)
         edge.getData.removeIf[it instanceof KRoundedBendsPolyline]
         edge.addRoundedBendsPolyline(4, 2.5f) => [
             foreground = Colors.GRAY_25
@@ -232,7 +232,7 @@ class EquationStyles {
     def KRectangle addCircuitReferenceNodeFigure(KNode node) {
         node.setMinimalNodeSize(45, 100);
         node.addLayoutParam(CoreOptions.NODE_SIZE_CONSTRAINTS, SizeConstraint.minimumSize)
-        node.addLayoutParam(CoreOptions.SPACING_PORT_SURROUNDING, new Margins(16,0,6,0))
+        node.addLayoutParam(CoreOptions.SPACING_PORT_SURROUNDING, new ElkMargin(16,0,6,0))
 
         node.addRectangle => [
             // Mark this figure as container for further content

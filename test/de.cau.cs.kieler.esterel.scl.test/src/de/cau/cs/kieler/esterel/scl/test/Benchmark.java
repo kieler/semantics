@@ -14,36 +14,29 @@
 package de.cau.cs.kieler.esterel.scl.test;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Enumeration;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.esterel.cec.CEC;
 import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclExtensions;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
-import de.cau.cs.kieler.esterel.cec.*;
-import de.cau.cs.kieler.esterel.scl.*;
-import de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclExtensions;
 
 /**
  * The test plugin for regression testing the Esterel to SCL transformation.
@@ -103,16 +96,17 @@ public class Benchmark extends KiemAutomatedJUnitTest {
             Program esterelProgram = (Program) resource.getContents().get(0);
 
             // Transform to SCL and to SCG
-            SCLProgram sclProgram =
-                    (SCLProgram) KielerCompiler.compile("ESTERELTOSCL_OPT", esterelProgram,
-                            false, false).getEObject();
-            SCGraph scg =
-                    (SCGraph) KielerCompiler.compile("SCLSCGGROUP", sclProgram, false, false)
-                            .getEObject();
-            de.cau.cs.kieler.s.s.Program sCode =
-                    (de.cau.cs.kieler.s.s.Program) KielerCompiler.compile("SCG2S", scg, false,
-                            false).getEObject();
-            String cCode = KielerCompiler.compile("S2C", sCode, false, false).getString();
+            KielerCompilerContext contextSCL = new KielerCompilerContext("ESTERELTOSCL_OPT", esterelProgram);
+            SCLProgram sclProgram = (SCLProgram) KielerCompiler.compile(contextSCL).getEObject();
+            
+            KielerCompilerContext contextSCG = new KielerCompilerContext("SCLSCGGROUP", sclProgram);
+            SCGraph scg = (SCGraph) KielerCompiler.compile(contextSCG).getEObject();
+            
+            KielerCompilerContext contextS = new KielerCompilerContext("SCG2S", scg);
+            de.cau.cs.kieler.s.s.Program sCode = (de.cau.cs.kieler.s.s.Program) KielerCompiler.compile(contextS).getEObject();
+            
+            KielerCompilerContext contextC = new KielerCompilerContext("S2C", sCode);
+            String cCode = KielerCompiler.compile(contextC).getString();
 
             // Save as *.c
             try {
@@ -149,16 +143,17 @@ public class Benchmark extends KiemAutomatedJUnitTest {
                 Program esterelProgram = (Program) resource.getContents().get(0);
 
                 // Transform to SCL and to SCG
-                SCLProgram sclProgram =
-                        (SCLProgram) KielerCompiler.compile("ESTERELTOSCL_OPT", esterelProgram,
-                                false, false).getEObject();
-                SCGraph scg =
-                        (SCGraph) KielerCompiler.compile("SCLSCGGROUP", sclProgram, false, false)
-                                .getEObject();
-                de.cau.cs.kieler.s.s.Program sCode =
-                        (de.cau.cs.kieler.s.s.Program) KielerCompiler.compile("SCG2S", scg, false,
-                                false).getEObject();
-                String cCode = KielerCompiler.compile("S2C", sCode, false, false).getString();
+                KielerCompilerContext contextSCL = new KielerCompilerContext("ESTERELTOSCL_OPT", esterelProgram);
+                SCLProgram sclProgram = (SCLProgram) KielerCompiler.compile(contextSCL).getEObject();
+                
+                KielerCompilerContext contextSCG = new KielerCompilerContext("SCLSCGGROUP", sclProgram);
+                SCGraph scg = (SCGraph) KielerCompiler.compile(contextSCG).getEObject();
+                
+                KielerCompilerContext contextS = new KielerCompilerContext("SCG2S", scg);
+                de.cau.cs.kieler.s.s.Program sCode = (de.cau.cs.kieler.s.s.Program) KielerCompiler.compile(contextS).getEObject();
+                
+                KielerCompilerContext contextC = new KielerCompilerContext("S2C", sCode);
+                String cCode = KielerCompiler.compile(contextC).getString();
 
                 // Save as *.c
                 try {
@@ -182,7 +177,8 @@ public class Benchmark extends KiemAutomatedJUnitTest {
             for (int i = 0; i < 10; i++) {
                 startTime = System.nanoTime();
                 try {
-                    CEC.run(java.net.URI.create(path + bundleFileUrl.toURI().getPath()));
+                    java.net.URI uri = java.net.URI.create(path + bundleFileUrl.toURI().getPath());
+                    CEC.run(uri, null);
                 } catch (IOException | URISyntaxException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

@@ -18,25 +18,6 @@
             id="de.cau.cs.kieler.core.model.removeMarkers"
             name="Remove Problem Markers">
       </command>
-      <command
-            categoryId="org.eclipse.ui.category.file"
-            defaultHandler="de.cau.cs.kieler.core.model.handlers.ConvertModelHandler"
-            id="de.cau.cs.kieler.core.model.convert.text"
-            name="Convert to Textual">
-         <commandParameter
-               id="de.cau.cs.kieler.convert.targetExtension"
-               name="Target Extension"
-               optional="false">
-         </commandParameter>
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="de.cau.cs.kieler.core.model.zoom"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+R Z">
-      </key>
    </extension>
    <extension
          point="org.eclipse.ui.menus">

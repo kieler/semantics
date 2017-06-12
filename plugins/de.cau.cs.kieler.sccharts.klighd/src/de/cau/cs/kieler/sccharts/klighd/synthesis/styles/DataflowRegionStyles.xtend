@@ -21,7 +21,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
@@ -29,7 +28,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import org.eclipse.elk.graph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Styles for {@link DataflowRegion}.

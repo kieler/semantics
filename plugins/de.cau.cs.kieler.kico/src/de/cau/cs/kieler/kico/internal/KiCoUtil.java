@@ -209,7 +209,7 @@ public class KiCoUtil {
                     if (KiCoPlugin.DEBUG) {
                         KiCoPlugin.log("failed.");
                     }
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
 
                 if (done) {

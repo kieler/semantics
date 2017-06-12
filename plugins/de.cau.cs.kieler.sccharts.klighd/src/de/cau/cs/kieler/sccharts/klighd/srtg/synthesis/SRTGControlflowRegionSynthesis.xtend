@@ -20,17 +20,15 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
-import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import java.util.ArrayList
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import org.eclipse.elk.core.options.Direction
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -51,9 +49,6 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
 
     @Inject
     extension KRenderingExtensions
-
-    @Inject
-    extension SCChartsSerializeHRExtension
 
     @Inject
     extension SRTGStateSynthesis
@@ -101,9 +96,9 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
 
 //            node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::POLYLINE)
             if (USE_KLAY.booleanValue) {
-                edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f)
+                edge.setLayoutOption(LayeredOptions::SPACING_LABEL_LABEL, 3.0d)
             } else {
-                edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f)
+                edge.setLayoutOption(CoreOptions::SPACING_LABEL_LABEL, 2.0d)
             }
 
             edge.source = node

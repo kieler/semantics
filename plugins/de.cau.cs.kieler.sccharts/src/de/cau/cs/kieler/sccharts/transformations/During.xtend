@@ -79,7 +79,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.toList.forEach [ targetState |
+        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
             targetState.transformDuring(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;

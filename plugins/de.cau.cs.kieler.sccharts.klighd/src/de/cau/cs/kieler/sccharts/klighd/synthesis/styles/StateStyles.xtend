@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
@@ -22,14 +23,14 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.sccharts.State
 import java.util.List
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 /**
  * Styles for {@link State}.
  * 
@@ -263,8 +264,15 @@ class StateStyles {
                 while (entries.hasNext) {
                 	val entry = entries.next
                 	if (builder.length > 0 && keyword != entry.value) {
-                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
-		                ktext = it.addText(builder.append(possibleSpace).toString)
+// I'm not sure about this. I take the master version. Please check.
+//<<<<<<< HEAD
+//                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
+//		                ktext = it.addText(builder.append(possibleSpace).toString)
+//=======
+		                ktext = it.addText(builder.append(" ").toString) => [
+                            horizontalAlignment = H_LEFT
+                        ]
+//>>>>>>> master
 		                if (keyword) {
 		                	ktext.highlightKeyword
 		                }                		
@@ -278,7 +286,9 @@ class StateStyles {
                 	builder.append(entry.key)
                 	keyword = entry.value
                 }
-                ktext = addText(builder.toString)
+                ktext = addText(builder.toString) => [
+                    horizontalAlignment = H_LEFT
+                ]
                 if (keyword) {
                 	ktext.highlightKeyword
                 }

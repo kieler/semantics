@@ -17,16 +17,14 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.elk.graph.KGraphElement;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
-import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis;
 import de.cau.cs.kieler.sccharts.klighd.hooks.ISynthesisHooks;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks.Type;
@@ -145,13 +143,5 @@ public abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphEl
     public float getFloatValue(SynthesisOption option) {
         return parent.getFloatValue(option);
     }
-
-    /**
-     * @return
-     * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getUsedContext()
-     */
-//    public ViewContext getUsedContext() {
-//        return parent.getUsedContext();
-//    }
 
 }

@@ -15,6 +15,7 @@
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.LineCap
 import de.cau.cs.kieler.klighd.krendering.LineJoin
@@ -23,7 +24,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensio
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import org.eclipse.elk.graph.KNode
 
 /**
  * @author fry

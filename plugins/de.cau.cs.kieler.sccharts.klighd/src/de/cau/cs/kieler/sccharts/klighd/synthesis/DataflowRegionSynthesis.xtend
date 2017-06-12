@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
@@ -27,14 +28,14 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.DataflowRegionStyles
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 
 /**
  * @author ssm
@@ -91,13 +92,13 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
-          node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH, GreedySwitchType::TWO_SIDED)
+          node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType::TWO_SIDED)
             
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 10f); //10.5 // 8f
-            node.setLayoutOption(CoreOptions::SPACING_BORDER, 4f);
-            node.setLayoutOption(LayeredOptions::SPACING_EDGE_SPACING_FACTOR, 0.8f); // 0.7
-            node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_SPACING_FACTOR, 0.75f); //1 //0.5
-            node.setLayoutOption(LayeredOptions::SPACING_IN_LAYER_SPACING_FACTOR, 0.25f); //0.2 // 0.5
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+            node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
+//            node.setLayoutOption(LayeredOptions::SPACING_EDGE_SPACING_FACTOR, 0.8f); // 0.7
+//            node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_SPACING_FACTOR, 0.75f); //1 //0.5
+//            node.setLayoutOption(LayeredOptions::SPACING_IN_LAYER_SPACING_FACTOR, 0.25f); //0.2 // 0.5
         }
             
         node.setLayoutOption(KlighdProperties::EXPAND, true)
@@ -152,8 +153,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         val node = createNode().associateWith(valuedObject); // This association is important for the ReferenceExpandAction
 //        if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 3f);
-            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+            node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
 //        } else {
 //            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
 //            node.setLayoutOption(LayoutOptions::SPACING, 40f);

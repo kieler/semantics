@@ -298,8 +298,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getValuedObject_Cardinalities() {
-        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(2);
+	public EReference getValuedObject_Cardinalities() {
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
     }
 
 				/**
@@ -785,7 +785,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         valuedObjectEClass = createEClass(VALUED_OBJECT);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__COMBINE_OPERATOR);
         createEReference(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__CARDINALITIES);
+        createEReference(valuedObjectEClass, VALUED_OBJECT__CARDINALITIES);
 
         valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
         createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
@@ -912,7 +912,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getValuedObject_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getValuedObject_InitialValue(), this.getExpression(), null, "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_Cardinalities(), ecorePackage.getEInt(), "cardinalities", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getValuedObject_Cardinalities(), this.getExpression(), null, "cardinalities", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valuedObjectReferenceEClass, ValuedObjectReference.class, "ValuedObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getValuedObjectReference_ValuedObject(), this.getValuedObject(), null, "valuedObject", null, 1, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

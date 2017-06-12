@@ -14,36 +14,25 @@
 package de.cau.cs.kieler.esterel.scl.test;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Enumeration;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclExtensions;
 import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
-import de.cau.cs.kieler.esterel.cec.*;
-import de.cau.cs.kieler.esterel.scl.*;
-import de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclExtensions;
 
 /**
  * Compiles every .strl file in test folder and returns a list of all failing files
@@ -104,12 +93,11 @@ public class SortOutFailing extends KiemAutomatedJUnitTest {
                 // Transform to SCL and to SCG
                 try {
                     startTime = System.nanoTime();
-                SCLProgram sclProgram =
-                        (SCLProgram) KielerCompiler.compile("ESTERELTOSCL_OPT", esterelProgram,
-                                false, false).getEObject();
-                endTime = System.nanoTime();
-                timeElapsed = endTime - startTime;
-                evaluation += (new EsterelToSclExtensions()).countStatements(esterelProgram) + "," + timeElapsed + newline;
+                    KielerCompilerContext contextSCL = new KielerCompilerContext("ESTERELTOSCL_OPT", esterelProgram);
+                    SCLProgram sclProgram = (SCLProgram) KielerCompiler.compile(contextSCL).getEObject();
+                    endTime = System.nanoTime();
+                    timeElapsed = endTime - startTime;
+                    evaluation += (new EsterelToSclExtensions()).countStatements(esterelProgram) + "," + timeElapsed + newline;
                 }
                 catch (Exception e) { outputString += fileURI + newline; }
         }

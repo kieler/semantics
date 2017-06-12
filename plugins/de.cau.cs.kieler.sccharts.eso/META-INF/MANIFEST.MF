@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ESO file generator for SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.eso;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.eso.SCChartsEsoPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,

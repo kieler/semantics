@@ -33,7 +33,7 @@ import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
 import org.eclipse.elk.core.options.HierarchyHandling
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.graph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Main diagram synthesis for SCCharts.

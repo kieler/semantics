@@ -215,7 +215,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                             }
                             break;
                         }
-                    case FLOAT:
+                    case DOUBLE:
                     case INT:
                     case OBJECT:
 
@@ -224,7 +224,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                         case STRING:
                             proposal = "\"\"";
                             break;
-                        case FLOAT:
+                        case DOUBLE:
                             proposal = "0.0";
                             break;
                         case INT:

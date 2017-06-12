@@ -237,17 +237,8 @@ public class RotateImpl extends AnimationImpl implements Rotate {
         Element elem = svgDoc.getElementById(svgElementID);
         MapAnimations currentMapAnimation = MapAnimations.getInstance();
         
-        // Check whether JSON object is an JSONAArray
-        String jsonValue;
-        if (getAccessID() != null && !getAccessID().equals("")) {
-            jsonValue = ((JSONObject) jsonObject).optJSONArray(getKey()).optString(Integer.parseInt(getAccessID()));
-            if (jsonValue.equals("")) {
-                return;
-            }
-        } else {
-            jsonValue = ((JSONObject) jsonObject).optString(getKey());    
-        }
-        
+        // Get value for current animation from json object
+        String jsonValue = getJsonValue((JSONObject) jsonObject);
         
         // Now apply the animation.
         if (elem != null) {

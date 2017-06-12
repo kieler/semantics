@@ -14,6 +14,9 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.Transition
@@ -22,9 +25,6 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.labels.LabelFocusSelectionListener
 import de.cau.cs.kieler.sccharts.klighd.synthesis.labels.LabelShorteningStrategies
 import org.eclipse.elk.core.labels.LabelManagementOptions
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KLabel
-import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
@@ -56,7 +56,7 @@ class LabelShorteningHook extends SynthesisActionHook {
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The synthesis option for fixed shorten labels value */
     public static val SynthesisOption SHORTEN_LABEL_WIDTH = SynthesisOption::createRangeOption("Shortening Width",
-        0, 200, 2, 200).setCategory(LABEL_MANAGEMENT_CATEGORY).
+        0, 1000, 10, 200).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The listener for handling label focusing */
     private static val LabelFocusSelectionListener labelFocusSelectionListener = new LabelFocusSelectionListener();

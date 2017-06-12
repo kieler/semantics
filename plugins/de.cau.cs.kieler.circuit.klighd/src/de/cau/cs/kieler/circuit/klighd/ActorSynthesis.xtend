@@ -16,6 +16,7 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
@@ -28,7 +29,6 @@ import java.util.EnumSet
 import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.graph.KNode
 
 /**
  * @author fry

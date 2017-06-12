@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.graph.KPort
 import de.cau.cs.kieler.klighd.krendering.HorizontalAlignment
 import de.cau.cs.kieler.klighd.krendering.KFontSize
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -29,12 +27,14 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import java.util.Map
 import java.util.List
-import java.util.HashMap
 import org.eclipse.elk.core.util.ElkUtil
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.klayoutdata.KShapeLayout
 import org.eclipse.elk.core.util.Maybe
+import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KShapeLayout
 
 /**
  * Provides some helpful extension methods for simplifying the composition of KGraph/KRendering-based view models.<br>
@@ -93,7 +93,7 @@ class KPortExtensionsReplacement {
     /**
      * A convenient getter preserving the element image relation by a create extension.
      */ 
-    def private KPort create port: ElkUtil::createInitializedPort internalCreatePort(ArrayList<Object> oc) {
+    def private KPort create port: KGraphUtil::createInitializedPort internalCreatePort(ArrayList<Object> oc) {
     }
     
     
@@ -198,7 +198,7 @@ class KPortExtensionsReplacement {
      * A convenience method to create a KPort without relating it to a business object.  
      */
     def KPort createPort() {
-        return ElkUtil.createInitializedPort;
+        return KGraphUtil.createInitializedPort;
     }
     
     /**
@@ -337,7 +337,7 @@ class KPortExtensionsReplacement {
             node.ports += it;
             it.setPortSize(portEdgeLength, portEdgeLength)
             it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::NORTH);
-            it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -portEdgeLength);
+            it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -portEdgeLength as double);
             it.setPortPos(node.nextNPortYPosition, 1);
             it.data += createEPortRendering(label).setRotation(-90f);
         ];
@@ -348,7 +348,7 @@ class KPortExtensionsReplacement {
             node.ports += it;
             it.setPortSize(portEdgeLength, portEdgeLength)
             it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::SOUTH);
-            it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0f);
+            it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.0);
             it.setPortPos(node.nextSPortYPosition, node.height-1);
             it.data += createEPortRendering(label).setRotation(90f);
         ];
@@ -359,7 +359,7 @@ class KPortExtensionsReplacement {
             node.ports += it;
             it.setPortSize(portEdgeLength, portEdgeLength)
             it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST);
-            it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0f);
+            it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.0);
             it.setPortPos(-6, node.nextWPortYPosition);
             it.data += createWPortRendering(label);
         ];
@@ -489,25 +489,22 @@ class KPortExtensionsReplacement {
 
 
     def KPort setPortSize(KPort port, float with, float height) {
-        return port => [
-            getData(typeof(KShapeLayout)).setSize(with, height)
-        ];
+        port.setSize(with, height);
+        return port;
     }
     
     def KPort setPortPos(KPort port, float x, float y) {
-        return port => [
-            getData(typeof(KShapeLayout)).setPos(x, y)
-        ];
+        port.setPos(x, y);
+        return port;
     }
     
     def <T> KPort addLayoutParam(KPort port, IProperty<? super T> property, T value) {
-        return port => [
-            it.getData(typeof(KShapeLayout)).setProperty(property, value)
-        ];
+        port.setProperty(property, value);
+        return port;
     }
     
     def KShapeLayout getShapeLayout(KPort port){
-        port.getData(typeof(KShapeLayout))
+        return port;
     }
 
     def KFontSize create it: createKFontSize portLabelFontSize() {
@@ -601,5 +598,6 @@ class KPortExtensionsReplacement {
         memo.set(f+verticalPortSpacing);
         return f;
     }
+
     
 }

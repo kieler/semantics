@@ -41,7 +41,6 @@ import java.util.List
 import java.util.Set
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.core.klayoutdata.KIdentifier
 import org.eclipse.elk.core.math.KVector
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortAlignment
@@ -49,9 +48,6 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.graph.KPort
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
@@ -60,6 +56,11 @@ import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * @author ssm
@@ -305,7 +306,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                     addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
                                 }
                                 setPortSize(0, 0)
-                                addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+                                addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
                                 createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                                 rootNode.ports += it
                             ]          
@@ -327,7 +328,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             val port = vo.createPort(v) => [
                                 addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
                                 setPortSize(0, 0)
-                                addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+                                addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
                                 createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                                 rootNode.ports += it
                             ]          
@@ -355,8 +356,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         val node = vo.createNode => [ 
             addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            setLayoutOption(CoreOptions::SPACING_BORDER, 5f);
-            setLayoutOption(CoreOptions::SPACING_NODE, 1f);
+            setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+            setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
 //            setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
             setLayoutOption(CoreOptions::EXPAND_NODES, true);         
             setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
@@ -391,7 +392,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 val port = vo.createPort(v) => [
                     addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
                     setPortSize(0, 0)
-                    addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+                    addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
                     createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                     node.ports += it
                 ]          
@@ -407,7 +408,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
                     }
                     setPortSize(0, 0)
-                    addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+                    addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
                     createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                     node.ports += it
                 ]          

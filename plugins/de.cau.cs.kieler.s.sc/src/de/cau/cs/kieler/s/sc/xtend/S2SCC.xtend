@@ -26,7 +26,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -45,6 +44,7 @@ import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -60,13 +60,13 @@ class S2SCC {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+    
+    @Inject
+    extension KExpressionsValueExtensions      
 
     @Inject
     extension KExpressionsDeclarationExtensions    
 
-    @Inject
-    extension SExtension    
-    
     // General method to create the c simulation interface.
     def transform (Program program) {
        '''
@@ -463,7 +463,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
         cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«signal.name»));
         //cJSON_AddItemToObject(output, "«signal.name»", cJSON_CreateNumber(«signal.name»));
         cJSON_AddItemToObject(output, "«signal.name»", value);
-    }
+        }
     «ENDFOR»'''»
     '''
    }

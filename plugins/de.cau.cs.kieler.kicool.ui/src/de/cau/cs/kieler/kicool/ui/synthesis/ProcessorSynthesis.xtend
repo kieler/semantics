@@ -28,11 +28,9 @@ import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.Platform
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.core.klayoutdata.KIdentifier
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.graph.KNode
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
@@ -42,6 +40,9 @@ import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManage
 import de.cau.cs.kieler.kicool.ProcessorEntry
 import org.eclipse.elk.core.util.ElkUtil
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -88,8 +89,8 @@ class ProcessorSynthesis {
         groupNode.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         groupNode.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
         groupNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
-        groupNode.addLayoutParam(CoreOptions::SPACING_NODE, 20f);
-        groupNode.addLayoutParam(CoreOptions::SPACING_BORDER, 8f);        
+        groupNode.addLayoutParam(CoreOptions::SPACING_NODE_NODE, 20d);
+        groupNode.addLayoutParam(CoreOptions::PADDING, new ElkPadding(8d));        
         
         var List<KNode> lastNodes = newArrayList()
         for(it : processorGroup.processors) {

@@ -27,7 +27,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -49,6 +48,7 @@ import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.s.sc.S2SCPlugin
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Transformation of S code into Arduino "C" code for be executed
@@ -63,11 +63,11 @@ class S2Arduino {
     extension KExpressionsValuedObjectExtensions    
     
     @Inject
-    extension KExpressionsDeclarationExtensions       
+    extension KExpressionsDeclarationExtensions   
 
-    @Inject
-    extension SExtension
-    
+    @Inject   
+    extension KExpressionsValueExtensions      
+
     val preCache = <ValuedObject> newArrayList  
 
    // -------------------------------------------------------------------------

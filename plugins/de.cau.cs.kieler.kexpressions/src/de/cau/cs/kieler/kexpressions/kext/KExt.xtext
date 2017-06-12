@@ -150,7 +150,7 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
 ValuedObject returns kexpressions::ValuedObject:
 	annotations+=QuotedStringAnnotation*
     name=PrimeID
-    ('[' cardinalities+=INT ']')* 
+    ('[' cardinalities+=Expression ']')* 
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)

@@ -1409,6 +1409,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleAnnotation
 entryRuleAnnotation 
 :
@@ -2821,6 +2823,7 @@ rule__FunctionCall__Alternatives_1_2
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 rule__Annotation__Alternatives
@@ -13964,8 +13967,8 @@ rule__ValuedObject__CardinalitiesAssignment_2_1
     }
 :
 (
-{ before(grammarAccess.getValuedObjectAccess().getCardinalitiesINTTerminalRuleCall_2_1_0()); }
-	RULE_INT{ after(grammarAccess.getValuedObjectAccess().getCardinalitiesINTTerminalRuleCall_2_1_0()); }
+{ before(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_2_1_0()); }
+	ruleExpression{ after(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_2_1_0()); }
 )
 
 ;

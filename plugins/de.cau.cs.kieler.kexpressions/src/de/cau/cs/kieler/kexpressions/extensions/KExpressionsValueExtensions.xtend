@@ -74,6 +74,10 @@ class KExpressionsValueExtensions {
 		expression as FloatValue
 	}
 	
+	def getIntValue(Expression expression) {
+	    expression.asIntValue.value 
+	}
+	
     def List<Value> getAllValues(Expression expression) {
         <Value> newArrayList => [
             if (expression == null) {

@@ -20,7 +20,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -30,6 +29,8 @@ import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import org.eclipse.elk.core.options.Direction
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -69,8 +70,8 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
 
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
-        node.setLayoutOption(CoreOptions::SPACING_NODE, 10f);
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(2d));
 
         // Basic state style
         node.addDefaultFigure
@@ -123,9 +124,9 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
                         val edge = state.createEdge(region)
 
                         if (USE_KLAY.booleanValue) {
-                            edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f)
+                            edge.setLayoutOption(LayeredOptions::SPACING_LABEL_LABEL, 3.0d)
                         } else {
-                            edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f)
+                            edge.setLayoutOption(CoreOptions::SPACING_LABEL_LABEL, 2.0)
                         }
         
                         edge.source = node

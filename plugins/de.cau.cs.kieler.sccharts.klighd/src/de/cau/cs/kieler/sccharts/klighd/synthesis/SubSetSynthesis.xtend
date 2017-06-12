@@ -14,8 +14,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import org.eclipse.emf.ecore.EObject
 import java.util.Collection
-import org.eclipse.elk.graph.KGraphElement
-import java.util.List
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 
 /**
  * @author ssm
@@ -23,24 +22,4 @@ import java.util.List
  */
 abstract class SubSetSynthesis<I extends EObject, O extends KGraphElement, T extends Collection<O>> extends SubSynthesis<I, O>{
     
-//    public def T transformToSet(I element) {
-//        val T result = performTranformationToSet(element);
-//        result.forEach[
-//            hooks.invokeHooks(hookType, element, it);
-//        ]
-//        return result;
-//    }    
-    
-//    abstract def T performTranformationToSet(I element);
-    
-//    override O transform(I element) {
-//        val T result = performTranformationToSet(element);
-//        hooks.invokeHooks(hookType, element, result.head);
-//        return result.head;
-//    }
-    
-//    override List<O> performTranformation(I element) {
-        // un-abstract it
-//    }
-        
 }

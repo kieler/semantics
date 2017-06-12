@@ -128,7 +128,7 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Cardinalities</b></em>' attribute list.
+     * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -882,15 +882,15 @@ public interface KExpressionsPackage extends EPackage {
     EReference getValuedObject_InitialValue();
 
     /**
-     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for the attribute list '<em>Cardinalities</em>'.
+     * @return the meta object for the containment reference list '<em>Cardinalities</em>'.
      * @see de.cau.cs.kieler.kexpressions.ValuedObject#getCardinalities()
      * @see #getValuedObject()
      * @generated
      */
-	EAttribute getValuedObject_Cardinalities();
+	EReference getValuedObject_Cardinalities();
 
 				/**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}'.
@@ -1473,12 +1473,12 @@ public interface KExpressionsPackage extends EPackage {
         EReference VALUED_OBJECT__INITIAL_VALUE = eINSTANCE.getValuedObject_InitialValue();
 
         /**
-         * The meta object literal for the '<em><b>Cardinalities</b></em>' attribute list feature.
+         * The meta object literal for the '<em><b>Cardinalities</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
          * @generated
          */
-		EAttribute VALUED_OBJECT__CARDINALITIES = eINSTANCE.getValuedObject_Cardinalities();
+		EReference VALUED_OBJECT__CARDINALITIES = eINSTANCE.getValuedObject_Cardinalities();
 
 								/**
          * The meta object literal for the '<em><b>Combine Operator</b></em>' attribute feature.

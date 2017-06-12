@@ -16,6 +16,7 @@ import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Region
@@ -23,12 +24,9 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import java.util.List
 import java.util.Map.Entry
-import org.eclipse.elk.graph.KNode
 
 import static extension java.lang.Character.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
-import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 
 /**
  * Evaluates synthesis option annotations in the model.

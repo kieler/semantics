@@ -91,12 +91,12 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Prepare all states so that each reagion has at most one final state
-        targetRootState.getAllStates.toList.forEach [ targetState |
+        // targetRootState.getAllStates.toList.forEach [ targetState |
             //targetState.prepareExit(targetRootState);
-        ]
+        // ]
 
         // Traverse all states
-        targetRootState.getAllStates.toList.forEach [ targetState |
+        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
             targetState.transformExit(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;

@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
@@ -27,15 +29,12 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import org.eclipse.elk.core.math.ElkPadding
+import java.util.List
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -55,9 +54,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     extension SCChartsExtension
     
     @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
     extension SCChartsSerializeHRExtension
 
     @Inject
@@ -72,14 +68,18 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject
     extension StateStyles
 
-    override performTranformation(State state) {
+    override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state);
+
+        // Set KIdentifier for use with incremental update
+        if (!state.id.nullOrEmpty) {
+            node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.id])
+        }
 
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
-        node.setLayoutOption(CoreOptions::SPACING_NODE, 1f);
-//        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0);
 
         //pre-evaluate type
         val isConnector = state.isConnector
@@ -161,8 +161,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Transform all outgoing transitions
+        // Also set KIdentifier for use with incremental update
+        val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
         for (transition : state.outgoingTransitions) {
-            transition.transform;
+            transition.transform => [ edge |
+                val target = transition.targetState;
+                if (!target.id.nullOrEmpty) {
+                    val counter = groupedTransitions.get(target).indexOf(transition)
+                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.id + counter]
+                }
+            ];
         }
 
         // Transform regions

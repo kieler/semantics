@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
-import org.eclipse.elk.graph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
@@ -21,14 +20,14 @@ import org.eclipse.elk.graph.properties.Property
 import java.util.ArrayList
 import java.util.Map
 import java.util.List
-import org.eclipse.elk.core.util.ElkUtil
-import org.eclipse.elk.core.klayoutdata.KShapeLayout
 import org.eclipse.elk.core.math.KVector
-import org.eclipse.elk.graph.KGraphElement
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import org.eclipse.elk.core.util.Pair
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KShapeLayout
+import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 
 /**
  * Provides some helpful extension methods for simplifying the composition of KGraph/KRendering-based view models.<br>
@@ -59,7 +58,7 @@ class KNodeExtensionsReplacement {
     /**
      * A convenient getter preserving the element image relation by a create extension.
      */ 
-    def private KNode create node: ElkUtil::createInitializedNode internalCreateNode(ArrayList<Object> oc) {
+    def private KNode create node: KGraphUtil::createInitializedNode internalCreateNode(ArrayList<Object> oc) {
     }
     
    /**
@@ -149,7 +148,7 @@ class KNodeExtensionsReplacement {
      * A convenience method to create a KNode without relating it to a business object. 
      */
     def KNode createNode() {
-        return ElkUtil::createInitializedNode();
+        return KGraphUtil::createInitializedNode();
     }
     
     /**
@@ -170,38 +169,37 @@ class KNodeExtensionsReplacement {
     
     def Pair<Float, Float> getNodeSize(KNode node) {
         return new Pair<Float, Float> => [
-            val layout = node.getData(typeof(KShapeLayout))
-            it.first = layout.height
-            it.second = layout.height
+            it.first = node.height
+            it.second = node.height
         ];
     }
 
     def float getHeight(KNode node) {
-        node.getData(typeof(KShapeLayout)).height;
+        node.height;
     }
     
     /**
      * Is used in KPortExtensions
      */    
     def float getWidth(KNode node) {
-        node.getData(typeof(KShapeLayout)).width;
+        node.width;
     }
     
     def KNode setNodeSize(KNode node, float width, float height) {
         return node => [
-            getData(typeof(KShapeLayout)).setSize(width, height);
+            node.setSize(width, height);
             setMinimalNodeSize(width, height);
         ];
     }
     
     def KNode setWidth(KNode node, float width) {
-        val height = node.getData(typeof(KShapeLayout)).height;
+        val height = node.height;
         node.setNodeSize(width, height)
         return node
     }
     
     def KNode setHeight(KNode node, float height) {
-        val width = node.getData(typeof(KShapeLayout)).width;
+        val width = node.width;
         node.setNodeSize(width, height)
         return node
     }
@@ -214,7 +212,7 @@ class KNodeExtensionsReplacement {
     }
     
     def <T> KNode addLayoutParam(KNode node, IProperty<? super T> property, T value) {
-        node?.getData(typeof(KShapeLayout))?.setProperty(property, value)
+        node?.setProperty(property, value)
         return node
     }
     
@@ -226,7 +224,7 @@ class KNodeExtensionsReplacement {
      * Internal helper for setting layout options without the need to check for KNode, KEdge, ...
      */
     def private <S, T extends KGraphElement> T setLayoutOption(T kgraphElement, IProperty<S> option, S value) {
-        kgraphElement?.getData(typeof(KLayoutData))?.setProperty(option, value)
+        kgraphElement?.setProperty(option, value)
         return kgraphElement
     }    
     
@@ -320,5 +318,6 @@ class KNodeExtensionsReplacement {
     def KNode configureInsideTopRightNodeLabelPlacement(KNode node) {
         return node.setLayoutOption(CoreOptions::NODE_LABELS_PLACEMENT, NodeLabelPlacement::insideTopRight)
     }
+
     
 }

@@ -73,6 +73,12 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
     
     public static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
         setCategory(GeneralSynthesisOptions::APPEARANCE)
+        
+    override getDisplayedActions() {
+        return newLinkedList => [ list |
+            hooks.allHooks.forEach[list.addAll(getDisplayedActions)];
+        ]
+    }
 
     val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
     
@@ -93,13 +99,6 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         return options.toList
     }
 
-//    override getDisplayedLayoutOptions() {
-//        return newLinkedList(
-//            specifyLayoutOption(CoreOptions::DIRECTION, #[Direction::UNDEFINED, Direction::RIGHT, Direction::DOWN]),
-//            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
-//        );
-//    }
-           
     override transform(Scope root) {
         val startTime = System.currentTimeMillis
         

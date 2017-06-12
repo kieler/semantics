@@ -24,6 +24,12 @@ import java.util.List
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.DoubleValue
 
 /**
  * @author ssm
@@ -71,7 +77,11 @@ class KExpressionsDeclarationExtensions {
     def VariableDeclaration createBoolDeclaration() {
         createVariableDeclaration(ValueType::BOOL)
     }    
-    
+
+    def VariableDeclaration createDoubleDeclaration() {
+        createVariableDeclaration(ValueType::DOUBLE)
+    }    
+
     def VariableDeclaration createStringDeclaration() {
         createVariableDeclaration(ValueType::STRING)
     }    
@@ -89,6 +99,14 @@ class KExpressionsDeclarationExtensions {
             hostType = declaration.hostType
         ]
     } 
+    
+    def Declaration createDeclaration(Value value) {
+        if (value instanceof IntValue) createIntDeclaration
+        else if (value instanceof BoolValue) createBoolDeclaration
+        else if (value instanceof DoubleValue) createDoubleDeclaration
+        else if (value instanceof StringValue) createStringDeclaration
+        else createDeclaration
+    }
     
     def VariableDeclaration applyAttributes(VariableDeclaration declaration, VariableDeclaration declarationWithAttributes) {
         declaration => [
@@ -134,16 +152,16 @@ class KExpressionsDeclarationExtensions {
     }            
     
     
-    def ImmutableList<VariableDeclaration> getVariableDeclarations(EObject eObject) {
-        ImmutableList.copyOf(<VariableDeclaration> newArrayList => [ list |
-            eObject.eContents.filter(typeof(VariableDeclaration)).forEach[ list += it ]
-        ])
+    def List<VariableDeclaration> getVariableDeclarations(EObject eObject) {
+        <VariableDeclaration> newArrayList => [ list |
+            eObject.eContents.filter(VariableDeclaration).forEach[ list += it ]
+        ]
     }  
     
-    def ImmutableList<ReferenceDeclaration> getReferenceDeclarations(EObject eObject) {
-        ImmutableList.copyOf(<ReferenceDeclaration> newArrayList => [ list |
-            eObject.eContents.filter(typeof(ReferenceDeclaration)).forEach[ list += it ]
-        ])
+    def List<ReferenceDeclaration> getReferenceDeclarations(EObject eObject) {
+        <ReferenceDeclaration> newArrayList => [ list |
+            eObject.eContents.filter(ReferenceDeclaration).forEach[ list += it ]
+        ]
     }      
     
 }

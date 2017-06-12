@@ -304,6 +304,9 @@ StringValue returns StringValue:
 // e.g. as initialValues of valued objects used in Kits.xtext. 
 AnyType returns ecore::EString:
     BOOLEAN | INT | FLOAT | ID | STRING;
+    
+AnyValue returns Value: 
+    IntValue | FloatValue | BoolValue | StringValue;
 
 // -------------------- //
 //  KExpressions Enums  // 

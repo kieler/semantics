@@ -74,6 +74,7 @@ import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnalyzer
+import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -372,9 +373,11 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         // ssm, 04.05.2014
         val scg = if (context?.getProperty(ENABLE_SFR)) {
                 timestamp = System.currentTimeMillis
-                val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
-                    typeof(SuperfluousForkRemover))
-                val optimizedSCG = superfluousForkRemover.optimize(sCGraph)
+                val SuperfluousThreadRemover superfluousThreadRemover = Guice.createInjector().
+                    getInstance(typeof(SuperfluousThreadRemover))
+                val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().
+                    getInstance(typeof(SuperfluousForkRemover))
+                val optimizedSCG = superfluousForkRemover.optimize(superfluousThreadRemover.optimize(sCGraph))
                 time = (System.currentTimeMillis - timestamp) as float
                 System.out.println("SCG optimization completed (additional time elapsed: " + (time / 1000) + "s).")
                 optimizedSCG

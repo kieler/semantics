@@ -12,12 +12,9 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
 
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.core.klayoutdata.KIdentifier
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import java.util.Map
-import org.eclipse.elk.graph.KLabel
 import de.cau.cs.kieler.kicool.compilation.RuntimeSystems
 import de.cau.cs.kieler.klighd.krendering.KForeground
 
@@ -47,9 +44,12 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
-import org.eclipse.elk.core.klayoutdata.KShapeLayout
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
 import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager.*
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KShapeLayout
 
 /**
  * @author ssm

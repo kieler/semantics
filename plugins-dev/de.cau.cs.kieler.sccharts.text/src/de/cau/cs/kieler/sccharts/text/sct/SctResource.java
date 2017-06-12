@@ -71,15 +71,18 @@ public class SctResource extends LazyLinkingResource {
      * new EObject will be added to contents regardless the non-emptiness of contents.
      */
     protected void updateInternalState(IParseResult parseResult) {
-        if (parseResult.getRootASTElement() != null && getContents().size() != 0
-                && !getContents().get(0).equals(parseResult.getRootASTElement())) {
-            unload(getContents().get(0));
-            getContents().remove(0);
-            while (!getContents().isEmpty()) {
-                getContents().remove(0);
-            }
-        }
-        this.getContents().clear();
+//        
+// NOT SURE IF THIS IS STILL NECESSARY.
+//        
+//        if (parseResult.getRootASTElement() != null && getContents().size() != 0
+//                && !getContents().get(0).equals(parseResult.getRootASTElement())) {
+//            unload(getContents().get(0));
+//            getContents().remove(0);
+//            while (!getContents().isEmpty()) {
+//                getContents().remove(0);
+//            }
+//        }
+//        this.getContents().clear();
         super.updateInternalState(parseResult);
     }
 

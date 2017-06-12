@@ -14,7 +14,6 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
-import org.eclipse.elk.graph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -24,6 +23,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Removes model elements marked with the annotation hide.

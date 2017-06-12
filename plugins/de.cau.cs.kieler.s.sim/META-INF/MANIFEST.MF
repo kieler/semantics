@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: S Simulation
 Bundle-SymbolicName: de.cau.cs.kieler.s.sim;singleton:=true
-Bundle-Version: 0.1.3.qualifier
+Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sim.SSimPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,

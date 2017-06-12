@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.IntValue
 
 /**
  * @author ssm
@@ -82,6 +83,18 @@ class KExpressionsCompareExtensions {
         }
         return (boolValue1.value == boolValue2.value)
     }
+
+    def dispatch equals2(IntValue intValue1, IntValue intValue2) {
+        if (intValue1 == null && intValue2 == null) {
+            return true
+        } else if (intValue1 != null && intValue2 == null) {
+            return false
+        } else if (intValue1 == null && intValue2 != null) {
+            return false
+        }
+        return (intValue1.value == intValue2.value)
+    }
+
     
     def dispatch equals2(Expression expression1, Expression expression2) {
         if (expression1 == null && expression2 == null) {

@@ -65,16 +65,19 @@ public class RunnableAnimation implements Runnable {
             jsonKey = jsonKeyIterator.next();
             newJSONValue = newJSONObject.optString(jsonKey);
             oldJSONValue = oldJSONObject.optString(jsonKey);
+            // Remove .value in name of json key in case of signals
+            if(jsonKey.endsWith(".value"))
+                jsonKey = jsonKey.replace(".value", "");
+            
+//            System.out.println(jsonKey+":"+oldJSONValue + " -> " +newJSONValue);
             
             //ONLY APPLY IF THE JSON-VALUE HAS CHANGED OR THE FIRST CHAR IS THE $-Operator
             if (!newJSONValue.equals(oldJSONValue) || oldJSONValue.indexOf("$") == 0) {
-                //System.out.println("KEY: "+jsonKey + " Value: "+jsonKeyToInputValuesToAnimationsMap.get(jsonKey));
                 if (keyToAnimationsMap.containsKey(jsonKey)) {
                     
                     for (Pair<String, Animation> pair : keyToAnimationsMap.get(jsonKey)) {
                         svgElementID = pair.getFirst();
                         animation = pair.getSecond();
-
 
                         //Test if the current Value matches the input of the animation or is empty
                         if (animation.getInput().equals("") || currentMapAnimation.jsonValueMatchesInputValue(newJSONValue, animation.getInput())) {

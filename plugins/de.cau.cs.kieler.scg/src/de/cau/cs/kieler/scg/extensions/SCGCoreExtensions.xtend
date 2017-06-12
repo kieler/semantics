@@ -319,10 +319,10 @@ class SCGCoreExtensions {
     def Entry asEntry(Node node) {
     	node as Entry
     }
-    
+
     def Exit asExit(Node node) {
         node as Exit
-    }    
+    }
     
     def Assignment asAssignment(Node node) {
     	node as Assignment

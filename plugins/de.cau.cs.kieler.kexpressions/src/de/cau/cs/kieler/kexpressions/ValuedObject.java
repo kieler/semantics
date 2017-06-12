@@ -65,20 +65,20 @@ public interface ValuedObject extends NamedObject, Annotatable, Referenceable {
     void setInitialValue(Expression value);
 
     /**
-     * Returns the value of the '<em><b>Cardinalities</b></em>' attribute list.
-     * The list contents are of type {@link java.lang.Integer}.
+     * Returns the value of the '<em><b>Cardinalities</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
      * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Cardinalities</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Cardinalities</em>' attribute list.
+     * @return the value of the '<em>Cardinalities</em>' containment reference list.
      * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_Cardinalities()
-     * @model
+     * @model containment="true"
      * @generated
      */
-	EList<Integer> getCardinalities();
+	EList<Expression> getCardinalities();
 
 				/**
      * Returns the value of the '<em><b>Combine Operator</b></em>' attribute.

@@ -1144,7 +1144,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -1748,6 +1748,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
+	}
+
+	//AnyValue Value:
+	//	IntValue | FloatValue | BoolValue | StringValue
+	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
+		return gaKExpressions.getAnyValueAccess();
+	}
+	
+	public ParserRule getAnyValueRule() {
+		return getAnyValueAccess().getRule();
 	}
 
 	//enum CompareOperator returns OperatorType:

@@ -15,6 +15,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.kico.KielerCompilerException
 
 /** 
  * @author ssm
@@ -109,7 +110,12 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	
     	// ASC schedulability output
     	if (size < estimatedScheduleSize) {
-    		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
+    	    val message = "The SCG is NOT asc-schedulable!"
+    	    if (context != null) {
+                context.getCompilationResult().addPostponedWarning(
+                    new KielerCompilerException(getId(), getId(), message));
+            }
+    		SCGPlugin.logError(message)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")
     	} 

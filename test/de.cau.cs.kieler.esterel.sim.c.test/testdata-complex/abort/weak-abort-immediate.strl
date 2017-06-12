@@ -1,0 +1,16 @@
+module M:
+output O,X,Y,Z;
+input I;
+
+weak abort
+	emit X;
+	pause;
+	emit Y;
+    pause;
+    emit Z;
+    pause;
+when immediate I;
+
+emit O;
+
+end module

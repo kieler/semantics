@@ -104,6 +104,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
             replacement.trace(const)
             replacement.trace(const.declaration)
             state.replaceAllReferencesWithCopy(const, replacement)
+            
             if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
                 state.eAllContents.filter(typeof(TextExpression)).forEach [
                     var replacementString = ""
@@ -120,6 +121,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
                     text = text.replaceAll(const.name, replacementString)
                 ]
             }
+            
             const.deleteAndCleanup
         }
 

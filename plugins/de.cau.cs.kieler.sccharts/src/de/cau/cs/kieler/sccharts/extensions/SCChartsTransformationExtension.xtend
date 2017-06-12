@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -35,6 +36,9 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
  * @kieler.rating 2015-12-10 proposed yellow
  */
 class SCChartsTransformationExtension {
+
+    @Inject
+    extension KExpressionsCreateExtensions
 
     @Inject
     extension SCChartsExtension
@@ -234,12 +238,33 @@ class SCChartsTransformationExtension {
         }
         if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
             for (card : valuedObjectWithAttributes.cardinalities) {
-                valuedObject.cardinalities.add(card);
+                valuedObject.cardinalities.add(card.copy);
             }
         }        
         valuedObject
     }
     
+    // Set the intial value of a valued object based on its type (e.g. int -> 0, bool -> false)
+    def void setDefaultValue(ValuedObject valuedObject) {
+        switch(valuedObject.type) {
+            case BOOL: {
+                valuedObject.initialValue = createBoolValue(false)
+            }
+            case INT,
+            case DOUBLE,
+            case FLOAT,
+            case UNSIGNED: {
+                valuedObject.initialValue = createIntValue(0) 
+            }
+            case STRING: {
+                valuedObject.initialValue = createStringValue("")
+            }
+            case HOST: {
+            }
+            case PURE: {
+            }
+        }
+    }
     
     // Set the type of a ValuedObject. 
     def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {

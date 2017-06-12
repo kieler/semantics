@@ -35,6 +35,8 @@ import javax.management.OperationsException
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorType
+import java.util.EnumSet
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -114,14 +116,17 @@ class SCGDependencyExtensions {
         dependency.confluent = false
         if (sourceNode instanceof Assignment) {
             if (targetNode instanceof Assignment) {
-                val sourceExpression = sourceNode.expression
-                val targetExpression = targetNode.expression
-                if (sourceExpression.isSameValue(targetExpression)) {
-                    dependency.confluent = true
-                } else {
-                    // To be downward-compatible, check for or operator expression with same value.
-                    if (areOldConfluentSetter(sourceNode, targetNode)) {
+                if (sourceNode.operator == AssignOperator.ASSIGN && targetNode.operator == AssignOperator.ASSIGN) {
+                    val sourceExpression = sourceNode.expression
+                    val targetExpression = targetNode.expression
+                    //TODO als: @ssm is this really the correct dependency analysis? x /= 5 confluent to x += 5
+                    if (sourceExpression.isSameValue(targetExpression)) {
                         dependency.confluent = true
+                    } else {
+                        // To be downward-compatible, check for operator expression with same value.
+                        if (areOldConfluentSetter(sourceNode, targetNode)) {
+                            dependency.confluent = true
+                        }
                     }
                 }
             }
@@ -134,22 +139,45 @@ class SCGDependencyExtensions {
         val targetExpression = targetAssignment.expression
         if (sourceExpression instanceof OperatorExpression) {
             if (targetExpression instanceof OperatorExpression) {
-                if (sourceExpression.operator == OperatorType.LOGICAL_OR &&
-                    targetExpression.operator == OperatorType.LOGICAL_OR) {
-                    if (sourceExpression.subExpressions.size == 2 && targetExpression.subExpressions.size == 2) {
-                        // Assume there is only one VO and one literal per OE.
-                        val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
-                        val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
-                        if (sourceRelativeVOR != null && targetRelativeVOR != null) {
-                            if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
-                                targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
-                                val sourceValue = sourceExpression.subExpressions.filter(Value).head
-                                val targetValue = targetExpression.subExpressions.filter(Value).head
-                                if (sourceValue.isSameValue(targetValue)) {
-                                    return true
+                // is legacy relative write
+                if (sourceAssignment.valuedObject == targetAssignment.valuedObject &&
+                    sourceExpression.eAllContents.filter(ValuedObjectReference).filter[valuedObject == sourceAssignment.valuedObject].size == 1 &&
+                    targetExpression.eAllContents.filter(ValuedObjectReference).filter[valuedObject == targetAssignment.valuedObject].size == 1 &&
+                    sourceExpression.subExpressions.filter(ValuedObjectReference).exists[valuedObject == sourceAssignment.valuedObject] &&
+                    targetExpression.subExpressions.filter(ValuedObjectReference).exists[valuedObject == targetAssignment.valuedObject]) {
+                    // Same operator
+                    if (sourceExpression.operator == targetExpression.operator) {
+                        // both binary operators
+                        if (sourceExpression.operator == OperatorType.LOGICAL_OR ||
+                            sourceExpression.operator == OperatorType.BITWISE_OR ||
+                            sourceExpression.operator == OperatorType.LOGICAL_AND ||
+                            sourceExpression.operator == OperatorType.BITWISE_AND) {
+                            // Must assign same value
+                            if (sourceExpression.subExpressions.size == 2 && targetExpression.subExpressions.size == 2) {
+                                // Assume there is only one VO and one literal per OE.
+                                val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
+                                val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
+                                if (sourceRelativeVOR != null && targetRelativeVOR != null) {
+                                    if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
+                                        targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
+                                        val sourceValue = sourceExpression.subExpressions.filter(Value).head
+                                        val targetValue = targetExpression.subExpressions.filter(Value).head
+                                        if (sourceValue.isSameValue(targetValue)) {
+                                            return true
+                                        }
+                                    }
                                 }
                             }
+                        } else if (EnumSet.of(OperatorType.ADD, OperatorType.DIV, OperatorType.MULT, OperatorType.SUB).contains(sourceExpression.operator)){
+                            //algorithmic operations are ok
+                            return true
                         }
+                    } else if (EnumSet.of(OperatorType.ADD, OperatorType.SUB).contains(sourceExpression.operator) &&
+                               EnumSet.of(OperatorType.ADD, OperatorType.SUB).contains(targetExpression.operator) ||
+                               EnumSet.of(OperatorType.DIV, OperatorType.MULT).contains(sourceExpression.operator) &&
+                               EnumSet.of(OperatorType.DIV, OperatorType.MULT).contains(targetExpression.operator) ) {
+                        // confluent operators are ok
+                        return true
                     }
                 }
             }

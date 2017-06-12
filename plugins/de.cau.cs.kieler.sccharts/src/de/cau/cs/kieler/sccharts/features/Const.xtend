@@ -14,11 +14,11 @@
 package de.cau.cs.kieler.sccharts.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * SCCharts Const Feature.
@@ -41,25 +41,16 @@ class Const extends Feature {
     }
 
     //-------------------------------------------------------------------------
+    
     @Inject
     extension SCChartsExtension
 
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
-            val constObjects = state.valuedObjects.filter [
-                isConst && initialValue != null
-            ].toList
-            if (constObjects.size > 0) {
-                return true
-            }
-        }
-        return false
+        return model.allStates.exists[declarations.filter(VariableDeclaration).filter[const].exists[valuedObjects.exists[initialValue != null]]]
     }
+    
+    
 
     def isContained(SCCharts sccharts) {
         for(s:sccharts.rootStates) {

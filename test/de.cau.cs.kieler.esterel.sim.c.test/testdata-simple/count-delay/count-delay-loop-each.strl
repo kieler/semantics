@@ -1,0 +1,11 @@
+module M:
+
+input I;
+output O;
+
+loop
+    emit O;
+    pause;
+each 3 I;
+
+end module

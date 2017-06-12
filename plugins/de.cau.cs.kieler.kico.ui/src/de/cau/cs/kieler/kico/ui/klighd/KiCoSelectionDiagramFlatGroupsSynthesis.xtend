@@ -18,6 +18,9 @@ import de.cau.cs.kieler.kico.features.FeatureGroup
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -28,13 +31,10 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
 import javax.inject.Inject
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.EdgeRouting
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).

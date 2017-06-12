@@ -17,7 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
-import org.eclipse.elk.graph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Main diagram synthesis for SCCharts.

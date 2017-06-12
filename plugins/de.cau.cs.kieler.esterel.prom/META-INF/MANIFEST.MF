@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Project Management for Esterel
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.prom;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.prom.EsterelPromPlugin
 Require-Bundle: org.eclipse.core.runtime,
  com.google.guava;bundle-version="15.0.0",

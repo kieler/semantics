@@ -17,7 +17,6 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -43,6 +42,9 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import com.google.inject.Injector
+import de.cau.cs.kieler.kexpressions.keffects.util.ValuedObjectContainer
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -95,7 +97,8 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     @Inject extension SCGDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions    
-    
+    @Inject Injector injector
+
 
     // -------------------------------------------------------------------------
     // -- Globals 
@@ -155,21 +158,37 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 	
     protected def void createNodeCaches(Map<Node, List<Entry>> nodeMapping, 
     	Set<Assignment> assignments, Set<Conditional> conditionals, 
-    	Multimap<ValuedObject, Assignment> writer, Set<Assignment> relativeWriter, 
-    	Multimap<ValuedObject, Node> reader
+    	Multimap<ValuedObjectContainer, Assignment> writer, Set<Assignment> relativeWriter, 
+    	Multimap<ValuedObjectContainer, Node> reader
 	) {
 		for(node : nodeMapping.keySet.filter[ it instanceof Assignment || it instanceof Conditional ]) {
 			if (node instanceof Assignment) {
 				if (node.valuedObject != null) {
 					assignments += node
-					writer.put(node.valuedObject, node)
-					writerObjectCache.put(node, node.valuedObject)
-					node.expression.getAllReferences.forEach[
-						reader.put(it.valuedObject, node)
-						if (it.valuedObject.equals(node.valuedObject)) {
+//<<<<<<< HEAD
+//					writer.put(node.valuedObject, node)
+//					writerObjectCache.put(node, node.valuedObject)
+//					node.expression.getAllReferences.forEach[
+//						reader.put(it.valuedObject, node)
+//						if (it.valuedObject.equals(node.valuedObject)) {
+//=======
+					
+					val VOC = injector.getInstance(ValuedObjectContainer) => [ set(node) ]
+					writer.put(VOC, node)
+					
+					val allReferences = node.expression.allReferences
+					node.indices.forEach[ allReferences += it.allReferences ]
+					
+					allReferences.forEach[ vor |
+					    val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
+						reader.put(expVOC, node)
+						
+						if (expVOC.equals(VOC)) {
+//>>>>>>> master
 							relativeWriter += node
 						}
 					]
+					
 					if (node.operator != AssignOperator::ASSIGN) {
 						relativeWriter += node
 					}
@@ -185,11 +204,12 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 				                val vo = pex.valuedObject
 				                val refVODeclaration = refList.get(i).declaration
 				                if (refVODeclaration instanceof VariableDeclaration) {
+				                    val VOC =  injector.getInstance(ValuedObjectContainer) => [ set(vo) ]
 				                    if (refVODeclaration.input) {
-				                        reader.put(vo, node)
+				                        reader.put(VOC, node)
 				                        readerObjectCache.put(node, vo)
 				                    } else {
-				                        writer.put(vo, node)
+				                        writer.put(VOC, node)
                                         writerObjectCache.put(node, vo)
 				                    }
 				                }
@@ -199,19 +219,27 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 				}
 			} else if (node instanceof Conditional) {
 				conditionals += node
-				node.condition.getAllReferences.forEach[
-					reader.put(it.valuedObject, node)
-					readerObjectCache.put(node, it.valuedObject)
+//<<<<<<< HEAD
+//				node.condition.getAllReferences.forEach[
+//					reader.put(it.valuedObject, node)
+//					readerObjectCache.put(node, it.valuedObject)
+//=======
+				node.condition.getAllReferences.forEach[ vor |
+                    val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
+                    reader.put(expVOC, node)
+//>>>>>>> master
 				]
 			}
 		}
     }   
     
-    protected def createDependencies(Assignment assignment, Multimap<ValuedObject, Assignment> writer,
-    	Set<Assignment> relativeWriter, Multimap<ValuedObject, Node> reader, Map<Node, List<Entry>> nodeMapping
+    protected def createDependencies(Assignment assignment, Multimap<ValuedObjectContainer, Assignment> writer,
+    	Set<Assignment> relativeWriter, Multimap<ValuedObjectContainer, Node> reader, Map<Node, List<Entry>> nodeMapping
     ) {
+        val VOC = injector.getInstance(ValuedObjectContainer) => [ set(assignment) ]
+        VOC.potentiallyEqual = true
         if (!relativeWriter.contains(assignment)) { 
-        	for(VOWriter : writer.get(assignment.valuedObject).filter[ !equals(assignment) ]
+        	for(VOWriter : writer.get(VOC).filter[ !equals(assignment) ]
         	) {
         		val dependency = assignment.createDataDependency(VOWriter, 
         			if (relativeWriter.contains(VOWriter)) DataDependencyType.WRITE_RELATIVEWRITE else DataDependencyType.WRITE_WRITE
@@ -222,7 +250,8 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         		dependency.trace(assignment)
         	}	
     	}
-    	for(VOReader : reader.get(assignment.valuedObject).filter[ !it.equals(assignment) ]) {
+    	for(VOReader : reader.get(VOC).filter[ !it.equals(assignment) ]) {
+    	    
     		val dependency = assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
     		dependency.checkAndSetConfluence
     		dependency.checkAndSetConcurrency(nodeMapping)
@@ -230,5 +259,5 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     		dependency.trace(assignment)
     	}	
     }
-    
+
 }

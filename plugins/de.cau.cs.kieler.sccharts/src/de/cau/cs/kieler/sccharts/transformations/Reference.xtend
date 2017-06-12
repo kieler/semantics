@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
@@ -86,6 +85,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    static val CONST_VO_PREFIX = "_literal"
 
     static private final String HOSTCODE_ANNOTATION = "alterHostcode"
     static private final String PROPAGATE_ANNOTATION = "propagate"
@@ -106,7 +106,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         // Transform dataflows first
 		targetRootState.transformDataflows
         // Traverse all referenced states
-        targetRootState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
+        targetRootState.allContainedStates.filter[referencedState].immutableCopy.forEach [
             transformReference(targetRootState)
         ]
         
@@ -158,25 +158,58 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         val assignmentCopy = assignment.nontracingCopy;
                         if (assignment.valuedObject.name == binding.formal.name) {
                             assignment.valuedObject = binding.actual
-                        }
-                        assignment.indices.clear
-                        for (index : assignmentCopy.indices) {
-                            assignment.indices.add(index.nontracingCopy.rtrace(binding));
+                            assignment.indices.clear
+                            for (index : assignmentCopy.indices) {
+                                assignment.indices.add(index.nontracingCopy.rtrace(binding));
+                            }
+                            
+                            // Use binding indices when bind to scalar.
+                            if (binding.indices.size > 0 && assignment.indices.size == 0) {
+                                assignment.indices.clear
+                                for(index : binding.indices) {
+                                    assignment.indices.add(index.nontracingCopy.rtrace(binding))
+                                }                                
+                            }                        
                         }
                     } else if (eObject instanceof ValuedObjectReference) {
                         val valuedObjectReference = (eObject as ValuedObjectReference);
                         val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
-                        if (valuedObjectReference.valuedObject.name == binding.formal.name) {
-                            valuedObjectReference.valuedObject = binding.actual
-                        }
-                        valuedObjectReference.indices.clear
-                        for (index : valuedObjectReferenceCopy.indices) {
-                            valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
+                        if (valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
+                            
+                            if (binding.actual != null) {
+                                valuedObjectReference.valuedObject = binding.actual 
+                                // This should be handled by copyState.
+                                // However, we need more testing for bindings with arrays.
+    //                            valuedObjectReference.indices.clear
+    //                            for (index : valuedObjectReferenceCopy.indices) {
+    //                                valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
+    //                            }
+    
+                                if (binding.indices.size > 0) {
+                                    valuedObjectReference.indices.clear
+                                    for(index : binding.indices) {
+                                        valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding))
+                                    }                                
+                                }
+                            } else { // bind to literal
+                                val newConstVO = createValuedObject(CONST_VO_PREFIX + binding.value.hashCode) => [
+                                    initialValue = binding.value.copy
+                                ]
+                                binding.value.createDeclaration.attach(newConstVO) => [
+                                    const = true
+                                    newState.declarations += it 
+                                ]
+                                valuedObjectReference.valuedObject = newConstVO
+                            }
                         }
                     } else if (eObject instanceof Binding) {
                         val bing = eObject as Binding
                         if (bing.actual.name == binding.formal.name) {
                             bing.actual = binding.actual
+                            bing.indices.clear
+                            for(index : binding.indices) {
+                                bing.indices.add(index.nontracingCopy.rtrace(binding))
+                            }                               
                         }
                     } else if (eObject instanceof TextExpression) {
                         if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {
@@ -194,7 +227,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
             }
             newState.declarations.immutableCopy.forEach [
                 val bindingName = binding.formal.name
-                val objects = valuedObjects.filter[name == bindingName].toList
+                val objects = valuedObjects.filter[name.equals(bindingName)].toList
                 objects.immutableCopy.forEach[delete]
             ]
         ]
@@ -228,7 +261,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
         state.remove
 
-        newState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
+        newState.allContainedStates.filter[referencedState].immutableCopy.forEach [
             transformReference(newState)
         ]
         * */

@@ -725,7 +725,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cCardinalitiesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cCardinalitiesINTTerminalRuleCall_2_1_0 = (RuleCall)cCardinalitiesAssignment_2_1.eContents().get(0);
+		private final RuleCall cCardinalitiesExpressionParserRuleCall_2_1_0 = (RuleCall)cCardinalitiesAssignment_2_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
@@ -764,11 +764,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//// Examples: array[10], initial = false, z = 0 combine max
 		//ValuedObject kexpressions::ValuedObject:
 		//	annotations+=QuotedStringAnnotation*
-		//	name=PrimeID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
+		//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 		//	combineOperator=CombineOperator)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=QuotedStringAnnotation* name=PrimeID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)?
+		//annotations+=QuotedStringAnnotation* name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)?
 		//('combine' combineOperator=CombineOperator)?
 		public Group getGroup() { return cGroup; }
 
@@ -784,17 +784,17 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimeID
 		public RuleCall getNamePrimeIDParserRuleCall_1_0() { return cNamePrimeIDParserRuleCall_1_0; }
 
-		//('[' cardinalities+=INT ']')*
+		//('[' cardinalities+=Expression ']')*
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'['
 		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
 
-		//cardinalities+=INT
+		//cardinalities+=Expression
 		public Assignment getCardinalitiesAssignment_2_1() { return cCardinalitiesAssignment_2_1; }
 
-		//INT
-		public RuleCall getCardinalitiesINTTerminalRuleCall_2_1_0() { return cCardinalitiesINTTerminalRuleCall_2_1_0; }
+		//Expression
+		public RuleCall getCardinalitiesExpressionParserRuleCall_2_1_0() { return cCardinalitiesExpressionParserRuleCall_2_1_0; }
 
 		//']'
 		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
@@ -1104,7 +1104,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=PrimeID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
 	public ValuedObjectElements getValuedObjectAccess() {
 		return pValuedObject;
@@ -1725,6 +1725,16 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
+	}
+
+	//AnyValue Value:
+	//	IntValue | FloatValue | BoolValue | StringValue
+	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
+		return gaKExpressions.getAnyValueAccess();
+	}
+	
+	public ParserRule getAnyValueRule() {
+		return getAnyValueAccess().getRule();
 	}
 
 	//enum CompareOperator returns OperatorType:

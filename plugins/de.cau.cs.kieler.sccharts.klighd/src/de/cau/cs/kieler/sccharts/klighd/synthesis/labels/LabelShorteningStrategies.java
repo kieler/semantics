@@ -30,7 +30,8 @@ public enum LabelShorteningStrategies {
     TRIGGER_EFFECT,
     VARIABLES,
     PRIORITIES,
-    MIXED;
+    MIXED,
+    SOFT_WRAPPING;
 
     @Override
     public String toString() {
@@ -50,7 +51,9 @@ public enum LabelShorteningStrategies {
         case PRIORITIES:
             return "Priorities";
         case MIXED:
-            return "Mixed";
+            return "Mixed (Truncate Variables + Hostcode Arguments + Trigger and Effect Wrapping)";
+        case SOFT_WRAPPING:
+            return "Soft Wrapping";
         default:
             return "";
         }
@@ -76,6 +79,8 @@ public enum LabelShorteningStrategies {
             return new ListLabelManager(false, new ShortenToSignalsLabelManager(),
                     new HostCodeTransitionLabelManager(),
                     new SemanticalWrappingTransitionLabelManager());
+        case SOFT_WRAPPING:
+            return new de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager();
         default:
             return null;
         }

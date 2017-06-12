@@ -21,7 +21,7 @@ import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
-import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
@@ -46,6 +46,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                 if (decl.input || decl.output) {
                     for (annotation : decl.annotations) {
                         val data = new WrapperCodeAnnotationData()
+                        data.modelName = model.id
                         initData(data, decl)
                         initData(data, annotation)
                         annotationDatas += data
@@ -65,13 +66,6 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
         } else {
             return null
         }
-    }
-    
-    override getModelName(EObject model) {
-        if(model instanceof State)
-            return model.id
-        else
-            return null
     }
     
     /**

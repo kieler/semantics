@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * SCCharts InputOutput Feature.
@@ -49,9 +50,8 @@ class InputOutput extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
-            if (state.variableDeclarations.filter[it.input && it.output].size > 0) {
+        for (state : model.allStates.toIterable) {
+            if (state.declarations.filter(VariableDeclaration).filter[it.input && it.output].size > 0) {
                 return true
             }
         }

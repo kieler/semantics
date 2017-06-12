@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis;
 
-import org.eclipse.elk.graph.KGraphElement;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.sccharts.klighd.hooks.ISynthesisHooks;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks;

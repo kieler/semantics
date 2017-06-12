@@ -25,11 +25,11 @@ import java.util.ArrayList
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.graph.KEdge
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -62,9 +62,9 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
 
 //        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         if (USE_KLAY.booleanValue) {
-            edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f);
+            edge.setLayoutOption(LayeredOptions::SPACING_LABEL_LABEL, 3.0d);
         } else {
-            edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f);
+            edge.setLayoutOption(CoreOptions::SPACING_LABEL_LABEL, 2.0);
         }
         
         // Connect with states

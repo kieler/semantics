@@ -50,6 +50,7 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_0_2(), "rule__FunctionCall__Alternatives_0_2");
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_1_2(), "rule__FunctionCall__Alternatives_1_2");
 					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
+					put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
 					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 					put(grammarAccess.getPragmaAnnotationAccess().getAlternatives(), "rule__PragmaAnnotation__Alternatives");
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");

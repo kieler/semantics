@@ -51,6 +51,10 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/ActionsParser.java
+=======
+					put(grammarAccess.getAnyValueAccess().getAlternatives(), "rule__AnyValue__Alternatives");
+>>>>>>> master:plugins/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/ActionsParser.java
 					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
 					put(grammarAccess.getRestrictedAnnotationAccess().getAlternatives(), "rule__RestrictedAnnotation__Alternatives");

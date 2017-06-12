@@ -12,31 +12,32 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
+
 import com.google.inject.Inject
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import org.eclipse.elk.core.data.LayoutMetaDataService
-import org.eclipse.elk.core.klayoutdata.KLayoutData
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KGraphElement
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
+
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.sccharts.SCCharts
+import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
-import org.eclipse.emf.ecore.EObject
 
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
@@ -47,11 +48,25 @@ import org.eclipse.emf.ecore.EObject
  * 
  */
 @ViewSynthesisShared
-class LayoutHook extends SynthesisHook {
-
+class LayoutHook extends SynthesisActionHook {
+    
+    /** Action ID */
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook";
+    /** The related synthesis option */
+    public static final SynthesisOption LAYOUT_DIRECTION = SynthesisOption.createChoiceOption("Direction", #["HV", "VH", "Down", "Right"], "HV").
+        setCategory(GeneralSynthesisOptions::LAYOUT).setUpdateAction(LayoutHook.ID); // Register this action as updater
+       
     /** This property is set if any element should override HV or VH layout annotation effects */
     private static final IProperty<Boolean> BLOCK_ALTERNATIN_LAYOUT = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.override", false)
+        
+    /** This property is set if the sidebar direction is set on the element */
+    private static final IProperty<Boolean> DEFAULT_DIRECTION = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.direction.default", false)
+        
+    /** This property indicates the depth of the associated state */
+    private static final IProperty<Integer> HV_DEPTH = new Property<Integer>(
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.hv.depth", null)
 
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -65,73 +80,82 @@ class LayoutHook extends SynthesisHook {
 
     /** The name of the annotation that must be present to activate the specified layout. */
     public static final String VH_ANNOTATION = "VHLayout";
-
+    
     @Inject
     extension AnnotationsExtensions
 
-    @Inject
-    extension SCChartsExtension
-
-    /** The depth of map of the sccharts scopes in the model */
-    private val depthMap = <Scope, Integer>newHashMap
     private var Direction golbalDirection = null;
 
-    override start(Scope scope, KNode node) {
-        depthMap.put(scope, if(scope instanceof State) 0 else -1)
-        var nextScope = scope
-        if (scope instanceof SCCharts) {
-            nextScope = scope.rootStates.head
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(LAYOUT_DIRECTION);
+    }
+
+    override finish(Scope scope, KNode rootNode) {
+        // Depth of root node
+        if (scope instanceof State) {
+            rootNode.setProperty(HV_DEPTH, 1)
+        } else {
+            rootNode.setProperty(HV_DEPTH, 0)
         }
-        // Calculated depths
-        nextScope.allScopes.filter[it != scope].forEach [
-            val parentDepth = depthMap.get(it.eContainer) ?: 0
-            // Increase depth only after regions because state have no layouted children
-            val depth = if(it instanceof State) parentDepth + 1 else parentDepth
-            depthMap.put(it, depth)
-        ]
+        
         // Find global direction annotation
-        for (annotation : nextScope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
+        for (annotation : scope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
             if (data != null && data.id == CoreOptions.DIRECTION.id) {
                 golbalDirection = data.parseValue(annotation.values?.head ?: "".toLowerCase) as Direction
             }
         }
-    }
-
-    override processState(State state, KNode node) {
-        // No default layout direction for states because of the box layout
-        // HV/VH Layout via annotation
-        node.processAlternatingLayoutAnnotation(state)
-        // Layout options
-        node.processLayoutOptionAnnotations(state)
-    }
-
-    override processRegion(Region region, KNode node) {
-        // Default layout direction for controlflow region
-        if (region instanceof ControlflowRegion) {
-            if (golbalDirection != null) {
-                node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
-            } else { // Alternating
-                node.setDepthDirection(region, true, 0)
-            }
-        } else {
-            node.eAllContents.filter(KEdge).forEach[
-                val source = it.getData(KLayoutData).getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as EObject;
-                if (source != null && source.eContainer instanceof Annotatable) {
-                    it.processLayoutOptionAnnotations(source.eContainer as Annotatable)
+        
+        // Process hierarchy
+        for (node : rootNode.eAllContentsOfType(KNode).toList) {
+            val source = node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
+            if (source != null) {
+                val baseDepth = (node.parent ?: rootNode).getProperty(HV_DEPTH) ?: 0
+                if (source instanceof State) {
+                    // Increase depth only after regions because states have no layouted children
+                    node.setProperty(HV_DEPTH, baseDepth + 1)
+                    // HV/VH Layout via annotation
+                    node.processAlternatingLayoutAnnotation(source)
+                    // Layout options
+                    node.processLayoutOptionAnnotations(source)
+                    // No default layout direction for states because of the box layout
+                } else if (source instanceof Region) {
+                    node.setProperty(HV_DEPTH, baseDepth)
+                    // Default layout direction for controlflow region
+                    if (source instanceof ControlflowRegion) {
+                        if (golbalDirection != null) {
+                            node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
+                        }
+                    }
+                    // HV/VH Layout via annotation
+                    node.processAlternatingLayoutAnnotation(source)
+                    // Layout options
+                    node.processLayoutOptionAnnotations(source)
+                    // Set sidebar layout direction
+                    if (!node.hasDirection) {
+                        node.setSidebarDirection
+                    }
                 }
-            ]
+                    
+            }
         }
-        // HV/VH Layout via annotation
-        node.processAlternatingLayoutAnnotation(region)
-        // Layout options
-        node.processLayoutOptionAnnotations(region)
+    }
+
+    def void setSidebarDirection(KNode node) {
+        switch (LAYOUT_DIRECTION.objectValue) {
+            case "HV": node.setDepthDirection(true, 0)
+            case "VH": node.setDepthDirection(false, 0)
+            case "Down": node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
+            case "Right": node.setLayoutOption(CoreOptions.DIRECTION, Direction.RIGHT)
+            default: return
+        }
+        node.setProperty(DEFAULT_DIRECTION, true)        
     }
 
     override processTransition(Transition transition, KEdge edge) {
         edge.processLayoutOptionAnnotations(transition)
     }
-
+    
     private def processLayoutOptionAnnotations(KGraphElement element, Annotatable annotatable) {
         for (annotation : annotatable.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
@@ -151,14 +175,14 @@ class LayoutHook extends SynthesisHook {
         val annotation = scope.annotations.findLast[isAlternatingLayoutAnnotation]
         if (annotation != null) {
             val isHV = annotation.name.equalsIgnoreCase(HV_ANNOTATION)
-            val offset = depthMap.get(scope)
+            val offset = node.getProperty(HV_DEPTH) ?: 0
             val workingset = newLinkedHashMap(new Pair(scope, node))
             while (!workingset.empty) {
                 val subScope = workingset.keySet.head
                 val subNode = workingset.remove(subScope)
 
                 if (subScope instanceof ControlflowRegion) {
-                    subNode.setDepthDirection(subScope, isHV, offset)
+                    subNode.setDepthDirection(isHV, offset)
                 }
 
                 // Add child elements to processing queue
@@ -180,17 +204,17 @@ class LayoutHook extends SynthesisHook {
         }
     }
 
+    private def hasDirection(KNode node) {
+        return node.allProperties.containsKey(CoreOptions.DIRECTION);
+    }
+    
     private def isBlockingAlternatingLayout(KNode node) {
-        val data = node.getData(KLayoutData)
-        if (data != null) {
-            return data.getProperty(BLOCK_ALTERNATIN_LAYOUT);
-        }
-        return BLOCK_ALTERNATIN_LAYOUT.^default;
+        return node.getProperty(BLOCK_ALTERNATIN_LAYOUT);
     }
 
-    private def setDepthDirection(KNode node, Scope scope, boolean isHV, int depthOffset) {
+    private def setDepthDirection(KNode node, boolean isHV, int depthOffset) {
         if (!node.isBlockingAlternatingLayout) {
-            val depth = (depthMap.get(scope) ?: 0) - depthOffset
+            val depth = (node.getProperty(HV_DEPTH) ?: 0) - depthOffset
             if (Boolean.logicalXor(isHV,(depth % 2 == 0))) {
                 node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
             } else {
@@ -198,4 +222,15 @@ class LayoutHook extends SynthesisHook {
             }
         }
     }
+    
+    // Change Layout on runtime diagram
+    override executeAction(KNode rootNode) {
+        rootNode.eAllContentsOfType(KNode).filter[
+            it.getProperty(DEFAULT_DIRECTION)
+        ].forEach[
+            it.setSidebarDirection
+        ]
+        return ActionResult.createResult(true);
+    }
+    
 }

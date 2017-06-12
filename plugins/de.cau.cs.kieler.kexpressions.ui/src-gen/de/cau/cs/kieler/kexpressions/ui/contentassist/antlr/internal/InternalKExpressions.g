@@ -909,6 +909,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleCommentAnnotation
 entryRuleCommentAnnotation 
 :
@@ -1914,6 +1916,7 @@ rule__FunctionCall__Alternatives_1_2
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 

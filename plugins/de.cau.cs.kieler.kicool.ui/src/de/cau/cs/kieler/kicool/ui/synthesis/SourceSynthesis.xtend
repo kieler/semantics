@@ -14,10 +14,10 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import org.eclipse.elk.graph.KNode
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Main diagram synthesis for the source in KiCool.

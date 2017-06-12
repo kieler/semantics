@@ -353,7 +353,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ValuedObject returns ValuedObject
 	 *
 	 * Constraint:
-	 *     (annotations+=QuotedStringAnnotation* name=PrimeID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (annotations+=QuotedStringAnnotation* name=PrimeID cardinalities+=Expression* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(ISerializationContext context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

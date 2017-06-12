@@ -14,7 +14,6 @@ package de.cau.cs.kieler.sccharts.klighd.srtg.synthesis
 
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
-import org.eclipse.elk.graph.KNode
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
@@ -22,6 +21,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensio
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
+import de.cau.cs.kieler.klighd.kgraph.KNode
+
 /**
  * @author ssm
  *

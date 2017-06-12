@@ -1,0 +1,11 @@
+module M:
+output O1;
+output O2;
+
+emit O1;
+pause;
+present pre(O1) then
+	emit O2;
+end
+
+end module

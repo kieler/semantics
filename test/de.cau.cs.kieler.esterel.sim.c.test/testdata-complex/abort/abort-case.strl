@@ -1,0 +1,22 @@
+module M:
+
+input A,B,C;
+output U,V,W,X,Y,Z,O;
+
+ 
+abort
+  emit U;
+  pause;
+  emit V;
+  pause;
+  emit W;
+  pause;
+when
+  case A do emit X;
+  case immediate B do emit Y;
+  case 2 C do emit Z;
+end;
+
+emit O;
+
+end module

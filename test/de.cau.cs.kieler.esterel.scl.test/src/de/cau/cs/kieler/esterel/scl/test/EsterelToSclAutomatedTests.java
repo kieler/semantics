@@ -13,25 +13,9 @@
  */
 package de.cau.cs.kieler.esterel.scl.test;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.Enumeration;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
 
 /**

@@ -98,8 +98,11 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     // -- Icons --
     /** The icon for saving current model. */
-    private static final ImageDescriptor SAVE_ICON = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/etool16/save_edit.gif");
+    private static final ImageDescriptor SAVE_ICON = 
+            KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/save_edit.png");
+    /** The icon for pin selection button. */
+    private static final ImageDescriptor PIN_ICON =
+            KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/pin.png");
     /** The icon for toggling compile mode button. */
     private static final ImageDescriptor COMPILER_ICON =
             KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/compile.png");
@@ -113,8 +116,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private static final ImageDescriptor CHAIN_ICON =
             KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/chain.png");
     /** The icon for closing windows. */
-    private static final ImageDescriptor CLOSE_ICON = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/remove.gif");
+    private static final ImageDescriptor CLOSE_ICON = 
+            KiCoKlighdPlugin.getImageDescriptor("icons/full/elcl16/remove.png");
 
     // -- Toolbar --
     /** The action for saving currently displayed model. */

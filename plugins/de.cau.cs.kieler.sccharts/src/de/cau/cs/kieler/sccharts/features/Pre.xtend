@@ -55,8 +55,7 @@ class Pre extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
+        for (state : model.allStates.toIterable) {
             val allActions = state.eAllContents.filter(typeof(Action)).toList
             val allPreValuedObjects = state.valuedObjects.filter(
                 valuedObject|

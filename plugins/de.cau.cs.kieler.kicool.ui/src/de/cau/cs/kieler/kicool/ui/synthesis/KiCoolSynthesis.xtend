@@ -34,8 +34,10 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.core.util.ElkUtil
+import org.eclipse.elk.core.math.ElkPadding
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 
 /**
  * Main diagram synthesis for KiCool.
@@ -60,8 +62,8 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
         rootNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
-        rootNode.setLayoutOption(CoreOptions::SPACING_NODE, 20f);
-        rootNode.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
+        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20d);
+        rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d));
         
         val source = sourceNode
         val nodes = model.processors.transform
@@ -88,7 +90,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
             return node
         } catch (Exception e) {
         }         
-        return ElkUtil::createInitializedNode
+        return KGraphUtil::createInitializedNode
     }    
     
 }

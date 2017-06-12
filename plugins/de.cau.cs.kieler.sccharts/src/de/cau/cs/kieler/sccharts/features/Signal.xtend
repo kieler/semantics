@@ -45,8 +45,7 @@ class Signal extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
+        for (state : model.allStates.toIterable) {
             if (state.signals.size > 0) {
                 return true
             }

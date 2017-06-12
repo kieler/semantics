@@ -1353,6 +1353,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getSTRINGTerminalRuleCall_4() { return cSTRINGTerminalRuleCall_4; }
 	}
+
+	public class AnyValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.AnyValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBoolValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cStringValueParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		
+		//AnyValue Value:
+		//	IntValue | FloatValue | BoolValue | StringValue
+		@Override public ParserRule getRule() { return rule; }
+
+		//IntValue | FloatValue | BoolValue | StringValue
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//IntValue
+		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
+
+		//FloatValue
+		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
+
+		//BoolValue
+		public RuleCall getBoolValueParserRuleCall_2() { return cBoolValueParserRuleCall_2; }
+
+		//StringValue
+		public RuleCall getStringValueParserRuleCall_3() { return cStringValueParserRuleCall_3; }
+	}
 	
 	
 	public class CompareOperatorElements extends AbstractEnumRuleElementFinder {
@@ -1833,6 +1861,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final BoolValueElements pBoolValue;
 	private final StringValueElements pStringValue;
 	private final AnyTypeElements pAnyType;
+	private final AnyValueElements pAnyValue;
 	private final CompareOperatorElements eCompareOperator;
 	private final PreOperatorElements ePreOperator;
 	private final BitwiseOrOperatorElements eBitwiseOrOperator;
@@ -1897,6 +1926,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBoolValue = new BoolValueElements();
 		this.pStringValue = new StringValueElements();
 		this.pAnyType = new AnyTypeElements();
+		this.pAnyValue = new AnyValueElements();
 		this.eCompareOperator = new CompareOperatorElements();
 		this.ePreOperator = new PreOperatorElements();
 		this.eBitwiseOrOperator = new BitwiseOrOperatorElements();
@@ -2408,6 +2438,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
+	}
+
+	//AnyValue Value:
+	//	IntValue | FloatValue | BoolValue | StringValue
+	public AnyValueElements getAnyValueAccess() {
+		return pAnyValue;
+	}
+	
+	public ParserRule getAnyValueRule() {
+		return getAnyValueAccess().getRule();
 	}
 
 	//enum CompareOperator returns OperatorType:
