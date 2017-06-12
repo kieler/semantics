@@ -14,7 +14,7 @@ package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
-import de.cau.cs.kieler.kvis.ui.svg.EclipseJSVGCanvas
+import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
@@ -39,26 +39,19 @@ class ColorAnimation extends AnimationHandler {
     }
     
     private def void apply(Object value, AttributeMapping attributeMapping) {
+        val elem = findElement()
         val attributeName = attributeMapping.attribute
-        val svgDoc = EclipseJSVGCanvas.getInstance()?.getSVGDocument();
-        val elem = svgDoc?.getElementById(svgElementId);
-        if(elem != null) {
-            val newValue = getMappedValue(value, attributeMapping)
-            if(newValue != null) {
-                if(attributeName.equals("fillColor")) {
-                    elem.setAttributeField("style", "fill", newValue)
-                } else if(attributeName.equals("strokeColor")) {
-                    elem.setAttributeField("style", "stroke", newValue)
-                } else if(attributeName.equals("strokeWidth")) {
-                    elem.setAttributeField("style", "stroke-width", newValue)
-                } else if(attributeName.equals("opacity")) {
-                    elem.setAttributeField("style", "opacity", newValue)
-                } else {
-                    throw new Exception("Attribute '"+attributeName+"' is not handled in color visualization.\n"
-                        + "Handled attributes are:\n"
-                        + "fillColor, strokeColor, strokeWidth, opacity."
-                    )
-                }
+        val newValue = getMappedValue(value, attributeMapping)
+        if(newValue != null) {
+            switch(attributeName) {
+                case "fillColor" : elem.setAttributeField("style", "fill", newValue)
+                case "strokeColor" : elem.setAttributeField("style", "stroke", newValue)
+                case "strokeWidth" : elem.setAttributeField("style", "stroke-width", newValue)
+                case "opacity" : elem.setAttributeField("style", "opacity", newValue)
+                default :
+                    throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
+                                      + "Handled attributes are:\n"
+                                      + "fillColor, strokeColor, strokeWidth, opacity.")
             }
         }
     }

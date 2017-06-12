@@ -18,27 +18,26 @@ import de.cau.cs.kieler.kvis.ui.animations.ColorAnimation
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.util.List
 import org.apache.batik.swing.gvt.GVTTreeRendererAdapter
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent
-import org.apache.batik.swing.svg.SVGDocumentLoaderEvent
-import org.apache.batik.swing.svg.SVGDocumentLoaderListener
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IResourceChangeEvent
 import org.eclipse.core.resources.IResourceChangeListener
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 import org.eclipse.jface.action.Action
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import org.eclipse.core.runtime.Status
-import org.eclipse.core.runtime.IStatus
-import de.cau.cs.kieler.kvis.ui.internal.KVisActivator
 import org.eclipse.ui.statushandlers.StatusManager
+import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
 
 /**
  * @author aas
@@ -50,16 +49,17 @@ class KVisView extends ViewPart {
 
     public static val KVIS_FILE_EXTENSION = "kvis"
 
-    public static var KVisView instance
+    @Accessors(PUBLIC_GETTER)
+    private static var KVisView instance
 
+    @Accessors(PUBLIC_GETTER)
     private KVisCanvas canvas
 
     private val List<AnimationHandler> animationHandlers = newArrayList()
 
-    private var IFile lastFile
-    
     private var IResourceChangeListener resourceChangeListener
     private var boolean updateAfterRendering
+    private var IFile lastFile
     private var DataPool lastPool
 
     /**
@@ -92,34 +92,52 @@ class KVisView extends ViewPart {
     }
 
     private def void loadFile(IFile file) {
-        if (!file.fileExtension.toLowerCase.equals(KVIS_FILE_EXTENSION)) {
-            System.err.println("Selection is not a kvis file.")
-            return;
+        try {
+            if (!file.fileExtension.toLowerCase.equals(KVIS_FILE_EXTENSION)) {
+                throw new Exception("Selection is not a kvis file.")
+            }
+            val model = ModelImporter.load(file)
+            if (model != null) {
+                if (model instanceof Visualization) {
+                    lastPool = null
+                    lastFile = file
+                    updateAfterRendering = true
+                    // Load image
+                    val project = file.project
+                    val imagePath = model.image
+                    val imageFile = project.getFile(imagePath)
+                    canvas.setSVGFile(imageFile)
+    
+                    // Load animations
+                    createAnimationHandlers(model)    
+                    // Register resource change listener for the files
+                    registerResourceChangeListener(file, imageFile)
+                }
+            }
+        } catch(Exception e) {
+            showError(e)
         }
-        val model = ModelImporter.load(file)
-        if (model != null) {
-            if (model instanceof Visualization) {
-                lastPool = null
-                lastFile = file
-                updateAfterRendering = true
-                val project = file.project
-                val imagePath = model.image
-                val imageFile = project.getFile(imagePath)
-                canvas.setSVGFile(imageFile)
-
-                // Load animations
-                animationHandlers.clear()
-                for (element : model.elements) {
-                    for (animation : element.animations) {
-                        if (animation.type == "color") {
-                            val colorAnimation = new ColorAnimation(element.name, animation)
-                            animationHandlers.add(colorAnimation)
-                        }
+    }
+    
+    private def void createAnimationHandlers(Visualization model) {
+        animationHandlers.clear()
+        for (element : model.elements) {
+            for (animation : element.animations) {
+                var AnimationHandler handler
+                switch(animation.type) {
+                    case "color": {
+                        handler = new ColorAnimation(element.name, animation)
+                    }
+                    case "walkPath": {
+                        handler = new WalkPathAnimation(element.name, animation)
+                    }
+                    default: {
+                        throw new Exception("No animation handler was found for "+animation.type)
                     }
                 }
-                
-                // Register resource change listener for the files
-                registerResourceChangeListener(file, imageFile)
+                if(animation != null) {
+                    animationHandlers.add(handler)
+                }
             }
         }
     }
@@ -161,7 +179,6 @@ class KVisView extends ViewPart {
         canvas.svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter(){
             
             override gvtRenderingCompleted(GVTTreeRendererEvent e) {
-//                println("SVG Rendering completed")
                 // Immediately update svg with new data pool after refresh
                 if(updateAfterRendering) {
                     updateAfterRendering = false
@@ -181,6 +198,11 @@ class KVisView extends ViewPart {
 
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
+        mgr.add(new Action("Refresh") {
+            override run() {
+                reload()
+            }
+        })
         mgr.add(new Action("Open KVis File") {
             override run() {
                 val rootElement = ResourcesPlugin.getWorkspace().getRoot()
@@ -210,10 +232,15 @@ class KVisView extends ViewPart {
                         animation.apply(pool)
                     }    
                 } catch (Exception e) {
-                    val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.getMessage(), e);
-                    StatusManager.getManager().handle(s, StatusManager.SHOW);
+                    showError(e)
                 }
             }
         })
+    }
+    
+    private def void showError(Exception e) {
+        e.printStackTrace
+        val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.getMessage(), e);
+        StatusManager.getManager().handle(s, StatusManager.SHOW);
     }
 }

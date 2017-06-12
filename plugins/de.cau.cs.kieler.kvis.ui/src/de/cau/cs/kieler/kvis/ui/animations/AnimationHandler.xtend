@@ -16,10 +16,12 @@ import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.kvis.Domain
 import de.cau.cs.kieler.kvis.kvis.Mapping
+import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
+import org.w3c.dom.svg.SVGDocument
 
 /**
  * @author aas
@@ -29,14 +31,24 @@ abstract class AnimationHandler {
     abstract def String getName()
     abstract def void apply(DataPool pool)
     
-    @Accessors
-    private var String svgElementId
-    @Accessors
-    private var Animation animation
+    protected var String svgElementId
+    protected var Animation animation
     
     public new(String svgElementId, Animation animation) {
         this.svgElementId = svgElementId
         this.animation = animation
+    }
+    
+    private def SVGDocument getSVGDocument() {
+         return KVisView.instance?.canvas?.svgCanvas?.getSVGDocument();
+    }
+    
+    protected def Element getElementById(String id) {
+        return SVGDocument.getElementById(id);
+    }
+    
+    protected def Element findElement() {
+        return getElementById(svgElementId)
     }
     
     protected def Object getVariableValue(DataPool pool) {
@@ -68,10 +80,13 @@ abstract class AnimationHandler {
     protected def String changeField(String attribute, String fieldName, String fieldValue) {
         val newField = (fieldName + ":" + fieldValue + ";")
         // Replace the current field from the attribute. That is, replace everything from 'FIELD_NAME:' to ';'
-        println("old:"+attribute)
+//        println("old:"+attribute)
         var newAttribute = attribute.replaceAll(fieldName+":[^;]*[;]?", "");
-        newAttribute += ";"+newField
-        println("new:"+newAttribute)
+        if(!newAttribute.isNullOrEmpty && !newAttribute.endsWith(";")) {
+            newAttribute += ";"    
+        }
+        newAttribute += newField
+//        println("new:"+newAttribute)
         return newAttribute
     }
     
@@ -127,15 +142,19 @@ abstract class AnimationHandler {
             val doubleValue = getDoubleValue(value)
             val fromLow = mapping.variableDomain.range.from
             val fromHigh = mapping.variableDomain.range.to
-            val double percent = Math.abs(doubleValue - fromLow) / Math.abs(fromHigh-fromLow)
-            
             val toLow = mapping.attributeDomain.range.from
             val toHigh = mapping.attributeDomain.range.to
             // Vector calculation v = pos + percent*length
-            val mappedValue = (toLow + percent * Math.abs(toHigh-toLow))
+            val mappedValue = scale(doubleValue, fromLow, fromHigh, toLow, toHigh)
             println("mappedValue:"+mappedValue)
             return mappedValue.toString
         }
+    }
+    
+    protected def double scale(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
+        val double percent = Math.abs(value - fromLow) / Math.abs(fromHigh - fromLow)
+        val mappedValue = (toLow + percent * Math.abs(toHigh-toLow))
+        return mappedValue
     }
     
     protected def getDoubleValue(Object value) {
