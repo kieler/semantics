@@ -73,10 +73,12 @@ class EnvironmentManager {
                 } else if (v instanceof String) {
                     prime.data.put(k, new String(v))
                 } else if (v instanceof IKiCoolCloneable) {
-                    if (inplace) {
-                        prime.data.put(k, v)
-                    } else {
-                        prime.data.put(k, v.cloneObject)
+                    if (!v.volatile) {
+                        if (inplace) {
+                            prime.data.put(k, v)
+                        } else {
+                            prime.data.put(k, v.cloneObject)
+                        }
                     }
                 } else if (v instanceof List<?>) {
                     if (k.equals(Environment.ERRORS)) {

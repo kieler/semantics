@@ -281,6 +281,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.ConstWrapper">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.Snapshot">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">

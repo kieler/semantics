@@ -14,6 +14,10 @@ package de.cau.cs.kieler.kicool.compilation
 
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -47,10 +51,24 @@ abstract class Processor implements IKiCoolCloneable {
         this
     }
     
+    protected def getCompilationContext() {
+        environments.key.getCompilationContext
+    }
+    
+    protected def getMetaProcessor() {
+        environments.key.data.get(Environment.META_PROCESSOR) as de.cau.cs.kieler.kicool.Processor
+    }
+    
+    protected def getModel() {
+        environment.model
+    }
+    
+    protected def Object setModel(Object model) {
+        environment.model = model
+        model
+    }
+    
     protected def void updateProgress(double progress) {
-        val compilationContext = environments.key.getCompilationContext
-        val metaProcessor = environments.key.data.get(Environment.META_PROCESSOR) as de.cau.cs.kieler.kicool.Processor
-        
         val startTimestamp = (environments.value.getData(START_TIMESTAMP, 0.0d) as Long).longValue
         val intermediateTimestamp = java.lang.System.nanoTime
         environments.value.setData(PTIME, (intermediateTimestamp - startTimestamp) / 1000_000)
@@ -58,6 +76,24 @@ abstract class Processor implements IKiCoolCloneable {
         compilationContext.notify(
             new ProcessorProgress(progress, compilationContext, metaProcessor, this)
         )
+    }
+    
+    protected def void snapshot(Object model) {
+        val snapshots = environment.getData(Environment.SNAPSHOTS, null) as Snapshots
+        
+        var Object snapshotModel = model 
+        if (model instanceof EObject) {
+            snapshotModel = model.copy
+        }
+        
+        snapshots += snapshotModel
+        compilationContext.notify(
+            new ProcessorSnapshot(snapshotModel, compilationContext, metaProcessor, this)
+        )
+    }
+    
+    protected def void snapshot() {
+        getModel.snapshot
     }
     
     abstract public def String getId()

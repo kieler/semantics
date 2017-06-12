@@ -46,6 +46,8 @@ import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
+import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
+import org.eclipse.elk.core.klayoutdata.KShapeLayout
 
 /**
  * @author ssm
@@ -149,10 +151,24 @@ class ProcessorDataManager {
         val intermediateRootNode = NODE_INTERMEDIATE.findNode(nodeIdMap)
         val intermediateKGT = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)
         intermediateRootNode.children.clear
+        var intermediatePosX = 0.0f
         // Test for infos, warnings and errors
         // Test for snapshots
+        val snapshots = processorUnit.environment.getData(SNAPSHOTS, null) as Snapshots
+        if (snapshots!= null) {
+            for(snapshot : snapshots) {
+                val intermediateNode = intermediateKGT.copy
+                intermediateNode.shapeLayout.xpos = intermediatePosX
+                intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                intermediateRootNode.children += intermediateNode 
+                knodeProcessorMap.put(intermediateNode, processorUnit)
+                intermediatePosX += 3.5f
+            }
+        }
+        
         // Final result
         val finalResultNode = intermediateKGT.copy
+        finalResultNode.shapeLayout.xpos = intermediatePosX
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
         knodeProcessorMap.put(finalResultNode, processorUnit)
@@ -294,6 +310,10 @@ class ProcessorDataManager {
     
     static def KLabel getLabel(KNode node) {
         node.eContents.filter(KLabel).head
+    }
+    
+    static def KShapeLayout getShapeLayout(KNode node) {
+        node.eContents.filter(KShapeLayout).head
     }
     
     private static def int range(int value, int min, int max) {

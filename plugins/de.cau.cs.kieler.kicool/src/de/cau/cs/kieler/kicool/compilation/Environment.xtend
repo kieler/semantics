@@ -17,6 +17,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.ecore.EObject
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 
 /**
  * @author ssm
@@ -33,12 +34,14 @@ class Environment {
     public static val START_TIMESTAMP = "startTimestamp"
     public static val STOP_TIMESTAMP = "stopTimestamp"
     public static val PTIME = "pTime"   
+    public static val SNAPSHOTS = "snapshots"
         
     @Accessors Map<String, Object> data
     
     new() {
         data = new HashMap<String, Object>()
         data.put(ERRORS, <String> newLinkedList)
+        data.put(SNAPSHOTS, new Snapshots)
     }
     
     def setData(String key, Object data) {
