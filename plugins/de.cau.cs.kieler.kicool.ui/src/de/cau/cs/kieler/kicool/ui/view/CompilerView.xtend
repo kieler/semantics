@@ -37,7 +37,7 @@ import org.eclipse.ui.IViewSite
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
+import de.cau.cs.kieler.kicool.ui.view.actions.VisualFeedbackAction
 
 /**
  * @author ssm
@@ -63,6 +63,7 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var AutoCompileToggle autoCompileToggle = null
     
     @Accessors private var CompilationAction compilationAction = null
+    @Accessors private var VisualFeedbackAction visualFeedbackAction = null
     
     /**
      * {@inheritDoc}
@@ -114,6 +115,8 @@ class CompilerView extends DiagramViewPart {
 //        debugToggle = new DebugToggle(this)
         
         toolBar.add(new Separator)
+        visualFeedbackAction = new VisualFeedbackAction(this)
+        toolBar.add(visualFeedbackAction.action)
         // The standard klighd view part menu entries will be inserted after this separator.    
 
         menu.add(forwardResultToggle.action)
