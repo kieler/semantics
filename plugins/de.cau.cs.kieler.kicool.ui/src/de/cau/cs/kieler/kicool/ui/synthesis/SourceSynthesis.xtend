@@ -34,7 +34,7 @@ class SourceSynthesis {
     
     private val SOURCE_KGT = "resources/source.kgt"
     
-    def sourceNode() {
+    def KNode sourceNode() {
         val sourceNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
        
         sourceNode

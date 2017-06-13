@@ -14,11 +14,7 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.kicool.System
 import org.eclipse.elk.core.options.CoreOptions
@@ -34,7 +30,6 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.elk.core.util.ElkUtil
 import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
@@ -50,8 +45,6 @@ import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
 
     @Inject extension KNodeExtensions
-    @Inject extension KRenderingExtensions
-    @Inject extension AnnotationsExtensions
     @Inject extension ProcessorSynthesis
     @Inject extension SourceSynthesis
     

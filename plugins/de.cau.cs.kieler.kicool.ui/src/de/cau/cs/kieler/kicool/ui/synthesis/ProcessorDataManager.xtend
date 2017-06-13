@@ -101,7 +101,7 @@ class ProcessorDataManager {
             val sourceNode = node.findNode(NODE_SOURCE)
             val processorUnit = compilationNotification.compilationContext.getFirstProcessorInstance
             sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-            sourceNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+            sourceNode.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(processorUnit, processorUnit.environment.getSourceModel, view))
             
         }
@@ -157,10 +157,10 @@ class ProcessorDataManager {
         if (snapshots!= null) {
             for(snapshot : snapshots) {
                 val intermediateNode = intermediateKGT.copy
-                intermediateNode.shapeLayout.xpos = intermediatePosX
+                intermediateNode.xpos = intermediatePosX
                 intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                 intermediateRootNode.children += intermediateNode
-                intermediateNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+                intermediateNode.setProperty(INTERMEDIATE_DATA, 
                     new IntermediateData(processorUnit, snapshot, view))
                 intermediatePosX += 3.5f
             }
@@ -168,15 +168,15 @@ class ProcessorDataManager {
         
         // Final result
         val finalResultNode = intermediateKGT.copy
-        finalResultNode.shapeLayout.xpos = intermediatePosX
+        finalResultNode.xpos = intermediatePosX
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
-        finalResultNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+        finalResultNode.setProperty(INTERMEDIATE_DATA, 
             new IntermediateData(processorUnit, processorUnit.environment.getModel, view))
 
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
-        processorBodyNode.shapeLayout.setProperty(INTERMEDIATE_DATA, 
+        processorBodyNode.setProperty(INTERMEDIATE_DATA, 
             new IntermediateData(processorUnit, processorUnit.environment.getModel, view))
 
         

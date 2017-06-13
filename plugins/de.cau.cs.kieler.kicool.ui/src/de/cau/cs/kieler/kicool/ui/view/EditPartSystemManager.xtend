@@ -68,7 +68,8 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
         editorActionAdapters.get(part)?.deactivate
         editorActionAdapters.remove(part)
         editPartCompilationContextMap.remove(part)
-        KiCoModelViewNotifier.notifyCompilationChanged(part, null)
+        // You have to set it to null manually if you want to because to many updates will cause NPEs in the thread pool.
+//        KiCoModelViewNotifier.notifyCompilationChanged(part, null)
     }
     
     override onEditorSaved(IEditorPart editor) {

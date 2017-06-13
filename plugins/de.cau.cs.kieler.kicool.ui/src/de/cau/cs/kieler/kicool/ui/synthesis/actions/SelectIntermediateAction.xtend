@@ -36,7 +36,7 @@ class SelectIntermediateAction implements IAction {
     override execute(ActionContext context) {
         val kNode = context.KNode
         
-        val intermediateData = kNode.shapeLayout.getProperty(INTERMEDIATE_DATA)
+        val intermediateData = kNode.getProperty(INTERMEDIATE_DATA)
         val compilationContext = intermediateData.processor.environment.compilationContext
         val editor = intermediateData.view.editPartSystemManager.findEditorForSystem(compilationContext.system)
         var model = intermediateData.model
