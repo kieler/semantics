@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kvis.ui.animations.AnimationHandler
 import de.cau.cs.kieler.kvis.ui.animations.ColorAnimation
 import de.cau.cs.kieler.kvis.ui.animations.MoveAnimation
 import de.cau.cs.kieler.kvis.ui.animations.RotateAnimation
+import de.cau.cs.kieler.kvis.ui.animations.TextAnimation
 import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
@@ -141,10 +142,13 @@ class KVisView extends ViewPart {
                     case "rotate": {
                         handler = new RotateAnimation(element.name, animation)
                     }
+                    case "text": {
+                        handler = new TextAnimation(element.name, animation)
+                    }
                     default: {
                         throw new Exception("No animation handler was found for '"+animation.type + "'\n"
                                             + "Available animation handlers are:\n"
-                                            + "color, move, rotate, walkPath")
+                                            + "color, move, rotate, walkPath, text")
                     }
                 }
                 if(animation != null) {

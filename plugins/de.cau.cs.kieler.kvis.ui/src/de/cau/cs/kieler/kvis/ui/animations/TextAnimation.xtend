@@ -13,17 +13,17 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
+import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.simulation.core.DataPool
-import org.w3c.dom.svg.SVGLocatable
 
 /**
  * @author aas
  *
  */
-class RotateAnimation extends AnimationHandler {
-    var float angle
-    var float anchorX
-    var float anchorY
+class TextAnimation extends AnimationHandler {
+    var float fontSize = -1
+    var String fontFamily
+    var String text
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
@@ -37,12 +37,12 @@ class RotateAnimation extends AnimationHandler {
             if(literal != null) {
                 val attributeName = attributeMapping.attribute
                 switch(attributeName) {
-                    case "angle" : angle = Float.valueOf(literal)
-                    case "anchorX" : anchorX = Float.valueOf(literal)
-                    case "anchorY" : anchorY = Float.valueOf(literal)
+                    case "fontSize" : fontSize = Float.valueOf(literal)
+                    case "fontFamily" : fontFamily = literal
+                    case "text" : text = literal
                     default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
                         + "Handled attributes are:\n"
-                        + "anchorX, anchorY"
+                        + "text, fontSize, fontFamily"
                     )
                 }
             }
@@ -50,7 +50,7 @@ class RotateAnimation extends AnimationHandler {
     }
 
     override getName() {
-        return "rotate"
+        return "text"
     }
     
     override apply(DataPool pool) {
@@ -58,22 +58,21 @@ class RotateAnimation extends AnimationHandler {
         val value = getVariableValue(pool) as Double
         
         // Get mapped value
-        val angleString = animation.getAttribute("angle").getMappedValue(value)
-        if(angleString != null) {
-            angle = Float.valueOf(angleString)
+        val textValue = animation.getAttribute("text").getMappedValue(value)
+        if(textValue != null) {
+            text = textValue
         }
         
-        // Compute position
-        if(elem instanceof SVGLocatable) {
-            // Position and size of the element
-            val SVGLocatable locatable = elem as SVGLocatable
-            val box = locatable.getBBox()
-            // Set new transform
-            var rotation =  angle + "," + (box.x+anchorX*box.width) + "," + (box.y+anchorY*box.width)
-            elem.setAttributeFunction("transform", "rotate", rotation)
-            println(elem.getAttribute("transform"))
-        } else {
-            throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")
+        // Apply attributes to svg element
+        if(fontSize >= 0) {
+            elem.setAttributeField("style", "font-size", String.valueOf(fontSize))                
         }
+        if(fontFamily != null) {
+            elem.setAttributeField("style", "font-family", fontFamily)
+        }
+        if(text != null) {
+            elem.setText(text)
+        }
+        println(elem.getAttribute("style"))
     }
 }

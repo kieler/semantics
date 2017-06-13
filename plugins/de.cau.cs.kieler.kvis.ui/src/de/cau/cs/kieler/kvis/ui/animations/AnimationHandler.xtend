@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import org.w3c.dom.Element
+import org.w3c.dom.Node
 import org.w3c.dom.svg.SVGDocument
 
 /**
@@ -56,7 +57,7 @@ abstract class AnimationHandler {
     
     protected def Object getVariableValue(DataPool pool) {
         val variableReference = animation.variable
-        val modelName = variableReference.model?.name
+        val modelName = variableReference?.model?.name
         val variableName = variableReference?.name
         if(variableName != null) {
             val variable = pool.getVariable(modelName, variableName);
@@ -87,6 +88,34 @@ abstract class AnimationHandler {
         val oldAttribute = elem.getAttribute(attributeName)
         val newAttribute = changeFunction(oldAttribute, functionName, functionValues)
         elem.setAttribute(attributeName, newAttribute)
+    }
+    
+    protected def void setText(Element elem, String text) {
+        val textNode = elem.findNodeOfType(Node.TEXT_NODE)
+        if (textNode != null) {
+            textNode.nodeValue = text
+        } else {
+            throw new Exception("Can't set text on element "+svgElementId+ ".\n"
+                              + "It is not a text node itself and has no text node as child.")
+        }
+    }
+    
+    protected def Node findNodeOfType(Node node, int nodeType) {
+        if(node.nodeType == nodeType) {
+            return node
+        } else {
+            val children = node.getChildNodes()
+            if (children != null) {
+                for(var i = 0; i < children.length; i++) {
+                    val child = children.item(i)
+                    val textNode = child.findNodeOfType(nodeType)
+                    if(textNode != null) {
+                        return textNode
+                    }                    
+                }    
+            }
+        }
+        return null
     }
     
     protected def String changeField(String attribute, String fieldName, String fieldValue) {
