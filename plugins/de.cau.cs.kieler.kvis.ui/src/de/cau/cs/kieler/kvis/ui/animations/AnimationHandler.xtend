@@ -84,9 +84,9 @@ abstract class AnimationHandler {
         elem.setAttribute(attributeName, newAttribute)
     }
     
-    protected def void setAttributeFunction(Element elem, String attributeName, String functionName, String... functionValues) {
+    protected def void setAttributeFunction(Element elem, String attributeName, String functionName, String... arguments) {
         val oldAttribute = elem.getAttribute(attributeName)
-        val newAttribute = changeFunction(oldAttribute, functionName, functionValues)
+        val newAttribute = changeFunction(oldAttribute, functionName, arguments)
         elem.setAttribute(attributeName, newAttribute)
     }
     
@@ -131,8 +131,8 @@ abstract class AnimationHandler {
         return newAttribute
     }
     
-    protected def String changeFunction(String attribute, String functionName, String... functionValues) {
-        val newFunction = (functionName + "(" + functionValues.join(",") + ")")
+    protected def String changeFunction(String attribute, String functionName, String... arguments) {
+        val newFunction = (functionName + "(" + arguments.join(",") + ")")
         // Replace the current function from the attribute. That is, replace everything from 'FUNCTION_NAME(' to ')'
 //        println("old:"+attribute)
         var newAttribute = attribute.replaceAll(functionName+"\\([^\\)]*\\)", "");

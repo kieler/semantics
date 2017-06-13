@@ -23,11 +23,8 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Panel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,30 +37,18 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import org.apache.batik.swing.JSVGCanvas;
-import org.apache.batik.swing.gvt.GVTTreeRendererAdapter;
-import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
-import org.apache.batik.swing.svg.GVTTreeBuilderAdapter;
-import org.apache.batik.swing.svg.GVTTreeBuilderEvent;
 import org.apache.batik.swing.svg.JSVGComponent;
-import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.svg2svg.SVGTranscoder;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceDeltaVisitor;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -86,14 +71,13 @@ import de.cau.cs.kieler.kvis.ui.internal.KVisActivator;
 
 public class KVisCanvas extends Composite implements ISelectionListener {
 
-    private JSVGCanvas svgCanvas = null;
+    private JSVGCanvas svgCanvas;
 
     private IFile svgFile;
     private IProject svgProject;
     private URI svgURI; // required if RCP does not support IFiles
 
-    private SVGResourceChangeListener updater;
-    private JLabel statusLabel = new JLabel("Status");
+    private JLabel statusLabel;
     private Frame frame;
 
     private KVisUserAgent userAgent;
@@ -122,6 +106,7 @@ public class KVisCanvas extends Composite implements ISelectionListener {
         super(parent, SWT.EMBEDDED);
 
         parent.setLayout(new FillLayout());
+        statusLabel = new JLabel("Status");
         statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
         statusLabel.setBackground(java.awt.Color.BLACK);
         statusLabel.setForeground(java.awt.Color.WHITE);
@@ -134,56 +119,25 @@ public class KVisCanvas extends Composite implements ISelectionListener {
          * their background. Note that this is a global property and cannot be scoped. It might not
          * be suitable for your application.
          */
-        try {
-            System.setProperty("sun.awt.noerasebackground", "true");
-        } catch (NoSuchMethodError error) {
-            error.printStackTrace();
-        }
+//        try {
+//            System.setProperty("sun.awt.noerasebackground", "true");
+//        } catch (NoSuchMethodError error) {
+//            error.printStackTrace();
+//        }
 
         try {
             userAgent = new KVisUserAgent(this);
-            if (EclipseJSVGCanvas.getInstance() == null) {
-                if (!EclipseJSVGCanvas.createSingleInstance(userAgent, true, true)) {
-                    log("Creation of single instance of KEV-View failed!");
-                    return;
-                }
-                // Get the single instance of the EclipseJSVGCanvas
-                svgCanvas = EclipseJSVGCanvas.getInstance();
-                // svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
-                svgCanvas.setLayout(new BorderLayout());
+            // Create the EclipseJSVGCanvas
+            svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
+            svgCanvas.setLayout(new BorderLayout());
 
-                svgCanvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
-                svgCanvas.setDoubleBufferedRendering(false);
-                svgCanvas.setDisableInteractions(true);
-                // this.canvas.setAnimationLimitingCPU(0.5f);
-
-                // Save current SVG Document via Shift + Alt + Mouse click
-                svgCanvas.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        int onmask = MouseEvent.SHIFT_DOWN_MASK | MouseEvent.ALT_DOWN_MASK;
-                        if ((e.getModifiersEx() & onmask) == onmask) {
-                            // Only save current SVGDocument to file, if
-                            // SHIFT + ALT + Right-Mousebutton is clicked
-                            if (e.getButton() == MouseEvent.BUTTON3) {
-                                saveSVGDocument();
-                            }
-                        }
-                    }
-                });
-            } else {// Otherwise set the sourcepath to the current document uri
-                svgCanvas = EclipseJSVGCanvas.getInstance();
-                // If svgDocument already exists, set the current svgURI for the refresh button
-                if (svgCanvas.getSVGDocument() != null) {
-                    setSVGURI(URI.create(svgCanvas.getSVGDocument().getURL()));
-                }
-            }
+            svgCanvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
+            svgCanvas.setDoubleBufferedRendering(false);
+            svgCanvas.setDisableInteractions(true);
+            // this.canvas.setAnimationLimitingCPU(0.5f);
 
             frame = null;
-            try {
-                frame = SWT_AWT.new_Frame(this);
-            } catch (Throwable e) {
-                // Catch 'not implemented' exception
-            }
+            frame = SWT_AWT.new_Frame(this);
 
             Panel panel = new Panel(new BorderLayout()) {
                 private static final long serialVersionUID = -3473742040625838717L;
@@ -210,27 +164,14 @@ public class KVisCanvas extends Composite implements ISelectionListener {
                 frame.add(BorderLayout.CENTER, panel);
                 frame.setEnabled(true);
             }
-
-            IWorkspace workspace = ResourcesPlugin.getWorkspace();
-            updater = new SVGResourceChangeListener();
-            workspace.addResourceChangeListener(updater);
-
         } catch (Throwable t) {
             Status s = new Status(IStatus.ERROR, KVisActivator.DE_CAU_CS_KIELER_KVIS_KVIS, t.getMessage(), t);
             StatusManager.getManager().handle(s, StatusManager.SHOW);
             StatusManager.getManager().handle(s, StatusManager.LOG);
-            // ErrorDialog d = new
-            // ErrorDialog(this.getShell(),"Error",t.getMessage(),s,IStatus.ERROR);
         }
-
     }
 
     public void dispose() {
-
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        if (updater != null) {
-            workspace.removeResourceChangeListener(updater);
-        }
         // Don't dispose svgCanvas, could be used later on (simulation can run in background without
         // showing the canvas)
         // svgCanvas.dispose();
@@ -326,60 +267,6 @@ public class KVisCanvas extends Composite implements ISelectionListener {
         }
     }
 
-    public class SVGResourceChangeListener implements IResourceChangeListener {
-        public void resourceChanged(IResourceChangeEvent event) {
-            if (svgFile != null) {
-                final IPath svgPath = svgFile.getLocation();
-
-                final IPath PATH = new Path(svgProject.getName() + "/" //$NON-NLS-1$
-                        + svgFile.getProjectRelativePath());
-
-                // we are only interested in POST_CHANGE events
-                if (event.getType() != IResourceChangeEvent.POST_CHANGE) {
-                    return;
-                }
-                IResourceDelta rootDelta = event.getDelta();
-                // get the delta, if any, for the documentation directory
-                IResourceDelta docDelta = rootDelta.findMember(PATH);
-                if (docDelta == null) {
-                    return;
-                }
-                IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
-                    public boolean visit(IResourceDelta delta) {
-                        // only interested in changed resources (not added or
-                        // removed)
-                        if (delta.getKind() != IResourceDelta.CHANGED) {
-                            return true;
-                        }
-                        // only interested in content changes
-                        if ((delta.getFlags() & IResourceDelta.CONTENT) == 0) {
-                            return true;
-                        }
-                        IResource resource = delta.getResource();
-
-                        IPath path = resource.getLocation();
-
-                        if (path.equals(svgPath)) {
-                            paintSVGFile();
-                        }
-
-                        return true;
-                    }
-                };
-                try {
-                    docDelta.accept(visitor);
-                } catch (CoreException e) {
-                    // BatikUIPlugin.getDefault().getLog().log(e.getStatus());
-                    log("CoreException", e);
-
-                    // open error dialog with syncExec or print to plugin log file
-                }
-                // nothing more to do if there were no changed text files
-                return;
-            }
-        }
-    }
-
     /**
      * Returns the current JSVGCanvas of the KEV-View.
      * 
@@ -390,46 +277,14 @@ public class KVisCanvas extends Composite implements ISelectionListener {
     }
 
     /**
-     * Helper function for saving current-status of svg-file This function creates an Eclipse
-     * Project with an "images" folder, where all svg-files are saved to. To save the image simple
-     * press CTRL+SHIFT+RIGHT_MOUSE_BUTTON on the current svg-document
+     * Save the currently displayed SVG to the file at the given location.
      */
-    public void saveSVGDocument() {
-        if (EclipseJSVGCanvas.getInstance() != null) {
-            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-            IProject project = root.getProject("KEV_SVG_FILEDUMP"); // Project name
-            IFolder imageFolder = project.getFolder("images"); // Folder name
+    public void saveSVGDocument(String location) {
+        if (svgCanvas != null) {
             try {
-                if (!project.exists()) { // Create project if it doesn't exists
-                    project.create(null);
-                }
-                project.open(null);
+                TranscoderInput input = new TranscoderInput(svgCanvas.getSVGDocument());
 
-                if (!imageFolder.exists()) { // Create folder if it doesn't exists
-                    imageFolder.create(false, true, null);
-                }
-            } catch (CoreException ce) {
-                // TODO Auto-generated catch block
-                ce.printStackTrace();
-            }
-            try {
-                TranscoderInput input = new TranscoderInput(getSVGCanvas().getSVGDocument());
-
-                FileWriter writer;
-                Calendar now = Calendar.getInstance();
-
-                String fileName;
-                fileName = imageFolder.getLocation().toString(); // Get fullpath to "images" folder
-                fileName += "/SVGFileDump[";
-                fileName += now.get(Calendar.YEAR) + "-";
-                fileName += now.get(Calendar.MONTH) + 1 < 10 ? "0" + (now.get(Calendar.MONTH) + 1)
-                        + "-" : (now.get(Calendar.MONTH) + 1) + "-";
-                fileName += now.get(Calendar.DAY_OF_MONTH) < 10 ? "0"
-                        + now.get(Calendar.DAY_OF_MONTH) + "_" : now.get(Calendar.DAY_OF_MONTH)
-                        + "-";
-                fileName += now.getTimeInMillis() + "].svg";
-
-                writer = new FileWriter(fileName);
+                FileWriter writer = new FileWriter(location);
 
                 TranscoderOutput output = new TranscoderOutput(writer);
                 SVGTranscoder t = new SVGTranscoder();
@@ -437,16 +292,7 @@ public class KVisCanvas extends Composite implements ISelectionListener {
                 t.transcode(input, output);
                 writer.flush();
                 writer.close();
-                imageFolder.refreshLocal(IFolder.DEPTH_ONE, null); // Refresh the "images" folder to
-                // show the saved file
-            } catch (TranscoderException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            } catch (CoreException e) {
-                // TODO Auto-generated catch block
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
