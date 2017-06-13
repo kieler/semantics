@@ -14,7 +14,6 @@ package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
-import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
@@ -41,7 +40,7 @@ class ColorAnimation extends AnimationHandler {
     private def void apply(Object value, AttributeMapping attributeMapping) {
         val elem = findElement()
         val attributeName = attributeMapping.attribute
-        val newValue = getMappedValue(value, attributeMapping)
+        val newValue = attributeMapping. getMappedValue(value)
         if(newValue != null) {
             switch(attributeName) {
                 case "fillColor" : elem.setAttributeField("style", "fill", newValue)

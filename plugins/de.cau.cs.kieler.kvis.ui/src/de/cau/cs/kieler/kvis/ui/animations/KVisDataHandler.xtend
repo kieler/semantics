@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Display
  *
  */
 class KVisDataHandler extends DefaultDataHandler {
-        
+
     override read(DataPool pool) {
 //        // Execute in UI thread
         Display.getDefault().asyncExec(new Runnable() {

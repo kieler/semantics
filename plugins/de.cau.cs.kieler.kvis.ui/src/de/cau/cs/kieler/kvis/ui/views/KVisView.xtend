@@ -15,10 +15,15 @@ package de.cau.cs.kieler.kvis.ui.views
 import de.cau.cs.kieler.kvis.kvis.Visualization
 import de.cau.cs.kieler.kvis.ui.animations.AnimationHandler
 import de.cau.cs.kieler.kvis.ui.animations.ColorAnimation
+import de.cau.cs.kieler.kvis.ui.animations.MoveAnimation
+import de.cau.cs.kieler.kvis.ui.animations.RotateAnimation
+import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.util.List
 import org.apache.batik.swing.gvt.GVTTreeRendererAdapter
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent
@@ -37,7 +42,6 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
 
 /**
  * @author aas
@@ -130,6 +134,12 @@ class KVisView extends ViewPart {
                     }
                     case "walkPath": {
                         handler = new WalkPathAnimation(element.name, animation)
+                    }
+                    case "move": {
+                        handler = new MoveAnimation(element.name, animation)
+                    }
+                    case "rotate": {
+                        handler = new RotateAnimation(element.name, animation)
                     }
                     default: {
                         throw new Exception("No animation handler was found for "+animation.type)
@@ -240,7 +250,12 @@ class KVisView extends ViewPart {
     
     private def void showError(Exception e) {
         e.printStackTrace
-        val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.getMessage(), e);
+        // Show stack trace to user
+        val sw = new StringWriter();
+        val pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        sw.toString();
+        val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + sw.toString, e);
         StatusManager.getManager().handle(s, StatusManager.SHOW);
     }
 }

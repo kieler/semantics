@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kvis.kvis.Mapping
 import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
-import org.eclipse.xtend.lib.annotations.Accessors
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
@@ -51,6 +50,10 @@ abstract class AnimationHandler {
         return getElementById(svgElementId)
     }
     
+    protected def AttributeMapping getAttribute(Animation animation, String name) {
+        return animation.attributeMappings.findFirst[it.attribute.equals(name)]
+    }
+    
     protected def Object getVariableValue(DataPool pool) {
         val variableReference = animation.variable
         val modelName = variableReference.model?.name
@@ -68,12 +71,21 @@ abstract class AnimationHandler {
     }
     
     protected def String removeQuotes(String txt) {
+        if(txt == null) {
+            return null    
+        }
         return txt.replaceAll("\"", "")
     }
     
     protected def void setAttributeField(Element elem, String attributeName, String fieldName, String fieldValue) {
         val oldAttribute = elem.getAttribute(attributeName)
         val newAttribute = changeField(oldAttribute, fieldName, fieldValue)
+        elem.setAttribute(attributeName, newAttribute)
+    }
+    
+    protected def void setAttributeFunction(Element elem, String attributeName, String functionName, String... functionValues) {
+        val oldAttribute = elem.getAttribute(attributeName)
+        val newAttribute = changeFunction(oldAttribute, functionName, functionValues)
         elem.setAttribute(attributeName, newAttribute)
     }
     
@@ -90,7 +102,21 @@ abstract class AnimationHandler {
         return newAttribute
     }
     
-    protected def String getMappedValue(Object value, AttributeMapping attributeMapping) {
+    protected def String changeFunction(String attribute, String functionName, String... functionValues) {
+        val newFunction = (functionName + "(" + functionValues.join(",") + ")")
+        // Replace the current function from the attribute. That is, replace everything from 'FUNCTION_NAME(' to ')'
+//        println("old:"+attribute)
+        var newAttribute = attribute.replaceAll(functionName+"\\([^\\)]*\\)", "");
+        newAttribute += newFunction
+//        println("new:"+newAttribute)
+        return newAttribute
+    }
+    
+    protected def String getMappedValue(AttributeMapping attributeMapping, Object value) {
+        if(attributeMapping == null) {
+            return null
+        }
+        
         if(attributeMapping.literal != null) {
             return attributeMapping.literal.removeQuotes
         } else {
@@ -146,7 +172,6 @@ abstract class AnimationHandler {
             val toHigh = mapping.attributeDomain.range.to
             // Vector calculation v = pos + percent*length
             val mappedValue = scale(doubleValue, fromLow, fromHigh, toLow, toHigh)
-            println("mappedValue:"+mappedValue)
             return mappedValue.toString
         }
     }
