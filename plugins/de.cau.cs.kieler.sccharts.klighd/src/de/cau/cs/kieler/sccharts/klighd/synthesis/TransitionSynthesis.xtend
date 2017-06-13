@@ -30,6 +30,8 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.core.options.EdgeLabelPlacement
+import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -61,7 +63,8 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         val edge = transition.createEdge().associateWith(transition);
 
         if (USE_KLAY.booleanValue) {
-            edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0);
+            edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0)
+            edge.setLayoutOption(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.ALWAYS_UP)
         } else {
             edge.setLayoutOption(CoreOptions::SPACING_EDGE_LABEL, 2.0);
         }

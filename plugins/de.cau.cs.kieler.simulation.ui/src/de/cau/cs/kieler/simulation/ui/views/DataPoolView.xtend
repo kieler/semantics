@@ -65,17 +65,18 @@ class DataPoolView extends ViewPart {
     }
     
     /**
+     * {@inheritDoc}
+     */
+    override setFocus() {
+        viewer.refresh()
+    }
+    
+    /**
      * Dispose and clear reference to singleton instance.
      */
     override dispose() {
         super.dispose()
         instance = null
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    override setFocus() {
     }
     
     /**

@@ -21,8 +21,8 @@ import java.util.Iterator
 import java.util.List
 import org.eclipse.emf.common.util.AbstractTreeIterator
 
-import static com.google.common.collect.Iterators.concat
-import static com.google.common.collect.Iterators.transform
+import static extension com.google.common.collect.Iterators.concat
+import static extension com.google.common.collect.Iterators.transform
 
 /** 
  * @author ssm
@@ -52,7 +52,7 @@ final class StateIterator {
      */
     def static Iterator<State> getDirectChildren(State s) {
         val regions = s.getRegions().iterator()
-        return concat(transform(regions, [region | region.getStates().iterator]))
+        return regions.transform([region | region.getStates().iterator]).concat
     }
     
     /**
@@ -104,7 +104,7 @@ final class StateIterator {
     def static Iterator<State> sccAllStates(ControlflowRegion r) {
         val states = r.getStates()
         val containedStates = states.map[state | sccAllStates(state)]
-        concat(containedStates)
+        containedStates.concat
     }
 
     /**

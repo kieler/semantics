@@ -107,7 +107,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         // Transform dataflows first
 		targetRootState.transformDataflows
         // Traverse all referenced states
-        targetRootState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
+        targetRootState.allContainedStates.filter[referencedState].immutableCopy.forEach [
             transformReference(targetRootState)
         ]
         
@@ -238,7 +238,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
         state.remove
 
-        newState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
+        newState.allContainedStates.filter[referencedState].immutableCopy.forEach [
             transformReference(newState)
         ]
     }

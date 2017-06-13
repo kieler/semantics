@@ -40,24 +40,15 @@ class Const extends Feature {
     }
 
     //-------------------------------------------------------------------------
+    
     @Inject
     extension SCChartsExtension
 
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
-            val constObjects = state.valuedObjects.filter [
-                isConst && initialValue != null
-            ].toList
-            if (constObjects.size > 0) {
-                return true
-            }
-        }
-        return false
+        return model.allStates.exists[declarations.filter[const].exists[valuedObjects.exists[initialValue != null]]]
     }
+    
+    
 
 }
