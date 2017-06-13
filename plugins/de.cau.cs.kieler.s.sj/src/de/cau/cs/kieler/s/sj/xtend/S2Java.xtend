@@ -135,7 +135,7 @@ class S2Java {
     «ENDFOR»
     
     
-    class «className» {
+    public class «className» {
 
    «/* Variables */»
     «sVariables(program)»    

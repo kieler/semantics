@@ -17,6 +17,9 @@ import org.eclipse.jface.viewers.CheckboxCellEditor
 import org.eclipse.jface.viewers.EditingSupport
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TextCellEditor
+import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
+import de.cau.cs.kieler.simulation.core.NDimensionalArray
+import java.util.List
 
 /**
  * @author aas
@@ -35,50 +38,81 @@ class ValueColumnEditingSupport extends EditingSupport {
     }
     
     override protected getCellEditor(Object element) {
-        if(element instanceof Variable){
-            if(element.value instanceof String) {
+        var Object value 
+        if(element instanceof Variable) {
+            value = element.value
+        } else if(element instanceof NDimensionalArrayElement){
+            value = element.value
+        }
+        if (value != null) {
+            if(value instanceof String) {
                 return new TextCellEditor(viewer.table)
-            } else if(element.value instanceof Boolean) {
+            } else if(value instanceof Boolean) {
                 return new CheckboxCellEditor(viewer.table)
-            } else if(element.value instanceof Float){
+            } else if(value instanceof Float
+                      || value instanceof Double
+                      || value instanceof Integer){
                 return new TextCellEditor(viewer.table)
-            } else if(element.value instanceof Integer){
-                return new TextCellEditor(viewer.table)
+            } else if(value instanceof NDimensionalArray) {
+                val ed= new ArrayCellEditor(viewer.table)
+                ed.control.setData("parentInput", viewer.input)
+                return ed
             }
         }
         return null
     }
     
     override protected getValue(Object element) {
+        var Object value  
         if(element instanceof Variable) {
-            val v = if(element.isDirty) element.userValue else element.value 
-            if(v instanceof String) {
-                return v
-            } else if(v instanceof Boolean) {
-                return v
-            } else if(v instanceof Float){
-                return v.toString
-            } else if(v instanceof Integer){
-                return v.toString
+            value = if(element.isDirty) element.userValue else element.value
+        } else if(element instanceof NDimensionalArrayElement) {
+            value = element.value
+        }
+        
+        if(value != null) {
+           if(value instanceof String) {
+                return value
+            } else if(value instanceof Boolean) {
+                return value
+            } else if(value instanceof Float
+                      || value instanceof Double
+                      || value instanceof Integer){
+                return value.toString
+            } else if(value instanceof NDimensionalArray) {
+                return value
             }
         }
         return null 
     }
     
     override protected setValue(Object element, Object value) {
-        if(element instanceof Variable){
-            if(element.value instanceof Float){
-                try {
+        try {
+            if(element instanceof Variable){
+                if(element.value instanceof Float) {
                     element.userValue = Float.valueOf(value.toString)    
-                } catch (NumberFormatException e) {}
-            } else if(element.value instanceof Integer){
-                try {
+                } else if(element.value instanceof Double) {
+                    element.userValue = Double.valueOf(value.toString)    
+                } else if(element.value instanceof Integer) {
                     element.userValue = Integer.valueOf(value.toString)
-                } catch (NumberFormatException e) {}
-            } else {
-                element.userValue = value
+                } else {
+                    element.userValue = value
+                }
+            } else if(element instanceof NDimensionalArrayElement) {
+                if(element.value instanceof Float) {
+                    element.value = Float.valueOf(value.toString)    
+                } else if(element.value instanceof Double) {
+                    element.value = Double.valueOf(value.toString)
+                } else if(element.value instanceof Integer) {
+                    element.value = Integer.valueOf(value.toString)
+                } else {
+                    element.value = value
+                }
             }
-            viewer.update(element, null);
+//            println("New value:"+element.value)
+        } catch (NumberFormatException e) {
+            throw new Exception("Can't set value of "+element+ " to "+value, e)
         }
+        viewer.update(element, null);
     }
 }

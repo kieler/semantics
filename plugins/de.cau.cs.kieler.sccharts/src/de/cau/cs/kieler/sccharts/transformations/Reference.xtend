@@ -107,7 +107,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         // Transform dataflows first
 		targetRootState.transformDataflows
         // Traverse all referenced states
-        targetRootState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
+        targetRootState.allContainedStates.filter[referencedState].immutableCopy.forEach [
             transformReference(targetRootState)
         ]
         
@@ -183,6 +183,10 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         val bing = eObject as Binding
                         if (bing.actual.name == binding.formal.name) {
                             bing.actual = binding.actual
+                            bing.indices.clear
+                            for(index : binding.indices) {
+                                bing.indices.add(index.nontracingCopy.rtrace(binding))
+                            }                               
                         }
                     } else if (eObject instanceof TextExpression) {
                         if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {
@@ -234,7 +238,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
         state.remove
 
-        newState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
+        newState.allContainedStates.filter[referencedState].immutableCopy.forEach [
             transformReference(newState)
         ]
     }

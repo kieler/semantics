@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated Mapping -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="de.cau.cs.kieler.kev.mapping.presentation.MappingModelWizardID"
+            name="%_UI_MappingModelWizard_label"
+            class="de.cau.cs.kieler.kev.mapping.presentation.MappingModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/MappingModelFile.gif">
+         <description>%_UI_MappingModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated Mapping -->
+      <editor
+            id="de.cau.cs.kieler.kev.mapping.presentation.MappingEditorID"
+            name="%_UI_MappingEditor_label"
+            icon="icons/full/obj16/MappingModelFile.gif"
+            extensions="mapping"
+            class="de.cau.cs.kieler.kev.mapping.presentation.MappingEditor"
+            contributorClass="de.cau.cs.kieler.kev.mapping.presentation.MappingActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

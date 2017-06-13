@@ -3,29 +3,33 @@
 /* MACROS TO SEND / RECEIVE A VARIABLE
 /*****************************************************************************/
 
-<#macro Simulate isInput isOutput isSignal>
+<#macro Simulate isInput isOutput indices...>
     <@input>
+    // Receive ${varname}
+    var = vars.getJSONObject(i);
+    model.${varname} = var.<@value_getter />("value");
+    i++;
     </@>
     <@output>
     // Send ${varname}
-    if(json.endsWith("}"))
-        json += ",";
-    json += "\"${varname}\":{";
-    <#if vartype == "int" || vartype == "float">
-    json += "\"value\":"+String.valueOf(model.${varname});
-    <#elseif vartype == "bool">
-    json += "\"value\":"+String.valueOf(model.${varname});
-    <#elseif vartype == "string">
-    json += "\"value\":\""+model.${varname}+"\"";
-    </#if>
-    json += ",";
-    json += "\"type\":\"${vartype}\"";
-    json += ",";
-    json += "\"input\":${isInput?c}";
-    json += ",";
-    json += "\"output\":${isOutput?c}";
-    json += ",";
-    json += "\"signal\":${isSignal?c}";
-    json += "}";
+    var = new JSONObject();
+    var.put("name", "${varname}");
+    var.put("value", model.${varname});
+    var.put("type", "${vartype}");
+    var.put("in", ${isInput?c});
+    var.put("out", ${isOutput?c});
+    vars.put(var);
     </@>
+</#macro>
+
+<#macro value_getter>
+<#if vartype == "int">
+getInt<#t>
+<#elseif vartype ==  "float">
+getFloat<#t>
+<#elseif vartype == "bool">
+getBoolean<#t>
+<#elseif vartype == "string">
+getString<#t>
+</#if>
 </#macro>

@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
+import de.cau.cs.kieler.prom.common.FileData
 
 /**
  * This class handles initialization of default environments.
@@ -97,14 +98,22 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * @return the created environment
      */
     private static def EnvironmentData getGenericEnvironment() {
+        val simTemplateFile = new FileData("Simulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/Simulation.ftl") 
+        val simTemplateSnippet = new FileData("snippets/SimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/SimulationSnippets.ftl") 
+        val initialResources = #[simTemplateFile,simTemplateSnippet]
+        
         var launchData = new KiCoLaunchData()
         
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".c"
+        launchData.wrapperCodeSnippetDirectory = "snippets"
+        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        
         
         var env = new EnvironmentData("Generic")
         env.launchData = launchData
         env.modelFile = "${project_name}"
+        env.initialResources = initialResources
         env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
         return env
     }
@@ -114,14 +123,22 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * @return the created environment
      */
     private static def EnvironmentData getGenericJavaEnvironment() {
+        val targetTemplateFile = new FileData("src/TargetTemplate.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/TargetTemplate.ftl")
+        val simTemplateFile = new FileData("src/JavaSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/JavaSimulation.ftl") 
+        val simTemplateSnippet = new FileData("snippets/JavaSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/JavaSimulationSnippets.ftl") 
+        val initialResources = #[simTemplateFile,simTemplateSnippet,targetTemplateFile]
+
         var launchData = new KiCoLaunchData()
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
+        launchData.targetTemplate = targetTemplateFile.projectRelativePath
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        launchData.wrapperCodeSnippetDirectory = "snippets"
         
         var env = new EnvironmentData("Generic Java")
         env.launchData = launchData
-        env.modelFile = "src/${project_name}"
+        env.modelFile = "src/model/${project_name}"
+        env.initialResources = initialResources
         env.associatedProjectWizardClass = "org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard"
         return env
     }

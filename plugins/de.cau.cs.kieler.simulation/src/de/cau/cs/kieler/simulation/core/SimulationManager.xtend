@@ -112,7 +112,7 @@ class SimulationManager {
     public def void append(Simulator simulator) {
         simulator.initialize(currentPool)
         
-        println("Appended simulator")
+//        println("Appended simulator")
         updateHandlersAfterStep()
     }
     
@@ -131,7 +131,7 @@ class SimulationManager {
         // Save initial state
         currentState = new StepState(pool, 0)
         
-        println("Initilized simulation")
+//        println("Initilized simulation")
         updateHandlersAfterStep()
     }
     
@@ -156,7 +156,7 @@ class SimulationManager {
         // Save new state
         setNewState(pool, currentState.actionIndex + 1)
         
-        println("Stepped simulation")
+//        println("Stepped simulation")
         updateHandlersAfterStep()
     }
     
@@ -180,7 +180,7 @@ class SimulationManager {
         // Save new state
         setNewState(pool, nextActionIndex)
         
-        println("Stepped simulation macro tick")
+//        println("Stepped simulation macro tick")
         updateHandlersAfterStep()
     }
     

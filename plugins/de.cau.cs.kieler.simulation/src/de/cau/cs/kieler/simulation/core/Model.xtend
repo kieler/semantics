@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import de.cau.cs.kieler.simulation.json.JsonManager
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.json.JSONObject
 
 /**
  * A model is a named container for variables.
@@ -23,19 +23,19 @@ import org.json.JSONObject
  * @author aas
  *
  */
-class Model {
+class Model implements Cloneable {
     
     /**
      * The name of the model
      */
     @Accessors
-    private String name
+    private String name = ""
     
     /**
      * The pool in which this model is saved
      */
     @Accessors
-    private DataPool pool
+    private DataPool pool = null
     
     /**
      * The variables of the model
@@ -43,38 +43,20 @@ class Model {
     private List<Variable> variables = newArrayList()
 
     /**
-     * Converts the variables of this model to a json representation.
+     * Convert this model to a json representation.
      */
-    public def JSONObject toJSONObject() {
-        val json = new JSONObject()
-        for(v : variables) {
-            val jsonVariable = new JSONObject()
-            jsonVariable.put("value", v.value)
-            jsonVariable.put("input", v.isInput)
-            jsonVariable.put("output", v.isInput)
-            jsonVariable.put("signal", v.isSignal)
-            json.put(v.name, jsonVariable)
-        }
+    public def String toJson() {
+        val json = JsonManager.GSON.toJson(this)
         return json
     }
     
     /**
-     * Loads the variables of this model from a json representation
+     * Creates a model from a json representation
      */
-    public def void fromJSONObject(JSONObject json) {
-        variables.clear()
-        val names = json.names
-        for(var i = 0; i < names.length; i++) {
-            val varName = names.getString(i)
-            val jsonVariable = json.getJSONObject(varName)
-            val varValue = jsonVariable.get("value")
-            
-            val variable = new Variable(varName, varValue)
-            variable.isInput = jsonVariable.optBoolean("input")
-            variable.isOutput = jsonVariable.optBoolean("output")
-            variable.isSignal = jsonVariable.optBoolean("signal")
-            addVariable(variable)
-        }
+    public static def Model createFromJson(String name, String json) {
+        val m = JsonManager.GSON.fromJson(json, typeof(Model))
+        m.name = name
+        return m
     }
     
     /**

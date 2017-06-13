@@ -16,6 +16,7 @@ import com.google.common.util.concurrent.SimpleTimeLimiter
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.Simulator
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -25,8 +26,6 @@ import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.json.JSONObject
-import de.cau.cs.kieler.simulation.core.Simulator
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -40,6 +39,8 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     @Accessors
     private var IFile executable
     
+    private var String modelName
+    
     private var Process process
     private var BufferedReader processReader
     private var PrintStream processWriter
@@ -48,18 +49,15 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
      * Create new process and read it's first JSON object with variables to fill the data pool.
      */
     override initialize(DataPool pool) {
-        var ProcessBuilder pBuilder
+        val currentDir = "." + File.separator
         // Execute jar file or binary
+        var ProcessBuilder pBuilder
         if(executable.name.endsWith(".jar"))
-            pBuilder = new ProcessBuilder(#["java", "-jar", "./"+executable.name])
+            pBuilder = new ProcessBuilder(#["java", "-jar", currentDir+executable.name])
         else
-            pBuilder = new ProcessBuilder(#["./"+executable.name])
+            pBuilder = new ProcessBuilder(#[executable.location.toOSString])
         pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
         process = pBuilder.start()
-         
-        val model = new Model()
-        model.name = modelName
-        pool.addModel(model)
         
         // Get reader and writer for process
         val isr = new InputStreamReader(process.inputStream)
@@ -68,9 +66,10 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         
         // Read json data
         var String line = waitForJSONOutput(processReader)
-        println("Parsing JSON:"+line)
-        val json = new JSONObject(line)
-        model.fromJSONObject(json)
+
+        modelName = getUniqueModelName(executable.name, pool, 0)
+        val model = Model.createFromJson(modelName, line)
+        pool.addModel(model)
     }
     
     /**
@@ -79,19 +78,19 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     override write(DataPool pool) {
         // Create json for this model from data pool
         val model = pool.models.findFirst[it.name == modelName]
-        val jsonInput = model.toJSONObject
+        val jsonInput = model.toJson
         
         // Write data pool to process
-        processWriter.print(jsonInput.toString)
+        processWriter.print(jsonInput)
         processWriter.print("\n")
         processWriter.flush()
         
+        // Read data pool from process
         // Let the process perform tick and wait for output
         val line = waitForJSONOutput(processReader)
-        
-        // Read data pool from process
-        val jsonOutput = new JSONObject(line)
-        model.fromJSONObject(jsonOutput)
+        val newModel = Model.createFromJson(modelName, line)
+        pool.models.remove(model)
+        pool.addModel(newModel)        
     }
     
     /**
@@ -120,6 +119,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         var String line
         val timeLimiter = new SimpleTimeLimiter();
         do {
+            System.err.println("Calling readLine "+System.currentTimeMillis)
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
                 override call() throws Exception {
@@ -129,12 +129,26 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
             try {
                 line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, false)
             } catch(Exception e) {
-                throw new IOException("Process of simulation "+executable.location.toOSString +" is not responding", e)
+                stop();
+                throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)
             }
             
             Thread.sleep(1);
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
         return line
+    }
+    
+    private def String getUniqueModelName(String name, DataPool pool, int suffix) {
+        val uniqueName = if(suffix > 0)
+                             name+"_"+suffix
+                         else
+                             name
+        val modelWithThisName = pool.models.findFirst[it.name.equals(uniqueName)]
+        if(modelWithThisName == null) {
+            return uniqueName
+        } else {
+            return getUniqueModelName(name, pool, suffix+1)
+        }
     }
     
     /**
