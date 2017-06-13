@@ -142,7 +142,9 @@ class KVisView extends ViewPart {
                         handler = new RotateAnimation(element.name, animation)
                     }
                     default: {
-                        throw new Exception("No animation handler was found for "+animation.type)
+                        throw new Exception("No animation handler was found for '"+animation.type + "'\n"
+                                            + "Available animation handlers are:\n"
+                                            + "color, move, rotate, walkPath")
                     }
                 }
                 if(animation != null) {
@@ -255,7 +257,11 @@ class KVisView extends ViewPart {
         val pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         sw.toString();
-        val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + sw.toString, e);
+        var stackTrace = sw.toString
+        if(stackTrace.length > 500) {
+            stackTrace = stackTrace.substring(0, 500)+"..."
+        }
+        val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
         StatusManager.getManager().handle(s, StatusManager.SHOW);
     }
 }
