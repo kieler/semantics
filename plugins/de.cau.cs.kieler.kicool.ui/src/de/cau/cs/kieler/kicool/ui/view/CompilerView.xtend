@@ -37,7 +37,7 @@ import org.eclipse.ui.IViewSite
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.actions.VisualFeedbackAction
+import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 
 /**
  * @author ssm
@@ -61,9 +61,9 @@ class CompilerView extends DiagramViewPart {
 //    @Accessors private var DebugToggle debugToggle = null
     @Accessors private var ForwardResultToggle forwardResultToggle = null
     @Accessors private var AutoCompileToggle autoCompileToggle = null
+    @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
     
     @Accessors private var CompilationAction compilationAction = null
-    @Accessors private var VisualFeedbackAction visualFeedbackAction = null
     
     /**
      * {@inheritDoc}
@@ -108,23 +108,19 @@ class CompilerView extends DiagramViewPart {
         forwardResultToggle = new ForwardResultToggle(this)
         autoCompileToggle = new AutoCompileToggle(this)
         
-        
         developerToggle = new DeveloperToggle(this)
         developerToggle.addContributions(toolBar, menu)
-//        smartSystemSelectionToggle = new SmartSystemSelectionToggle(this)
-//        debugToggle = new DebugToggle(this)
+        visualLayoutFeedbackToggle = new VisualLayoutFeedbackToggle(this)
         
         toolBar.add(new Separator)
-        visualFeedbackAction = new VisualFeedbackAction(this)
-        toolBar.add(visualFeedbackAction.action)
         // The standard klighd view part menu entries will be inserted after this separator.    
 
         menu.add(forwardResultToggle.action)
         menu.add(autoCompileToggle.action)
         menu.add(new Separator)
-//        menu.add(smartSystemSelectionToggle.action)
+        menu.add(visualLayoutFeedbackToggle.action)
+        menu.add(new Separator)
         menu.add(developerToggle.action)
-//        menu.add(debugToggle.action)
         
         memento?.loadCheckedValue(forwardResultToggle)
         memento?.loadCheckedValue(autoCompileToggle)

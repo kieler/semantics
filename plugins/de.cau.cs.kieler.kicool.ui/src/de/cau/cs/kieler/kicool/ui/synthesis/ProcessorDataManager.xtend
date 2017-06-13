@@ -50,6 +50,10 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KShapeLayout
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
+import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateDoubleCollector
+import org.eclipse.elk.core.options.CoreOptions
+import de.cau.cs.kieler.klighd.LightDiagramServices
 
 /**
  * @author ssm
@@ -200,14 +204,47 @@ class ProcessorDataManager {
     }
     
     
-    static def void setFrameErrorColor(KNode node) {
-        val rect = node.getData(KContainerRendering) as KContainerRendering
-        rect.setFBColor(ERROR)
+    static def void postUpdateProcessors(AbstractContextNotification contextNotification, KNode node, CompilerView view) {
+        val postUpdateCollector = new PostUpdateDoubleCollector(PTIME)
+        val allProcessors = contextNotification.compilationContext.processorMap.keySet
+        
+        // Gather data.       
+        for(processor : allProcessors) {
+            val processorNode = node.findNode(processor.uniqueProcessorId)    
+            if (processorNode == null) {
+                // This can happen because metrics are also listed in the processor map.
+            } else {
+                val compilationUnit = contextNotification.compilationContext.getCompilationUnit(processor)
+                postUpdateCollector.addProcessor(compilationUnit)
+            }
+        }
+        
+        // Update view.
+        for(processor : allProcessors) {
+            val processorNode = node.findNode(processor.uniqueProcessorId)    
+            if (processorNode == null) {
+                // This can happen because metrics are also listed in the processor map.
+            } else {
+                val compilationUnit = contextNotification.compilationContext.getCompilationUnit(processor)
+                val perc = postUpdateCollector.getPercentile(compilationUnit)
+                processorNode.setProperty(CoreOptions.SCALE_FACTOR, perc)
+            }
+        }
+        
+        LightDiagramServices.layoutDiagram(view)
+        
     }
     
     
     
     
+    
+    
+    
+    static def void setFrameErrorColor(KNode node) {
+        val rect = node.getData(KContainerRendering) as KContainerRendering
+        rect.setFBColor(ERROR)
+    }
     
     static def void setLabel(KNode node, String string) {
         node.labels.head.text = string

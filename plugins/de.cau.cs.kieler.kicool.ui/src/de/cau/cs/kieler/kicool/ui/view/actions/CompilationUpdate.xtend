@@ -22,6 +22,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetSystem
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetProcessor
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.postUpdateProcessors
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
@@ -66,6 +67,10 @@ class CompilationUpdate extends KiCoolUIObserver {
                         }
                         view.editPartSystemManager.attachCompilationContextToEditorPart(editor, notification.compilationContext)
                         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
+                    }
+                    
+                    if (view.visualLayoutFeedbackToggle.checked) {
+                        notification.postUpdateProcessors(view.viewContext.viewModel, view)    
                     }
                 } 
         }
