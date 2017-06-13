@@ -47,14 +47,14 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
+import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.emf.ecore.util.EContentsEList
 
 /**
  * @author aas
@@ -75,6 +75,17 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private IProgressMonitor monitor
 
     /**
+     * The project for which this build is done.
+     */
+    private IProject project
+    
+    /**
+     * The kind of the build for an IncrementalProjectBuilder. This is one of 
+     * FULL_BUILD, CLEAN_BUILD, INCREMENTAL_BUILD
+     */
+    private int kind
+    
+    /**
      * The environment data used for the build.
      */
     private EnvironmentData env
@@ -92,27 +103,33 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     /**
      * Cache of all loaded models of a project.
      */
-    private XtextResourceSet resourceSet;
+    private ResourceSet resourceSet;
     
     /**
+     * Build method for Eclipse Builders.
      * {@inheritDoc}
      */
     protected override IProject[] build(int kind, Map args, IProgressMonitor monitor) {
         this.monitor = monitor
+        this.project = getProject()
+        this.kind = kind
         
-        if (kind == IncrementalProjectBuilder.FULL_BUILD || kind == IncrementalProjectBuilder.CLEAN_BUILD) {
-            fullBuild();
-        } else {
-            val delta = getDelta(project);
-            if (delta == null) {
-               fullBuild();
-            } else {
-               incrementalBuild(delta);
+        switch(kind) {
+            case FULL_BUILD : fullBuild()
+            case CLEAN_BUILD : clean()
+            case AUTO_BUILD,
+            case INCREMENTAL_BUILD : {
+                val delta = getDelta(project);
+                if (delta == null) {
+                   fullBuild();
+                } else {
+                   incrementalBuild(delta);
+                }
             }
         }
         return null;
-    }   
-
+    }
+    
     /**
      * Perform a full build of all files.
      */
@@ -133,7 +150,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             delta.accept(new IResourceDeltaVisitor() {
                 override visit(IResourceDelta delta) throws CoreException {
                     val res = delta.getResource()
-                    if(res.type == IResource.FILE && res.exists && res.fileExtension != null) {
+                    if(res.type == IResource.FILE && res.fileExtension != null && res.exists) {
                         // Only take care of files with the following extensions
                         switch(res.fileExtension.toLowerCase) {
                             case "sct",
@@ -162,44 +179,52 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Build a list of files
      * @param resources The list of files to build 
      */
-    private def void build(List<IFile> resources) {
+    private def void build(List<IFile> files) {
         // Compile the found resources
-        if(!resources.isNullOrEmpty) {
+        if(!files.isNullOrEmpty) {
             // Init 
             monitor.subTask("Initializing build")
             initialize()
-  
+            
+            // Load changed models into resource set
+            for(res : files) {
+                monitor.subTask("Loading resource "+res.name)
+                ModelImporter.getResource(res, resourceSet)
+            }
+            // Re-link all models 
+            relink(resourceSet)
+            
             // Compile via KiCo
             var boolean isFirstModel = true
-            for(res : resources) {
+            for(file : files) {
                 // Compile, generate simulation code, fetch wrapper code annotations
                 if(!monitor.isCanceled) {
                     // Remove all warnings and errors from a previous KiCo build.
-                    deleteMarkers(res)
+                    deleteMarkers(file)
                     // Compile model files
-                    switch(res.fileExtension.toLowerCase) {
+                    switch(file.fileExtension.toLowerCase) {
                         case "sct",
                         case "strl" : {
-                            monitor.subTask("Loading resource "+res.name)
-                            val model = ModelImporter.load(res, resourceSet)
+                            monitor.subTask("Loading model "+file.name)
+                            val model = ModelImporter.load(file, resourceSet)
                             if(model == null) {
-                                throw new Exception("Couldn't load model "+res.name)
+                                throw new Exception("Couldn't load model "+file.name)
                             }
                             // Compile using KiCo
                             if(!monitor.isCanceled) {
-                                monitor.subTask("Compiling model "+res.name)
-                                compile(res, model)
+                                monitor.subTask("Compiling model "+file.name)
+                                compile(file, model)
                             }
                             // Generate simulation code
                             if(!monitor.isCanceled) {
-                                monitor.subTask("Creating simulation for "+res.name)
-                                generateSimulationCode(res, model)
+                                monitor.subTask("Creating simulation for "+file.name)
+                                generateSimulationCode(file, model)
                             }
                             // Generate wrapper code for first model in the list
                             if(!monitor.isCanceled) {
                                 if(isFirstModel) {
                                     monitor.subTask("Generating wrapper code.")
-                                    generateWrapperCode(res, model)
+                                    generateWrapperCode(file, model)
                                 }
                             }
                         }
@@ -210,8 +235,18 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             
             // Refresh output in workspace
             monitor.subTask("Refreshing output directory")
-            refreshOutput(resources)
+            refreshOutput(files)
         }
+    }
+
+    /**
+     * Clean the project.
+     */
+    private def void clean() {
+        // TODO: Delete generated files
+        isInitialized = false
+        modelNames.clear
+        createResourceSet
     }
 
     /**
@@ -230,21 +265,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // At first build, search for wrapper code annotations in all model files.
         // These are updated later, if a model file changes.
         if(!isInitialized) {
-            System.err.println("initialize")
             isInitialized = true
-            // Create resource set
-            resourceSet = new XtextResourceSet()
-            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
-            // Load all model files into one resource set
-            modelNames.clear()
-//            val modelFiles = findModelFilesInProject()
-//            for(f : modelFiles) {
-//                System.err.println("loading "+f.name)
-//                val model = ModelImporter.load(f, resourceSet)
-//                if(model != null) {
-//                    modelNames.put(f.location.toOSString, Files.getNameWithoutExtension(f.name))
-//                }
-//            }
+            if(resourceSet == null) {
+                createResourceSet    
+            }
         }
     }
 
@@ -287,7 +311,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * 
      * @param res the resource to build
      */
-    private def void compile(IFile res, EObject model) {
+    private def void compile(IFile file, EObject model) {
         // Load model from file        
         if (model != null) {
             // Get compiler context with settings for KiCo
@@ -313,13 +337,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             // Handle errors and warnings
             if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty()) {
                 // Flush compilation result to target
-                val targetLocation = computeTargetPath(res.projectRelativePath.toOSString, false)
-                saveCompilationResult(res, model, result, targetLocation)
+                val targetLocation = computeTargetPath(file.projectRelativePath.toOSString, false)
+                saveCompilationResult(file, model, result, targetLocation)
             } else {
                 if(result.allWarnings != null && result.allWarnings.toLowerCase.contains("not asc")) {
-                    createWarningMarker(res, "Model is not ASC-Schedulable")
+                    createWarningMarker(file, "Model is not ASC-Schedulable")
                 } else {
-                    val errorMessage = "Compilation of '" + res.name + "' failed:\n\n" +
+                    val errorMessage = "Compilation of '" + file.name + "' failed:\n\n" +
                                        Strings.nullToEmpty(result.allErrors) + "\n" +
                                        Strings.nullToEmpty(result.allWarnings)
     
@@ -370,7 +394,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Generates wrapper code using the main file template
      * and all annotation datas that have been found in models.
      */
-    private def void generateWrapperCode(IFile res, EObject model) {
+    private def void generateWrapperCode(IFile file, EObject model) {
         if(!launchData.wrapperCodeTemplate.isNullOrEmpty) {
             // Get annotations in model
             val annotationDatas = newArrayList()
@@ -379,8 +403,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             // Resolve template path
             val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchData.wrapperCodeTemplate, project)
             // Create wrapper code
-            val name = Files.getNameWithoutExtension(res.name)
-            modelNames.put(res.location.toOSString, name)
+            val name = Files.getNameWithoutExtension(file.name)
+            modelNames.put(file.location.toOSString, name)
             val names = modelNames.values.toList
             val generator = new WrapperCodeGenerator(project, launchData)
             val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate,
@@ -403,14 +427,14 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * 
      * @param res the model file for which simulation code should be created
      */
-    private def void generateSimulationCode(IFile res, EObject model) {
+    private def void generateSimulationCode(IFile file, EObject model) {
         //TODO: Hardcoded stuff
         val simTargetPathDirectory = new Path(computeTargetPath("sim/code/", true))
         var simTemplate = "Simulation.ftl";
-        var simTargetPath = simTargetPathDirectory + File.separator + "Sim_" + Files.getNameWithoutExtension(res.name)+".c"
+        var simTargetPath = simTargetPathDirectory + File.separator + "Sim_" + Files.getNameWithoutExtension(file.name)+".c"
         if(project.findMember(simTemplate) == null) {
             simTemplate = "src/JavaSimulation.ftl"
-            simTargetPath = simTargetPathDirectory + File.separator + "Sim_" + Files.getNameWithoutExtension(res.name)+".java"
+            simTargetPath = simTargetPathDirectory + File.separator + "Sim_" + Files.getNameWithoutExtension(file.name)+".java"
             if(project.findMember(simTemplate) == null) {
                 println("No simulation template found.")
                 return;                
@@ -462,10 +486,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         
         // Get simulation code
         monitor.subTask("Processing simulation template")
-        val modelName = Files.getNameWithoutExtension(res.name)
+        val modelName = Files.getNameWithoutExtension(file.name)
         val generator = new WrapperCodeGenerator(project, launchData)
         val simulationCode = generator.generateWrapperCode(simTemplate,
-            #{"compiled_model_loc" -> computeTargetPath(res.projectRelativePath.toOSString, false),
+            #{"compiled_model_loc" -> computeTargetPath(file.projectRelativePath.toOSString, false),
               WrapperCodeGenerator.FILE_NAME_VARIABLE -> Files.getNameWithoutExtension(simTargetPath),
               WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
               WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName] },
@@ -713,7 +737,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * @param result The KiCo compilation result to be saved
      * @param targetPath File path where the result should be saved
      */
-    private def void saveCompilationResult(IFile res, EObject model, CompilationResult result, String targetLocation) {
+    private def void saveCompilationResult(IFile file, EObject model, CompilationResult result, String targetLocation) {
         // Create directory for the output if none yet.
         createDirectories(targetLocation)
         
@@ -728,7 +752,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 Files.write(result.string, new File(targetLocation), Charsets.UTF_8)
             } else {
                 // Inject compilation result into target template
-                val modelName = Files.getNameWithoutExtension(res.name)
+                val modelName = Files.getNameWithoutExtension(file.name)
                 val annotationDatas = newArrayList()
                 
                 WrapperCodeGenerator.getWrapperCodeAnnotationData(model, annotationDatas)
@@ -764,6 +788,38 @@ class KiCoBuilder extends IncrementalProjectBuilder {
           resource.save(Collections.EMPTY_MAP);
         } catch (IOException e) {
           e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Re-link all XtextResources in the resource set to find references. 
+     * 
+     * @param path The path to a fully qualified file
+     */
+    private def void relink(ResourceSet resourceSet) {
+        for(res : resourceSet.resources) {
+            if(res instanceof XtextResource) {
+                monitor.subTask("Linking resource "+res.URI.lastSegment)
+                res.relink()
+            }
+        }
+    }
+
+    private def void createResourceSet() {
+        // Create resource set
+        resourceSet = new XtextResourceSet()
+        
+        // Load all model files into one resource set.
+        // But only if this is not a full build,
+        // because on a full build all resources are loaded and re-linked later anyway.
+        if(kind != FULL_BUILD) {
+            val modelFiles = findModelFilesInProject()
+            for(f : modelFiles) {
+                monitor.subTask("Loading "+f.name)
+                val res = ModelImporter.getResource(f, resourceSet)
+            }
+            // Relink loaded resources, because all potentially referenced models are in the resource set now.
+            relink(resourceSet)
         }
     }
 
