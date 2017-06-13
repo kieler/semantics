@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.Exec
 import de.cau.cs.kieler.esterel.esterel.Do
@@ -29,63 +28,71 @@ import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.scl.scl.Label
 
 /**
  * @author mrb
  *
  */
-class EsterelParallelTransformation extends AbstractExpansionTransformation implements Traceable{
+class OptimizationLabelRenamingTransformation extends AbstractExpansionTransformation implements Traceable{
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return SCEstTransformation::ESTERELPARALLEL_ID
+        return SCEstTransformation::LABELRENAMING_ID
     }
 
     override getName() {
-        return SCEstTransformation::ESTERELPARALLEL_NAME
+        return SCEstTransformation::LABELRENAMING_NAME
     }
 
     override getExpandsFeatureId() {
-        return SCEstFeature::ESTERELPARALLEL_ID
+        return SCEstFeature::LABELRENAMING_ID
     }
         
 //    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
+//        return Sets.newHashSet(SCEstTransformation::)
 //    }
 //
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(
+              SCEstTransformation::ABORT_ID, SCEstTransformation::ESTERELPARALLEL_ID
+            , SCEstTransformation::NOTHING_ID, SCEstTransformation::HALT_ID
+            , SCEstTransformation::BLOCK_ID, SCEstTransformation::EMIT_ID
+            , SCEstTransformation::SUSTAIN_ID, SCEstTransformation::ESTERELASSIGNMENT_ID
+            , SCEstTransformation::PROCCALL_ID, SCEstTransformation::PRESENT_ID
+            , SCEstTransformation::IFTEST_ID, SCEstTransformation::LOOP_ID
+            , SCEstTransformation::REPEAT_ID, SCEstTransformation::AWAIT_ID
+            , SCEstTransformation::EVERYDO_ID, SCEstTransformation::SUSPEND_ID
+            , SCEstTransformation::TRAP_ID, SCEstTransformation::EXEC_ID
+            , SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID
+            , SCEstTransformation::RUN_ID, SCEstTransformation::DO_ID
+            , SCEstTransformation::UNEMIT_ID, SCEstTransformation::SET_ID
+        )
     }
-    
+
     @Inject
     extension SCEstExtension
     
     def SCEstProgram transform(SCEstProgram prog) {
+        resetLabelSuffix
         prog.modules.forEach [ m | transformStatements(m.statements)]
         return prog
     }
     
-    def EList<Statement> transformStatements(EList<Statement> statements) {
+    def void transformStatements(EList<Statement> statements) {
         for (var i=0; i<statements.length; i++) {
-            var statement = statements.get(i).transformStatement
-            if (statement instanceof Statement) {
-                statements.set(i, statement)
-            }
+            statements.get(i).transformStatement
         }
-        return statements
     }
     
-    def Statement transformStatement(Statement statement) {
-        if (statement instanceof EsterelParallel) {
-            var parallel = createParallel
-            for (thread : (statement as EsterelParallel).threads) {
-                parallel.threads.add(createThread => [ statements.add(transformStatements(thread.statements)) ])
-            }
-            return parallel
+    def transformStatement(Statement statement) {
+        if (statement instanceof Label) {
+            (statement as Label).name = createNewUniqueLabelOptimization
         }
         else if (statement instanceof StatementContainer) {
             
@@ -118,12 +125,15 @@ class EsterelParallelTransformation extends AbstractExpansionTransformation impl
             (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
             transformStatements((statement as IfTest).elseStatements)
         }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements)
+            ]
+        }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
         }
-        return statement
     }
-     
 }

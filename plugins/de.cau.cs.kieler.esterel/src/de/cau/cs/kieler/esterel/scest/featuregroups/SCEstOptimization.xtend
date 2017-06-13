@@ -12,36 +12,30 @@
  */
 package de.cau.cs.kieler.esterel.scest.featuregroups
 
-import com.google.common.collect.Sets
 import de.cau.cs.kieler.kico.features.FeatureGroup
 import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
+import com.google.common.collect.Sets
 
 /**
  * @author mrb
  *
  */
-class SCEstGroup extends FeatureGroup {
+class SCEstOptimization extends FeatureGroup {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCEstFeatureGroup::SCESTPROG_ID
+        return SCEstFeatureGroup::SCESTOPTIMIZATION_ID
     }
 
     override getName() {
-        return SCEstFeatureGroup::SCESTPROG_NAME
+        return SCEstFeatureGroup::SCESTOPTIMIZATION_NAME
     }
 
     override getFeatureIds() {
         Sets.newHashSet(
-             SCEstFeatureGroup::SCESTCONTROLFLOWSTATEMENTS_ID,
-             SCEstFeatureGroup::SCESTSIGNALHANDLINGSTATEMENTS_ID,
-             SCEstFeatureGroup::SCESTDATAHANDLINGSTATEMENTS_ID,
-             SCEstFeatureGroup::SCESTPREEMPTIONSTATEMENTS_ID,
-             SCEstFeatureGroup::SCESTDERIVEDSTATEMENTS_ID,
-             SCEstFeatureGroup::SCESTOPTIMIZATION_ID,
-             SCEstFeature::INITIALIZATION_ID
+             SCEstFeature::LABELRENAMING_ID
         )
     }
 }

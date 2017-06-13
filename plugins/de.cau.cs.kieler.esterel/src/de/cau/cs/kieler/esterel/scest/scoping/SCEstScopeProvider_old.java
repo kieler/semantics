@@ -50,7 +50,7 @@ import de.cau.cs.kieler.esterel.esterel.ValuedObjectReference;
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
  * on how and when to use it.
  */
-public class SCEstScopeProvider extends de.cau.cs.kieler.esterel.scoping.EsterelScopeProvider {
+public class SCEstScopeProvider_old extends de.cau.cs.kieler.esterel.scoping.EsterelScopeProvider {
     
     /**
      * {@inheritDoc}

@@ -73,7 +73,7 @@ ConstantDecls:
 OneTypeConstantDecls:
     constants+=Constant ("," constants+=Constant)* ":" type=TypeIdentifier;
 
-Constant returns ValuedObject:
+Constant returns kexpressions::ValuedObject:
     {Constant} name=ID ("=" value=ConstantValue)?;
 
 ConstantValue:
@@ -130,7 +130,7 @@ InterfaceSignalDecl:
 // example 1:   A : combine boolean with or
 // example 2:   A (combine boolean with or)
 // example 3:   A := 0 : combine integer with '+'
-ISignal returns ISignal:
+ISignal returns kexpressions::ValuedObject:
     {ISignal}
     name=ID (   
           (":"    type=Esterel_ValueType
@@ -149,7 +149,7 @@ ISignal returns ISignal:
           ) 
     )?;
     
-Tick returns ValuedObject:
+Tick returns kexpressions::ValuedObject:
     name="tick";
 
 // ==> 7.3.7 Sensor Declaration
@@ -559,7 +559,7 @@ TypeRenaming:
     (newName=[Type|ID] | newType=Esterel_ValueType) "/" oldName=[Type|ID];
 
 ConstantRenaming:
-    (newName=[ValuedObject|ID] | newValue=ConstantValue) "/" oldName=[ValuedObject|ID];
+    (newName=[kexpressions::ValuedObject|ID] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject|ID];
 
 FunctionRenaming:
     (newName=[Function|ID] | newFunc=BuildInFunction) "/" oldName=[Function|ID];
@@ -683,7 +683,7 @@ terminal HOSTCODE returns ecore::EString:
 // Esterel is a bit richer than what is provided by kexpressions. 
 // These rules are introduced here.
 // Care about order of the rules! 
-AtomicExpression returns Expression:
+AtomicExpression returns kexpressions::Expression:
     FunctionExpression
     | TrapExpression
     | BooleanValue
@@ -692,52 +692,52 @@ AtomicExpression returns Expression:
     | '(' BooleanExpression ')'
     | ConstantExpression;
 
-TrapExpression returns Expression:
+TrapExpression returns kexpressions::Expression:
     {TrapExpression} "??" trap=[ISignal|ID];
 
-FunctionExpression returns Expression:
+FunctionExpression returns kexpressions::Expression:
     {FunctionExpression} function=[Function|ID] 
     "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 
-ConstantExpression returns Expression:
+ConstantExpression returns kexpressions::Expression:
     {ConstantExpression} (constant=[Constant|ID] | value=ConstantValue);
 
 // --> B.3.5 Trap Expressions <--
 // -------------------------------------
-TrapExpr returns Expression:
+TrapExpr returns kexpressions::Expression:
     SignalExpression;
 
 // --> B.3.3 Signal Expressions <--
 // -------------------------------------
-SignalExpression returns Expression:
+SignalExpression returns kexpressions::Expression:
     SignalAndExpression 
     ({OperatorExpression.subExpressions+=current} 
         operator=Esterel_OrOperator
         subExpressions+=SignalAndExpression
     )*;
 
-SignalAndExpression returns Expression:
+SignalAndExpression returns kexpressions::Expression:
     SignalNotExpression 
     ({OperatorExpression.subExpressions+=current} 
         operator=Esterel_AndOperator
         subExpressions+=SignalNotExpression
     )*;
 
-SignalNotExpression returns Expression:
+SignalNotExpression returns kexpressions::Expression:
     {OperatorExpression} 
     operator=Esterel_NotOperator 
     subExpressions+=(SignalNotExpression) 
     |
     SignalAtomicExpression;
 
-SignalAtomicExpression returns Expression:
+SignalAtomicExpression returns kexpressions::Expression:
     SignalReferenceExpr
     | "(" SignalExpression ")"
     | SignalPreExpr
     | TrapReferenceExpr 
 ;
 
-SignalReferenceExpr returns ValuedObjectReference:
+SignalReferenceExpr returns kexpressions::ValuedObjectReference:
     valuedObject=[ISignal|ID];
 
 SignalPreExpr returns Expression:
@@ -783,19 +783,19 @@ DelayExpr:
  * #########################################################################
  */    
 
-Expression returns Expression:
+Expression returns kexpressions::Expression:
     => BooleanExpression
     | ValuedExpression
     ;
 
 
 // Example: not D and C or ?E = 42 or not (A and (B or C))
-BooleanExpression returns Expression:
+BooleanExpression returns kexpressions::Expression:
     OrExpression;
 
 
 // Example: A or B, A and B and C, C and B or D and not E, A and B and C
-OrExpression returns Expression:
+OrExpression returns kexpressions::Expression:
     AndExpression 
     (   {OperatorExpression.subExpressions+=current} 
         operator=Esterel_OrOperator 
@@ -804,7 +804,7 @@ OrExpression returns Expression:
 
 
 // Example: A and B, not C and 42 <= ?D
-AndExpression returns Expression:
+AndExpression returns kexpressions::Expression:
     CompareOperation 
     (   {OperatorExpression.subExpressions+=current} 
         operator=Esterel_AndOperator 
@@ -813,7 +813,7 @@ AndExpression returns Expression:
 
 
 // Example: 42 <= ?A
-CompareOperation returns Expression:
+CompareOperation returns kexpressions::Expression:
     => NotOrValuedExpression 
     ( {OperatorExpression.subExpressions+=current} 
         operator=Esterel_CompareOperator 
@@ -825,7 +825,7 @@ CompareOperation returns Expression:
 
 
 // order IS IMPORTANT
-NotOrValuedExpression returns Expression:
+NotOrValuedExpression returns kexpressions::Expression:
     => ValuedExpression
     | NotExpression
     ;
@@ -833,7 +833,7 @@ NotOrValuedExpression returns Expression:
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
-NotExpression returns Expression:
+NotExpression returns kexpressions::Expression:
     {OperatorExpression} 
     operator=Esterel_NotOperator 
     subExpressions+=(NotExpression)
@@ -842,12 +842,12 @@ NotExpression returns Expression:
   
     
 // everything that evaluates to a primitive number value
-ValuedExpression returns Expression:
+ValuedExpression returns kexpressions::Expression:
     AddExpression;
 
 
 // Example: 1 + 2
-AddExpression returns Expression:
+AddExpression returns kexpressions::Expression:
     SubExpression 
     (   {OperatorExpression.subExpressions+=current} 
         operator=Esterel_AddOperator 
@@ -856,7 +856,7 @@ AddExpression returns Expression:
 
 
 // Example: varA - ?B
-SubExpression returns Expression:
+SubExpression returns kexpressions::Expression:
     MultExpression 
     (   {OperatorExpression.subExpressions+=current} 
         operator=Esterel_SubOperator 
@@ -865,7 +865,7 @@ SubExpression returns Expression:
 
 
 // Example: 2 * 4
-MultExpression returns Expression:
+MultExpression returns kexpressions::Expression:
     DivExpression 
     ( {OperatorExpression.subExpressions+=current} 
         operator=Esterel_MultOperator 
@@ -875,7 +875,7 @@ MultExpression returns Expression:
 
 // Example: (2 / 4)
 // note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-DivExpression returns Expression:
+DivExpression returns kexpressions::Expression:
     ModExpression 
     (   {OperatorExpression.subExpressions+=current} 
         operator=Esterel_DivOperator 
@@ -884,7 +884,7 @@ DivExpression returns Expression:
     
 
 // Example: varA mod ?B
-ModExpression returns Expression:
+ModExpression returns kexpressions::Expression:
     NegExpression 
     (   {OperatorExpression.subExpressions+=current} 
         operator=Esterel_ModOperator 
@@ -894,14 +894,14 @@ ModExpression returns Expression:
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
-NegExpression returns Expression:
+NegExpression returns kexpressions::Expression:
     {OperatorExpression} 
     operator=Esterel_SubOperator 
     subExpressions+=(NegExpression)
     | 
     AtomicValuedExpression;
 
-AtomicValuedExpression returns Expression:
+AtomicValuedExpression returns kexpressions::Expression:
     Esterel_IntValue
     | FloatValue
 //    | '(' DivExpression ')'
@@ -910,7 +910,7 @@ AtomicValuedExpression returns Expression:
 
 
 // Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
-ValuedObjectTestExpression returns Expression:
+ValuedObjectTestExpression returns kexpressions::Expression:
     {OperatorExpression} operator=Esterel_PreOperator '('subExpressions+=ValuedObjectTestExpression')'
     | {OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=Esterel_ValuedObjectReference
     | Esterel_ValuedObjectReference
@@ -918,9 +918,9 @@ ValuedObjectTestExpression returns Expression:
 
 
 // Example: A, varB
-Esterel_ValuedObjectReference returns ValuedObjectReference:
-    {Esterel_ValuedObjectReference} 
-    valuedObject=[ValuedObject|ID];
+Esterel_ValuedObjectReference returns kexpressions::ValuedObjectReference:
+    {kexpressions::ValuedObjectReference} 
+    valuedObject=[kexpressions::ValuedObject|ID];
 
 
 // Example: 'printf(...)'(C)

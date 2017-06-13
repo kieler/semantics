@@ -35,4 +35,8 @@ class SCEstFeatureGroup {
     
     public final static String SCESTDERIVEDSTATEMENTS_ID = "scest.derivedstatements";
     public final static String SCESTDERIVEDSTATEMENTS_NAME = "Derived";
+    
+    public final static String SCESTOPTIMIZATION_ID = "scest.optimization";
+    public final static String SCESTOPTIMIZATION_NAME = "Optimization";
+    
 }

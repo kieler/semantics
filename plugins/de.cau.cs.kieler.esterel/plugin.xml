@@ -113,6 +113,12 @@
      <featureClass
            class="de.cau.cs.kieler.esterel.scest.features.UnEmitFeature">
      </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.Initialization">
+     </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.OptimizationLabelRenaming">
+     </featureClass>
      <featureGroupClass
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstControlFlowStatements">
      </featureGroupClass>
@@ -127,6 +133,9 @@
      </featureGroupClass>
      <featureGroupClass
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstSignalHandlingStatements">
+     </featureGroupClass>
+     <featureGroupClass
+           class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstOptimization">
      </featureGroupClass>
   </extension>
   <extension
@@ -202,6 +211,12 @@
      </expansionTransformationClass>
      <expansionTransformationClass
            class="de.cau.cs.kieler.esterel.scest.transformations.UnEmitTransformation">
+     </expansionTransformationClass>
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.scest.transformations.OptimizationLabelRenamingTransformation">
+     </expansionTransformationClass>
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.scest.transformations.InitializationTransformation">
      </expansionTransformationClass>
   </extension>
   <!--extension

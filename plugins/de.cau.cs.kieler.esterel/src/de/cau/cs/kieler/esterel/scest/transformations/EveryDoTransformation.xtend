@@ -58,10 +58,10 @@ class EveryDoTransformation extends AbstractExpansionTransformation implements T
     override getProducesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::AWAIT_ID, SCEstTransformation::LOOP_ID)
     }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+    }
 
     @Inject
     extension SCEstExtension
@@ -74,7 +74,7 @@ class EveryDoTransformation extends AbstractExpansionTransformation implements T
     def EList<Statement> transformStatements(EList<Statement> statements) {
         for (var i=0; i<statements.length; i++) {
             var statement = statements.get(i).transformStatement
-            if (statement!=null) {
+            if (statement instanceof Statement) {
                 statements.set(i, statement)
             }
         }
@@ -105,7 +105,6 @@ class EveryDoTransformation extends AbstractExpansionTransformation implements T
                 (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
             }
             else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).statements)
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
             }

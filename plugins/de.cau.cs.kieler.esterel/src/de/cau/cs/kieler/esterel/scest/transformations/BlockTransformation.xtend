@@ -31,6 +31,7 @@ import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.esterel.esterel.Block
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
+import com.google.common.collect.Sets
 
 /**
  * @author mrb
@@ -57,9 +58,9 @@ class  BlockTransformation extends AbstractExpansionTransformation implements Tr
 //        return Sets.newHashSet()
 //    }
 //
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+    }
 
     @Inject
     extension SCEstExtension
@@ -72,7 +73,7 @@ class  BlockTransformation extends AbstractExpansionTransformation implements Tr
     def EList<Statement> transformStatements(EList<Statement> statements) {
         for (var i=0; i<statements.length; i++) {
             var statement = statements.get(i).transformStatement
-            if (statement!=null) {
+            if (statement instanceof Statement) {
                 statements.set(i, statement)
             }
         }
@@ -92,7 +93,6 @@ class  BlockTransformation extends AbstractExpansionTransformation implements Tr
                 (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
             }
             else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).statements)
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
             }

@@ -92,5 +92,11 @@ public class SCEstTransformation {
     
     public final static String SET_ID = "scest.set";
     public final static String SET_NAME = "Set";
+    
+    public final static String INITIALIZATION_ID = "scest.initialization";
+    public final static String INITIALIZATION_NAME = "Initialization";
+    
+    public final static String LABELRENAMING_ID = "scest.labelrenaming";
+    public final static String LABELRENAMING_NAME = "Label Renaming";
 
 }

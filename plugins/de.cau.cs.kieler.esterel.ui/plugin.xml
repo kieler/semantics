@@ -344,7 +344,7 @@
       </editor>
       <editor
             editor="de.cau.cs.kieler.esterel.scest.SCEst"
-            features="scest.prog, scest.controllflowstatements, scest.signalhandlingstatements, scest.datahandlingstatements, scest.preemptionstatements, scest.derivedstatements, esterel.parallel, esterel.nothing, esterel.halt, esterel.block, esterel.emit, esterel.sustain, esterel.assignment, esterel.proccall, esterel.present, esterel.iftest, esterel.loop, esterel.repeat, esterel.abort, esterel.await, esterel.everydo, esterel.suspend, esterel.trap, esterel.exec, esterel.localsignaldecl, esterel.localvariable, esterel.run, esterel.do, scest.unemit, scest.set"
+            features="scest.prog, scest.controllflowstatements, scest.signalhandlingstatements, scest.datahandlingstatements, scest.preemptionstatements, scest.derivedstatements, scest.optimization, esterel.parallel, esterel.nothing, esterel.halt, esterel.block, esterel.emit, esterel.sustain, esterel.assignment, esterel.proccall, esterel.present, esterel.iftest, esterel.loop, esterel.repeat, esterel.abort, esterel.await, esterel.everydo, esterel.suspend, esterel.trap, esterel.exec, esterel.localsignaldecl, esterel.localvariable, esterel.run, esterel.do, scest.unemit, scest.set, scest.labelrenaming, scest.initialization"
             label="SCEst to SCL Transformation"
             priority="100">
       </editor>
