@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.ui.toolbar
 
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.ui.SimulationConsole
+import de.cau.cs.kieler.simulation.ui.launch.SimulationLaunchShortcut
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
@@ -24,15 +25,22 @@ import org.eclipse.core.commands.ExecutionException
  */
 class SimulationToolbarButton extends AbstractHandler {
     
+    protected boolean justRestarted
+    
     override execute(ExecutionEvent event) throws ExecutionException {
+        justRestarted = false
         if(simulation == null || simulation.isStopped) {
-            SimulationConsole.writeToConsole("No simulation running")
+            // Start last simulation
+            justRestarted = true
+            SimulationConsole.writeToConsole("Restarting last simulation")
+            new SimulationLaunchShortcut().launchLastSelection
+            println("Restarted last simulation")
         }
         return null
     }
     
     override isEnabled() {
-        return (simulation != null) && (!simulation.isStopped)
+        return true
     }
 
     public def SimulationManager getSimulation() {

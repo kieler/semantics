@@ -107,6 +107,21 @@ public class KvisSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case KvisPackage.CONDITION:
+      {
+        Condition condition = (Condition)theEObject;
+        T result = caseCondition(condition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.COMPARISON:
+      {
+        Comparison comparison = (Comparison)theEObject;
+        T result = caseComparison(comparison);
+        if (result == null) result = caseCondition(comparison);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case KvisPackage.DOMAIN:
       {
         Domain domain = (Domain)theEObject;
@@ -132,6 +147,21 @@ public class KvisSwitch<T> extends Switch<T>
       {
         ModelReference modelReference = (ModelReference)theEObject;
         T result = caseModelReference(modelReference);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.BOOLEAN_OPERATOR:
+      {
+        BooleanOperator booleanOperator = (BooleanOperator)theEObject;
+        T result = caseBooleanOperator(booleanOperator);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case KvisPackage.AND_OR_EXPRESSION:
+      {
+        AndOrExpression andOrExpression = (AndOrExpression)theEObject;
+        T result = caseAndOrExpression(andOrExpression);
+        if (result == null) result = caseCondition(andOrExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -220,6 +250,38 @@ public class KvisSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Condition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Condition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCondition(Condition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Comparison</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Comparison</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseComparison(Comparison object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Domain</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -279,6 +341,38 @@ public class KvisSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseModelReference(ModelReference object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Boolean Operator</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Boolean Operator</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBooleanOperator(BooleanOperator object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>And Or Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>And Or Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAndOrExpression(AndOrExpression object)
   {
     return null;
   }

@@ -10,7 +10,9 @@ public class SimulationUiPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.simulation.ui"; //$NON-NLS-1$
-
+	
+	public static final String LAST_LAUNCHED_SELECTION = "last_launched_selection";
+	
 	// The shared instance
 	private static SimulationUiPlugin plugin;
 	

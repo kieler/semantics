@@ -24,7 +24,7 @@ class StopSimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(simulation != null) {
+        if(simulation != null && !justRestarted) {
             SimulationConsole.writeToConsole("Halt")
             simulation.stop()
         }

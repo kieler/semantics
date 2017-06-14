@@ -49,13 +49,13 @@ class SimulationManager {
     /**
      * Is the simulation performed continuously in a separate thread? 
      */
-    @Accessors
+    @Accessors(PUBLIC_GETTER)
     private var boolean isPlaying
     
     /**
      * Has the simulation been stopped? 
      */
-     @Accessors
+     @Accessors(PUBLIC_GETTER)
     private var boolean isStopped
     
     /**
@@ -138,7 +138,7 @@ class SimulationManager {
     /**
      * Execute a single step action and save the resulting state.
      */
-    public def void stepSingle() {
+    public def void stepSubTick() {
         if(isStopped) {
             System.err.println("Simulation was stopped")
             return

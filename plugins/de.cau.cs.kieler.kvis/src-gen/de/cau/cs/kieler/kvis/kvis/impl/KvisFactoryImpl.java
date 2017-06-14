@@ -69,10 +69,14 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
       case KvisPackage.ANIMATION: return createAnimation();
       case KvisPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
       case KvisPackage.MAPPING: return createMapping();
+      case KvisPackage.CONDITION: return createCondition();
+      case KvisPackage.COMPARISON: return createComparison();
       case KvisPackage.DOMAIN: return createDomain();
       case KvisPackage.INTERVAL: return createInterval();
       case KvisPackage.VARIABLE_REFERENCE: return createVariableReference();
       case KvisPackage.MODEL_REFERENCE: return createModelReference();
+      case KvisPackage.BOOLEAN_OPERATOR: return createBooleanOperator();
+      case KvisPackage.AND_OR_EXPRESSION: return createAndOrExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -138,6 +142,28 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public Condition createCondition()
+  {
+    ConditionImpl condition = new ConditionImpl();
+    return condition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Comparison createComparison()
+  {
+    ComparisonImpl comparison = new ComparisonImpl();
+    return comparison;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Domain createDomain()
   {
     DomainImpl domain = new DomainImpl();
@@ -175,6 +201,28 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
   {
     ModelReferenceImpl modelReference = new ModelReferenceImpl();
     return modelReference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BooleanOperator createBooleanOperator()
+  {
+    BooleanOperatorImpl booleanOperator = new BooleanOperatorImpl();
+    return booleanOperator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AndOrExpression createAndOrExpression()
+  {
+    AndOrExpressionImpl andOrExpression = new AndOrExpressionImpl();
+    return andOrExpression;
   }
 
   /**

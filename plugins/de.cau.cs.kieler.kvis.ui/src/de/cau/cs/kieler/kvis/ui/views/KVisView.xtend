@@ -53,6 +53,8 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.apache.batik.swing.JSVGCanvas.AffineAction
 import org.eclipse.jface.dialogs.MessageDialog
+import org.eclipse.core.runtime.preferences.InstanceScope
+import de.cau.cs.kieler.kvis.ui.KVisUiModule
 
 /**
  * @author aas
@@ -118,6 +120,7 @@ class KVisView extends ViewPart {
                 if (model instanceof Visualization) {
                     lastPool = null
                     kvisFile = file
+                    saveUsedKvisFile(kvisFile)
                     updateAfterRendering = true
                     // Load image
                     val project = file.project
@@ -174,6 +177,23 @@ class KVisView extends ViewPart {
         if (kvisFile != null) {
             println("Reloading KVis View")
             loadFile(kvisFile)
+        }
+    }
+
+    private def void saveUsedKvisFile(IFile file) {
+        val prefs = InstanceScope.INSTANCE.getNode(KVisUiModule.PLUGIN_ID)
+        prefs.put(KVisUiModule.LAST_KVIS_FILE, file?.fullPath.toOSString)
+    }
+
+    public def void loadLastKvisFile() {
+        val prefs = InstanceScope.INSTANCE.getNode(KVisUiModule.PLUGIN_ID)
+        val path = prefs.get(KVisUiModule.LAST_KVIS_FILE, "")
+        if(!path.isNullOrEmpty) {
+            val workspaceRoot = ResourcesPlugin.workspace.root
+            val file = workspaceRoot.findMember(path)
+            if(file != null && file.exists && file.type == IResource.FILE){
+                loadFile(file as IFile)
+            }            
         }
     }
 
@@ -283,9 +303,13 @@ class KVisView extends ViewPart {
                 saveSVGDocument
             }
         })
-        mgr.add(new Action("Refresh") {
+        mgr.add(new Action("Reload") {
             override run() {
-                reload()
+                if(kvisFile != null && svgImage != null) {
+                    reload()    
+                } else {
+                    loadLastKvisFile()
+                }
             }
         })
         mgr.add(new Action("Open KVis File") {
@@ -307,6 +331,9 @@ class KVisView extends ViewPart {
     }
 
     public def void update(DataPool pool) {
+        if(kvisFile == null && svgImage == null) {
+            return
+        }
         // Make all changes to the svg in the update manager.
         // Otherwise the svg canvas is not updated properly.
         lastPool = pool

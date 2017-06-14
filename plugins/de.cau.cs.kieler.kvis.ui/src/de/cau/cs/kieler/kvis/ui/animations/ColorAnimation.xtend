@@ -40,13 +40,13 @@ class ColorAnimation extends AnimationHandler {
     private def void apply(Object value, AttributeMapping attributeMapping) {
         val elem = findElement()
         val attributeName = attributeMapping.attribute
-        val newValue = attributeMapping. getMappedValue(value)
+        val newValue = attributeMapping.getMappedValue(value)
         if(newValue != null) {
             switch(attributeName) {
-                case "fillColor" : elem.setAttributeField("style", "fill", newValue)
-                case "strokeColor" : elem.setAttributeField("style", "stroke", newValue)
-                case "strokeWidth" : elem.setAttributeField("style", "stroke-width", newValue)
-                case "opacity" : elem.setAttributeField("style", "opacity", newValue)
+                case "fillColor" : elem.setAttributeField("style", "fill", newValue.toString)
+                case "strokeColor" : elem.setAttributeField("style", "stroke", newValue.toString)
+                case "strokeWidth" : elem.setAttributeField("style", "stroke-width", newValue.toString)
+                case "opacity" : elem.setAttributeField("style", "opacity", newValue.toString)
                 default :
                     throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
                                       + "Handled attributes are:\n"

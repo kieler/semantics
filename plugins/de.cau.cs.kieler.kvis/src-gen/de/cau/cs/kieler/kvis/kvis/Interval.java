@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
+import de.cau.cs.kieler.kexpressions.Value;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -24,55 +26,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface Interval extends EObject
 {
   /**
-   * Returns the value of the '<em><b>From</b></em>' attribute.
+   * Returns the value of the '<em><b>From</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>From</em>' attribute isn't clear,
+   * If the meaning of the '<em>From</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>From</em>' attribute.
-   * @see #setFrom(int)
+   * @return the value of the '<em>From</em>' containment reference.
+   * @see #setFrom(Value)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getInterval_From()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  int getFrom();
+  Value getFrom();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Interval#getFrom <em>From</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Interval#getFrom <em>From</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>From</em>' attribute.
+   * @param value the new value of the '<em>From</em>' containment reference.
    * @see #getFrom()
    * @generated
    */
-  void setFrom(int value);
+  void setFrom(Value value);
 
   /**
-   * Returns the value of the '<em><b>To</b></em>' attribute.
+   * Returns the value of the '<em><b>To</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>To</em>' attribute isn't clear,
+   * If the meaning of the '<em>To</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>To</em>' attribute.
-   * @see #setTo(int)
+   * @return the value of the '<em>To</em>' containment reference.
+   * @see #setTo(Value)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getInterval_To()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  int getTo();
+  Value getTo();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Interval#getTo <em>To</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Interval#getTo <em>To</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>To</em>' attribute.
+   * @param value the new value of the '<em>To</em>' containment reference.
    * @see #getTo()
    * @generated
    */
-  void setTo(int value);
+  void setTo(Value value);
 
 } // Interval

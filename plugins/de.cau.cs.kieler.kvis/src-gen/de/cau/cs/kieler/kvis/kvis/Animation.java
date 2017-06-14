@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
-import de.cau.cs.kieler.kexpressions.Expression;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -106,12 +104,12 @@ public interface Animation extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Condition</em>' containment reference.
-   * @see #setCondition(Expression)
+   * @see #setCondition(Condition)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAnimation_Condition()
    * @model containment="true"
    * @generated
    */
-  Expression getCondition();
+  Condition getCondition();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Animation#getCondition <em>Condition</em>}' containment reference.
@@ -121,6 +119,6 @@ public interface Animation extends EObject
    * @see #getCondition()
    * @generated
    */
-  void setCondition(Expression value);
+  void setCondition(Condition value);
 
 } // Animation

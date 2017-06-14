@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
+import de.cau.cs.kieler.kexpressions.Value;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -24,30 +26,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Domain extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Value</b></em>' attribute.
+   * Returns the value of the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Value</em>' attribute isn't clear,
+   * If the meaning of the '<em>Value</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Value</em>' attribute.
-   * @see #setValue(String)
+   * @return the value of the '<em>Value</em>' containment reference.
+   * @see #setValue(Value)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getDomain_Value()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getValue();
+  Value getValue();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Domain#getValue <em>Value</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Domain#getValue <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Value</em>' attribute.
+   * @param value the new value of the '<em>Value</em>' containment reference.
    * @see #getValue()
    * @generated
    */
-  void setValue(String value);
+  void setValue(Value value);
 
   /**
    * Returns the value of the '<em><b>Range</b></em>' containment reference.

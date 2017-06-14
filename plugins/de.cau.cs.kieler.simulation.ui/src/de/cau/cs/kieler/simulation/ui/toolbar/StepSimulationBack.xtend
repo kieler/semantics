@@ -25,7 +25,7 @@ class StepSimulationBack extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(SimulationManager.instance != null) {
+        if(simulation != null && !justRestarted) {
             SimulationConsole.writeToConsole("Step Back")
             simulation.stepBack()
         }

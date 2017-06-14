@@ -24,7 +24,7 @@ class StepSimulationMacroTick extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(simulation != null) {
+        if(simulation != null && !justRestarted) {
             SimulationConsole.writeToConsole("Step macro tick")
             simulation.stepMacroTick()
 //            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)

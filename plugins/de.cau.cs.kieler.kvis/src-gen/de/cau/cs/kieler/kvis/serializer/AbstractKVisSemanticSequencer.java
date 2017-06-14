@@ -22,8 +22,11 @@ import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
+import de.cau.cs.kieler.kvis.kvis.AndOrExpression;
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
+import de.cau.cs.kieler.kvis.kvis.BooleanOperator;
+import de.cau.cs.kieler.kvis.kvis.Comparison;
 import de.cau.cs.kieler.kvis.kvis.Domain;
 import de.cau.cs.kieler.kvis.kvis.Element;
 import de.cau.cs.kieler.kvis.kvis.Interval;
@@ -166,11 +169,20 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 			}
 		else if (epackage == KvisPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KvisPackage.AND_OR_EXPRESSION:
+				sequence_AndExpression(context, (AndOrExpression) semanticObject); 
+				return; 
 			case KvisPackage.ANIMATION:
 				sequence_Animation(context, (Animation) semanticObject); 
 				return; 
 			case KvisPackage.ATTRIBUTE_MAPPING:
 				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
+				return; 
+			case KvisPackage.BOOLEAN_OPERATOR:
+				sequence_AndOperator(context, (BooleanOperator) semanticObject); 
+				return; 
+			case KvisPackage.COMPARISON:
+				sequence_Comparison(context, (Comparison) semanticObject); 
 				return; 
 			case KvisPackage.DOMAIN:
 				sequence_VariableDomain(context, (Domain) semanticObject); 
@@ -200,10 +212,53 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
+	 *     AndExpression returns AndOrExpression
+	 *     AndExpression.AndOrExpression_1_0_0 returns AndOrExpression
+	 *
+	 * Constraint:
+	 *     (left=AndExpression_AndOrExpression_1_0_0 operator='and' right=Comparison)
+	 */
+	protected void sequence_AndExpression(ISerializationContext context, AndOrExpression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__LEFT));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__OPERATOR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__OPERATOR));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAndExpressionAccess().getAndOrExpressionLeftAction_1_0_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getAndExpressionAccess().getOperatorAndKeyword_1_0_1_0(), semanticObject.getOperator());
+		feeder.accept(grammarAccess.getAndExpressionAccess().getRightComparisonParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AndOperator returns BooleanOperator
+	 *
+	 * Constraint:
+	 *     AND='and'
+	 */
+	protected void sequence_AndOperator(ISerializationContext context, BooleanOperator semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.BOOLEAN_OPERATOR__AND) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.BOOLEAN_OPERATOR__AND));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAndOperatorAccess().getANDAndKeyword_0(), semanticObject.getAND());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Animation returns Animation
 	 *
 	 * Constraint:
-	 *     (type=ID variable=VariableReference? attributeMappings+=AttributeMapping* condition=BoolExpression?)
+	 *     (type=ID variable=VariableReference? attributeMappings+=AttributeMapping* condition=AndExpression?)
 	 */
 	protected void sequence_Animation(ISerializationContext context, Animation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -215,9 +270,23 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     AttributeMapping returns AttributeMapping
 	 *
 	 * Constraint:
-	 *     (attribute=ID (literal=Literal | (mappings+=Mapping mappings+=Mapping*)))
+	 *     (attribute=ID (literal=AnyValue | (mappings+=Mapping mappings+=Mapping*)))
 	 */
 	protected void sequence_AttributeMapping(ISerializationContext context, AttributeMapping semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AndExpression returns Comparison
+	 *     AndExpression.AndOrExpression_1_0_0 returns Comparison
+	 *     Comparison returns Comparison
+	 *
+	 * Constraint:
+	 *     (left=VariableReference relation=CompareOperator (right=AnyValue | right=VariableReference))
+	 */
+	protected void sequence_Comparison(ISerializationContext context, Comparison semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -239,7 +308,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     Interval returns Interval
 	 *
 	 * Constraint:
-	 *     ((from=Integer | from=Integer) (to=Integer | to=Integer))
+	 *     ((from=IntValue | from=FloatValue) (to=IntValue | to=FloatValue))
 	 */
 	protected void sequence_Interval(ISerializationContext context, Interval semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -291,7 +360,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     AttributeDomain returns Domain
 	 *
 	 * Constraint:
-	 *     (value=Literal | range=Interval)
+	 *     (value=AnyValue | range=Interval)
 	 */
 	protected void sequence_VariableDomain(ISerializationContext context, Domain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

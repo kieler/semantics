@@ -68,6 +68,24 @@ public interface KvisFactory extends EFactory
   Mapping createMapping();
 
   /**
+   * Returns a new object of class '<em>Condition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Condition</em>'.
+   * @generated
+   */
+  Condition createCondition();
+
+  /**
+   * Returns a new object of class '<em>Comparison</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Comparison</em>'.
+   * @generated
+   */
+  Comparison createComparison();
+
+  /**
    * Returns a new object of class '<em>Domain</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -102,6 +120,24 @@ public interface KvisFactory extends EFactory
    * @generated
    */
   ModelReference createModelReference();
+
+  /**
+   * Returns a new object of class '<em>Boolean Operator</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Boolean Operator</em>'.
+   * @generated
+   */
+  BooleanOperator createBooleanOperator();
+
+  /**
+   * Returns a new object of class '<em>And Or Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>And Or Expression</em>'.
+   * @generated
+   */
+  AndOrExpression createAndOrExpression();
 
   /**
    * Returns the package supported by this factory.

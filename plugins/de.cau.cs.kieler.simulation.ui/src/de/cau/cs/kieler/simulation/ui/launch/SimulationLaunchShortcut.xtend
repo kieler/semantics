@@ -12,18 +12,21 @@
  */
 package de.cau.cs.kieler.simulation.ui.launch
 
+import de.cau.cs.kieler.kvis.ui.animations.KVisDataHandler
 import de.cau.cs.kieler.simulation.SimulationPlugin
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.Redirect
 import de.cau.cs.kieler.simulation.ui.SimulationConsole
+import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.handlers.DataPoolHandler
 import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -31,7 +34,8 @@ import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.ide.ResourceUtil
 import org.eclipse.ui.statushandlers.StatusManager
-import de.cau.cs.kieler.kvis.ui.animations.KVisDataHandler
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.resources.IResource
 
 /**
  * @author aas
@@ -93,7 +97,19 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
         }
     }
     
+    public def void launchLastSelection() {
+        this.files = loadLaunchSelection
+        if(!files.isNullOrEmpty) {
+            this.project = files.get(0).project
+            this.mode = "run"
+            launch()
+        }
+    }
+    
     private def void launch() {
+        // Save launch settings
+        saveLaunchSelection()
+        
         // Show data pool view
         if(DataPoolView.instance != null) {
             PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().bringToTop(DataPoolView.instance);
@@ -159,5 +175,31 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
             SimulationConsole.writeToConsole("\n\nNew simulation")
             SimulationConsole.writeToConsole("Initial pool:"+simMan.currentPool)
         }
+    }
+    
+    private def List<IFile> loadLaunchSelection() {
+        val prefs = InstanceScope.INSTANCE.getNode(SimulationUiPlugin.PLUGIN_ID)
+        val pathCSV = prefs.get(SimulationUiPlugin.LAST_LAUNCHED_SELECTION, "")
+        val paths = pathCSV.split(",")
+        val List<IFile> files = newArrayList
+        val workspaceRoot = ResourcesPlugin.workspace.root
+        for(path : paths){
+            val file = workspaceRoot.findMember(path)
+            if(file != null && file.exists && file.type == IResource.FILE){
+                files.add(file as IFile)
+            }
+        }
+        return files
+    }
+    
+    private def void saveLaunchSelection() {
+        val prefs = InstanceScope.INSTANCE.getNode(SimulationUiPlugin.PLUGIN_ID)
+        var String pathCSV = ""
+        for(f : files) {
+            if(!pathCSV.isNullOrEmpty)
+                pathCSV += ","
+            pathCSV += f.fullPath
+        }
+        prefs.put(SimulationUiPlugin.LAST_LAUNCHED_SELECTION, pathCSV)
     }
 }

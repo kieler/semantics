@@ -12,6 +12,11 @@
  */
 package de.cau.cs.kieler.kvis.ui.animations
 
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.kvis.Domain
@@ -141,68 +146,77 @@ abstract class AnimationHandler {
         return newAttribute
     }
     
-    protected def String getMappedValue(AttributeMapping attributeMapping, Object value) {
+    protected def Object getMappedValue(AttributeMapping attributeMapping, Object value) {
         if(attributeMapping == null) {
             return null
         }
         
-        if(attributeMapping.literal != null) {
-            return attributeMapping.literal.removeQuotes
+        val literal = attributeMapping.literal
+        if(literal != null) {
+            return literal.primitiveValue
         } else {
             for(mapping : attributeMapping.mappings) {
                 if(mapping.variableDomain.matches(value)) {
                     return mapping.apply(value)
                 } else {
-//                    if(mapping.variableDomain.range != null) {
-//                        System.err.println(value + " does not match with "
-//                            + mapping.variableDomain.range.from
-//                            + "-"
-//                            + mapping.variableDomain.range.to)
-//                    } else {
-//                        System.err.println(value + " does not match with "+ mapping.variableDomain.value)
-//                    } 
+                    if(mapping.variableDomain.range != null) {
+                        System.err.println(value + " does not match with "
+                            + mapping.variableDomain.range.from.primitiveValue 
+                            + "-"
+                            + mapping.variableDomain.range.to.primitiveValue)
+                    } else {
+                        System.err.println(value + " does not match with "+ mapping.variableDomain.value.primitiveValue)
+                    } 
                 }
             }
             return null
         }
     }
     
-    protected def boolean matches(Domain domain, Object value) {
-        if(domain.value != null) {
-            if(value instanceof Number) {
-                try {
-                    return getDoubleValue(value).equals(Double.valueOf(domain.value))
-                } catch (NumberFormatException e) {
-                    return false
-                }
-            } else {
-                return domain.value.removeQuotes.equals(value.toString)
-            }
-        } else if(domain.range != null) {
-            try {
-                val doubleValue = getDoubleValue(value)
-                return (domain.range.from <= doubleValue) && (doubleValue <= domain.range.to)
-            } catch(IllegalArgumentException e) {
-                return false
-            }
-        } else {
-            return false
+    protected def Object getPrimitiveValue(Value value) {
+        if(value instanceof StringValue) {
+            return value.value
+        } else if(value instanceof FloatValue) {
+            return value.value
+        } else if(value instanceof IntValue) {
+            return value.value
+        } else if(value instanceof BoolValue) {
+            return value.value
         }
+        return null
     }
     
-    protected def String apply(Mapping mapping, Object value) {
+    protected def boolean matches(Domain domain, Object value) {
+        if(domain.value != null) {
+            val domValue = domain.value.primitiveValue
+            return domValue.equalsValue(value)
+        } else if(domain.range != null) {
+            try {
+                val doubleValue = value.doubleValue
+                val low = domain.range.from.primitiveValue.doubleValue
+                val high = domain.range.to.primitiveValue.doubleValue
+                return (low <= doubleValue) && (doubleValue <= high)
+            } catch(IllegalArgumentException e) {
+                // Just go to 'return false' at the end of the method.
+            }
+        }
+        return false
+    }
+    
+    protected def Object apply(Mapping mapping, Object value) {
         if(mapping.attributeDomain.value != null) {
-            return mapping.attributeDomain.value.removeQuotes
+            return mapping.attributeDomain.value.primitiveValue
         } else if(mapping.attributeDomain.range != null && mapping.variableDomain.range != null) {
-            val doubleValue = getDoubleValue(value)
-            val fromLow = mapping.variableDomain.range.from
-            val fromHigh = mapping.variableDomain.range.to
-            val toLow = mapping.attributeDomain.range.from
-            val toHigh = mapping.attributeDomain.range.to
+            val doubleValue = value.doubleValue
+            val fromLow = mapping.variableDomain.range.from.primitiveValue.doubleValue
+            val fromHigh = mapping.variableDomain.range.to.primitiveValue.doubleValue
+            val toLow = mapping.attributeDomain.range.from.primitiveValue.doubleValue
+            val toHigh = mapping.attributeDomain.range.to.primitiveValue.doubleValue
             // Vector calculation v = pos + percent*length
             val mappedValue = scale(doubleValue, fromLow, fromHigh, toLow, toHigh)
-            return mappedValue.toString
+            return mappedValue
         }
+        return null
     }
     
     protected def double scale(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
@@ -211,7 +225,7 @@ abstract class AnimationHandler {
         return mappedValue
     }
     
-    protected def getDoubleValue(Object value) {
+    protected def double getDoubleValue(Object value) {
         var double doubleValue
         if(value instanceof Double){
             doubleValue = value as Double
@@ -225,5 +239,20 @@ abstract class AnimationHandler {
             throw new IllegalArgumentException("Can't convert "+value.toString+" to Double")
         }
         return doubleValue
+    }
+    
+    protected def boolean equalsValue(Object v1, Object v2) {
+        if(v1 == null && v2 == null) {
+            return true
+        }
+        if(v1 != null && v2 != null) {
+            if(v1 instanceof String || v1 instanceof Boolean) {
+                return v1.equals(v2)
+            }
+            if(v1 instanceof Number && v2 instanceof Number) {
+                return v1.doubleValue.equals(v2.doubleValue)
+            }
+        }
+        return false
     }
 }

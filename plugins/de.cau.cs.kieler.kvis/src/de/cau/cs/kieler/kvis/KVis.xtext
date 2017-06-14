@@ -17,33 +17,40 @@ Element:
 	'}'
 ;
 
-Animation returns Animation:
+Animation:
     'apply' type=ID ('using' variable=VariableReference)? '{'
         (attributeMappings+=AttributeMapping)*
-    '}' ('when' condition=BoolExpression)?
+    '}' ('when' condition=AndExpression)?
 ;
 
 AttributeMapping:
-    attribute=ID ':' (literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
+    attribute=ID ':' (literal=AnyValue | (mappings+=Mapping) (',' mappings+=Mapping)*)
 ;
 
 Mapping:
     variableDomain = VariableDomain 'is' attributeDomain = AttributeDomain
 ;
 
+AndExpression returns Condition:
+    Comparison 
+    (({AndOrExpression.left=current} operator="and") right=Comparison)*
+;
+
+Comparison:
+    left=VariableReference
+    relation=CompareOperator
+    (right=AnyValue | right=VariableReference)
+;
+
 VariableDomain returns Domain:
-    value = Literal
+    value = AnyValue
     | range = Interval
 ;
 
 Interval:
-    (from=Integer | '('from=Integer')')
+    (from=IntValue | from=FloatValue)
     Range
-    (to=Integer | '('to=Integer')')
-;
-
-Range:
-    '-'
+    (to=IntValue | to=FloatValue)
 ;
 
 AttributeDomain returns Domain:
@@ -60,6 +67,10 @@ ModelReference:
     name=ID '.'
 ;
 
-Literal:
-    Integer | Floateger | STRING | BOOLEAN
+AndOperator returns BooleanOperator:
+    AND='and'
+;
+
+Range:
+    '-'
 ;
