@@ -32,6 +32,8 @@
     <eLiterals name="ASSIGNXOR" value="8"/>
     <eLiterals name="POSTFIXADD" value="9"/>
     <eLiterals name="POSTFIXSUB" value="10"/>
+    <eLiterals name="ASSIGNMIN" value="11"/>
+    <eLiterals name="ASSIGNMAX" value="12" literal=""/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//FunctionCall"/>
 </ecore:EPackage>

@@ -152,6 +152,13 @@ class LayoutHook extends SynthesisActionHook {
         node.setProperty(DEFAULT_DIRECTION, true)        
     }
 
+    override processRegion(Region region, KNode node) {
+        val regions = region.parentState?.regions
+        if (region != null) {
+            node.setLayoutOption(CoreOptions.PRIORITY, regions.size - regions.indexOf(region))
+        }
+    }
+
     override processTransition(Transition transition, KEdge edge) {
         edge.processLayoutOptionAnnotations(transition)
     }

@@ -1,4 +1,5 @@
 '!'=20
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.tokens
 '!='=44
 '#'=66
 '%'=24
@@ -56,6 +57,67 @@
 'unsigned'=47
 'val'=25
 'volatile'=71
+=======
+'!='=46
+'#'=68
+'%'=24
+'&&'=27
+'&'=19
+'('=64
+'()'=28
+')'=65
+'*'=23
+'*='=35
+'+'=21
+'++'=39
+'+='=33
+','=60
+'-'=22
+'--'=40
+'-='=34
+'.'=67
+'/'=57
+'/='=36
+':'=16
+';'=58
+'<'=42
+'<='=43
+'='=32
+'=='=41
+'>'=44
+'>='=45
+'@'=66
+'['=61
+']'=62
+'bool'=48
+'combine'=63
+'const'=71
+'deferred'=70
+'expression'=59
+'extern'=72
+'float'=51
+'history'=31
+'host'=53
+'immediate'=69
+'input'=74
+'int'=50
+'max'=55
+'max='=38
+'min'=56
+'min='=37
+'none'=54
+'output'=75
+'pre'=17
+'pure'=47
+'reset'=29
+'shallow history'=30
+'signal'=77
+'static'=76
+'string'=52
+'unsigned'=49
+'val'=25
+'volatile'=73
+>>>>>>> master:plugins/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.tokens
 '|'=18
 '||'=26
 RULE_ANY_OTHER=15
@@ -130,3 +192,8 @@ T__72=72
 T__73=73
 T__74=74
 T__75=75
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.tokens
+=======
+T__76=76
+T__77=77
+>>>>>>> master:plugins/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.tokens

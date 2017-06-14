@@ -55,7 +55,13 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
             return " |= " 
         } else 
         if (operator == AssignOperator::ASSIGNXOR) {
-            return " ^= " 
+            return " ^= "
+        } else 
+        if (operator == AssignOperator::ASSIGNMIN) {
+            return " min= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMAX) {
+            return " max= " 
         } else 
         if (operator == AssignOperator::POSTFIXADD) {
             return "++"

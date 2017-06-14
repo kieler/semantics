@@ -26,7 +26,6 @@ import org.eclipse.xtext.resource.XtextResourceSet
  * @author aas
  */
 class ModelImporter {
-        
     /**
      * Loads an EObject from a file path without cross-references.
      * 
@@ -42,7 +41,7 @@ class ModelImporter {
     public static def EObject load(IFile file, ResourceSet resourceSet) {
         val resource = getResource(file, resourceSet)
         resource.unload()
-        resource.load(#{})
+        resource.load(resourceSet.loadOptions)
         
         if(!resource.getContents().isEmpty) {
             return resource.getContents().get(0)
@@ -55,6 +54,16 @@ class ModelImporter {
         val uri = URI.createFileURI(file.location.toOSString)
         val resource = resourceSet.getResource(uri, true)
         return resource
+    }
+    
+    public static def EObject getEObject(IFile file, ResourceSet resourceSet) {
+        val res = getResource(file, resourceSet)
+        val content = res?.contents
+        if(!content.isNullOrEmpty) {
+            return content.get(0)
+        } else {
+            return null
+        }
     }
     
     /**

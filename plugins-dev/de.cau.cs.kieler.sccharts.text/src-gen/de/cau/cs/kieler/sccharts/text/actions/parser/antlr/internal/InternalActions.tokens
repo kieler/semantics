@@ -1,3 +1,4 @@
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.tokens
 '!'=38
 '!='=57
 '#'=42
@@ -31,11 +32,47 @@
 '['=29
 ']'=30
 'bool'=67
+=======
+'!'=46
+'!='=65
+'#'=49
+'%'=45
+'&&'=39
+'&'=41
+'('=33
+'()'=36
+')'=34
+'*'=44
+'*='=56
+'+'=42
+'++'=60
+'+='=54
+','=28
+'-'=43
+'--'=61
+'-='=55
+'.'=48
+'/'=18
+'/='=57
+':'=50
+';'=19
+'<'=35
+'<='=63
+'='=31
+'=='=62
+'>'=37
+'>='=64
+'@'=47
+'['=29
+']'=30
+'bool'=69
+>>>>>>> master:plugins/de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.tokens
 'combine'=32
 'const'=21
 'deferred'=17
 'expression'=20
 'extern'=22
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.tokens
 'float'=70
 'history'=47
 'host'=72
@@ -58,6 +95,32 @@
 'volatile'=23
 '|'=59
 '||'=64
+=======
+'float'=72
+'history'=53
+'host'=74
+'immediate'=16
+'input'=24
+'int'=71
+'max'=76
+'max='=59
+'min'=77
+'min='=58
+'none'=75
+'output'=25
+'pre'=66
+'pure'=68
+'reset'=51
+'shallow history'=52
+'signal'=27
+'static'=26
+'string'=73
+'unsigned'=70
+'val'=67
+'volatile'=23
+'|'=40
+'||'=38
+>>>>>>> master:plugins/de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.tokens
 RULE_ANY_OTHER=15
 RULE_BOOLEAN=8
 RULE_COMMENT_ANNOTATION=10
@@ -130,3 +193,8 @@ T__72=72
 T__73=73
 T__74=74
 T__75=75
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.tokens
+=======
+T__76=76
+T__77=77
+>>>>>>> master:plugins/de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.tokens

@@ -83,7 +83,8 @@ BoolExpression returns Expression:
 LogicalOrExpression returns Expression:
     LogicalAndExpression 
     ({OperatorExpression.subExpressions+=current} 
-        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+
+        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
+        ('||' subExpressions+=LogicalAndExpression)*
     )?;
 
 // Logical And Expression Rule
@@ -92,7 +93,8 @@ LogicalOrExpression returns Expression:
 LogicalAndExpression returns Expression:
     BitwiseOrExpression 
     ({OperatorExpression.subExpressions+=current} 
-        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+
+        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)
+        ('&&' subExpressions+=BitwiseOrExpression)*
     )?;
 
 // Bitwiese Or Expression Rule
@@ -101,7 +103,8 @@ LogicalAndExpression returns Expression:
 BitwiseOrExpression returns Expression:
 	BitwiseAndExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)+
+	    (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)
+	    ('|' subExpressions+=BitwiseAndExpression)*
 	)?;
 
 // Bitwise And Expression Rule
@@ -110,7 +113,8 @@ BitwiseOrExpression returns Expression:
 BitwiseAndExpression returns Expression:
 	CompareOperation 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=BitwiseAndOperator subExpressions+=CompareOperation)+
+	    (operator=BitwiseAndOperator subExpressions+=CompareOperation)
+	    ('&' subExpressions+=CompareOperation)*
 	)?;
 
 // Compare Operation Rule
@@ -149,7 +153,8 @@ ValuedExpression returns Expression:
 AddExpression returns Expression:
 	SubExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=AddOperator subExpressions+=SubExpression)+
+	    (operator=AddOperator subExpressions+=SubExpression)
+	    ('+' subExpressions+=SubExpression)*
 	)?;
 
 // Sub Expression Rule
@@ -159,7 +164,8 @@ AddExpression returns Expression:
 SubExpression returns Expression:
 	MultExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=SubOperator subExpressions+=MultExpression)+
+	    (operator=SubOperator subExpressions+=MultExpression)
+	    ('-' subExpressions+=MultExpression)*
 	)?;
 
 // Mult Expression Rule
@@ -169,7 +175,8 @@ SubExpression returns Expression:
 MultExpression returns Expression:
 	DivExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=MultOperator subExpressions+=DivExpression)+
+	    (operator=MultOperator subExpressions+=DivExpression)
+	    ('*' subExpressions+=DivExpression)*
 	)?;
 
 // Div Expression Rule
@@ -179,7 +186,8 @@ MultExpression returns Expression:
 DivExpression returns Expression:
 	ModExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=DivOperator subExpressions+=ModExpression)+
+	    (operator=DivOperator subExpressions+=ModExpression)
+	    ('/' subExpressions+=ModExpression)*
 	)?;
 	
 // Mod Expression Rule
@@ -189,7 +197,8 @@ DivExpression returns Expression:
 ModExpression returns Expression:
 	NegExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=ModOperator subExpressions+=AtomicValuedExpression)+
+	    (operator=ModOperator subExpressions+=AtomicValuedExpression)
+	    ('%' subExpressions+=AtomicValuedExpression)*
 	)?;
 
 // Neg Expression Rule

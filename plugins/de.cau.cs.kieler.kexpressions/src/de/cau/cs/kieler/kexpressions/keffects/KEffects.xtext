@@ -124,7 +124,8 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
 // Assign Operator Enum    
 enum AssignOperator returns keffects::AssignOperator:
     ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
-    ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=";
+    ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+    ASSIGNMIN="min=" | ASSIGNMAX="max=";
 
 // Postfix Operator Enum    
 enum PostfixOperator returns keffects::AssignOperator:
