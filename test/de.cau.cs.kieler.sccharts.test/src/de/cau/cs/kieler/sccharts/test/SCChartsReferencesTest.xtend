@@ -23,6 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import org.eclipse.xtext.Keyword
 
 /**
  * Tests if all reference in SCCharts are correctly linked.
@@ -57,13 +58,15 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<State> {
     
     @Test
     def void testReferences(State scc, TestModelData modelData) {
+        val keyword = grammar.stateAccess.referencesKeyword_6_0_0
         for (res : scc.eResource.resourceSet.resources.filter(XtextResource)) {
             val parserNodes = res.parseResult.rootNode
             parserNodes.asTreeIterable.filter[
                 semanticElement instanceof State 
-                && grammarElement == grammar.stateAccess.referencesKeyword_6_0_0
+                && grammarElement.eClass.equals(keyword.eClass)
+                && (grammarElement as Keyword).value == keyword.value
             ].forEach[
-                assertTrue("Referenced state " + (semanticElement as State).id + " in " + res.URI.toFileString + " cannot be resolved",
+                assertTrue("Referenced state " + (semanticElement as State).id + " in " + res.URI.segment(res.URI.segmentCount - 1) + " cannot be resolved",
                     (semanticElement as State).referencedScope !== null)
             ]
         }

@@ -69,9 +69,13 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
                 val relatedURI = URI.createFileURI(absRelatedPath.toFile.absolutePath)
                 resourceSet.getResource(relatedURI, true)
             }
-            resourceSet.resources.filter(XtextResource).forEach[relink]
             // Load file
             val resource = resourceSet.getResource(uri, true)
+            
+            // Fix references
+            if (resourceSet.resources.size > 1) {
+                resourceSet.resources.filter(XtextResource).forEach[relink]
+            }
             return resource.getContents().head as T
         } catch (Exception e) {
             throw new Exception("Cannot load model from "+absModelPath.toString, e)
