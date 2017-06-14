@@ -30,14 +30,12 @@ import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Parallel
-import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Repeat
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.Expression
-import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.kexpressions.OperatorType
 import org.eclipse.emf.ecore.util.EcoreUtil
+import com.google.common.collect.Sets
 
 /**
  * @author mrb
@@ -64,9 +62,9 @@ class RepeatTransformation extends AbstractExpansionTransformation implements Tr
 //        return Sets.newHashSet()
 //    }
 //
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+    }
 
     @Inject
     extension SCEstExtension
@@ -144,6 +142,11 @@ class RepeatTransformation extends AbstractExpansionTransformation implements Tr
             transformStatements((statement as IfTest).thenStatements)
             (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
             transformStatements((statement as IfTest).elseStatements)
+        }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements)
+            ]
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |

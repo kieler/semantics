@@ -64,6 +64,7 @@ import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.esterel.scest.transformations.SCEstTransformation
+import de.cau.cs.kieler.annotations.AnnotationsFactory
 
 /**
  * @author mrb
@@ -980,6 +981,40 @@ class SCEstExtension {
      */
     def createAwait() {
         EsterelFactory::eINSTANCE.createAwait
+    }
+    
+     /**
+      * Creates "if c then pause; goto l"
+      * 
+      * @param condition The condition
+      * @param targetLabel The targetlabel
+      * @param pause With or without a Pause Statement
+      * @return The created IfTest
+      */
+    def IfTest newIfThenPauseGoto(de.cau.cs.kieler.esterel.esterel.DelayExpr condition, Label targetLabel, boolean pause) {
+        EsterelFactory::eINSTANCE.createIfTest => [
+            expr = condition.signalExpr 
+            if (pause) {
+                thenStatements.addAll(SclFactory::eINSTANCE.createPause)                
+            }
+            thenStatements.add(
+                    SclFactory::eINSTANCE.createGoto => [
+                        it.target = targetLabel
+                    ])
+        ]
+    }
+    
+    /**
+     * Creates a new Annotation
+     * 
+     * @param layer The name of the Annotation
+     * @return The newly created Annotation
+     */
+    def createAnnotation(int layer) {
+        AnnotationsFactory::eINSTANCE.createIntAnnotation => [
+            name = "generated_ifTest"
+            value = layer
+        ]
     }
  
 }
