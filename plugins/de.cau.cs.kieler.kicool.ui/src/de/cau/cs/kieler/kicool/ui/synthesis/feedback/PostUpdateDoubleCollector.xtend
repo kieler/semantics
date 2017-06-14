@@ -23,7 +23,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class PostUpdateDoubleCollector {
     
     @Accessors var String key
-    @Accessors var double nullPercent = 0.01 
+    @Accessors var double nullPercent = 0.20 
     @Accessors var double maxValue = nullPercent
     
     private val processorMap = <de.cau.cs.kieler.kicool.compilation.Processor, Double> newHashMap
@@ -38,7 +38,7 @@ class PostUpdateDoubleCollector {
             val long = processor.environment.getData(key, 0.0) as Long
             val double value = long.longValue 
             processorMap.put(processor, value)
-//            if (value > maxValue) maxValue = value
+            if (value > maxValue) maxValue = value
         } catch(Exception e) {
         }
     }
