@@ -278,7 +278,7 @@ class KVisView extends ViewPart {
                 dialog.open
             }
         })
-        mgr.add(new Action("Save Image") {
+        mgr.add(new Action("Export Image") {
             override run() {
                 saveSVGDocument
             }
