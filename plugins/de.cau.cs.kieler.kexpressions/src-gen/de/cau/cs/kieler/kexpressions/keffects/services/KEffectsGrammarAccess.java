@@ -400,12 +400,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cASSIGNMULAsteriskEqualsSignKeyword_3_0 = (Keyword)cASSIGNMULEnumLiteralDeclaration_3.eContents().get(0);
 		private final EnumLiteralDeclaration cASSIGNDIVEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cASSIGNDIVSolidusEqualsSignKeyword_4_0 = (Keyword)cASSIGNDIVEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMINEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cASSIGNMINMinKeyword_5_0 = (Keyword)cASSIGNMINEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMAXEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cASSIGNMAXMaxKeyword_6_0 = (Keyword)cASSIGNMAXEnumLiteralDeclaration_6.eContents().get(0);
 		
 		//enum AssignOperator returns keffects::AssignOperator:
-		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max=";
 		public EnumRule getRule() { return rule; }
 
-		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/="
+		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max="
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ASSIGN="="
@@ -437,6 +441,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"/="
 		public Keyword getASSIGNDIVSolidusEqualsSignKeyword_4_0() { return cASSIGNDIVSolidusEqualsSignKeyword_4_0; }
+
+		//ASSIGNMIN="min="
+		public EnumLiteralDeclaration getASSIGNMINEnumLiteralDeclaration_5() { return cASSIGNMINEnumLiteralDeclaration_5; }
+
+		//"min="
+		public Keyword getASSIGNMINMinKeyword_5_0() { return cASSIGNMINMinKeyword_5_0; }
+
+		//ASSIGNMAX="max="
+		public EnumLiteralDeclaration getASSIGNMAXEnumLiteralDeclaration_6() { return cASSIGNMAXEnumLiteralDeclaration_6; }
+
+		//"max="
+		public Keyword getASSIGNMAXMaxKeyword_6_0() { return cASSIGNMAXMaxKeyword_6_0; }
 	}
 
 	public class PostfixOperatorElements extends AbstractEnumRuleElementFinder {
@@ -642,7 +658,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public AssignOperatorElements getAssignOperatorAccess() {
 		return eAssignOperator;
 	}

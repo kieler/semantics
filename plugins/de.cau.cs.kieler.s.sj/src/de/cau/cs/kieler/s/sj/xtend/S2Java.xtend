@@ -373,7 +373,7 @@ class S2Java {
        return ''' ='''
    }
 
-    // Expand a ASSIGNMENT instruction.
+    // Expand an ASSIGNMENT instruction.
     def dispatch CharSequence expand(Assignment assignment) {
         if (assignment.expression instanceof FunctionCall) {
             var returnValue = '''«assignment.expression.expand»;'''
@@ -388,12 +388,19 @@ class S2Java {
                     returnValue = returnValue + '''[«index.expand»]'''
                 }
             }
-            returnValue = returnValue + assignment.expandOperator
-            if ((assignment.operator != AssignOperator.POSTFIXADD) && 
-                (assignment.operator != AssignOperator.POSTFIXSUB)) {
-                returnValue = returnValue + ''' «assignment.expression.expand»;'''
+            
+            if (assignment.operator == AssignOperator.ASSIGNMIN) {
+                returnValue = returnValue + ''' = «assignment.expression.expand» < «returnValue» ? «assignment.expression.expand» : «returnValue»;'''
+            } else if (assignment.operator == AssignOperator.ASSIGNMAX) {
+                returnValue = returnValue + ''' = «assignment.expression.expand» > «returnValue» ? «assignment.expression.expand» : «returnValue»;'''
             } else {
-                returnValue = returnValue + ''';'''
+                returnValue = returnValue + assignment.expandOperator
+                if ((assignment.operator != AssignOperator.POSTFIXADD) && 
+                    (assignment.operator != AssignOperator.POSTFIXSUB)) {
+                    returnValue = returnValue + ''' «assignment.expression.expand»;'''
+                } else {
+                    returnValue = returnValue + ''';'''
+                }
             }
             return returnValue
         }

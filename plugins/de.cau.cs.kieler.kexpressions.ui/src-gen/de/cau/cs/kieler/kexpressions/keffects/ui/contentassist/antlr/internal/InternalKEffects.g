@@ -2242,6 +2242,20 @@ rule__AssignOperator__Alternatives
 { after(grammarAccess.getAssignOperatorAccess().getASSIGNDIVEnumLiteralDeclaration_4()); }
 )
 
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNMINEnumLiteralDeclaration_5()); }
+(	'min=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNMINEnumLiteralDeclaration_5()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNMAXEnumLiteralDeclaration_6()); }
+(	'max=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNMAXEnumLiteralDeclaration_6()); }
+)
+
 ;
 finally {
 	restoreStackSize(stackSize);
