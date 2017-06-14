@@ -183,7 +183,6 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         val bing = eObject as Binding
                         if (bing.actual.name == binding.formal.name) {
                             bing.actual = binding.actual
-                            bing.indices.clear
                             for(index : binding.indices) {
                                 bing.indices.add(index.nontracingCopy.rtrace(binding))
                             }                               
