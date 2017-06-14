@@ -10,12 +10,15 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui
+package de.cau.cs.kieler.prom.ui.console
 
 import com.google.common.base.Strings
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.ui.console.ConsolePlugin
+import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.common.io.ByteStreams
+import java.io.InputStream
 
 /**
  * Dedecated console in the Console View of Eclipse for output about the simulation. 
@@ -23,54 +26,80 @@ import org.eclipse.ui.console.ConsolePlugin
  * @author aas
  *
  */
-class SimulationConsole {
-    
+class PromConsole {
     // Message console
-    private static val CONSOLE_NAME = "KIELER Simulation"
+    private static val CONSOLE_NAME = "KIELER Project Management"
     private static MessageConsole console;
     private static MessageConsoleStream consoleStream;
     
     /**
-     * Writes to the console view of simulations.
+     * Writes to the console.
      * @param message The message to print to the console
      */
-    public static def void writeToConsole(String message){
+    public static def void print(String message){
         // If there is nothing to write, we are done immediately.
         if(message.isNullOrEmpty())
             return;
         
         // Ensure the console exists.
-        initializeConsole()
+        initialize()
         
         // Print message
         consoleStream.println(message)
-        
-        // Bring console to front
-//        bringToFront()
     }
     
-    public static def void bringToFront() {
-        initializeConsole()
-        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
-        consoleManager.showConsoleView(console)
-    }
-
     /**
-     * Write the exception to the simulation console 
+     * Write the exception to the console 
      * 
      * @param Exception e the exception
      */
-    public static def void writeToConsole(Exception e){
+    public static def void print(Exception e){
         // Write exception to console of running Eclipse
         var text = ""
         text += Strings.nullToEmpty(e.toString())
         if(text.length > 0 )
             text += ":"
         text += Strings.nullToEmpty(e.message)
-        writeToConsole(text)
+        print(text)
+        
+        // Bring to front because an exception might require user action
+        bringToFront()
         
         // Print stack trace
         e.printStackTrace()
+    }
+    
+    public static def void bringToFront() {
+        initialize()
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        consoleManager.showConsoleView(console)
+    }
+
+    /**
+     * Remove all text from the console
+     */
+    public static def void clear() {
+        initialize()
+        console.clearConsole()
+    }
+    
+    /**
+     * Copies all bytes from the input stream to the console. Does not close either stream.
+     */
+    public static def void copy(InputStream from) {
+        initialize()
+        ByteStreams.copy(from, consoleStream)
+        consoleStream.flush
+    }
+    
+    /**
+     * Creates the console if not yet done
+     */
+    public static def void initialize() {
+        if (console == null || consoleStream == null) {
+            console = findOrCreateConsole(CONSOLE_NAME)
+            consoleStream = console.newMessageStream()
+        }
     }
 
     /**
@@ -92,23 +121,4 @@ class SimulationConsole {
         consoleManager.addConsoles(#[myConsole]);
         return myConsole;
     }
-    
-    /**
-     * Remove all text from the console
-     */
-    public static def void clearConsole() {
-        initializeConsole()
-        console.clearConsole()
-    }
-    
-    /**
-     * Creates the console if not yet done
-     */
-    public static def void initializeConsole() {
-        if (console == null || consoleStream == null) {
-            console = findOrCreateConsole(CONSOLE_NAME)
-            consoleStream = console.newMessageStream()
-        }
-    }
-    
 }

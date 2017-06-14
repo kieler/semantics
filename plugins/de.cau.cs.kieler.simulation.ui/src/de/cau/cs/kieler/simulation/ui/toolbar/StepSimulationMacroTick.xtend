@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.simulation.ui.SimulationConsole
+import de.cau.cs.kieler.prom.ui.console.PromConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -25,9 +25,8 @@ class StepSimulationMacroTick extends SimulationToolbarButton {
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null) {
-            SimulationConsole.writeToConsole("Step macro tick")
+            PromConsole.print("Step macro tick")
             simulation.stepMacroTick()
-//            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
         }
         return null
     }
