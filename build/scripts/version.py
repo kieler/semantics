@@ -28,7 +28,7 @@ PROJECT_PREFIX = 'de.cau.cs.kieler'
 def main(args):
     print '- Processing Plugins -'
 
-    for pluginFolder in ['plugins', 'test']
+    for pluginFolder in ['plugins', 'test']:
         # check pluging path
         plugins = join(args.path, pluginFolder)
         if not isdir(plugins):
