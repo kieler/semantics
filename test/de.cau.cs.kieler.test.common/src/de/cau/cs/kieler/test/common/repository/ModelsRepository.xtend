@@ -232,7 +232,7 @@ class ModelsRepository {
         val Map<String, String> additionalProperties
         
         package new() {
-            ignore = false
+            ignore = true
             confidential = false
             modelExt = emptySet
             traceExt = emptySet
