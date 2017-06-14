@@ -12,27 +12,26 @@
  */
 package de.cau.cs.kieler.simulation.ui.launch
 
+import de.cau.cs.kieler.simulation.SimulationPlugin
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.Redirect
 import de.cau.cs.kieler.simulation.ui.SimulationConsole
 import de.cau.cs.kieler.simulation.ui.handlers.DataPoolHandler
+import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.runtime.Status
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.IEditorPart
-import org.eclipse.ui.ide.ResourceUtil
 import org.eclipse.ui.PlatformUI
-import de.cau.cs.kieler.simulation.ui.views.DataPoolView
+import org.eclipse.ui.ide.ResourceUtil
 import org.eclipse.ui.statushandlers.StatusManager
-import org.eclipse.ui.statushandlers.StatusAdapter
-import org.eclipse.core.runtime.Status
-import de.cau.cs.kieler.simulation.SimulationPlugin
-import org.eclipse.jface.dialogs.ErrorDialog
+import de.cau.cs.kieler.kvis.ui.animations.KVisDataHandler
 
 /**
  * @author aas
@@ -110,6 +109,10 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
                 simMan = new SimulationManager()
                 val dataPool = new DataPoolHandler()
                 simMan.addHandler(dataPool)
+                
+                val kvis = new KVisDataHandler()
+                simMan.addHandler(kvis)
+            
                 simMan.addAction(StepAction.Method.WRITE, simulator)
                 simMan.initialize()
                 
@@ -141,8 +144,11 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
             redirectModelToEnv.to = simulatorEnv.modelName
             
             val dataPool = new DataPoolHandler()
-            
             simMan.addHandler(dataPool)
+
+            val kvis = new KVisDataHandler()
+            simMan.addHandler(kvis)
+            
             simMan.addAction(StepAction.Method.WRITE, simulatorEnv)
             simMan.addAction(StepAction.Method.WRITE, redirectEnvToModel)
             simMan.addAction(StepAction.Method.WRITE, simulatorModel)

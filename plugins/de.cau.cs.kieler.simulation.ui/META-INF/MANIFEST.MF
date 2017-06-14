@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend.lib.macro,
  org.eclipse.debug.ui;bundle-version="3.11.202",
  org.eclipse.ui.console;bundle-version="3.6.201",
- de.cau.cs.kieler.simulation;bundle-version="0.1.0"
+ de.cau.cs.kieler.simulation;bundle-version="0.1.0",
+ de.cau.cs.kieler.kvis.ui;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.simulation.ui
 
