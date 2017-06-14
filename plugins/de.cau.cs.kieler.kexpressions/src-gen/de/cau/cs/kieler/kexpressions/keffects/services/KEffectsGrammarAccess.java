@@ -400,12 +400,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cASSIGNMULAsteriskEqualsSignKeyword_3_0 = (Keyword)cASSIGNMULEnumLiteralDeclaration_3.eContents().get(0);
 		private final EnumLiteralDeclaration cASSIGNDIVEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cASSIGNDIVSolidusEqualsSignKeyword_4_0 = (Keyword)cASSIGNDIVEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMINEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cASSIGNMINMinKeyword_5_0 = (Keyword)cASSIGNMINEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMAXEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cASSIGNMAXMaxKeyword_6_0 = (Keyword)cASSIGNMAXEnumLiteralDeclaration_6.eContents().get(0);
 		
 		//enum AssignOperator returns keffects::AssignOperator:
-		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max=";
 		public EnumRule getRule() { return rule; }
 
-		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/="
+		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max="
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ASSIGN="="
@@ -437,6 +441,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"/="
 		public Keyword getASSIGNDIVSolidusEqualsSignKeyword_4_0() { return cASSIGNDIVSolidusEqualsSignKeyword_4_0; }
+
+		//ASSIGNMIN="min="
+		public EnumLiteralDeclaration getASSIGNMINEnumLiteralDeclaration_5() { return cASSIGNMINEnumLiteralDeclaration_5; }
+
+		//"min="
+		public Keyword getASSIGNMINMinKeyword_5_0() { return cASSIGNMINMinKeyword_5_0; }
+
+		//ASSIGNMAX="max="
+		public EnumLiteralDeclaration getASSIGNMAXEnumLiteralDeclaration_6() { return cASSIGNMAXEnumLiteralDeclaration_6; }
+
+		//"max="
+		public Keyword getASSIGNMAXMaxKeyword_6_0() { return cASSIGNMAXMaxKeyword_6_0; }
 	}
 
 	public class PostfixOperatorElements extends AbstractEnumRuleElementFinder {
@@ -642,7 +658,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public AssignOperatorElements getAssignOperatorAccess() {
 		return eAssignOperator;
 	}
@@ -743,7 +759,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression)+)?
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
@@ -757,7 +773,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression)+)?
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaKExpressions.getLogicalAndExpressionAccess();
 	}
@@ -771,7 +787,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseAndExpression)+)?
+	//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -785,7 +801,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation)+)?
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -853,7 +869,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
 	//AddExpression Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+	//	subExpressions+=SubExpression)*)?
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -867,7 +884,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: var(A) - i
 	//SubExpression Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
+	//	('-' subExpressions+=MultExpression)*)?
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -881,7 +899,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
+	//	('*' subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -895,7 +914,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 / 4
 	//DivExpression Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
+	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
+	//	subExpressions+=ModExpression)*)?
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -910,7 +930,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: i % j
 	//ModExpression Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)+)?
+	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}

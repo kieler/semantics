@@ -192,17 +192,42 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *
 	 * Constraint:
 	 *     (
-	 *         (subExpressions+=LogicalOrExpression_OperatorExpression_1_0 (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+) | 
-	 *         (subExpressions+=LogicalAndExpression_OperatorExpression_1_0 (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+) | 
-	 *         (subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)+) | 
-	 *         (subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 (operator=BitwiseAndOperator subExpressions+=CompareOperation)+) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=BitwiseOrExpression 
+	 *             subExpressions+=BitwiseOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseOrOperator 
+	 *             subExpressions+=BitwiseAndExpression 
+	 *             subExpressions+=BitwiseAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=AddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=SubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=MultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 (operator=DivOperator subExpressions+=ModExpression)+) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 (operator=ModOperator subExpressions+=AtomicValuedExpression)+) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression subExpressions+=MultExpression*) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=DivExpression subExpressions+=DivExpression*) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=ModExpression subExpressions+=ModExpression*) | 
+	 *         (
+	 *             subExpressions+=ModExpression_OperatorExpression_1_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
 	 *     )

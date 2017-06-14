@@ -143,7 +143,6 @@ class LayoutHook extends SynthesisActionHook {
         }
     }
 
-    
     def void setSidebarDirection(KNode node) {
         switch (LAYOUT_DIRECTION.objectValue) {
             case "HV": node.setDepthDirection(true, 0)
@@ -153,6 +152,13 @@ class LayoutHook extends SynthesisActionHook {
             default: return
         }
         node.setProperty(DEFAULT_DIRECTION, true)        
+    }
+
+    override processRegion(Region region, KNode node) {
+        val regions = region.parentState?.regions
+        if (region != null) {
+            node.setLayoutOption(CoreOptions.PRIORITY, regions.size - regions.indexOf(region))
+        }
     }
 
     override processTransition(Transition transition, KEdge edge) {
