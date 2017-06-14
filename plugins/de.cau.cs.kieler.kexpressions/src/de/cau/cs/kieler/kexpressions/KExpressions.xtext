@@ -92,7 +92,8 @@ LogicalOrExpression returns Expression:
 LogicalAndExpression returns Expression:
     BitwiseOrExpression 
     ({OperatorExpression.subExpressions+=current} 
-        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+
+        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)
+        ('&' subExpressions+=BitwiseOrExpression)*
     )?;
 
 // Bitwiese Or Expression Rule
