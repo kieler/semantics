@@ -269,6 +269,9 @@ class S2Java {
        else if (valueType == ValueType::STRING) {
            return '''String'''
        }
+       else if (valueType == ValueType::FLOAT) {
+           return '''double'''
+       }
        else {
            return '''«valueType»'''
        }
