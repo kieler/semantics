@@ -67,12 +67,11 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
             // Load referenced model
             for (absRelatedPath : data.resourceSetModels.filter[it != data.modelPath].map[data.repositoryPath.resolve(it)]) {
                 val relatedURI = URI.createFileURI(absRelatedPath.toFile.absolutePath)
-                val relatedResource = resourceSet.createResource(relatedURI)
-                relatedResource.load(new FileInputStream(absRelatedPath.toFile), resourceSet.getLoadOptions())
+                resourceSet.getResource(relatedURI, true)
             }
+            resourceSet.resources.filter(XtextResource).forEach[relink]
             // Load file
-            val resource = resourceSet.createResource(uri)
-            resource.load(new FileInputStream(absModelPath.toFile), resourceSet.getLoadOptions())
+            val resource = resourceSet.getResource(uri, true)
             return resource.getContents().head as T
         } catch (Exception e) {
             throw new Exception("Cannot load model from "+absModelPath.toString, e)
