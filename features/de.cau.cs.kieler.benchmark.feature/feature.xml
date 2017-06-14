@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.benchmark.feature" label="KIELER Semantics Benchmarks" version="0.1.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.benchmark">
+<feature id="de.cau.cs.kieler.benchmark.feature" label="KIELER Semantics Benchmarks" version="0.12.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.benchmark">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is provided.
