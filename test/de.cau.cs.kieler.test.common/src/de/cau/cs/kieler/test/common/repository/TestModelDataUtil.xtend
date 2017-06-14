@@ -100,6 +100,35 @@ class TestModelDataUtil {
     }
     
     /**
+     * A comparator based on the model folder of two models.
+     */
+    public static val ModelFolderComparator = new Comparator<TestModelData>(){
+        
+        override compare(TestModelData a, TestModelData b) {
+            return switch(a) {
+                case a.modelPath.parent == b.modelPath.parent: 0
+                case a.modelPath.parent === null: -1
+                default: a.modelPath.parent.compareTo(b.modelPath.parent)
+            }
+        }
+        
+    }
+    
+    /**
+     * A comparator based on the model file name of two models.
+     */
+    public static val ModelFileNameComparator = new Comparator<TestModelData>(){
+        
+        override compare(TestModelData a, TestModelData b) {
+            return switch(a) {
+                case a.modelPath.fileName == b.modelPath.fileName: 0
+                default: a.modelPath.fileName.compareTo(b.modelPath.fileName)
+            }
+        }
+        
+    }
+    
+    /**
      * A comparator based on optional "complexity" property of two models.
      */    
     public static val ComplexityComparator = new Comparator<TestModelData>(){

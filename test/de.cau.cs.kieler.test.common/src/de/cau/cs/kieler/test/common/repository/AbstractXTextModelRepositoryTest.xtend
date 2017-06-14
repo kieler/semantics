@@ -35,7 +35,7 @@ import com.google.inject.Injector
 abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IModelsRepositoryTest<T> {
     
     /** The list of hierarchical compare predicates */
-    protected val compareHierarchy = newLinkedList(ResourceSetIDComparator, ComplexityComparator, ModelPathComparator)  
+    protected val compareHierarchy = newLinkedList(ModelFolderComparator, ComplexityComparator, ModelFileNameComparator)  
     /** Injector used for resource set creation */
     private val Injector resourceSetInjector;
     
