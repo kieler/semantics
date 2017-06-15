@@ -205,20 +205,20 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
       // ==> Halt <==
          c.setLinewrap().before(f.getHaltAccess().getHaltKeyword_2());
 
-      // ==> IfTest <==
+         // ==> IfTest <==
          c.setLinewrap().before(f.getIfTestAccess().getIfKeyword_1());
          c.setLinewrap().before(f.getIfTestAccess().getEndKeyword_6());
          // ElsIf
          c.setLinewrap().before(f.getElsIfAccess().getElsifKeyword_1());
          c.setIndentationIncrement().after(f.getElsIfAccess().getThenKeyword_3_1());
-         c.setIndentationDecrement().after(f.getElsIfAccess().getThenStatementsAssignment_3_2_1());
+         c.setIndentationDecrement().after(f.getElsIfAccess().getRule());
          // Then
          c.setIndentationIncrement().after(f.getIfTestAccess().getThenKeyword_3_1());
-         c.setIndentationDecrement().after(f.getIfTestAccess().getThenStatementsAssignment_3_2_1());
+         c.setIndentationDecrement().after(f.getIfTestAccess().getGroup_3_2());
          // Else
          c.setLinewrap().before(f.getIfTestAccess().getElseKeyword_5_1());
          c.setIndentationIncrement().after(f.getIfTestAccess().getElseKeyword_5_1());
-         c.setIndentationDecrement().after(f.getIfTestAccess().getElseStatementsAssignment_5_2_1());
+         c.setIndentationDecrement().after(f.getIfTestAccess().getGroup_5_2());
 
       // ==> Loop <==
          c.setLinewrap().before(f.getLoopAccess().getLoopKeyword_2());
@@ -271,13 +271,13 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
          c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_4_2_0());
          c.setLinewrap().after(f.getRenamingAccess().getCommaKeyword_1_5_2_0());
               
-         // ==> Suspend <==
+      // ==> Suspend <==
          c.setLinewrap().before(f.getSuspendAccess().getGroup_1());
          c.setIndentationIncrement().after(f.getSuspendAccess().getSuspendKeyword_1_1());
          c.setIndentationDecrement().before(f.getSuspendAccess().getWhenKeyword_3());
          c.setLinewrap().before(f.getSuspendAccess().getWhenKeyword_3());
          c.setIndentationIncrement().after(f.getSuspendAccess().getWhenKeyword_3());
-         c.setIndentationDecrement().after(f.getSuspendAccess().getRule());
+         c.setIndentationDecrement().after(f.getSuspendAccess().getDelayDelayExprParserRuleCall_4_0());
       
       // ==> Sustain <==
          c.setLinewrap().before(f.getSustainAccess().getSustainKeyword_1());

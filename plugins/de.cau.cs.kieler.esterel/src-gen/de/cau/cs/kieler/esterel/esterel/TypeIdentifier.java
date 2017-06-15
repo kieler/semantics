@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.CombineOperator;
+import de.cau.cs.kieler.kexpressions.ValueType;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -26,7 +29,7 @@ public interface TypeIdentifier extends EObject
 {
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.esterel.esterel.ValueType}.
+   * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.ValueType}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Type</em>' attribute isn't clear,
@@ -34,7 +37,7 @@ public interface TypeIdentifier extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' attribute.
-   * @see de.cau.cs.kieler.esterel.esterel.ValueType
+   * @see de.cau.cs.kieler.kexpressions.ValueType
    * @see #setType(ValueType)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTypeIdentifier_Type()
    * @model
@@ -47,7 +50,7 @@ public interface TypeIdentifier extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Type</em>' attribute.
-   * @see de.cau.cs.kieler.esterel.esterel.ValueType
+   * @see de.cau.cs.kieler.kexpressions.ValueType
    * @see #getType()
    * @generated
    */
@@ -81,7 +84,7 @@ public interface TypeIdentifier extends EObject
 
   /**
    * Returns the value of the '<em><b>Operator</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.esterel.esterel.CombineOperator}.
+   * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.CombineOperator}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Operator</em>' attribute isn't clear,
@@ -89,7 +92,7 @@ public interface TypeIdentifier extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Operator</em>' attribute.
-   * @see de.cau.cs.kieler.esterel.esterel.CombineOperator
+   * @see de.cau.cs.kieler.kexpressions.CombineOperator
    * @see #setOperator(CombineOperator)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTypeIdentifier_Operator()
    * @model
@@ -102,7 +105,7 @@ public interface TypeIdentifier extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Operator</em>' attribute.
-   * @see de.cau.cs.kieler.esterel.esterel.CombineOperator
+   * @see de.cau.cs.kieler.kexpressions.CombineOperator
    * @see #getOperator()
    * @generated
    */

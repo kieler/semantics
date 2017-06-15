@@ -6,7 +6,9 @@ import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 
-import de.cau.cs.kieler.kexpressions.Value;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementContainer;
@@ -130,13 +132,6 @@ public class EsterelSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.VALUED_OBJECT:
-      {
-        ValuedObject valuedObject = (ValuedObject)theEObject;
-        T result = caseValuedObject(valuedObject);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsterelPackage.FUNCTION_DECL:
       {
         FunctionDecl functionDecl = (FunctionDecl)theEObject;
@@ -190,6 +185,8 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         ISignal iSignal = (ISignal)theEObject;
         T result = caseISignal(iSignal);
+        if (result == null) result = caseValuedObject(iSignal);
+        if (result == null) result = caseAnnotatable(iSignal);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -578,66 +575,10 @@ public class EsterelSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.EXPRESSION:
-      {
-        Expression expression = (Expression)theEObject;
-        T result = caseExpression(expression);
-        if (result == null) result = caseKExpressions_Expression(expression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.VALUED_OBJECT_REFERENCE:
-      {
-        ValuedObjectReference valuedObjectReference = (ValuedObjectReference)theEObject;
-        T result = caseValuedObjectReference(valuedObjectReference);
-        if (result == null) result = caseExpression(valuedObjectReference);
-        if (result == null) result = caseKExpressions_Expression(valuedObjectReference);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsterelPackage.DELAY_EXPR:
       {
         DelayExpr delayExpr = (DelayExpr)theEObject;
         T result = caseDelayExpr(delayExpr);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.TEXT_EXPRESSION:
-      {
-        TextExpression textExpression = (TextExpression)theEObject;
-        T result = caseTextExpression(textExpression);
-        if (result == null) result = caseExpression(textExpression);
-        if (result == null) result = caseKExpressions_TextExpression(textExpression);
-        if (result == null) result = caseKExpressions_Expression(textExpression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.INT_VALUE:
-      {
-        IntValue intValue = (IntValue)theEObject;
-        T result = caseIntValue(intValue);
-        if (result == null) result = caseExpression(intValue);
-        if (result == null) result = caseKExpressions_Expression(intValue);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.FLOAT_VALUE:
-      {
-        FloatValue floatValue = (FloatValue)theEObject;
-        T result = caseFloatValue(floatValue);
-        if (result == null) result = caseExpression(floatValue);
-        if (result == null) result = caseKExpressions_FloatValue(floatValue);
-        if (result == null) result = caseValue(floatValue);
-        if (result == null) result = caseKExpressions_Expression(floatValue);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.BOOLEAN_VALUE:
-      {
-        BooleanValue booleanValue = (BooleanValue)theEObject;
-        T result = caseBooleanValue(booleanValue);
-        if (result == null) result = caseExpression(booleanValue);
-        if (result == null) result = caseKExpressions_Expression(booleanValue);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -654,6 +595,7 @@ public class EsterelSwitch<T> extends Switch<T>
         Constant constant = (Constant)theEObject;
         T result = caseConstant(constant);
         if (result == null) result = caseValuedObject(constant);
+        if (result == null) result = caseAnnotatable(constant);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -702,6 +644,8 @@ public class EsterelSwitch<T> extends Switch<T>
         TrapSignal trapSignal = (TrapSignal)theEObject;
         T result = caseTrapSignal(trapSignal);
         if (result == null) result = caseISignal(trapSignal);
+        if (result == null) result = caseValuedObject(trapSignal);
+        if (result == null) result = caseAnnotatable(trapSignal);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -710,7 +654,6 @@ public class EsterelSwitch<T> extends Switch<T>
         TrapExpression trapExpression = (TrapExpression)theEObject;
         T result = caseTrapExpression(trapExpression);
         if (result == null) result = caseExpression(trapExpression);
-        if (result == null) result = caseKExpressions_Expression(trapExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -719,7 +662,6 @@ public class EsterelSwitch<T> extends Switch<T>
         FunctionExpression functionExpression = (FunctionExpression)theEObject;
         T result = caseFunctionExpression(functionExpression);
         if (result == null) result = caseExpression(functionExpression);
-        if (result == null) result = caseKExpressions_Expression(functionExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -728,16 +670,6 @@ public class EsterelSwitch<T> extends Switch<T>
         ConstantExpression constantExpression = (ConstantExpression)theEObject;
         T result = caseConstantExpression(constantExpression);
         if (result == null) result = caseExpression(constantExpression);
-        if (result == null) result = caseKExpressions_Expression(constantExpression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.OPERATOR_EXPRESSION:
-      {
-        OperatorExpression operatorExpression = (OperatorExpression)theEObject;
-        T result = caseOperatorExpression(operatorExpression);
-        if (result == null) result = caseExpression(operatorExpression);
-        if (result == null) result = caseKExpressions_Expression(operatorExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -747,17 +679,6 @@ public class EsterelSwitch<T> extends Switch<T>
         T result = caseTrapReferenceExpr(trapReferenceExpr);
         if (result == null) result = caseValuedObjectReference(trapReferenceExpr);
         if (result == null) result = caseExpression(trapReferenceExpr);
-        if (result == null) result = caseKExpressions_Expression(trapReferenceExpr);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.ESTEREL_VALUED_OBJECT_REFERENCE:
-      {
-        Esterel_ValuedObjectReference esterel_ValuedObjectReference = (Esterel_ValuedObjectReference)theEObject;
-        T result = caseEsterel_ValuedObjectReference(esterel_ValuedObjectReference);
-        if (result == null) result = caseValuedObjectReference(esterel_ValuedObjectReference);
-        if (result == null) result = caseExpression(esterel_ValuedObjectReference);
-        if (result == null) result = caseKExpressions_Expression(esterel_ValuedObjectReference);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -873,22 +794,6 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseOneTypeConstantDecls(OneTypeConstantDecls object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Valued Object</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseValuedObject(ValuedObject object)
   {
     return null;
   }
@@ -1742,38 +1647,6 @@ public class EsterelSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseExpression(Expression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseValuedObjectReference(ValuedObjectReference object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Delay Expr</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1785,70 +1658,6 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDelayExpr(DelayExpr object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Text Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Text Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTextExpression(TextExpression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Int Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Int Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseIntValue(IntValue object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Float Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Float Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFloatValue(FloatValue object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Boolean Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Boolean Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBooleanValue(BooleanValue object)
   {
     return null;
   }
@@ -2030,22 +1839,6 @@ public class EsterelSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Operator Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Operator Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseOperatorExpression(OperatorExpression object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Trap Reference Expr</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -2057,22 +1850,6 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTrapReferenceExpr(TrapReferenceExpr object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Esterel Valued Object Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Esterel Valued Object Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEsterel_ValuedObjectReference(Esterel_ValuedObjectReference object)
   {
     return null;
   }
@@ -2110,6 +1887,22 @@ public class EsterelSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValuedObject(ValuedObject object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Statement</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -2136,55 +1929,23 @@ public class EsterelSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseKExpressions_Expression(de.cau.cs.kieler.kexpressions.Expression object)
+  public T caseExpression(Expression object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Text Expression</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Text Expression</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseKExpressions_TextExpression(de.cau.cs.kieler.kexpressions.TextExpression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseValue(Value object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Float Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Float Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseKExpressions_FloatValue(de.cau.cs.kieler.kexpressions.FloatValue object)
+  public T caseValuedObjectReference(ValuedObjectReference object)
   {
     return null;
   }

@@ -15,7 +15,6 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.esterel.esterel.Abort;
 import de.cau.cs.kieler.esterel.esterel.Await;
 import de.cau.cs.kieler.esterel.esterel.Block;
-import de.cau.cs.kieler.esterel.esterel.BooleanValue;
 import de.cau.cs.kieler.esterel.esterel.Case;
 import de.cau.cs.kieler.esterel.esterel.Constant;
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
@@ -30,12 +29,10 @@ import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel;
 import de.cau.cs.kieler.esterel.esterel.EsterelThread;
 import de.cau.cs.kieler.esterel.esterel.EsterelType;
-import de.cau.cs.kieler.esterel.esterel.Esterel_ValuedObjectReference;
 import de.cau.cs.kieler.esterel.esterel.EveryDo;
 import de.cau.cs.kieler.esterel.esterel.Exec;
 import de.cau.cs.kieler.esterel.esterel.ExecCase;
 import de.cau.cs.kieler.esterel.esterel.Exit;
-import de.cau.cs.kieler.esterel.esterel.FloatValue;
 import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
@@ -46,7 +43,6 @@ import de.cau.cs.kieler.esterel.esterel.IVariable;
 import de.cau.cs.kieler.esterel.esterel.IfTest;
 import de.cau.cs.kieler.esterel.esterel.Input;
 import de.cau.cs.kieler.esterel.esterel.InputOutput;
-import de.cau.cs.kieler.esterel.esterel.IntValue;
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
 import de.cau.cs.kieler.esterel.esterel.LocalVariable;
 import de.cau.cs.kieler.esterel.esterel.Loop;
@@ -54,7 +50,6 @@ import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.ModuleRenaming;
 import de.cau.cs.kieler.esterel.esterel.Nothing;
 import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls;
-import de.cau.cs.kieler.esterel.esterel.OperatorExpression;
 import de.cau.cs.kieler.esterel.esterel.Output;
 import de.cau.cs.kieler.esterel.esterel.Present;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
@@ -78,7 +73,6 @@ import de.cau.cs.kieler.esterel.esterel.Sustain;
 import de.cau.cs.kieler.esterel.esterel.Task;
 import de.cau.cs.kieler.esterel.esterel.TaskDecl;
 import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
-import de.cau.cs.kieler.esterel.esterel.TextExpression;
 import de.cau.cs.kieler.esterel.esterel.Trap;
 import de.cau.cs.kieler.esterel.esterel.TrapExpression;
 import de.cau.cs.kieler.esterel.esterel.TrapHandler;
@@ -88,8 +82,6 @@ import de.cau.cs.kieler.esterel.esterel.Type;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
-import de.cau.cs.kieler.esterel.esterel.ValuedObjectReference;
 import de.cau.cs.kieler.esterel.esterel.VariableDecl;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram;
@@ -99,9 +91,14 @@ import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess;
 import de.cau.cs.kieler.esterel.serializer.EsterelSemanticSequencer;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
+import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
@@ -120,7 +117,6 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.ScopeStatement;
-import de.cau.cs.kieler.scl.scl.StatementContainer;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -196,9 +192,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.BLOCK:
 				sequence_Block(context, (Block) semanticObject); 
 				return; 
-			case EsterelPackage.BOOLEAN_VALUE:
-				sequence_BooleanValue(context, (BooleanValue) semanticObject); 
-				return; 
 			case EsterelPackage.CASE:
 				sequence_Case(context, (Case) semanticObject); 
 				return; 
@@ -238,9 +231,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.ESTEREL_TYPE:
 				sequence_TypeIdentifier(context, (EsterelType) semanticObject); 
 				return; 
-			case EsterelPackage.ESTEREL_VALUED_OBJECT_REFERENCE:
-				sequence_Esterel_ValuedObjectReference(context, (Esterel_ValuedObjectReference) semanticObject); 
-				return; 
 			case EsterelPackage.EVERY_DO:
 				sequence_EveryDo(context, (EveryDo) semanticObject); 
 				return; 
@@ -252,9 +242,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case EsterelPackage.EXIT:
 				sequence_Exit(context, (Exit) semanticObject); 
-				return; 
-			case EsterelPackage.FLOAT_VALUE:
-				sequence_FloatValue(context, (FloatValue) semanticObject); 
 				return; 
 			case EsterelPackage.FUNCTION:
 				sequence_Function(context, (Function) semanticObject); 
@@ -272,12 +259,17 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				sequence_Halt(context, (Halt) semanticObject); 
 				return; 
 			case EsterelPackage.ISIGNAL:
-				if (rule == grammarAccess.getISignalRule()) {
+				if (rule == grammarAccess.getISignalRule()
+						|| rule == grammarAccess.getValuedObjectRule()) {
 					sequence_ISignal(context, (ISignal) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getSensorRule()) {
 					sequence_Sensor(context, (ISignal) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTickRule()) {
+					sequence_Tick(context, (ISignal) semanticObject); 
 					return; 
 				}
 				else break;
@@ -292,9 +284,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case EsterelPackage.INPUT_OUTPUT:
 				sequence_InterfaceSignalDecl(context, (InputOutput) semanticObject); 
-				return; 
-			case EsterelPackage.INT_VALUE:
-				sequence_Esterel_IntValue(context, (IntValue) semanticObject); 
 				return; 
 			case EsterelPackage.LOCAL_SIGNAL_DECL:
 				sequence_LocalSignalDecl(context, (LocalSignalDecl) semanticObject); 
@@ -317,66 +306,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.ONE_TYPE_CONSTANT_DECLS:
 				sequence_OneTypeConstantDecls(context, (OneTypeConstantDecls) semanticObject); 
 				return; 
-			case EsterelPackage.OPERATOR_EXPRESSION:
-				if (rule == grammarAccess.getExpressionRule()
-						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0()
-						|| rule == grammarAccess.getNotOrValuedExpressionRule()
-						|| rule == grammarAccess.getValuedExpressionRule()
-						|| rule == grammarAccess.getAddExpressionRule()
-						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSubExpressionRule()
-						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getMultExpressionRule()
-						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getDivExpressionRule()
-						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getModExpressionRule()
-						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getNegExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getRootRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression_OperatorExpression_0_1_0(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getBooleanExpressionRule()
-						|| rule == grammarAccess.getOrExpressionRule()
-						|| action == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAndExpressionRule()
-						|| action == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getCompareOperationRule()
-						|| rule == grammarAccess.getNotExpressionRule()
-						|| rule == grammarAccess.getBoolExpressionRule()
-						|| rule == grammarAccess.getLogicalOrExpressionRule()
-						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getLogicalAndExpressionRule()
-						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseOrExpressionRule()
-						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseAndExpressionRule()
-						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
-					sequence_AndExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getTrapExprRule()
-						|| rule == grammarAccess.getSignalExpressionRule()
-						|| action == grammarAccess.getSignalExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSignalAndExpressionRule()
-						|| action == grammarAccess.getSignalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSignalNotExpressionRule()
-						|| rule == grammarAccess.getSignalAtomicExpressionRule()) {
-					sequence_SignalAndExpression_SignalExpression_SignalNotExpression_SignalPreExpr(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getSignalPreExprRule()) {
-					sequence_SignalPreExpr(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
-					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else break;
 			case EsterelPackage.OUTPUT:
 				sequence_InterfaceSignalDecl(context, (Output) semanticObject); 
 				return; 
@@ -446,9 +375,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.TASK_RENAMING:
 				sequence_TaskRenaming(context, (TaskRenaming) semanticObject); 
 				return; 
-			case EsterelPackage.TEXT_EXPRESSION:
-				sequence_TextExpression(context, (TextExpression) semanticObject); 
-				return; 
 			case EsterelPackage.TRAP:
 				sequence_Trap(context, (Trap) semanticObject); 
 				return; 
@@ -475,12 +401,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case EsterelPackage.TYPE_RENAMING:
 				sequence_TypeRenaming(context, (TypeRenaming) semanticObject); 
-				return; 
-			case EsterelPackage.VALUED_OBJECT:
-				sequence_Tick(context, (ValuedObject) semanticObject); 
-				return; 
-			case EsterelPackage.VALUED_OBJECT_REFERENCE:
-				sequence_SignalReferenceExpr(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			case EsterelPackage.VARIABLE_DECL:
 				sequence_VariableDecl(context, (VariableDecl) semanticObject); 
@@ -509,31 +429,81 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case KExpressionsPackage.DECLARATION:
 				sequence_Declaration(context, (Declaration) semanticObject); 
 				return; 
+			case KExpressionsPackage.FLOAT_VALUE:
+				sequence_FloatValue(context, (FloatValue) semanticObject); 
+				return; 
 			case KExpressionsPackage.FUNCTION_CALL:
 				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.INT_VALUE:
-				sequence_IntValue(context, (de.cau.cs.kieler.kexpressions.IntValue) semanticObject); 
+				sequence_IntValue(context, (IntValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getLogicalOrExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseOrExpression_LogicalAndExpression_LogicalOrExpression(context, (de.cau.cs.kieler.kexpressions.OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getLogicalAndExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseOrExpression_LogicalAndExpression(context, (de.cau.cs.kieler.kexpressions.OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseOrExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseOrExpression(context, (de.cau.cs.kieler.kexpressions.OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()) {
-					sequence_BitwiseAndExpression(context, (de.cau.cs.kieler.kexpressions.OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_BitwiseAndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBooleanExpressionRule()
+						|| rule == grammarAccess.getOrExpressionRule()
+						|| action == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAndExpressionRule()
+						|| action == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getRootRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTrapExprRule()
+						|| rule == grammarAccess.getSignalExpressionRule()
+						|| action == grammarAccess.getSignalExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSignalAndExpressionRule()
+						|| action == grammarAccess.getSignalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSignalNotExpressionRule()
+						|| rule == grammarAccess.getSignalAtomicExpressionRule()) {
+					sequence_SignalAndExpression_SignalExpression_SignalNotExpression_SignalPreExpr(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSignalPreExprRule()) {
+					sequence_SignalPreExpr(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
+					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else break;
@@ -543,12 +513,61 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
-			case KExpressionsPackage.VALUED_OBJECT:
-				sequence_ValuedObject(context, (de.cau.cs.kieler.kexpressions.ValuedObject) semanticObject); 
+			case KExpressionsPackage.TEXT_EXPRESSION:
+				sequence_TextExpression(context, (TextExpression) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
-				sequence_ValuedObjectReference(context, (de.cau.cs.kieler.kexpressions.ValuedObjectReference) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getTrapExprRule()
+						|| rule == grammarAccess.getSignalExpressionRule()
+						|| action == grammarAccess.getSignalExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSignalAndExpressionRule()
+						|| action == grammarAccess.getSignalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSignalNotExpressionRule()
+						|| rule == grammarAccess.getSignalAtomicExpressionRule()
+						|| rule == grammarAccess.getSignalReferenceExprRule()) {
+					sequence_SignalReferenceExpr(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBooleanExpressionRule()
+						|| rule == grammarAccess.getOrExpressionRule()
+						|| action == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAndExpressionRule()
+						|| action == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
+						|| rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
+					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if (epackage == KExtPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
@@ -605,9 +624,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case SclPackage.SCOPE_STATEMENT:
 				sequence_ScopeStatement(context, (ScopeStatement) semanticObject); 
-				return; 
-			case SclPackage.STATEMENT_CONTAINER:
-				sequence_StatementContainer(context, (StatementContainer) semanticObject); 
 				return; 
 			case SclPackage.THREAD:
 				sequence_Thread(context, (de.cau.cs.kieler.scl.scl.Thread) semanticObject); 

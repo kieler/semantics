@@ -5,6 +5,8 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.Constant;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
+import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;

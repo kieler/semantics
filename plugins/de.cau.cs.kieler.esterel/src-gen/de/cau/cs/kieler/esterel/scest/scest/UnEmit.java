@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.esterel.scest.scest;
 
 import de.cau.cs.kieler.esterel.esterel.ISignal;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
 
 import de.cau.cs.kieler.scl.scl.Statement;
 
@@ -61,12 +60,12 @@ public interface UnEmit extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Tick</em>' containment reference.
-   * @see #setTick(ValuedObject)
+   * @see #setTick(ISignal)
    * @see de.cau.cs.kieler.esterel.scest.scest.ScestPackage#getUnEmit_Tick()
    * @model containment="true"
    * @generated
    */
-  ValuedObject getTick();
+  ISignal getTick();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.scest.scest.UnEmit#getTick <em>Tick</em>}' containment reference.
@@ -76,6 +75,6 @@ public interface UnEmit extends Statement
    * @see #getTick()
    * @generated
    */
-  void setTick(ValuedObject value);
+  void setTick(ISignal value);
 
 } // UnEmit

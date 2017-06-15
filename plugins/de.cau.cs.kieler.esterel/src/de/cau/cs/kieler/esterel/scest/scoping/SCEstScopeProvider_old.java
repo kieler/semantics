@@ -42,7 +42,7 @@ import de.cau.cs.kieler.esterel.esterel.Sustain;
 import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
 import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
-import de.cau.cs.kieler.esterel.esterel.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 /**
  * This class contains custom scoping description.

@@ -498,7 +498,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cValueConstantValueParserRuleCall_2_1_0 = (RuleCall)cValueAssignment_2_1.eContents().get(0);
 		
-		//Constant ValuedObject:
+		//Constant kexpressions::ValuedObject:
 		//	{Constant} name=ID ("=" value=ConstantValue)?
 		@Override public ParserRule getRule() { return rule; }
 
@@ -1528,7 +1528,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
 		private final Keyword cNameTickKeyword_0 = (Keyword)cNameAssignment.eContents().get(0);
 		
-		//Tick ValuedObject:
+		//Tick ISignal:
 		//	name="tick"
 		@Override public ParserRule getRule() { return rule; }
 
@@ -5557,19 +5557,19 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOldNameValuedObjectIDTerminalRuleCall_2_0_1 = (RuleCall)cOldNameValuedObjectCrossReference_2_0.eContents().get(1);
 		
 		//ConstantRenaming:
-		//	(newName=[ValuedObject] | newValue=ConstantValue) "/" oldName=[ValuedObject];
+		//	(newName=[kexpressions::ValuedObject] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject];
 		@Override public ParserRule getRule() { return rule; }
 
-		//(newName=[ValuedObject] | newValue=ConstantValue) "/" oldName=[ValuedObject]
+		//(newName=[kexpressions::ValuedObject] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject]
 		public Group getGroup() { return cGroup; }
 
-		//(newName=[ValuedObject] | newValue=ConstantValue)
+		//(newName=[kexpressions::ValuedObject] | newValue=ConstantValue)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//newName=[ValuedObject]
+		//newName=[kexpressions::ValuedObject]
 		public Assignment getNewNameAssignment_0_0() { return cNewNameAssignment_0_0; }
 
-		//[ValuedObject]
+		//[kexpressions::ValuedObject]
 		public CrossReference getNewNameValuedObjectCrossReference_0_0_0() { return cNewNameValuedObjectCrossReference_0_0_0; }
 
 		//ID
@@ -5584,10 +5584,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"/"
 		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
 
-		//oldName=[ValuedObject]
+		//oldName=[kexpressions::ValuedObject]
 		public Assignment getOldNameAssignment_2() { return cOldNameAssignment_2; }
 
-		//[ValuedObject]
+		//[kexpressions::ValuedObject]
 		public CrossReference getOldNameValuedObjectCrossReference_2_0() { return cOldNameValuedObjectCrossReference_2_0; }
 
 		//ID
@@ -6010,7 +6010,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cFunctionExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cTrapExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cBooleanValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cBoolValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cValuedObjectTestExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
@@ -6025,17 +6025,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		// * / // Esterel is a bit richer than what is provided by kexpressions. 
 		//// These rules are introduced here.
 		//// Care about order of the rules! 
-		//AtomicExpression Expression:
+		//AtomicExpression kexpressions::Expression:
 		//	FunctionExpression
 		//	| TrapExpression
-		//	| BooleanValue
+		//	| BoolValue
 		//	| ValuedObjectTestExpression
 		//	| TextExpression
 		//	| '(' BooleanExpression ')'
 		//	| ConstantExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//FunctionExpression | TrapExpression | BooleanValue | ValuedObjectTestExpression | TextExpression | '(' BooleanExpression
+		//FunctionExpression | TrapExpression | BoolValue | ValuedObjectTestExpression | TextExpression | '(' BooleanExpression
 		//')' | ConstantExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -6045,8 +6045,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//TrapExpression
 		public RuleCall getTrapExpressionParserRuleCall_1() { return cTrapExpressionParserRuleCall_1; }
 
-		//BooleanValue
-		public RuleCall getBooleanValueParserRuleCall_2() { return cBooleanValueParserRuleCall_2; }
+		//BoolValue
+		public RuleCall getBoolValueParserRuleCall_2() { return cBoolValueParserRuleCall_2; }
 
 		//ValuedObjectTestExpression
 		public RuleCall getValuedObjectTestExpressionParserRuleCall_3() { return cValuedObjectTestExpressionParserRuleCall_3; }
@@ -6079,7 +6079,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cTrapISignalCrossReference_2_0 = (CrossReference)cTrapAssignment_2.eContents().get(0);
 		private final RuleCall cTrapISignalIDTerminalRuleCall_2_0_1 = (RuleCall)cTrapISignalCrossReference_2_0.eContents().get(1);
 		
-		//TrapExpression Expression:
+		//TrapExpression kexpressions::Expression:
 		//	{TrapExpression} "??" trap=[ISignal]
 		@Override public ParserRule getRule() { return rule; }
 
@@ -6119,7 +6119,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKexpressionsExpressionParserRuleCall_3_1_1_0 = (RuleCall)cKexpressionsAssignment_3_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//FunctionExpression Expression:
+		//FunctionExpression kexpressions::Expression:
 		//	{FunctionExpression} function=[Function]
 		//	"(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")"
 		@Override public ParserRule getRule() { return rule; }
@@ -6178,7 +6178,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final RuleCall cValueConstantValueParserRuleCall_1_1_0 = (RuleCall)cValueAssignment_1_1.eContents().get(0);
 		
-		//ConstantExpression Expression:
+		//ConstantExpression kexpressions::Expression:
 		//	{ConstantExpression} (constant=[Constant] | value=ConstantValue)
 		@Override public ParserRule getRule() { return rule; }
 
@@ -6213,7 +6213,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// --> B.3.5 Trap Expressions <--
 		//// -------------------------------------
-		//TrapExpr Expression:
+		//TrapExpr kexpressions::Expression:
 		//	SignalExpression
 		@Override public ParserRule getRule() { return rule; }
 
@@ -6227,42 +6227,48 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSignalAndExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsSignalAndExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsSignalAndExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// --> B.3.3 Signal Expressions <--
 		//// -------------------------------------
-		//SignalExpression Expression:
-		//	SignalAndExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator
-		//	subExpressions+=SignalAndExpression)*
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//SignalExpression kexpressions::Expression:
+		//	SignalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//	subExpressions+=SignalAndExpression)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//SignalAndExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator
-		//subExpressions+=SignalAndExpression)*
+		//SignalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//subExpressions+=SignalAndExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//SignalAndExpression
 		public RuleCall getSignalAndExpressionParserRuleCall_0() { return cSignalAndExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator subExpressions+=SignalAndExpression)*
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//subExpressions+=SignalAndExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=Esterel_OrOperator subExpressions+=SignalAndExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=Esterel_OrOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//Esterel_OrOperator
-		public RuleCall getOperatorEsterel_OrOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=SignalAndExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//SignalAndExpression
-		public RuleCall getSubExpressionsSignalAndExpressionParserRuleCall_1_2_0() { return cSubExpressionsSignalAndExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsSignalAndExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsSignalAndExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class SignalAndExpressionElements extends AbstractParserRuleElementFinder {
@@ -6271,40 +6277,46 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSignalNotExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsSignalNotExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsSignalNotExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
-		//SignalAndExpression Expression:
-		//	SignalNotExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator
-		//	subExpressions+=SignalNotExpression)*
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//SignalAndExpression kexpressions::Expression:
+		//	SignalNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//	subExpressions+=SignalNotExpression)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//SignalNotExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator
-		//subExpressions+=SignalNotExpression)*
+		//SignalNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//subExpressions+=SignalNotExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//SignalNotExpression
 		public RuleCall getSignalNotExpressionParserRuleCall_0() { return cSignalNotExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator subExpressions+=SignalNotExpression)*
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//subExpressions+=SignalNotExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=Esterel_AndOperator subExpressions+=SignalNotExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=Esterel_AndOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//Esterel_AndOperator
-		public RuleCall getOperatorEsterel_AndOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=SignalNotExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//SignalNotExpression
-		public RuleCall getSubExpressionsSignalNotExpressionParserRuleCall_1_2_0() { return cSubExpressionsSignalNotExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsSignalNotExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsSignalNotExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class SignalNotExpressionElements extends AbstractParserRuleElementFinder {
@@ -6315,34 +6327,37 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cOperatorEsterel_NotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cSubExpressionsSignalNotExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cSubExpressionsSignalAtomicExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
 		private final RuleCall cSignalAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//SignalNotExpression Expression:
-		//	{OperatorExpression} operator=Esterel_NotOperator
-		//	subExpressions+=SignalNotExpression | SignalAtomicExpression
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//SignalNotExpression kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator+
+		//	subExpressions+=SignalAtomicExpression
+		//	| SignalAtomicExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=Esterel_NotOperator subExpressions+=SignalNotExpression | SignalAtomicExpression
+		//{kexpressions::OperatorExpression} operator=Esterel_NotOperator+ subExpressions+=SignalAtomicExpression |
+		//SignalAtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//{OperatorExpression} operator=Esterel_NotOperator subExpressions+=SignalNotExpression
+		//{kexpressions::OperatorExpression} operator=Esterel_NotOperator+ subExpressions+=SignalAtomicExpression
 		public Group getGroup_0() { return cGroup_0; }
 
-		//{OperatorExpression}
+		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 
-		//operator=Esterel_NotOperator
+		//operator=Esterel_NotOperator+
 		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
 
 		//Esterel_NotOperator
 		public RuleCall getOperatorEsterel_NotOperatorEnumRuleCall_0_1_0() { return cOperatorEsterel_NotOperatorEnumRuleCall_0_1_0; }
 
-		//subExpressions+=SignalNotExpression
+		//subExpressions+=SignalAtomicExpression
 		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
 
-		//SignalNotExpression
-		public RuleCall getSubExpressionsSignalNotExpressionParserRuleCall_0_2_0() { return cSubExpressionsSignalNotExpressionParserRuleCall_0_2_0; }
+		//SignalAtomicExpression
+		public RuleCall getSubExpressionsSignalAtomicExpressionParserRuleCall_0_2_0() { return cSubExpressionsSignalAtomicExpressionParserRuleCall_0_2_0; }
 
 		//SignalAtomicExpression
 		public RuleCall getSignalAtomicExpressionParserRuleCall_1() { return cSignalAtomicExpressionParserRuleCall_1; }
@@ -6359,7 +6374,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSignalPreExprParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cTrapReferenceExprParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
-		//SignalAtomicExpression Expression:
+		//SignalAtomicExpression kexpressions::Expression:
 		//	SignalReferenceExpr
 		//	| "(" SignalExpression ")"
 		//	| SignalPreExpr
@@ -6397,7 +6412,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cValuedObjectISignalCrossReference_0 = (CrossReference)cValuedObjectAssignment.eContents().get(0);
 		private final RuleCall cValuedObjectISignalIDTerminalRuleCall_0_1 = (RuleCall)cValuedObjectISignalCrossReference_0.eContents().get(1);
 		
-		//SignalReferenceExpr ValuedObjectReference:
+		//SignalReferenceExpr kexpressions::ValuedObjectReference:
 		//	valuedObject=[ISignal]
 		@Override public ParserRule getRule() { return rule; }
 
@@ -6422,15 +6437,15 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsSignalReferenceExprParserRuleCall_3_0 = (RuleCall)cSubExpressionsAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//SignalPreExpr Expression:
-		//	{OperatorExpression} operator=Esterel_PreOperator
+		//SignalPreExpr kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} operator=Esterel_PreOperator
 		//	'(' subExpressions+=SignalReferenceExpr ')'
 		@Override public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=SignalReferenceExpr ')'
+		//{kexpressions::OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=SignalReferenceExpr ')'
 		public Group getGroup() { return cGroup; }
 
-		//{OperatorExpression}
+		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_0() { return cOperatorExpressionAction_0; }
 
 		//operator=Esterel_PreOperator
@@ -6460,7 +6475,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cValuedObjectTrapSignalCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
 		private final RuleCall cValuedObjectTrapSignalIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectTrapSignalCrossReference_1_0.eContents().get(1);
 		
-		//TrapReferenceExpr ValuedObjectReference:
+		//TrapReferenceExpr kexpressions::ValuedObjectReference:
 		//	{TrapReferenceExpr} valuedObject=[TrapSignal]
 		@Override public ParserRule getRule() { return rule; }
 
@@ -6482,21 +6497,13 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class DelayExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.DelayExpr");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Assignment cExprAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cExprAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
 		private final RuleCall cExprExpressionParserRuleCall_0_0_0 = (RuleCall)cExprAssignment_0_0.eContents().get(0);
-		private final Alternatives cAlternatives_0_1 = (Alternatives)cGroup_0.eContents().get(1);
-		private final Assignment cTickAssignment_0_1_0 = (Assignment)cAlternatives_0_1.eContents().get(0);
-		private final RuleCall cTickTickParserRuleCall_0_1_0_0 = (RuleCall)cTickAssignment_0_1_0.eContents().get(0);
-		private final Assignment cSignalExprAssignment_0_1_1 = (Assignment)cAlternatives_0_1.eContents().get(1);
-		private final RuleCall cSignalExprSignalReferenceExprParserRuleCall_0_1_1_0 = (RuleCall)cSignalExprAssignment_0_1_1.eContents().get(0);
-		private final Group cGroup_0_1_2 = (Group)cAlternatives_0_1.eContents().get(2);
-		private final Keyword cLeftSquareBracketKeyword_0_1_2_0 = (Keyword)cGroup_0_1_2.eContents().get(0);
-		private final Assignment cSignalExprAssignment_0_1_2_1 = (Assignment)cGroup_0_1_2.eContents().get(1);
-		private final RuleCall cSignalExprSignalExpressionParserRuleCall_0_1_2_1_0 = (RuleCall)cSignalExprAssignment_0_1_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_0_1_2_2 = (Keyword)cGroup_0_1_2.eContents().get(2);
-		private final Alternatives cAlternatives_1 = (Alternatives)cAlternatives.eContents().get(1);
+		private final Assignment cIsImmediateAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final Keyword cIsImmediateImmediateKeyword_0_1_0 = (Keyword)cIsImmediateAssignment_0_1.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Assignment cTickAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
 		private final RuleCall cTickTickParserRuleCall_1_0_0 = (RuleCall)cTickAssignment_1_0.eContents().get(0);
 		private final Assignment cSignalExprAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
@@ -6506,39 +6513,21 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSignalExprAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSignalExprSignalExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSignalExprAssignment_1_2_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Assignment cIsImmediateAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final Keyword cIsImmediateImmediateKeyword_2_0_0 = (Keyword)cIsImmediateAssignment_2_0.eContents().get(0);
-		private final Alternatives cAlternatives_2_1 = (Alternatives)cGroup_2.eContents().get(1);
-		private final Assignment cTickAssignment_2_1_0 = (Assignment)cAlternatives_2_1.eContents().get(0);
-		private final RuleCall cTickTickParserRuleCall_2_1_0_0 = (RuleCall)cTickAssignment_2_1_0.eContents().get(0);
-		private final Assignment cSignalExprAssignment_2_1_1 = (Assignment)cAlternatives_2_1.eContents().get(1);
-		private final RuleCall cSignalExprSignalReferenceExprParserRuleCall_2_1_1_0 = (RuleCall)cSignalExprAssignment_2_1_1.eContents().get(0);
-		private final Group cGroup_2_1_2 = (Group)cAlternatives_2_1.eContents().get(2);
-		private final Keyword cLeftSquareBracketKeyword_2_1_2_0 = (Keyword)cGroup_2_1_2.eContents().get(0);
-		private final Assignment cSignalExprAssignment_2_1_2_1 = (Assignment)cGroup_2_1_2.eContents().get(1);
-		private final RuleCall cSignalExprSignalExpressionParserRuleCall_2_1_2_1_0 = (RuleCall)cSignalExprAssignment_2_1_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_2_1_2_2 = (Keyword)cGroup_2_1_2.eContents().get(2);
 		
 		//// --> B.3.4 Delay Expressions <--
 		//// -------------------------------------
 		//DelayExpr:
-		//	expr=Expression (tick=Tick
-		//	| signalExpr=SignalReferenceExpr
-		//	| "[" signalExpr=SignalExpression "]") | (tick=Tick
-		//	| signalExpr=SignalReferenceExpr
-		//	| "[" signalExpr=SignalExpression "]") | isImmediate?="immediate" (tick=Tick
+		//	(expr=Expression | isImmediate?="immediate")? (tick=Tick
 		//	| signalExpr=SignalReferenceExpr
 		//	| "[" signalExpr=SignalExpression "]");
 		@Override public ParserRule getRule() { return rule; }
 
-		//expr=Expression (tick=Tick | signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]") | (tick=Tick |
-		//signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]") | isImmediate?="immediate" (tick=Tick |
-		//signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]")
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//(expr=Expression | isImmediate?="immediate")? (tick=Tick | signalExpr=SignalReferenceExpr | "["
+		//signalExpr=SignalExpression "]")
+		public Group getGroup() { return cGroup; }
 
-		//expr=Expression (tick=Tick | signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]")
-		public Group getGroup_0() { return cGroup_0; }
+		//(expr=Expression | isImmediate?="immediate")?
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//expr=Expression
 		public Assignment getExprAssignment_0_0() { return cExprAssignment_0_0; }
@@ -6546,35 +6535,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Expression
 		public RuleCall getExprExpressionParserRuleCall_0_0_0() { return cExprExpressionParserRuleCall_0_0_0; }
 
-		//(tick=Tick | signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]")
-		public Alternatives getAlternatives_0_1() { return cAlternatives_0_1; }
+		//isImmediate?="immediate"
+		public Assignment getIsImmediateAssignment_0_1() { return cIsImmediateAssignment_0_1; }
 
-		//tick=Tick
-		public Assignment getTickAssignment_0_1_0() { return cTickAssignment_0_1_0; }
-
-		//Tick
-		public RuleCall getTickTickParserRuleCall_0_1_0_0() { return cTickTickParserRuleCall_0_1_0_0; }
-
-		//signalExpr=SignalReferenceExpr
-		public Assignment getSignalExprAssignment_0_1_1() { return cSignalExprAssignment_0_1_1; }
-
-		//SignalReferenceExpr
-		public RuleCall getSignalExprSignalReferenceExprParserRuleCall_0_1_1_0() { return cSignalExprSignalReferenceExprParserRuleCall_0_1_1_0; }
-
-		//"[" signalExpr=SignalExpression "]"
-		public Group getGroup_0_1_2() { return cGroup_0_1_2; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_0_1_2_0() { return cLeftSquareBracketKeyword_0_1_2_0; }
-
-		//signalExpr=SignalExpression
-		public Assignment getSignalExprAssignment_0_1_2_1() { return cSignalExprAssignment_0_1_2_1; }
-
-		//SignalExpression
-		public RuleCall getSignalExprSignalExpressionParserRuleCall_0_1_2_1_0() { return cSignalExprSignalExpressionParserRuleCall_0_1_2_1_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_0_1_2_2() { return cRightSquareBracketKeyword_0_1_2_2; }
+		//"immediate"
+		public Keyword getIsImmediateImmediateKeyword_0_1_0() { return cIsImmediateImmediateKeyword_0_1_0; }
 
 		//(tick=Tick | signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]")
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
@@ -6605,45 +6570,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"]"
 		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
-
-		//isImmediate?="immediate" (tick=Tick | signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]")
-		public Group getGroup_2() { return cGroup_2; }
-
-		//isImmediate?="immediate"
-		public Assignment getIsImmediateAssignment_2_0() { return cIsImmediateAssignment_2_0; }
-
-		//"immediate"
-		public Keyword getIsImmediateImmediateKeyword_2_0_0() { return cIsImmediateImmediateKeyword_2_0_0; }
-
-		//(tick=Tick | signalExpr=SignalReferenceExpr | "[" signalExpr=SignalExpression "]")
-		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
-
-		//tick=Tick
-		public Assignment getTickAssignment_2_1_0() { return cTickAssignment_2_1_0; }
-
-		//Tick
-		public RuleCall getTickTickParserRuleCall_2_1_0_0() { return cTickTickParserRuleCall_2_1_0_0; }
-
-		//signalExpr=SignalReferenceExpr
-		public Assignment getSignalExprAssignment_2_1_1() { return cSignalExprAssignment_2_1_1; }
-
-		//SignalReferenceExpr
-		public RuleCall getSignalExprSignalReferenceExprParserRuleCall_2_1_1_0() { return cSignalExprSignalReferenceExprParserRuleCall_2_1_1_0; }
-
-		//"[" signalExpr=SignalExpression "]"
-		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_2_1_2_0() { return cLeftSquareBracketKeyword_2_1_2_0; }
-
-		//signalExpr=SignalExpression
-		public Assignment getSignalExprAssignment_2_1_2_1() { return cSignalExprAssignment_2_1_2_1; }
-
-		//SignalExpression
-		public RuleCall getSignalExprSignalExpressionParserRuleCall_2_1_2_1_0() { return cSignalExprSignalExpressionParserRuleCall_2_1_2_1_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_2_1_2_2() { return cRightSquareBracketKeyword_2_1_2_2; }
 	}
 
 	public class ExpressionElements extends AbstractParserRuleElementFinder {
@@ -6660,15 +6586,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		// * 
 		// * 
 		// * #########################################################################
-		// * / Expression:
-		//	=> BooleanExpression
-		//	| ValuedExpression;
+		// * / Expression kexpressions::Expression:
+		//	BooleanExpression
+		//	| ValuedExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//=> BooleanExpression | ValuedExpression
+		////    => BooleanExpression // old
+		//BooleanExpression | ValuedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//=> BooleanExpression
+		////    => BooleanExpression // old
+		//BooleanExpression
 		public RuleCall getBooleanExpressionParserRuleCall_0() { return cBooleanExpressionParserRuleCall_0; }
 
 		//ValuedExpression
@@ -6680,7 +6608,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOrExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// Example: not D and C or ?E = 42 or not (A and (B or C))
-		//BooleanExpression Expression:
+		//BooleanExpression kexpressions::Expression:
 		//	OrExpression
 		@Override public ParserRule getRule() { return rule; }
 
@@ -6694,40 +6622,47 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAndExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsAndExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsAndExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
-		//OrExpression Expression:
-		//	AndExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator
-		//	subExpressions+=AndExpression)*
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//OrExpression kexpressions::Expression:
+		//	AndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//	subExpressions+=AndExpression)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//AndExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator subExpressions+=AndExpression)*
+		//AndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//subExpressions+=AndExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//AndExpression
 		public RuleCall getAndExpressionParserRuleCall_0() { return cAndExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator subExpressions+=AndExpression)*
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//subExpressions+=AndExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=Esterel_OrOperator subExpressions+=AndExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=Esterel_OrOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//Esterel_OrOperator
-		public RuleCall getOperatorEsterel_OrOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=AndExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//AndExpression
-		public RuleCall getSubExpressionsAndExpressionParserRuleCall_1_2_0() { return cSubExpressionsAndExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsAndExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsAndExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class AndExpressionElements extends AbstractParserRuleElementFinder {
@@ -6736,93 +6671,91 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCompareOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: A and B, not C and 42 <= ?D
-		//AndExpression Expression:
-		//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator
-		//	subExpressions+=CompareOperation)*
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//AndExpression kexpressions::Expression:
+		//	CompareOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//	subExpressions+=CompareOperation)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//CompareOperation ({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator
-		//subExpressions+=CompareOperation)*
+		//CompareOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//subExpressions+=CompareOperation)+)?
 		public Group getGroup() { return cGroup; }
 
 		//CompareOperation
 		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator subExpressions+=CompareOperation)*
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//subExpressions+=CompareOperation)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=Esterel_AndOperator subExpressions+=CompareOperation)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=Esterel_AndOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//Esterel_AndOperator
-		public RuleCall getOperatorEsterel_AndOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=CompareOperation
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//CompareOperation
-		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_2_0() { return cSubExpressionsCompareOperationParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_1_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_1_1_0; }
 	}
 
 	public class CompareOperationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.CompareOperation");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final RuleCall cNotOrValuedExpressionParserRuleCall_0_0 = (RuleCall)cGroup_0.eContents().get(0);
-		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
-		private final Action cOperatorExpressionSubExpressionsAction_0_1_0 = (Action)cGroup_0_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_CompareOperatorEnumRuleCall_0_1_1_0 = (RuleCall)cOperatorAssignment_0_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_0_1_2 = (Assignment)cGroup_0_1.eContents().get(2);
-		private final RuleCall cSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0 = (RuleCall)cSubExpressionsAssignment_0_1_2.eContents().get(0);
-		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cNotOrValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorEsterel_CompareOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsNotOrValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//// Example: 42 <= ?A
-		//CompareOperation Expression:
-		//	=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
-		//	subExpressions+=NotOrValuedExpression) | NotExpression
+		//CompareOperation kexpressions::Expression:
+		//	NotOrValuedExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
+		//	subExpressions+=NotOrValuedExpression)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
-		//subExpressions+=NotOrValuedExpression) | NotExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
-		//subExpressions+=NotOrValuedExpression)
-		public Group getGroup_0() { return cGroup_0; }
-
-		//=> NotOrValuedExpression
-		public RuleCall getNotOrValuedExpressionParserRuleCall_0_0() { return cNotOrValuedExpressionParserRuleCall_0_0; }
-
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression)
-		public Group getGroup_0_1() { return cGroup_0_1; }
-
-		//{OperatorExpression.subExpressions+=current}
-		public Action getOperatorExpressionSubExpressionsAction_0_1_0() { return cOperatorExpressionSubExpressionsAction_0_1_0; }
-
-		//operator=Esterel_CompareOperator
-		public Assignment getOperatorAssignment_0_1_1() { return cOperatorAssignment_0_1_1; }
-
-		//Esterel_CompareOperator
-		public RuleCall getOperatorEsterel_CompareOperatorEnumRuleCall_0_1_1_0() { return cOperatorEsterel_CompareOperatorEnumRuleCall_0_1_1_0; }
-
-		//subExpressions+=NotOrValuedExpression
-		public Assignment getSubExpressionsAssignment_0_1_2() { return cSubExpressionsAssignment_0_1_2; }
+		//NotOrValuedExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
+		//subExpressions+=NotOrValuedExpression)?
+		public Group getGroup() { return cGroup; }
 
 		//NotOrValuedExpression
-		public RuleCall getSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0() { return cSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0; }
+		public RuleCall getNotOrValuedExpressionParserRuleCall_0() { return cNotOrValuedExpressionParserRuleCall_0; }
 
-		//NotExpression
-		public RuleCall getNotExpressionParserRuleCall_1() { return cNotExpressionParserRuleCall_1; }
+		//({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
+		//subExpressions+=NotOrValuedExpression)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{kexpressions::OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//operator=Esterel_CompareOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//Esterel_CompareOperator
+		public RuleCall getOperatorEsterel_CompareOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_CompareOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=NotOrValuedExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//NotOrValuedExpression
+		public RuleCall getSubExpressionsNotOrValuedExpressionParserRuleCall_1_2_0() { return cSubExpressionsNotOrValuedExpressionParserRuleCall_1_2_0; }
 	}
 
 	public class NotOrValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -6831,16 +6764,27 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//// order IS IMPORTANT
-		//NotOrValuedExpression Expression:
-		//	=> ValuedExpression
+		/// *   
+		//    // old
+		//    => NotOrValuedExpression 
+		//    ( {kexpressions::OperatorExpression.subExpressions+=current} 
+		//        operator=Esterel_CompareOperator 
+		//        subExpressions+=NotOrValuedExpression
+		//    )
+		//    | 
+		//    NotExpression; 
+		// * / // order IS IMPORTANT
+		//NotOrValuedExpression kexpressions::Expression:
+		//	ValuedExpression
 		//	| NotExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//=> ValuedExpression | NotExpression
+		////    => ValuedExpression // old
+		//ValuedExpression | NotExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//=> ValuedExpression
+		////    => ValuedExpression // old
+		//ValuedExpression
 		public RuleCall getValuedExpressionParserRuleCall_0() { return cValuedExpressionParserRuleCall_0; }
 
 		//NotExpression
@@ -6860,18 +6804,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Example: not A, not false, not (A or B)
 		//// at the latter we need the parans to indicate the right binding
-		//NotExpression Expression:
-		//	{OperatorExpression} operator=Esterel_NotOperator
+		//NotExpression kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator
 		//	subExpressions+=NotExpression | AtomicExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=Esterel_NotOperator subExpressions+=NotExpression | AtomicExpression
+		//{kexpressions::OperatorExpression} operator=Esterel_NotOperator subExpressions+=NotExpression | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//{OperatorExpression} operator=Esterel_NotOperator subExpressions+=NotExpression
+		//{kexpressions::OperatorExpression} operator=Esterel_NotOperator subExpressions+=NotExpression
 		public Group getGroup_0() { return cGroup_0; }
 
-		//{OperatorExpression}
+		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 
 		//operator=Esterel_NotOperator
@@ -6895,7 +6839,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAddExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// everything that evaluates to a primitive number value
-		//ValuedExpression Expression:
+		//ValuedExpression kexpressions::Expression:
 		//	AddExpression
 		@Override public ParserRule getRule() { return rule; }
 
@@ -6909,40 +6853,47 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_AddOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_AddOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: 1 + 2
-		//AddExpression Expression:
-		//	SubExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_AddOperator
-		//	subExpressions+=SubExpression)*
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//AddExpression kexpressions::Expression:
+		//	SubExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AddOperator
+		//	subExpressions+=SubExpression)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//SubExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_AddOperator subExpressions+=SubExpression)*
+		//SubExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AddOperator
+		//subExpressions+=SubExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//SubExpression
 		public RuleCall getSubExpressionParserRuleCall_0() { return cSubExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_AddOperator subExpressions+=SubExpression)*
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AddOperator
+		//subExpressions+=SubExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=Esterel_AddOperator subExpressions+=SubExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=Esterel_AddOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//Esterel_AddOperator
-		public RuleCall getOperatorEsterel_AddOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_AddOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorEsterel_AddOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_AddOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=SubExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//SubExpression
-		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_2_0() { return cSubExpressionsSubExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsSubExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class SubExpressionElements extends AbstractParserRuleElementFinder {
@@ -6951,41 +6902,47 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMultExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_SubOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_SubOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: varA - ?B
-		//SubExpression Expression:
-		//	MultExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_SubOperator
-		//	subExpressions+=MultExpression)*
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//SubExpression kexpressions::Expression:
+		//	MultExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_SubOperator
+		//	subExpressions+=MultExpression)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//MultExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_SubOperator
-		//subExpressions+=MultExpression)*
+		//MultExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_SubOperator
+		//subExpressions+=MultExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//MultExpression
 		public RuleCall getMultExpressionParserRuleCall_0() { return cMultExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_SubOperator subExpressions+=MultExpression)*
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_SubOperator
+		//subExpressions+=MultExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=Esterel_SubOperator subExpressions+=MultExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=Esterel_SubOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//Esterel_SubOperator
-		public RuleCall getOperatorEsterel_SubOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_SubOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorEsterel_SubOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_SubOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=MultExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//MultExpression
-		public RuleCall getSubExpressionsMultExpressionParserRuleCall_1_2_0() { return cSubExpressionsMultExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsMultExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsMultExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class MultExpressionElements extends AbstractParserRuleElementFinder {
@@ -6994,41 +6951,47 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDivExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorEsterel_MultOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsDivExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_MultOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsDivExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: 2 * 4
-		//MultExpression Expression:
-		//	DivExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_MultOperator
-		//	subExpressions+=DivExpression)*
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//MultExpression kexpressions::Expression:
+		//	DivExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_MultOperator
+		//	subExpressions+=DivExpression)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//DivExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_MultOperator
-		//subExpressions+=DivExpression)*
+		//DivExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_MultOperator
+		//subExpressions+=DivExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//DivExpression
 		public RuleCall getDivExpressionParserRuleCall_0() { return cDivExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_MultOperator subExpressions+=DivExpression)*
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_MultOperator
+		//subExpressions+=DivExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=Esterel_MultOperator subExpressions+=DivExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=Esterel_MultOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//Esterel_MultOperator
-		public RuleCall getOperatorEsterel_MultOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_MultOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorEsterel_MultOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_MultOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=DivExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//DivExpression
-		public RuleCall getSubExpressionsDivExpressionParserRuleCall_1_2_0() { return cSubExpressionsDivExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsDivExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsDivExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class DivExpressionElements extends AbstractParserRuleElementFinder {
@@ -7044,21 +7007,22 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Example: (2 / 4)
 		//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-		//DivExpression Expression:
-		//	ModExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator
+		//DivExpression kexpressions::Expression:
+		//	ModExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator
 		//	subExpressions+=ModExpression)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//ModExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator subExpressions+=ModExpression)?
+		//ModExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator
+		//subExpressions+=ModExpression)?
 		public Group getGroup() { return cGroup; }
 
 		//ModExpression
 		public RuleCall getModExpressionParserRuleCall_0() { return cModExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator subExpressions+=ModExpression)?
+		//({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator subExpressions+=ModExpression)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
 		//operator=Esterel_DivOperator
@@ -7086,22 +7050,23 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//// Example: varA mod ?B
-		//ModExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
+		//ModExpression kexpressions::Expression:
+		//	NegExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
 		//	subExpressions+=AtomicValuedExpression)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//NegExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
+		//NegExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
 		//subExpressions+=AtomicValuedExpression)?
 		public Group getGroup() { return cGroup; }
 
 		//NegExpression
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator subExpressions+=AtomicValuedExpression)?
+		//({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
+		//subExpressions+=AtomicValuedExpression)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
 		//operator=Esterel_ModOperator
@@ -7130,18 +7095,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Example: not A, not false, not (A or B)
 		//// at the latter we need the parans to indicate the right binding
-		//NegExpression Expression:
-		//	{OperatorExpression} operator=Esterel_SubOperator
+		//NegExpression kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} operator=Esterel_SubOperator
 		//	subExpressions+=NegExpression | AtomicValuedExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=Esterel_SubOperator subExpressions+=NegExpression | AtomicValuedExpression
+		//{kexpressions::OperatorExpression} operator=Esterel_SubOperator subExpressions+=NegExpression | AtomicValuedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//{OperatorExpression} operator=Esterel_SubOperator subExpressions+=NegExpression
+		//{kexpressions::OperatorExpression} operator=Esterel_SubOperator subExpressions+=NegExpression
 		public Group getGroup_0() { return cGroup_0; }
 
-		//{OperatorExpression}
+		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 
 		//operator=Esterel_SubOperator
@@ -7163,7 +7128,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.AtomicValuedExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cEsterel_IntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
@@ -7171,28 +7136,30 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		private final RuleCall cAtomicExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
-		//AtomicValuedExpression Expression:
-		//	Esterel_IntValue
+		//AtomicValuedExpression kexpressions::Expression:
+		//	IntValue
 		//	| FloatValue
 		//	//    | '(' DivExpression ')'
-		//	| => '(' ValuedExpression ')'
+		//	//    | => '(' ValuedExpression ')'  // old
+		//	| '(' ValuedExpression ')'
 		//	| AtomicExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//Esterel_IntValue | FloatValue //    | '(' DivExpression ')'
-		//| => '(' ValuedExpression ')' | AtomicExpression
+		//IntValue | FloatValue //    | '(' DivExpression ')'
+		////    | => '(' ValuedExpression ')'  // old
+		//| '(' ValuedExpression ')' | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//Esterel_IntValue
-		public RuleCall getEsterel_IntValueParserRuleCall_0() { return cEsterel_IntValueParserRuleCall_0; }
+		//IntValue
+		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
 
 		//FloatValue
 		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
 
-		//=> '(' ValuedExpression ')'
+		//'(' ValuedExpression ')'
 		public Group getGroup_2() { return cGroup_2; }
 
-		//=> '('
+		//'('
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
 		//ValuedExpression
@@ -7221,25 +7188,25 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorEsterel_ValueTestOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsEsterel_ValuedObjectReferenceParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
-		private final RuleCall cEsterel_ValuedObjectReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final RuleCall cValuedObjectReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
-		//ValuedObjectTestExpression Expression:
-		//	{OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
-		//	| {OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=Esterel_ValuedObjectReference
-		//	| Esterel_ValuedObjectReference
+		//ValuedObjectTestExpression kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
+		//	| {kexpressions::OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference
+		//	| ValuedObjectReference
 		@Override public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')' |
-		//{OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=Esterel_ValuedObjectReference |
-		//Esterel_ValuedObjectReference
+		//{kexpressions::OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')' |
+		//{kexpressions::OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference |
+		//ValuedObjectReference
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//{OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
+		//{kexpressions::OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
 		public Group getGroup_0() { return cGroup_0; }
 
-		//{OperatorExpression}
+		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 
 		//operator=Esterel_PreOperator
@@ -7260,10 +7227,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
 
-		//{OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=Esterel_ValuedObjectReference
+		//{kexpressions::OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{OperatorExpression}
+		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_1_0() { return cOperatorExpressionAction_1_0; }
 
 		//operator=Esterel_ValueTestOperator
@@ -7272,167 +7239,42 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Esterel_ValueTestOperator
 		public RuleCall getOperatorEsterel_ValueTestOperatorEnumRuleCall_1_1_0() { return cOperatorEsterel_ValueTestOperatorEnumRuleCall_1_1_0; }
 
-		//subExpressions+=Esterel_ValuedObjectReference
+		//subExpressions+=ValuedObjectReference
 		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
 
-		//Esterel_ValuedObjectReference
-		public RuleCall getSubExpressionsEsterel_ValuedObjectReferenceParserRuleCall_1_2_0() { return cSubExpressionsEsterel_ValuedObjectReferenceParserRuleCall_1_2_0; }
+		//ValuedObjectReference
+		public RuleCall getSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0() { return cSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0; }
 
-		//Esterel_ValuedObjectReference
-		public RuleCall getEsterel_ValuedObjectReferenceParserRuleCall_2() { return cEsterel_ValuedObjectReferenceParserRuleCall_2; }
+		//ValuedObjectReference
+		public RuleCall getValuedObjectReferenceParserRuleCall_2() { return cValuedObjectReferenceParserRuleCall_2; }
 	}
 
-	public class Esterel_ValuedObjectReferenceElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.Esterel_ValuedObjectReference");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEsterel_ValuedObjectReferenceAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
-		
-		//// Example: A, varB
-		//Esterel_ValuedObjectReference ValuedObjectReference:
-		//	{Esterel_ValuedObjectReference} valuedObject=[ValuedObject]
-		@Override public ParserRule getRule() { return rule; }
-
-		//{Esterel_ValuedObjectReference} valuedObject=[ValuedObject]
-		public Group getGroup() { return cGroup; }
-
-		//{Esterel_ValuedObjectReference}
-		public Action getEsterel_ValuedObjectReferenceAction_0() { return cEsterel_ValuedObjectReferenceAction_0; }
-
-		//valuedObject=[ValuedObject]
-		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
-
-		//[ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
-
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1; }
-	}
-
-	public class TextExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.TextExpression");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cCodeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cCodeHOSTCODETerminalRuleCall_0_0 = (RuleCall)cCodeAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cTypeIDTerminalRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		
-		//// Example: 'printf(...)'(C)
-		//TextExpression:
-		//	code=HOSTCODE ("(" type=ID ")")?;
-		@Override public ParserRule getRule() { return rule; }
-
-		//code=HOSTCODE ("(" type=ID ")")?
-		public Group getGroup() { return cGroup; }
-
-		//code=HOSTCODE
-		public Assignment getCodeAssignment_0() { return cCodeAssignment_0; }
-
-		//HOSTCODE
-		public RuleCall getCodeHOSTCODETerminalRuleCall_0_0() { return cCodeHOSTCODETerminalRuleCall_0_0; }
-
-		//("(" type=ID ")")?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
-
-		//type=ID
-		public Assignment getTypeAssignment_1_1() { return cTypeAssignment_1_1; }
-
-		//ID
-		public RuleCall getTypeIDTerminalRuleCall_1_1_0() { return cTypeIDTerminalRuleCall_1_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
-	}
-
-	public class Esterel_IntValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.Esterel_IntValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//Esterel_IntValue IntValue:
-		//	value=INT
-		@Override public ParserRule getRule() { return rule; }
-
-		//value=INT
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//INT
-		public RuleCall getValueINTTerminalRuleCall_0() { return cValueINTTerminalRuleCall_0; }
-	}
-
-	public class FloatValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.FloatValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueFLOATTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//FloatValue:
-		//	value=FLOAT;
-		@Override public ParserRule getRule() { return rule; }
-
-		//value=FLOAT
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//FLOAT
-		public RuleCall getValueFLOATTerminalRuleCall_0() { return cValueFLOATTerminalRuleCall_0; }
-	}
-
-	public class BooleanValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.BooleanValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueBOOLEANTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//BooleanValue:
-		//	value=BOOLEAN;
-		@Override public ParserRule getRule() { return rule; }
-
-		//value=BOOLEAN
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//BOOLEAN
-		public RuleCall getValueBOOLEANTerminalRuleCall_0() { return cValueBOOLEANTerminalRuleCall_0; }
-	}
-
-	public class AnyTypeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.AnyType");
+	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.ValuedObject");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cBOOLEANTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cFLOATTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cIDTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cISignalParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cConstantParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTrapSignalParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
-		//// data type rule allowing any kind of value to be accepted,
-		//// e.g. as initialValues of valuedObjects
-		//// used in Kits.xtext 
-		//AnyType:
-		//	BOOLEAN | INT | FLOAT | ID | STRING;
+		////// Example: A, varB
+		////ValuedObjectReference returns kexpressions::ValuedObjectReference:
+		////    {kexpressions::ValuedObjectReference} 
+		////    valuedObject=[kexpressions::ValuedObject|ID];
+		//ValuedObject kexpressions::ValuedObject:
+		//	ISignal | Constant | TrapSignal
 		@Override public ParserRule getRule() { return rule; }
 
-		//BOOLEAN | INT | FLOAT | ID | STRING
+		//ISignal | Constant | TrapSignal
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//BOOLEAN
-		public RuleCall getBOOLEANTerminalRuleCall_0() { return cBOOLEANTerminalRuleCall_0; }
+		//ISignal
+		public RuleCall getISignalParserRuleCall_0() { return cISignalParserRuleCall_0; }
 
-		//INT
-		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
+		//Constant
+		public RuleCall getConstantParserRuleCall_1() { return cConstantParserRuleCall_1; }
 
-		//FLOAT
-		public RuleCall getFLOATTerminalRuleCall_2() { return cFLOATTerminalRuleCall_2; }
-
-		//ID
-		public RuleCall getIDTerminalRuleCall_3() { return cIDTerminalRuleCall_3; }
-
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_4() { return cSTRINGTerminalRuleCall_4; }
+		//TrapSignal
+		public RuleCall getTrapSignalParserRuleCall_2() { return cTrapSignalParserRuleCall_2; }
 	}
 	
 	
@@ -7452,7 +7294,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cNEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cNELessThanSignGreaterThanSignKeyword_5_0 = (Keyword)cNEEnumLiteralDeclaration_5.eContents().get(0);
 		
-		//enum Esterel_CompareOperator returns OperatorType:
+		//enum Esterel_CompareOperator returns kexpressions::OperatorType:
 		//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 		public EnumRule getRule() { return rule; }
 
@@ -7501,7 +7343,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_PreOperator returns OperatorType:
+		//enum Esterel_PreOperator returns kexpressions::OperatorType:
 		//	PRE="pre";
 		public EnumRule getRule() { return rule; }
 
@@ -7514,34 +7356,34 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class Esterel_OrOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.Esterel_OrOperator");
-		private final EnumLiteralDeclaration cOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cOROrKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
+		private final EnumLiteralDeclaration cLOGICAL_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cLOGICAL_OROrKeyword_0 = (Keyword)cLOGICAL_OREnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_OrOperator returns OperatorType:
-		//	OR="or";
+		//enum Esterel_OrOperator returns kexpressions::OperatorType:
+		//	LOGICAL_OR="or";
 		public EnumRule getRule() { return rule; }
 
-		//OR="or"
-		public EnumLiteralDeclaration getOREnumLiteralDeclaration() { return cOREnumLiteralDeclaration; }
+		//LOGICAL_OR="or"
+		public EnumLiteralDeclaration getLOGICAL_OREnumLiteralDeclaration() { return cLOGICAL_OREnumLiteralDeclaration; }
 
 		//"or"
-		public Keyword getOROrKeyword_0() { return cOROrKeyword_0; }
+		public Keyword getLOGICAL_OROrKeyword_0() { return cLOGICAL_OROrKeyword_0; }
 	}
 
 	public class Esterel_AndOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.Esterel_AndOperator");
-		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cANDAndKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
+		private final EnumLiteralDeclaration cLOGICAL_ANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cLOGICAL_ANDAndKeyword_0 = (Keyword)cLOGICAL_ANDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_AndOperator returns OperatorType:
-		//	AND="and";
+		//enum Esterel_AndOperator returns kexpressions::OperatorType:
+		//	LOGICAL_AND="and";
 		public EnumRule getRule() { return rule; }
 
-		//AND="and"
-		public EnumLiteralDeclaration getANDEnumLiteralDeclaration() { return cANDEnumLiteralDeclaration; }
+		//LOGICAL_AND="and"
+		public EnumLiteralDeclaration getLOGICAL_ANDEnumLiteralDeclaration() { return cLOGICAL_ANDEnumLiteralDeclaration; }
 
 		//"and"
-		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
+		public Keyword getLOGICAL_ANDAndKeyword_0() { return cLOGICAL_ANDAndKeyword_0; }
 	}
 
 	public class Esterel_NotOperatorElements extends AbstractEnumRuleElementFinder {
@@ -7549,7 +7391,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cNOTNotKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_NotOperator returns OperatorType:
+		//enum Esterel_NotOperator returns kexpressions::OperatorType:
 		//	NOT="not";
 		public EnumRule getRule() { return rule; }
 
@@ -7565,7 +7407,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cADDPlusSignKeyword_0 = (Keyword)cADDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_AddOperator returns OperatorType:
+		//enum Esterel_AddOperator returns kexpressions::OperatorType:
 		//	ADD="+";
 		public EnumRule getRule() { return rule; }
 
@@ -7581,7 +7423,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSUBHyphenMinusKeyword_0 = (Keyword)cSUBEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_SubOperator returns OperatorType:
+		//enum Esterel_SubOperator returns kexpressions::OperatorType:
 		//	SUB="-";
 		public EnumRule getRule() { return rule; }
 
@@ -7597,7 +7439,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cMULTAsteriskKeyword_0 = (Keyword)cMULTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_MultOperator returns OperatorType:
+		//enum Esterel_MultOperator returns kexpressions::OperatorType:
 		//	MULT="*";
 		public EnumRule getRule() { return rule; }
 
@@ -7613,7 +7455,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cMODModKeyword_0 = (Keyword)cMODEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_ModOperator returns OperatorType:
+		//enum Esterel_ModOperator returns kexpressions::OperatorType:
 		//	MOD="mod";
 		public EnumRule getRule() { return rule; }
 
@@ -7629,7 +7471,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cDIVSolidusKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_DivOperator returns OperatorType:
+		//enum Esterel_DivOperator returns kexpressions::OperatorType:
 		//	DIV="/";
 		public EnumRule getRule() { return rule; }
 
@@ -7645,7 +7487,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cVALQuestionMarkKeyword_0 = (Keyword)cVALEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum Esterel_ValueTestOperator returns OperatorType:
+		//enum Esterel_ValueTestOperator returns kexpressions::OperatorType:
 		//	VAL="?";
 		public EnumRule getRule() { return rule; }
 
@@ -7676,7 +7518,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
-		//enum Esterel_ValueType returns ValueType:
+		//enum Esterel_ValueType returns kexpressions::ValueType:
 		//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" |
 		//	INT="integer" | FLOAT="float" | DOUBLE="double" |
 		//	STRING="string" | HOST="host";
@@ -7755,7 +7597,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
-		//enum Esterel_CombineOperator returns CombineOperator:
+		//enum Esterel_CombineOperator returns kexpressions::CombineOperator:
 		//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 		//	MIN="min" | OR="or" | AND="and" | HOST="host";
 		public EnumRule getRule() { return rule; }
@@ -7927,12 +7769,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private final NegExpressionElements pNegExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
-	private final Esterel_ValuedObjectReferenceElements pEsterel_ValuedObjectReference;
-	private final TextExpressionElements pTextExpression;
-	private final Esterel_IntValueElements pEsterel_IntValue;
-	private final FloatValueElements pFloatValue;
-	private final BooleanValueElements pBooleanValue;
-	private final AnyTypeElements pAnyType;
+	private final ValuedObjectElements pValuedObject;
 	
 	private final Grammar grammar;
 
@@ -8078,12 +7915,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		this.pNegExpression = new NegExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
-		this.pEsterel_ValuedObjectReference = new Esterel_ValuedObjectReferenceElements();
-		this.pTextExpression = new TextExpressionElements();
-		this.pEsterel_IntValue = new Esterel_IntValueElements();
-		this.pFloatValue = new FloatValueElements();
-		this.pBooleanValue = new BooleanValueElements();
-		this.pAnyType = new AnyTypeElements();
+		this.pValuedObject = new ValuedObjectElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -8237,7 +8069,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getOneTypeConstantDeclsAccess().getRule();
 	}
 
-	//Constant ValuedObject:
+	//Constant kexpressions::ValuedObject:
 	//	{Constant} name=ID ("=" value=ConstantValue)?
 	public ConstantElements getConstantAccess() {
 		return pConstant;
@@ -8373,7 +8205,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getISignalAccess().getRule();
 	}
 
-	//Tick ValuedObject:
+	//Tick ISignal:
 	//	name="tick"
 	public TickElements getTickAccess() {
 		return pTick;
@@ -8987,7 +8819,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ConstantRenaming:
-	//	(newName=[ValuedObject] | newValue=ConstantValue) "/" oldName=[ValuedObject];
+	//	(newName=[kexpressions::ValuedObject] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject];
 	public ConstantRenamingElements getConstantRenamingAccess() {
 		return pConstantRenaming;
 	}
@@ -9067,7 +8899,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getDoAccess().getRule();
 	}
 
-	//enum Esterel_CompareOperator returns OperatorType:
+	//enum Esterel_CompareOperator returns kexpressions::OperatorType:
 	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public Esterel_CompareOperatorElements getEsterel_CompareOperatorAccess() {
 		return eEsterel_CompareOperator;
@@ -9077,7 +8909,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_CompareOperatorAccess().getRule();
 	}
 
-	//enum Esterel_PreOperator returns OperatorType:
+	//enum Esterel_PreOperator returns kexpressions::OperatorType:
 	//	PRE="pre";
 	public Esterel_PreOperatorElements getEsterel_PreOperatorAccess() {
 		return eEsterel_PreOperator;
@@ -9087,8 +8919,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_PreOperatorAccess().getRule();
 	}
 
-	//enum Esterel_OrOperator returns OperatorType:
-	//	OR="or";
+	//enum Esterel_OrOperator returns kexpressions::OperatorType:
+	//	LOGICAL_OR="or";
 	public Esterel_OrOperatorElements getEsterel_OrOperatorAccess() {
 		return eEsterel_OrOperator;
 	}
@@ -9097,8 +8929,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_OrOperatorAccess().getRule();
 	}
 
-	//enum Esterel_AndOperator returns OperatorType:
-	//	AND="and";
+	//enum Esterel_AndOperator returns kexpressions::OperatorType:
+	//	LOGICAL_AND="and";
 	public Esterel_AndOperatorElements getEsterel_AndOperatorAccess() {
 		return eEsterel_AndOperator;
 	}
@@ -9107,7 +8939,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_AndOperatorAccess().getRule();
 	}
 
-	//enum Esterel_NotOperator returns OperatorType:
+	//enum Esterel_NotOperator returns kexpressions::OperatorType:
 	//	NOT="not";
 	public Esterel_NotOperatorElements getEsterel_NotOperatorAccess() {
 		return eEsterel_NotOperator;
@@ -9117,7 +8949,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_NotOperatorAccess().getRule();
 	}
 
-	//enum Esterel_AddOperator returns OperatorType:
+	//enum Esterel_AddOperator returns kexpressions::OperatorType:
 	//	ADD="+";
 	public Esterel_AddOperatorElements getEsterel_AddOperatorAccess() {
 		return eEsterel_AddOperator;
@@ -9127,7 +8959,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_AddOperatorAccess().getRule();
 	}
 
-	//enum Esterel_SubOperator returns OperatorType:
+	//enum Esterel_SubOperator returns kexpressions::OperatorType:
 	//	SUB="-";
 	public Esterel_SubOperatorElements getEsterel_SubOperatorAccess() {
 		return eEsterel_SubOperator;
@@ -9137,7 +8969,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_SubOperatorAccess().getRule();
 	}
 
-	//enum Esterel_MultOperator returns OperatorType:
+	//enum Esterel_MultOperator returns kexpressions::OperatorType:
 	//	MULT="*";
 	public Esterel_MultOperatorElements getEsterel_MultOperatorAccess() {
 		return eEsterel_MultOperator;
@@ -9147,7 +8979,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_MultOperatorAccess().getRule();
 	}
 
-	//enum Esterel_ModOperator returns OperatorType:
+	//enum Esterel_ModOperator returns kexpressions::OperatorType:
 	//	MOD="mod";
 	public Esterel_ModOperatorElements getEsterel_ModOperatorAccess() {
 		return eEsterel_ModOperator;
@@ -9157,7 +8989,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_ModOperatorAccess().getRule();
 	}
 
-	//enum Esterel_DivOperator returns OperatorType:
+	//enum Esterel_DivOperator returns kexpressions::OperatorType:
 	//	DIV="/";
 	public Esterel_DivOperatorElements getEsterel_DivOperatorAccess() {
 		return eEsterel_DivOperator;
@@ -9167,7 +8999,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_DivOperatorAccess().getRule();
 	}
 
-	//enum Esterel_ValueTestOperator returns OperatorType:
+	//enum Esterel_ValueTestOperator returns kexpressions::OperatorType:
 	//	VAL="?";
 	public Esterel_ValueTestOperatorElements getEsterel_ValueTestOperatorAccess() {
 		return eEsterel_ValueTestOperator;
@@ -9177,7 +9009,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_ValueTestOperatorAccess().getRule();
 	}
 
-	//enum Esterel_ValueType returns ValueType:
+	//enum Esterel_ValueType returns kexpressions::ValueType:
 	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" |
 	//	INT="integer" | FLOAT="float" | DOUBLE="double" |
 	//	STRING="string" | HOST="host";
@@ -9189,7 +9021,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEsterel_ValueTypeAccess().getRule();
 	}
 
-	//enum Esterel_CombineOperator returns CombineOperator:
+	//enum Esterel_CombineOperator returns kexpressions::CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	//	MIN="min" | OR="or" | AND="and" | HOST="host";
 	public Esterel_CombineOperatorElements getEsterel_CombineOperatorAccess() {
@@ -9230,10 +9062,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// * / // Esterel is a bit richer than what is provided by kexpressions. 
 	//// These rules are introduced here.
 	//// Care about order of the rules! 
-	//AtomicExpression Expression:
+	//AtomicExpression kexpressions::Expression:
 	//	FunctionExpression
 	//	| TrapExpression
-	//	| BooleanValue
+	//	| BoolValue
 	//	| ValuedObjectTestExpression
 	//	| TextExpression
 	//	| '(' BooleanExpression ')'
@@ -9246,7 +9078,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicExpressionAccess().getRule();
 	}
 
-	//TrapExpression Expression:
+	//TrapExpression kexpressions::Expression:
 	//	{TrapExpression} "??" trap=[ISignal]
 	public TrapExpressionElements getTrapExpressionAccess() {
 		return pTrapExpression;
@@ -9256,7 +9088,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getTrapExpressionAccess().getRule();
 	}
 
-	//FunctionExpression Expression:
+	//FunctionExpression kexpressions::Expression:
 	//	{FunctionExpression} function=[Function]
 	//	"(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")"
 	public FunctionExpressionElements getFunctionExpressionAccess() {
@@ -9267,7 +9099,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionExpressionAccess().getRule();
 	}
 
-	//ConstantExpression Expression:
+	//ConstantExpression kexpressions::Expression:
 	//	{ConstantExpression} (constant=[Constant] | value=ConstantValue)
 	public ConstantExpressionElements getConstantExpressionAccess() {
 		return pConstantExpression;
@@ -9279,7 +9111,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --> B.3.5 Trap Expressions <--
 	//// -------------------------------------
-	//TrapExpr Expression:
+	//TrapExpr kexpressions::Expression:
 	//	SignalExpression
 	public TrapExprElements getTrapExprAccess() {
 		return pTrapExpr;
@@ -9291,9 +9123,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --> B.3.3 Signal Expressions <--
 	//// -------------------------------------
-	//SignalExpression Expression:
-	//	SignalAndExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator
-	//	subExpressions+=SignalAndExpression)*
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//SignalExpression kexpressions::Expression:
+	//	SignalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+	//	subExpressions+=SignalAndExpression)+)?
 	public SignalExpressionElements getSignalExpressionAccess() {
 		return pSignalExpression;
 	}
@@ -9302,9 +9135,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalExpressionAccess().getRule();
 	}
 
-	//SignalAndExpression Expression:
-	//	SignalNotExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator
-	//	subExpressions+=SignalNotExpression)*
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//SignalAndExpression kexpressions::Expression:
+	//	SignalNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+	//	subExpressions+=SignalNotExpression)+)?
 	public SignalAndExpressionElements getSignalAndExpressionAccess() {
 		return pSignalAndExpression;
 	}
@@ -9313,9 +9147,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAndExpressionAccess().getRule();
 	}
 
-	//SignalNotExpression Expression:
-	//	{OperatorExpression} operator=Esterel_NotOperator
-	//	subExpressions+=SignalNotExpression | SignalAtomicExpression
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//SignalNotExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator+
+	//	subExpressions+=SignalAtomicExpression
+	//	| SignalAtomicExpression
 	public SignalNotExpressionElements getSignalNotExpressionAccess() {
 		return pSignalNotExpression;
 	}
@@ -9324,7 +9160,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalNotExpressionAccess().getRule();
 	}
 
-	//SignalAtomicExpression Expression:
+	//SignalAtomicExpression kexpressions::Expression:
 	//	SignalReferenceExpr
 	//	| "(" SignalExpression ")"
 	//	| SignalPreExpr
@@ -9337,7 +9173,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAtomicExpressionAccess().getRule();
 	}
 
-	//SignalReferenceExpr ValuedObjectReference:
+	//SignalReferenceExpr kexpressions::ValuedObjectReference:
 	//	valuedObject=[ISignal]
 	public SignalReferenceExprElements getSignalReferenceExprAccess() {
 		return pSignalReferenceExpr;
@@ -9347,8 +9183,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalReferenceExprAccess().getRule();
 	}
 
-	//SignalPreExpr Expression:
-	//	{OperatorExpression} operator=Esterel_PreOperator
+	//SignalPreExpr kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=Esterel_PreOperator
 	//	'(' subExpressions+=SignalReferenceExpr ')'
 	public SignalPreExprElements getSignalPreExprAccess() {
 		return pSignalPreExpr;
@@ -9358,7 +9194,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalPreExprAccess().getRule();
 	}
 
-	//TrapReferenceExpr ValuedObjectReference:
+	//TrapReferenceExpr kexpressions::ValuedObjectReference:
 	//	{TrapReferenceExpr} valuedObject=[TrapSignal]
 	public TrapReferenceExprElements getTrapReferenceExprAccess() {
 		return pTrapReferenceExpr;
@@ -9371,11 +9207,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// --> B.3.4 Delay Expressions <--
 	//// -------------------------------------
 	//DelayExpr:
-	//	expr=Expression (tick=Tick
-	//	| signalExpr=SignalReferenceExpr
-	//	| "[" signalExpr=SignalExpression "]") | (tick=Tick
-	//	| signalExpr=SignalReferenceExpr
-	//	| "[" signalExpr=SignalExpression "]") | isImmediate?="immediate" (tick=Tick
+	//	(expr=Expression | isImmediate?="immediate")? (tick=Tick
 	//	| signalExpr=SignalReferenceExpr
 	//	| "[" signalExpr=SignalExpression "]");
 	public DelayExprElements getDelayExprAccess() {
@@ -9394,9 +9226,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// * 
 	// * 
 	// * #########################################################################
-	// * / Expression:
-	//	=> BooleanExpression
-	//	| ValuedExpression;
+	// * / Expression kexpressions::Expression:
+	//	BooleanExpression
+	//	| ValuedExpression
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}
@@ -9406,7 +9238,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: not D and C or ?E = 42 or not (A and (B or C))
-	//BooleanExpression Expression:
+	//BooleanExpression kexpressions::Expression:
 	//	OrExpression
 	public BooleanExpressionElements getBooleanExpressionAccess() {
 		return pBooleanExpression;
@@ -9417,9 +9249,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
-	//OrExpression Expression:
-	//	AndExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_OrOperator
-	//	subExpressions+=AndExpression)*
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//OrExpression kexpressions::Expression:
+	//	AndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+	//	subExpressions+=AndExpression)+)?
 	public OrExpressionElements getOrExpressionAccess() {
 		return pOrExpression;
 	}
@@ -9429,9 +9262,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: A and B, not C and 42 <= ?D
-	//AndExpression Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=Esterel_AndOperator
-	//	subExpressions+=CompareOperation)*
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//AndExpression kexpressions::Expression:
+	//	CompareOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+	//	subExpressions+=CompareOperation)+)?
 	public AndExpressionElements getAndExpressionAccess() {
 		return pAndExpression;
 	}
@@ -9441,9 +9275,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 42 <= ?A
-	//CompareOperation Expression:
-	//	=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
-	//	subExpressions+=NotOrValuedExpression) | NotExpression
+	//CompareOperation kexpressions::Expression:
+	//	NotOrValuedExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_CompareOperator
+	//	subExpressions+=NotOrValuedExpression)?
 	public CompareOperationElements getCompareOperationAccess() {
 		return pCompareOperation;
 	}
@@ -9452,9 +9286,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getCompareOperationAccess().getRule();
 	}
 
-	//// order IS IMPORTANT
-	//NotOrValuedExpression Expression:
-	//	=> ValuedExpression
+	/// *   
+	//    // old
+	//    => NotOrValuedExpression 
+	//    ( {kexpressions::OperatorExpression.subExpressions+=current} 
+	//        operator=Esterel_CompareOperator 
+	//        subExpressions+=NotOrValuedExpression
+	//    )
+	//    | 
+	//    NotExpression; 
+	// * / // order IS IMPORTANT
+	//NotOrValuedExpression kexpressions::Expression:
+	//	ValuedExpression
 	//	| NotExpression
 	public NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return pNotOrValuedExpression;
@@ -9466,8 +9309,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: not A, not false, not (A or B)
 	//// at the latter we need the parans to indicate the right binding
-	//NotExpression Expression:
-	//	{OperatorExpression} operator=Esterel_NotOperator
+	//NotExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator
 	//	subExpressions+=NotExpression | AtomicExpression
 	public NotExpressionElements getNotExpressionAccess() {
 		return pNotExpression;
@@ -9478,7 +9321,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// everything that evaluates to a primitive number value
-	//ValuedExpression Expression:
+	//ValuedExpression kexpressions::Expression:
 	//	AddExpression
 	public ValuedExpressionElements getValuedExpressionAccess() {
 		return pValuedExpression;
@@ -9489,9 +9332,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 1 + 2
-	//AddExpression Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_AddOperator
-	//	subExpressions+=SubExpression)*
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//AddExpression kexpressions::Expression:
+	//	SubExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AddOperator
+	//	subExpressions+=SubExpression)+)?
 	public AddExpressionElements getAddExpressionAccess() {
 		return pAddExpression;
 	}
@@ -9501,9 +9345,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: varA - ?B
-	//SubExpression Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_SubOperator
-	//	subExpressions+=MultExpression)*
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//SubExpression kexpressions::Expression:
+	//	MultExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_SubOperator
+	//	subExpressions+=MultExpression)+)?
 	public SubExpressionElements getSubExpressionAccess() {
 		return pSubExpression;
 	}
@@ -9513,9 +9358,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 2 * 4
-	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_MultOperator
-	//	subExpressions+=DivExpression)*
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//MultExpression kexpressions::Expression:
+	//	DivExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_MultOperator
+	//	subExpressions+=DivExpression)+)?
 	public MultExpressionElements getMultExpressionAccess() {
 		return pMultExpression;
 	}
@@ -9526,8 +9372,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: (2 / 4)
 	//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-	//DivExpression Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator
+	//DivExpression kexpressions::Expression:
+	//	ModExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_DivOperator
 	//	subExpressions+=ModExpression)?
 	public DivExpressionElements getDivExpressionAccess() {
 		return pDivExpression;
@@ -9538,8 +9384,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: varA mod ?B
-	//ModExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
+	//ModExpression kexpressions::Expression:
+	//	NegExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
 	//	subExpressions+=AtomicValuedExpression)?
 	public ModExpressionElements getModExpressionAccess() {
 		return pModExpression;
@@ -9551,8 +9397,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: not A, not false, not (A or B)
 	//// at the latter we need the parans to indicate the right binding
-	//NegExpression Expression:
-	//	{OperatorExpression} operator=Esterel_SubOperator
+	//NegExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=Esterel_SubOperator
 	//	subExpressions+=NegExpression | AtomicValuedExpression
 	public NegExpressionElements getNegExpressionAccess() {
 		return pNegExpression;
@@ -9562,11 +9408,12 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getNegExpressionAccess().getRule();
 	}
 
-	//AtomicValuedExpression Expression:
-	//	Esterel_IntValue
+	//AtomicValuedExpression kexpressions::Expression:
+	//	IntValue
 	//	| FloatValue
 	//	//    | '(' DivExpression ')'
-	//	| => '(' ValuedExpression ')'
+	//	//    | => '(' ValuedExpression ')'  // old
+	//	| '(' ValuedExpression ')'
 	//	| AtomicExpression
 	public AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return pAtomicValuedExpression;
@@ -9577,10 +9424,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
-	//ValuedObjectTestExpression Expression:
-	//	{OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
-	//	| {OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=Esterel_ValuedObjectReference
-	//	| Esterel_ValuedObjectReference
+	//ValuedObjectTestExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=Esterel_PreOperator '(' subExpressions+=ValuedObjectTestExpression ')'
+	//	| {kexpressions::OperatorExpression} operator=Esterel_ValueTestOperator subExpressions+=ValuedObjectReference
+	//	| ValuedObjectReference
 	public ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return pValuedObjectTestExpression;
 	}
@@ -9589,69 +9436,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
-	//// Example: A, varB
-	//Esterel_ValuedObjectReference ValuedObjectReference:
-	//	{Esterel_ValuedObjectReference} valuedObject=[ValuedObject]
-	public Esterel_ValuedObjectReferenceElements getEsterel_ValuedObjectReferenceAccess() {
-		return pEsterel_ValuedObjectReference;
+	////// Example: A, varB
+	////ValuedObjectReference returns kexpressions::ValuedObjectReference:
+	////    {kexpressions::ValuedObjectReference} 
+	////    valuedObject=[kexpressions::ValuedObject|ID];
+	//ValuedObject kexpressions::ValuedObject:
+	//	ISignal | Constant | TrapSignal
+	public ValuedObjectElements getValuedObjectAccess() {
+		return pValuedObject;
 	}
 	
-	public ParserRule getEsterel_ValuedObjectReferenceRule() {
-		return getEsterel_ValuedObjectReferenceAccess().getRule();
-	}
-
-	//// Example: 'printf(...)'(C)
-	//TextExpression:
-	//	code=HOSTCODE ("(" type=ID ")")?;
-	public TextExpressionElements getTextExpressionAccess() {
-		return pTextExpression;
-	}
-	
-	public ParserRule getTextExpressionRule() {
-		return getTextExpressionAccess().getRule();
-	}
-
-	//Esterel_IntValue IntValue:
-	//	value=INT
-	public Esterel_IntValueElements getEsterel_IntValueAccess() {
-		return pEsterel_IntValue;
-	}
-	
-	public ParserRule getEsterel_IntValueRule() {
-		return getEsterel_IntValueAccess().getRule();
-	}
-
-	//FloatValue:
-	//	value=FLOAT;
-	public FloatValueElements getFloatValueAccess() {
-		return pFloatValue;
-	}
-	
-	public ParserRule getFloatValueRule() {
-		return getFloatValueAccess().getRule();
-	}
-
-	//BooleanValue:
-	//	value=BOOLEAN;
-	public BooleanValueElements getBooleanValueAccess() {
-		return pBooleanValue;
-	}
-	
-	public ParserRule getBooleanValueRule() {
-		return getBooleanValueAccess().getRule();
-	}
-
-	//// data type rule allowing any kind of value to be accepted,
-	//// e.g. as initialValues of valuedObjects
-	//// used in Kits.xtext 
-	//AnyType:
-	//	BOOLEAN | INT | FLOAT | ID | STRING;
-	public AnyTypeElements getAnyTypeAccess() {
-		return pAnyType;
-	}
-	
-	public ParserRule getAnyTypeRule() {
-		return getAnyTypeAccess().getRule();
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
 	}
 
 	//SCLProgram:
@@ -9664,16 +9460,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSCLProgramRule() {
 		return getSCLProgramAccess().getRule();
-	}
-
-	//StatementContainer:
-	//	statements+=Statement;
-	public SCLGrammarAccess.StatementContainerElements getStatementContainerAccess() {
-		return gaSCL.getStatementContainerAccess();
-	}
-	
-	public ParserRule getStatementContainerRule() {
-		return getStatementContainerAccess().getRule();
 	}
 
 	//Statement:
@@ -9878,29 +9664,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	volatile?='volatile'?
 	//	input?='input'?
 	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
-	//	valuedObjects+=ValuedObject)* ';'
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=super::ValuedObject (','
+	//	valuedObjects+=super::ValuedObject)* ';'
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
 	
 	public ParserRule getDeclarationRule() {
 		return getDeclarationAccess().getRule();
-	}
-
-	//// Valued Object Rule
-	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
-	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
-	//// Examples: array[10], initial = false, z = 0 combine max
-	//ValuedObject kexpressions::ValuedObject:
-	//	name=ID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
-	//	combineOperator=CombineOperator)?
-	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
-		return gaKExt.getValuedObjectAccess();
-	}
-	
-	public ParserRule getValuedObjectRule() {
-		return getValuedObjectAccess().getRule();
 	}
 
 	/// **
@@ -10170,6 +9941,19 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getParameterAccess().getRule();
 	}
 
+	//// Text Expression Rule
+	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
+	//// Example: 'printf(...)'
+	//TextExpression:
+	//	text=super::HOSTCODE;
+	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
+		return gaKExpressions.getTextExpressionAccess();
+	}
+	
+	public ParserRule getTextExpressionRule() {
+		return getTextExpressionAccess().getRule();
+	}
+
 	//// Int Value Rule
 	//IntValue:
 	//	value=INT;
@@ -10179,6 +9963,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getIntValueRule() {
 		return getIntValueAccess().getRule();
+	}
+
+	//// Float Value Rule
+	//FloatValue:
+	//	value=FLOAT;
+	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
+		return gaKExpressions.getFloatValueAccess();
+	}
+	
+	public ParserRule getFloatValueRule() {
+		return getFloatValueAccess().getRule();
 	}
 
 	//// Bool Value Rule
@@ -10203,8 +9998,21 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getStringValueAccess().getRule();
 	}
 
+	//// Any Type Rule
+	//// Data type rule allowing any kind of value to be accepted,
+	//// e.g. as initialValues of valued objects used in Kits.xtext. 
+	//AnyType:
+	//	BOOLEAN | INT | FLOAT | ID | super::STRING;
+	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
+		return gaKExpressions.getAnyTypeAccess();
+	}
+	
+	public ParserRule getAnyTypeRule() {
+		return getAnyTypeAccess().getRule();
+	}
+
 	//AnyValue Value:
-	//	IntValue | super::FloatValue | BoolValue | StringValue
+	//	IntValue | FloatValue | BoolValue | StringValue
 	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
 		return gaKExpressions.getAnyValueAccess();
 	}

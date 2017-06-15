@@ -2,12 +2,12 @@
  */
 package de.cau.cs.kieler.esterel.scest.scest.impl;
 
-import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.ISignal;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
 
 import de.cau.cs.kieler.esterel.scest.scest.ScestPackage;
 import de.cau.cs.kieler.esterel.scest.scest.Set;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
 
@@ -54,7 +54,7 @@ public class SetImpl extends StatementImpl implements Set
    * @generated
    * @ordered
    */
-  protected ValuedObject tick;
+  protected ISignal tick;
 
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
@@ -135,7 +135,7 @@ public class SetImpl extends StatementImpl implements Set
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getTick()
+  public ISignal getTick()
   {
     return tick;
   }
@@ -145,9 +145,9 @@ public class SetImpl extends StatementImpl implements Set
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTick(ValuedObject newTick, NotificationChain msgs)
+  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
   {
-    ValuedObject oldTick = tick;
+    ISignal oldTick = tick;
     tick = newTick;
     if (eNotificationRequired())
     {
@@ -162,7 +162,7 @@ public class SetImpl extends StatementImpl implements Set
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTick(ValuedObject newTick)
+  public void setTick(ISignal newTick)
   {
     if (newTick != tick)
     {
@@ -279,7 +279,7 @@ public class SetImpl extends StatementImpl implements Set
         setSignal((ISignal)newValue);
         return;
       case ScestPackage.SET__TICK:
-        setTick((ValuedObject)newValue);
+        setTick((ISignal)newValue);
         return;
       case ScestPackage.SET__EXPR:
         setExpr((Expression)newValue);
@@ -302,7 +302,7 @@ public class SetImpl extends StatementImpl implements Set
         setSignal((ISignal)null);
         return;
       case ScestPackage.SET__TICK:
-        setTick((ValuedObject)null);
+        setTick((ISignal)null);
         return;
       case ScestPackage.SET__EXPR:
         setExpr((Expression)null);

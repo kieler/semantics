@@ -17,7 +17,7 @@ import de.cau.cs.kieler.esterel.esterel.Input
 import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Output
 import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.esterel.ValueType
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Transformation of Esterel code into a c simulation interface wrapper

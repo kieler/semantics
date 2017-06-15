@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.esterel.scest.scest.impl;
 
 import de.cau.cs.kieler.esterel.esterel.ISignal;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
 
 import de.cau.cs.kieler.esterel.scest.scest.ScestPackage;
 import de.cau.cs.kieler.esterel.scest.scest.UnEmit;
@@ -52,7 +51,7 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * @generated
    * @ordered
    */
-  protected ValuedObject tick;
+  protected ISignal tick;
 
   /**
    * <!-- begin-user-doc -->
@@ -123,7 +122,7 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getTick()
+  public ISignal getTick()
   {
     return tick;
   }
@@ -133,9 +132,9 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTick(ValuedObject newTick, NotificationChain msgs)
+  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
   {
-    ValuedObject oldTick = tick;
+    ISignal oldTick = tick;
     tick = newTick;
     if (eNotificationRequired())
     {
@@ -150,7 +149,7 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTick(ValuedObject newTick)
+  public void setTick(ISignal newTick)
   {
     if (newTick != tick)
     {
@@ -215,7 +214,7 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
         setSignal((ISignal)newValue);
         return;
       case ScestPackage.UN_EMIT__TICK:
-        setTick((ValuedObject)newValue);
+        setTick((ISignal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,7 +234,7 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
         setSignal((ISignal)null);
         return;
       case ScestPackage.UN_EMIT__TICK:
-        setTick((ValuedObject)null);
+        setTick((ISignal)null);
         return;
     }
     super.eUnset(featureID);

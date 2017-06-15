@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.ValueType;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -52,7 +54,7 @@ public interface TypeRenaming extends EObject
 
   /**
    * Returns the value of the '<em><b>New Type</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.esterel.esterel.ValueType}.
+   * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.ValueType}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>New Type</em>' attribute isn't clear,
@@ -60,7 +62,7 @@ public interface TypeRenaming extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>New Type</em>' attribute.
-   * @see de.cau.cs.kieler.esterel.esterel.ValueType
+   * @see de.cau.cs.kieler.kexpressions.ValueType
    * @see #setNewType(ValueType)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTypeRenaming_NewType()
    * @model
@@ -73,7 +75,7 @@ public interface TypeRenaming extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>New Type</em>' attribute.
-   * @see de.cau.cs.kieler.esterel.esterel.ValueType
+   * @see de.cau.cs.kieler.kexpressions.ValueType
    * @see #getNewType()
    * @generated
    */

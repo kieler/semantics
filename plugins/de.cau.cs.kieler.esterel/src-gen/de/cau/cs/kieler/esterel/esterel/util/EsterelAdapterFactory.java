@@ -6,7 +6,9 @@ import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 
-import de.cau.cs.kieler.kexpressions.Value;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementContainer;
@@ -115,11 +117,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseOneTypeConstantDecls(OneTypeConstantDecls object)
       {
         return createOneTypeConstantDeclsAdapter();
-      }
-      @Override
-      public Adapter caseValuedObject(ValuedObject object)
-      {
-        return createValuedObjectAdapter();
       }
       @Override
       public Adapter caseFunctionDecl(FunctionDecl object)
@@ -387,39 +384,9 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createDoAdapter();
       }
       @Override
-      public Adapter caseExpression(Expression object)
-      {
-        return createExpressionAdapter();
-      }
-      @Override
-      public Adapter caseValuedObjectReference(ValuedObjectReference object)
-      {
-        return createValuedObjectReferenceAdapter();
-      }
-      @Override
       public Adapter caseDelayExpr(DelayExpr object)
       {
         return createDelayExprAdapter();
-      }
-      @Override
-      public Adapter caseTextExpression(TextExpression object)
-      {
-        return createTextExpressionAdapter();
-      }
-      @Override
-      public Adapter caseIntValue(IntValue object)
-      {
-        return createIntValueAdapter();
-      }
-      @Override
-      public Adapter caseFloatValue(FloatValue object)
-      {
-        return createFloatValueAdapter();
-      }
-      @Override
-      public Adapter caseBooleanValue(BooleanValue object)
-      {
-        return createBooleanValueAdapter();
       }
       @Override
       public Adapter caseEsterelType(EsterelType object)
@@ -477,19 +444,9 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createConstantExpressionAdapter();
       }
       @Override
-      public Adapter caseOperatorExpression(OperatorExpression object)
-      {
-        return createOperatorExpressionAdapter();
-      }
-      @Override
       public Adapter caseTrapReferenceExpr(TrapReferenceExpr object)
       {
         return createTrapReferenceExprAdapter();
-      }
-      @Override
-      public Adapter caseEsterel_ValuedObjectReference(Esterel_ValuedObjectReference object)
-      {
-        return createEsterel_ValuedObjectReferenceAdapter();
       }
       @Override
       public Adapter caseAnnotatable(Annotatable object)
@@ -502,29 +459,24 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createStatementContainerAdapter();
       }
       @Override
+      public Adapter caseValuedObject(ValuedObject object)
+      {
+        return createValuedObjectAdapter();
+      }
+      @Override
       public Adapter caseStatement(Statement object)
       {
         return createStatementAdapter();
       }
       @Override
-      public Adapter caseKExpressions_Expression(de.cau.cs.kieler.kexpressions.Expression object)
+      public Adapter caseExpression(Expression object)
       {
-        return createKExpressions_ExpressionAdapter();
+        return createExpressionAdapter();
       }
       @Override
-      public Adapter caseKExpressions_TextExpression(de.cau.cs.kieler.kexpressions.TextExpression object)
+      public Adapter caseValuedObjectReference(ValuedObjectReference object)
       {
-        return createKExpressions_TextExpressionAdapter();
-      }
-      @Override
-      public Adapter caseValue(Value object)
-      {
-        return createValueAdapter();
-      }
-      @Override
-      public Adapter caseKExpressions_FloatValue(de.cau.cs.kieler.kexpressions.FloatValue object)
-      {
-        return createKExpressions_FloatValueAdapter();
+        return createValuedObjectReferenceAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -649,21 +601,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createOneTypeConstantDeclsAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ValuedObject <em>Valued Object</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.ValuedObject
-   * @generated
-   */
-  public Adapter createValuedObjectAdapter()
   {
     return null;
   }
@@ -1464,36 +1401,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Expression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Expression
-   * @generated
-   */
-  public Adapter createExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ValuedObjectReference <em>Valued Object Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.ValuedObjectReference
-   * @generated
-   */
-  public Adapter createValuedObjectReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr <em>Delay Expr</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1504,66 +1411,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDelayExprAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TextExpression <em>Text Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.TextExpression
-   * @generated
-   */
-  public Adapter createTextExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.IntValue <em>Int Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.IntValue
-   * @generated
-   */
-  public Adapter createIntValueAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.FloatValue <em>Float Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.FloatValue
-   * @generated
-   */
-  public Adapter createFloatValueAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.BooleanValue <em>Boolean Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.BooleanValue
-   * @generated
-   */
-  public Adapter createBooleanValueAdapter()
   {
     return null;
   }
@@ -1734,21 +1581,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.OperatorExpression <em>Operator Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.OperatorExpression
-   * @generated
-   */
-  public Adapter createOperatorExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr <em>Trap Reference Expr</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1759,21 +1591,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTrapReferenceExprAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Esterel_ValuedObjectReference <em>Esterel Valued Object Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Esterel_ValuedObjectReference
-   * @generated
-   */
-  public Adapter createEsterel_ValuedObjectReferenceAdapter()
   {
     return null;
   }
@@ -1809,6 +1626,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ValuedObject <em>Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.ValuedObject
+   * @generated
+   */
+  public Adapter createValuedObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1833,52 +1665,22 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @see de.cau.cs.kieler.kexpressions.Expression
    * @generated
    */
-  public Adapter createKExpressions_ExpressionAdapter()
+  public Adapter createExpressionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.TextExpression <em>Text Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kexpressions.TextExpression
+   * @see de.cau.cs.kieler.kexpressions.ValuedObjectReference
    * @generated
    */
-  public Adapter createKExpressions_TextExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Value <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kexpressions.Value
-   * @generated
-   */
-  public Adapter createValueAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.FloatValue <em>Float Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kexpressions.FloatValue
-   * @generated
-   */
-  public Adapter createKExpressions_FloatValueAdapter()
+  public Adapter createValuedObjectReferenceAdapter()
   {
     return null;
   }

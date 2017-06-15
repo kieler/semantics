@@ -86,15 +86,6 @@ public interface EsterelFactory extends EFactory
   OneTypeConstantDecls createOneTypeConstantDecls();
 
   /**
-   * Returns a new object of class '<em>Valued Object</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Valued Object</em>'.
-   * @generated
-   */
-  ValuedObject createValuedObject();
-
-  /**
    * Returns a new object of class '<em>Function Decl</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -572,24 +563,6 @@ public interface EsterelFactory extends EFactory
   Do createDo();
 
   /**
-   * Returns a new object of class '<em>Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Expression</em>'.
-   * @generated
-   */
-  Expression createExpression();
-
-  /**
-   * Returns a new object of class '<em>Valued Object Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Valued Object Reference</em>'.
-   * @generated
-   */
-  ValuedObjectReference createValuedObjectReference();
-
-  /**
    * Returns a new object of class '<em>Delay Expr</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -597,42 +570,6 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   DelayExpr createDelayExpr();
-
-  /**
-   * Returns a new object of class '<em>Text Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Text Expression</em>'.
-   * @generated
-   */
-  TextExpression createTextExpression();
-
-  /**
-   * Returns a new object of class '<em>Int Value</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Int Value</em>'.
-   * @generated
-   */
-  IntValue createIntValue();
-
-  /**
-   * Returns a new object of class '<em>Float Value</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Float Value</em>'.
-   * @generated
-   */
-  FloatValue createFloatValue();
-
-  /**
-   * Returns a new object of class '<em>Boolean Value</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Boolean Value</em>'.
-   * @generated
-   */
-  BooleanValue createBooleanValue();
 
   /**
    * Returns a new object of class '<em>Type</em>'.
@@ -734,15 +671,6 @@ public interface EsterelFactory extends EFactory
   ConstantExpression createConstantExpression();
 
   /**
-   * Returns a new object of class '<em>Operator Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Operator Expression</em>'.
-   * @generated
-   */
-  OperatorExpression createOperatorExpression();
-
-  /**
    * Returns a new object of class '<em>Trap Reference Expr</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -750,15 +678,6 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   TrapReferenceExpr createTrapReferenceExpr();
-
-  /**
-   * Returns a new object of class '<em>Esterel Valued Object Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Esterel Valued Object Reference</em>'.
-   * @generated
-   */
-  Esterel_ValuedObjectReference createEsterel_ValuedObjectReference();
 
   /**
    * Returns the package supported by this factory.

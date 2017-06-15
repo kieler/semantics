@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.scl.scl.Statement;
 
 /**
@@ -59,12 +61,12 @@ public interface Emit extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Tick</em>' containment reference.
-   * @see #setTick(ValuedObject)
+   * @see #setTick(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEmit_Tick()
    * @model containment="true"
    * @generated
    */
-  ValuedObject getTick();
+  ISignal getTick();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Emit#getTick <em>Tick</em>}' containment reference.
@@ -74,7 +76,7 @@ public interface Emit extends Statement
    * @see #getTick()
    * @generated
    */
-  void setTick(ValuedObject value);
+  void setTick(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.

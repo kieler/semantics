@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getSignalExpr <em>Signal Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr()
@@ -52,6 +54,32 @@ public interface DelayExpr extends EObject
   void setExpr(Expression value);
 
   /**
+   * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Is Immediate</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Is Immediate</em>' attribute.
+   * @see #setIsImmediate(boolean)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_IsImmediate()
+   * @model
+   * @generated
+   */
+  boolean isIsImmediate();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Is Immediate</em>' attribute.
+   * @see #isIsImmediate()
+   * @generated
+   */
+  void setIsImmediate(boolean value);
+
+  /**
    * Returns the value of the '<em><b>Tick</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
@@ -60,12 +88,12 @@ public interface DelayExpr extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Tick</em>' containment reference.
-   * @see #setTick(ValuedObject)
+   * @see #setTick(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Tick()
    * @model containment="true"
    * @generated
    */
-  ValuedObject getTick();
+  ISignal getTick();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick <em>Tick</em>}' containment reference.
@@ -75,7 +103,7 @@ public interface DelayExpr extends EObject
    * @see #getTick()
    * @generated
    */
-  void setTick(ValuedObject value);
+  void setTick(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Signal Expr</b></em>' containment reference.
@@ -102,31 +130,5 @@ public interface DelayExpr extends EObject
    * @generated
    */
   void setSignalExpr(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Is Immediate</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Is Immediate</em>' attribute.
-   * @see #setIsImmediate(boolean)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_IsImmediate()
-   * @model
-   * @generated
-   */
-  boolean isIsImmediate();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Is Immediate</em>' attribute.
-   * @see #isIsImmediate()
-   * @generated
-   */
-  void setIsImmediate(boolean value);
 
 } // DelayExpr

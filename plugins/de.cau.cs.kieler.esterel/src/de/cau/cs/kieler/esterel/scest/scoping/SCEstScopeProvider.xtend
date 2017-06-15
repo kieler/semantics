@@ -42,8 +42,6 @@ import de.cau.cs.kieler.esterel.esterel.Sustain;
 import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
 import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
-import de.cau.cs.kieler.esterel.esterel.ValuedObjectReference;
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.scl.scl.SclPackage
 import com.google.common.collect.Iterators
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
@@ -53,6 +51,7 @@ import de.cau.cs.kieler.scl.scl.Scope
 import java.util.Collections
 import org.eclipse.xtext.naming.QualifiedName
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * This class contains custom scoping description.

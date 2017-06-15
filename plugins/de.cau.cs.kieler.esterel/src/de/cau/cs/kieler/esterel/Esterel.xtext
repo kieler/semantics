@@ -737,7 +737,7 @@ SignalAtomicExpression returns kexpressions::Expression:
     | SignalPreExpr
     | TrapReferenceExpr;
 
-SignalReferenceExpr returns ValuedObjectReference:
+SignalReferenceExpr returns kexpressions::ValuedObjectReference:
     valuedObject=[ISignal|ID];
 
 SignalPreExpr returns kexpressions::Expression:
@@ -909,10 +909,10 @@ ValuedObjectTestExpression returns kexpressions::Expression:
     | ValuedObjectReference;
 
 
-// Example: A, varB
-ValuedObjectReference returns kexpressions::ValuedObjectReference:
-    {kexpressions::ValuedObjectReference} 
-    valuedObject=[kexpressions::ValuedObject|ID];
+//// Example: A, varB
+//ValuedObjectReference returns kexpressions::ValuedObjectReference:
+//    {kexpressions::ValuedObjectReference} 
+//    valuedObject=[kexpressions::ValuedObject|ID];
 
 ValuedObject returns kexpressions::ValuedObject:
     ISignal | Constant | TrapSignal;

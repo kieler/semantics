@@ -5,10 +5,11 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.annotations.Annotation;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Expression;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.Present;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.Statement;
 
@@ -68,7 +69,7 @@ public class PresentImpl extends StatementImpl implements Present
    * @generated
    * @ordered
    */
-  protected ValuedObject tick;
+  protected ISignal tick;
 
   /**
    * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
@@ -194,7 +195,7 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getTick()
+  public ISignal getTick()
   {
     return tick;
   }
@@ -204,9 +205,9 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTick(ValuedObject newTick, NotificationChain msgs)
+  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
   {
-    ValuedObject oldTick = tick;
+    ISignal oldTick = tick;
     tick = newTick;
     if (eNotificationRequired())
     {
@@ -221,7 +222,7 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTick(ValuedObject newTick)
+  public void setTick(ISignal newTick)
   {
     if (newTick != tick)
     {
@@ -378,7 +379,7 @@ public class PresentImpl extends StatementImpl implements Present
         setExpression((Expression)newValue);
         return;
       case EsterelPackage.PRESENT__TICK:
-        setTick((ValuedObject)newValue);
+        setTick((ISignal)newValue);
         return;
       case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
         getThenAnnotations().clear();
@@ -418,7 +419,7 @@ public class PresentImpl extends StatementImpl implements Present
         setExpression((Expression)null);
         return;
       case EsterelPackage.PRESENT__TICK:
-        setTick((ValuedObject)null);
+        setTick((ISignal)null);
         return;
       case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
         getThenAnnotations().clear();

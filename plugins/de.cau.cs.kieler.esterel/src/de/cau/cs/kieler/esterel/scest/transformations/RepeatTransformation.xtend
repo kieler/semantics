@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.OperatorType
 import org.eclipse.emf.ecore.util.EcoreUtil
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.kexpressions.IntValue
 
 /**
  * @author mrb
@@ -89,7 +90,7 @@ class RepeatTransformation extends AbstractExpansionTransformation implements Tr
             var repeat = statement as Repeat
             var vObject = createValuedObject
             vObject.name = createNewUniqueConstantName
-            vObject.initialValue = createIntValue => [ value = 0 ]
+            vObject.initialValue = createIntValue(0)
             var decl = createDeclaration
             decl.type = ValueType.INT
             decl.valuedObjects.add(vObject)
@@ -98,15 +99,20 @@ class RepeatTransformation extends AbstractExpansionTransformation implements Tr
             var label = createLabel(createNewUniqueLabel) 
             scope.statements.add(label)
             scope.statements.add(repeat.statements)
-            var increment = createIntValue => [ value = 1 ]
+            var increment = createIntValue(1)
             var vObjectReference = createValuedObjectReference(vObject)
             var addExpr = createOperatorExpression(vObjectReference, increment, OperatorType.ADD)
             var assignment = createAssignment(vObject, addExpr) 
             scope.statements.add(assignment)
             var ifStatement = createConditional
             ifStatement.statements.add(createGotoStatement(label))
-            var intValue = createIntValue
-            intValue.value = Integer.parseInt((repeat.expression as ConstantExpression).value)
+            var intValue = createIntValue(1)
+            if (repeat.expression instanceof IntValue) {
+                intValue.value = (repeat.expression as IntValue).value
+            }
+            else if (repeat.expression instanceof ConstantExpression) {
+                intValue.value = Integer.parseInt((repeat.expression as ConstantExpression).value)
+            }
             var lessExpr = createLT(EcoreUtil.copy(vObjectReference), intValue)
             ifStatement.expression = lessExpr
             scope.statements.add(ifStatement)

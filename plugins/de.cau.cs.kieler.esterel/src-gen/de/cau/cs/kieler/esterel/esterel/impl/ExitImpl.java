@@ -4,8 +4,9 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Exit;
-import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.TrapSignal;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
 

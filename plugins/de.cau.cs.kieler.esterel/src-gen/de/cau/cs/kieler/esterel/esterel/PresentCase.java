@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.scl.scl.StatementContainer;
 
 /**
@@ -58,12 +60,12 @@ public interface PresentCase extends StatementContainer
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Tick</em>' containment reference.
-   * @see #setTick(ValuedObject)
+   * @see #setTick(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Tick()
    * @model containment="true"
    * @generated
    */
-  ValuedObject getTick();
+  ISignal getTick();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getTick <em>Tick</em>}' containment reference.
@@ -73,6 +75,6 @@ public interface PresentCase extends StatementContainer
    * @see #getTick()
    * @generated
    */
-  void setTick(ValuedObject value);
+  void setTick(ISignal value);
 
 } // PresentCase

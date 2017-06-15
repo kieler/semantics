@@ -6,6 +6,8 @@ import de.cau.cs.kieler.esterel.esterel.Constant;
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
+import de.cau.cs.kieler.kexpressions.impl.ExpressionImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;

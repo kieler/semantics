@@ -4,9 +4,9 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.Emit;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.ISignal;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.impl.StatementImpl;
 
@@ -53,7 +53,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * @generated
    * @ordered
    */
-  protected ValuedObject tick;
+  protected ISignal tick;
 
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
@@ -134,7 +134,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getTick()
+  public ISignal getTick()
   {
     return tick;
   }
@@ -144,9 +144,9 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTick(ValuedObject newTick, NotificationChain msgs)
+  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
   {
-    ValuedObject oldTick = tick;
+    ISignal oldTick = tick;
     tick = newTick;
     if (eNotificationRequired())
     {
@@ -161,7 +161,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTick(ValuedObject newTick)
+  public void setTick(ISignal newTick)
   {
     if (newTick != tick)
     {
@@ -278,7 +278,7 @@ public class EmitImpl extends StatementImpl implements Emit
         setSignal((ISignal)newValue);
         return;
       case EsterelPackage.EMIT__TICK:
-        setTick((ValuedObject)newValue);
+        setTick((ISignal)newValue);
         return;
       case EsterelPackage.EMIT__EXPR:
         setExpr((Expression)newValue);
@@ -301,7 +301,7 @@ public class EmitImpl extends StatementImpl implements Emit
         setSignal((ISignal)null);
         return;
       case EsterelPackage.EMIT__TICK:
-        setTick((ValuedObject)null);
+        setTick((ISignal)null);
         return;
       case EsterelPackage.EMIT__EXPR:
         setExpr((Expression)null);

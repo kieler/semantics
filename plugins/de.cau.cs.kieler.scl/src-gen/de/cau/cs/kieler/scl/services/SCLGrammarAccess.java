@@ -105,50 +105,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getStatementsStatementParserRuleCall_6_0() { return cStatementsStatementParserRuleCall_6_0; }
 	}
 
-	public class StatementContainerElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.StatementContainer");
-		private final Assignment cStatementsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cStatementsStatementParserRuleCall_0 = (RuleCall)cStatementsAssignment.eContents().get(0);
-		
-		//StatementContainer:
-		//	statements+=Statement;
-		@Override public ParserRule getRule() { return rule; }
-
-		//statements+=Statement
-		public Assignment getStatementsAssignment() { return cStatementsAssignment; }
-
-		//Statement
-		public RuleCall getStatementsStatementParserRuleCall_0() { return cStatementsStatementParserRuleCall_0; }
-	}
-
-	public class StatementContainerInterfaceElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.StatementContainerInterface");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cConditionalParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cElseScopeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cThreadParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cScopeStatementParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		
-		//StatementContainerInterface StatementContainer:
-		//	Conditional | ElseScope | Thread | ScopeStatement
-		@Override public ParserRule getRule() { return rule; }
-
-		//Conditional | ElseScope | Thread | ScopeStatement
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//Conditional
-		public RuleCall getConditionalParserRuleCall_0() { return cConditionalParserRuleCall_0; }
-
-		//ElseScope
-		public RuleCall getElseScopeParserRuleCall_1() { return cElseScopeParserRuleCall_1; }
-
-		//Thread
-		public RuleCall getThreadParserRuleCall_2() { return cThreadParserRuleCall_2; }
-
-		//ScopeStatement
-		public RuleCall getScopeStatementParserRuleCall_3() { return cScopeStatementParserRuleCall_3; }
-	}
-
 	public class StatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.Statement");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -834,8 +790,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private final SCLProgramElements pSCLProgram;
-	private final StatementContainerElements pStatementContainer;
-	private final StatementContainerInterfaceElements pStatementContainerInterface;
 	private final StatementElements pStatement;
 	private final InstructionStatementElements pInstructionStatement;
 	private final MetaStatementElements pMetaStatement;
@@ -875,8 +829,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
 		this.pSCLProgram = new SCLProgramElements();
-		this.pStatementContainer = new StatementContainerElements();
-		this.pStatementContainerInterface = new StatementContainerInterfaceElements();
 		this.pStatement = new StatementElements();
 		this.pInstructionStatement = new InstructionStatementElements();
 		this.pMetaStatement = new MetaStatementElements();
@@ -944,26 +896,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSCLProgramRule() {
 		return getSCLProgramAccess().getRule();
-	}
-
-	//StatementContainer:
-	//	statements+=Statement;
-	public StatementContainerElements getStatementContainerAccess() {
-		return pStatementContainer;
-	}
-	
-	public ParserRule getStatementContainerRule() {
-		return getStatementContainerAccess().getRule();
-	}
-
-	//StatementContainerInterface StatementContainer:
-	//	Conditional | ElseScope | Thread | ScopeStatement
-	public StatementContainerInterfaceElements getStatementContainerInterfaceAccess() {
-		return pStatementContainerInterface;
-	}
-	
-	public ParserRule getStatementContainerInterfaceRule() {
-		return getStatementContainerInterfaceAccess().getRule();
 	}
 
 	//Statement:

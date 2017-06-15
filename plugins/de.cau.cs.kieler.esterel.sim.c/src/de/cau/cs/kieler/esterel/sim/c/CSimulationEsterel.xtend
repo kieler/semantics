@@ -16,9 +16,9 @@
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Output
 import de.cau.cs.kieler.esterel.esterel.ISignal
-import de.cau.cs.kieler.esterel.esterel.ValueType
 import de.cau.cs.kieler.esterel.esterel.impl.InputImpl
 import de.cau.cs.kieler.esterel.esterel.impl.OutputImpl
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Transformation from Esterel Program to wrapper code for the simulation.

@@ -4,7 +4,8 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.ConstantRenaming;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
+
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import org.eclipse.emf.common.notify.Notification;
 

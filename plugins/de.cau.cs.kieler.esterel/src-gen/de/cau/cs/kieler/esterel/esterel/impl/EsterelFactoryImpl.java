@@ -5,7 +5,6 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.*;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -72,7 +71,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TYPE: return createType();
       case EsterelPackage.CONSTANT_DECLS: return createConstantDecls();
       case EsterelPackage.ONE_TYPE_CONSTANT_DECLS: return createOneTypeConstantDecls();
-      case EsterelPackage.VALUED_OBJECT: return createValuedObject();
       case EsterelPackage.FUNCTION_DECL: return createFunctionDecl();
       case EsterelPackage.FUNCTION: return createFunction();
       case EsterelPackage.PROCEDURE_DECL: return createProcedureDecl();
@@ -126,13 +124,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TASK_RENAMING: return createTaskRenaming();
       case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
       case EsterelPackage.DO: return createDo();
-      case EsterelPackage.EXPRESSION: return createExpression();
-      case EsterelPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
       case EsterelPackage.DELAY_EXPR: return createDelayExpr();
-      case EsterelPackage.TEXT_EXPRESSION: return createTextExpression();
-      case EsterelPackage.INT_VALUE: return createIntValue();
-      case EsterelPackage.FLOAT_VALUE: return createFloatValue();
-      case EsterelPackage.BOOLEAN_VALUE: return createBooleanValue();
       case EsterelPackage.ESTEREL_TYPE: return createEsterelType();
       case EsterelPackage.CONSTANT: return createConstant();
       case EsterelPackage.INPUT: return createInput();
@@ -144,53 +136,9 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TRAP_EXPRESSION: return createTrapExpression();
       case EsterelPackage.FUNCTION_EXPRESSION: return createFunctionExpression();
       case EsterelPackage.CONSTANT_EXPRESSION: return createConstantExpression();
-      case EsterelPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
       case EsterelPackage.TRAP_REFERENCE_EXPR: return createTrapReferenceExpr();
-      case EsterelPackage.ESTEREL_VALUED_OBJECT_REFERENCE: return createEsterel_ValuedObjectReference();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object createFromString(EDataType eDataType, String initialValue)
-  {
-    switch (eDataType.getClassifierID())
-    {
-      case EsterelPackage.OPERATOR_TYPE:
-        return createOperatorTypeFromString(eDataType, initialValue);
-      case EsterelPackage.VALUE_TYPE:
-        return createValueTypeFromString(eDataType, initialValue);
-      case EsterelPackage.COMBINE_OPERATOR:
-        return createCombineOperatorFromString(eDataType, initialValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String convertToString(EDataType eDataType, Object instanceValue)
-  {
-    switch (eDataType.getClassifierID())
-    {
-      case EsterelPackage.OPERATOR_TYPE:
-        return convertOperatorTypeToString(eDataType, instanceValue);
-      case EsterelPackage.VALUE_TYPE:
-        return convertValueTypeToString(eDataType, instanceValue);
-      case EsterelPackage.COMBINE_OPERATOR:
-        return convertCombineOperatorToString(eDataType, instanceValue);
-      default:
-        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -269,17 +217,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     OneTypeConstantDeclsImpl oneTypeConstantDecls = new OneTypeConstantDeclsImpl();
     return oneTypeConstantDecls;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ValuedObject createValuedObject()
-  {
-    ValuedObjectImpl valuedObject = new ValuedObjectImpl();
-    return valuedObject;
   }
 
   /**
@@ -870,76 +807,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression createExpression()
-  {
-    ExpressionImpl expression = new ExpressionImpl();
-    return expression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ValuedObjectReference createValuedObjectReference()
-  {
-    ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
-    return valuedObjectReference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public DelayExpr createDelayExpr()
   {
     DelayExprImpl delayExpr = new DelayExprImpl();
     return delayExpr;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TextExpression createTextExpression()
-  {
-    TextExpressionImpl textExpression = new TextExpressionImpl();
-    return textExpression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public IntValue createIntValue()
-  {
-    IntValueImpl intValue = new IntValueImpl();
-    return intValue;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public FloatValue createFloatValue()
-  {
-    FloatValueImpl floatValue = new FloatValueImpl();
-    return floatValue;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public BooleanValue createBooleanValue()
-  {
-    BooleanValueImpl booleanValue = new BooleanValueImpl();
-    return booleanValue;
   }
 
   /**
@@ -1068,98 +939,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public OperatorExpression createOperatorExpression()
-  {
-    OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
-    return operatorExpression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public TrapReferenceExpr createTrapReferenceExpr()
   {
     TrapReferenceExprImpl trapReferenceExpr = new TrapReferenceExprImpl();
     return trapReferenceExpr;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Esterel_ValuedObjectReference createEsterel_ValuedObjectReference()
-  {
-    Esterel_ValuedObjectReferenceImpl esterel_ValuedObjectReference = new Esterel_ValuedObjectReferenceImpl();
-    return esterel_ValuedObjectReference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public OperatorType createOperatorTypeFromString(EDataType eDataType, String initialValue)
-  {
-    OperatorType result = OperatorType.get(initialValue);
-    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertOperatorTypeToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ValueType createValueTypeFromString(EDataType eDataType, String initialValue)
-  {
-    ValueType result = ValueType.get(initialValue);
-    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertValueTypeToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public CombineOperator createCombineOperatorFromString(EDataType eDataType, String initialValue)
-  {
-    CombineOperator result = CombineOperator.get(initialValue);
-    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertCombineOperatorToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

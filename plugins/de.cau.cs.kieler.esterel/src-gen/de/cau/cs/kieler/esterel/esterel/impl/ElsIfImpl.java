@@ -6,7 +6,8 @@ import de.cau.cs.kieler.annotations.Annotation;
 
 import de.cau.cs.kieler.esterel.esterel.ElsIf;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Expression;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.Statement;
 

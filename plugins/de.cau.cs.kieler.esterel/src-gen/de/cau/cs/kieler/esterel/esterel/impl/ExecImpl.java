@@ -5,10 +5,11 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Exec;
 import de.cau.cs.kieler.esterel.esterel.ExecCase;
-import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.IVariable;
 import de.cau.cs.kieler.esterel.esterel.Task;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 

@@ -7,44 +7,6 @@
     editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions platform:/resource/de.cau.cs.kieler.scl/model/scl.genmodel#//scl">
   <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler.esterel" disposableProviderFactory="true"
       ecorePackage="Esterel.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Esterel.ecore#//OperatorType">
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/EQ"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/LT"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/LEQ"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/GT"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/GEQ"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/NE"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/PRE"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/OR"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/AND"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/NOT"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/ADD"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/SUB"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/MULT"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/MOD"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/DIV"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//OperatorType/VAL"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Esterel.ecore#//ValueType">
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/PURE"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/BOOL"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/UNSIGNED"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/INT"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/FLOAT"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/DOUBLE"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/STRING"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//ValueType/HOST"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Esterel.ecore#//CombineOperator">
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/ADD"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/MULT"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/MAX"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/MIN"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/OR"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/AND"/>
-      <genEnumLiterals ecoreEnumLiteral="Esterel.ecore#//CombineOperator/HOST"/>
-    </genEnums>
     <genClasses ecoreClass="Esterel.ecore#//Program">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Program/modules"/>
     </genClasses>
@@ -79,9 +41,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/constants"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/type"/>
     </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ValuedObject">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ValuedObject/name"/>
-    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//FunctionDecl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionDecl/annotations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionDecl/functions"/>
@@ -114,7 +73,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//InterfaceSignalDecl/signals"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//ISignal">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/typeID"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ISignal/func"/>
@@ -303,26 +261,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/delay"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/watchingStatements"/>
     </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Expression"/>
-    <genClasses ecoreClass="Esterel.ecore#//ValuedObjectReference">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ValuedObjectReference/valuedObject"/>
-    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//DelayExpr">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/expr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayExpr/isImmediate"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/signalExpr"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayExpr/isImmediate"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TextExpression">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TextExpression/code"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TextExpression/type"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//IntValue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//IntValue/value"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//FloatValue"/>
-    <genClasses ecoreClass="Esterel.ecore#//BooleanValue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//BooleanValue/value"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//EsterelType">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelType/estType"/>
@@ -350,11 +293,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantExpression/constant"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantExpression/value"/>
     </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//OperatorExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OperatorExpression/subExpressions"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//OperatorExpression/operator"/>
-    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//TrapReferenceExpr"/>
-    <genClasses ecoreClass="Esterel.ecore#//Esterel_ValuedObjectReference"/>
   </genPackages>
 </genmodel:GenModel>

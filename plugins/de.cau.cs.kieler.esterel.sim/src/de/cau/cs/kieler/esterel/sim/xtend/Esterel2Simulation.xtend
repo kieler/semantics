@@ -14,8 +14,6 @@
 package de.cau.cs.kieler.esterel.sim.xtend
 
 import de.cau.cs.kieler.esterel.sim.EsterelSimPlugin
-
-import de.cau.cs.kieler.esterel.esterel.ValueType
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.Do
@@ -25,11 +23,9 @@ import de.cau.cs.kieler.esterel.esterel.EveryDo
 import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.esterel.esterel.Halt
 import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.Module
 import de.cau.cs.kieler.esterel.esterel.Nothing
-import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.Program
@@ -41,9 +37,11 @@ import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.esterel.esterel.Block
-import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.scest.scest.UnEmit
 import de.cau.cs.kieler.esterel.esterel.EsterelThread
+import de.cau.cs.kieler.kexpressions.ValueType
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 
 /**
  * Transformation of Esterel code into Esterel code that is 
@@ -107,11 +105,21 @@ class Esterel2Simulation {
 
         target;
     }
+    
+    /**
+     * Returns the list in which the given Statement is contained.
+     * 
+     * @param statement A Statement which is in the returned list 
+     * @return The Statement list which includes the given Statement
+     */
+    def getContainingList(Statement statement) {
+        statement.eContainer.eGet(statement.eContainingFeature) as EList<Statement>
+    }
 
     // -------------------------------------------------------------------------
     // Statement transformation in the fashion like described at the top
     def void transformStatement(Statement statement, Module mainmodule, String UID) {
-        var container = statement.eContainer;
+        var container = statement.getContainingList;
 
         // Statements for which the transformation should take part
         if (((statement instanceof Abort) || (statement instanceof Await) || (statement instanceof Do) ||
@@ -156,7 +164,7 @@ class Esterel2Simulation {
 //            var abortInstanceStatement = EsterelFactory::eINSTANCE.createAbortInstance();
             var abortDelay = EsterelFactory::eINSTANCE.createDelayExpr();
 //            var abortDelayEvent = EsterelFactory::eINSTANCE.createDelayEvent();
-            var abortValuedObjectReference = EsterelFactory::eINSTANCE.createValuedObjectReference();
+            var abortValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference();
 
             // Setup the abortSignal using an unique name
             abortISignal.setName("AP" + statement.hashCode.toString().replace("-", "M"));
@@ -218,12 +226,12 @@ class Esterel2Simulation {
 //            blockStatement2.addStatement(abortSignalDecl)
             blockStatement2.getStatements.add(abortSignalDecl)
             // Add it to initial container
-            container.addStatement(blockStatement2);
+            container.add(blockStatement2);
         } else {
             // this is necessary to handle not highlighted statements correctly (KISEMA-1004)
             var blockStatement2 = EsterelFactory::eINSTANCE.createBlock()
             blockStatement2.addStatement(statement)
-            container.addStatement(blockStatement2);
+            container.add(blockStatement2);
         }
 
     }

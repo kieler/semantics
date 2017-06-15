@@ -791,10 +791,13 @@ class SCEstExtension {
     /**
      * Creates a KExpression Int Value
      * 
+     * @param value The wanted value for IntValue.
      * @return A KExpression Int Value
      */
-    def createIntValue() {
-        KExpressionsFactory::eINSTANCE.createIntValue
+    def createIntValue(int value) {
+        KExpressionsFactory::eINSTANCE.createIntValue => [
+            it.value = value
+        ]
     }
     
     /**

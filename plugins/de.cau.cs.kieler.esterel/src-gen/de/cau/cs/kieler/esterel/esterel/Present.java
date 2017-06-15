@@ -4,6 +4,8 @@ package de.cau.cs.kieler.esterel.esterel;
 
 import de.cau.cs.kieler.annotations.Annotation;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.scl.scl.Statement;
 
 import org.eclipse.emf.common.util.EList;
@@ -67,12 +69,12 @@ public interface Present extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Tick</em>' containment reference.
-   * @see #setTick(ValuedObject)
+   * @see #setTick(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_Tick()
    * @model containment="true"
    * @generated
    */
-  ValuedObject getTick();
+  ISignal getTick();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Present#getTick <em>Tick</em>}' containment reference.
@@ -82,7 +84,7 @@ public interface Present extends Statement
    * @see #getTick()
    * @generated
    */
-  void setTick(ValuedObject value);
+  void setTick(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Then Annotations</b></em>' containment reference list.

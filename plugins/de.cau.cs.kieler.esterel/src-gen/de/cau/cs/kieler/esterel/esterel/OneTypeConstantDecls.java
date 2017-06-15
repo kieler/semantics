@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +29,7 @@ public interface OneTypeConstantDecls extends EObject
 {
   /**
    * Returns the value of the '<em><b>Constants</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ValuedObject}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ValuedObject}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Constants</em>' containment reference list isn't clear,

@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementContainer;
 
@@ -73,7 +75,7 @@ public interface Exec extends StatementContainer, Statement
 
   /**
    * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Expression}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Kexpressions</em>' containment reference list isn't clear,

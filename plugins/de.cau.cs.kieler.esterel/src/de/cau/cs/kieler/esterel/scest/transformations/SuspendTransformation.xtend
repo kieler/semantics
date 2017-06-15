@@ -86,6 +86,8 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
         return statements
     }
     
+    // TODO A Transformation for "weak suspend", which was introduced with Esterel v7, is not implemented.
+    
     def Statement transformStatement(Statement statement, int counter) {
         if (statement instanceof Suspend) {
             var suspend = statement as Suspend
@@ -134,13 +136,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             transformStatements((statement as Present).elseStatements, counter+1)
         }
         else if (statement instanceof IfTest) {
-            // Don't transform the pauses in generated IfTests.
-            var annotations = (statement as IfTest).annotations
-            if (!isGenerated(annotations)) {
-                transformStatements((statement as IfTest).thenStatements, counter+1)
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, counter+1)]
-                transformStatements((statement as IfTest).elseStatements, counter+1)
-            }
+            transformStatements((statement as IfTest).thenStatements, counter+1)
+            (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, counter+1)]
+            transformStatements((statement as IfTest).elseStatements, counter+1)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |
@@ -190,15 +188,18 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
                     var ifTest2 = statements.get(pos+i) as IfTest
                     if (!ifTest2.annotations.empty) {
                         var isGenerated = false
-                        for (Annotation a : ifTest.annotations) {
-                            if (a.name == "generated_ifTest") {
+                        for (var j=0; j<ifTest2.annotations.length; j++) {
+                            var a = ifTest2.annotations.get(j)
+                            if (a.name.equals("generated_ifTest")) {
                                 isGenerated = true
                                 var layer = (a as IntAnnotation).value
                                 if (counter<layer) {
                                     statements.add(pos+i, ifTest)
                                     i = statements.length
+                                    j = ifTest2.annotations.length
                                 }
                             }
+                            
                         }
                         if (!isGenerated) {
                             statements.add(pos+i, ifTest)
@@ -245,9 +246,13 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             transformPauses((statement as Present).elseStatements, counter, delay)
         }
         else if (statement instanceof IfTest) {
-            transformPauses((statement as IfTest).thenStatements, counter, delay)
-            (statement as IfTest).elseif.forEach [ elsif | transformPauses(elsif.thenStatements, counter, delay)]
-            transformPauses((statement as IfTest).elseStatements, counter, delay)
+            // Don't transform the pauses in generated IfTests.
+            var annotations = (statement as IfTest).annotations
+            if (!isGenerated(annotations)) {
+                transformPauses((statement as IfTest).thenStatements, counter, delay)
+                (statement as IfTest).elseif.forEach [ elsif | transformPauses(elsif.thenStatements, counter, delay)]
+                transformPauses((statement as IfTest).elseStatements, counter, delay)
+            }
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |

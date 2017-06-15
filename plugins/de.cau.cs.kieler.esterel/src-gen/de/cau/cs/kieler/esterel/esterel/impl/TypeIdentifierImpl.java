@@ -2,10 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.CombineOperator;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
-import de.cau.cs.kieler.esterel.esterel.ValueType;
+
+import de.cau.cs.kieler.kexpressions.CombineOperator;
+import de.cau.cs.kieler.kexpressions.ValueType;
 
 import org.eclipse.emf.common.notify.Notification;
 

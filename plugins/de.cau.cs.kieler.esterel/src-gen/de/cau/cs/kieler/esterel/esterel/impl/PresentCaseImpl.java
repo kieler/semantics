@@ -3,9 +3,10 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Expression;
+import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
-import de.cau.cs.kieler.esterel.esterel.ValuedObject;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.impl.StatementContainerImpl;
 
@@ -51,7 +52,7 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * @generated
    * @ordered
    */
-  protected ValuedObject tick;
+  protected ISignal tick;
 
   /**
    * <!-- begin-user-doc -->
@@ -127,7 +128,7 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getTick()
+  public ISignal getTick()
   {
     return tick;
   }
@@ -137,9 +138,9 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTick(ValuedObject newTick, NotificationChain msgs)
+  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
   {
-    ValuedObject oldTick = tick;
+    ISignal oldTick = tick;
     tick = newTick;
     if (eNotificationRequired())
     {
@@ -154,7 +155,7 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTick(ValuedObject newTick)
+  public void setTick(ISignal newTick)
   {
     if (newTick != tick)
     {
@@ -220,7 +221,7 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
         setExpression((Expression)newValue);
         return;
       case EsterelPackage.PRESENT_CASE__TICK:
-        setTick((ValuedObject)newValue);
+        setTick((ISignal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -240,7 +241,7 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
         setExpression((Expression)null);
         return;
       case EsterelPackage.PRESENT_CASE__TICK:
-        setTick((ValuedObject)null);
+        setTick((ISignal)null);
         return;
     }
     super.eUnset(featureID);

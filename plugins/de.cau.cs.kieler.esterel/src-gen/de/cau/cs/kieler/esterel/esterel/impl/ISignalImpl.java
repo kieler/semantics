@@ -2,12 +2,15 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.CombineOperator;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Expression;
 import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.ISignal;
-import de.cau.cs.kieler.esterel.esterel.ValueType;
+
+import de.cau.cs.kieler.kexpressions.CombineOperator;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValueType;
+
+import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -16,7 +19,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +28,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getTypeID <em>Type ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getFunc <em>Func</em>}</li>
@@ -36,28 +37,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class ISignalImpl extends MinimalEObjectImpl.Container implements ISignal
+public class ISignalImpl extends ValuedObjectImpl implements ISignal
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -157,29 +138,6 @@ public class ISignalImpl extends MinimalEObjectImpl.Container implements ISignal
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.ISIGNAL;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ISIGNAL__NAME, oldName, name));
   }
 
   /**
@@ -368,8 +326,6 @@ public class ISignalImpl extends MinimalEObjectImpl.Container implements ISignal
   {
     switch (featureID)
     {
-      case EsterelPackage.ISIGNAL__NAME:
-        return getName();
       case EsterelPackage.ISIGNAL__TYPE:
         return getType();
       case EsterelPackage.ISIGNAL__TYPE_ID:
@@ -395,9 +351,6 @@ public class ISignalImpl extends MinimalEObjectImpl.Container implements ISignal
   {
     switch (featureID)
     {
-      case EsterelPackage.ISIGNAL__NAME:
-        setName((String)newValue);
-        return;
       case EsterelPackage.ISIGNAL__TYPE:
         setType((ValueType)newValue);
         return;
@@ -427,9 +380,6 @@ public class ISignalImpl extends MinimalEObjectImpl.Container implements ISignal
   {
     switch (featureID)
     {
-      case EsterelPackage.ISIGNAL__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case EsterelPackage.ISIGNAL__TYPE:
         setType(TYPE_EDEFAULT);
         return;
@@ -459,8 +409,6 @@ public class ISignalImpl extends MinimalEObjectImpl.Container implements ISignal
   {
     switch (featureID)
     {
-      case EsterelPackage.ISIGNAL__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case EsterelPackage.ISIGNAL__TYPE:
         return type != TYPE_EDEFAULT;
       case EsterelPackage.ISIGNAL__TYPE_ID:
@@ -486,9 +434,7 @@ public class ISignalImpl extends MinimalEObjectImpl.Container implements ISignal
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", type: ");
+    result.append(" (type: ");
     result.append(type);
     result.append(", typeID: ");
     result.append(typeID);
