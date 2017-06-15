@@ -195,22 +195,22 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR__ID = PROCESSOR_ENTRY__ID;
 
     /**
-     * The feature id for the '<em><b>Pre Annotations</b></em>' containment reference list.
+     * The feature id for the '<em><b>Presets</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR__PRE_ANNOTATIONS = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
+    int PROCESSOR__PRESETS = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Post Annotations</b></em>' containment reference list.
+     * The feature id for the '<em><b>Postsets</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR__POST_ANNOTATIONS = PROCESSOR_ENTRY_FEATURE_COUNT + 1;
+    int PROCESSOR__POSTSETS = PROCESSOR_ENTRY_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Metric</b></em>' reference.
@@ -499,6 +499,53 @@ public interface KiCoolPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.KVPairImpl <em>KV Pair</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kicool.impl.KVPairImpl
+     * @see de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl#getKVPair()
+     * @generated
+     */
+    int KV_PAIR = 8;
+
+    /**
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int KV_PAIR__KEY = 0;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int KV_PAIR__VALUE = 1;
+
+    /**
+     * The number of structural features of the '<em>KV Pair</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int KV_PAIR_FEATURE_COUNT = 2;
+
+    /**
+     * The number of operations of the '<em>KV Pair</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int KV_PAIR_OPERATION_COUNT = 0;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.System <em>System</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -606,26 +653,26 @@ public interface KiCoolPackage extends EPackage {
     EClass getProcessor();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.Processor#getPreAnnotations <em>Pre Annotations</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.Processor#getPresets <em>Presets</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Pre Annotations</em>'.
-     * @see de.cau.cs.kieler.kicool.Processor#getPreAnnotations()
+     * @return the meta object for the containment reference list '<em>Presets</em>'.
+     * @see de.cau.cs.kieler.kicool.Processor#getPresets()
      * @see #getProcessor()
      * @generated
      */
-    EReference getProcessor_PreAnnotations();
+    EReference getProcessor_Presets();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.Processor#getPostAnnotations <em>Post Annotations</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.Processor#getPostsets <em>Postsets</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Post Annotations</em>'.
-     * @see de.cau.cs.kieler.kicool.Processor#getPostAnnotations()
+     * @return the meta object for the containment reference list '<em>Postsets</em>'.
+     * @see de.cau.cs.kieler.kicool.Processor#getPostsets()
      * @see #getProcessor()
      * @generated
      */
-    EReference getProcessor_PostAnnotations();
+    EReference getProcessor_Postsets();
 
     /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.kicool.Processor#getMetric <em>Metric</em>}'.
@@ -766,6 +813,38 @@ public interface KiCoolPackage extends EPackage {
     EReference getProcessorContext_Targets();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.KVPair <em>KV Pair</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>KV Pair</em>'.
+     * @see de.cau.cs.kieler.kicool.KVPair
+     * @generated
+     */
+    EClass getKVPair();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.KVPair#getKey <em>Key</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Key</em>'.
+     * @see de.cau.cs.kieler.kicool.KVPair#getKey()
+     * @see #getKVPair()
+     * @generated
+     */
+    EAttribute getKVPair_Key();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.KVPair#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see de.cau.cs.kieler.kicool.KVPair#getValue()
+     * @see #getKVPair()
+     * @generated
+     */
+    EAttribute getKVPair_Value();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -875,20 +954,20 @@ public interface KiCoolPackage extends EPackage {
         EClass PROCESSOR = eINSTANCE.getProcessor();
 
         /**
-         * The meta object literal for the '<em><b>Pre Annotations</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Presets</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference PROCESSOR__PRE_ANNOTATIONS = eINSTANCE.getProcessor_PreAnnotations();
+        EReference PROCESSOR__PRESETS = eINSTANCE.getProcessor_Presets();
 
         /**
-         * The meta object literal for the '<em><b>Post Annotations</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Postsets</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference PROCESSOR__POST_ANNOTATIONS = eINSTANCE.getProcessor_PostAnnotations();
+        EReference PROCESSOR__POSTSETS = eINSTANCE.getProcessor_Postsets();
 
         /**
          * The meta object literal for the '<em><b>Metric</b></em>' reference feature.
@@ -1003,6 +1082,32 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EReference PROCESSOR_CONTEXT__TARGETS = eINSTANCE.getProcessorContext_Targets();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.KVPairImpl <em>KV Pair</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kicool.impl.KVPairImpl
+         * @see de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl#getKVPair()
+         * @generated
+         */
+        EClass KV_PAIR = eINSTANCE.getKVPair();
+
+        /**
+         * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute KV_PAIR__KEY = eINSTANCE.getKVPair_Key();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute KV_PAIR__VALUE = eINSTANCE.getKVPair_Value();
 
     }
 

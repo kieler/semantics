@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.kicool;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -15,8 +13,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kicool.Processor#getPreAnnotations <em>Pre Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.Processor#getPostAnnotations <em>Post Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.Processor#getPresets <em>Presets</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.Processor#getPostsets <em>Postsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.Processor#getMetric <em>Metric</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.Processor#getContext <em>Context</em>}</li>
  * </ul>
@@ -27,36 +25,36 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Processor extends ProcessorEntry {
     /**
-     * Returns the value of the '<em><b>Pre Annotations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
+     * Returns the value of the '<em><b>Presets</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kicool.KVPair}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Pre Annotations</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Presets</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Pre Annotations</em>' containment reference list.
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessor_PreAnnotations()
+     * @return the value of the '<em>Presets</em>' containment reference list.
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessor_Presets()
      * @model containment="true"
      * @generated
      */
-    EList<Annotation> getPreAnnotations();
+    EList<KVPair> getPresets();
 
     /**
-     * Returns the value of the '<em><b>Post Annotations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
+     * Returns the value of the '<em><b>Postsets</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kicool.KVPair}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Post Annotations</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Postsets</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Post Annotations</em>' containment reference list.
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessor_PostAnnotations()
+     * @return the value of the '<em>Postsets</em>' containment reference list.
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessor_Postsets()
      * @model containment="true"
      * @generated
      */
-    EList<Annotation> getPostAnnotations();
+    EList<KVPair> getPostsets();
 
     /**
      * Returns the value of the '<em><b>Metric</b></em>' reference.

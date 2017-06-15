@@ -53,7 +53,13 @@ ProcessorGroup returns kicool::ProcessorGroup:
 ;
 
 Processor returns kicool::Processor:
+    ('pre' 
+        ('set' presets += KVPair)+
+    )?
     id = QualifiedID ('metric' metric = [kicool::Metric|QualifiedID])?
+    ('post' 
+        ('set' postsets += KVPair)+
+    )?
 ;
 
 ProcessorSystem returns kicool::ProcessorSystem:
@@ -62,9 +68,14 @@ ProcessorSystem returns kicool::ProcessorSystem:
 
 ProcessorAlternativeGroup returns kicool::ProcessorAlternativeGroup:
     ('label' label = EString)? 
+    
     (
         processors += ProcessorGroup
     ('|'
         processors += ProcessorGroup)+
     )
+;
+
+KVPair returns kicool::KVPair:
+    key=EString value=EStringAllTypes
 ;

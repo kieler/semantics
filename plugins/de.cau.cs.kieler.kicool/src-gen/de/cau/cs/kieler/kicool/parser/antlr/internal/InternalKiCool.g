@@ -431,27 +431,53 @@ ruleProcessor returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+((	otherlv_0='pre' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getProcessorAccess().getPreKeyword_0_0());
+    }
+(	otherlv_1='set' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getProcessorAccess().getSetKeyword_0_1_0());
+    }
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProcessorAccess().getIdQualifiedIDParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getProcessorAccess().getPresetsKVPairParserRuleCall_0_1_1_0()); 
 	    }
-		lv_id_0_0=ruleQualifiedID		{
+		lv_presets_2_0=ruleKVPair		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getProcessorRule());
+	        }
+       		add(
+       			$current, 
+       			"presets",
+        		lv_presets_2_0, 
+        		"de.cau.cs.kieler.kicool.KiCool.KVPair");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getProcessorAccess().getIdQualifiedIDParserRuleCall_1_0()); 
+	    }
+		lv_id_3_0=ruleQualifiedID		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProcessorRule());
 	        }
        		set(
        			$current, 
        			"id",
-        		lv_id_0_0, 
+        		lv_id_3_0, 
         		"de.cau.cs.kieler.annotations.Annotations.QualifiedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_1='metric' 
+)(	otherlv_4='metric' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getProcessorAccess().getMetricKeyword_1_0());
+    	newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getMetricKeyword_2_0());
     }
 (
 (
@@ -464,14 +490,40 @@ ruleProcessor returns [EObject current=null]
 	        }
         }
 		{ 
-	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricMetricCrossReference_1_1_0()); 
+	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricMetricCrossReference_2_1_0()); 
 	    }
 		ruleQualifiedID		{ 
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?)
+))?(	otherlv_6='post' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getProcessorAccess().getPostKeyword_3_0());
+    }
+(	otherlv_7='set' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getProcessorAccess().getSetKeyword_3_1_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getProcessorAccess().getPostsetsKVPairParserRuleCall_3_1_1_0()); 
+	    }
+		lv_postsets_8_0=ruleKVPair		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getProcessorRule());
+	        }
+       		add(
+       			$current, 
+       			"postsets",
+        		lv_postsets_8_0, 
+        		"de.cau.cs.kieler.kicool.KiCool.KVPair");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))+)?)
 ;
 
 
@@ -594,6 +646,63 @@ ruleProcessorAlternativeGroup returns [EObject current=null]
 
 )
 ))+))
+;
+
+
+
+
+
+// Entry rule entryRuleKVPair
+entryRuleKVPair returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getKVPairRule()); }
+	 iv_ruleKVPair=ruleKVPair 
+	 { $current=$iv_ruleKVPair.current; } 
+	 EOF 
+;
+
+// Rule KVPair
+ruleKVPair returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getKVPairAccess().getKeyEStringParserRuleCall_0_0()); 
+	    }
+		lv_key_0_0=ruleEString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getKVPairRule());
+	        }
+       		set(
+       			$current, 
+       			"key",
+        		lv_key_0_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_1_0()); 
+	    }
+		lv_value_1_0=ruleEStringAllTypes		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getKVPairRule());
+	        }
+       		set(
+       			$current, 
+       			"value",
+        		lv_value_1_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
 ;
 
 

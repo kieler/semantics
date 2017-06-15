@@ -254,41 +254,91 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	public class ProcessorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.Processor");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cIdAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cIdQualifiedIDParserRuleCall_0_0 = (RuleCall)cIdAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cMetricKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cMetricAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final CrossReference cMetricMetricCrossReference_1_1_0 = (CrossReference)cMetricAssignment_1_1.eContents().get(0);
-		private final RuleCall cMetricMetricQualifiedIDParserRuleCall_1_1_0_1 = (RuleCall)cMetricMetricCrossReference_1_1_0.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Keyword cPreKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
+		private final Keyword cSetKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
+		private final Assignment cPresetsAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
+		private final RuleCall cPresetsKVPairParserRuleCall_0_1_1_0 = (RuleCall)cPresetsAssignment_0_1_1.eContents().get(0);
+		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIdQualifiedIDParserRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cMetricKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cMetricAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cMetricMetricCrossReference_2_1_0 = (CrossReference)cMetricAssignment_2_1.eContents().get(0);
+		private final RuleCall cMetricMetricQualifiedIDParserRuleCall_2_1_0_1 = (RuleCall)cMetricMetricCrossReference_2_1_0.eContents().get(1);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cPostKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
+		private final Keyword cSetKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cPostsetsAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cPostsetsKVPairParserRuleCall_3_1_1_0 = (RuleCall)cPostsetsAssignment_3_1_1.eContents().get(0);
 		
 		//Processor kicool::Processor:
-		//	id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])?
+		//	('pre' ('set' presets+=KVPair)+)?
+		//	id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])? ('post' ('set' postsets+=KVPair)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])?
+		//('pre' ('set' presets+=KVPair)+)? id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])? ('post' ('set'
+		//postsets+=KVPair)+)?
 		public Group getGroup() { return cGroup; }
 
+		//('pre' ('set' presets+=KVPair)+)?
+		public Group getGroup_0() { return cGroup_0; }
+
+		//'pre'
+		public Keyword getPreKeyword_0_0() { return cPreKeyword_0_0; }
+
+		//('set' presets+=KVPair)+
+		public Group getGroup_0_1() { return cGroup_0_1; }
+
+		//'set'
+		public Keyword getSetKeyword_0_1_0() { return cSetKeyword_0_1_0; }
+
+		//presets+=KVPair
+		public Assignment getPresetsAssignment_0_1_1() { return cPresetsAssignment_0_1_1; }
+
+		//KVPair
+		public RuleCall getPresetsKVPairParserRuleCall_0_1_1_0() { return cPresetsKVPairParserRuleCall_0_1_1_0; }
+
 		//id=QualifiedID
-		public Assignment getIdAssignment_0() { return cIdAssignment_0; }
+		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
 
 		//QualifiedID
-		public RuleCall getIdQualifiedIDParserRuleCall_0_0() { return cIdQualifiedIDParserRuleCall_0_0; }
+		public RuleCall getIdQualifiedIDParserRuleCall_1_0() { return cIdQualifiedIDParserRuleCall_1_0; }
 
 		//('metric' metric=[kicool::Metric|QualifiedID])?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//'metric'
-		public Keyword getMetricKeyword_1_0() { return cMetricKeyword_1_0; }
+		public Keyword getMetricKeyword_2_0() { return cMetricKeyword_2_0; }
 
 		//metric=[kicool::Metric|QualifiedID]
-		public Assignment getMetricAssignment_1_1() { return cMetricAssignment_1_1; }
+		public Assignment getMetricAssignment_2_1() { return cMetricAssignment_2_1; }
 
 		//[kicool::Metric|QualifiedID]
-		public CrossReference getMetricMetricCrossReference_1_1_0() { return cMetricMetricCrossReference_1_1_0; }
+		public CrossReference getMetricMetricCrossReference_2_1_0() { return cMetricMetricCrossReference_2_1_0; }
 
 		//QualifiedID
-		public RuleCall getMetricMetricQualifiedIDParserRuleCall_1_1_0_1() { return cMetricMetricQualifiedIDParserRuleCall_1_1_0_1; }
+		public RuleCall getMetricMetricQualifiedIDParserRuleCall_2_1_0_1() { return cMetricMetricQualifiedIDParserRuleCall_2_1_0_1; }
+
+		//('post' ('set' postsets+=KVPair)+)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//'post'
+		public Keyword getPostKeyword_3_0() { return cPostKeyword_3_0; }
+
+		//('set' postsets+=KVPair)+
+		public Group getGroup_3_1() { return cGroup_3_1; }
+
+		//'set'
+		public Keyword getSetKeyword_3_1_0() { return cSetKeyword_3_1_0; }
+
+		//postsets+=KVPair
+		public Assignment getPostsetsAssignment_3_1_1() { return cPostsetsAssignment_3_1_1; }
+
+		//KVPair
+		public RuleCall getPostsetsKVPairParserRuleCall_3_1_1_0() { return cPostsetsKVPairParserRuleCall_3_1_1_0; }
 	}
 
 	public class ProcessorSystemElements extends AbstractParserRuleElementFinder {
@@ -363,6 +413,34 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//ProcessorGroup
 		public RuleCall getProcessorsProcessorGroupParserRuleCall_1_1_1_0() { return cProcessorsProcessorGroupParserRuleCall_1_1_1_0; }
 	}
+
+	public class KVPairElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.KVPair");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cKeyEStringParserRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
+		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValueEStringAllTypesParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		
+		//KVPair kicool::KVPair:
+		//	key=EString value=EStringAllTypes
+		@Override public ParserRule getRule() { return rule; }
+
+		//key=EString value=EStringAllTypes
+		public Group getGroup() { return cGroup; }
+
+		//key=EString
+		public Assignment getKeyAssignment_0() { return cKeyAssignment_0; }
+
+		//EString
+		public RuleCall getKeyEStringParserRuleCall_0_0() { return cKeyEStringParserRuleCall_0_0; }
+
+		//value=EStringAllTypes
+		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+
+		//EStringAllTypes
+		public RuleCall getValueEStringAllTypesParserRuleCall_1_0() { return cValueEStringAllTypesParserRuleCall_1_0; }
+	}
 	
 	
 	private final SystemElements pSystem;
@@ -371,6 +449,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	private final ProcessorElements pProcessor;
 	private final ProcessorSystemElements pProcessorSystem;
 	private final ProcessorAlternativeGroupElements pProcessorAlternativeGroup;
+	private final KVPairElements pKVPair;
 	
 	private final Grammar grammar;
 
@@ -391,6 +470,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		this.pProcessor = new ProcessorElements();
 		this.pProcessorSystem = new ProcessorSystemElements();
 		this.pProcessorAlternativeGroup = new ProcessorAlternativeGroupElements();
+		this.pKVPair = new KVPairElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -468,7 +548,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Processor kicool::Processor:
-	//	id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])?
+	//	('pre' ('set' presets+=KVPair)+)?
+	//	id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])? ('post' ('set' postsets+=KVPair)+)?
 	public ProcessorElements getProcessorAccess() {
 		return pProcessor;
 	}
@@ -496,6 +577,16 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getProcessorAlternativeGroupRule() {
 		return getProcessorAlternativeGroupAccess().getRule();
+	}
+
+	//KVPair kicool::KVPair:
+	//	key=EString value=EStringAllTypes
+	public KVPairElements getKVPairAccess() {
+		return pKVPair;
+	}
+	
+	public ParserRule getKVPairRule() {
+		return getKVPairAccess().getRule();
 	}
 
 	/// **

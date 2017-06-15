@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kicool.util;
 
+import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.Metric;
 import de.cau.cs.kieler.kicool.Processor;
@@ -127,6 +128,12 @@ public class KiCoolSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KiCoolPackage.KV_PAIR: {
+                KVPair kvPair = (KVPair)theEObject;
+                T result = caseKVPair(kvPair);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -248,6 +255,21 @@ public class KiCoolSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseProcessorContext(ProcessorContext object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>KV Pair</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>KV Pair</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseKVPair(KVPair object) {
         return null;
     }
 

@@ -15,12 +15,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Processor" eSuperTypes="#//ProcessorEntry">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="preAnnotations" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="postAnnotations" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="presets" upperBound="-1"
+        eType="#//KVPair" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="postsets" upperBound="-1"
+        eType="#//KVPair" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="metric" eType="#//Metric"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//ProcessorContext"
         containment="true"/>
@@ -46,5 +44,9 @@
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="targets" upperBound="-1"
         eType="#//ProcessorContext" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KVPair">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

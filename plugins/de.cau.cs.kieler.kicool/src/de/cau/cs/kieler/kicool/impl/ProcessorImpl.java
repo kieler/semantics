@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.kicool.impl;
 
-import de.cau.cs.kieler.annotations.Annotation;
-
+import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.Metric;
 import de.cau.cs.kieler.kicool.Processor;
@@ -31,8 +30,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorImpl#getPreAnnotations <em>Pre Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorImpl#getPostAnnotations <em>Post Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorImpl#getPresets <em>Presets</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorImpl#getPostsets <em>Postsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorImpl#getMetric <em>Metric</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorImpl#getContext <em>Context</em>}</li>
  * </ul>
@@ -41,24 +40,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
     /**
-     * The cached value of the '{@link #getPreAnnotations() <em>Pre Annotations</em>}' containment reference list.
+     * The cached value of the '{@link #getPresets() <em>Presets</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPreAnnotations()
+     * @see #getPresets()
      * @generated
      * @ordered
      */
-    protected EList<Annotation> preAnnotations;
+    protected EList<KVPair> presets;
 
     /**
-     * The cached value of the '{@link #getPostAnnotations() <em>Post Annotations</em>}' containment reference list.
+     * The cached value of the '{@link #getPostsets() <em>Postsets</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPostAnnotations()
+     * @see #getPostsets()
      * @generated
      * @ordered
      */
-    protected EList<Annotation> postAnnotations;
+    protected EList<KVPair> postsets;
 
     /**
      * The cached value of the '{@link #getMetric() <em>Metric</em>}' reference.
@@ -104,11 +103,11 @@ public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Annotation> getPreAnnotations() {
-        if (preAnnotations == null) {
-            preAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KiCoolPackage.PROCESSOR__PRE_ANNOTATIONS);
+    public EList<KVPair> getPresets() {
+        if (presets == null) {
+            presets = new EObjectContainmentEList<KVPair>(KVPair.class, this, KiCoolPackage.PROCESSOR__PRESETS);
         }
-        return preAnnotations;
+        return presets;
     }
 
     /**
@@ -116,11 +115,11 @@ public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Annotation> getPostAnnotations() {
-        if (postAnnotations == null) {
-            postAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KiCoolPackage.PROCESSOR__POST_ANNOTATIONS);
+    public EList<KVPair> getPostsets() {
+        if (postsets == null) {
+            postsets = new EObjectContainmentEList<KVPair>(KVPair.class, this, KiCoolPackage.PROCESSOR__POSTSETS);
         }
-        return postAnnotations;
+        return postsets;
     }
 
     /**
@@ -212,10 +211,10 @@ public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR__PRE_ANNOTATIONS:
-                return ((InternalEList<?>)getPreAnnotations()).basicRemove(otherEnd, msgs);
-            case KiCoolPackage.PROCESSOR__POST_ANNOTATIONS:
-                return ((InternalEList<?>)getPostAnnotations()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.PROCESSOR__PRESETS:
+                return ((InternalEList<?>)getPresets()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.PROCESSOR__POSTSETS:
+                return ((InternalEList<?>)getPostsets()).basicRemove(otherEnd, msgs);
             case KiCoolPackage.PROCESSOR__CONTEXT:
                 return basicSetContext(null, msgs);
         }
@@ -230,10 +229,10 @@ public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR__PRE_ANNOTATIONS:
-                return getPreAnnotations();
-            case KiCoolPackage.PROCESSOR__POST_ANNOTATIONS:
-                return getPostAnnotations();
+            case KiCoolPackage.PROCESSOR__PRESETS:
+                return getPresets();
+            case KiCoolPackage.PROCESSOR__POSTSETS:
+                return getPostsets();
             case KiCoolPackage.PROCESSOR__METRIC:
                 if (resolve) return getMetric();
                 return basicGetMetric();
@@ -252,13 +251,13 @@ public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR__PRE_ANNOTATIONS:
-                getPreAnnotations().clear();
-                getPreAnnotations().addAll((Collection<? extends Annotation>)newValue);
+            case KiCoolPackage.PROCESSOR__PRESETS:
+                getPresets().clear();
+                getPresets().addAll((Collection<? extends KVPair>)newValue);
                 return;
-            case KiCoolPackage.PROCESSOR__POST_ANNOTATIONS:
-                getPostAnnotations().clear();
-                getPostAnnotations().addAll((Collection<? extends Annotation>)newValue);
+            case KiCoolPackage.PROCESSOR__POSTSETS:
+                getPostsets().clear();
+                getPostsets().addAll((Collection<? extends KVPair>)newValue);
                 return;
             case KiCoolPackage.PROCESSOR__METRIC:
                 setMetric((Metric)newValue);
@@ -278,11 +277,11 @@ public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR__PRE_ANNOTATIONS:
-                getPreAnnotations().clear();
+            case KiCoolPackage.PROCESSOR__PRESETS:
+                getPresets().clear();
                 return;
-            case KiCoolPackage.PROCESSOR__POST_ANNOTATIONS:
-                getPostAnnotations().clear();
+            case KiCoolPackage.PROCESSOR__POSTSETS:
+                getPostsets().clear();
                 return;
             case KiCoolPackage.PROCESSOR__METRIC:
                 setMetric((Metric)null);
@@ -302,10 +301,10 @@ public class ProcessorImpl extends ProcessorEntryImpl implements Processor {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.PROCESSOR__PRE_ANNOTATIONS:
-                return preAnnotations != null && !preAnnotations.isEmpty();
-            case KiCoolPackage.PROCESSOR__POST_ANNOTATIONS:
-                return postAnnotations != null && !postAnnotations.isEmpty();
+            case KiCoolPackage.PROCESSOR__PRESETS:
+                return presets != null && !presets.isEmpty();
+            case KiCoolPackage.PROCESSOR__POSTSETS:
+                return postsets != null && !postsets.isEmpty();
             case KiCoolPackage.PROCESSOR__METRIC:
                 return metric != null;
             case KiCoolPackage.PROCESSOR__CONTEXT:

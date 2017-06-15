@@ -12,6 +12,7 @@ import de.cau.cs.kieler.annotations.PragmaStringAnnotation;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
+import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.Metric;
 import de.cau.cs.kieler.kicool.Processor;
@@ -94,6 +95,9 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 			}
 		else if (epackage == KiCoolPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KiCoolPackage.KV_PAIR:
+				sequence_KVPair(context, (KVPair) semanticObject); 
+				return; 
 			case KiCoolPackage.METRIC:
 				sequence_Metric(context, (Metric) semanticObject); 
 				return; 
@@ -116,6 +120,27 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     KVPair returns KVPair
+	 *
+	 * Constraint:
+	 *     (key=EString value=EStringAllTypes)
+	 */
+	protected void sequence_KVPair(ISerializationContext context, KVPair semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KiCoolPackage.Literals.KV_PAIR__KEY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KiCoolPackage.Literals.KV_PAIR__KEY));
+			if (transientValues.isValueTransient(semanticObject, KiCoolPackage.Literals.KV_PAIR__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KiCoolPackage.Literals.KV_PAIR__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getKVPairAccess().getKeyEStringParserRuleCall_0_0(), semanticObject.getKey());
+		feeder.accept(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_1_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -176,7 +201,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *     Processor returns Processor
 	 *
 	 * Constraint:
-	 *     (id=QualifiedID metric=[Metric|QualifiedID]?)
+	 *     (presets+=KVPair* id=QualifiedID metric=[Metric|QualifiedID]? postsets+=KVPair*)
 	 */
 	protected void sequence_Processor(ISerializationContext context, Processor semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

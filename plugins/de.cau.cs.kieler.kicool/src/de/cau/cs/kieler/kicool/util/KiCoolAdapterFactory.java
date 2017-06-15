@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kicool.util;
 
+import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.Metric;
 import de.cau.cs.kieler.kicool.Processor;
@@ -105,6 +106,10 @@ public class KiCoolAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseProcessorContext(ProcessorContext object) {
                 return createProcessorContextAdapter();
+            }
+            @Override
+            public Adapter caseKVPair(KVPair object) {
+                return createKVPairAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -235,6 +240,20 @@ public class KiCoolAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createProcessorContextAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kicool.KVPair <em>KV Pair</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kicool.KVPair
+     * @generated
+     */
+    public Adapter createKVPairAdapter() {
         return null;
     }
 
