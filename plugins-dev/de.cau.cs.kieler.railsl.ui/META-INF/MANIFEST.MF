@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.rtsys.peu.railsl.ui
+Bundle-Name: de.cau.cs.kieler.railsl.ui
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.railsl.ui;singleton:=true
@@ -19,7 +19,7 @@ Require-Bundle: de.cau.cs.kieler.railsl,
  org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.cau.rtsys.peu.ui.quickfix,
- de.cau.rtsys.peu.ui.contentassist,
- de.cau.rtsys.peu.railsl.ui.internal
-Bundle-Activator: de.cau.rtsys.peu.railsl.ui.internal.RailslActivator
+Export-Package: de.cau.cs.kieler.railsl.ui.internal,
+ de.cau.cs.kieler.ui.contentassist,
+ de.cau.cs.kieler.ui.quickfix
+Bundle-Activator: de.cau.cs.kieler.railsl.ui.internal.RailslActivator

@@ -3,20 +3,20 @@
 <plugin>
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package 
-			uri = "http://www.cau.de/rtsys/peu/RailSL"
-			class = "de.cau.rtsys.peu.railSL.RailSLPackage"
+			uri = "http://www.cau.de/cs/kieler/RailSL"
+			class = "de.cau.cs.kieler.railSL.RailSLPackage"
 			genModel = "model/generated/RailSL.genmodel" />
 	</extension>
  <extension
        point="de.cau.cs.kieler.kico.transformation">
     <productionTransformationClass
-          class="de.cau.rtsys.peu.RailSLTransformation">
+          class="de.cau.cs.kieler.railsl.RailSLTransformation">
     </productionTransformationClass>
  </extension>
  <extension
        point="de.cau.cs.kieler.kico.feature">
     <featureClass
-          class="de.cau.rtsys.peu.RailSL">
+          class="de.cau.cs.kieler.railsl.RailSL">
     </featureClass>
  </extension>
 </plugin>

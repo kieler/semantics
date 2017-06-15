@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.rtsys.peu.railsl
+Bundle-Name: de.cau.cs.kieler.railsl
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.railsl;singleton:=true
@@ -18,15 +18,16 @@ Require-Bundle: org.eclipse.xtext,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kitt;bundle-version="0.12.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.cau.rtsys.peu.services,
- de.cau.rtsys.peu.scoping,
- de.cau.rtsys.peu,
- de.cau.rtsys.peu.railSL,
- de.cau.rtsys.peu.validation,
- de.cau.rtsys.peu.serializer,
- de.cau.rtsys.peu.railSL.util,
- de.cau.rtsys.peu.parser.antlr.internal,
- de.cau.rtsys.peu.parser.antlr,
- de.cau.rtsys.peu.generator,
- de.cau.rtsys.peu.railSL.impl
+Export-Package: de.cau.cs.kieler,
+ de.cau.cs.kieler.generator,
+ de.cau.cs.kieler.parser.antlr,
+ de.cau.cs.kieler.parser.antlr.internal,
+ de.cau.cs.kieler.railSL,
+ de.cau.cs.kieler.railSL.impl,
+ de.cau.cs.kieler.railSL.util,
+ de.cau.cs.kieler.railsl,
+ de.cau.cs.kieler.scoping,
+ de.cau.cs.kieler.serializer,
+ de.cau.cs.kieler.services,
+ de.cau.cs.kieler.validation
 Import-Package: org.apache.log4j

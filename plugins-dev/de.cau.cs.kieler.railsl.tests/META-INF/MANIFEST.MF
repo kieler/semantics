@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.rtsys.peu.railsl.tests
+Bundle-Name: de.cau.cs.kieler.railsl.tests
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.railsl.tests;singleton:=true
@@ -11,7 +11,7 @@ Require-Bundle: de.cau.cs.kieler.railsl,
  org.eclipse.xtext.xbase.junit,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.cau.rtsys.peu.tests
+Export-Package: de.cau.cs.kieler.tests
 Import-Package: org.hamcrest.core,
  org.junit;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
