@@ -135,9 +135,9 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
         return createBooleanOperatorAdapter();
       }
       @Override
-      public Adapter caseAndOrExpression(AndOrExpression object)
+      public Adapter caseAndExpression(AndExpression object)
       {
-        return createAndOrExpressionAdapter();
+        return createAndExpressionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -342,16 +342,16 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression <em>And Or Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.AndExpression <em>And Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.kvis.AndOrExpression
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression
    * @generated
    */
-  public Adapter createAndOrExpressionAdapter()
+  public Adapter createAndExpressionAdapter()
   {
     return null;
   }

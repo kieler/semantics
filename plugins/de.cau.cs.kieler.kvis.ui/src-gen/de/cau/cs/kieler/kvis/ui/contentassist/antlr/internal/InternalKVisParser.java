@@ -10512,7 +10512,7 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
             // InternalKVis.g:3468:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getAndExpressionAccess().getAndOrExpressionLeftAction_1_0_0()); 
+               before(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0()); 
             }
             // InternalKVis.g:3469:1: ()
             // InternalKVis.g:3471:1: 
@@ -10520,7 +10520,7 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getAndExpressionAccess().getAndOrExpressionLeftAction_1_0_0()); 
+               after(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0()); 
             }
 
             }

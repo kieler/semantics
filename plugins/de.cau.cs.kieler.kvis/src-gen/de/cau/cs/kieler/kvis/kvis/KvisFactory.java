@@ -131,13 +131,13 @@ public interface KvisFactory extends EFactory
   BooleanOperator createBooleanOperator();
 
   /**
-   * Returns a new object of class '<em>And Or Expression</em>'.
+   * Returns a new object of class '<em>And Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>And Or Expression</em>'.
+   * @return a new object of class '<em>And Expression</em>'.
    * @generated
    */
-  AndOrExpression createAndOrExpression();
+  AndExpression createAndExpression();
 
   /**
    * Returns the package supported by this factory.

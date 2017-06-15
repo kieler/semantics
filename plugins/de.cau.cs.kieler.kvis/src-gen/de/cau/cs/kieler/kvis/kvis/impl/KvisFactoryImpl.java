@@ -76,7 +76,7 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
       case KvisPackage.VARIABLE_REFERENCE: return createVariableReference();
       case KvisPackage.MODEL_REFERENCE: return createModelReference();
       case KvisPackage.BOOLEAN_OPERATOR: return createBooleanOperator();
-      case KvisPackage.AND_OR_EXPRESSION: return createAndOrExpression();
+      case KvisPackage.AND_EXPRESSION: return createAndExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -219,10 +219,10 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public AndOrExpression createAndOrExpression()
+  public AndExpression createAndExpression()
   {
-    AndOrExpressionImpl andOrExpression = new AndOrExpressionImpl();
-    return andOrExpression;
+    AndExpressionImpl andExpression = new AndExpressionImpl();
+    return andExpression;
   }
 
   /**

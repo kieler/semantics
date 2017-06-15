@@ -4,7 +4,7 @@ package de.cau.cs.kieler.kvis.kvis.impl;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
-import de.cau.cs.kieler.kvis.kvis.AndOrExpression;
+import de.cau.cs.kieler.kvis.kvis.AndExpression;
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
 import de.cau.cs.kieler.kvis.kvis.BooleanOperator;
@@ -124,7 +124,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass andOrExpressionEClass = null;
+  private EClass andExpressionEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -567,9 +567,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getAndOrExpression()
+  public EClass getAndExpression()
   {
-    return andOrExpressionEClass;
+    return andExpressionEClass;
   }
 
   /**
@@ -577,9 +577,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAndOrExpression_Left()
+  public EReference getAndExpression_Left()
   {
-    return (EReference)andOrExpressionEClass.getEStructuralFeatures().get(0);
+    return (EReference)andExpressionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -587,9 +587,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAndOrExpression_Operator()
+  public EAttribute getAndExpression_Operator()
   {
-    return (EAttribute)andOrExpressionEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)andExpressionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -597,9 +597,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAndOrExpression_Right()
+  public EReference getAndExpression_Right()
   {
-    return (EReference)andOrExpressionEClass.getEStructuralFeatures().get(2);
+    return (EReference)andExpressionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -681,10 +681,10 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     booleanOperatorEClass = createEClass(BOOLEAN_OPERATOR);
     createEAttribute(booleanOperatorEClass, BOOLEAN_OPERATOR__AND);
 
-    andOrExpressionEClass = createEClass(AND_OR_EXPRESSION);
-    createEReference(andOrExpressionEClass, AND_OR_EXPRESSION__LEFT);
-    createEAttribute(andOrExpressionEClass, AND_OR_EXPRESSION__OPERATOR);
-    createEReference(andOrExpressionEClass, AND_OR_EXPRESSION__RIGHT);
+    andExpressionEClass = createEClass(AND_EXPRESSION);
+    createEReference(andExpressionEClass, AND_EXPRESSION__LEFT);
+    createEAttribute(andExpressionEClass, AND_EXPRESSION__OPERATOR);
+    createEReference(andExpressionEClass, AND_EXPRESSION__RIGHT);
   }
 
   /**
@@ -720,7 +720,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     // Add supertypes to classes
     comparisonEClass.getESuperTypes().add(this.getCondition());
-    andOrExpressionEClass.getESuperTypes().add(this.getCondition());
+    andExpressionEClass.getESuperTypes().add(this.getCondition());
 
     // Initialize classes and features; add operations and parameters
     initEClass(visualizationEClass, Visualization.class, "Visualization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -772,10 +772,10 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     initEClass(booleanOperatorEClass, BooleanOperator.class, "BooleanOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBooleanOperator_AND(), ecorePackage.getEString(), "AND", null, 0, 1, BooleanOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(andOrExpressionEClass, AndOrExpression.class, "AndOrExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAndOrExpression_Left(), this.getCondition(), null, "left", null, 0, 1, AndOrExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAndOrExpression_Operator(), ecorePackage.getEString(), "operator", null, 0, 1, AndOrExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAndOrExpression_Right(), this.getComparison(), null, "right", null, 0, 1, AndOrExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(andExpressionEClass, AndExpression.class, "AndExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAndExpression_Left(), this.getCondition(), null, "left", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAndExpression_Operator(), ecorePackage.getEString(), "operator", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAndExpression_Right(), this.getComparison(), null, "right", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

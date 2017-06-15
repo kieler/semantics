@@ -512,7 +512,7 @@ ruleAndExpression returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElementAndSet(
-            grammarAccess.getAndExpressionAccess().getAndOrExpressionLeftAction_1_0_0(),
+            grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0(),
             $current);
     }
 )(

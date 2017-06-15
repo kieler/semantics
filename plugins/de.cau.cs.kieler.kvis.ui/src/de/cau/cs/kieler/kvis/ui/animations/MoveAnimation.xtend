@@ -49,9 +49,9 @@ class MoveAnimation extends AnimationHandler {
         return "move"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool) as Double
+        val value = variableValue as Double
         
         // Get mapped value
         val newX = animation.getAttribute("x").getMappedValue(value)

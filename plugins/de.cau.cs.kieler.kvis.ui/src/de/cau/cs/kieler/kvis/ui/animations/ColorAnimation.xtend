@@ -30,10 +30,9 @@ class ColorAnimation extends AnimationHandler {
         return "color"
     }
     
-    override apply(DataPool pool) {
-        val value = getVariableValue(pool)
+    override doApply(DataPool pool) {
         for(attributeMapping : animation.attributeMappings) {
-            apply(value, attributeMapping)
+            apply(variableValue, attributeMapping)
         }
     }
     

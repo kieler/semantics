@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kvis.ui.views
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.kvis.kvis.Visualization
+import de.cau.cs.kieler.kvis.ui.KVisUiModule
 import de.cau.cs.kieler.kvis.ui.animations.AnimationHandler
 import de.cau.cs.kieler.kvis.ui.animations.ColorAnimation
 import de.cau.cs.kieler.kvis.ui.animations.MoveAnimation
@@ -24,9 +25,8 @@ import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import java.awt.event.MouseListener
 import java.awt.event.MouseWheelEvent
-import java.awt.geom.AffineTransform
+import java.awt.event.MouseWheelListener
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -40,10 +40,10 @@ import org.eclipse.core.resources.IResourceChangeListener
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.jface.action.Action
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
-import org.eclipse.swt.events.MouseEvent
-import org.eclipse.swt.events.MouseWheelListener
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.ui.IWorkbenchPart
@@ -51,10 +51,6 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.apache.batik.swing.JSVGCanvas.AffineAction
-import org.eclipse.jface.dialogs.MessageDialog
-import org.eclipse.core.runtime.preferences.InstanceScope
-import de.cau.cs.kieler.kvis.ui.KVisUiModule
 
 /**
  * @author aas
@@ -79,7 +75,6 @@ class KVisView extends ViewPart {
     private var IFile kvisFile
     private var IFile svgImage
     private var DataPool lastPool
-    var double scale = 1
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -228,7 +223,7 @@ class KVisView extends ViewPart {
         canvas = new KVisCanvas(parent, SWT.NONE, false)
         
         // Zoom in/out via mouse wheel
-        canvas.svgCanvas.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+        canvas.svgCanvas.addMouseWheelListener(new MouseWheelListener() {
             override mouseWheelMoved(MouseWheelEvent e) {
                 val at = canvas.svgCanvas.renderingTransform
                 val direction = Math.signum(e.wheelRotation)

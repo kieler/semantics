@@ -53,8 +53,7 @@ public abstract class AbstractKVisSyntacticSequencer extends AbstractSyntacticSe
 	
 	/**
 	 * Range:
-	 *     '-'
-	 * ;
+	 *     '-' ;
 	 */
 	protected String getRangeToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)

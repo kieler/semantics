@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
-import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
@@ -53,9 +52,9 @@ class TextAnimation extends AnimationHandler {
         return "text"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool)
+        val value = variableValue
         
         // Get mapped value
         val newText = animation.getAttribute("text").getMappedValue(value)

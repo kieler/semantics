@@ -15,12 +15,17 @@ package de.cau.cs.kieler.kvis.ui.animations
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kvis.kvis.AndExpression
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
+import de.cau.cs.kieler.kvis.kvis.Comparison
+import de.cau.cs.kieler.kvis.kvis.Condition
 import de.cau.cs.kieler.kvis.kvis.Domain
 import de.cau.cs.kieler.kvis.kvis.Mapping
+import de.cau.cs.kieler.kvis.kvis.VariableReference
 import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
@@ -33,15 +38,23 @@ import org.w3c.dom.svg.SVGDocument
  *
  */
 abstract class AnimationHandler {
-    abstract def String getName()
-    abstract def void apply(DataPool pool)
-    
     protected var String svgElementId
     protected var Animation animation
+    protected var Object variableValue
+    
+    abstract public def String getName()
+    abstract protected def void doApply(DataPool pool)
     
     public new(String svgElementId, Animation animation) {
         this.svgElementId = svgElementId
         this.animation = animation
+    }
+    
+    public def void apply(DataPool pool) {
+        variableValue = getVariableValue(pool)
+        if(isActive(pool)) {
+            doApply(pool)
+        }
     }
     
     private def SVGDocument getSVGDocument() {
@@ -60,20 +73,23 @@ abstract class AnimationHandler {
         return animation.attributeMappings.findFirst[it.attribute.equals(name)]
     }
     
-    protected def Object getVariableValue(DataPool pool) {
-        val variableReference = animation.variable
-        val modelName = variableReference?.model?.name
-        val variableName = variableReference?.name
+    protected def Object getVariableValue(VariableReference ref, DataPool pool) {
+        val modelName = ref?.model?.name
+        val variableName = ref?.name
         if(variableName != null) {
             val variable = pool.getVariable(modelName, variableName);
             if(variable.value instanceof NDimensionalArray) {
                 val array = variable.value as NDimensionalArray
-                return array.get(variableReference.indices)
+                return array.get(ref.indices)
             } else {
                 return variable.value
             }
         }
         return null
+    }
+    
+    protected def Object getVariableValue(DataPool pool) {
+        return getVariableValue(animation.variable, pool)
     }
     
     protected def String removeQuotes(String txt) {
@@ -254,5 +270,66 @@ abstract class AnimationHandler {
             }
         }
         return false
+    }
+    
+    protected def boolean isActive(DataPool pool) {
+        if(animation.condition == null) {
+            return true
+        } else {
+            return animation.condition.eval(pool)
+        }
+    }
+    
+    protected def boolean eval(Condition cond, DataPool pool) {
+        if(cond instanceof AndExpression) {
+            return (cond as AndExpression).eval(pool)
+        } else if(cond instanceof Comparison) {
+            return (cond as Comparison).eval(pool)
+        }
+        return true
+    }
+    
+    protected def boolean eval(Comparison cond, DataPool pool) {
+        if(cond != null) {
+            val leftValue = cond.left.getVariableValue(pool)
+            val right = cond.right
+            var Object rightValue
+            
+            if(right instanceof Value) {
+                rightValue = right.primitiveValue
+            } else if(right instanceof VariableReference) {
+                rightValue = right.getVariableValue(pool)
+            }
+            if( leftValue != null && rightValue != null) {
+                try {
+                    switch(cond.relation) {
+                        case OperatorType.EQ : return leftValue.equalsValue(rightValue)
+                        case OperatorType.NE : return !leftValue.equalsValue(rightValue)
+                        case OperatorType.GT : return leftValue.doubleValue > rightValue.doubleValue
+                        case OperatorType.LT : return leftValue.doubleValue < rightValue.doubleValue
+                        case OperatorType.GEQ : return leftValue.doubleValue >= rightValue.doubleValue
+                        case OperatorType.LEQ : return leftValue.doubleValue <= rightValue.doubleValue
+                        default: {
+                            return false
+                        }
+                    }
+                } catch(IllegalArgumentException e) {
+                    return false
+                }        
+            }
+            cond.left
+        }
+        return true
+    }
+    
+    protected def boolean eval(AndExpression cond, DataPool pool) {
+        // Because we have all comparision combined by and,
+        // we can immediately return false, if any of them evaluates to false.
+        if(!cond.left.eval(pool)) {
+            return false
+        } else if(!cond.right.eval(pool)) {
+            return false
+        }
+        return true
     }
 }

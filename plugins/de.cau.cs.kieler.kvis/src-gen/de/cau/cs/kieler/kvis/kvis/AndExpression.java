@@ -5,23 +5,23 @@ package de.cau.cs.kieler.kvis.kvis;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>And Or Expression</b></em>'.
+ * A representation of the model object '<em><b>And Expression</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getLeft <em>Left</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getOperator <em>Operator</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getRight <em>Right</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getLeft <em>Left</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getRight <em>Right</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndOrExpression()
+ * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndExpression()
  * @model
  * @generated
  */
-public interface AndOrExpression extends Condition
+public interface AndExpression extends Condition
 {
   /**
    * Returns the value of the '<em><b>Left</b></em>' containment reference.
@@ -33,14 +33,14 @@ public interface AndOrExpression extends Condition
    * <!-- end-user-doc -->
    * @return the value of the '<em>Left</em>' containment reference.
    * @see #setLeft(Condition)
-   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndOrExpression_Left()
+   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndExpression_Left()
    * @model containment="true"
    * @generated
    */
   Condition getLeft();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getLeft <em>Left</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getLeft <em>Left</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Left</em>' containment reference.
@@ -59,14 +59,14 @@ public interface AndOrExpression extends Condition
    * <!-- end-user-doc -->
    * @return the value of the '<em>Operator</em>' attribute.
    * @see #setOperator(String)
-   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndOrExpression_Operator()
+   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndExpression_Operator()
    * @model
    * @generated
    */
   String getOperator();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getOperator <em>Operator</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getOperator <em>Operator</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Operator</em>' attribute.
@@ -85,14 +85,14 @@ public interface AndOrExpression extends Condition
    * <!-- end-user-doc -->
    * @return the value of the '<em>Right</em>' containment reference.
    * @see #setRight(Comparison)
-   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndOrExpression_Right()
+   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAndExpression_Right()
    * @model containment="true"
    * @generated
    */
   Comparison getRight();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getRight <em>Right</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getRight <em>Right</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Right</em>' containment reference.
@@ -101,4 +101,4 @@ public interface AndOrExpression extends Condition
    */
   void setRight(Comparison value);
 
-} // AndOrExpression
+} // AndExpression

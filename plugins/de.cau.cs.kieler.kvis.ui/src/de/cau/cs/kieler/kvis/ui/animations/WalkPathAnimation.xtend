@@ -68,9 +68,9 @@ class WalkPathAnimation extends AnimationHandler {
         return "walkPath"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool) as Double
+        val value = variableValue as Double
 
         // Calculate animation
         var SVGOMPathElement path

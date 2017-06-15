@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
-import de.cau.cs.kieler.kvis.kvis.AndOrExpression;
+import de.cau.cs.kieler.kvis.kvis.AndExpression;
 import de.cau.cs.kieler.kvis.kvis.Comparison;
 import de.cau.cs.kieler.kvis.kvis.Condition;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
@@ -17,20 +17,20 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>And Or Expression</b></em>'.
+ * An implementation of the model object '<em><b>And Expression</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.AndOrExpressionImpl#getLeft <em>Left</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.AndOrExpressionImpl#getOperator <em>Operator</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.AndOrExpressionImpl#getRight <em>Right</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl#getLeft <em>Left</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl#getRight <em>Right</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpression
+public class AndExpressionImpl extends ConditionImpl implements AndExpression
 {
   /**
    * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
@@ -77,7 +77,7 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
    * <!-- end-user-doc -->
    * @generated
    */
-  protected AndOrExpressionImpl()
+  protected AndExpressionImpl()
   {
     super();
   }
@@ -90,7 +90,7 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
   @Override
   protected EClass eStaticClass()
   {
-    return KvisPackage.Literals.AND_OR_EXPRESSION;
+    return KvisPackage.Literals.AND_EXPRESSION;
   }
 
   /**
@@ -114,7 +114,7 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
     left = newLeft;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KvisPackage.AND_OR_EXPRESSION__LEFT, oldLeft, newLeft);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KvisPackage.AND_EXPRESSION__LEFT, oldLeft, newLeft);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -131,14 +131,14 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
     {
       NotificationChain msgs = null;
       if (left != null)
-        msgs = ((InternalEObject)left).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_OR_EXPRESSION__LEFT, null, msgs);
+        msgs = ((InternalEObject)left).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_EXPRESSION__LEFT, null, msgs);
       if (newLeft != null)
-        msgs = ((InternalEObject)newLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_OR_EXPRESSION__LEFT, null, msgs);
+        msgs = ((InternalEObject)newLeft).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_EXPRESSION__LEFT, null, msgs);
       msgs = basicSetLeft(newLeft, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.AND_OR_EXPRESSION__LEFT, newLeft, newLeft));
+      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.AND_EXPRESSION__LEFT, newLeft, newLeft));
   }
 
   /**
@@ -161,7 +161,7 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
     String oldOperator = operator;
     operator = newOperator;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.AND_OR_EXPRESSION__OPERATOR, oldOperator, operator));
+      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.AND_EXPRESSION__OPERATOR, oldOperator, operator));
   }
 
   /**
@@ -185,7 +185,7 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
     right = newRight;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KvisPackage.AND_OR_EXPRESSION__RIGHT, oldRight, newRight);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KvisPackage.AND_EXPRESSION__RIGHT, oldRight, newRight);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -202,14 +202,14 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
     {
       NotificationChain msgs = null;
       if (right != null)
-        msgs = ((InternalEObject)right).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_OR_EXPRESSION__RIGHT, null, msgs);
+        msgs = ((InternalEObject)right).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_EXPRESSION__RIGHT, null, msgs);
       if (newRight != null)
-        msgs = ((InternalEObject)newRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_OR_EXPRESSION__RIGHT, null, msgs);
+        msgs = ((InternalEObject)newRight).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KvisPackage.AND_EXPRESSION__RIGHT, null, msgs);
       msgs = basicSetRight(newRight, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.AND_OR_EXPRESSION__RIGHT, newRight, newRight));
+      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.AND_EXPRESSION__RIGHT, newRight, newRight));
   }
 
   /**
@@ -222,9 +222,9 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
   {
     switch (featureID)
     {
-      case KvisPackage.AND_OR_EXPRESSION__LEFT:
+      case KvisPackage.AND_EXPRESSION__LEFT:
         return basicSetLeft(null, msgs);
-      case KvisPackage.AND_OR_EXPRESSION__RIGHT:
+      case KvisPackage.AND_EXPRESSION__RIGHT:
         return basicSetRight(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -240,11 +240,11 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
   {
     switch (featureID)
     {
-      case KvisPackage.AND_OR_EXPRESSION__LEFT:
+      case KvisPackage.AND_EXPRESSION__LEFT:
         return getLeft();
-      case KvisPackage.AND_OR_EXPRESSION__OPERATOR:
+      case KvisPackage.AND_EXPRESSION__OPERATOR:
         return getOperator();
-      case KvisPackage.AND_OR_EXPRESSION__RIGHT:
+      case KvisPackage.AND_EXPRESSION__RIGHT:
         return getRight();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -260,13 +260,13 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
   {
     switch (featureID)
     {
-      case KvisPackage.AND_OR_EXPRESSION__LEFT:
+      case KvisPackage.AND_EXPRESSION__LEFT:
         setLeft((Condition)newValue);
         return;
-      case KvisPackage.AND_OR_EXPRESSION__OPERATOR:
+      case KvisPackage.AND_EXPRESSION__OPERATOR:
         setOperator((String)newValue);
         return;
-      case KvisPackage.AND_OR_EXPRESSION__RIGHT:
+      case KvisPackage.AND_EXPRESSION__RIGHT:
         setRight((Comparison)newValue);
         return;
     }
@@ -283,13 +283,13 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
   {
     switch (featureID)
     {
-      case KvisPackage.AND_OR_EXPRESSION__LEFT:
+      case KvisPackage.AND_EXPRESSION__LEFT:
         setLeft((Condition)null);
         return;
-      case KvisPackage.AND_OR_EXPRESSION__OPERATOR:
+      case KvisPackage.AND_EXPRESSION__OPERATOR:
         setOperator(OPERATOR_EDEFAULT);
         return;
-      case KvisPackage.AND_OR_EXPRESSION__RIGHT:
+      case KvisPackage.AND_EXPRESSION__RIGHT:
         setRight((Comparison)null);
         return;
     }
@@ -306,11 +306,11 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
   {
     switch (featureID)
     {
-      case KvisPackage.AND_OR_EXPRESSION__LEFT:
+      case KvisPackage.AND_EXPRESSION__LEFT:
         return left != null;
-      case KvisPackage.AND_OR_EXPRESSION__OPERATOR:
+      case KvisPackage.AND_EXPRESSION__OPERATOR:
         return OPERATOR_EDEFAULT == null ? operator != null : !OPERATOR_EDEFAULT.equals(operator);
-      case KvisPackage.AND_OR_EXPRESSION__RIGHT:
+      case KvisPackage.AND_EXPRESSION__RIGHT:
         return right != null;
     }
     return super.eIsSet(featureID);
@@ -333,4 +333,4 @@ public class AndOrExpressionImpl extends ConditionImpl implements AndOrExpressio
     return result.toString();
   }
 
-} //AndOrExpressionImpl
+} //AndExpressionImpl

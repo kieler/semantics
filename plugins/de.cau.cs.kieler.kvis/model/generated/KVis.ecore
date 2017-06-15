@@ -66,7 +66,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="BooleanOperator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="AND" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AndOrExpression" eSuperTypes="#//Condition">
+  <eClassifiers xsi:type="ecore:EClass" name="AndExpression" eSuperTypes="#//Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Condition"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

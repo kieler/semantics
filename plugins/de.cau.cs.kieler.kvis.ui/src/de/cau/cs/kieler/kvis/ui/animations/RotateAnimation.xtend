@@ -53,9 +53,9 @@ class RotateAnimation extends AnimationHandler {
         return "rotate"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool) as Double
+        val value = variableValue as Double
         
         // Get mapped value
         val newAngle = animation.getAttribute("angle").getMappedValue(value)

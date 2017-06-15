@@ -22,7 +22,7 @@ import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
-import de.cau.cs.kieler.kvis.kvis.AndOrExpression;
+import de.cau.cs.kieler.kvis.kvis.AndExpression;
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
 import de.cau.cs.kieler.kvis.kvis.BooleanOperator;
@@ -169,8 +169,8 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 			}
 		else if (epackage == KvisPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case KvisPackage.AND_OR_EXPRESSION:
-				sequence_AndExpression(context, (AndOrExpression) semanticObject); 
+			case KvisPackage.AND_EXPRESSION:
+				sequence_AndExpression(context, (AndExpression) semanticObject); 
 				return; 
 			case KvisPackage.ANIMATION:
 				sequence_Animation(context, (Animation) semanticObject); 
@@ -212,23 +212,23 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
-	 *     AndExpression returns AndOrExpression
-	 *     AndExpression.AndOrExpression_1_0_0 returns AndOrExpression
+	 *     AndExpression returns AndExpression
+	 *     AndExpression.AndExpression_1_0_0 returns AndExpression
 	 *
 	 * Constraint:
-	 *     (left=AndExpression_AndOrExpression_1_0_0 operator='and' right=Comparison)
+	 *     (left=AndExpression_AndExpression_1_0_0 operator='and' right=Comparison)
 	 */
-	protected void sequence_AndExpression(ISerializationContext context, AndOrExpression semanticObject) {
+	protected void sequence_AndExpression(ISerializationContext context, AndExpression semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__LEFT));
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__OPERATOR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__OPERATOR));
-			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_OR_EXPRESSION__RIGHT));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_EXPRESSION__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_EXPRESSION__LEFT));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_EXPRESSION__OPERATOR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_EXPRESSION__OPERATOR));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_EXPRESSION__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_EXPRESSION__RIGHT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAndExpressionAccess().getAndOrExpressionLeftAction_1_0_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0(), semanticObject.getLeft());
 		feeder.accept(grammarAccess.getAndExpressionAccess().getOperatorAndKeyword_1_0_1_0(), semanticObject.getOperator());
 		feeder.accept(grammarAccess.getAndExpressionAccess().getRightComparisonParserRuleCall_1_1_0(), semanticObject.getRight());
 		feeder.finish();
@@ -280,7 +280,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	/**
 	 * Contexts:
 	 *     AndExpression returns Comparison
-	 *     AndExpression.AndOrExpression_1_0_0 returns Comparison
+	 *     AndExpression.AndExpression_1_0_0 returns Comparison
 	 *     Comparison returns Comparison
 	 *
 	 * Constraint:

@@ -89,6 +89,11 @@
     <genClasses ecoreClass="KVis.ecore#//BooleanOperator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//BooleanOperator/AND"/>
     </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//AndExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AndExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/right"/>
+    </genClasses>
     <genClasses ecoreClass="KVis.ecore#//AndOrExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndOrExpression/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AndOrExpression/operator"/>

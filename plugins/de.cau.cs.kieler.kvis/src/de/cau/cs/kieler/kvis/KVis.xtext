@@ -33,7 +33,7 @@ Mapping:
 
 AndExpression returns Condition:
     Comparison 
-    (({AndOrExpression.left=current} operator="and") right=Comparison)*
+    (({AndExpression.left=current} operator="and") right=Comparison)*
 ;
 
 Comparison:
@@ -72,5 +72,5 @@ AndOperator returns BooleanOperator:
 ;
 
 Range:
-    '-'
+    '-' // Alternative would be '..'
 ;

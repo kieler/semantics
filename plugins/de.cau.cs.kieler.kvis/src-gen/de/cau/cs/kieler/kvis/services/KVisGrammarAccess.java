@@ -276,30 +276,30 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cComparisonParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
-		private final Action cAndOrExpressionLeftAction_1_0_0 = (Action)cGroup_1_0.eContents().get(0);
+		private final Action cAndExpressionLeftAction_1_0_0 = (Action)cGroup_1_0.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
 		private final Keyword cOperatorAndKeyword_1_0_1_0 = (Keyword)cOperatorAssignment_1_0_1.eContents().get(0);
 		private final Assignment cRightAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cRightComparisonParserRuleCall_1_1_0 = (RuleCall)cRightAssignment_1_1.eContents().get(0);
 		
 		//AndExpression Condition:
-		//	Comparison (({AndOrExpression.left=current} operator="and") right=Comparison)*
+		//	Comparison (({AndExpression.left=current} operator="and") right=Comparison)*
 		@Override public ParserRule getRule() { return rule; }
 
-		//Comparison (({AndOrExpression.left=current} operator="and") right=Comparison)*
+		//Comparison (({AndExpression.left=current} operator="and") right=Comparison)*
 		public Group getGroup() { return cGroup; }
 
 		//Comparison
 		public RuleCall getComparisonParserRuleCall_0() { return cComparisonParserRuleCall_0; }
 
-		//(({AndOrExpression.left=current} operator="and") right=Comparison)*
+		//(({AndExpression.left=current} operator="and") right=Comparison)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//({AndOrExpression.left=current} operator="and")
+		//({AndExpression.left=current} operator="and")
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
-		//{AndOrExpression.left=current}
-		public Action getAndOrExpressionLeftAction_1_0_0() { return cAndOrExpressionLeftAction_1_0_0; }
+		//{AndExpression.left=current}
+		public Action getAndExpressionLeftAction_1_0_0() { return cAndExpressionLeftAction_1_0_0; }
 
 		//operator="and"
 		public Assignment getOperatorAssignment_1_0_1() { return cOperatorAssignment_1_0_1; }
@@ -554,7 +554,8 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cHyphenMinusKeyword = (Keyword)rule.eContents().get(1);
 		
 		//Range:
-		//	'-';
+		//	'-' // Alternative would be '..'
+		//;
 		@Override public ParserRule getRule() { return rule; }
 
 		//'-'
@@ -701,7 +702,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AndExpression Condition:
-	//	Comparison (({AndOrExpression.left=current} operator="and") right=Comparison)*
+	//	Comparison (({AndExpression.left=current} operator="and") right=Comparison)*
 	public AndExpressionElements getAndExpressionAccess() {
 		return pAndExpression;
 	}
@@ -784,7 +785,8 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Range:
-	//	'-';
+	//	'-' // Alternative would be '..'
+	//;
 	public RangeElements getRangeAccess() {
 		return pRange;
 	}

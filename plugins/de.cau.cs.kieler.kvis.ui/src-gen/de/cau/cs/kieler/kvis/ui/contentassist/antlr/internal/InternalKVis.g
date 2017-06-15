@@ -3465,11 +3465,11 @@ rule__AndExpression__Group_1_0__0__Impl
     }
 :
 (
-{ before(grammarAccess.getAndExpressionAccess().getAndOrExpressionLeftAction_1_0_0()); }
+{ before(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0()); }
 (
 
 )
-{ after(grammarAccess.getAndExpressionAccess().getAndOrExpressionLeftAction_1_0_0()); }
+{ after(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0()); }
 )
 
 ;

@@ -510,14 +510,14 @@ public interface KvisPackage extends EPackage
   int BOOLEAN_OPERATOR_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndOrExpressionImpl <em>And Or Expression</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl <em>And Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.kvis.impl.AndOrExpressionImpl
-   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAndOrExpression()
+   * @see de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAndExpression()
    * @generated
    */
-  int AND_OR_EXPRESSION = 12;
+  int AND_EXPRESSION = 12;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -526,7 +526,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AND_OR_EXPRESSION__LEFT = CONDITION_FEATURE_COUNT + 0;
+  int AND_EXPRESSION__LEFT = CONDITION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -535,7 +535,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AND_OR_EXPRESSION__OPERATOR = CONDITION_FEATURE_COUNT + 1;
+  int AND_EXPRESSION__OPERATOR = CONDITION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Right</b></em>' containment reference.
@@ -544,16 +544,16 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AND_OR_EXPRESSION__RIGHT = CONDITION_FEATURE_COUNT + 2;
+  int AND_EXPRESSION__RIGHT = CONDITION_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>And Or Expression</em>' class.
+   * The number of structural features of the '<em>And Expression</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AND_OR_EXPRESSION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
+  int AND_EXPRESSION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
 
 
   /**
@@ -952,47 +952,47 @@ public interface KvisPackage extends EPackage
   EAttribute getBooleanOperator_AND();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression <em>And Or Expression</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.AndExpression <em>And Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>And Or Expression</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.AndOrExpression
+   * @return the meta object for class '<em>And Expression</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression
    * @generated
    */
-  EClass getAndOrExpression();
+  EClass getAndExpression();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getLeft <em>Left</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getLeft <em>Left</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.AndOrExpression#getLeft()
-   * @see #getAndOrExpression()
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression#getLeft()
+   * @see #getAndExpression()
    * @generated
    */
-  EReference getAndOrExpression_Left();
+  EReference getAndExpression_Left();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getOperator <em>Operator</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getOperator <em>Operator</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.AndOrExpression#getOperator()
-   * @see #getAndOrExpression()
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression#getOperator()
+   * @see #getAndExpression()
    * @generated
    */
-  EAttribute getAndOrExpression_Operator();
+  EAttribute getAndExpression_Operator();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.AndOrExpression#getRight <em>Right</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getRight <em>Right</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.AndOrExpression#getRight()
-   * @see #getAndOrExpression()
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression#getRight()
+   * @see #getAndExpression()
    * @generated
    */
-  EReference getAndOrExpression_Right();
+  EReference getAndExpression_Right();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1338,14 +1338,14 @@ public interface KvisPackage extends EPackage
     EAttribute BOOLEAN_OPERATOR__AND = eINSTANCE.getBooleanOperator_AND();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndOrExpressionImpl <em>And Or Expression</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl <em>And Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.kvis.impl.AndOrExpressionImpl
-     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAndOrExpression()
+     * @see de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAndExpression()
      * @generated
      */
-    EClass AND_OR_EXPRESSION = eINSTANCE.getAndOrExpression();
+    EClass AND_EXPRESSION = eINSTANCE.getAndExpression();
 
     /**
      * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
@@ -1353,7 +1353,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference AND_OR_EXPRESSION__LEFT = eINSTANCE.getAndOrExpression_Left();
+    EReference AND_EXPRESSION__LEFT = eINSTANCE.getAndExpression_Left();
 
     /**
      * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
@@ -1361,7 +1361,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute AND_OR_EXPRESSION__OPERATOR = eINSTANCE.getAndOrExpression_Operator();
+    EAttribute AND_EXPRESSION__OPERATOR = eINSTANCE.getAndExpression_Operator();
 
     /**
      * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
@@ -1369,7 +1369,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference AND_OR_EXPRESSION__RIGHT = eINSTANCE.getAndOrExpression_Right();
+    EReference AND_EXPRESSION__RIGHT = eINSTANCE.getAndExpression_Right();
 
   }
 

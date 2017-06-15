@@ -157,11 +157,11 @@ public class KvisSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KvisPackage.AND_OR_EXPRESSION:
+      case KvisPackage.AND_EXPRESSION:
       {
-        AndOrExpression andOrExpression = (AndOrExpression)theEObject;
-        T result = caseAndOrExpression(andOrExpression);
-        if (result == null) result = caseCondition(andOrExpression);
+        AndExpression andExpression = (AndExpression)theEObject;
+        T result = caseAndExpression(andExpression);
+        if (result == null) result = caseCondition(andExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -362,17 +362,17 @@ public class KvisSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>And Or Expression</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>And Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>And Or Expression</em>'.
+   * @return the result of interpreting the object as an instance of '<em>And Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAndOrExpression(AndOrExpression object)
+  public T caseAndExpression(AndExpression object)
   {
     return null;
   }
