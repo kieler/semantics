@@ -30,6 +30,10 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
+import org.eclipse.swt.events.KeyAdapter
+import org.eclipse.swt.events.KeyEvent
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.prom.ui.console.PromConsole
 
 /**
  * @author aas
@@ -62,6 +66,9 @@ class DataPoolView extends ViewPart {
         // Create menu and toolbars.
         createMenu();
         createToolbar();
+        
+        // Add key listeners for fast controls
+        addKeyListeners()
     }
     
     /**
@@ -121,6 +128,21 @@ class DataPoolView extends ViewPart {
                 } 
             }
         });
+    }
+    
+    private def void addKeyListeners() {
+        // Step through simulation via ARROW_RIGHT.
+        viewer.control.addKeyListener(new KeyAdapter() {
+            override keyPressed(KeyEvent e) {
+                val manager = SimulationManager.instance
+                if(e.keyCode == SWT.ARROW_RIGHT) {
+                    if(manager != null) {
+                        PromConsole.print("Step macro tick")
+                        manager.stepMacroTick()
+                    }
+                }
+            }
+        })
     }
     
     private def TableViewer createDataPoolTable(Composite parent) {

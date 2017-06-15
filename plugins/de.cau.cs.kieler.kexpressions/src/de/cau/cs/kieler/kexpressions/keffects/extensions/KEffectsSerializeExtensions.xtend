@@ -45,6 +45,12 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         if (operator == AssignOperator::ASSIGNDIV) {
             return " /= " 
         } else 
+        if (operator == AssignOperator::ASSIGNMIN) {
+            return " min= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMAX) {
+            return " max= " 
+        } else 
         if (operator == AssignOperator::POSTFIXADD) {
             return "++"
         } else 

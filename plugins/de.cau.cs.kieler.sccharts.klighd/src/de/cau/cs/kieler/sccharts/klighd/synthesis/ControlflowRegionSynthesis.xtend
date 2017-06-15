@@ -75,12 +75,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
+            node.setLayoutOption(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.ALWAYS_UP)
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
         // Direction is set by the {@link LayoutHook}
         
         // Do not set! This is handled by the ExpandCollapseHook

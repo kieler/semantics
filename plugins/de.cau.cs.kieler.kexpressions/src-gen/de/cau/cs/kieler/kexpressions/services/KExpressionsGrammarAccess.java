@@ -121,29 +121,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorLogicalOrOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsLogicalAndExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cVerticalLineVerticalLineKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsLogicalAndExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Logical Or Expression Rule
 		//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//LogicalOrExpression Expression:
 		//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-		//	subExpressions+=LogicalAndExpression)+)?
+		//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-		//subExpressions+=LogicalAndExpression)+)?
+		//subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//LogicalAndExpression
 		public RuleCall getLogicalAndExpressionParserRuleCall_0() { return cLogicalAndExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression) ('||'
+		//subExpressions+=LogicalAndExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+
+		//(operator=LogicalOrOperator subExpressions+=LogicalAndExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=LogicalOrOperator
@@ -157,6 +162,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//LogicalAndExpression
 		public RuleCall getSubExpressionsLogicalAndExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsLogicalAndExpressionParserRuleCall_1_1_1_0; }
+
+		//('||' subExpressions+=LogicalAndExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'||'
+		public Keyword getVerticalLineVerticalLineKeyword_1_2_0() { return cVerticalLineVerticalLineKeyword_1_2_0; }
+
+		//subExpressions+=LogicalAndExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//LogicalAndExpression
+		public RuleCall getSubExpressionsLogicalAndExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsLogicalAndExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class LogicalAndExpressionElements extends AbstractParserRuleElementFinder {
@@ -170,29 +187,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorLogicalAndOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsBitwiseOrExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cAmpersandAmpersandKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsBitwiseOrExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Logical And Expression Rule
 		//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//LogicalAndExpression Expression:
 		//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-		//	subExpressions+=BitwiseOrExpression)+)?
+		//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-		//subExpressions+=BitwiseOrExpression)+)?
+		//subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//BitwiseOrExpression
 		public RuleCall getBitwiseOrExpressionParserRuleCall_0() { return cBitwiseOrExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression) ('&&'
+		//subExpressions+=BitwiseOrExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+
+		//(operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=LogicalAndOperator
@@ -206,6 +228,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BitwiseOrExpression
 		public RuleCall getSubExpressionsBitwiseOrExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsBitwiseOrExpressionParserRuleCall_1_1_1_0; }
+
+		//('&&' subExpressions+=BitwiseOrExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'&&'
+		public Keyword getAmpersandAmpersandKeyword_1_2_0() { return cAmpersandAmpersandKeyword_1_2_0; }
+
+		//subExpressions+=BitwiseOrExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//BitwiseOrExpression
+		public RuleCall getSubExpressionsBitwiseOrExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsBitwiseOrExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class BitwiseOrExpressionElements extends AbstractParserRuleElementFinder {
@@ -219,29 +253,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cVerticalLineKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Bitwiese Or Expression Rule
 		//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//BitwiseOrExpression Expression:
 		//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-		//	subExpressions+=BitwiseAndExpression)+)?
+		//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-		//subExpressions+=BitwiseAndExpression)+)?
+		//subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//BitwiseAndExpression
 		public RuleCall getBitwiseAndExpressionParserRuleCall_0() { return cBitwiseAndExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression) ('|'
+		//subExpressions+=BitwiseAndExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)+
+		//(operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=BitwiseOrOperator
@@ -255,6 +294,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BitwiseAndExpression
 		public RuleCall getSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0; }
+
+		//('|' subExpressions+=BitwiseAndExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'|'
+		public Keyword getVerticalLineKeyword_1_2_0() { return cVerticalLineKeyword_1_2_0; }
+
+		//subExpressions+=BitwiseAndExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//BitwiseAndExpression
+		public RuleCall getSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class BitwiseAndExpressionElements extends AbstractParserRuleElementFinder {
@@ -268,29 +319,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cAmpersandKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Bitwise And Expression Rule
 		//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//BitwiseAndExpression Expression:
 		//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-		//	subExpressions+=CompareOperation)+)?
+		//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-		//subExpressions+=CompareOperation)+)?
+		//subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 		public Group getGroup() { return cGroup; }
 
 		//CompareOperation
 		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator subExpressions+=CompareOperation)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator subExpressions+=CompareOperation) ('&'
+		//subExpressions+=CompareOperation)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=BitwiseAndOperator subExpressions+=CompareOperation)+
+		//(operator=BitwiseAndOperator subExpressions+=CompareOperation)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=BitwiseAndOperator
@@ -304,6 +360,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//CompareOperation
 		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_1_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_1_1_0; }
+
+		//('&' subExpressions+=CompareOperation)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'&'
+		public Keyword getAmpersandKeyword_1_2_0() { return cAmpersandKeyword_1_2_0; }
+
+		//subExpressions+=CompareOperation
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//CompareOperation
+		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_2_1_0() { return cSubExpressionsCompareOperationParserRuleCall_1_2_1_0; }
 	}
 
 	public class CompareOperationElements extends AbstractParserRuleElementFinder {
@@ -444,28 +512,35 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorAddOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cPlusSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Add Expression Rule
 		//// The rule directs the 'sub expression' rule and creates an operator expression for additions
 		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 		//// Example: 1 + 2
 		//AddExpression Expression:
-		//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
+		//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+		//	subExpressions+=SubExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
+		//SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+		//subExpressions+=SubExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//SubExpression
 		public RuleCall getSubExpressionParserRuleCall_0() { return cSubExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+		//subExpressions+=SubExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=AddOperator subExpressions+=SubExpression)+
+		//(operator=AddOperator subExpressions+=SubExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=AddOperator
@@ -479,6 +554,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//SubExpression
 		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsSubExpressionParserRuleCall_1_1_1_0; }
+
+		//('+' subExpressions+=SubExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'+'
+		public Keyword getPlusSignKeyword_1_2_0() { return cPlusSignKeyword_1_2_0; }
+
+		//subExpressions+=SubExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//SubExpression
+		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsSubExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class SubExpressionElements extends AbstractParserRuleElementFinder {
@@ -492,28 +579,35 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorSubOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cHyphenMinusKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Sub Expression Rule
 		//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
 		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 		//// Example: var(A) - i
 		//SubExpression Expression:
-		//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
+		//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
+		//	('-' subExpressions+=MultExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
+		//MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression) ('-'
+		//subExpressions+=MultExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//MultExpression
 		public RuleCall getMultExpressionParserRuleCall_0() { return cMultExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression) ('-'
+		//subExpressions+=MultExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=SubOperator subExpressions+=MultExpression)+
+		//(operator=SubOperator subExpressions+=MultExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=SubOperator
@@ -527,6 +621,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//MultExpression
 		public RuleCall getSubExpressionsMultExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsMultExpressionParserRuleCall_1_1_1_0; }
+
+		//('-' subExpressions+=MultExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'-'
+		public Keyword getHyphenMinusKeyword_1_2_0() { return cHyphenMinusKeyword_1_2_0; }
+
+		//subExpressions+=MultExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//MultExpression
+		public RuleCall getSubExpressionsMultExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsMultExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class MultExpressionElements extends AbstractParserRuleElementFinder {
@@ -540,28 +646,35 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorMultOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsDivExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cAsteriskKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsDivExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Mult Expression Rule
 		//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
 		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 		//// Example: 2 * 4
 		//MultExpression Expression:
-		//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
+		//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
+		//	('*' subExpressions+=DivExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
+		//DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+		//subExpressions+=DivExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//DivExpression
 		public RuleCall getDivExpressionParserRuleCall_0() { return cDivExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+		//subExpressions+=DivExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=MultOperator subExpressions+=DivExpression)+
+		//(operator=MultOperator subExpressions+=DivExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=MultOperator
@@ -575,6 +688,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//DivExpression
 		public RuleCall getSubExpressionsDivExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsDivExpressionParserRuleCall_1_1_1_0; }
+
+		//('*' subExpressions+=DivExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'*'
+		public Keyword getAsteriskKeyword_1_2_0() { return cAsteriskKeyword_1_2_0; }
+
+		//subExpressions+=DivExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//DivExpression
+		public RuleCall getSubExpressionsDivExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsDivExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class DivExpressionElements extends AbstractParserRuleElementFinder {
@@ -588,28 +713,35 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorDivOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsModExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cSolidusKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsModExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Div Expression Rule
 		//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
 		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 		//// Example: 2 / 4
 		//DivExpression Expression:
-		//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
+		//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
+		//	subExpressions+=ModExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
+		//ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
+		//subExpressions+=ModExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//ModExpression
 		public RuleCall getModExpressionParserRuleCall_0() { return cModExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
+		//subExpressions+=ModExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=DivOperator subExpressions+=ModExpression)+
+		//(operator=DivOperator subExpressions+=ModExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=DivOperator
@@ -623,6 +755,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ModExpression
 		public RuleCall getSubExpressionsModExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsModExpressionParserRuleCall_1_1_1_0; }
+
+		//('/' subExpressions+=ModExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'/'
+		public Keyword getSolidusKeyword_1_2_0() { return cSolidusKeyword_1_2_0; }
+
+		//subExpressions+=ModExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//ModExpression
+		public RuleCall getSubExpressionsModExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsModExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class ModExpressionElements extends AbstractParserRuleElementFinder {
@@ -636,6 +780,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorModOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cPercentSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Mod Expression Rule
 		//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
@@ -643,23 +791,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Example: i % j
 		//ModExpression Expression:
 		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-		//	subExpressions+=AtomicValuedExpression)+)?
+		//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-		//subExpressions+=AtomicValuedExpression)+)?
+		//subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
 		public Group getGroup() { return cGroup; }
 
 		//NegExpression
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=AtomicValuedExpression)+)?
+		//({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=AtomicValuedExpression) ('%'
+		//subExpressions+=AtomicValuedExpression)*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//(operator=ModOperator subExpressions+=AtomicValuedExpression)+
+		//(operator=ModOperator subExpressions+=AtomicValuedExpression)
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//operator=ModOperator
@@ -673,6 +822,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//AtomicValuedExpression
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0; }
+
+		//('%' subExpressions+=AtomicValuedExpression)*
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//'%'
+		public Keyword getPercentSignKeyword_1_2_0() { return cPercentSignKeyword_1_2_0; }
+
+		//subExpressions+=AtomicValuedExpression
+		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
+
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0; }
 	}
 
 	public class NegExpressionElements extends AbstractParserRuleElementFinder {
@@ -1876,7 +2037,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression)+)?
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
 	public LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return pLogicalOrExpression;
 	}
@@ -1890,7 +2051,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression)+)?
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
 	public LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return pLogicalAndExpression;
 	}
@@ -1904,7 +2065,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseAndExpression)+)?
+	//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
 	public BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return pBitwiseOrExpression;
 	}
@@ -1918,7 +2079,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation)+)?
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 	public BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return pBitwiseAndExpression;
 	}
@@ -1986,7 +2147,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
 	//AddExpression Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+	//	subExpressions+=SubExpression)*)?
 	public AddExpressionElements getAddExpressionAccess() {
 		return pAddExpression;
 	}
@@ -2000,7 +2162,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: var(A) - i
 	//SubExpression Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
+	//	('-' subExpressions+=MultExpression)*)?
 	public SubExpressionElements getSubExpressionAccess() {
 		return pSubExpression;
 	}
@@ -2014,7 +2177,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
+	//	('*' subExpressions+=DivExpression)*)?
 	public MultExpressionElements getMultExpressionAccess() {
 		return pMultExpression;
 	}
@@ -2028,7 +2192,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 / 4
 	//DivExpression Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
+	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
+	//	subExpressions+=ModExpression)*)?
 	public DivExpressionElements getDivExpressionAccess() {
 		return pDivExpression;
 	}
@@ -2043,7 +2208,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: i % j
 	//ModExpression Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)+)?
+	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
 	public ModExpressionElements getModExpressionAccess() {
 		return pModExpression;
 	}

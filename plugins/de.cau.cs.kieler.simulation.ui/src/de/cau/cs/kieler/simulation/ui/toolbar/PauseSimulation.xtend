@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.simulation.ui.SimulationConsole
+import de.cau.cs.kieler.prom.ui.console.PromConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -25,7 +25,7 @@ class PauseSimulation extends SimulationToolbarButton {
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {
-            SimulationConsole.writeToConsole("Pause")
+            PromConsole.print("Pause")
             simulation.pause()
         }
         return null

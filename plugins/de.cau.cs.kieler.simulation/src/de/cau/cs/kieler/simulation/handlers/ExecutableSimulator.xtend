@@ -119,7 +119,6 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         var String line
         val timeLimiter = new SimpleTimeLimiter();
         do {
-//            System.err.println("Calling readLine "+System.currentTimeMillis)
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
                 override call() throws Exception {

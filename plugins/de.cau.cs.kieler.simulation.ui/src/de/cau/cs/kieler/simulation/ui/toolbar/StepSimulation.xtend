@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.simulation.ui.SimulationConsole
+import de.cau.cs.kieler.prom.ui.console.PromConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -25,10 +25,9 @@ class StepSimulation extends SimulationToolbarButton {
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null && !justRestarted) {
-            SimulationConsole.writeToConsole("Step single (performing "
+            PromConsole.print("Step single (performing "
                 + simulation.currentAction.method + " on " + simulation.currentAction.handler + ")")
             simulation.stepSubTick()
-//            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
         }
         return null
     }

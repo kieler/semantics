@@ -18,13 +18,14 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.Redirect
-import de.cau.cs.kieler.simulation.ui.SimulationConsole
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.handlers.DataPoolHandler
 import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.debug.ui.ILaunchShortcut
@@ -34,8 +35,7 @@ import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.ide.ResourceUtil
 import org.eclipse.ui.statushandlers.StatusManager
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.resources.IResource
+import de.cau.cs.kieler.prom.ui.console.PromConsole
 
 /**
  * @author aas
@@ -132,14 +132,14 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
                 simMan.addAction(StepAction.Method.WRITE, simulator)
                 simMan.initialize()
                 
-                SimulationConsole.writeToConsole("\n\nNew simulation")
-                SimulationConsole.writeToConsole("Initial pool:"+simMan.currentPool)
+                PromConsole.print("\n\nNew simulation")
+                PromConsole.print("Initial pool:"+simMan.currentPool)
             } else {
                 simMan.addAction(StepAction.Method.WRITE, simulator)
                 simMan.append(simulator)
                 
-                SimulationConsole.writeToConsole("Appended simulator")
-                SimulationConsole.writeToConsole("New pool:"+simMan.currentPool)
+                PromConsole.print("Appended simulator")
+                PromConsole.print("New pool:"+simMan.currentPool)
             }
             
         } else if(files.size == 2) {
@@ -172,8 +172,8 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
             
             simMan.initialize()
             
-            SimulationConsole.writeToConsole("\n\nNew simulation")
-            SimulationConsole.writeToConsole("Initial pool:"+simMan.currentPool)
+            PromConsole.print("\n\nNew simulation")
+            PromConsole.print("Initial pool:"+simMan.currentPool)
         }
     }
     

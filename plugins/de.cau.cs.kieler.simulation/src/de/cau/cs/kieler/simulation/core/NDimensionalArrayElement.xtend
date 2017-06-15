@@ -45,4 +45,11 @@ class NDimensionalArrayElement implements Cloneable {
         } 
         return null
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override toString() {
+        return value.class.name + index.join("[", ",", "]", [it.toString])
+    }
 }

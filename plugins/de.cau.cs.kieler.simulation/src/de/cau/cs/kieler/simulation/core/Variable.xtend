@@ -160,4 +160,11 @@ class Variable implements Cloneable {
         v.isSignal = this.isSignal
         return v
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override toString() {
+        return "variable "+name
+    }
 }

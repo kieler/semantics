@@ -82,7 +82,23 @@ public enum AssignOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    POSTFIXSUB(6, "POSTFIXSUB", "POSTFIXSUB");
+    POSTFIXSUB(6, "POSTFIXSUB", "POSTFIXSUB"), /**
+     * The '<em><b>ASSIGNMIN</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ASSIGNMIN_VALUE
+     * @generated
+     * @ordered
+     */
+    ASSIGNMIN(7, "ASSIGNMIN", "ASSIGNMIN"), /**
+     * The '<em><b>ASSIGNMAX</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ASSIGNMAX_VALUE
+     * @generated
+     * @ordered
+     */
+    ASSIGNMAX(8, "ASSIGNMAX", "");
 
     /**
      * The '<em><b>ASSIGN</b></em>' literal value.
@@ -190,6 +206,36 @@ public enum AssignOperator implements Enumerator {
     public static final int POSTFIXSUB_VALUE = 6;
 
     /**
+     * The '<em><b>ASSIGNMIN</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>ASSIGNMIN</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #ASSIGNMIN
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int ASSIGNMIN_VALUE = 7;
+
+    /**
+     * The '<em><b>ASSIGNMAX</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>ASSIGNMAX</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #ASSIGNMAX
+     * @model literal=""
+     * @generated
+     * @ordered
+     */
+    public static final int ASSIGNMAX_VALUE = 8;
+
+    /**
      * An array of all the '<em><b>Assign Operator</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -204,6 +250,8 @@ public enum AssignOperator implements Enumerator {
             ASSIGNDIV,
             POSTFIXADD,
             POSTFIXSUB,
+            ASSIGNMIN,
+            ASSIGNMAX,
         };
 
     /**
@@ -267,6 +315,8 @@ public enum AssignOperator implements Enumerator {
             case ASSIGNDIV_VALUE: return ASSIGNDIV;
             case POSTFIXADD_VALUE: return POSTFIXADD;
             case POSTFIXSUB_VALUE: return POSTFIXSUB;
+            case ASSIGNMIN_VALUE: return ASSIGNMIN;
+            case ASSIGNMAX_VALUE: return ASSIGNMAX;
         }
         return null;
     }
