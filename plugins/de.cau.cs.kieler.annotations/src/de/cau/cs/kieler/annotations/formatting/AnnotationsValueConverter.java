@@ -19,6 +19,9 @@ import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
 import org.eclipse.xtext.conversion.impl.INTValueConverter;
 import org.eclipse.xtext.util.Strings;
+
+import com.google.inject.Inject;
+
 import org.eclipse.xtext.nodemodel.INode;
 
 
@@ -54,6 +57,13 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                 }
             }
         };
+    }
+    
+    @Inject private QualifiedIDValueConverter qualifiedIDValueConverter;
+    
+    @ValueConverter(rule = "QualifiedID") 
+    public IValueConverter<String> convertQualifiedID() {
+        return qualifiedIDValueConverter;
     }
     
     /**
