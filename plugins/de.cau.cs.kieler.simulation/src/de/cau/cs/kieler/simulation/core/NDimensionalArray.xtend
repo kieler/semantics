@@ -79,8 +79,31 @@ class NDimensionalArray implements Cloneable{
         return arr 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
         val values = elements.map[it.value]
         return values.toString()
+    }
+    
+    /**
+     * Two NDimensionalArrays are equal, if they have the same size of elements
+     * and all their elements are equal within the same order.
+     */
+    override equals(Object other) {
+        if(other != null) {
+            if(other instanceof NDimensionalArray) {
+                if(other.elements.size == elements.size) {
+                    for(var i = 0; i < elements.size; i++) {
+                        if(!elements.get(i).equals(other.elements.get(i))) {
+                            return false
+                        }
+                    }
+                    return true
+                }    
+            }
+        }
+        return false
     }
 }

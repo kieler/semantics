@@ -49,6 +49,7 @@ class DataPoolView extends ViewPart {
     
     var TableViewerColumn variableColumn
     var TableViewerColumn valueColumn
+    var TableViewerColumn userValueColumn
     var TableViewerColumn historyColumn
     var TableViewerColumn inputColumn
     var TableViewerColumn outputColumn
@@ -167,19 +168,26 @@ class DataPoolView extends ViewPart {
                 }
             }
         };
-        valueColumn = createTableColumn(viewer, "Value", 80, true)
+        valueColumn = createTableColumn(viewer, "Current Value", 120, true)
         valueColumn.labelProvider = new DataPoolViewerColumn() {
             override String getText(Object element) {
                  if(element instanceof Variable) {
-                    if(element.isDirty)
-                        return "* "+element.userValue?.toString
-                    else
-                        return element.value?.toString
+                    return element.value?.toString
                 }
                 return ""
             }
         };
-        historyColumn = createTableColumn(viewer, "History", 80, true)
+        userValueColumn = createTableColumn(viewer, "User Value", 120, true)
+        userValueColumn.labelProvider = new DataPoolViewerColumn() {
+            override String getText(Object element) {
+                 if(element instanceof Variable) {
+                    if(element.isDirty)
+                        return "* "+element.userValue?.toString
+                }
+                return ""
+            }
+        };
+        historyColumn = createTableColumn(viewer, "History", 200, true)
         historyColumn.labelProvider = new DataPoolViewerColumn() {
             var Image img
             
@@ -238,7 +246,7 @@ class DataPoolView extends ViewPart {
         viewer.input = newArrayList()
         
         // Make cells editable
-        valueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
+        userValueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
         return viewer
     }
