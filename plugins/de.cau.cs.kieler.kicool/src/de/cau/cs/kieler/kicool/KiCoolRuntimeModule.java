@@ -19,9 +19,9 @@ public class KiCoolRuntimeModule extends de.cau.cs.kieler.kicool.AbstractKiCoolR
         return KiCoolValueConverter.class;
     }       
     
-    @Override
-    public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
-        return de.cau.cs.kieler.kicool.formatting.KiCoolFormatterX.class;
-    }    
+//    @Override
+//    public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
+//        return de.cau.cs.kieler.kicool.formatting.KiCoolFormatterX.class;
+//    }    
     
 }

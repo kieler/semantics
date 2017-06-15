@@ -17,7 +17,8 @@ class KiCoolFormatter extends AnnotationsFormatter {
 	@Inject extension KiCoolGrammarAccess
 
 	def dispatch void format(de.cau.cs.kieler.kicool.System system, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+	    system.interior[ indent ]
+
 		for (Metric metrics : system.getMetrics()) {
 			format(metrics, document);
 		}
@@ -36,5 +37,10 @@ class KiCoolFormatter extends AnnotationsFormatter {
 		for (ProcessorEntry processors : processoralternativegroup.getProcessors()) {
 			format(processors, document);
 		}
+	}
+	
+	def dispatch void format(Metric metric, extension IFormattableDocument document) {
+	    metric.regionFor.keyword("metric").prepend[ newLine ]
+	    
 	}
 }
