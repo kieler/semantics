@@ -47,6 +47,8 @@ import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import de.cau.cs.kieler.prom.launchconfig.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.common.PromPlugin
 
 /**
  * The tab with the controls to set files to be compiled via KiCo.
@@ -304,7 +306,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
             }
         })
         targetTemplate.toolTipText = "Template for the compiled output.\n"
-            + "Use ${" + KiCoLaunchConfig.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
+            + "Use ${" + WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
             
         // Create target directory control
         val comp4 = UIUtil.createComposite(group, 1)
@@ -341,7 +343,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
             }
         })
         wrapperCodeTemplate.toolTipText =  "Path to a template of a file, which will contain wrapper code.\n"
-            + "The path may contain placeholders such as ${" + KiCoLaunchConfig.MAIN_FILE_NAME_VARIABLE + "}."
+            + "The path may contain placeholders such as ${" + PromPlugin.MAIN_FILE_NAME_VARIABLE + "}."
 
         // Create control for directory with snippet definitions
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory",

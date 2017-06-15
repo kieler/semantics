@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
+import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
@@ -36,7 +37,6 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -75,15 +75,16 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
+            node.setLayoutOption(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.ALWAYS_UP)
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
         // Direction is set by the {@link LayoutHook}
         
-        node.initiallyExpand
+        // Do not set! This is handled by the ExpandCollapseHook
+        // node.initiallyExpand
 
         if (!region.states.empty) {
 
@@ -107,14 +108,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                 }
                 // Add Button after area to assure correct overlapping
-                addButton("[-]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addButton("[+]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView
                 associateWith(region)
-                addButton("[+]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addButton("[+]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Add inner states

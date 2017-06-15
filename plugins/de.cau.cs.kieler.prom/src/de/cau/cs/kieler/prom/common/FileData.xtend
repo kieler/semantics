@@ -1,7 +1,11 @@
 package de.cau.cs.kieler.prom.common
 
 import de.cau.cs.kieler.prom.simulation.SimulationLaunchConfig
+import java.io.File
 import java.util.List
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
@@ -89,6 +93,33 @@ class FileData extends ConfigurationSerializable {
      */    
     override setIdentifier(String value) {
         projectRelativePath = value
+    }
+    
+    /**
+     * Returns the location of the project plus the project relative path of this data container.
+     * 
+     * @param project The project with the base location
+     */
+    public def String getLocation(IProject project) {
+        return project.location.toOSString + File.separator + projectRelativePath
+    }
+    
+    /**
+     * Returns an IPath with the location of the project plus the project relative path of this data container.
+     * 
+     * @param project The project with the base location
+     */
+    public def IPath getLocationAsPath(IProject project) {
+        return new Path(getLocation(project))
+    }
+     
+    /**
+     * Returns an IFile of this file in the project.
+     * 
+     * @param project The project with the base location
+     */
+    public def IFile getFile(IProject project) {
+        return project.getFile(projectRelativePath)
     }
     
     /**

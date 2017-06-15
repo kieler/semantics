@@ -108,7 +108,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
         targetRootState.transformValuedObjectRise
         
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
+        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
             targetState.transformSignal(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;

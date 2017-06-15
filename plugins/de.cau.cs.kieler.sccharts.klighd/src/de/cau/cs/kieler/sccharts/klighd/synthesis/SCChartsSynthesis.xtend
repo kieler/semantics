@@ -72,6 +72,12 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
        
     // -------------------------------------------------------------------------
     // Sidebar Options
+    
+    override getDisplayedActions() {
+        return newLinkedList => [ list |
+            hooks.allHooks.forEach[list.addAll(getDisplayedActions)];
+        ]
+    }
 
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();

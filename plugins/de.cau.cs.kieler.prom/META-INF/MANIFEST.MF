@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  org.eclipse.xtext;bundle-version="2.7.2",
  org.freemarker;bundle-version="0.1.0",
- de.cau.cs.kieler.sccharts.preferences
+ de.cau.cs.kieler.sccharts.preferences,
+ de.cau.cs.kieler.sccharts.text;bundle-version="0.12.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPoliBundle-Vendor: Christian-Albrechts-Universität zu Kiel
 cy: lazy
@@ -33,6 +34,7 @@ Export-Package: de.cau.cs.kieler.prom.common,
  de.cau.cs.kieler.prom.launchconfig.ui,
  de.cau.cs.kieler.prom.projectwizard,
  de.cau.cs.kieler.prom.simulation,
- de.cau.cs.kieler.prom.simulation.ui
+ de.cau.cs.kieler.prom.simulation.ui,
+ de.cau.cs.kieler.prom.ui.console
 Bundle-Vendor: Kiel University
 

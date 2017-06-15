@@ -50,11 +50,16 @@ class LabelShorteningHook extends SynthesisActionHook {
         false).setCategory(LABEL_MANAGEMENT_CATEGORY).setUpdateAction(LabelShorteningHook.ID); // Register this action as updater
     /** The synthesis option to shorten labels */
     public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Strategy",
-        LabelShorteningStrategies.values, LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
+        newLinkedList(
+            LabelShorteningStrategies.NO,
+            LabelShorteningStrategies.TRUNCATE,
+            LabelShorteningStrategies.SOFT_WRAPPING,
+            LabelShorteningStrategies.PRIORITIES
+        ), LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The synthesis option for fixed shorten labels value */
     public static val SynthesisOption SHORTEN_LABEL_WIDTH = SynthesisOption::createRangeOption("Shortening Width",
-        0, 200, 2, 200).setCategory(LABEL_MANAGEMENT_CATEGORY).
+        0, 1000, 10, 200).setCategory(LABEL_MANAGEMENT_CATEGORY).
         setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The listener for handling label focusing */
     private static val LabelFocusSelectionListener labelFocusSelectionListener = new LabelFocusSelectionListener();

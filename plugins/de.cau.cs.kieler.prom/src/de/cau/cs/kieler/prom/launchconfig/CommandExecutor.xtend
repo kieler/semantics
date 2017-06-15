@@ -14,13 +14,13 @@
 package de.cau.cs.kieler.prom.launchconfig
 
 import de.cau.cs.kieler.prom.common.CommandData
+import de.cau.cs.kieler.prom.common.PromPlugin
 import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.DebugPlugin
 
 /**
@@ -75,8 +75,7 @@ class CommandExecutor {
      */
     private def void executeSingle(CommandData command) {
         if (command != null && !command.command.isNullOrEmpty()) {
-            val man = VariablesPlugin.getDefault.stringVariableManager
-            command.fullCommand = man.performStringSubstitution(command.command)
+            command.fullCommand = PromPlugin.performStringSubstitution(command.command, launchConfig.project)
             val commandWithParameters = splitStringOnWhitespace(command.fullCommand)
 
             // Run process

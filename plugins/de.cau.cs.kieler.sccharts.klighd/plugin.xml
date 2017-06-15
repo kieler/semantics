@@ -32,6 +32,18 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook">
       </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.MemorizingExpandCollapseAction"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.MemorizingExpandCollapseAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.CollapseAllRegionsAction"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.CollapseAllRegionsAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.ExpandAllRegionsAction"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.ExpandAllRegionsAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
@@ -71,6 +83,9 @@
       </hook>
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ExpandCollapseHook">
       </hook>
    </extension>
 

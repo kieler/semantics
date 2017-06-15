@@ -21,6 +21,7 @@
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="javax.xml.bind" version="0.0.0"/>
+      <unit id="com.google.gson" version="0.0.0"/>
       <unit id="org.eclipse.orbit.mongodb" version="0.0.0"/>
       <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170307180635/repository/"/>
     </location>

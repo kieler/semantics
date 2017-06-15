@@ -89,6 +89,11 @@ abstract class PromLaunchConfig implements ILaunchConfigurationDelegate {
         consoleManager.showConsoleView(console)
     }
 
+    /**
+     * Write the exception to the KiCo console 
+     * 
+     * @param Exception e the exception
+     */
     public static def void writeToConsole(Exception e){
         // Write exception to console of running Eclipse
         var text = ""
@@ -122,11 +127,17 @@ abstract class PromLaunchConfig implements ILaunchConfigurationDelegate {
         return myConsole;
     }
     
+    /**
+     * Removes all text from the console.
+     */
     static def void clearConsole() {
         initializeConsole()
         console.clearConsole()
     }
     
+    /**
+     * Creates the console if it has not been created.
+     */
     static def void initializeConsole() {
         if (console == null || consoleStream == null) {
             console = findOrCreateConsole(CONSOLE_NAME)

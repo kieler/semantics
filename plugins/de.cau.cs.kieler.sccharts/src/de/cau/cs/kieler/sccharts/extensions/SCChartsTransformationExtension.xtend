@@ -237,7 +237,7 @@ class SCChartsTransformationExtension {
         }
         if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
             for (card : valuedObjectWithAttributes.cardinalities) {
-                valuedObject.cardinalities.add(card);
+                valuedObject.cardinalities.add(card.copy);
             }
         }        
         valuedObject

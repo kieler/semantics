@@ -106,6 +106,8 @@
     <module>de.cau.cs.kieler.sim.signals.ui</module>
     <module>de.cau.cs.kieler.sim.syncsignalreset</module>
     <module>de.cau.cs.kieler.sim.table</module>
+    <module>de.cau.cs.kieler.simulation</module>
+    <module>de.cau.cs.kieler.simulation.ui</module>
     <module>de.cau.cs.kieler.sj</module>
     <module>de.cau.cs.kieler.sjl</module>
     <module>de.cau.cs.kieler.synccharts</module>
