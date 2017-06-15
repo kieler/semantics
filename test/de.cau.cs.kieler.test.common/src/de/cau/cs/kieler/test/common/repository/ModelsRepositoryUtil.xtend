@@ -19,7 +19,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import static com.google.common.base.Preconditions.*
 
 /**
- * Provides utiliies for the models in the model repositories.
+ * Provides utilities for the models in the model repositories.
  * 
  * @author als
  * @kieler.design proposed

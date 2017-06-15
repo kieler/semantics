@@ -22,6 +22,7 @@ import java.nio.file.PathMatcher
 import java.nio.file.Paths
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
+import java.util.LinkedList
 import java.util.List
 import java.util.Map
 import java.util.Properties
@@ -29,8 +30,6 @@ import java.util.Set
 import org.eclipse.xtend.lib.annotations.Data
 
 import static extension java.lang.Boolean.*
-import java.util.HashMap
-import java.util.LinkedList
 
 /**
  * Provides the models in the model repositories.
