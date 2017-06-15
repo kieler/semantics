@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.kvis.kvis.impl;
 
 import de.cau.cs.kieler.kvis.kvis.Element;
+import de.cau.cs.kieler.kvis.kvis.Interaction;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.kvis.Visualization;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl#getImage <em>Image</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl#getInteractions <em>Interactions</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,6 +69,16 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * @ordered
    */
   protected EList<Element> elements;
+
+  /**
+   * The cached value of the '{@link #getInteractions() <em>Interactions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getInteractions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Interaction> interactions;
 
   /**
    * <!-- begin-user-doc -->
@@ -131,6 +143,20 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Interaction> getInteractions()
+  {
+    if (interactions == null)
+    {
+      interactions = new EObjectContainmentEList<Interaction>(Interaction.class, this, KvisPackage.VISUALIZATION__INTERACTIONS);
+    }
+    return interactions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -138,6 +164,8 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
     {
       case KvisPackage.VISUALIZATION__ELEMENTS:
         return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
+      case KvisPackage.VISUALIZATION__INTERACTIONS:
+        return ((InternalEList<?>)getInteractions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -156,6 +184,8 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
         return getImage();
       case KvisPackage.VISUALIZATION__ELEMENTS:
         return getElements();
+      case KvisPackage.VISUALIZATION__INTERACTIONS:
+        return getInteractions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -178,6 +208,10 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
         getElements().clear();
         getElements().addAll((Collection<? extends Element>)newValue);
         return;
+      case KvisPackage.VISUALIZATION__INTERACTIONS:
+        getInteractions().clear();
+        getInteractions().addAll((Collection<? extends Interaction>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -198,6 +232,9 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
       case KvisPackage.VISUALIZATION__ELEMENTS:
         getElements().clear();
         return;
+      case KvisPackage.VISUALIZATION__INTERACTIONS:
+        getInteractions().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -216,6 +253,8 @@ public class VisualizationImpl extends MinimalEObjectImpl.Container implements V
         return IMAGE_EDEFAULT == null ? image != null : !IMAGE_EDEFAULT.equals(image);
       case KvisPackage.VISUALIZATION__ELEMENTS:
         return elements != null && !elements.isEmpty();
+      case KvisPackage.VISUALIZATION__INTERACTIONS:
+        return interactions != null && !interactions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

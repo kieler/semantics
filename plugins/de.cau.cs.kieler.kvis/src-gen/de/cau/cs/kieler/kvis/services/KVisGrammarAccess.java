@@ -27,15 +27,17 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cImageAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cImageSTRINGTerminalRuleCall_2_0 = (RuleCall)cImageAssignment_2.eContents().get(0);
-		private final Assignment cElementsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cElementsElementParserRuleCall_3_0 = (RuleCall)cElementsAssignment_3.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cElementsAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cElementsElementParserRuleCall_3_0_0 = (RuleCall)cElementsAssignment_3_0.eContents().get(0);
+		private final Assignment cInteractionsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cInteractionsInteractionParserRuleCall_3_1_0 = (RuleCall)cInteractionsAssignment_3_1.eContents().get(0);
 		
 		//Visualization:
-		//	'image' ':' image=STRING
-		//	elements+=Element*;
+		//	'image' ':' image=STRING (elements+=Element | interactions+=Interaction)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'image' ':' image=STRING elements+=Element*
+		//'image' ':' image=STRING (elements+=Element | interactions+=Interaction)*
 		public Group getGroup() { return cGroup; }
 
 		//'image'
@@ -50,11 +52,20 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getImageSTRINGTerminalRuleCall_2_0() { return cImageSTRINGTerminalRuleCall_2_0; }
 
-		//elements+=Element*
-		public Assignment getElementsAssignment_3() { return cElementsAssignment_3; }
+		//(elements+=Element | interactions+=Interaction)*
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
+		//elements+=Element
+		public Assignment getElementsAssignment_3_0() { return cElementsAssignment_3_0; }
 
 		//Element
-		public RuleCall getElementsElementParserRuleCall_3_0() { return cElementsElementParserRuleCall_3_0; }
+		public RuleCall getElementsElementParserRuleCall_3_0_0() { return cElementsElementParserRuleCall_3_0_0; }
+
+		//interactions+=Interaction
+		public Assignment getInteractionsAssignment_3_1() { return cInteractionsAssignment_3_1; }
+
+		//Interaction
+		public RuleCall getInteractionsInteractionParserRuleCall_3_1_0() { return cInteractionsInteractionParserRuleCall_3_1_0; }
 	}
 
 	public class ElementElements extends AbstractParserRuleElementFinder {
@@ -97,6 +108,185 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+
+	public class InteractionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Interaction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInteractionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cPerformKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cOnKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cEventAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cEventEventParserRuleCall_2_1_0 = (RuleCall)cEventAssignment_2_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cActionsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cActionsActionParserRuleCall_4_0 = (RuleCall)cActionsAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cWhenKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cConditionAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cConditionAndExpressionParserRuleCall_6_1_0 = (RuleCall)cConditionAssignment_6_1.eContents().get(0);
+		
+		//Interaction:
+		//	{Interaction}
+		//	'perform' ('on' event=Event)? '{'
+		//	actions+=Action*
+		//	'}' ('when' condition=AndExpression)?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Interaction} 'perform' ('on' event=Event)? '{' actions+=Action* '}' ('when' condition=AndExpression)?
+		public Group getGroup() { return cGroup; }
+
+		//{Interaction}
+		public Action getInteractionAction_0() { return cInteractionAction_0; }
+
+		//'perform'
+		public Keyword getPerformKeyword_1() { return cPerformKeyword_1; }
+
+		//('on' event=Event)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'on'
+		public Keyword getOnKeyword_2_0() { return cOnKeyword_2_0; }
+
+		//event=Event
+		public Assignment getEventAssignment_2_1() { return cEventAssignment_2_1; }
+
+		//Event
+		public RuleCall getEventEventParserRuleCall_2_1_0() { return cEventEventParserRuleCall_2_1_0; }
+
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+
+		//actions+=Action*
+		public Assignment getActionsAssignment_4() { return cActionsAssignment_4; }
+
+		//Action
+		public RuleCall getActionsActionParserRuleCall_4_0() { return cActionsActionParserRuleCall_4_0; }
+
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+
+		//('when' condition=AndExpression)?
+		public Group getGroup_6() { return cGroup_6; }
+
+		//'when'
+		public Keyword getWhenKeyword_6_0() { return cWhenKeyword_6_0; }
+
+		//condition=AndExpression
+		public Assignment getConditionAssignment_6_1() { return cConditionAssignment_6_1; }
+
+		//AndExpression
+		public RuleCall getConditionAndExpressionParserRuleCall_6_1_0() { return cConditionAndExpressionParserRuleCall_6_1_0; }
+	}
+
+	public class EventElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Event");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cEventAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cEventDOMEventEnumRuleCall_0_0 = (RuleCall)cEventAssignment_0.eContents().get(0);
+		private final Keyword cFromKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cElementAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cElementIDTerminalRuleCall_2_0 = (RuleCall)cElementAssignment_2.eContents().get(0);
+		
+		//Event:
+		//	event=DOMEvent 'from' element=ID;
+		@Override public ParserRule getRule() { return rule; }
+
+		//event=DOMEvent 'from' element=ID
+		public Group getGroup() { return cGroup; }
+
+		//event=DOMEvent
+		public Assignment getEventAssignment_0() { return cEventAssignment_0; }
+
+		//DOMEvent
+		public RuleCall getEventDOMEventEnumRuleCall_0_0() { return cEventDOMEventEnumRuleCall_0_0; }
+
+		//'from'
+		public Keyword getFromKeyword_1() { return cFromKeyword_1; }
+
+		//element=ID
+		public Assignment getElementAssignment_2() { return cElementAssignment_2; }
+
+		//ID
+		public RuleCall getElementIDTerminalRuleCall_2_0() { return cElementIDTerminalRuleCall_2_0; }
+	}
+
+	public class ActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Action");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cVariableAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cSimulationActionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//Action:
+		//	VariableAssignment | SimulationAction;
+		@Override public ParserRule getRule() { return rule; }
+
+		//VariableAssignment | SimulationAction
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//VariableAssignment
+		public RuleCall getVariableAssignmentParserRuleCall_0() { return cVariableAssignmentParserRuleCall_0; }
+
+		//SimulationAction
+		public RuleCall getSimulationActionParserRuleCall_1() { return cSimulationActionParserRuleCall_1; }
+	}
+
+	public class VariableAssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.VariableAssignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cVariableVariableReferenceParserRuleCall_0_0 = (RuleCall)cVariableAssignment_0.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueAnyValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//VariableAssignment Action:
+		//	variable=VariableReference '=' value=AnyValue
+		@Override public ParserRule getRule() { return rule; }
+
+		//variable=VariableReference '=' value=AnyValue
+		public Group getGroup() { return cGroup; }
+
+		//variable=VariableReference
+		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
+
+		//VariableReference
+		public RuleCall getVariableVariableReferenceParserRuleCall_0_0() { return cVariableVariableReferenceParserRuleCall_0_0; }
+
+		//'='
+		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+
+		//value=AnyValue
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+
+		//AnyValue
+		public RuleCall getValueAnyValueParserRuleCall_2_0() { return cValueAnyValueParserRuleCall_2_0; }
+	}
+
+	public class SimulationActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.SimulationAction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cOperationAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cOperationSimulationOperationEnumRuleCall_0_0 = (RuleCall)cOperationAssignment_0.eContents().get(0);
+		private final Keyword cSimulationKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//SimulationAction Action:
+		//	operation=SimulationOperation 'simulation'
+		@Override public ParserRule getRule() { return rule; }
+
+		//operation=SimulationOperation 'simulation'
+		public Group getGroup() { return cGroup; }
+
+		//operation=SimulationOperation
+		public Assignment getOperationAssignment_0() { return cOperationAssignment_0; }
+
+		//SimulationOperation
+		public RuleCall getOperationSimulationOperationEnumRuleCall_0_0() { return cOperationSimulationOperationEnumRuleCall_0_0; }
+
+		//'simulation'
+		public Keyword getSimulationKeyword_1() { return cSimulationKeyword_1; }
 	}
 
 	public class AnimationElements extends AbstractParserRuleElementFinder {
@@ -563,8 +753,108 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
+	public class DOMEventElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.DOMEvent");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cCLICKEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cCLICKClickKeyword_0_0 = (Keyword)cCLICKEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cMOUSEDOWNEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cMOUSEDOWNMousedownKeyword_1_0 = (Keyword)cMOUSEDOWNEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cMOUSEUPEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cMOUSEUPMouseupKeyword_2_0 = (Keyword)cMOUSEUPEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cMOUSEMOVEEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cMOUSEMOVEMousemoveKeyword_3_0 = (Keyword)cMOUSEMOVEEnumLiteralDeclaration_3.eContents().get(0);
+		
+		//enum DOMEvent:
+		//	CLICK='click'
+		//	| MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
+		//	| MOUSEMOVE='mousemove'
+		//	// The following events do not work very well (or not at all) with the JSVGCanvas
+		//	//    | DOUBLECLICK='dblclick'
+		//	//    | MOUSEOVER='mouseover' | MOUSEOUT='mouseout'
+		//	//    | MOUSEENTER='mouseenter' | MOUSELEAVE='mouseleave'
+		//;
+		public EnumRule getRule() { return rule; }
+
+		//CLICK='click' | MOUSEDOWN='mousedown' | MOUSEUP='mouseup' | MOUSEMOVE='mousemove'
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//CLICK='click'
+		public EnumLiteralDeclaration getCLICKEnumLiteralDeclaration_0() { return cCLICKEnumLiteralDeclaration_0; }
+
+		//'click'
+		public Keyword getCLICKClickKeyword_0_0() { return cCLICKClickKeyword_0_0; }
+
+		//MOUSEDOWN='mousedown'
+		public EnumLiteralDeclaration getMOUSEDOWNEnumLiteralDeclaration_1() { return cMOUSEDOWNEnumLiteralDeclaration_1; }
+
+		//'mousedown'
+		public Keyword getMOUSEDOWNMousedownKeyword_1_0() { return cMOUSEDOWNMousedownKeyword_1_0; }
+
+		//MOUSEUP='mouseup'
+		public EnumLiteralDeclaration getMOUSEUPEnumLiteralDeclaration_2() { return cMOUSEUPEnumLiteralDeclaration_2; }
+
+		//'mouseup'
+		public Keyword getMOUSEUPMouseupKeyword_2_0() { return cMOUSEUPMouseupKeyword_2_0; }
+
+		//MOUSEMOVE='mousemove'
+		public EnumLiteralDeclaration getMOUSEMOVEEnumLiteralDeclaration_3() { return cMOUSEMOVEEnumLiteralDeclaration_3; }
+
+		//'mousemove'
+		public Keyword getMOUSEMOVEMousemoveKeyword_3_0() { return cMOUSEMOVEMousemoveKeyword_3_0; }
+	}
+
+	public class SimulationOperationElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.SimulationOperation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cSTEPEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cSTEPStepKeyword_0_0 = (Keyword)cSTEPEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cSTOPEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cSTOPStopKeyword_1_0 = (Keyword)cSTOPEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cPAUSEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cPAUSEPauseKeyword_2_0 = (Keyword)cPAUSEEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cPLAYEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cPLAYPlayKeyword_3_0 = (Keyword)cPLAYEnumLiteralDeclaration_3.eContents().get(0);
+		
+		//enum SimulationOperation:
+		//	STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play';
+		public EnumRule getRule() { return rule; }
+
+		//STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play'
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//STEP='step'
+		public EnumLiteralDeclaration getSTEPEnumLiteralDeclaration_0() { return cSTEPEnumLiteralDeclaration_0; }
+
+		//'step'
+		public Keyword getSTEPStepKeyword_0_0() { return cSTEPStepKeyword_0_0; }
+
+		//STOP='stop'
+		public EnumLiteralDeclaration getSTOPEnumLiteralDeclaration_1() { return cSTOPEnumLiteralDeclaration_1; }
+
+		//'stop'
+		public Keyword getSTOPStopKeyword_1_0() { return cSTOPStopKeyword_1_0; }
+
+		//PAUSE='pause'
+		public EnumLiteralDeclaration getPAUSEEnumLiteralDeclaration_2() { return cPAUSEEnumLiteralDeclaration_2; }
+
+		//'pause'
+		public Keyword getPAUSEPauseKeyword_2_0() { return cPAUSEPauseKeyword_2_0; }
+
+		//PLAY='play'
+		public EnumLiteralDeclaration getPLAYEnumLiteralDeclaration_3() { return cPLAYEnumLiteralDeclaration_3; }
+
+		//'play'
+		public Keyword getPLAYPlayKeyword_3_0() { return cPLAYPlayKeyword_3_0; }
+	}
+	
 	private final VisualizationElements pVisualization;
 	private final ElementElements pElement;
+	private final InteractionElements pInteraction;
+	private final EventElements pEvent;
+	private final ActionElements pAction;
+	private final VariableAssignmentElements pVariableAssignment;
+	private final SimulationActionElements pSimulationAction;
 	private final AnimationElements pAnimation;
 	private final AttributeMappingElements pAttributeMapping;
 	private final MappingElements pMapping;
@@ -576,6 +866,8 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final VariableReferenceElements pVariableReference;
 	private final ModelReferenceElements pModelReference;
 	private final AndOperatorElements pAndOperator;
+	private final DOMEventElements eDOMEvent;
+	private final SimulationOperationElements eSimulationOperation;
 	private final RangeElements pRange;
 	
 	private final Grammar grammar;
@@ -597,6 +889,11 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pVisualization = new VisualizationElements();
 		this.pElement = new ElementElements();
+		this.pInteraction = new InteractionElements();
+		this.pEvent = new EventElements();
+		this.pAction = new ActionElements();
+		this.pVariableAssignment = new VariableAssignmentElements();
+		this.pSimulationAction = new SimulationActionElements();
 		this.pAnimation = new AnimationElements();
 		this.pAttributeMapping = new AttributeMappingElements();
 		this.pMapping = new MappingElements();
@@ -608,6 +905,8 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.pVariableReference = new VariableReferenceElements();
 		this.pModelReference = new ModelReferenceElements();
 		this.pAndOperator = new AndOperatorElements();
+		this.eDOMEvent = new DOMEventElements();
+		this.eSimulationOperation = new SimulationOperationElements();
 		this.pRange = new RangeElements();
 	}
 	
@@ -647,8 +946,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Visualization:
-	//	'image' ':' image=STRING
-	//	elements+=Element*;
+	//	'image' ':' image=STRING (elements+=Element | interactions+=Interaction)*;
 	public VisualizationElements getVisualizationAccess() {
 		return pVisualization;
 	}
@@ -669,10 +967,60 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getElementAccess().getRule();
 	}
 
-	//Animation:
-	//	'apply' type=ID ('using' variable=VariableReference)? '{'
-	//	attributeMappings+=AttributeMapping*
+	//Interaction:
+	//	{Interaction}
+	//	'perform' ('on' event=Event)? '{'
+	//	actions+=Action*
 	//	'}' ('when' condition=AndExpression)?;
+	public InteractionElements getInteractionAccess() {
+		return pInteraction;
+	}
+	
+	public ParserRule getInteractionRule() {
+		return getInteractionAccess().getRule();
+	}
+
+	//Event:
+	//	event=DOMEvent 'from' element=ID;
+	public EventElements getEventAccess() {
+		return pEvent;
+	}
+	
+	public ParserRule getEventRule() {
+		return getEventAccess().getRule();
+	}
+
+	//Action:
+	//	VariableAssignment | SimulationAction;
+	public ActionElements getActionAccess() {
+		return pAction;
+	}
+	
+	public ParserRule getActionRule() {
+		return getActionAccess().getRule();
+	}
+
+	//VariableAssignment Action:
+	//	variable=VariableReference '=' value=AnyValue
+	public VariableAssignmentElements getVariableAssignmentAccess() {
+		return pVariableAssignment;
+	}
+	
+	public ParserRule getVariableAssignmentRule() {
+		return getVariableAssignmentAccess().getRule();
+	}
+
+	//SimulationAction Action:
+	//	operation=SimulationOperation 'simulation'
+	public SimulationActionElements getSimulationActionAccess() {
+		return pSimulationAction;
+	}
+	
+	public ParserRule getSimulationActionRule() {
+		return getSimulationActionAccess().getRule();
+	}
+
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kvis/KVis.xtext#XtextFragmentProvider_de.cau.cs.kieler.kvis.KVis/AttributeMapping'
 	public AnimationElements getAnimationAccess() {
 		return pAnimation;
 	}
@@ -681,8 +1029,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnimationAccess().getRule();
 	}
 
-	//AttributeMapping:
-	//	attribute=ID ':' (literal=AnyValue | mappings+=Mapping (',' mappings+=Mapping)*);
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kvis/KVis.xtext#XtextFragmentProvider_de.cau.cs.kieler.kvis.KVis/AttributeMapping'
 	public AttributeMappingElements getAttributeMappingAccess() {
 		return pAttributeMapping;
 	}
@@ -782,6 +1129,33 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAndOperatorRule() {
 		return getAndOperatorAccess().getRule();
+	}
+
+	//enum DOMEvent:
+	//	CLICK='click'
+	//	| MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
+	//	| MOUSEMOVE='mousemove'
+	//	// The following events do not work very well (or not at all) with the JSVGCanvas
+	//	//    | DOUBLECLICK='dblclick'
+	//	//    | MOUSEOVER='mouseover' | MOUSEOUT='mouseout'
+	//	//    | MOUSEENTER='mouseenter' | MOUSELEAVE='mouseleave'
+	//;
+	public DOMEventElements getDOMEventAccess() {
+		return eDOMEvent;
+	}
+	
+	public EnumRule getDOMEventRule() {
+		return getDOMEventAccess().getRule();
+	}
+
+	//enum SimulationOperation:
+	//	STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play';
+	public SimulationOperationElements getSimulationOperationAccess() {
+		return eSimulationOperation;
+	}
+	
+	public EnumRule getSimulationOperationRule() {
+		return getSimulationOperationAccess().getRule();
 	}
 
 	//Range:

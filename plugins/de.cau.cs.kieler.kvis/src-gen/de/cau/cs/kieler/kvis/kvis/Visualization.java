@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kvis.kvis.Visualization#getImage <em>Image</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kvis.kvis.Visualization#getElements <em>Elements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions <em>Interactions</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualization()
@@ -66,5 +67,21 @@ public interface Visualization extends EObject
    * @generated
    */
   EList<Element> getElements();
+
+  /**
+   * Returns the value of the '<em><b>Interactions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kvis.kvis.Interaction}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Interactions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Interactions</em>' containment reference list.
+   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualization_Interactions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Interaction> getInteractions();
 
 } // Visualization

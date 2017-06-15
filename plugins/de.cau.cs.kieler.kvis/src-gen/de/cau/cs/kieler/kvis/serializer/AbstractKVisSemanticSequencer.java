@@ -29,6 +29,8 @@ import de.cau.cs.kieler.kvis.kvis.BooleanOperator;
 import de.cau.cs.kieler.kvis.kvis.Comparison;
 import de.cau.cs.kieler.kvis.kvis.Domain;
 import de.cau.cs.kieler.kvis.kvis.Element;
+import de.cau.cs.kieler.kvis.kvis.Event;
+import de.cau.cs.kieler.kvis.kvis.Interaction;
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
@@ -169,6 +171,20 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 			}
 		else if (epackage == KvisPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KvisPackage.ACTION:
+				if (rule == grammarAccess.getSimulationActionRule()) {
+					sequence_SimulationAction(context, (de.cau.cs.kieler.kvis.kvis.Action) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getActionRule()) {
+					sequence_SimulationAction_VariableAssignment(context, (de.cau.cs.kieler.kvis.kvis.Action) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getVariableAssignmentRule()) {
+					sequence_VariableAssignment(context, (de.cau.cs.kieler.kvis.kvis.Action) semanticObject); 
+					return; 
+				}
+				else break;
 			case KvisPackage.AND_EXPRESSION:
 				sequence_AndExpression(context, (AndExpression) semanticObject); 
 				return; 
@@ -189,6 +205,12 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 				return; 
 			case KvisPackage.ELEMENT:
 				sequence_Element(context, (Element) semanticObject); 
+				return; 
+			case KvisPackage.EVENT:
+				sequence_Event(context, (Event) semanticObject); 
+				return; 
+			case KvisPackage.INTERACTION:
+				sequence_Interaction(context, (Interaction) semanticObject); 
 				return; 
 			case KvisPackage.INTERVAL:
 				sequence_Interval(context, (Interval) semanticObject); 
@@ -305,6 +327,39 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
+	 *     Event returns Event
+	 *
+	 * Constraint:
+	 *     (event=DOMEvent element=ID)
+	 */
+	protected void sequence_Event(ISerializationContext context, Event semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.EVENT__EVENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.EVENT__EVENT));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.EVENT__ELEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.EVENT__ELEMENT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getEventAccess().getEventDOMEventEnumRuleCall_0_0(), semanticObject.getEvent());
+		feeder.accept(grammarAccess.getEventAccess().getElementIDTerminalRuleCall_2_0(), semanticObject.getElement());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Interaction returns Interaction
+	 *
+	 * Constraint:
+	 *     (event=Event? actions+=Action* condition=AndExpression?)
+	 */
+	protected void sequence_Interaction(ISerializationContext context, Interaction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Interval returns Interval
 	 *
 	 * Constraint:
@@ -356,6 +411,57 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
+	 *     SimulationAction returns Action
+	 *
+	 * Constraint:
+	 *     operation=SimulationOperation
+	 */
+	protected void sequence_SimulationAction(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.ACTION__OPERATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.ACTION__OPERATION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSimulationActionAccess().getOperationSimulationOperationEnumRuleCall_0_0(), semanticObject.getOperation());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Action returns Action
+	 *
+	 * Constraint:
+	 *     ((variable=VariableReference value=AnyValue) | operation=SimulationOperation)
+	 */
+	protected void sequence_SimulationAction_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     VariableAssignment returns Action
+	 *
+	 * Constraint:
+	 *     (variable=VariableReference value=AnyValue)
+	 */
+	protected void sequence_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.ACTION__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.ACTION__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.ACTION__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.ACTION__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getVariableAssignmentAccess().getVariableVariableReferenceParserRuleCall_0_0(), semanticObject.getVariable());
+		feeder.accept(grammarAccess.getVariableAssignmentAccess().getValueAnyValueParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     VariableDomain returns Domain
 	 *     AttributeDomain returns Domain
 	 *
@@ -384,7 +490,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     Visualization returns Visualization
 	 *
 	 * Constraint:
-	 *     (image=STRING elements+=Element*)
+	 *     (image=STRING (elements+=Element | interactions+=Interaction)*)
 	 */
 	protected void sequence_Visualization(ISerializationContext context, Visualization semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

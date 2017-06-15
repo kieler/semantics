@@ -37,6 +37,8 @@ public class KVisParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getVisualizationAccess().getAlternatives_3(), "rule__Visualization__Alternatives_3");
+					put(grammarAccess.getActionAccess().getAlternatives(), "rule__Action__Alternatives");
 					put(grammarAccess.getAttributeMappingAccess().getAlternatives_2(), "rule__AttributeMapping__Alternatives_2");
 					put(grammarAccess.getComparisonAccess().getAlternatives_2(), "rule__Comparison__Alternatives_2");
 					put(grammarAccess.getVariableDomainAccess().getAlternatives(), "rule__VariableDomain__Alternatives");
@@ -58,11 +60,19 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRestrictedAnnotationAccess().getAlternatives(), "rule__RestrictedAnnotation__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
+					put(grammarAccess.getDOMEventAccess().getAlternatives(), "rule__DOMEvent__Alternatives");
+					put(grammarAccess.getSimulationOperationAccess().getAlternatives(), "rule__SimulationOperation__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getVisualizationAccess().getGroup(), "rule__Visualization__Group__0");
 					put(grammarAccess.getElementAccess().getGroup(), "rule__Element__Group__0");
+					put(grammarAccess.getInteractionAccess().getGroup(), "rule__Interaction__Group__0");
+					put(grammarAccess.getInteractionAccess().getGroup_2(), "rule__Interaction__Group_2__0");
+					put(grammarAccess.getInteractionAccess().getGroup_6(), "rule__Interaction__Group_6__0");
+					put(grammarAccess.getEventAccess().getGroup(), "rule__Event__Group__0");
+					put(grammarAccess.getVariableAssignmentAccess().getGroup(), "rule__VariableAssignment__Group__0");
+					put(grammarAccess.getSimulationActionAccess().getGroup(), "rule__SimulationAction__Group__0");
 					put(grammarAccess.getAnimationAccess().getGroup(), "rule__Animation__Group__0");
 					put(grammarAccess.getAnimationAccess().getGroup_2(), "rule__Animation__Group_2__0");
 					put(grammarAccess.getAnimationAccess().getGroup_6(), "rule__Animation__Group_6__0");
@@ -146,9 +156,18 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 					put(grammarAccess.getVisualizationAccess().getImageAssignment_2(), "rule__Visualization__ImageAssignment_2");
-					put(grammarAccess.getVisualizationAccess().getElementsAssignment_3(), "rule__Visualization__ElementsAssignment_3");
+					put(grammarAccess.getVisualizationAccess().getElementsAssignment_3_0(), "rule__Visualization__ElementsAssignment_3_0");
+					put(grammarAccess.getVisualizationAccess().getInteractionsAssignment_3_1(), "rule__Visualization__InteractionsAssignment_3_1");
 					put(grammarAccess.getElementAccess().getNameAssignment_1(), "rule__Element__NameAssignment_1");
 					put(grammarAccess.getElementAccess().getAnimationsAssignment_3(), "rule__Element__AnimationsAssignment_3");
+					put(grammarAccess.getInteractionAccess().getEventAssignment_2_1(), "rule__Interaction__EventAssignment_2_1");
+					put(grammarAccess.getInteractionAccess().getActionsAssignment_4(), "rule__Interaction__ActionsAssignment_4");
+					put(grammarAccess.getInteractionAccess().getConditionAssignment_6_1(), "rule__Interaction__ConditionAssignment_6_1");
+					put(grammarAccess.getEventAccess().getEventAssignment_0(), "rule__Event__EventAssignment_0");
+					put(grammarAccess.getEventAccess().getElementAssignment_2(), "rule__Event__ElementAssignment_2");
+					put(grammarAccess.getVariableAssignmentAccess().getVariableAssignment_0(), "rule__VariableAssignment__VariableAssignment_0");
+					put(grammarAccess.getVariableAssignmentAccess().getValueAssignment_2(), "rule__VariableAssignment__ValueAssignment_2");
+					put(grammarAccess.getSimulationActionAccess().getOperationAssignment_0(), "rule__SimulationAction__OperationAssignment_0");
 					put(grammarAccess.getAnimationAccess().getTypeAssignment_1(), "rule__Animation__TypeAssignment_1");
 					put(grammarAccess.getAnimationAccess().getVariableAssignment_2_1(), "rule__Animation__VariableAssignment_2_1");
 					put(grammarAccess.getAnimationAccess().getAttributeMappingsAssignment_4(), "rule__Animation__AttributeMappingsAssignment_4");

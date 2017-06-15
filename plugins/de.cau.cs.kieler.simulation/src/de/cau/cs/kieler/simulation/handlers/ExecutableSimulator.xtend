@@ -128,8 +128,11 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
             try {
                 line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, false)
             } catch(Exception e) {
-                stop();
-                throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)
+                // If the process is null, the simulation was stopped already
+                if(process != null) {
+                    stop();
+                    throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)    
+                }
             }
             
             Thread.sleep(1);

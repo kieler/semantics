@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kvis.ui.animations.MoveAnimation
 import de.cau.cs.kieler.kvis.ui.animations.RotateAnimation
 import de.cau.cs.kieler.kvis.ui.animations.TextAnimation
 import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
+import de.cau.cs.kieler.kvis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.simulation.core.DataPool
@@ -41,7 +42,6 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.preferences.InstanceScope
-import org.eclipse.jface.action.Action
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Composite
@@ -51,6 +51,8 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.apache.batik.swing.svg.SVGDocumentLoaderEvent
+import org.apache.batik.swing.svg.SVGDocumentLoaderListener
 
 /**
  * @author aas
@@ -69,9 +71,11 @@ class KVisView extends ViewPart {
     private KVisCanvas canvas
 
     private val List<AnimationHandler> animationHandlers = newArrayList()
+    private val List<InteractionHandler> interactionHandlers = newArrayList()
 
     private var IResourceChangeListener resourceChangeListener
     private var boolean updateAfterRendering
+    private var Visualization kvisConfig
     private var IFile kvisFile
     private var IFile svgImage
     private var DataPool lastPool
@@ -113,18 +117,17 @@ class KVisView extends ViewPart {
             val model = ModelImporter.load(file)
             if (model != null) {
                 if (model instanceof Visualization) {
+                    kvisConfig = model
                     lastPool = null
                     kvisFile = file
                     saveUsedKvisFile(kvisFile)
                     updateAfterRendering = true
                     // Load image
                     val project = file.project
-                    val imagePath = model.image
+                    val imagePath = kvisConfig.image
                     svgImage = project.getFile(imagePath)
                     canvas.setSVGFile(svgImage)
     
-                    // Load animations
-                    createAnimationHandlers(model)    
                     // Register resource change listener for the files
                     registerResourceChangeListener(file, svgImage)
                 }
@@ -134,8 +137,16 @@ class KVisView extends ViewPart {
         }
     }
     
+    private def void createInteractionHandlers(Visualization model) {
+        interactionHandlers.clear
+        for(interaction : model.interactions) {
+            val interactionHandler = new InteractionHandler(interaction)
+            interactionHandlers.add(interactionHandler)
+        }
+    }
+    
     private def void createAnimationHandlers(Visualization model) {
-        animationHandlers.clear()
+        animationHandlers.clear
         for (element : model.elements) {
             for (animation : element.animations) {
                 var AnimationHandler handler
@@ -236,6 +247,26 @@ class KVisView extends ViewPart {
             }
         })
 
+        canvas.svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderListener() {
+            
+            override documentLoadingCancelled(SVGDocumentLoaderEvent e) {
+            }
+            
+            override documentLoadingCompleted(SVGDocumentLoaderEvent e) {
+                // Now that the document is loaded,
+                // we can configure the animation and interactions from the kvis file.
+                createAnimationHandlers(kvisConfig)
+                createInteractionHandlers(kvisConfig)
+            }
+            
+            override documentLoadingFailed(SVGDocumentLoaderEvent e) {
+            }
+            
+            override documentLoadingStarted(SVGDocumentLoaderEvent e) {
+            }
+            
+            })
+
         // Add load listener to update immediately in running simulation when changing visualization config.
         canvas.svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter(){
             
@@ -282,7 +313,7 @@ class KVisView extends ViewPart {
 
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(new Action("Show Controls") {
+        mgr.add(new KVisViewToolbarAction("Show Controls", "help.png") {
             override run() {
                 val title = "Controls for the Simulation Visualization View"
                 val message = "Shift + Mouse Drag : Move\n"
@@ -293,12 +324,12 @@ class KVisView extends ViewPart {
                 dialog.open
             }
         })
-        mgr.add(new Action("Export Image") {
+        mgr.add(new KVisViewToolbarAction("Export Image", "saveFile.png") {
             override run() {
                 saveSVGDocument
             }
         })
-        mgr.add(new Action("Reload") {
+        mgr.add(new KVisViewToolbarAction("Reload", "refresh.png") {
             override run() {
                 if(kvisFile != null && svgImage != null) {
                     reload()    
@@ -307,7 +338,7 @@ class KVisView extends ViewPart {
                 }
             }
         })
-        mgr.add(new Action("Open KVis File") {
+        mgr.add(new KVisViewToolbarAction("Open KVis File", "openFile.png") {
             override run() {
                 val rootElement = ResourcesPlugin.getWorkspace().getRoot()
 
@@ -329,6 +360,12 @@ class KVisView extends ViewPart {
         if(kvisFile == null && svgImage == null) {
             return
         }
+        
+        // Execute interactions if needed
+        for(interaction : interactionHandlers) {
+            interaction.apply(pool)
+        }
+        
         // Make all changes to the svg in the update manager.
         // Otherwise the svg canvas is not updated properly.
         lastPool = pool

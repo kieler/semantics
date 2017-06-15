@@ -7,6 +7,23 @@
     editorPluginID="de.cau.cs.kieler.kvis.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Kvis" basePackage="de.cau.cs.kieler.kvis" disposableProviderFactory="true"
       ecorePackage="KVis.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//DOMEvent">
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/CLICK"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/MOUSEDOWN"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/MOUSEUP"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/MOUSEMOVE"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/DOUBLECLICK"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/MOUSEOVER"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/MOUSEOUT"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/MOUSEENTER"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//DOMEvent/MOUSELEAVE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//SimulationOperation">
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//SimulationOperation/STEP"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//SimulationOperation/STOP"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//SimulationOperation/PAUSE"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//SimulationOperation/PLAY"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//OperatorType">
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//OperatorType/EQ"/>
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//OperatorType/LT"/>
@@ -40,11 +57,26 @@
     <genClasses ecoreClass="KVis.ecore#//Visualization">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/image"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/interactions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/file"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Element">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Element/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Element/animations"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//Interaction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Interaction/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Interaction/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Interaction/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Event/event"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Event/element"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//Action">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Action/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Action/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Action/operation"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Animation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Animation/type"/>

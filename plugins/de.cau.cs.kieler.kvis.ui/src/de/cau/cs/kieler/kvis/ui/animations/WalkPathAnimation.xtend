@@ -77,7 +77,7 @@ class WalkPathAnimation extends AnimationHandler {
         if(pathName.isNullOrEmpty){
             throw new Exception("Path animation must have a path id set.")
         } else {
-            val pathElement = getElementById(pathName)
+            val pathElement = findElement(pathName)
             if(pathElement == null) {
                 throw new Exception("Path with id '" + pathName + "' was not found in the svg.")
             } else {

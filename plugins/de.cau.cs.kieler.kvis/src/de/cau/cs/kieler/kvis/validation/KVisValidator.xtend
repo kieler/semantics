@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kvis.kvis.Interval
 import de.cau.cs.kieler.kvis.kvis.Mapping
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.kvis.kvis.Interaction
 
 /**
  * @author aas
@@ -50,6 +51,13 @@ class KVisValidator extends KVisJavaValidator {
             if(low > high) {
                 error("Lower value of an interval has to be on the left side.", interval, null);
             }
+        }
+    }
+    
+    @Check
+    public def void checkEventOrConditionOnInteraction(Interaction interaction) {
+        if(interaction.event == null && interaction.condition == null) {
+            error("An interaction must have a condition or must listen to an event", interaction, null)
         }
     }
 }

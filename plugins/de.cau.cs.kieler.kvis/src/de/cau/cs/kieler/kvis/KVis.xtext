@@ -7,14 +7,36 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 
 Visualization:
 	'image' ':' image=STRING
-	elements += Element*
+	(elements += Element | interactions += Interaction)*
 ;
-
 
 Element:
 	'animate' name=ID '{'
         (animations+=Animation)+
 	'}'
+;
+
+Interaction:
+    {Interaction}
+    'perform' ('on' event=Event)? '{'
+        (actions+=Action)*
+    '}' ('when' condition=AndExpression)?
+;
+
+Event:
+    event=DOMEvent 'from' element=ID
+;
+
+Action returns Action:
+    VariableAssignment | SimulationAction
+;
+
+VariableAssignment returns Action:
+    variable=VariableReference '=' value=AnyValue
+;
+
+SimulationAction returns Action:
+    operation=SimulationOperation 'simulation'
 ;
 
 Animation:
@@ -69,6 +91,20 @@ ModelReference:
 
 AndOperator returns BooleanOperator:
     AND='and'
+;
+
+enum DOMEvent:
+    CLICK='click'
+    | MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
+    | MOUSEMOVE='mousemove'
+    // The following events do not work very well (or not at all) with the JSVGCanvas
+//    | DOUBLECLICK='dblclick'
+//    | MOUSEOVER='mouseover' | MOUSEOUT='mouseout'
+//    | MOUSEENTER='mouseenter' | MOUSELEAVE='mouseleave'
+;
+
+enum SimulationOperation:
+    STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play'
 ;
 
 Range:

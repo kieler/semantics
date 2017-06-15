@@ -41,7 +41,7 @@ import de.cau.cs.kieler.prom.ui.console.PromConsole
  * @author aas
  *
  */
-class SimulationLaunchShortcut implements ILaunchShortcut{
+class SimulationLaunchShortcut implements ILaunchShortcut {
     
     /**
      * The file handle from which this launch shortcut has been startet.

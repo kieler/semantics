@@ -4,24 +4,30 @@ package de.cau.cs.kieler.kvis.kvis.impl;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
+import de.cau.cs.kieler.kvis.kvis.Action;
 import de.cau.cs.kieler.kvis.kvis.AndExpression;
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
 import de.cau.cs.kieler.kvis.kvis.BooleanOperator;
 import de.cau.cs.kieler.kvis.kvis.Comparison;
 import de.cau.cs.kieler.kvis.kvis.Condition;
+import de.cau.cs.kieler.kvis.kvis.DOMEvent;
 import de.cau.cs.kieler.kvis.kvis.Domain;
 import de.cau.cs.kieler.kvis.kvis.Element;
+import de.cau.cs.kieler.kvis.kvis.Event;
+import de.cau.cs.kieler.kvis.kvis.Interaction;
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisFactory;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
 import de.cau.cs.kieler.kvis.kvis.ModelReference;
+import de.cau.cs.kieler.kvis.kvis.SimulationOperation;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
 import de.cau.cs.kieler.kvis.kvis.Visualization;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -48,6 +54,27 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * @generated
    */
   private EClass elementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass interactionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass eventEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass actionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -125,6 +152,20 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * @generated
    */
   private EClass andExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum domEventEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum simulationOperationEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -227,6 +268,16 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getVisualization_Interactions()
+  {
+    return (EReference)visualizationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getElement()
   {
     return elementEClass;
@@ -250,6 +301,116 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
   public EReference getElement_Animations()
   {
     return (EReference)elementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInteraction()
+  {
+    return interactionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInteraction_Event()
+  {
+    return (EReference)interactionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInteraction_Actions()
+  {
+    return (EReference)interactionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInteraction_Condition()
+  {
+    return (EReference)interactionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEvent()
+  {
+    return eventEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEvent_Event()
+  {
+    return (EAttribute)eventEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEvent_Element()
+  {
+    return (EAttribute)eventEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAction()
+  {
+    return actionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAction_Variable()
+  {
+    return (EReference)actionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAction_Value()
+  {
+    return (EReference)actionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAction_Operation()
+  {
+    return (EAttribute)actionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -607,6 +768,26 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EEnum getDOMEvent()
+  {
+    return domEventEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getSimulationOperation()
+  {
+    return simulationOperationEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public KvisFactory getKvisFactory()
   {
     return (KvisFactory)getEFactoryInstance();
@@ -635,10 +816,25 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     visualizationEClass = createEClass(VISUALIZATION);
     createEAttribute(visualizationEClass, VISUALIZATION__IMAGE);
     createEReference(visualizationEClass, VISUALIZATION__ELEMENTS);
+    createEReference(visualizationEClass, VISUALIZATION__INTERACTIONS);
 
     elementEClass = createEClass(ELEMENT);
     createEAttribute(elementEClass, ELEMENT__NAME);
     createEReference(elementEClass, ELEMENT__ANIMATIONS);
+
+    interactionEClass = createEClass(INTERACTION);
+    createEReference(interactionEClass, INTERACTION__EVENT);
+    createEReference(interactionEClass, INTERACTION__ACTIONS);
+    createEReference(interactionEClass, INTERACTION__CONDITION);
+
+    eventEClass = createEClass(EVENT);
+    createEAttribute(eventEClass, EVENT__EVENT);
+    createEAttribute(eventEClass, EVENT__ELEMENT);
+
+    actionEClass = createEClass(ACTION);
+    createEReference(actionEClass, ACTION__VARIABLE);
+    createEReference(actionEClass, ACTION__VALUE);
+    createEAttribute(actionEClass, ACTION__OPERATION);
 
     animationEClass = createEClass(ANIMATION);
     createEAttribute(animationEClass, ANIMATION__TYPE);
@@ -685,6 +881,10 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     createEReference(andExpressionEClass, AND_EXPRESSION__LEFT);
     createEAttribute(andExpressionEClass, AND_EXPRESSION__OPERATOR);
     createEReference(andExpressionEClass, AND_EXPRESSION__RIGHT);
+
+    // Create enums
+    domEventEEnum = createEEnum(DOM_EVENT);
+    simulationOperationEEnum = createEEnum(SIMULATION_OPERATION);
   }
 
   /**
@@ -726,10 +926,25 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     initEClass(visualizationEClass, Visualization.class, "Visualization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVisualization_Image(), ecorePackage.getEString(), "image", null, 0, 1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVisualization_Elements(), this.getElement(), null, "elements", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVisualization_Interactions(), this.getInteraction(), null, "interactions", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getElement_Animations(), this.getAnimation(), null, "animations", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(interactionEClass, Interaction.class, "Interaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getInteraction_Event(), this.getEvent(), null, "event", null, 0, 1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInteraction_Actions(), this.getAction(), null, "actions", null, 0, -1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInteraction_Condition(), this.getCondition(), null, "condition", null, 0, 1, Interaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(eventEClass, Event.class, "Event", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEvent_Event(), this.getDOMEvent(), "event", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEvent_Element(), ecorePackage.getEString(), "element", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAction_Variable(), this.getVariableReference(), null, "variable", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_Value(), theKExpressionsPackage.getValue(), null, "value", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAction_Operation(), this.getSimulationOperation(), "operation", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(animationEClass, Animation.class, "Animation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAnimation_Type(), ecorePackage.getEString(), "type", null, 0, 1, Animation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -776,6 +991,19 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     initEReference(getAndExpression_Left(), this.getCondition(), null, "left", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAndExpression_Operator(), ecorePackage.getEString(), "operator", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAndExpression_Right(), this.getComparison(), null, "right", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    // Initialize enums and add enum literals
+    initEEnum(domEventEEnum, DOMEvent.class, "DOMEvent");
+    addEEnumLiteral(domEventEEnum, DOMEvent.CLICK);
+    addEEnumLiteral(domEventEEnum, DOMEvent.MOUSEDOWN);
+    addEEnumLiteral(domEventEEnum, DOMEvent.MOUSEUP);
+    addEEnumLiteral(domEventEEnum, DOMEvent.MOUSEMOVE);
+
+    initEEnum(simulationOperationEEnum, SimulationOperation.class, "SimulationOperation");
+    addEEnumLiteral(simulationOperationEEnum, SimulationOperation.STEP);
+    addEEnumLiteral(simulationOperationEEnum, SimulationOperation.STOP);
+    addEEnumLiteral(simulationOperationEEnum, SimulationOperation.PAUSE);
+    addEEnumLiteral(simulationOperationEEnum, SimulationOperation.PLAY);
 
     // Create resource
     createResource(eNS_URI);

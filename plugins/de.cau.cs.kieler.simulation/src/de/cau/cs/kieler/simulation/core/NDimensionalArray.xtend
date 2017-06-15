@@ -58,8 +58,15 @@ class NDimensionalArray implements Cloneable{
         return indices.get(dimension);
     }
     
-    public def Object get(int... indices) {
-        return elements.get(getOneDimensionalIndex(indices)).value
+    public def Object get(int... index) {
+        val oneDimIndex = getOneDimensionalIndex(index)
+        return elements.get(oneDimIndex).value
+    }
+    
+    public def Object set(List<Integer> index, Object value) {
+        val oneDimIndex = getOneDimensionalIndex(index)
+        val newArrayElement = new NDimensionalArrayElement(value, index) 
+        elements.set(oneDimIndex, newArrayElement)
     }
     
     private def int getOneDimensionalIndex(List<Integer> indices) {

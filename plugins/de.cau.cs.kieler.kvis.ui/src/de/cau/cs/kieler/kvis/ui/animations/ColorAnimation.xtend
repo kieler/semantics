@@ -37,7 +37,7 @@ class ColorAnimation extends AnimationHandler {
     }
     
     private def void apply(Object value, AttributeMapping attributeMapping) {
-        val elem = findElement()
+        val elem = findElement
         val attributeName = attributeMapping.attribute
         val newValue = attributeMapping.getMappedValue(value)
         if(newValue != null) {

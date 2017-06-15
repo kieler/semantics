@@ -34,6 +34,7 @@ import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.prom.ui.console.PromConsole
+import org.eclipse.jface.dialogs.MessageDialog
 
 /**
  * @author aas
@@ -120,6 +121,14 @@ class DataPoolView extends ViewPart {
      */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
+        mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
+            override run() {
+                val title = "Controls for the Data Pool View"
+                val message = "Right Arrow : Step simulation macro tick\n"
+                val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
+                dialog.open
+            }
+        })
         mgr.add(new Action("Reset Value"){
             override run(){
                 val variable = viewer.structuredSelection.firstElement as Variable

@@ -25,11 +25,12 @@ import org.eclipse.core.commands.ExecutionException
  */
 class SimulationToolbarButton extends AbstractHandler {
     
+    protected boolean restartSimulationIfStopped = true
     protected boolean justRestarted
     
     override execute(ExecutionEvent event) throws ExecutionException {
         justRestarted = false
-        if(simulation == null || simulation.isStopped) {
+        if(restartSimulationIfStopped && (simulation == null || simulation.isStopped)) {
             // Start last simulation
             justRestarted = true
             PromConsole.print("Restarting last simulation")

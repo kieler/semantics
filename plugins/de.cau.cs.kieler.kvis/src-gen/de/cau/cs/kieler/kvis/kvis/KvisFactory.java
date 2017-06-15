@@ -41,6 +41,33 @@ public interface KvisFactory extends EFactory
   Element createElement();
 
   /**
+   * Returns a new object of class '<em>Interaction</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Interaction</em>'.
+   * @generated
+   */
+  Interaction createInteraction();
+
+  /**
+   * Returns a new object of class '<em>Event</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Event</em>'.
+   * @generated
+   */
+  Event createEvent();
+
+  /**
+   * Returns a new object of class '<em>Action</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Action</em>'.
+   * @generated
+   */
+  Action createAction();
+
+  /**
    * Returns a new object of class '<em>Animation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
