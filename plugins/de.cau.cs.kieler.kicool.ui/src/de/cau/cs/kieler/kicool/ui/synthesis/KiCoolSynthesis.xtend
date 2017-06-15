@@ -59,7 +59,8 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d));
         
         val source = sourceNode
-        val nodes = model.processors.transform
+        val processorNodes = model.processors.transform
+        val nodes = processorNodes.head.children
         source.sourceConnect(nodes.head)
         nodes += source
 

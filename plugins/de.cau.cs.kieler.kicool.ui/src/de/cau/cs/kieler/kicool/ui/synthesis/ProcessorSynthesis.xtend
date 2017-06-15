@@ -43,6 +43,9 @@ import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import org.eclipse.elk.core.math.ElkPadding
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -61,7 +64,10 @@ class ProcessorSynthesis {
     @Inject extension KiCoolSynthesis
     @Inject IResourceServiceProvider.Registry regXtext;      
     
-    private val PROCESSOR_KGT = "resources/processor.kgt"
+    static private val PROCESSOR_KGT = "resources/processor.kgt"
+    static private val PROCESSOR_GROUP_KGT = "resources/processor_group.kgt"
+    static private val COLLAPSED_ID = "collapsed"
+    static private val EXPANDED_ID = "expanded" 
     
     private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
@@ -83,14 +89,15 @@ class ProcessorSynthesis {
     }
     
     dispatch def List<KNode> transform(ProcessorGroup processorGroup) {
-        val groupNode = processorGroup.createNode.addProcessorGroupFigure
+        val groupNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_GROUP_KGT)
         
-        groupNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-        groupNode.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        groupNode.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
-        groupNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
-        groupNode.addLayoutParam(CoreOptions::SPACING_NODE_NODE, 20d);
-        groupNode.addLayoutParam(CoreOptions::PADDING, new ElkPadding(8d));        
+        val collapsedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ COLLAPSED_ID.equals(id) ].head
+        val expandedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ EXPANDED_ID.equals(id) ].head
+        
+        collapsedRendering.eContents.filter(KText).head.text = processorGroup.label
+        expandedRendering.eContents.filter(KText).head.text = processorGroup.label        
+        
+        groupNode.addLayoutParam(KlighdProperties::EXPAND, false);
         
         var List<KNode> lastNodes = newArrayList()
         for(it : processorGroup.processors) {
