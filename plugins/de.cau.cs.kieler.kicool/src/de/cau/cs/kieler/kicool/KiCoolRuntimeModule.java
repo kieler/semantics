@@ -14,8 +14,14 @@ import de.cau.cs.kieler.kicool.formatting.KiCoolValueConverter;
  */
 public class KiCoolRuntimeModule extends de.cau.cs.kieler.kicool.AbstractKiCoolRuntimeModule {
 
+    @Override
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return KiCoolValueConverter.class;
     }       
+    
+    @Override
+    public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
+        return de.cau.cs.kieler.kicool.formatting.KiCoolFormatterX.class;
+    }    
     
 }
