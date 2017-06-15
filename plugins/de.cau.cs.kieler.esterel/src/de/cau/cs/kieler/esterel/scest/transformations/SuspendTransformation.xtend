@@ -134,9 +134,13 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             transformStatements((statement as Present).elseStatements, counter+1)
         }
         else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements, counter+1)
-            (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, counter+1)]
-            transformStatements((statement as IfTest).elseStatements, counter+1)
+            // Don't transform the pauses in generated IfTests.
+            var annotations = (statement as IfTest).annotations
+            if (!isGenerated(annotations)) {
+                transformStatements((statement as IfTest).thenStatements, counter+1)
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, counter+1)]
+                transformStatements((statement as IfTest).elseStatements, counter+1)
+            }
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |
@@ -172,11 +176,15 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             var ifTest = newIfThenPauseGoto(EcoreUtil.copy(delay), label, false)
             var annotation = createAnnotation(counter)
             ifTest.annotations.add(annotation)
+            // Look for already existing IfTests after Pause.
+            // Check whether they have a higher priority than the transformed Suspend statement.
+            // Place the IfTest at the correct position.
             if (pos+1>=statements.length) {
                 statements.add(ifTest)
                 statements.add(pos, label)
                 return null
             }
+            // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
             for (var i=1; pos+i<statements.length; i++) {
                 if (statements.get(pos+i) instanceof IfTest) {
                     var ifTest2 = statements.get(pos+i) as IfTest

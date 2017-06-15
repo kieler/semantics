@@ -65,6 +65,7 @@ import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.esterel.scest.transformations.SCEstTransformation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.Annotation
 
 /**
  * @author mrb
@@ -993,6 +994,8 @@ class SCEstExtension {
       */
     def IfTest newIfThenPauseGoto(de.cau.cs.kieler.esterel.esterel.DelayExpr condition, Label targetLabel, boolean pause) {
         EsterelFactory::eINSTANCE.createIfTest => [
+            // TODO delayExpr also includes a counter expression: Signal A: ( suspend 3 A ...) or (suspend 3*X A)
+            // TODO delayExpr also includes a "Tick" delayExpr.tick
             expr = condition.signalExpr 
             if (pause) {
                 thenStatements.addAll(SclFactory::eINSTANCE.createPause)                
@@ -1015,6 +1018,20 @@ class SCEstExtension {
             name = "generated_ifTest"
             value = layer
         ]
+    }
+    
+    /**
+     * Check whether in an annotation list there is an annotation named "generated_ifTest".
+     * 
+     * @param annotations
+     * @return Is there an annotation which is named "generated_ifTest"?
+     */
+    def isGenerated(EList<Annotation> annotations) {
+        var generated = false
+        for (a : annotations) {
+            generated = generated || a.name.equals("generated_ifTest") 
+        }
+        return generated
     }
  
 }
