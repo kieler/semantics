@@ -20,7 +20,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.Colors
 import org.eclipse.emf.ecore.EObject
 import java.lang.Object
-import org.eclipse.cdt.internal.ui.editor.CEditor
 import org.eclipse.ui.texteditor.AbstractMarkerAnnotationModel
 
 /* Package and import statements... */
