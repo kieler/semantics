@@ -86,7 +86,7 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
         modelRoot = null;
         consoleStream.println("' PlantUML Code");
         consoleStream.println("' ");
-        consoleStream.println("' Use the following link to render the activity diagram:");
+        consoleStream.println("' Use the following link to render the sequence diagram:");
         consoleStream.println("' http://www.plantuml.com/plantuml/uml/");
         consoleStream.println(" ");
         
