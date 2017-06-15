@@ -15,11 +15,9 @@ package de.cau.cs.kieler.esterel.xtend
 
 import de.cau.cs.kieler.esterel.esterel.ISignal
 import de.cau.cs.kieler.esterel.esterel.InterfaceSignalDecl
-import de.cau.cs.kieler.esterel.esterel.ValueType
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.kexpressions.ValueType
 
-import static extension org.eclipse.xtext.xbase.lib.IteratorExtensions.*
 //WAS import static extension org.eclipse.xtext.xtend2.lib.EObjectExtensions.*
 
 // Transformation of Esterel code into Esterel code that fixes inconsistencies

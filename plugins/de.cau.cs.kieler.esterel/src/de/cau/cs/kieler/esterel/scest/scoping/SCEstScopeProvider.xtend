@@ -78,7 +78,7 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
         }
     }
     
-    def voScope(EObject context) {
+    def voScope(EObject context) { 
         var parent = context;
         val vos = newLinkedList()
         while (parent != null) {

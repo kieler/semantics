@@ -73,7 +73,7 @@ ConstantDecls:
 OneTypeConstantDecls:
     constants+=Constant ("," constants+=Constant)* ":" type=TypeIdentifier;
 
-Constant returns ValuedObject:
+Constant returns kexpressions::ValuedObject:
     {Constant} name=ID ("=" value=ConstantValue)?;
 
 ConstantValue:
@@ -130,7 +130,7 @@ InterfaceSignalDecl:
 // example 1:   A : combine boolean with or
 // example 2:   A (combine boolean with or)
 // example 3:   A := 0 : combine integer with '+'
-ISignal returns kexpressions::ValuedObject:
+ISignal returns ISignal:
     {ISignal}
     name=ID (   
           (":"    type=Esterel_ValueType
@@ -149,7 +149,7 @@ ISignal returns kexpressions::ValuedObject:
           ) 
     )?;
     
-Tick returns kexpressions::ValuedObject:
+Tick returns ISignal:
     name="tick";
 
 // ==> 7.3.7 Sensor Declaration
@@ -445,7 +445,7 @@ Trap:
     (trapHandler+=TrapHandler)* 
     "end" "trap"?;
 
-TrapSignal returns kexpressions::ValuedObject:
+TrapSignal returns ISignal:
     {TrapSignal} 
     name=ID 
     ( 
@@ -559,7 +559,7 @@ TypeRenaming:
     (newName=[Type|ID] | newType=Esterel_ValueType) "/" oldName=[Type|ID];
 
 ConstantRenaming:
-    (newName=[ValuedObject|ID] | newValue=ConstantValue) "/" oldName=[ValuedObject|ID];
+    (newName=[kexpressions::ValuedObject|ID] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject|ID];
 
 FunctionRenaming:
     (newName=[Function|ID] | newFunc=BuildInFunction) "/" oldName=[Function|ID];
@@ -914,7 +914,9 @@ ValuedObjectReference returns kexpressions::ValuedObjectReference:
     {kexpressions::ValuedObjectReference} 
     valuedObject=[kexpressions::ValuedObject|ID];
 
+ValuedObject returns kexpressions::ValuedObject:
+    ISignal | Constant | TrapSignal;
 
-// Example: 'printf(...)'(C)
-TextExpression returns TextExpression:
-    code=HOSTCODE ("(" type=ID ")")?;
+//// Example: 'printf(...)'(C)
+//TextExpression returns TextExpression:
+//    code=HOSTCODE ("(" type=ID ")")?; // in KExpressions there is no 'type'

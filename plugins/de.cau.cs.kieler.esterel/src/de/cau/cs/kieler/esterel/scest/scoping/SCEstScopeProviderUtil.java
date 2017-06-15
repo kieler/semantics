@@ -25,6 +25,7 @@ import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 import de.cau.cs.kieler.esterel.esterel.*;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
  * Supplies some convenient methods for scoping of the esterel grammar.

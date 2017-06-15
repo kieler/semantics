@@ -12,21 +12,9 @@
  */
 package de.cau.cs.kieler.esterel.scest.extensions
 
-import com.google.common.collect.ImmutableList
-import com.google.common.collect.Iterators
 import com.google.inject.Inject
-
-import java.util.ArrayList
-import java.util.Iterator
-import java.util.List
 import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.EObject
-
-import de.cau.cs.kieler.scl.scl.*
-import de.cau.cs.kieler.esterel.esterel.*
-
 import com.google.common.collect.Multimap
-import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.Block
 import de.cau.cs.kieler.esterel.esterel.EveryDo
@@ -36,7 +24,6 @@ import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.PresentCase
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.esterel.esterel.Suspend
@@ -45,7 +32,6 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -58,14 +44,14 @@ import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
-import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.esterel.scest.transformations.SCEstTransformation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.esterel.esterel.EsterelFactory
+import de.cau.cs.kieler.esterel.esterel.IfTest
 
 /**
  * @author mrb
@@ -996,7 +982,7 @@ class SCEstExtension {
         EsterelFactory::eINSTANCE.createIfTest => [
             // TODO delayExpr also includes a counter expression: Signal A: ( suspend 3 A ...) or (suspend 3*X A)
             // TODO delayExpr also includes a "Tick" delayExpr.tick
-            expr = condition.signalExpr 
+            expr = (condition.signalExpr as Expression)
             if (pause) {
                 thenStatements.addAll(SclFactory::eINSTANCE.createPause)                
             }
