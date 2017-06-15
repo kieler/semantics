@@ -84,7 +84,14 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
         bringToFront();
         eObjectMap = new HashMap<String, EObject>();
         modelRoot = null;
+        consoleStream.println("' PlantUML Code");
+        consoleStream.println("' ");
+        consoleStream.println("' Use the following link to render the activity diagram:");
+        consoleStream.println("' http://www.plantuml.com/plantuml/uml/");
+        consoleStream.println(" ");
+        
         consoleStream.println("@startuml");
+        consoleStream.println("participant User");
 
         transitionSerializer = Guice.createInjector().getInstance(TransitionSerializer);
     }
@@ -216,9 +223,18 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
             val effectValuedObjects = transition.effectAssignmentValuedObjects
 
             // Optional Note
-            val transitionNote = transition.sourceState.id + " -> " + transition.targetState.id // + " with " + transitionSerializer.serializeTrigger(transition)  
-            consolePrintln("note left \n   " + transitionNote + "")
-            consolePrintln("end note\n")
+            //val transitionNote = transition.sourceState.id + " -> " + transition.targetState.id // + " with " + transitionSerializer.serializeTrigger(transition)  
+            //consolePrintln("note left \n   " + transitionNote + "")
+            //consolePrintln("end note\n")
+            
+            // New Note
+            val affectedComponent = getRegion(transition);
+            
+            val beforeNote = "note over "+affectedComponent+" \n  " + transition.sourceState.id + "\n end note"
+            val afterNote = "note over "+affectedComponent+" \n  " + transition.targetState.id + "\n end note"
+            
+            // Print note before taken the transition : source state                  
+            consolePrintln(beforeNote)
 
             if (!triggerValuedObjects.nullOrEmpty) {
                 for (valuedObject : triggerValuedObjects) {
@@ -262,6 +278,9 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
                     }
                 }
             }
+
+            // Print note after taken the transition : target state                  
+            consolePrintln(afterNote)
 
         }
         return null;
@@ -339,6 +358,17 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
             returnList.add(assignment.valuedObject)
         }
         return returnList
+    }
+
+    // -------------------------------------------------------------------------
+    // Get the component of a taken transition
+    def String getRegion(Transition transition) {
+        for (region : toplevelRegions) {
+            if (region.eAllContents().filter(typeof(Action)).filter(e | e == transition).toList().size > 0) {
+                return region.id;
+            }
+        }
+        return "";
     }
 
     // -------------------------------------------------------------------------
