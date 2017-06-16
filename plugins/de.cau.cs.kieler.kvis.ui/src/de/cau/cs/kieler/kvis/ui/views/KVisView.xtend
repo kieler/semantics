@@ -254,20 +254,24 @@ class KVisView extends ViewPart {
 
         canvas.svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderListener() {
             
-            override documentLoadingCancelled(SVGDocumentLoaderEvent e) {
+            override documentLoadingCancelled(SVGDocumentLoaderEvent event) {
             }
             
-            override documentLoadingCompleted(SVGDocumentLoaderEvent e) {
+            override documentLoadingCompleted(SVGDocumentLoaderEvent event) {
                 // Now that the document is loaded,
                 // we can configure the animation and interactions from the kvis file.
-                createAnimationHandlers(kvisConfig)
-                createInteractionHandlers(kvisConfig)
+                try {
+                    createAnimationHandlers(kvisConfig)
+                    createInteractionHandlers(kvisConfig)
+                } catch (Exception e) {
+                    showError(e)
+                }
             }
             
-            override documentLoadingFailed(SVGDocumentLoaderEvent e) {
+            override documentLoadingFailed(SVGDocumentLoaderEvent event) {
             }
             
-            override documentLoadingStarted(SVGDocumentLoaderEvent e) {
+            override documentLoadingStarted(SVGDocumentLoaderEvent event) {
             }
             
             })
