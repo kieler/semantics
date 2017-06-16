@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 import de.cau.cs.kieler.kicool.ProcessorGroup
+import java.util.Observer
 
 /**
  * @author ssm
@@ -37,9 +38,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors System system
     @Accessors Object sourceModel
     @Accessors Map<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor> processorMap
+    @Accessors Map<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext> subContexts
     
     new() {
         processorMap = new HashMap<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor>()
+        subContexts = new HashMap<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext>()
     }
     
     def getProcessorInstances() {
@@ -65,8 +68,6 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     def void compile() {
-        val processorEntry = system.processors
-        
         val environment = new Environment
         environment.sourceModel = sourceModel
         environment.model = sourceModel
@@ -76,9 +77,18 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         environment.inplaceCompilation = false
         
+        environment.compile        
+    }
+    
+    // Protected is important. Should not be accessible from the outside.
+    protected def Environment compile(Environment environment) {
+        val processorEntry = system.processors
+        
         notify(new CompilationStart(this))
         val EPrime = processorEntry.compileEntry(environment)
-        notify(new CompilationFinished(this, EPrime))        
+        notify(new CompilationFinished(this, EPrime))
+              
+        EPrime  
     }
     
     
@@ -122,6 +132,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentLists.last
     }
     
+    protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.ProcessorSystem processorSystem, Environment environment) {
+        val subContext = subContexts.get(processorSystem)
+        subContext.compile(environment)
+    }
+    
     override cloneObject() {
         this
     }
@@ -129,5 +144,15 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     override isMutable() {
         false
     }
+    
+    override synchronized void addObserver(Observer o) {
+        super.addObserver(o)
+        for(sc : subContexts.values) sc.addObserver(o)
+    }
+
+    override synchronized void deleteObserver(Observer o) {
+        super.deleteObserver(o)
+        for(sc : subContexts.values) sc.deleteObserver(o)
+    }    
         
 }

@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.compilation.internal
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.compilation.Environment
+import de.cau.cs.kieler.kicool.compilation.Compile
 
 /**
  * @author ssm
@@ -58,6 +59,12 @@ class ContextPopulation {
         for(processor : processorAlternativeGroup.processors) {
             processor.populate(cc)
         }
+    }
+    
+    static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorSystem processorSystem, CompilationContext cc) {
+        val subContext = Compile.createCompilationContext(processorSystem.id, null)
+        
+        cc.subContexts.put(processorSystem, subContext)
     }
     
     

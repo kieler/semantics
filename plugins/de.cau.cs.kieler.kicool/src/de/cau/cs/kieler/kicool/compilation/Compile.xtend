@@ -34,7 +34,7 @@ class Compile {
         
         cc.populateContext
         
-        RuntimeSystems.add(cc.getSystem, cc)
+//        RuntimeSystems.add(cc.getSystem, cc)
         
         cc
     }
