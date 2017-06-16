@@ -33,7 +33,7 @@ class KExpressionsComplexCreateExtensions {
         if (first == null) {
             return second
         }
-        createLogicalAndExpression(first, second)
+        return createLogicalAndExpression(first, second)
     }  
     
     // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
@@ -42,12 +42,12 @@ class KExpressionsComplexCreateExtensions {
         if (first == null) {
             return second
         }
-        createLogicalOrExpression(first, second)
+        return createLogicalOrExpression(first, second)
     }
 
     // Create an NOT Expression and add expression as a sub expression.
     def OperatorExpression not(Expression expression) {
-        createNotExpression(expression)
+        return createNotExpression(expression)
     }
 
     // Create an ADD Expression and add expression as a sub expression.
@@ -55,7 +55,7 @@ class KExpressionsComplexCreateExtensions {
         if (first == null) {
             return second
         }
-        createAddExpression(first, second) 
+        return createAddExpression(first, second) 
     }    
     
     // Create an SUB Expression and add expression as a sub expression.
@@ -63,7 +63,7 @@ class KExpressionsComplexCreateExtensions {
         if (first == null) {
             return second
         }
-        createSubExpression(first, second)
+        return createSubExpression(first, second)
     }    
 
     // Create an MULT Expression and add expression as a sub expression.
@@ -71,10 +71,10 @@ class KExpressionsComplexCreateExtensions {
         if (expressionFirst == null) {
             return expressionSecond
         }
-        val addExpression = createMultExpression()
-        addExpression.add(expressionFirst)
-        addExpression.add(expressionSecond)
-        addExpression
+        return createMultExpression() => [
+            subExpressions += expressionFirst
+            subExpressions += expressionSecond
+        ]
     }
      
 
@@ -83,10 +83,10 @@ class KExpressionsComplexCreateExtensions {
         if (expressionFirst == null) {
             return expressionSecond
         }
-        val addExpression = createMaxExpression()
-        addExpression.add(expressionFirst)
-        addExpression.add(expressionSecond)
-        addExpression
+        return createMaxExpression() => [
+            subExpressions += expressionFirst
+            subExpressions += expressionSecond
+        ]
     }
 
     // Create an MIN Expression and add expression as a sub expression.
@@ -94,18 +94,18 @@ class KExpressionsComplexCreateExtensions {
         if (expressionFirst == null) {
             return expressionSecond
         }
-        val addExpression = createMinExpression()
-        addExpression.add(expressionFirst)
-        addExpression.add(expressionSecond)
-        addExpression
+        return createMinExpression() => [
+            subExpressions += expressionFirst
+            subExpressions += expressionSecond
+        ]
     }
     
     // Create an EQ Expression.
-    def OperatorExpression eq(Expression first, Expression second) {
-        val equalsExpression = createEQExpression
-        equalsExpression.add(first)
-        equalsExpression.add(second)
-        equalsExpression
+    def OperatorExpression eq(Expression expressionFirst, Expression expressionSecond) {
+        return createEQExpression => [
+            subExpressions += expressionFirst
+            subExpressions += expressionSecond
+        ]
     }
     
        
