@@ -48,13 +48,20 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
                 )
             }
             case SUB: {
-                feeder.multiOP(
-                    semanticObject,
-                    grammarAccess.subExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
-                    grammarAccess.subExpressionAccess.operatorSubOperatorEnumRuleCall_1_1_0_0,
-                    grammarAccess.subExpressionAccess.subExpressionsMultExpressionParserRuleCall_1_1_1_0,
-                    grammarAccess.subExpressionAccess.subExpressionsMultExpressionParserRuleCall_1_2_1_0
-                )
+                if (semanticObject.subExpressions.size == 1) {
+                    feeder.accept(grammarAccess.negExpressionAccess.operatorSubOperatorEnumRuleCall_0_1_0,
+                        semanticObject.operator)
+                    feeder.accept(grammarAccess.negExpressionAccess.subExpressionsNegExpressionParserRuleCall_0_2_0,
+                        semanticObject.subExpressions.head, 0)                    
+                } else {
+                    feeder.multiOP(
+                        semanticObject,
+                        grammarAccess.subExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                        grammarAccess.subExpressionAccess.operatorSubOperatorEnumRuleCall_1_1_0_0,
+                        grammarAccess.subExpressionAccess.subExpressionsMultExpressionParserRuleCall_1_1_1_0,
+                        grammarAccess.subExpressionAccess.subExpressionsMultExpressionParserRuleCall_1_2_1_0
+                    )
+                }
             }
             case MULT: {
                 feeder.multiOP(
