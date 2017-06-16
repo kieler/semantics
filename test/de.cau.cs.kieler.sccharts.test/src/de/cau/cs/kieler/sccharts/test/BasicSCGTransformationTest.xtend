@@ -100,7 +100,7 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<State>
         assertTrue("Compilation result of SCG transformation is not an SCGraph", resultModel instanceof SCGraph)
         
         // Dependencies
-        result = resultModel.compile("T_scg.dependencies")
+        result = resultModel.compile("T_scg.dependency")
         if (!result.postponedErrors.empty) {
             throw new Exception("Could not perform dependency analysis on SCGraph. Compilation error occurred!", result.postponedErrors.head)
         }
