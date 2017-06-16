@@ -160,7 +160,7 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                 for (var i=0; i<cases.length; i++) {
                     var c = cases.get(i)
                     if (c.delay != null) {
-                        if (await.delay.expr != null) {
+                        if (c.delay.expr != null) {
                             var variable = createNewUniqueVariable(createIntValue(0))
                             var decl = createDeclaration(ValueType.INT, variable)
                             scope.declarations.add(decl)
@@ -192,7 +192,10 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                         }
                     }
                 }
+                scope.statements.add(createPause)
+                scope.statements.add(createGotoStatement(startLabel))
                 scope.statements.add(endLabel)
+                statements.set(pos, scope)
             }
             
             
