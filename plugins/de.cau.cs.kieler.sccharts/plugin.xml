@@ -293,6 +293,9 @@
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.extended.simple.kico">
         </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.extended.kico">
+        </TransformationSystem>
      </extension>
 
 
