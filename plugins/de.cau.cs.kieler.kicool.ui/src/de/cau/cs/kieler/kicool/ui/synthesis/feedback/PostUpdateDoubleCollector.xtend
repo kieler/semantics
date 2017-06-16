@@ -23,7 +23,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class PostUpdateDoubleCollector {
     
     @Accessors var String key
-    @Accessors var double nullPercent = 0.20 
+    @Accessors var double nullPercent = 0.33 
     @Accessors var double maxValue = nullPercent
     
     private val processorMap = <de.cau.cs.kieler.kicool.compilation.Processor, Double> newHashMap
