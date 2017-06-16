@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.8.1",
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kitt,
- de.cau.cs.kieler.sccharts.text
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.kicool
 Export-Package: de.cau.cs.kieler.sccharts.scg
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
