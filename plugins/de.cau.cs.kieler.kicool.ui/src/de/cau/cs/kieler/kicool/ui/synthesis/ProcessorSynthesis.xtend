@@ -46,6 +46,7 @@ import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -94,8 +95,10 @@ class ProcessorSynthesis {
         val collapsedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ COLLAPSED_ID.equals(id) ].head
         val expandedRendering = groupNode.eContents.filter(KRoundedRectangle).filter[ EXPANDED_ID.equals(id) ].head
         
-        collapsedRendering.eContents.filter(KText).head.text = processorGroup.label
-        expandedRendering.eContents.filter(KText).head.text = processorGroup.label        
+        var label = processorGroup.label
+        if (processorGroup.eContainer instanceof System) label = (processorGroup.eContainer as System).label
+        collapsedRendering.eContents.filter(KText).head.text = label
+        expandedRendering.eContents.filter(KText).head.text = label        
         
         groupNode.addLayoutParam(KlighdProperties::EXPAND, false);
         
@@ -128,8 +131,22 @@ class ProcessorSynthesis {
         alternativeGroupNodes   
     }
     
+    dispatch def List<KNode> transform(ProcessorSystem processorSystem) {
+        val system = processorSystem.getProcessorSystem
+        if (system != null) {
+//            val systemModel = system.transform
+            val systemModel = system.processors.transform
+            return newArrayList(systemModel) 
+        }
+        return newArrayList(createNode)
+    }
     
+
     protected def System getProcessorSystem(ProcessorSystem processorSystem) {
+        return KiCoolRegistration.getSystemById(processorSystem.id)
+    }
+
+    protected def System getProcessorSystemFromModelFile(ProcessorSystem processorSystem) {
         val sl = processorSystem.eResource.URI.segmentsList
         val nsl = sl.take(sl.length - 1).drop(1)
         val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + processorSystem.id + '.kico', false)   
@@ -142,20 +159,10 @@ class ProcessorSynthesis {
             val node = (res.getContents().get(0) as System)
             return node
         } catch (Exception e) {
-            // 
+            val rSystem = KiCoolRegistration.getSystemById(processorSystem.id)
+            return rSystem
         }         
-        return null
     }
-    
 
-    dispatch def List<KNode> transform(ProcessorSystem processorSystem) {
-        val system = processorSystem.getProcessorSystem
-        if (system != null) {
-            val systemModel = system.transform
-            return newArrayList(systemModel) 
-        }
-        return newArrayList(createNode)
-    }
-    
     
 }
