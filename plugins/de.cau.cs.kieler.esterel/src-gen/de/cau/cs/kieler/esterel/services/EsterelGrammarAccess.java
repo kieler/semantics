@@ -1226,8 +1226,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFuncAssignment_2_0_2_3_0 = (Assignment)cAlternatives_2_0_2_3.eContents().get(0);
 		private final CrossReference cFuncFunctionCrossReference_2_0_2_3_0_0 = (CrossReference)cFuncAssignment_2_0_2_3_0.eContents().get(0);
 		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_0_2_3_0_0.eContents().get(1);
-		private final Assignment cOperatorAssignment_2_0_2_3_1 = (Assignment)cAlternatives_2_0_2_3.eContents().get(1);
-		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0 = (RuleCall)cOperatorAssignment_2_0_2_3_1.eContents().get(0);
+		private final Assignment cCombineOperatorAssignment_2_0_2_3_1 = (Assignment)cAlternatives_2_0_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_0_2_3_1.eContents().get(0);
 		private final Alternatives cAlternatives_2_1 = (Alternatives)cAlternatives_2.eContents().get(1);
 		private final Group cGroup_2_1_0 = (Group)cAlternatives_2_1.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2_1_0_0 = (Keyword)cGroup_2_1_0.eContents().get(0);
@@ -1248,8 +1248,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFuncAssignment_2_1_2_0_3_0 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(0);
 		private final CrossReference cFuncFunctionCrossReference_2_1_2_0_3_0_0 = (CrossReference)cFuncAssignment_2_1_2_0_3_0.eContents().get(0);
 		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_1_2_0_3_0_0.eContents().get(1);
-		private final Assignment cOperatorAssignment_2_1_2_0_3_1 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(1);
-		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0 = (RuleCall)cOperatorAssignment_2_1_2_0_3_1.eContents().get(0);
+		private final Assignment cCombineOperatorAssignment_2_1_2_0_3_1 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_1_2_0_3_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_1_2_1 = (Keyword)cGroup_2_1_2.eContents().get(1);
 		private final Alternatives cAlternatives_2_2 = (Alternatives)cAlternatives_2.eContents().get(2);
 		private final Group cGroup_2_2_0 = (Group)cAlternatives_2_2.eContents().get(0);
@@ -1273,8 +1273,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFuncAssignment_2_2_2_3_0 = (Assignment)cAlternatives_2_2_2_3.eContents().get(0);
 		private final CrossReference cFuncFunctionCrossReference_2_2_2_3_0_0 = (CrossReference)cFuncAssignment_2_2_2_3_0.eContents().get(0);
 		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_2_2_3_0_0.eContents().get(1);
-		private final Assignment cOperatorAssignment_2_2_2_3_1 = (Assignment)cAlternatives_2_2_2_3.eContents().get(1);
-		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0 = (RuleCall)cOperatorAssignment_2_2_2_3_1.eContents().get(0);
+		private final Assignment cCombineOperatorAssignment_2_2_2_3_1 = (Assignment)cAlternatives_2_2_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_2_2_3_1.eContents().get(0);
 		
 		//// example 1:   A : combine boolean with or
 		//// example 2:   A (combine boolean with or)
@@ -1282,21 +1282,23 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ISignal:
 		//	{ISignal} name=ID ((":" type=Esterel_ValueType
 		//	| typeID=ID
-		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) | ("("
+		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
+		//	("("
 		//	type=Esterel_ValueType
 		//	| typeID=ID
-		//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+		//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 		//	")") | (":=" expression=Expression ":"
 		//	type=Esterel_ValueType
 		//	| typeID=ID
-		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)))?;
+		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//	combineOperator=Esterel_CombineOperator)))?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{ISignal} name=ID ((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | operator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
-		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) ")") | (":="
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
+		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
 		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | operator=Esterel_CombineOperator)))?
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		public Group getGroup() { return cGroup; }
 
 		//{ISignal}
@@ -1309,14 +1311,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
 		//((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine" (type=Esterel_ValueType |
-		//typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) ")") | (":=" expression=Expression ":"
-		//type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator)))?
+		//combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
+		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
+		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//(":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator))
+		//combineOperator=Esterel_CombineOperator))
 		public Alternatives getAlternatives_2_0() { return cAlternatives_2_0; }
 
 		//":" type=Esterel_ValueType
@@ -1337,7 +1339,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_0; }
 
-		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)
+		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
 
 		//"combine"
@@ -1361,7 +1363,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_2_0_2_2() { return cWithKeyword_2_0_2_2; }
 
-		//(func=[Function] | operator=Esterel_CombineOperator)
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Alternatives getAlternatives_2_0_2_3() { return cAlternatives_2_0_2_3; }
 
 		//func=[Function]
@@ -1373,14 +1375,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1; }
 
-		//operator=Esterel_CombineOperator
-		public Assignment getOperatorAssignment_2_0_2_3_1() { return cOperatorAssignment_2_0_2_3_1; }
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_0_2_3_1() { return cCombineOperatorAssignment_2_0_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0; }
 
 		//("(" type=Esterel_ValueType | typeID=ID | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator)) ")")
+		//combineOperator=Esterel_CombineOperator)) ")")
 		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
 
 		//"(" type=Esterel_ValueType
@@ -1401,10 +1403,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_0; }
 
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) ")"
+		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")"
 		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
 
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 		public Group getGroup_2_1_2_0() { return cGroup_2_1_2_0; }
 
 		//"combine"
@@ -1428,7 +1430,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_2_1_2_0_2() { return cWithKeyword_2_1_2_0_2; }
 
-		//(func=[Function] | operator=Esterel_CombineOperator)
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Alternatives getAlternatives_2_1_2_0_3() { return cAlternatives_2_1_2_0_3; }
 
 		//func=[Function]
@@ -1440,17 +1442,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1; }
 
-		//operator=Esterel_CombineOperator
-		public Assignment getOperatorAssignment_2_1_2_0_3_1() { return cOperatorAssignment_2_1_2_0_3_1; }
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_1_2_0_3_1() { return cCombineOperatorAssignment_2_1_2_0_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_1_2_1() { return cRightParenthesisKeyword_2_1_2_1; }
 
 		//(":=" expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID)
-		//"with" (func=[Function] | operator=Esterel_CombineOperator))
+		//"with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 		public Alternatives getAlternatives_2_2() { return cAlternatives_2_2; }
 
 		//":=" expression=Expression ":" type=Esterel_ValueType
@@ -1480,7 +1482,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTypeIDIDTerminalRuleCall_2_2_1_0() { return cTypeIDIDTerminalRuleCall_2_2_1_0; }
 
-		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)
+		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Group getGroup_2_2_2() { return cGroup_2_2_2; }
 
 		//"combine"
@@ -1504,7 +1506,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_2_2_2_2() { return cWithKeyword_2_2_2_2; }
 
-		//(func=[Function] | operator=Esterel_CombineOperator)
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Alternatives getAlternatives_2_2_2_3() { return cAlternatives_2_2_2_3; }
 
 		//func=[Function]
@@ -1516,11 +1518,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1; }
 
-		//operator=Esterel_CombineOperator
-		public Assignment getOperatorAssignment_2_2_2_3_1() { return cOperatorAssignment_2_2_2_3_1; }
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_2_2_3_1() { return cCombineOperatorAssignment_2_2_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0; }
 	}
 
 	public class TickElements extends AbstractParserRuleElementFinder {
@@ -3991,8 +3993,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFuncAssignment_2_0_2_3_0 = (Assignment)cAlternatives_2_0_2_3.eContents().get(0);
 		private final CrossReference cFuncFunctionCrossReference_2_0_2_3_0_0 = (CrossReference)cFuncAssignment_2_0_2_3_0.eContents().get(0);
 		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_0_2_3_0_0.eContents().get(1);
-		private final Assignment cOperatorAssignment_2_0_2_3_1 = (Assignment)cAlternatives_2_0_2_3.eContents().get(1);
-		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0 = (RuleCall)cOperatorAssignment_2_0_2_3_1.eContents().get(0);
+		private final Assignment cCombineOperatorAssignment_2_0_2_3_1 = (Assignment)cAlternatives_2_0_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_0_2_3_1.eContents().get(0);
 		private final Alternatives cAlternatives_2_1 = (Alternatives)cAlternatives_2.eContents().get(1);
 		private final Group cGroup_2_1_0 = (Group)cAlternatives_2_1.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2_1_0_0 = (Keyword)cGroup_2_1_0.eContents().get(0);
@@ -4013,8 +4015,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFuncAssignment_2_1_2_0_3_0 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(0);
 		private final CrossReference cFuncFunctionCrossReference_2_1_2_0_3_0_0 = (CrossReference)cFuncAssignment_2_1_2_0_3_0.eContents().get(0);
 		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_1_2_0_3_0_0.eContents().get(1);
-		private final Assignment cOperatorAssignment_2_1_2_0_3_1 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(1);
-		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0 = (RuleCall)cOperatorAssignment_2_1_2_0_3_1.eContents().get(0);
+		private final Assignment cCombineOperatorAssignment_2_1_2_0_3_1 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_1_2_0_3_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_1_2_1 = (Keyword)cGroup_2_1_2.eContents().get(1);
 		private final Alternatives cAlternatives_2_2 = (Alternatives)cAlternatives_2.eContents().get(2);
 		private final Group cGroup_2_2_0 = (Group)cAlternatives_2_2.eContents().get(0);
@@ -4038,27 +4040,28 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFuncAssignment_2_2_2_3_0 = (Assignment)cAlternatives_2_2_2_3.eContents().get(0);
 		private final CrossReference cFuncFunctionCrossReference_2_2_2_3_0_0 = (CrossReference)cFuncAssignment_2_2_2_3_0.eContents().get(0);
 		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_2_2_3_0_0.eContents().get(1);
-		private final Assignment cOperatorAssignment_2_2_2_3_1 = (Assignment)cAlternatives_2_2_2_3.eContents().get(1);
-		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0 = (RuleCall)cOperatorAssignment_2_2_2_3_1.eContents().get(0);
+		private final Assignment cCombineOperatorAssignment_2_2_2_3_1 = (Assignment)cAlternatives_2_2_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_2_2_3_1.eContents().get(0);
 		
 		//TrapSignal ISignal:
 		//	{TrapSignal} name=ID ((":" type=Esterel_ValueType
 		//	| typeID=ID
-		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) | ("("
+		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
+		//	("("
 		//	type=Esterel_ValueType
 		//	| typeID=ID
-		//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+		//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 		//	")") | (":=" expression=Expression ":"
 		//	type=Esterel_ValueType
 		//	| typeID=ID
-		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)))?
+		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		@Override public ParserRule getRule() { return rule; }
 
 		//{TrapSignal} name=ID ((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | operator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
-		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) ")") | (":="
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
+		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
 		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | operator=Esterel_CombineOperator)))?
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		public Group getGroup() { return cGroup; }
 
 		//{TrapSignal}
@@ -4071,14 +4074,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
 		//((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine" (type=Esterel_ValueType |
-		//typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) ")") | (":=" expression=Expression ":"
-		//type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator)))?
+		//combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
+		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
+		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//(":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator))
+		//combineOperator=Esterel_CombineOperator))
 		public Alternatives getAlternatives_2_0() { return cAlternatives_2_0; }
 
 		//":" type=Esterel_ValueType
@@ -4099,7 +4102,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_0; }
 
-		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)
+		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
 
 		//"combine"
@@ -4123,7 +4126,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_2_0_2_2() { return cWithKeyword_2_0_2_2; }
 
-		//(func=[Function] | operator=Esterel_CombineOperator)
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Alternatives getAlternatives_2_0_2_3() { return cAlternatives_2_0_2_3; }
 
 		//func=[Function]
@@ -4135,14 +4138,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1; }
 
-		//operator=Esterel_CombineOperator
-		public Assignment getOperatorAssignment_2_0_2_3_1() { return cOperatorAssignment_2_0_2_3_1; }
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_0_2_3_1() { return cCombineOperatorAssignment_2_0_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0; }
 
 		//("(" type=Esterel_ValueType | typeID=ID | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//operator=Esterel_CombineOperator)) ")")
+		//combineOperator=Esterel_CombineOperator)) ")")
 		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
 
 		//"(" type=Esterel_ValueType
@@ -4163,10 +4166,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_0; }
 
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) ")"
+		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")"
 		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
 
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 		public Group getGroup_2_1_2_0() { return cGroup_2_1_2_0; }
 
 		//"combine"
@@ -4190,7 +4193,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_2_1_2_0_2() { return cWithKeyword_2_1_2_0_2; }
 
-		//(func=[Function] | operator=Esterel_CombineOperator)
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Alternatives getAlternatives_2_1_2_0_3() { return cAlternatives_2_1_2_0_3; }
 
 		//func=[Function]
@@ -4202,17 +4205,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1; }
 
-		//operator=Esterel_CombineOperator
-		public Assignment getOperatorAssignment_2_1_2_0_3_1() { return cOperatorAssignment_2_1_2_0_3_1; }
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_1_2_0_3_1() { return cCombineOperatorAssignment_2_1_2_0_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_1_2_1() { return cRightParenthesisKeyword_2_1_2_1; }
 
 		//(":=" expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID)
-		//"with" (func=[Function] | operator=Esterel_CombineOperator))
+		//"with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 		public Alternatives getAlternatives_2_2() { return cAlternatives_2_2; }
 
 		//":=" expression=Expression ":" type=Esterel_ValueType
@@ -4242,7 +4245,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTypeIDIDTerminalRuleCall_2_2_1_0() { return cTypeIDIDTerminalRuleCall_2_2_1_0; }
 
-		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)
+		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Group getGroup_2_2_2() { return cGroup_2_2_2; }
 
 		//"combine"
@@ -4266,7 +4269,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_2_2_2_2() { return cWithKeyword_2_2_2_2; }
 
-		//(func=[Function] | operator=Esterel_CombineOperator)
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
 		public Alternatives getAlternatives_2_2_2_3() { return cAlternatives_2_2_2_3; }
 
 		//func=[Function]
@@ -4278,11 +4281,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1; }
 
-		//operator=Esterel_CombineOperator
-		public Assignment getOperatorAssignment_2_2_2_3_1() { return cOperatorAssignment_2_2_2_3_1; }
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_2_2_3_1() { return cCombineOperatorAssignment_2_2_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0; }
 	}
 
 	public class TrapHandlerElements extends AbstractParserRuleElementFinder {
@@ -7249,22 +7252,24 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValuedObjectReferenceParserRuleCall_2() { return cValuedObjectReferenceParserRuleCall_2; }
 	}
 
-	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.ValuedObject");
+	public class Esterel_ValuedObjectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.Esterel_ValuedObject");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cISignalParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cConstantParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cTrapSignalParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cIVariableParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cValuedObjectParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		////// Example: A, varB
 		////ValuedObjectReference returns kexpressions::ValuedObjectReference:
 		////    {kexpressions::ValuedObjectReference} 
 		////    valuedObject=[kexpressions::ValuedObject|ID];
-		//ValuedObject kexpressions::ValuedObject:
-		//	ISignal | Constant | TrapSignal
+		//Esterel_ValuedObject kexpressions::ValuedObject:
+		//	ISignal | Constant | TrapSignal | IVariable | ValuedObject
 		@Override public ParserRule getRule() { return rule; }
 
-		//ISignal | Constant | TrapSignal
+		//ISignal | Constant | TrapSignal | IVariable | ValuedObject
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ISignal
@@ -7275,6 +7280,12 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//TrapSignal
 		public RuleCall getTrapSignalParserRuleCall_2() { return cTrapSignalParserRuleCall_2; }
+
+		//IVariable
+		public RuleCall getIVariableParserRuleCall_3() { return cIVariableParserRuleCall_3; }
+
+		//ValuedObject
+		public RuleCall getValuedObjectParserRuleCall_4() { return cValuedObjectParserRuleCall_4; }
 	}
 	
 	
@@ -7769,7 +7780,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private final NegExpressionElements pNegExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
-	private final ValuedObjectElements pValuedObject;
+	private final Esterel_ValuedObjectElements pEsterel_ValuedObject;
 	
 	private final Grammar grammar;
 
@@ -7915,7 +7926,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		this.pNegExpression = new NegExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
-		this.pValuedObject = new ValuedObjectElements();
+		this.pEsterel_ValuedObject = new Esterel_ValuedObjectElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -8189,14 +8200,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//ISignal:
 	//	{ISignal} name=ID ((":" type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) | ("("
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
+	//	("("
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 	//	")") | (":=" expression=Expression ":"
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)))?;
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+	//	combineOperator=Esterel_CombineOperator)))?;
 	public ISignalElements getISignalAccess() {
 		return pISignal;
 	}
@@ -8641,14 +8654,15 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//TrapSignal ISignal:
 	//	{TrapSignal} name=ID ((":" type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) | ("("
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
+	//	("("
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 	//	")") | (":=" expression=Expression ":"
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)))?
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)))?
 	public TrapSignalElements getTrapSignalAccess() {
 		return pTrapSignal;
 	}
@@ -9440,14 +9454,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	////ValuedObjectReference returns kexpressions::ValuedObjectReference:
 	////    {kexpressions::ValuedObjectReference} 
 	////    valuedObject=[kexpressions::ValuedObject|ID];
-	//ValuedObject kexpressions::ValuedObject:
-	//	ISignal | Constant | TrapSignal
-	public ValuedObjectElements getValuedObjectAccess() {
-		return pValuedObject;
+	//Esterel_ValuedObject kexpressions::ValuedObject:
+	//	ISignal | Constant | TrapSignal | IVariable | ValuedObject
+	public Esterel_ValuedObjectElements getEsterel_ValuedObjectAccess() {
+		return pEsterel_ValuedObject;
 	}
 	
-	public ParserRule getValuedObjectRule() {
-		return getValuedObjectAccess().getRule();
+	public ParserRule getEsterel_ValuedObjectRule() {
+		return getEsterel_ValuedObjectAccess().getRule();
 	}
 
 	//SCLProgram:
@@ -9664,14 +9678,29 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	volatile?='volatile'?
 	//	input?='input'?
 	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=super::ValuedObject (','
-	//	valuedObjects+=super::ValuedObject)* ';'
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)* ';'
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
 	
 	public ParserRule getDeclarationRule() {
 		return getDeclarationAccess().getRule();
+	}
+
+	//// Valued Object Rule
+	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
+	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+	//// Examples: array[10], initial = false, z = 0 combine max
+	//ValuedObject kexpressions::ValuedObject:
+	//	name=ID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
+	//	combineOperator=CombineOperator)?
+	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
+		return gaKExt.getValuedObjectAccess();
+	}
+	
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
 	}
 
 	/// **

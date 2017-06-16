@@ -93,6 +93,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
@@ -258,7 +259,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case EsterelPackage.ISIGNAL:
 				if (rule == grammarAccess.getISignalRule()
-						|| rule == grammarAccess.getValuedObjectRule()) {
+						|| rule == grammarAccess.getEsterel_ValuedObjectRule()) {
 					sequence_ISignal(context, (ISignal) semanticObject); 
 					return; 
 				}
@@ -513,6 +514,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				sequence_TextExpression(context, (TextExpression) semanticObject); 
+				return; 
+			case KExpressionsPackage.VALUED_OBJECT:
+				sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getTrapExprRule()
@@ -917,7 +921,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     Constant returns Constant
-	 *     ValuedObject returns Constant
+	 *     Esterel_ValuedObject returns Constant
 	 *
 	 * Constraint:
 	 *     (name=ID value=ConstantValue?)
@@ -1214,7 +1218,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     ISignal returns ISignal
-	 *     ValuedObject returns ISignal
+	 *     Esterel_ValuedObject returns ISignal
 	 *
 	 * Constraint:
 	 *     (
@@ -1222,13 +1226,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (
 	 *             type=Esterel_ValueType | 
 	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | operator=Esterel_CombineOperator)) | 
+	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
 	 *             type=Esterel_ValueType | 
 	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | operator=Esterel_CombineOperator)) | 
+	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
 	 *             (expression=Expression type=Esterel_ValueType) | 
 	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | operator=Esterel_CombineOperator))
+	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
 	 *         )?
 	 *     )
 	 */
@@ -1240,6 +1244,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     IVariable returns IVariable
+	 *     Esterel_ValuedObject returns IVariable
 	 *
 	 * Constraint:
 	 *     (name=ID expression=Expression?)
@@ -1957,7 +1962,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     TrapSignal returns TrapSignal
-	 *     ValuedObject returns TrapSignal
+	 *     Esterel_ValuedObject returns TrapSignal
 	 *
 	 * Constraint:
 	 *     (
@@ -1965,13 +1970,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (
 	 *             type=Esterel_ValueType | 
 	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | operator=Esterel_CombineOperator)) | 
+	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
 	 *             type=Esterel_ValueType | 
 	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | operator=Esterel_CombineOperator)) | 
+	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
 	 *             (expression=Expression type=Esterel_ValueType) | 
 	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | operator=Esterel_CombineOperator))
+	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
 	 *         )?
 	 *     )
 	 */

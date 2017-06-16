@@ -54,10 +54,6 @@ class NothingTransformation extends AbstractExpansionTransformation implements T
         return SCEstFeature::NOTHING_ID
     }
         
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::)
-//    }
-//
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
     }
@@ -71,10 +67,12 @@ class NothingTransformation extends AbstractExpansionTransformation implements T
     }
     
     def EList<Statement> transformStatements(EList<Statement> statements) {
-        for (var i=0; i<statements.length; i++) {
-            var statement = statements.get(i).transformStatement
-            if (statement instanceof Statement) {
-                statements.set(i, statement)
+        if (statements != null) {
+            for (var i=0; i<statements.length; i++) {
+                var statement = statements.get(i).transformStatement
+                if (statement instanceof Statement) {
+                    statements.set(i, statement)
+                }
             }
         }
         return statements
@@ -89,30 +87,42 @@ class NothingTransformation extends AbstractExpansionTransformation implements T
             transformStatements((statement as StatementContainer).statements)
             
             if (statement instanceof Trap) {
-                (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
+                if ((statement as Trap).trapHandler != null) {
+                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
+                }
             }
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
-                (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
+                if ((statement as Abort).cases != null) {
+                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
+                }
             }
             else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
+                if ((statement as Exec).execCaseList != null) {
+                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
+                }
             }
             else if (statement instanceof Do) {
                 transformStatements((statement as Do).watchingStatements)
             }
             else if (statement instanceof Conditional) {
-                transformStatements((statement as Conditional).getElse().statements)
+                if ((statement as Conditional).getElse() != null) {
+                    transformStatements((statement as Conditional).getElse().statements)
+                }
             }
         }
         else if (statement instanceof Present) {
             transformStatements((statement as Present).thenStatements)
-            (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+            }
             transformStatements((statement as Present).elseStatements)
         }
         else if (statement instanceof IfTest) {
             transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
+            }
             transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {

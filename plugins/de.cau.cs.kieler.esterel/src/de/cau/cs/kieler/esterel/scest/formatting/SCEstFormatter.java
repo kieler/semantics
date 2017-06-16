@@ -340,6 +340,9 @@ public class SCEstFormatter extends AbstractDeclarativeFormatter {
          c.setLinewrap().before(f.getExecCaseAccess().getCaseKeyword_1());
          c.setIndentationIncrement().before(f.getExecCaseAccess().getCaseKeyword_1());
          c.setIndentationDecrement().after(f.getExecCaseRule());
+ 
+      // ==> Assignment <==
+         c.setLinewrap().before(f.getAssignmentRule());
          
       // ==> Conditional <==
          c.setLinewrap().before(f.getConditionalAccess().getIfKeyword_1());
@@ -366,13 +369,13 @@ public class SCEstFormatter extends AbstractDeclarativeFormatter {
          c.setIndentationDecrement().before(f.getThreadAccess().getRightCurlyBracketKeyword_1_0_4());
          c.setLinewrap().before(f.getThreadAccess().getRightCurlyBracketKeyword_1_0_4());
          
-         // ==> ScopeStatement <==
+      // ==> ScopeStatement <==
          c.setLinewrap().before(f.getScopeStatementAccess().getLeftCurlyBracketKeyword_2());
          c.setIndentationIncrement().after(f.getScopeStatementAccess().getLeftCurlyBracketKeyword_2());
          c.setIndentationDecrement().before(f.getScopeStatementAccess().getRightCurlyBracketKeyword_5());
          c.setLinewrap().before(f.getScopeStatementAccess().getRightCurlyBracketKeyword_5());
          
-         // ==> Declaration <==
+      // ==> Declaration <==
          c.setLinewrap().before(f.getDeclarationRule());
          c.setNoLinewrap().before(f.getDeclarationAccess().getCommaKeyword_9_0());
          c.setNoLinewrap().before(f.getDeclarationAccess().getSemicolonKeyword_10());

@@ -7,6 +7,8 @@ import de.cau.cs.kieler.esterel.esterel.IVariable;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
+import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -14,7 +16,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,34 +25,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IVariableImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IVariableImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class IVariableImpl extends MinimalEObjectImpl.Container implements IVariable
+public class IVariableImpl extends ValuedObjectImpl implements IVariable
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -81,29 +61,6 @@ public class IVariableImpl extends MinimalEObjectImpl.Container implements IVari
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.IVARIABLE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IVARIABLE__NAME, oldName, name));
   }
 
   /**
@@ -180,8 +137,6 @@ public class IVariableImpl extends MinimalEObjectImpl.Container implements IVari
   {
     switch (featureID)
     {
-      case EsterelPackage.IVARIABLE__NAME:
-        return getName();
       case EsterelPackage.IVARIABLE__EXPRESSION:
         return getExpression();
     }
@@ -198,9 +153,6 @@ public class IVariableImpl extends MinimalEObjectImpl.Container implements IVari
   {
     switch (featureID)
     {
-      case EsterelPackage.IVARIABLE__NAME:
-        setName((String)newValue);
-        return;
       case EsterelPackage.IVARIABLE__EXPRESSION:
         setExpression((Expression)newValue);
         return;
@@ -218,9 +170,6 @@ public class IVariableImpl extends MinimalEObjectImpl.Container implements IVari
   {
     switch (featureID)
     {
-      case EsterelPackage.IVARIABLE__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case EsterelPackage.IVARIABLE__EXPRESSION:
         setExpression((Expression)null);
         return;
@@ -238,29 +187,10 @@ public class IVariableImpl extends MinimalEObjectImpl.Container implements IVari
   {
     switch (featureID)
     {
-      case EsterelPackage.IVARIABLE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case EsterelPackage.IVARIABLE__EXPRESSION:
         return expression != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //IVariableImpl

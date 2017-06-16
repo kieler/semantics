@@ -98,6 +98,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
@@ -260,7 +261,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case EsterelPackage.ISIGNAL:
 				if (rule == grammarAccess.getISignalRule()
-						|| rule == grammarAccess.getValuedObjectRule()) {
+						|| rule == grammarAccess.getEsterel_ValuedObjectRule()) {
 					sequence_ISignal(context, (ISignal) semanticObject); 
 					return; 
 				}
@@ -515,6 +516,9 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				sequence_TextExpression(context, (TextExpression) semanticObject); 
+				return; 
+			case KExpressionsPackage.VALUED_OBJECT:
+				sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getTrapExprRule()

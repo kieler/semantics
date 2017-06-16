@@ -52,6 +52,9 @@ import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.IfTest
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.Value
 
 /**
  * @author mrb
@@ -86,6 +89,8 @@ class SCEstExtension {
     var static labelSuffix = 0;
     
     var static constantSuffix = 0;
+    
+    var static variableSuffix = 0;
 
     /**
      * Searches a valuedObject in a declarations list by its name
@@ -178,10 +183,24 @@ class SCEstExtension {
     }
 
     /**
-     * Resets the label count, should be called when the transformation is finished
+     * Resets the label count, should be called before a transformation.
      */
     def resetLabelSuffix() {
         labelSuffix = 0;
+    }
+    
+    /**
+     * Resets the constant count, should be called before a transformation.
+     */
+    def resetConstantSuffix() {
+        constantSuffix = 0;
+    }
+    
+    /**
+     * Resets the variable count, should be called before a transformation.
+     */
+    def resetVariableSuffix() {
+        variableSuffix = 0;
     }
     
     /**
@@ -208,6 +227,32 @@ class SCEstExtension {
 //
 //        newUniqueVariable
 //    }
+    
+    /**
+     * Returns a new variable.
+     * 
+     * @param exp The value of the variable. Can be null.
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createNewUniqueVariable(Expression exp) {
+        if (exp instanceof Expression) {
+            createValuedObject(createNewUniqueVariableName) => [
+                it.initialValue = exp
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueVariableName)
+        }
+    }
+    
+    /**
+     * Returns an unused variable name. String: ( "_v" + counter )
+     * @return Returns an unused variable name. String: ( "_v" + counter )
+     */
+    def createNewUniqueVariableName() {
+        variableSuffix++
+        "_v" + variableSuffix
+    }
 
     /**
      * Returns a unused variable and adds it to given ScopeStatement
@@ -578,7 +623,7 @@ class SCEstExtension {
     def Conditional newIfThenGoto(Expression condition, Label targetLabel, boolean isImmediate) {
         SclFactory::eINSTANCE.createConditional => [
             expression = condition
-            if (!isImmediate) {
+            if (isImmediate) {
                 statements.addAll(SclFactory::eINSTANCE.createPause)
 //                statements.addAll(createPause.statements)
             }
@@ -773,19 +818,28 @@ class SCEstExtension {
     /**
      * Creates a SCL conditional
      * 
+     * @param expr The condition for the conditional statement.
      * @return A SCL conditional
      */
-    def createConditional() {
-        SclFactory::eINSTANCE.createConditional
+    def createConditional(Expression expr) {
+        SclFactory::eINSTANCE.createConditional => [
+            it.expression = expr
+        ]
     }
     
     /**
      * Creates a KExpression Declaration
-     * 
+     * @param type The ValueType of the declaration
+     * @param object A ValuedObject to the previous type
      * @return A KExpression Declaration
      */
-    def createDeclaration() {
-        KExpressionsFactory::eINSTANCE.createDeclaration
+    def createDeclaration(ValueType type, ValuedObject object) {
+        KExpressionsFactory::eINSTANCE.createDeclaration => [
+            it.type = type
+            if (object != null) {
+                it.valuedObjects.add(object)
+            }
+        ]
     }
     
     /**
@@ -801,12 +855,17 @@ class SCEstExtension {
     }
     
     /**
-     * Creates a KExpression ValuedObject
+     * Creates an Esterel Constant
      * 
+     * @param name The name of the Constant
+     * @param value The Value of the Constant
      * @return A KExpression ValuedObject
      */
-    def createValuedObject() {
-        KExpressionsFactory::eINSTANCE.createValuedObject
+    def createConstant(String name, String value) {
+        EsterelFactory::eINSTANCE.createConstant => [
+            it.name = name
+            it.value = value
+        ]
     }
   
     /**
@@ -893,10 +952,15 @@ class SCEstExtension {
     /**
      * Creates a new SCL ScopeStatement
      * 
+     * @param decls Already existing declarations for the Scope statement.
      * @return The newly created SCL ScopeStatement
      */
-    def createScopeStatement() {
-        SclFactory::eINSTANCE.createScopeStatement
+    def createScopeStatement(Declaration decl) {
+        SclFactory::eINSTANCE.createScopeStatement => [
+            if (decl != null) {
+                it.declarations.add(decl)
+            }
+        ]
     }
 
     /**

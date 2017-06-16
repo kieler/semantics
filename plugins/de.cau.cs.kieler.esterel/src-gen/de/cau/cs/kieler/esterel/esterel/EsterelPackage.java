@@ -760,22 +760,13 @@ public interface EsterelPackage extends EPackage
   int ISIGNAL__FUNC = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ISIGNAL__OPERATOR = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 3;
-
-  /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ISIGNAL__EXPRESSION = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 4;
+  int ISIGNAL__EXPRESSION = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>ISignal</em>' class.
@@ -784,7 +775,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ISIGNAL_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 5;
+  int ISIGNAL_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SensorDeclImpl <em>Sensor Decl</em>}' class.
@@ -2469,13 +2460,49 @@ public interface EsterelPackage extends EPackage
   int IVARIABLE = 49;
 
   /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IVARIABLE__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IVARIABLE__NAME = 0;
+  int IVARIABLE__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IVARIABLE__COMBINE_OPERATOR = KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR;
+
+  /**
+   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IVARIABLE__INITIAL_VALUE = KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE;
+
+  /**
+   * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IVARIABLE__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2484,7 +2511,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IVARIABLE__EXPRESSION = 1;
+  int IVARIABLE__EXPRESSION = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>IVariable</em>' class.
@@ -2493,7 +2520,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IVARIABLE_FEATURE_COUNT = 2;
+  int IVARIABLE_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.RunImpl <em>Run</em>}' class.
@@ -3388,15 +3415,6 @@ public interface EsterelPackage extends EPackage
   int TRAP_SIGNAL__FUNC = ISIGNAL__FUNC;
 
   /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRAP_SIGNAL__OPERATOR = ISIGNAL__OPERATOR;
-
-  /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4143,17 +4161,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getISignal_Func();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.ISignal#getOperator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.ISignal#getOperator()
-   * @see #getISignal()
-   * @generated
-   */
-  EAttribute getISignal_Operator();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.ISignal#getExpression <em>Expression</em>}'.
@@ -5285,17 +5292,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EClass getIVariable();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.IVariable#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.IVariable#getName()
-   * @see #getIVariable()
-   * @generated
-   */
-  EAttribute getIVariable_Name();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IVariable#getExpression <em>Expression</em>}'.
@@ -6450,14 +6446,6 @@ public interface EsterelPackage extends EPackage
     EReference ISIGNAL__FUNC = eINSTANCE.getISignal_Func();
 
     /**
-     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ISIGNAL__OPERATOR = eINSTANCE.getISignal_Operator();
-
-    /**
      * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7374,14 +7362,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EClass IVARIABLE = eINSTANCE.getIVariable();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute IVARIABLE__NAME = eINSTANCE.getIVariable_Name();
 
     /**
      * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.

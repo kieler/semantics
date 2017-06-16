@@ -6,7 +6,6 @@ import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.ISignal;
 
-import de.cau.cs.kieler.kexpressions.CombineOperator;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValueType;
 
@@ -31,7 +30,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getTypeID <em>Type ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getFunc <em>Func</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ISignalImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -88,26 +86,6 @@ public class ISignalImpl extends ValuedObjectImpl implements ISignal
    * @ordered
    */
   protected Function func;
-
-  /**
-   * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOperator()
-   * @generated
-   * @ordered
-   */
-  protected static final CombineOperator OPERATOR_EDEFAULT = CombineOperator.NONE;
-
-  /**
-   * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOperator()
-   * @generated
-   * @ordered
-   */
-  protected CombineOperator operator = OPERATOR_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -234,29 +212,6 @@ public class ISignalImpl extends ValuedObjectImpl implements ISignal
    * <!-- end-user-doc -->
    * @generated
    */
-  public CombineOperator getOperator()
-  {
-    return operator;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOperator(CombineOperator newOperator)
-  {
-    CombineOperator oldOperator = operator;
-    operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ISIGNAL__OPERATOR, oldOperator, operator));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Expression getExpression()
   {
     return expression;
@@ -333,8 +288,6 @@ public class ISignalImpl extends ValuedObjectImpl implements ISignal
       case EsterelPackage.ISIGNAL__FUNC:
         if (resolve) return getFunc();
         return basicGetFunc();
-      case EsterelPackage.ISIGNAL__OPERATOR:
-        return getOperator();
       case EsterelPackage.ISIGNAL__EXPRESSION:
         return getExpression();
     }
@@ -359,9 +312,6 @@ public class ISignalImpl extends ValuedObjectImpl implements ISignal
         return;
       case EsterelPackage.ISIGNAL__FUNC:
         setFunc((Function)newValue);
-        return;
-      case EsterelPackage.ISIGNAL__OPERATOR:
-        setOperator((CombineOperator)newValue);
         return;
       case EsterelPackage.ISIGNAL__EXPRESSION:
         setExpression((Expression)newValue);
@@ -389,9 +339,6 @@ public class ISignalImpl extends ValuedObjectImpl implements ISignal
       case EsterelPackage.ISIGNAL__FUNC:
         setFunc((Function)null);
         return;
-      case EsterelPackage.ISIGNAL__OPERATOR:
-        setOperator(OPERATOR_EDEFAULT);
-        return;
       case EsterelPackage.ISIGNAL__EXPRESSION:
         setExpression((Expression)null);
         return;
@@ -415,8 +362,6 @@ public class ISignalImpl extends ValuedObjectImpl implements ISignal
         return TYPE_ID_EDEFAULT == null ? typeID != null : !TYPE_ID_EDEFAULT.equals(typeID);
       case EsterelPackage.ISIGNAL__FUNC:
         return func != null;
-      case EsterelPackage.ISIGNAL__OPERATOR:
-        return operator != OPERATOR_EDEFAULT;
       case EsterelPackage.ISIGNAL__EXPRESSION:
         return expression != null;
     }
@@ -438,8 +383,6 @@ public class ISignalImpl extends ValuedObjectImpl implements ISignal
     result.append(type);
     result.append(", typeID: ");
     result.append(typeID);
-    result.append(", operator: ");
-    result.append(operator);
     result.append(')');
     return result.toString();
   }

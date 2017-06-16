@@ -1231,19 +1231,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getISignal_Operator()
-  {
-    return (EAttribute)iSignalEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getISignal_Expression()
   {
-    return (EReference)iSignalEClass.getEStructuralFeatures().get(4);
+    return (EReference)iSignalEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -2301,19 +2291,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIVariable_Name()
-  {
-    return (EAttribute)iVariableEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getIVariable_Expression()
   {
-    return (EReference)iVariableEClass.getEStructuralFeatures().get(1);
+    return (EReference)iVariableEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -3025,7 +3005,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEAttribute(iSignalEClass, ISIGNAL__TYPE);
     createEAttribute(iSignalEClass, ISIGNAL__TYPE_ID);
     createEReference(iSignalEClass, ISIGNAL__FUNC);
-    createEAttribute(iSignalEClass, ISIGNAL__OPERATOR);
     createEReference(iSignalEClass, ISIGNAL__EXPRESSION);
 
     sensorDeclEClass = createEClass(SENSOR_DECL);
@@ -3167,7 +3146,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(variableDeclEClass, VARIABLE_DECL__TYPE);
 
     iVariableEClass = createEClass(IVARIABLE);
-    createEAttribute(iVariableEClass, IVARIABLE__NAME);
     createEReference(iVariableEClass, IVARIABLE__EXPRESSION);
 
     runEClass = createEClass(RUN);
@@ -3330,6 +3308,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     localSignalDeclEClass.getESuperTypes().add(theSclPackage.getStatement());
     localVariableEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
     localVariableEClass.getESuperTypes().add(theSclPackage.getStatement());
+    iVariableEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     runEClass.getESuperTypes().add(theSclPackage.getStatement());
     doEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
     doEClass.getESuperTypes().add(theSclPackage.getStatement());
@@ -3416,7 +3395,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEAttribute(getISignal_Type(), theKExpressionsPackage.getValueType(), "type", null, 0, 1, ISignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getISignal_TypeID(), ecorePackage.getEString(), "typeID", null, 0, 1, ISignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getISignal_Func(), this.getFunction(), null, "func", null, 0, 1, ISignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getISignal_Operator(), theKExpressionsPackage.getCombineOperator(), "operator", null, 0, 1, ISignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getISignal_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, ISignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sensorDeclEClass, SensorDecl.class, "SensorDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3558,7 +3536,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getVariableDecl_Type(), this.getTypeIdentifier(), null, "type", null, 0, 1, VariableDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(iVariableEClass, IVariable.class, "IVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, IVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIVariable_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, IVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(runEClass, Run.class, "Run", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

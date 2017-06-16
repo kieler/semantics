@@ -497,6 +497,8 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         IVariable iVariable = (IVariable)theEObject;
         T result = caseIVariable(iVariable);
+        if (result == null) result = caseValuedObject(iVariable);
+        if (result == null) result = caseAnnotatable(iVariable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

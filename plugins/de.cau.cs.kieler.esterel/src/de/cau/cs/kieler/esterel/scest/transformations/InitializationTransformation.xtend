@@ -53,6 +53,8 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
 
     def SCEstProgram transform(SCEstProgram prog) {
         resetLabelSuffix
+        resetConstantSuffix
+        resetVariableSuffix
         return prog
     }
 }

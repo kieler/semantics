@@ -135,17 +135,17 @@ ISignal returns ISignal:
     name=ID (   
           (":"    type=Esterel_ValueType
                 | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | operator=Esterel_CombineOperator)) 
+                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
                 )
         | ("(" 
               type=Esterel_ValueType
             | typeID=ID
-            | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | operator=Esterel_CombineOperator))
+            | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
            ")")
         | (":=" expression=Expression ":" 
                   type=Esterel_ValueType
                 | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | operator=Esterel_CombineOperator))
+                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
           ) 
     )?;
     
@@ -451,17 +451,17 @@ TrapSignal returns ISignal:
     ( 
           (":"    type=Esterel_ValueType
                 | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | operator=Esterel_CombineOperator)) 
+                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
                 )
         | ("(" 
               type=Esterel_ValueType
             | typeID=ID
-            | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | operator=Esterel_CombineOperator))
+            | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
            ")")
         | (":=" expression=Expression ":" 
                   type=Esterel_ValueType
                 | typeID=ID
-                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | operator=Esterel_CombineOperator))
+                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
           ) 
      )?;
 
@@ -914,8 +914,8 @@ ValuedObjectTestExpression returns kexpressions::Expression:
 //    {kexpressions::ValuedObjectReference} 
 //    valuedObject=[kexpressions::ValuedObject|ID];
 
-ValuedObject returns kexpressions::ValuedObject:
-    ISignal | Constant | TrapSignal;
+Esterel_ValuedObject returns kexpressions::ValuedObject:
+    ISignal | Constant | TrapSignal | IVariable | ValuedObject;
 
 //// Example: 'printf(...)'(C)
 //TextExpression returns TextExpression:

@@ -76,7 +76,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/typeID"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ISignal/func"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ISignal/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ISignal/expression"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//SensorDecl">
@@ -213,7 +212,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableDecl/type"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//IVariable">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//IVariable/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IVariable/expression"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Run">

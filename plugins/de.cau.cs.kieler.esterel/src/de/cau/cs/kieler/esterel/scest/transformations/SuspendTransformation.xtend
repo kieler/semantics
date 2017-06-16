@@ -36,7 +36,6 @@ import de.cau.cs.kieler.esterel.esterel.DelayExpr
 import de.cau.cs.kieler.scl.scl.Pause
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.annotations.Annotation
 
 /**
  * @author mrb
@@ -59,10 +58,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
         return SCEstFeature::SUSPEND_ID
     }
         
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
-//    }
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCEstTransformation::IFTEST_ID)
+    }
 
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
@@ -77,10 +75,12 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
     }
     
     def EList<Statement> transformStatements(EList<Statement> statements, int counter) {
-        for (var i=0; i<statements.length; i++) {
-            var statement = statements.get(i).transformStatement(counter)
-            if (statement instanceof Statement) {
-                statements.set(i, statement)
+        if (statements != null) {
+            for (var i=0; i<statements.length; i++) {
+                var statement = statements.get(i).transformStatement(counter)
+                if (statement instanceof Statement) {
+                    statements.set(i, statement)
+                }
             }
         }
         return statements
@@ -114,30 +114,42 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             transformStatements((statement as StatementContainer).statements, counter+1)
             
             if (statement instanceof Trap) {
-                (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements, counter+1)]
+                if ((statement as Trap).trapHandler != null) {
+                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements, counter+1)]
+                }
             }
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements, counter+1)
-                (statement as Abort).cases.forEach[ c | transformStatements(c.statements, counter+1)]
+                if ((statement as Abort).cases != null) {
+                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements, counter+1)]
+                }
             }
             else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements, counter+1)]
+                if ((statement as Exec).execCaseList != null) {
+                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements, counter+1)]
+                }
             }
             else if (statement instanceof Do) {
                 transformStatements((statement as Do).watchingStatements, counter+1)
             }
             else if (statement instanceof Conditional) {
-                transformStatements((statement as Conditional).getElse().statements, counter+1)
+                if ((statement as Conditional).getElse() != null) {
+                    transformStatements((statement as Conditional).getElse().statements, counter+1)
+                }
             }
         }
         else if (statement instanceof Present) {
             transformStatements((statement as Present).thenStatements, counter+1)
-            (statement as Present).cases.forEach[ c | transformStatements(c.statements, counter+1)]
+            if ((statement as Present).cases != null) {
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements, counter+1)]
+            }
             transformStatements((statement as Present).elseStatements, counter+1)
         }
         else if (statement instanceof IfTest) {
             transformStatements((statement as IfTest).thenStatements, counter+1)
-            (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, counter+1)]
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, counter+1)]
+            }
             transformStatements((statement as IfTest).elseStatements, counter+1)
         }
         else if (statement instanceof EsterelParallel) {

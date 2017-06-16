@@ -4685,14 +4685,16 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//ISignal:
 	//	{ISignal} name=ID ((":" type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) | ("("
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
+	//	("("
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 	//	")") | (":=" expression=Expression ":"
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)))?;
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+	//	combineOperator=Esterel_CombineOperator)))?;
 	public EsterelGrammarAccess.ISignalElements getISignalAccess() {
 		return gaEsterel.getISignalAccess();
 	}
@@ -4899,14 +4901,15 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//TrapSignal ISignal:
 	//	{TrapSignal} name=ID ((":" type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)) | ("("
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
+	//	("("
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator))
+	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
 	//	")") | (":=" expression=Expression ":"
 	//	type=Esterel_ValueType
 	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | operator=Esterel_CombineOperator)))?
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)))?
 	public EsterelGrammarAccess.TrapSignalElements getTrapSignalAccess() {
 		return gaEsterel.getTrapSignalAccess();
 	}
@@ -5588,14 +5591,14 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	////ValuedObjectReference returns kexpressions::ValuedObjectReference:
 	////    {kexpressions::ValuedObjectReference} 
 	////    valuedObject=[kexpressions::ValuedObject|ID];
-	//ValuedObject kexpressions::ValuedObject:
-	//	ISignal | Constant | TrapSignal
-	public EsterelGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
-		return gaEsterel.getValuedObjectAccess();
+	//Esterel_ValuedObject kexpressions::ValuedObject:
+	//	ISignal | Constant | TrapSignal | IVariable | ValuedObject
+	public EsterelGrammarAccess.Esterel_ValuedObjectElements getEsterel_ValuedObjectAccess() {
+		return gaEsterel.getEsterel_ValuedObjectAccess();
 	}
 	
-	public ParserRule getValuedObjectRule() {
-		return getValuedObjectAccess().getRule();
+	public ParserRule getEsterel_ValuedObjectRule() {
+		return getEsterel_ValuedObjectAccess().getRule();
 	}
 
 	//SCLProgram:
@@ -5738,14 +5741,29 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	volatile?='volatile'?
 	//	input?='input'?
 	//	output?='output'?
-	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=super::ValuedObject (','
-	//	valuedObjects+=super::ValuedObject)* ';'
+	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
+	//	valuedObjects+=ValuedObject)* ';'
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
 	
 	public ParserRule getDeclarationRule() {
 		return getDeclarationAccess().getRule();
+	}
+
+	//// Valued Object Rule
+	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
+	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+	//// Examples: array[10], initial = false, z = 0 combine max
+	//ValuedObject kexpressions::ValuedObject:
+	//	name=ID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
+	//	combineOperator=CombineOperator)?
+	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
+		return gaKExt.getValuedObjectAccess();
+	}
+	
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
 	}
 
 	/// **
