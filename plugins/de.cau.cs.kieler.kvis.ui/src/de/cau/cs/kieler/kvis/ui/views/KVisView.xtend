@@ -25,6 +25,8 @@ import de.cau.cs.kieler.kvis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
@@ -34,6 +36,8 @@ import java.io.StringWriter
 import java.util.List
 import org.apache.batik.swing.gvt.GVTTreeRendererAdapter
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent
+import org.apache.batik.swing.svg.SVGDocumentLoaderEvent
+import org.apache.batik.swing.svg.SVGDocumentLoaderListener
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IResourceChangeEvent
@@ -45,14 +49,13 @@ import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.apache.batik.swing.svg.SVGDocumentLoaderEvent
-import org.apache.batik.swing.svg.SVGDocumentLoaderListener
 
 /**
  * @author aas
@@ -63,6 +66,8 @@ class KVisView extends ViewPart {
     public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
 
     public static val KVIS_FILE_EXTENSION = "kvis"
+
+    public static val simulationListener = createSimulationListener
 
     @Accessors(PUBLIC_GETTER)
     private static var KVisView instance
@@ -86,10 +91,10 @@ class KVisView extends ViewPart {
     override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
-
+        SimulationManager.addListener(simulationListener)
         // Create canvas
         createCanvas(parent)
-
+ 
         // Create menu and toolbars.
         createMenu()
         createToolbar()
@@ -361,25 +366,30 @@ class KVisView extends ViewPart {
             return
         }
         
-        // Execute interactions if needed
-        for(interaction : interactionHandlers) {
-            interaction.apply(pool)
-        }
-        
-        // Make all changes to the svg in the update manager.
-        // Otherwise the svg canvas is not updated properly.
-        lastPool = pool
-        canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
-            override run() {
-                try {
-                    for (animation : animationHandlers) {
-                        animation.apply(pool)
-                    }    
-                } catch (Exception e) {
-                    showError(e)
-                }
+        // If there is no pool (simulation was stopped), then return to original state
+        if(pool == null) {
+            reload
+        } else {
+            // Execute interactions if needed
+            for(interaction : interactionHandlers) {
+                interaction.apply(pool)
             }
-        })
+            
+            // Make all changes to the svg in the update manager.
+            // Otherwise the svg canvas is not updated properly.
+            lastPool = pool
+            canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
+                override run() {
+                    try {
+                        for (animation : animationHandlers) {
+                            animation.apply(pool)
+                        }    
+                    } catch (Exception e) {
+                        showError(e)
+                    }
+                }
+            })
+        }
     }
     
     private def void showError(Exception e) {
@@ -395,5 +405,19 @@ class KVisView extends ViewPart {
         }
         val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
         StatusManager.getManager().handle(s, StatusManager.SHOW);
+    }
+    
+    private static def SimulationListener createSimulationListener() {
+        val listener = new SimulationListener() {
+            override update(SimulationEvent e) {
+                // Execute in UI thread
+                Display.getDefault().asyncExec(new Runnable() {
+                    override void run() {
+                        KVisView.instance?.update(SimulationManager.instance?.currentPool)
+                    }
+                });
+            }
+        }
+        return listener
     }
 }

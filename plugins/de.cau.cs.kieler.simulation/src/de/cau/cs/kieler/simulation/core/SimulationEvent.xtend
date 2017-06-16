@@ -13,19 +13,11 @@
 package de.cau.cs.kieler.simulation.core
 
 /**
- * Default implementation for a data handler.
- * 
  * @author aas
  *
  */
-class DefaultDataHandler implements DataHandler {
-    
-    override read(DataPool pool) {
-    }
-    
-    override write(DataPool pool) {
-    }
-    
-    override stop() {
-    }
+class SimulationEvent {
+    public var SimulationEventType type
+    public var DataPool newPool
+    public var Variable modifiedVariable
 }

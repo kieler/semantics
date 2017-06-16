@@ -43,6 +43,11 @@ class SimulationManager {
     public static var SimulationManager instance
     
     /**
+     * List of event listeners
+     */
+     private static val List<SimulationListener> listeners = newArrayList
+    
+    /**
      * The job that executes the step actions concurrently when playing.
      */
     private var Job steppingJob
@@ -51,6 +56,13 @@ class SimulationManager {
      */
     @Accessors(PUBLIC_GETTER)
     private var boolean isPlaying
+    
+    /**
+     * The pause in milliseconds that is waited
+     * until the next tick is simulated when in play mode. 
+     */
+    @Accessors
+    private var int playDelay = 100
     
     /**
      * Has the simulation been stopped? 
@@ -113,7 +125,7 @@ class SimulationManager {
         simulator.initialize(currentPool)
         
 //        println("Appended simulator")
-        updateHandlersAfterStep()
+        notifyListeners(SimulationEventType.APPEND_SIMULATION)
     }
     
     /**
@@ -132,7 +144,7 @@ class SimulationManager {
         currentState = new StepState(pool, 0)
         
 //        println("Initilized simulation")
-        updateHandlersAfterStep()
+        notifyListeners(SimulationEventType.INITIALIZED)
     }
     
     /**
@@ -156,8 +168,8 @@ class SimulationManager {
         // Save new state
         setNewState(pool, currentState.actionIndex + 1)
         
-//        println("Stepped simulation")
-        updateHandlersAfterStep()
+//        println("Sub Stepped simulation")
+        notifyListeners(SimulationEventType.SUB_STEP)
     }
     
     /**
@@ -181,7 +193,7 @@ class SimulationManager {
         setNewState(pool, nextActionIndex)
         
 //        println("Stepped simulation macro tick")
-        updateHandlersAfterStep()
+        notifyListeners(SimulationEventType.STEP)
     }
     
     /**
@@ -202,7 +214,7 @@ class SimulationManager {
             currentState = previousState
         }
         
-        updateHandlersAfterStep()
+        notifyListeners(SimulationEventType.STEP_BACK)
     }
 
     /**
@@ -218,32 +230,22 @@ class SimulationManager {
             
             steppingJob = new Job("Simulation Player") {
                 override protected run(IProgressMonitor monitor) {
-                    val delay = 100
-                    val updateInterval = 500
-                    var lastUpdate = System.currentTimeMillis
-                    
-                    // Create following state and set this one
-                    // so following operations are performed on this one
-                    val DataPool pool = createNextPool()
-                    setNewState(pool, currentState.actionIndex)
-                    
                     while(isPlaying) {
                         println("Playing simulation")
                         // Perform a step after a period of time
-                        Thread.sleep(delay);
+                        Thread.sleep(playDelay);
                         
-                        // Update current pool
-                        val newActionIndex = applyMacroTickActions(currentPool)
-                        // Update index of current state
-                        currentState.actionIndex = newActionIndex
+                        // Create following state
+                        val DataPool pool = createNextPool()
+                        // Perform actions on this new state
+                        val nextActionIndex = applyMacroTickActions(pool)
+                        // Save new state
+                        setNewState(pool, nextActionIndex)
                         
-                        // Update data readers after a period of time
-                        if((System.currentTimeMillis - lastUpdate) > updateInterval) {
-                            lastUpdate = System.currentTimeMillis
-                            updateHandlersAfterStep()
-                        }
+                        // Notify listeners of new state
+                        notifyListeners(SimulationEventType.PLAYING)
                     }
-                    updateHandlersAfterStep()
+                    notifyListeners(SimulationEventType.STEP)
                     return Status.OK_STATUS
                 }
             }
@@ -262,6 +264,8 @@ class SimulationManager {
         if(isPlaying) {
             isPlaying = false
         }
+        
+        notifyListeners(SimulationEventType.PAUSE)
     }
     
     /**
@@ -278,12 +282,18 @@ class SimulationManager {
         for(handler : dataHandlers) {
             handler.stop()
         }
+        currentState = null
+        
+        notifyListeners(SimulationEventType.STOP)
     }
     
     /**
      * Returns the data pool of the current state
      */
     public def DataPool getCurrentPool() {
+        if(currentState == null) {
+            return null
+        }
         return currentState.pool
     }
     
@@ -291,6 +301,9 @@ class SimulationManager {
      * Returns the step action of the current state's step action index.
      */
     public def StepAction getCurrentAction() {
+        if(currentState == null) {
+            return null
+        }
         return getActionStep(currentState.actionIndex)
     }
     
@@ -298,6 +311,9 @@ class SimulationManager {
      * Returns the step action with the given step action index.
      */
     public def StepAction getActionStep(int index) {
+        if(actions.isNullOrEmpty) {
+            return null
+        } 
         val relativeActionIndex = index % actions.size()
         return actions.get(relativeActionIndex)
     }
@@ -352,13 +368,37 @@ class SimulationManager {
     }
     
     /**
-     * Update all data handlers that want to be updated after every step of the simulation.
+     * Notifies all listeners about an event.
      */
-    private def void updateHandlersAfterStep() {
-        for(d : dataHandlers) {
-            if(d.updateEachStep) {
-                d.read(currentPool)
-            }
-        }
-    }
+     protected def void notifyListeners(SimulationEventType type, Variable variable) {
+         val e = new SimulationEvent()
+         e.type = type
+         e.newPool = currentPool
+         e.modifiedVariable = variable
+         for(l : listeners) {
+             l.update(e)
+         }
+     }
+     
+     /**
+     * Notifies all listeners about an event.
+     */
+     protected def void notifyListeners(SimulationEventType type) {
+         val e = new SimulationEvent()
+         e.type = type
+         e.newPool = currentPool
+         for(l : listeners) {
+             l.update(e)
+         }
+     }
+     
+     public static def void addListener(SimulationListener listener) {
+         if(!listeners.contains(listener)) {
+             listeners.add(listener)
+         }
+     }
+     
+     public static def void removeListener(SimulationListener listener) {
+         listeners.remove(listener)
+     }
 }

@@ -82,7 +82,6 @@ class InteractionHandler {
     }
     
     public def void apply(DataPool pool) {
-        println("Applying interaction "+this)
         initialize()
         if(interaction.event == null) {
             performActions

@@ -43,7 +43,6 @@ class Variable implements Cloneable {
     /**
      * A value for this variable entered by the user.
      */
-    @Accessors
     private Object userValue = null
     
     /**
@@ -145,6 +144,26 @@ class Variable implements Cloneable {
             return false
         else
             return !userValue.equals(value)
+    }
+    
+    public def Object getUserValue() {
+        return userValue
+    }
+    
+    public def void setUserValue(Object value) {
+        var boolean eq = true
+        if(value != userValue) {
+            eq = false
+        } else if(value != null) {
+            eq = value.equals(userValue) 
+        } else if(userValue != null) {
+            eq = userValue.equals(value)
+        }
+        if(!eq) {
+            userValue = value
+            // Notify simulation listeners that value changed
+            SimulationManager.instance?.notifyListeners(SimulationEventType.VARIABLE_CHANGE, this) 
+        }
     }
     
     /**

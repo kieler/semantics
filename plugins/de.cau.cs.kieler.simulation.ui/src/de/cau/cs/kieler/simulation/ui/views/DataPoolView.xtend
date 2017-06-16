@@ -35,6 +35,8 @@ import org.eclipse.swt.events.KeyEvent
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.prom.ui.console.PromConsole
 import org.eclipse.jface.dialogs.MessageDialog
+import de.cau.cs.kieler.simulation.core.SimulationListener
+import de.cau.cs.kieler.simulation.core.SimulationEvent
 
 /**
  * @author aas
@@ -45,6 +47,8 @@ class DataPoolView extends ViewPart {
     public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
     
     public static var DataPoolView instance
+    
+    public static val simulationListener = createSimulationListener
     
     var TableViewer viewer
     
@@ -61,7 +65,8 @@ class DataPoolView extends ViewPart {
      override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
-         
+        SimulationManager.addListener(simulationListener)
+        
         // Create viewer.
         viewer = createDataPoolTable(parent);
 
@@ -368,5 +373,19 @@ class DataPoolView extends ViewPart {
         gc.dispose()
         
         return img
+    }
+    
+    private static def SimulationListener createSimulationListener() {
+        val listener = new SimulationListener() {
+            override update(SimulationEvent e) {
+                // Execute in UI thread
+                Display.getDefault().asyncExec(new Runnable() {
+                    override void run() {
+                        DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
+                    }
+                });
+            }
+        }
+        return listener
     }
 }
