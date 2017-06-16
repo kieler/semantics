@@ -371,7 +371,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // Remove superfluous fork constructs 
         // ssm, 04.05.2014
-        val scg = if (context?.getProperty(ENABLE_SFR)) {
+        val scg = if (context != null && context?.getProperty(ENABLE_SFR)) {
                 timestamp = System.currentTimeMillis
                 val SuperfluousThreadRemover superfluousThreadRemover = Guice.createInjector().
                     getInstance(typeof(SuperfluousThreadRemover))

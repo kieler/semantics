@@ -46,7 +46,7 @@ class SCGTransformationWrapper extends Processor {
         val wrappedTransformation = injector.getInstance(SCGTransformation)
         switch (model) {
             State: environment.model = wrappedTransformation.transform(model)
-            SCCharts: environment.model = wrappedTransformation.transform(model)
+            SCCharts: environment.model = wrappedTransformation.transform(model, null)
         }
     }
     

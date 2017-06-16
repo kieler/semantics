@@ -55,7 +55,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     def de.cau.cs.kieler.kicool.compilation.Processor getFirstProcessorInstance() {
         val processor = (system.processors as ProcessorGroup).processors.head
-        processorMap.get(processor)
+        if (processor instanceof ProcessorGroup) {
+            val groupProcessor = processor.processors.head
+            return processorMap.get(processor)
+        } else {
+            return processorMap.get(processor)
+        }
     }
     
     public def notify(Object arg) {
@@ -103,7 +108,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         notify(new ProcessorStart(this, processor, compilationUnit))
         val startTimestamp = java.lang.System.nanoTime
         environmentPrime.setData(START_TIMESTAMP, startTimestamp)
-        compilationUnit.process
+        try {
+            compilationUnit.process
+        } catch (Exception e) {
+            
+        }
         val stopTimestamp = java.lang.System.nanoTime
         environmentPrime.setData(STOP_TIMESTAMP, stopTimestamp)
         environmentPrime.setData(PTIME, (stopTimestamp - startTimestamp) / 1000_000)

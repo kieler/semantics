@@ -149,16 +149,22 @@ class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
     }
     
     static def createPotentiallyInstantaneousLoopData(SCGraph scg, KielerCompilerContext context) {
-        var pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult)?.head?.
-            criticalNodes?.toSet
+        var pilData = if (context != null) context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult)?.head?.
+                criticalNodes?.toSet else null
         
         if (pilData == null) {
-            val PotentiallyInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
-            getInstance(PotentiallyInstantaneousLoopAnalyzer)
-            context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
+            val PotentiallyInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
+                Guice.createInjector().getInstance(PotentiallyInstantaneousLoopAnalyzer)
+            val p = potentialInstantaneousLoopAnalyzer.analyze(scg) as PotentialInstantaneousLoopResult
             
-            pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
-                criticalNodes.toSet
+            
+            if (context != null) { 
+                context.compilationResult.addAuxiliaryData(p)
+                pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
+                    criticalNodes.toSet
+            } else {
+                pilData = p.criticalNodes.toSet
+            }
         }       
         
         return pilData         

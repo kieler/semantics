@@ -31,6 +31,10 @@ class ContextPopulation {
     
     static dispatch def void populate(de.cau.cs.kieler.kicool.Processor processor, CompilationContext cc) {
         val processorCompilationUnit = KiCoolRegistration.getProcessorInstance(processor.id)
+        if (processorCompilationUnit == null) {
+            System.err.println("The context cannot find a compilation unit for the processor " + processor)
+            return
+        }
         val env = new Environment()
         val envP = new Environment()
         
@@ -41,6 +45,10 @@ class ContextPopulation {
 
     static dispatch def void populate(de.cau.cs.kieler.kicool.Metric metric, CompilationContext cc) {
         val processorCompilationUnit = KiCoolRegistration.getProcessorInstance(metric.id)
+        if (processorCompilationUnit == null) {
+            System.err.println("The context cannot find a compilation unit for the metric " + metric)
+            return
+        }
         val env = new Environment()
         val envP = new Environment()
         

@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import org.eclipse.xtend.lib.annotations.Data
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 
 /**
  * @author ssm
@@ -23,6 +24,7 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
  @Data
 class IntermediateData {
     de.cau.cs.kieler.kicool.compilation.Processor processor
+    CompilationContext compilationContext
     Object model
     CompilerView view
 }

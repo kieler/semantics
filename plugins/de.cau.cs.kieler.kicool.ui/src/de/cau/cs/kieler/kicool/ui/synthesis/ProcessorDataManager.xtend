@@ -106,7 +106,10 @@ class ProcessorDataManager {
             val processorUnit = compilationNotification.compilationContext.getFirstProcessorInstance
             sourceNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             sourceNode.setProperty(INTERMEDIATE_DATA, 
-                new IntermediateData(processorUnit, processorUnit.environment.getSourceModel, view))
+                new IntermediateData(processorUnit, 
+                    compilationNotification.compilationContext, 
+                    compilationNotification.compilationContext.sourceModel, view
+                ))
             
         }
     }
@@ -165,7 +168,7 @@ class ProcessorDataManager {
                 intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                 intermediateRootNode.children += intermediateNode
                 intermediateNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorUnit, snapshot, view))
+                    new IntermediateData(processorUnit, processorNotification.compilationContext, snapshot, view))
                 intermediatePosX += 3.5f
             }
         }
@@ -176,12 +179,12 @@ class ProcessorDataManager {
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
         finalResultNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorUnit, processorUnit.environment.getModel, view))
+            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.environment.getModel, view))
 
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         processorBodyNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorUnit, processorUnit.environment.getModel, view))
+            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.environment.getModel, view))
 
         
         if (processorNotification instanceof ProcessorProgress) {
