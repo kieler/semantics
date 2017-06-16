@@ -40,6 +40,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors Object sourceModel
     @Accessors Map<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor> processorMap
     @Accessors Map<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext> subContexts
+    @Accessors CompilationContext parentContext = null
     
     new() {
         processorMap = new HashMap<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor>()
@@ -165,5 +166,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         super.deleteObserver(o)
         for(sc : subContexts.values) sc.deleteObserver(o)
     }    
+    
+    def CompilationContext getRootContext() {
+        if (parentContext == null) return this
+        else return parentContext.getRootContext
+    }
         
 }

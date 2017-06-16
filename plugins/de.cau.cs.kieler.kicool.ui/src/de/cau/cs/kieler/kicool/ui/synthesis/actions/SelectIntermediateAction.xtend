@@ -38,32 +38,14 @@ class SelectIntermediateAction implements IAction {
         
         val intermediateData = kNode.getProperty(INTERMEDIATE_DATA)
         val compilationContext = intermediateData.compilationContext
-        val editor = intermediateData.view.editPartSystemManager.findEditorForSystem(compilationContext.system)
+        val editor = intermediateData.view.editPartSystemManager.findEditorForSystem(compilationContext.getRootContext.system)
         var model = intermediateData.model
         if (model instanceof String) {
             model = new Container<String>(model)
         }
         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)        
         
-//        val processor = ProcessorDataManager.getProcessorFromKNode(kNode)
-//        if (processor != null) {
-//            val view = ProcessorDataManager.getViewFromProcessor(processor)
-//            if (view != null) {
-//                val compilationContext = processor.environment.compilationContext
-//                val editor = view.editPartSystemManager.findEditorForSystem(compilationContext.system)
-//                                
-//                var model = processor.environment.model
-//                if (kNode.getId.equals("sourcebody")) {
-//                    model = processor.environment.getData(EnvironmentManager.ENVIRONMENT_SOURCEMODEL, null)    
-//                }
-//                if (model instanceof String) {
-//                    model = new Container<String>(model)
-//                }
-//                KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
-//            }     
-//        }   
-        
-        ActionResult.createResult(true).dontAnimateLayout()
+        ActionResult.createResult(false).dontAnimateLayout()
     }
     
 }

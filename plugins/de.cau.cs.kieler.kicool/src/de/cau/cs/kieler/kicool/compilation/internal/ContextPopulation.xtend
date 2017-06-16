@@ -70,7 +70,9 @@ class ContextPopulation {
     }
     
     static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorSystem processorSystem, CompilationContext cc) {
-        val subContext = Compile.createCompilationContext(processorSystem.id, null)
+        val subContext = Compile.createCompilationContext(processorSystem.id, null) => [
+            parentContext = cc
+        ]
         
         cc.subContexts.put(processorSystem, subContext)
     }
