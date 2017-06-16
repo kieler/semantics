@@ -124,9 +124,8 @@ class CompilerView extends DiagramViewPart {
         
         memento?.loadCheckedValue(forwardResultToggle)
         memento?.loadCheckedValue(autoCompileToggle)
+        memento?.loadCheckedValue(visualLayoutFeedbackToggle)
         memento?.loadCheckedValue(developerToggle)
-//        memento?.loadCheckedValue(debugToggle)
-//        memento?.loadCheckedValue(smartSystemSelectionToggle)
         
         menu.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
@@ -141,9 +140,8 @@ class CompilerView extends DiagramViewPart {
         super.saveState(memento)
         memento.saveCheckedValue(forwardResultToggle)
         memento.saveCheckedValue(autoCompileToggle)
+        memento.saveCheckedValue(visualLayoutFeedbackToggle)
         memento.saveCheckedValue(developerToggle)
-//        memento.saveCheckedValue(smartSystemSelectionToggle)
-//        memento.saveCheckedValue(debugToggle)
     }
     
     def void updateView() {
