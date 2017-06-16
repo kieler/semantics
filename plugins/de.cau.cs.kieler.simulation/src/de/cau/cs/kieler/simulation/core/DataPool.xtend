@@ -46,6 +46,23 @@ class DataPool implements Cloneable {
         return pool
     }
     
+    public def Model getModel(String modelName) {
+        return models.findFirst[it.name == modelName]
+    }
+    
+    public def Variable getVariable(String variableName) {
+        return allVariables.findFirst[it.name == variableName]
+    }
+    
+    public def Variable getVariable(String modelName, String variableName) {
+        if(modelName != null) {
+            val model = getModel(modelName)
+            return model.getVariable(variableName)
+        } else {
+            return getVariable(variableName)
+        }
+    }
+    
     /**
      * Returns the concatenation of all variables of all models.
      */

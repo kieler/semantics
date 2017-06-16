@@ -23,8 +23,9 @@ import org.eclipse.core.commands.ExecutionException
 class StopSimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
+        restartSimulationIfStopped = false
         super.execute(event)
-        if(simulation != null) {
+        if(simulation != null && !justRestarted) {
             PromConsole.print("Halt")
             simulation.stop()
         }

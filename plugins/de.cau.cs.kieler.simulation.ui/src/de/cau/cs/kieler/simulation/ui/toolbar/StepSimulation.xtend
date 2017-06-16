@@ -24,11 +24,10 @@ class StepSimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(simulation != null) {
+        if(simulation != null && !justRestarted) {
             PromConsole.print("Step single (performing "
                 + simulation.currentAction.method + " on " + simulation.currentAction.handler + ")")
-            simulation.stepSingle()
-//            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
+            simulation.stepSubTick()
         }
         return null
     }
