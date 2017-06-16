@@ -13,12 +13,11 @@
 package de.cau.cs.kieler.prom.ui.console
 
 import com.google.common.base.Strings
-import org.eclipse.ui.console.MessageConsole
-import org.eclipse.ui.console.MessageConsoleStream
-import org.eclipse.ui.console.ConsolePlugin
-import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.common.io.ByteStreams
 import java.io.InputStream
+import org.eclipse.ui.console.ConsolePlugin
+import org.eclipse.ui.console.MessageConsole
+import org.eclipse.ui.console.MessageConsoleStream
 
 /**
  * Dedecated console in the Console View of Eclipse for output about the simulation. 

@@ -26,11 +26,6 @@ class DefaultDataHandler implements DataHandler {
     override write(DataPool pool) {
     }
     
-    override updateEachStep() {
-        return false
-    }
-    
     override stop() {
     }
-    
 }
