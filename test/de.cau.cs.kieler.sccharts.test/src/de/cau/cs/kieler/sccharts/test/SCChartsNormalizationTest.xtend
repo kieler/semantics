@@ -107,7 +107,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
             try {
                 // Serialize
                 val outputStream = new ByteArrayOutputStream(25000);
-                val uri = URI.createURI("dummy:/inmemory/" + modelData.modelPath.fileName.toString)
+                val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
                 val resource = uri.xtextResourceSet.createResource(uri)
                 resource.getContents().add(iResult.result as State)
                 resource.save(outputStream, saveOptions)
@@ -116,7 +116,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
             } catch (AssertionError ae) {
                 throw ae
             } catch (Exception e) {
-                throw new Exception("Error when %s".format(name), e)
+                throw new Exception("Error in %s".format(name), e)
             }
         }
     }
