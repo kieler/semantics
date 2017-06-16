@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import java.util.Observer
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
 
 /**
  * @author ssm
@@ -57,7 +58,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         val processor = (system.processors as ProcessorGroup).processors.head
         if (processor instanceof ProcessorGroup) {
             val groupProcessor = processor.processors.head
-            return processorMap.get(processor)
+            return processorMap.get(groupProcessor)
         } else {
             return processorMap.get(processor)
         }
@@ -111,7 +112,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         try {
             compilationUnit.process
         } catch (Exception e) {
-            
+            compilationUnit.environment.error = e.message
+            notify(new ProcessorError(e.message, this, processor, compilationUnit))
         }
         val stopTimestamp = java.lang.System.nanoTime
         environmentPrime.setData(STOP_TIMESTAMP, stopTimestamp)
