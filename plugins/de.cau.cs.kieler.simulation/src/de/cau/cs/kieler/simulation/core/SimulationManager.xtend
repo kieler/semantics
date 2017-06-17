@@ -277,8 +277,18 @@ class SimulationManager {
             return
         }
         
-        isStopped = true
         isPlaying = false
+        // Wait for the concurrent thread to terminate
+        if(steppingJob != null) {
+            if(steppingJob.join(3000, null)) {
+                steppingJob = null
+            } else {
+                throw new Exception("The concurrent thread that plays the simulation does not seem to terminate.")
+            }
+        }
+        
+        // Stop simulation
+        isStopped = true
         for(handler : dataHandlers) {
             handler.stop()
         }

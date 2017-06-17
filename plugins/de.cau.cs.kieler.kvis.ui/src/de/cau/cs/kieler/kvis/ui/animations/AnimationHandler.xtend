@@ -82,15 +82,15 @@ abstract class AnimationHandler {
             for(mapping : attributeMapping.mappings) {
                 if(mapping.variableDomain.matches(value)) {
                     return mapping.apply(value)
-                } else {
-                    if(mapping.variableDomain.range != null) {
-                        System.err.println(value + " does not match with "
-                            + mapping.variableDomain.range.from.primitiveValue 
-                            + "-"
-                            + mapping.variableDomain.range.to.primitiveValue)
-                    } else {
-                        System.err.println(value + " does not match with "+ mapping.variableDomain.value.primitiveValue)
-                    } 
+//                } else {
+//                    if(mapping.variableDomain.range != null) {
+//                        System.err.println(value + " does not match with "
+//                            + mapping.variableDomain.range.from.primitiveValue 
+//                            + "-"
+//                            + mapping.variableDomain.range.to.primitiveValue)
+//                    } else {
+//                        System.err.println(value + " does not match with "+ mapping.variableDomain.value.primitiveValue)
+//                    } 
                 }
             }
             return null
