@@ -27,6 +27,7 @@ import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import de.cau.cs.kieler.prom.launchconfig.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.ui.console.PromConsole
 import de.cau.cs.kieler.sccharts.State
 import java.io.File
 import java.io.IOException
@@ -46,6 +47,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
+import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
@@ -57,13 +59,8 @@ import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
-import java.io.InputStreamReader
-import java.io.BufferedReader
-import de.cau.cs.kieler.prom.ui.console.PromConsole
-import java.lang.ProcessBuilder.Redirect
-import com.google.common.io.CharStreams
-import com.google.common.io.ByteStreams
-import org.eclipse.core.runtime.Status
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.iterators.StateIterator
 
 /**
  * @author aas
@@ -113,6 +110,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Cache of all loaded models of a project.
      */
     private ResourceSet resourceSet;
+    
+    /**
+     * Graph representing the dependencies of the resources.
+     */
+    private DependencyGraph dependencies;
     
     /**
      * Build method for Eclipse Builders.
@@ -195,15 +197,23 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             monitor.subTask("Initializing build")
             initialize()
             
-            // Load changed models into resource set
-            for(res : files) {
-                monitor.subTask("Loading resource "+res.name)
-                ModelImporter.getResource(res, resourceSet)
-            }
-            // Re-link all models 
-            relink(resourceSet)
-            
-            // Compile via KiCo
+            // Load changed models into resource set.
+            // But only if this is not a full build because in a full build this is done in the initialization.
+            if(kind != FULL_BUILD) {
+                for(f : files) {
+                    monitor.subTask("Loading resource "+f.name)
+                    val res = ModelImporter.getResource(f, resourceSet)
+                    ModelImporter.reload(res, resourceSet)
+                }
+                // Re-link all models 
+                relink(resourceSet)
+                
+                // Update dependencies
+                updateDependencies(files)
+                checkDependencies()
+            } 
+
+             // Compile via KiCo
             var boolean isFirstModel = true
             for(file : files) {
                 // Compile, generate simulation code, fetch wrapper code annotations
@@ -215,7 +225,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                         case "sct",
                         case "strl" : {
                             monitor.subTask("Loading model "+file.name)
-                            val model = ModelImporter.load(file, resourceSet)
+                            val model = ModelImporter.getEObject(file, resourceSet)
                             if(model == null) {
                                 throw new Exception("Couldn't load model "+file.name)
                             }
@@ -275,9 +285,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // These are updated later, if a model file changes.
         if(!isInitialized) {
             isInitialized = true
-            if(resourceSet == null) {
-                createResourceSet    
-            }
+            createResourceSet    
         }
     }
 
@@ -856,18 +864,79 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private def void createResourceSet() {
         // Create resource set
         resourceSet = new XtextResourceSet()
-        
         // Load all model files into one resource set.
-        // But only if this is not a full build,
-        // because on a full build all resources are loaded and re-linked later anyway.
-        if(kind != FULL_BUILD) {
-            val modelFiles = findModelFilesInProject()
-            for(f : modelFiles) {
-                monitor.subTask("Loading "+f.name)
-                val res = ModelImporter.getResource(f, resourceSet)
+        val modelFiles = findModelFilesInProject()
+        for(f : modelFiles) {
+            monitor.subTask("Loading "+f.name)
+            ModelImporter.getResource(f, resourceSet)
+        }
+        // Relink loaded resources, because all potentially referenced models are in the resource set now.
+        relink(resourceSet)
+        // Update dependencies
+        createDependencyGraph
+        // Check dependencies for validation
+        checkDependencies
+    }
+
+    private def void updateDependencies(IFile... files) {
+        for(f : files) {
+            val node = dependencies.getOrCreate(f)
+            // Remove old dependencies
+            node.removeAllDependencies()
+            // Add new dependencies
+            val model = ModelImporter.getEObject(f, resourceSet)
+            if(model instanceof State && model != null) {
+                val state = model as State
+                val iter = StateIterator.sccAllStates(state)
+                while(iter.hasNext) {
+                    val s = iter.next
+                    if(s.referencedScope != null) {
+                        val refResource = s.referencedScope.eResource
+                        val refFile = ModelImporter.toPlatformResource(refResource)
+                        val refNode = dependencies.getOrCreate(refFile)
+                        node.addDependency(refNode)
+                    }
+                }
             }
-            // Relink loaded resources, because all potentially referenced models are in the resource set now.
-            relink(resourceSet)
+        }
+    }
+
+    private def void createDependencyGraph() {
+        dependencies = new DependencyGraph()
+        for(r : resourceSet.resources) {
+            val model = r.contents.get(0)
+            if(model instanceof State && model != null) {
+                val state = model as State
+                val file = ModelImporter.toPlatformResource(r)
+                if(file != null) {
+                    val node = dependencies.getOrCreate(file)
+                    val states = StateIterator.sccAllStates(state)
+                    while(states.hasNext) {
+                        val s = states.next
+                        if(s.referencedScope != null) {
+                            val refResource = s.referencedScope.eResource
+                            val refFile = ModelImporter.toPlatformResource(refResource)
+                            val refNode = dependencies.getOrCreate(refFile)
+                            node.addDependency(refNode)
+                        }
+                    }
+                }
+            }
+        }
+        
+        for(n : dependencies.nodes) { 
+            for(d : n.dependencies) {
+                println(n.id + " ref " + d.id)
+            }
+        }
+    }
+
+    private def void checkDependencies() {
+        // Check that there are no loops
+        val loop = dependencies.findLoop
+        System.err.println(loop)
+        if(loop != null) {
+            throw new Exception("There is a loop in the dependencies of the models "+loop)
         }
     }
 
