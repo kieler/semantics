@@ -115,35 +115,30 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
         nameCache.clear
 
         // Traverse all states
-        var done = false;
         for (targetState : targetRootState.getAllContainedStatesList) {
-            if (!done) {
-                // !!!CHANGED: optimization added, check if correct for all cases
-                // The termination transformation is only necessary if there are delayed/conditional terminations or if
-                // a termination is mixed with WEAK aborts
-                // if a termination is mixed with strong aborts it does not matter because we do not
-                // have a last wish to consider!
-                val singleTermination = targetState.outgoingTransitions.filter [e|
-                    e.typeTermination && e.isImmediate2 && e.trigger == null
-                ].size == 1 && targetState.outgoingTransitions.filter[e|e.typeTermination].size == 1
-                val noWeakAborts = targetState.outgoingTransitions.filter[e|e.typeWeakAbort].size == 0
-                
-                // TEST: TerminationImmediateAndAbort
-                val delayedStrongAbortButImmediateTermination =
-                (targetState.outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0) 
-                && (targetState.canImmediateTerminate)
-                
-                // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
-                // noStrongMixedAborts
-                if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
-                    // optimization: If this termination is the only outgoing then do not transform terminations first
-                    targetState.transformTermination(targetRootState)
-                }
-
-                targetState.transformAbortNoWTO_NEW(targetRootState)
+            // !!!CHANGED: optimization added, check if correct for all cases
+            // The termination transformation is only necessary if there are delayed/conditional terminations or if
+            // a termination is mixed with WEAK aborts
+            // if a termination is mixed with strong aborts it does not matter because we do not
+            // have a last wish to consider!
+            val singleTermination = targetState.outgoingTransitions.filter [e|
+                e.typeTermination && e.isImmediate2 && e.trigger == null
+            ].size == 1 && targetState.outgoingTransitions.filter[e|e.typeTermination].size == 1
+            val noWeakAborts = targetState.outgoingTransitions.filter[e|e.typeWeakAbort].size == 0
+            
+            // TEST: TerminationImmediateAndAbort
+            val delayedStrongAbortButImmediateTermination =
+            (targetState.outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0) 
+            && (targetState.canImmediateTerminate)
+            
+            // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
+            // noStrongMixedAborts
+            if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
+                // optimization: If this termination is the only outgoing then do not transform terminations first
+                targetState.transformTermination(targetRootState)
             }
 
-        // done = true;
+            targetState.transformAbortNoWTO_NEW(targetRootState)
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -482,10 +477,9 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
         if (trigger == null) {
             return false
         }
-        val contents = trigger.eContainer.eAllContents.toList
-        val list1 = contents.filter(typeof(ValuedObjectReference)).toList
-        val list2 = list1.filter[valuedObject.name.contains("_termD")].toList
-        return !(list2.nullOrEmpty)
+        return trigger.eContainer.eAllContents.filter(ValuedObjectReference).exists[
+            valuedObject.name.contains("_termD")
+        ]
     }
 
 }
