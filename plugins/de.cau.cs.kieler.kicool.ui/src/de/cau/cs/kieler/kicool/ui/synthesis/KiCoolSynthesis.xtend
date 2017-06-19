@@ -71,7 +71,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     
     protected def static getKGTFromBundle(String bundleId, String resourceLocation) {
         val Bundle bundle = Platform.getBundle(bundleId)
-        val URL fileURL = bundle.getEntry(resourceLocation)
+        val URL fileURL = bundle.getEntry(SkinSelector.skinPrefix + resourceLocation)
         val absFile = FileLocator.resolve(fileURL)
         val newURI = URI.createFileURI(absFile.getFile)
         val provider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(newURI)

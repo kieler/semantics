@@ -38,6 +38,9 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
+import org.eclipse.jface.action.MenuManager
+import org.eclipse.jface.action.Action
+import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
 
 /**
  * @author ssm
@@ -62,6 +65,7 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var ForwardResultToggle forwardResultToggle = null
     @Accessors private var AutoCompileToggle autoCompileToggle = null
     @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
+    @Accessors private var SkinSelectionActions skinSelectionActions = null
     
     @Accessors private var CompilationAction compilationAction = null
     
@@ -119,7 +123,13 @@ class CompilerView extends DiagramViewPart {
         menu.add(autoCompileToggle.action)
         menu.add(new Separator)
         menu.add(visualLayoutFeedbackToggle.action)
+        
         menu.add(new Separator)
+        
+        val MenuManager skinMenu = new MenuManager("Synthesis Skins")
+        skinSelectionActions = new SkinSelectionActions(this)
+        skinSelectionActions.actions.forEach[ skinMenu.add(it) ]
+        menu.add(skinMenu)
         menu.add(developerToggle.action)
         
         memento?.loadCheckedValue(forwardResultToggle)

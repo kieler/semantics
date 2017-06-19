@@ -32,7 +32,7 @@ class SourceSynthesis {
     @Inject extension KEdgeExtensions 
     @Inject extension KPolylineExtensions      
     
-    private val SOURCE_KGT = "resources/source.kgt"
+    private val SOURCE_KGT = "source.kgt"
     
     def KNode sourceNode() {
         val sourceNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)

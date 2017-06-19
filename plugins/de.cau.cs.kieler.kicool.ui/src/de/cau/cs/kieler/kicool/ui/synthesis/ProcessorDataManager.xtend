@@ -80,7 +80,7 @@ class ProcessorDataManager {
     static val NODE_SOURCE = "sourcebody"
     static val NODE_ACTIVE = "active"
     
-    static val INTERMEDIATE_KGT = "resources/intermediate.kgt"
+    static val INTERMEDIATE_KGT = "intermediate.kgt"
     
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
         node.setProperty(PROCESSOR_IDENTIFIER, processor)
@@ -99,12 +99,14 @@ class ProcessorDataManager {
         
         
         val toggleOnOffNode = nodeIdMap.findNode(NODE_ACTIVE)
-        toggleOnOffNode.container.addAction(Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
-        toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processor))
-        if (ToggleProcessorOnOffAction.deactivatedProcessors.contains(processor)) {
-            setFBColor(getContainer(toggleOnOffNode), OFF)
-        } else {
-            setFBColor(getContainer(toggleOnOffNode), ON)
+        if (toggleOnOffNode != null) {
+            toggleOnOffNode.container.addAction(Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
+            toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processor))
+            if (ToggleProcessorOnOffAction.deactivatedProcessors.contains(processor)) {
+                setFBColor(getContainer(toggleOnOffNode), OFF)
+            } else {
+                setFBColor(getContainer(toggleOnOffNode), ON)
+            }
         }
     }
     

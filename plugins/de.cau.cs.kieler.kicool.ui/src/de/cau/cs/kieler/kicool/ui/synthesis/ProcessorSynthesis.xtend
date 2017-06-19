@@ -62,8 +62,8 @@ class ProcessorSynthesis {
     @Inject extension KiCoolSynthesis
     @Inject IResourceServiceProvider.Registry regXtext;      
     
-    static private val PROCESSOR_KGT = "resources/processor.kgt"
-    static private val PROCESSOR_GROUP_KGT = "resources/processor_group.kgt"
+    static private val PROCESSOR_KGT = "processor.kgt"
+    static private val PROCESSOR_GROUP_KGT = "processor_group.kgt"
     static private val COLLAPSED_ID = "collapsed"
     static private val EXPANDED_ID = "expanded" 
     
