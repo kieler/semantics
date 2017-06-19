@@ -21,10 +21,16 @@ import de.cau.cs.kieler.kicool.compilation.Processor
  */
 abstract class Metric extends Processor {
     
-    static val METRIC = "metric" 
+    public static val METRIC = "metric"
+    protected static val METRIC_ENTITY = "metricEntity"
+    protected static val METRIC_SOURCE_ENTITY = "metricSourceEntity"
     
-    def void setMetric(double m) {
-        environment.data.put(METRIC, m)
+    override setEnvironment(Environment environment, Environment environmentPrime) {
+        this.environments = new Pair<Environment, Environment>(environment, environmentPrime)
+    }    
+    
+    def void setMetric() {
+        environment.data.put(METRIC, calculateMetricValue)
     }
     
     def double getMetric() {
@@ -34,4 +40,24 @@ abstract class Metric extends Processor {
     override getType() {
         ProcessorType.ANALYZER
     }
+    
+    abstract protected def Object getMetricEntity()
+    
+    def setMetricEntity() {
+        environment.data.put(METRIC_ENTITY, getMetricEntity)
+    }
+    
+    def setMetricSourceEntity() {
+        environment.data.put(METRIC_SOURCE_ENTITY, getMetricEntity)
+    }
+    
+    def applyMetrics(Environment environment) {
+        environment.data.put(METRIC, this.environment.data.get(METRIC))
+        environment.data.put(METRIC_ENTITY, this.environment.data.get(METRIC_ENTITY))
+        environment.data.put(METRIC_SOURCE_ENTITY, this.environment.data.get(METRIC_SOURCE_ENTITY))
+    }
+    
+    abstract protected def double calculateMetricValue();
+    
+    override process() {}
 }

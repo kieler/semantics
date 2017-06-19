@@ -56,6 +56,8 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.getSystem
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
+import static extension de.cau.cs.kieler.kicool.compilation.Metric.METRIC
+import java.util.Locale
 
 /**
  * @author ssm
@@ -164,7 +166,11 @@ class ProcessorDataManager {
         }
         
         val pTime = processorUnit.environment.getData(PTIME, 0)
-        NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel("pTime: " + pTime + "ms")
+        var envText = "pTime: " + pTime + "ms"
+        val mMetric = processorUnit.environment.getData(METRIC, null)
+        if (mMetric != null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
+        NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel(envText)
+        
 
         val intermediateRootNode = NODE_INTERMEDIATE.findNode(nodeIdMap)
         val intermediateKGT = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)

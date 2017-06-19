@@ -33,7 +33,9 @@ class Environment {
     public static val ERRORS = "errors"     
     public static val START_TIMESTAMP = "startTimestamp"
     public static val STOP_TIMESTAMP = "stopTimestamp"
-    public static val PTIME = "pTime"   
+    public static val OVERALL_TIMESTAMP = "overallTimestamp"
+    public static val PTIME = "pTime"
+    public static val PTIME_OVERALL = "pTimeOverall"   
     public static val SNAPSHOTS = "snapshots"
     public static val ENABLED = "enabled"
         

@@ -80,7 +80,13 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environment.model = sourceModel
         environment.compilationContext = this
         
-        // Add metric code for initial model
+        val metric = getSourceMetric
+        if (metric != null) {
+            metric.setEnvironment(environment, environment)
+            metric.setMetricSourceEntity
+            metric.setMetricEntity
+            metric.setMetric
+        }
         
         environment.inplaceCompilation = false
         
@@ -122,8 +128,18 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setData(STOP_TIMESTAMP, stopTimestamp)
         environmentPrime.setData(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
         
-        
         // Add Metric code
+        val metric = getMetric(processor)
+        if (metric != null) {
+            metric.setEnvironment(environment, environmentPrime)
+            metric.setMetricEntity
+            metric.setMetric
+        }
+        
+        val overallTimestamp = java.lang.System.nanoTime
+        environmentPrime.setData(OVERALL_TIMESTAMP, overallTimestamp)
+        environmentPrime.setData(PTIME_OVERALL, (overallTimestamp - startTimestamp) / 1000_000)
+        
         
         notify(new ProcessorFinished(this, processor, compilationUnit))
         
@@ -172,6 +188,14 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     def CompilationContext getRootContext() {
         if (parentContext == null) return this
         else return parentContext.getRootContext
+    }
+    
+    protected def Metric getSourceMetric() {
+        processorMap.get(system.metrics.head) as Metric
+    }
+    
+    protected def Metric getMetric(de.cau.cs.kieler.kicool.Processor processor) {
+        processorMap.get(system.metrics.head) as Metric
     }
         
 }

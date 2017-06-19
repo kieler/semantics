@@ -22,8 +22,6 @@ import org.eclipse.emf.ecore.EObject
  */
 class EObjectCount extends Metric {
     
-    static val ENVIRONMENT_METRIC_KEY = "eObjectCount"
-    
     override getId() {
         "de.cau.cs.kieler.kicool.processors.metrics.eObjectCount"
     }
@@ -32,21 +30,27 @@ class EObjectCount extends Metric {
         "EObject Count Metric"
     }
     
-    override process() {
-        val model = environment.getModel as EObject
-        val count = model.count
-        environment.data.put(ENVIRONMENT_METRIC_KEY, count)
-        
-        val previousCount = environments.key.data.get(ENVIRONMENT_METRIC_KEY)
-        if (previousCount != null) {
-            setMetric(count / previousCount as Double)
-        } else {
-            setMetric(1.0)
-        }
+    static def count(EObject eObject) {
+        eObject.eAllContents.toList.size
     }
     
-    static def count(EObject eObject) {
-        0
+    override protected getMetricEntity() {
+        val model = environment.getModel
+        if (model instanceof EObject) {
+            model.count
+        } else {
+            System.err.println("EObject metric is used for non-eObject. This does not yield any result.")
+            0
+        } 
+    }
+    
+    override protected calculateMetricValue() {
+        val sourceEntity = environment.data.get(METRIC_SOURCE_ENTITY) as Integer
+        val modelEntity = environment.data.get(METRIC_ENTITY) as Integer
+        if (sourceEntity != 0) 
+            return (modelEntity.intValue as double) / (sourceEntity.intValue as double)
+        else
+            return 1.0;
     }
     
 }
