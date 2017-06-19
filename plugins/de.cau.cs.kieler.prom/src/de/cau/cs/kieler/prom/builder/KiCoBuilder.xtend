@@ -35,6 +35,7 @@ import java.util.Collections
 import java.util.HashMap
 import java.util.List
 import java.util.Map
+import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IProject
@@ -45,6 +46,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
+import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -55,6 +57,13 @@ import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
+import java.io.InputStreamReader
+import java.io.BufferedReader
+import de.cau.cs.kieler.prom.ui.console.PromConsole
+import java.lang.ProcessBuilder.Redirect
+import com.google.common.io.CharStreams
+import com.google.common.io.ByteStreams
+import org.eclipse.core.runtime.Status
 
 /**
  * @author aas
@@ -443,6 +452,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         
         // Get variables in model
         // TODO: more generic implementation
+        monitor.subTask("Fetching variables in model:" + file.name)
         val List<WrapperCodeAnnotationData> variables = newArrayList()
         if (model instanceof State) {
             for(decl : model.declarations) {
@@ -485,7 +495,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
         
         // Get simulation code
-        monitor.subTask("Processing simulation template")
+        monitor.subTask("Processing simulation template for:" + file.name)
         val modelName = Files.getNameWithoutExtension(file.name)
         val generator = new WrapperCodeGenerator(project, launchData)
         val simulationCode = generator.generateWrapperCode(simTemplate,
@@ -544,10 +554,23 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             return   
         }
         
-        if(isCTarget)
-            createExecutableFromCCode(simPath)
-        else if(isJavaTarget)
-            createExecutableFromJavaCode(simPath)
+        val compileJob = new Job("Executable compilation of:" + simPath) {
+            override protected run(IProgressMonitor monitor) {
+                try {
+                    if(isCTarget) {
+                        createExecutableFromCCode(simPath)
+                    } else if(isJavaTarget) {
+                        createExecutableFromJavaCode(simPath)
+                    }
+                    return Status.OK_STATUS
+                } catch (Exception e){
+                    e.printStackTrace
+                    val s = new Status(Status.ERROR, PromPlugin.ID, "Compilation to executable failed.", e)
+                    return s
+                }
+            }
+        }
+        compileJob.schedule()
     }
     
     /**
@@ -555,7 +578,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * @param simPath the path to the simulation file
      */
     private def void createExecutableFromCCode(String simTargetPath) {
-        monitor.subTask("Compiling simulation via gcc")
+        monitor.subTask("Compiling simulation via gcc:" + simTargetPath)
         
         val slash = File.separator
         val currentDir = "." + slash
@@ -583,16 +606,31 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         
         // Run gcc on simulation code
         // Example command to compile simulation code: "gcc -std=c99 SimulationCode.c -o SimulationCode"
-        val pBuilder = new ProcessBuilder("gcc",
-                                          "-std=c99",
+        val pBuilder = new ProcessBuilder("gcc", "-std=c99",
                                           currentDir + "code" + slash + codeFileName,
                                           "-o", currentDir + executablePath.makeRelativeTo(simDirectory).toOSString)
         pBuilder.directory(project.location.append(simDirectory).toFile)
+        pBuilder.redirectErrorStream(true)
         val p = pBuilder.start()
         // Wait until the process finished
-        val errorCode = p.waitFor()
-        if(errorCode != 0) {
-            throw new Exception("GCC has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
+        var Exception exception
+        if(!p.waitFor(60, TimeUnit.SECONDS)) {
+            exception = new Exception("GCC took to long: (timeout: 60s, command: " + pBuilder.command + ", in directory " + pBuilder.directory + ")\n\n"
+                              + "Please check the KIELER Console output.")
+        }
+        // Check that there was no error
+        if(exception == null && p.exitValue != 0) {
+            exception = new Exception("GCC has issues:" + p.exitValue + " (" + pBuilder.command + " in " + pBuilder.directory + ")\n\n"
+                              + "Please check the KIELER Console output.")
+        }
+        if(p.inputStream.available > 0) {
+            // Print output of process to eclipse console
+            PromConsole.print("GCC output for '" + simTargetPath + "'")
+            PromConsole.copy(p.inputStream)
+            PromConsole.print("\n\n")
+        }
+        if(exception != null) {
+            throw exception
         } else {
             executableFile.refreshLocal(1, null)
         }
@@ -627,15 +665,25 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         val mainClassWithoutSourceDirectoryAndFileExtension = filePath.removeFirstSegments(1).removeFileExtension.toOSString
         val pBuilder = new ProcessBuilder(#["jar", "cvfe", parentDir+executableFile.projectRelativePath.toOSString, mainClassWithoutSourceDirectoryAndFileExtension] + classFilePaths)
         pBuilder.directory(project.location.append(new Path(File.separator + "bin")).toFile)
-        pBuilder.redirectError(project.location.append(new Path("log.txt")).toFile)
-        
+        pBuilder.redirectErrorStream(true)
         val p = pBuilder.start()
         // Wait until the process finished
         val errorCode = p.waitFor()
+        var Exception exception
         if(errorCode != 0) {
-            throw new Exception("jar has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
+            exception = new Exception("jar has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
         } else {
             executableFile.refreshLocal(1, null)
+        }
+        // Print output of process
+        if(p.inputStream.available > 0) {
+            // Print output of process to eclipse console
+            PromConsole.print("JAR output for '" + simPath + "'")
+            PromConsole.copy(p.inputStream)
+            PromConsole.print("\n\n")
+        }
+        if(exception != null) {
+            throw exception
         }
     }
     

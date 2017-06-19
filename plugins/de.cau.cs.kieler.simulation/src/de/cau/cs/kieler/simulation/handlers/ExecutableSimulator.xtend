@@ -119,7 +119,6 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         var String line
         val timeLimiter = new SimpleTimeLimiter();
         do {
-            System.err.println("Calling readLine "+System.currentTimeMillis)
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
                 override call() throws Exception {
@@ -129,8 +128,11 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
             try {
                 line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, false)
             } catch(Exception e) {
-                stop();
-                throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)
+                // If the process is null, the simulation was stopped already
+                if(process != null) {
+                    stop();
+                    throw new IOException("Process of simulation '" + executable.name + "' is not responding", e)    
+                }
             }
             
             Thread.sleep(1);

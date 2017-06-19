@@ -30,6 +30,13 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
+import org.eclipse.swt.events.KeyAdapter
+import org.eclipse.swt.events.KeyEvent
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.prom.ui.console.PromConsole
+import org.eclipse.jface.dialogs.MessageDialog
+import de.cau.cs.kieler.simulation.core.SimulationListener
+import de.cau.cs.kieler.simulation.core.SimulationEvent
 
 /**
  * @author aas
@@ -41,10 +48,13 @@ class DataPoolView extends ViewPart {
     
     public static var DataPoolView instance
     
+    public static val simulationListener = createSimulationListener
+    
     var TableViewer viewer
     
     var TableViewerColumn variableColumn
     var TableViewerColumn valueColumn
+    var TableViewerColumn userValueColumn
     var TableViewerColumn historyColumn
     var TableViewerColumn inputColumn
     var TableViewerColumn outputColumn
@@ -55,13 +65,17 @@ class DataPoolView extends ViewPart {
      override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
-         
+        SimulationManager.addListener(simulationListener)
+        
         // Create viewer.
         viewer = createDataPoolTable(parent);
 
         // Create menu and toolbars.
         createMenu();
         createToolbar();
+        
+        // Add key listeners for fast controls
+        addKeyListeners()
     }
     
     /**
@@ -112,6 +126,14 @@ class DataPoolView extends ViewPart {
      */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
+        mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
+            override run() {
+                val title = "Controls for the Data Pool View"
+                val message = "Right Arrow : Step simulation macro tick\n"
+                val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
+                dialog.open
+            }
+        })
         mgr.add(new Action("Reset Value"){
             override run(){
                 val variable = viewer.structuredSelection.firstElement as Variable
@@ -121,6 +143,21 @@ class DataPoolView extends ViewPart {
                 } 
             }
         });
+    }
+    
+    private def void addKeyListeners() {
+        // Step through simulation via ARROW_RIGHT.
+        viewer.control.addKeyListener(new KeyAdapter() {
+            override keyPressed(KeyEvent e) {
+                val manager = SimulationManager.instance
+                if(e.keyCode == SWT.ARROW_RIGHT) {
+                    if(manager != null) {
+                        PromConsole.print("Step macro tick")
+                        manager.stepMacroTick()
+                    }
+                }
+            }
+        })
     }
     
     private def TableViewer createDataPoolTable(Composite parent) {
@@ -145,19 +182,26 @@ class DataPoolView extends ViewPart {
                 }
             }
         };
-        valueColumn = createTableColumn(viewer, "Value", 80, true)
+        valueColumn = createTableColumn(viewer, "Current Value", 120, true)
         valueColumn.labelProvider = new DataPoolViewerColumn() {
             override String getText(Object element) {
                  if(element instanceof Variable) {
-                    if(element.isDirty)
-                        return "* "+element.userValue?.toString
-                    else
-                        return element.value?.toString
+                    return element.value?.toString
                 }
                 return ""
             }
         };
-        historyColumn = createTableColumn(viewer, "History", 80, true)
+        userValueColumn = createTableColumn(viewer, "User Value", 120, true)
+        userValueColumn.labelProvider = new DataPoolViewerColumn() {
+            override String getText(Object element) {
+                 if(element instanceof Variable) {
+                    if(element.isDirty)
+                        return "* "+element.userValue?.toString
+                }
+                return ""
+            }
+        };
+        historyColumn = createTableColumn(viewer, "History", 200, true)
         historyColumn.labelProvider = new DataPoolViewerColumn() {
             var Image img
             
@@ -216,7 +260,7 @@ class DataPoolView extends ViewPart {
         viewer.input = newArrayList()
         
         // Make cells editable
-        valueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
+        userValueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
         return viewer
     }
@@ -329,5 +373,19 @@ class DataPoolView extends ViewPart {
         gc.dispose()
         
         return img
+    }
+    
+    private static def SimulationListener createSimulationListener() {
+        val listener = new SimulationListener() {
+            override update(SimulationEvent e) {
+                // Execute in UI thread
+                Display.getDefault().asyncExec(new Runnable() {
+                    override void run() {
+                        DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
+                    }
+                });
+            }
+        }
+        return listener
     }
 }

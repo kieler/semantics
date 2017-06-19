@@ -55,8 +55,9 @@
                   disabledIcon="icons/stepIconDisabled.png"
                   icon="icons/stepIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.step"
-                  label="Step Simulation"
-                  style="push">
+                  label="Step Sub Tick"
+                  style="push"
+                  tooltip="Step Sub Tick">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -73,7 +74,8 @@
                   icon="icons/macroStepIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.stepMacroTick"
                   label="Step Macro Tick"
-                  style="push">
+                  style="push"
+                  tooltip="Step Macro Tick">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -90,7 +92,8 @@
                   icon="icons/stopIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.stop"
                   label="Stop Simulation"
-                  style="push">
+                  style="push"
+                  tooltip="Stop Simulation">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -107,7 +110,8 @@
                   icon="icons/runIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.play"
                   label="Play Simulation"
-                  style="push">
+                  style="push"
+                  tooltip="Play Simulation">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -124,7 +128,8 @@
                   icon="icons/pauseIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.pause"
                   label="Pause Simulation"
-                  style="push">
+                  style="push"
+                  tooltip="Pause Simulation">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -140,7 +145,8 @@
                   icon="icons/stepBackIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.back"
                   label="Step Back"
-                  style="push">
+                  style="push"
+                  tooltip="Step Back">
             </command>
          </toolbar>
       </menuContribution>
