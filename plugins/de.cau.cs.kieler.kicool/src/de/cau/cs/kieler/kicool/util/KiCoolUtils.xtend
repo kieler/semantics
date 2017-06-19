@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.util
 
+import de.cau.cs.kieler.kicool.ProcessorEntry
+
 /**
  * @author ssm
  * @kieler.design 2017-02-27 proposed 
@@ -26,5 +28,9 @@ class KiCoolUtils {
             (entry.eContainer as de.cau.cs.kieler.kicool.ProcessorEntry).getSystem
         }
     }
+    
+    static def uniqueProcessorId(ProcessorEntry processor) {
+        processor.id + "#" + processor.hashCode
+    }    
     
 }

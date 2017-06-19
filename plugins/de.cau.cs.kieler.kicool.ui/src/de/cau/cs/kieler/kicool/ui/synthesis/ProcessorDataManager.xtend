@@ -30,21 +30,19 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorSynthesis.uniqueProcessorId
+import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractCompilationNotification
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
 import de.cau.cs.kieler.klighd.krendering.Trigger
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.TOGGLE_ON_OFF_DATA
 import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager.*
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
@@ -54,6 +52,10 @@ import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateDoubleCollector
 import org.eclipse.elk.core.options.CoreOptions
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
+import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.getSystem
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 
 /**
  * @author ssm
@@ -71,6 +73,7 @@ class ProcessorDataManager {
     static val NODE_ENVIRONMENT = "environment"
     static val NODE_INTERMEDIATE = "intermediate"
     static val NODE_SOURCE = "sourcebody"
+    static val NODE_ACTIVE = "active"
     
     static val INTERMEDIATE_KGT = "resources/intermediate.kgt"
     
@@ -86,6 +89,16 @@ class ProcessorDataManager {
         }
         
         nodeIdMap.findNode(NODE_NAME).label.text = rtProcessor.name
+        
+        
+        val toggleOnOffNode = nodeIdMap.findNode(NODE_ACTIVE)
+        toggleOnOffNode.container.addAction(Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
+        toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processor))
+        if (ToggleProcessorOnOffAction.deactivatedProcessors.contains(processor)) {
+            setFBColor(getContainer(toggleOnOffNode), OFF)
+        } else {
+            setFBColor(getContainer(toggleOnOffNode), ON)
+        }
     }
     
     
@@ -110,7 +123,6 @@ class ProcessorDataManager {
                     compilationNotification.compilationContext, 
                     compilationNotification.compilationContext.sourceModel, view
                 ))
-            
         }
     }
     

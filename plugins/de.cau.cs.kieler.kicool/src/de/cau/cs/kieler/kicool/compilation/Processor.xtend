@@ -36,11 +36,19 @@ abstract class Processor implements IKiCoolCloneable {
     }
     
     public def setEnvironment(Environment environment, Environment environmentPrime) {
+        if (environments != null && environments.key != null) {
+            val enabledFlag = environments.key.enabled
+            environment.setEnabled(enabledFlag)
+        }
         this.environments = new Pair<Environment, Environment>(environment, environmentPrime)
     }
     
     public def Environment getEnvironment() {
         return environments.value
+    }
+    
+    public def Environment getSourceEnvironment() {
+        return environments.key
     }
     
     override boolean isMutable() {

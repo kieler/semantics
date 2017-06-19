@@ -111,7 +111,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         val startTimestamp = java.lang.System.nanoTime
         environmentPrime.setData(START_TIMESTAMP, startTimestamp)
         try {
-            compilationUnit.process
+            if (compilationUnit.sourceEnvironment.enabled) { 
+                compilationUnit.process
+            }
         } catch (Exception e) {
             compilationUnit.environment.error = e.message
             notify(new ProcessorError(e.message, this, processor, compilationUnit))

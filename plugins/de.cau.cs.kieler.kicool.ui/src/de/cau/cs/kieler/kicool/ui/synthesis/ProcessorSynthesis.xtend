@@ -47,6 +47,7 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -74,11 +75,6 @@ class ProcessorSynthesis {
         node.getData(KIdentifier).id = id
         node
     }
-    
-    static def uniqueProcessorId(ProcessorEntry processor) {
-        processor.id + "#" + processor.hashCode
-    }
-    
 
     dispatch def List<KNode> transform(Processor processor) {
         val processorNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)

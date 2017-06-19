@@ -23,6 +23,8 @@ import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.XtextResource
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
 
 /**
  * @author ssm
@@ -60,10 +62,21 @@ class CompilationAction {
         
         val cc = Compile.createCompilationContext(view.activeSystem, model)
         
+        cc.deactiveDisabledProcessors
+        
         val updateObserver = new CompilationUpdate(view)
         cc.addObserver(updateObserver)
         
         cc.compileAsynchronously
+    }
+    
+    protected def void deactiveDisabledProcessors(CompilationContext cc) {
+        for (proc : ToggleProcessorOnOffAction.deactivatedProcessors) {
+            val unit = cc.processorMap.get(proc)
+            if (unit != null) {
+                unit.sourceEnvironment.enabled = false
+            }
+        }
     }
     
     protected def Object getEditorModel() {

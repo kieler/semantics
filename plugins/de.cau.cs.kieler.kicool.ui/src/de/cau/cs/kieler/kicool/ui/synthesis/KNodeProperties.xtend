@@ -14,6 +14,8 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 
 /**
  * @author ssm
@@ -21,6 +23,11 @@ import org.eclipse.elk.graph.properties.Property
  * @kieler.rating 2017-06-12 proposed yellow
  */
 class KNodeProperties {
+    
     public static val IProperty<IntermediateData> INTERMEDIATE_DATA =
-        new Property<IntermediateData>("de.cau.cs.kieler.kicool.ui.intermediateData", null);
+        new Property<IntermediateData>("de.cau.cs.kieler.kicool.ui.intermediateData", null)
+        
+    public static val IProperty<ToggleOnOffData> TOGGLE_ON_OFF_DATA = 
+        new Property<ToggleOnOffData>("de.cau.cs.kieler.kicool.ui.toggleOnOffData", null)
+        
 }

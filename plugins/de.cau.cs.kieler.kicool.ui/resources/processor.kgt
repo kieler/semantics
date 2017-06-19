@@ -85,6 +85,8 @@ knode processor {
                     styles:
                         foreground = 200r,200g,200b,0a 
                         background = 0r,255g,0b,255a -> 0r,128g,0b,255a (45)
+                        selection foreground = 0r,0g,0b,255a
+                        selection lineWidth = 0.5
                 }
             }
             knode seperator {

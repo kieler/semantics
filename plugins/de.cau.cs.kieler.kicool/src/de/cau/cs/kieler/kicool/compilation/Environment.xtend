@@ -35,6 +35,7 @@ class Environment {
     public static val STOP_TIMESTAMP = "stopTimestamp"
     public static val PTIME = "pTime"   
     public static val SNAPSHOTS = "snapshots"
+    public static val ENABLED = "enabled"
         
     @Accessors Map<String, Object> data
     
@@ -85,4 +86,11 @@ class Environment {
         if (errors.size == 0) ProcessorStatus.OK else ProcessorStatus.ERRORS
     }
     
+    def boolean getEnabled() {
+        data.get(ENABLED) as Boolean
+    }
+    
+    def setEnabled(boolean enabled) {
+        data.put(ENABLED, enabled)
+    }
 }
