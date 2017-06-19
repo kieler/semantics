@@ -55,6 +55,12 @@ import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.esterel.esterel.ISignal
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.scl.scl.StatementContainer
+import de.cau.cs.kieler.esterel.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
@@ -91,6 +97,8 @@ class SCEstExtension {
     var static constantSuffix = 0;
     
     var static variableSuffix = 0;
+    
+    var static flagSuffix = 0;
 
     /**
      * Searches a valuedObject in a declarations list by its name
@@ -204,6 +212,13 @@ class SCEstExtension {
     }
     
     /**
+     * Resets the flag count, should be called before a transformation.
+     */
+    def resetFlagSuffix() {
+        variableSuffix = 0;
+    }
+    
+    /**
      * Returns an unused constant by appending the constantCount to "_l" and incrementing constantCount.
      * 
      * @return An unused constant
@@ -246,12 +261,38 @@ class SCEstExtension {
     }
     
     /**
+     * Returns a new flag.
+     * 
+     * @param exp The value of the flag. true or false
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createNewUniqueFlag(Expression exp) {
+        if (exp instanceof Expression) {
+            createValuedObject(createNewUniqueFlagName) => [
+                it.initialValue = exp
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueFlagName)
+        }
+    }
+    
+    /**
      * Returns an unused variable name. String: ( "_v" + counter )
      * @return Returns an unused variable name. String: ( "_v" + counter )
      */
     def createNewUniqueVariableName() {
         variableSuffix++
         "_v" + variableSuffix
+    }
+    
+    /**
+     * Returns an unused flag name. String: ( "_f" + counter )
+     * @return Returns an unused flag name. String: ( "_f" + counter )
+     */
+    def createNewUniqueFlagName() {
+        flagSuffix++
+        "_f" + flagSuffix
     }
 
     /**
@@ -283,6 +324,17 @@ class SCEstExtension {
     def createLabel(String label) {
         SclFactory::eINSTANCE.createLabel => [
             it.name = label
+        ]
+    }
+    
+    /**
+     * Creates a new unique Label
+     * 
+     * @return The created EmptyStatement
+     */
+    def createLabel() {
+        SclFactory::eINSTANCE.createLabel => [
+            it.name = createNewUniqueLabel
         ]
     }
 
@@ -622,7 +674,7 @@ class SCEstExtension {
       */
     def Conditional newIfThenGoto(Expression condition, Label targetLabel, boolean isImmediate) {
         SclFactory::eINSTANCE.createConditional => [
-            expression = condition
+            expression = EcoreUtil.copy(condition)
             if (isImmediate) {
                 statements.addAll(SclFactory::eINSTANCE.createPause)
 //                statements.addAll(createPause.statements)
@@ -631,6 +683,12 @@ class SCEstExtension {
                     SclFactory::eINSTANCE.createGoto => [
                         it.target = targetLabel
                     ])
+        ]
+    }
+    
+    def Conditional newIfStatement(Expression expr) {
+        SclFactory::eINSTANCE.createConditional => [
+            expression = EcoreUtil.copy(expr)
         ]
     }
 
@@ -850,6 +908,18 @@ class SCEstExtension {
      */
     def createIntValue(int value) {
         KExpressionsFactory::eINSTANCE.createIntValue => [
+            it.value = value
+        ]
+    }
+    
+    /**
+     * Creates a KExpression Bool Value
+     * 
+     * @param value The wanted value for BoolValue.
+     * @return A KExpression Bool Value
+     */
+    def createBoolValue(boolean value) {
+        KExpressionsFactory::eINSTANCE.createBoolValue => [
             it.value = value
         ]
     }
@@ -1086,5 +1156,107 @@ class SCEstExtension {
         }
         return generated
     }
+    
+    /**
+     * Creates a new Emit Statement
+     * 
+     * @param sustain The sustain statement which is being transformed
+     * @return The newly created emit statement
+     */
+    def createEmit(Sustain sustain) {
+        EsterelFactory::eINSTANCE.createEmit => [
+            it.signal = sustain.signal
+            it.expr = sustain.expression
+        ]
+    }
+    
+    /**
+     * Insert a Conditional at the right position after a pause statement.
+     * 
+     * @param statements
+     * @param conditional
+     * @param pos
+     * @param counter
+     */
+    def insertConditional(EList<Statement> statements, Conditional conditional, int pos, int counter) {
+        for (var i=1; pos+i<statements.length; i++) {
+            if (statements.get(pos+i) instanceof Conditional) {
+                var ifTest2 = statements.get(pos+i) as Conditional
+                if (!ifTest2.annotations.empty) {
+                    var isGenerated = false
+                    for (var j=0; j<ifTest2.annotations.length; j++) {
+                        var a = ifTest2.annotations.get(j)
+                        if (a.name.equals("generated_ifTest")) {
+                            isGenerated = true
+                            var layer = (a as IntAnnotation).value
+                            if (counter<layer) {
+                                statements.add(pos+i, conditional)
+                                i = statements.length
+                                j = ifTest2.annotations.length
+                            }
+                        }
+                        
+                    }
+                    if (!isGenerated) {
+                        statements.add(pos+i, conditional)
+                        i = statements.length
+                    }
+                }
+                else {
+                    statements.add(pos+i, conditional)
+                    i = statements.length
+                }
+            }
+            else {
+                statements.add(pos+i, conditional)
+                i = statements.length
+            }
+        }
+    }
+    
+    /**
+     * Returns the given label or the thread end label. Depends on which comes first.
+     * 
+     * @param label
+     * @param statement
+     * @return Returns the given label or the thread end label. Depends on which comes first.
+     */
+    def Label findClosestLabel(Label label, Statement statement) {
+        var parent = statement.eContainer
+        var labelParent = label.eContainer
+        while (true) {
+            if (parent == labelParent) {
+                return label
+            }
+            else if (parent instanceof Thread ||  parent instanceof EsterelThread) {
+                if ((parent as StatementContainer).statements.last instanceof Label) {
+                    return (parent as StatementContainer).statements.last as Label
+                }
+                else { 
+                    return null
+                }
+            }
+            else if (parent instanceof SCEstModule) {
+                return null // shouldn't be possible
+            }
+        }
+    }
+    
+    def scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int counter) {
+        var variable = createNewUniqueVariable(createIntValue(0))
+        var decl = createDeclaration(ValueType.INT, variable)
+        var scope = createScopeStatement(decl)
+        var conditional = newIfStatement(signalExpr)
+        conditional.statements.add(incrementInt(variable))
+        conditional.annotations.add(createAnnotation(-1))
+        statements.add(pos+1, conditional)
+        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), expr), label, false)
+        insertConditional(statements, conditional2, pos, counter)
+        scope.statements.add(statements)
+        statements.add(scope)
+        return scope
+    }
+ 
+ 
  
 }

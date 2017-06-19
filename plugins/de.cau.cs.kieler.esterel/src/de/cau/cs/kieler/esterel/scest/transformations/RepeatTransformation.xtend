@@ -90,26 +90,17 @@ class RepeatTransformation extends AbstractExpansionTransformation implements Tr
     def Statement transformStatement(Statement statement) {
         if (statement instanceof Repeat) {
             var repeat = statement as Repeat
-            var iVariable = createConstant(createNewUniqueConstantName, "0")
-            var decl = createDeclaration(ValueType.INT, iVariable)
+            var variable = createNewUniqueVariable(createIntValue(0))
+            var decl = createDeclaration(ValueType.INT, variable)
             var scope = createScopeStatement(decl)
             var label = createLabel(createNewUniqueLabel) 
             scope.statements.add(label)
             scope.statements.add(repeat.statements)
-            var vObjectReference = createValuedObjectReference(iVariable)
-            var addExpr = createOperatorExpression(vObjectReference, createIntValue(1), OperatorType.ADD)
-            var assignment = createAssignment(iVariable, addExpr) 
-            scope.statements.add(assignment)
-            
-            var intValue = createIntValue(1)
-            if (repeat.expression instanceof IntValue) {
-                intValue.value = (repeat.expression as IntValue).value
-            }
-            else if (repeat.expression instanceof ConstantExpression) {
-                intValue.value = Integer.parseInt((repeat.expression as ConstantExpression).value)
-            }
-            var ifStatement = createConditional(createLT(EcoreUtil.copy(vObjectReference), intValue))
-            scope.statements.add(ifStatement.statements.add(createGotoStatement(label)))
+            var vObjectReference = createValuedObjectReference(variable) 
+            scope.statements.add(incrementInt(variable))
+            var ifStatement = createConditional(createLT(EcoreUtil.copy(vObjectReference), repeat.expression))
+            ifStatement.statements.add(createGotoStatement(label))
+            scope.statements.add(ifStatement)
             return scope
         }
        else if (statement instanceof StatementContainer) {

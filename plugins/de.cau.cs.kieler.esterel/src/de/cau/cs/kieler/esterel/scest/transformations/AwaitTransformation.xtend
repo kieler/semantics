@@ -33,10 +33,8 @@ import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.scl.scl.Label
 import java.util.LinkedList
-import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
@@ -60,8 +58,7 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
     }
         
 //    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
+//        return Sets.newHashSet()
 //    }
 
     override getNotHandlesFeatureIds() {
@@ -151,12 +148,12 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                 
                 var cases = await.cases
                 var scope = createScopeStatement(null)
-                var firstDecl = true
                 var startLabel = createLabel(createNewUniqueLabel)
                 var endLabel = createLabel(createNewUniqueLabel)
                 scope.statements.add(startLabel)
-                var immediateLabels = new LinkedList<Label>()
-                var label = createLabel(createNewUniqueLabel)
+                var LinkedList<Pair<Label, Conditional>> immediateLabels = new LinkedList()
+                var label = startLabel
+                var nextLabel = createLabel(createNewUniqueLabel)
                 for (var i=0; i<cases.length; i++) {
                     var c = cases.get(i)
                     if (c.delay != null) {
@@ -164,31 +161,55 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                             var variable = createNewUniqueVariable(createIntValue(0))
                             var decl = createDeclaration(ValueType.INT, variable)
                             scope.declarations.add(decl)
-                            scope.statements.add(scope)
-                            var lt = createLT(createValuedObjectReference(variable), c.delay.expr)
                             var conditional = createConditional(c.delay.signalExpr)
                             conditional.statements.add(incrementInt(variable))
-                            var conditional2 = newIfThenGoto(lt, label, false)
+                            var lt = createLT(createValuedObjectReference(variable), c.delay.expr)
+                            var conditional2 = newIfThenGoto(lt, nextLabel, false)
                             scope.statements.add(conditional)
                             scope.statements.add(conditional2)
                             if (c.statements != null) {
                                 scope.statements.add(c.statements)
                             }
                             scope.statements.add(createGotoStatement(endLabel))
-                            scope.statements.add(label)
-                            label = createLabel(createNewUniqueLabel)
+                            scope.statements.add(nextLabel)
+                            if (i+1<cases.length) {
+                                label = nextLabel
+                                nextLabel = createLabel(createNewUniqueLabel)
+                            }
                         }
                         else {
+                            var conditional = newIfThenGoto(createNot(c.delay.signalExpr), nextLabel, false)
+                            scope.statements.add(conditional)
                             if (c.delay.isIsImmediate) {
-                                immediateLabels.add(label)
+                                immediateLabels.add(new Pair(label, conditional))
                             }
-                            scope.statements.add(newIfThenGoto(createNot(c.delay.signalExpr), label, false))
                             if (c.statements != null) {
                                 scope.statements.add(c.statements)
                             }
                             scope.statements.add(createGotoStatement(endLabel))
-                            scope.statements.add(label)
-                            label = createLabel(createNewUniqueLabel)
+                            scope.statements.add(nextLabel)
+                            if (i+1<cases.length) {
+                                label = nextLabel
+                                nextLabel = createLabel(createNewUniqueLabel)
+                            }
+                        }
+                    }
+                }
+                if (!immediateLabels.isEmpty) {
+                    var variable = createNewUniqueVariable(createBoolValue(true))
+                    var decl = createDeclaration(ValueType.BOOL, variable)
+                    scope.declarations.add(decl)
+                    scope.statements.add(0, createGotoStatement(immediateLabels.get(0).key))
+                    for (var i=0; i<immediateLabels.length; i++) {
+                        if (i+1<immediateLabels.length) {
+                            immediateLabels.get(i).value.statements.add(0, newIfThenGoto(createValuedObjectReference(variable), immediateLabels.get(i+1).key, false))
+                        }
+                        else {
+                            // set 'variable' to false, since the immediate run is over
+                            // now just the normal order of the cases counts
+                            var conditional = newIfThenGoto(createValuedObjectReference(variable), nextLabel, false)
+                            conditional.statements.add(0,createAssignment(variable, createBoolValue(false)))
+                            immediateLabels.get(i).value.statements.add(0, conditional)
                         }
                     }
                 }

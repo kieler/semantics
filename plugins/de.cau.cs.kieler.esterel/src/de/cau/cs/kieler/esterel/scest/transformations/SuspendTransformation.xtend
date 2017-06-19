@@ -36,6 +36,7 @@ import de.cau.cs.kieler.esterel.esterel.DelayExpr
 import de.cau.cs.kieler.scl.scl.Pause
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author mrb
@@ -94,13 +95,14 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             var statements = getContainingList(statement)
             var pos = statements.indexOf(statement)
             transformPauses(suspend.statements, counter, EcoreUtil.copy(suspend.delay))
+            // without this if statement the first statement of suspend.statements could be not checked in next cycle of transformStatements
             if (suspend.statements.length > 0) {
                 suspend.statements.get(0).transformStatement(counter+1)
             }
             if (suspend.delay.isImmediate) {
                 var label = createLabel(createNewUniqueLabel)
                 statements.set(pos, label)
-                statements.add(pos+1, newIfThenPauseGoto(EcoreUtil.copy(suspend.delay), label, true))
+                statements.add(pos+1, newIfThenGoto(EcoreUtil.copy(suspend.delay.signalExpr), label, true))
                 statements.add(pos+2, suspend.statements)
             }
             else {
@@ -172,7 +174,7 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
                 statements.set(i, statement)
             }
             else if (statement == null) {
-                i = i+2 // a label/ifTest was added before/after the pause statement;without 'i=i+2' pause would be transformed indefinitely often
+                i = i+1 // a label/ifTest was added before/after the pause statement;without 'i=i+2' pause would be transformed indefinitely often
             }
         }
         return statements
@@ -180,10 +182,11 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
     
     def Statement transformPause(Statement statement, int counter, DelayExpr delay) {
         if (statement instanceof Pause) {
+            // it is not possible to transform "suspend p when 3 A" because in this transformation delay.expr is not checked. 
             var statements = getContainingList(statement)
             var pos = statements.indexOf(statement)
             var label = createLabel(createNewUniqueLabel)
-            var ifTest = newIfThenPauseGoto(EcoreUtil.copy(delay), label, false)
+            var ifTest = newIfThenGoto(EcoreUtil.copy(delay.signalExpr), label, false)
             var annotation = createAnnotation(counter)
             ifTest.annotations.add(annotation)
             // Look for already existing IfTests after Pause.
@@ -196,7 +199,7 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             }
             // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
             for (var i=1; pos+i<statements.length; i++) {
-                if (statements.get(pos+i) instanceof IfTest) {
+                if (statements.get(pos+i) instanceof Conditional) {
                     var ifTest2 = statements.get(pos+i) as IfTest
                     if (!ifTest2.annotations.empty) {
                         var isGenerated = false
@@ -232,8 +235,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             return null
         }
         else if (statement instanceof StatementContainer) {
-            
-            transformPauses((statement as StatementContainer).statements, counter, delay)
+            if (!(statement instanceof Conditional)) {
+                transformPauses((statement as StatementContainer).statements, counter, delay)
+            }
             
             if (statement instanceof Trap) {
                 (statement as Trap).trapHandler.forEach[h | transformPauses(h.statements, counter, delay)]
@@ -249,7 +253,12 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
                 transformPauses((statement as Do).watchingStatements, counter, delay)
             }
             else if (statement instanceof Conditional) {
-                transformPauses((statement as Conditional).getElse().statements, counter, delay)
+                // Don't transform the pauses in generated Conditionals.
+                var annotations = (statement as Conditional).annotations
+                if (!isGenerated(annotations)) {
+                    transformPauses((statement as StatementContainer).statements, counter, delay)
+                    transformPauses((statement as Conditional).getElse().statements, counter, delay)
+                }
             }
         }
         else if (statement instanceof Present) {
@@ -258,13 +267,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             transformPauses((statement as Present).elseStatements, counter, delay)
         }
         else if (statement instanceof IfTest) {
-            // Don't transform the pauses in generated IfTests.
-            var annotations = (statement as IfTest).annotations
-            if (!isGenerated(annotations)) {
-                transformPauses((statement as IfTest).thenStatements, counter, delay)
-                (statement as IfTest).elseif.forEach [ elsif | transformPauses(elsif.thenStatements, counter, delay)]
-                transformPauses((statement as IfTest).elseStatements, counter, delay)
-            }
+            transformPauses((statement as IfTest).thenStatements, counter, delay)
+            (statement as IfTest).elseif.forEach [ elsif | transformPauses(elsif.thenStatements, counter, delay)]
+            transformPauses((statement as IfTest).elseStatements, counter, delay)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads.forEach [ t |

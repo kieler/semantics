@@ -339,7 +339,6 @@ ElsIf:
     "elsif" 
     expr=Expression 
     (
-        (thenAnnotations += Annotation)*
         "then" 
         ( (thenStatements+=EsterelStatement ";")* thenStatements+=EsterelStatement? )
     )?;

@@ -89,8 +89,7 @@ class LoopTransformation extends AbstractExpansionTransformation implements Trac
             var pos = statements.indexOf(statement)
             var label = createLabel(createNewUniqueLabel)
             var length = loop.statements.length
-            statements.remove(pos)
-            statements.add(pos, label)
+            statements.set(pos, label)
             if (loop.delay == null) {
                 statements.add(pos+1, loop.statements)
                 statements.add(pos+1+length, createGotoStatement(label))
@@ -103,7 +102,6 @@ class LoopTransformation extends AbstractExpansionTransformation implements Trac
                 statements.add(pos+1, abort)
                 statements.add(pos+2, createGotoStatement(label))
             }
-            transformStatements(statements)
             return null
         }
        else if (statement instanceof StatementContainer) {
