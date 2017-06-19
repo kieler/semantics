@@ -414,6 +414,15 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getKVPair_IsKeyValue() {
+        return (EAttribute)kvPairEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public KiCoolFactory getKiCoolFactory() {
         return (KiCoolFactory)getEFactoryInstance();
     }
@@ -473,6 +482,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         kvPairEClass = createEClass(KV_PAIR);
         createEAttribute(kvPairEClass, KV_PAIR__KEY);
         createEAttribute(kvPairEClass, KV_PAIR__VALUE);
+        createEAttribute(kvPairEClass, KV_PAIR__IS_KEY_VALUE);
     }
 
     /**
@@ -551,6 +561,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         initEClass(kvPairEClass, KVPair.class, "KVPair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getKVPair_Key(), ecorePackage.getEString(), "key", null, 0, 1, KVPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getKVPair_Value(), ecorePackage.getEString(), "value", null, 0, 1, KVPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getKVPair_IsKeyValue(), ecorePackage.getEBoolean(), "isKeyValue", null, 0, 1, KVPair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

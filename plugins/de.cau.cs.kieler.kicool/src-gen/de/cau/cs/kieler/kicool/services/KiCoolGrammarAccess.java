@@ -419,14 +419,16 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cKeyEStringParserRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
-		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cValueEStringAllTypesParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		private final Assignment cIsKeyValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsKeyValueKeyKeyword_1_0 = (Keyword)cIsKeyValueAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueEStringAllTypesParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
 		//KVPair kicool::KVPair:
-		//	key=EString value=EStringAllTypes
+		//	key=EString isKeyValue?='key'? value=EStringAllTypes
 		@Override public ParserRule getRule() { return rule; }
 
-		//key=EString value=EStringAllTypes
+		//key=EString isKeyValue?='key'? value=EStringAllTypes
 		public Group getGroup() { return cGroup; }
 
 		//key=EString
@@ -435,11 +437,17 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//EString
 		public RuleCall getKeyEStringParserRuleCall_0_0() { return cKeyEStringParserRuleCall_0_0; }
 
+		//isKeyValue?='key'?
+		public Assignment getIsKeyValueAssignment_1() { return cIsKeyValueAssignment_1; }
+
+		//'key'
+		public Keyword getIsKeyValueKeyKeyword_1_0() { return cIsKeyValueKeyKeyword_1_0; }
+
 		//value=EStringAllTypes
-		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
 		//EStringAllTypes
-		public RuleCall getValueEStringAllTypesParserRuleCall_1_0() { return cValueEStringAllTypesParserRuleCall_1_0; }
+		public RuleCall getValueEStringAllTypesParserRuleCall_2_0() { return cValueEStringAllTypesParserRuleCall_2_0; }
 	}
 	
 	
@@ -580,7 +588,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//KVPair kicool::KVPair:
-	//	key=EString value=EStringAllTypes
+	//	key=EString isKeyValue?='key'? value=EStringAllTypes
 	public KVPairElements getKVPairAccess() {
 		return pKVPair;
 	}

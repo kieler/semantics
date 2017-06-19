@@ -113,6 +113,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         compilationUnit.setEnvironment(environment, environmentPrime)
         
+        environment.processEnvironmentSetter(processor.presets)
+        
         notify(new ProcessorStart(this, processor, compilationUnit))
         val startTimestamp = java.lang.System.nanoTime
         environmentPrime.setData(START_TIMESTAMP, startTimestamp)
@@ -140,6 +142,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setData(OVERALL_TIMESTAMP, overallTimestamp)
         environmentPrime.setData(PTIME_OVERALL, (overallTimestamp - startTimestamp) / 1000_000)
         
+        environmentPrime.processEnvironmentSetter(processor.postsets)
         
         notify(new ProcessorFinished(this, processor, compilationUnit))
         

@@ -527,13 +527,22 @@ public interface KiCoolPackage extends EPackage {
     int KV_PAIR__VALUE = 1;
 
     /**
+     * The feature id for the '<em><b>Is Key Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int KV_PAIR__IS_KEY_VALUE = 2;
+
+    /**
      * The number of structural features of the '<em>KV Pair</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int KV_PAIR_FEATURE_COUNT = 2;
+    int KV_PAIR_FEATURE_COUNT = 3;
 
     /**
      * The number of operations of the '<em>KV Pair</em>' class.
@@ -845,6 +854,17 @@ public interface KiCoolPackage extends EPackage {
     EAttribute getKVPair_Value();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.KVPair#isIsKeyValue <em>Is Key Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Key Value</em>'.
+     * @see de.cau.cs.kieler.kicool.KVPair#isIsKeyValue()
+     * @see #getKVPair()
+     * @generated
+     */
+    EAttribute getKVPair_IsKeyValue();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1108,6 +1128,14 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EAttribute KV_PAIR__VALUE = eINSTANCE.getKVPair_Value();
+
+        /**
+         * The meta object literal for the '<em><b>Is Key Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute KV_PAIR__IS_KEY_VALUE = eINSTANCE.getKVPair_IsKeyValue();
 
     }
 

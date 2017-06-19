@@ -126,19 +126,10 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *     KVPair returns KVPair
 	 *
 	 * Constraint:
-	 *     (key=EString value=EStringAllTypes)
+	 *     (key=EString isKeyValue?='key'? value=EStringAllTypes)
 	 */
 	protected void sequence_KVPair(ISerializationContext context, KVPair semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KiCoolPackage.Literals.KV_PAIR__KEY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KiCoolPackage.Literals.KV_PAIR__KEY));
-			if (transientValues.isValueTransient(semanticObject, KiCoolPackage.Literals.KV_PAIR__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KiCoolPackage.Literals.KV_PAIR__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getKVPairAccess().getKeyEStringParserRuleCall_0_0(), semanticObject.getKey());
-		feeder.accept(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_1_0(), semanticObject.getValue());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

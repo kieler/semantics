@@ -19,6 +19,7 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
 import java.util.List
 import java.util.LinkedList
 import de.cau.cs.kieler.kicool.compilation.IKiCoolCloneable
+import de.cau.cs.kieler.kicool.KVPair
 
 /**
  * @author ssm
@@ -97,5 +98,32 @@ class EnvironmentManager {
                 }
             }
         }   
+    }
+    
+    static def processEnvironmentSetter(Environment environment, List<KVPair> kvPairList) {
+        for(pair : kvPairList) {
+            var Object setTo = null
+            
+            if (pair.isIsKeyValue) {
+                setTo = environment.data.get(pair.value)
+            } else {
+                val v = pair.value
+                try {
+                    val myInt = Integer.parseInt(v)
+                    setTo = myInt
+                } catch (NumberFormatException e) {
+                    try {
+                        val myDouble = Double.parseDouble(v)
+                        setTo = myDouble
+                    } catch (NumberFormatException e2) {
+                        if (v.equalsIgnoreCase("true")) setTo = true
+                        else if (v.equalsIgnoreCase("false")) setTo = false
+                        else setTo = v
+                    }
+                } 
+            }
+            
+            environment.data.put(pair.key, setTo)
+        }
     }
 }

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kicool.KVPair#getKey <em>Key</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.KVPair#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.KVPair#isIsKeyValue <em>Is Key Value</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getKVPair()
@@ -73,5 +74,31 @@ public interface KVPair extends EObject {
      * @generated
      */
     void setValue(String value);
+
+    /**
+     * Returns the value of the '<em><b>Is Key Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Is Key Value</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Is Key Value</em>' attribute.
+     * @see #setIsKeyValue(boolean)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getKVPair_IsKeyValue()
+     * @model
+     * @generated
+     */
+    boolean isIsKeyValue();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.KVPair#isIsKeyValue <em>Is Key Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Is Key Value</em>' attribute.
+     * @see #isIsKeyValue()
+     * @generated
+     */
+    void setIsKeyValue(boolean value);
 
 } // KVPair

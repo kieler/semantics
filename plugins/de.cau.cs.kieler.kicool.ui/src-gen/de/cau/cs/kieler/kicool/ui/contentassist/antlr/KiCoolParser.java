@@ -111,7 +111,8 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProcessorAlternativeGroupAccess().getProcessorsAssignment_1_0(), "rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_0");
 					put(grammarAccess.getProcessorAlternativeGroupAccess().getProcessorsAssignment_1_1_1(), "rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_1_1");
 					put(grammarAccess.getKVPairAccess().getKeyAssignment_0(), "rule__KVPair__KeyAssignment_0");
-					put(grammarAccess.getKVPairAccess().getValueAssignment_1(), "rule__KVPair__ValueAssignment_1");
+					put(grammarAccess.getKVPairAccess().getIsKeyValueAssignment_1(), "rule__KVPair__IsKeyValueAssignment_1");
+					put(grammarAccess.getKVPairAccess().getValueAssignment_2(), "rule__KVPair__ValueAssignment_2");
 					put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");
 					put(grammarAccess.getPragmaTagAnnotationAccess().getNameAssignment_1(), "rule__PragmaTagAnnotation__NameAssignment_1");

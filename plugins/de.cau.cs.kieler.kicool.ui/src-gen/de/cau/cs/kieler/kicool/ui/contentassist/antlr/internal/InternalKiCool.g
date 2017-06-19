@@ -2503,6 +2503,7 @@ rule__KVPair__Group__1
     }
 :
 	rule__KVPair__Group__1__Impl
+	rule__KVPair__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -2514,15 +2515,45 @@ rule__KVPair__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getKVPairAccess().getValueAssignment_1()); }
-(rule__KVPair__ValueAssignment_1)
-{ after(grammarAccess.getKVPairAccess().getValueAssignment_1()); }
+{ before(grammarAccess.getKVPairAccess().getIsKeyValueAssignment_1()); }
+(rule__KVPair__IsKeyValueAssignment_1)?
+{ after(grammarAccess.getKVPairAccess().getIsKeyValueAssignment_1()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__KVPair__Group__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__KVPair__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__KVPair__Group__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getKVPairAccess().getValueAssignment_2()); }
+(rule__KVPair__ValueAssignment_2)
+{ after(grammarAccess.getKVPairAccess().getValueAssignment_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -5065,14 +5096,37 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__KVPair__ValueAssignment_1
+rule__KVPair__IsKeyValueAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_1_0()); }
-	ruleEStringAllTypes{ after(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_1_0()); }
+{ before(grammarAccess.getKVPairAccess().getIsKeyValueKeyKeyword_1_0()); }
+(
+{ before(grammarAccess.getKVPairAccess().getIsKeyValueKeyKeyword_1_0()); }
+
+	'key' 
+
+{ after(grammarAccess.getKVPairAccess().getIsKeyValueKeyKeyword_1_0()); }
+)
+
+{ after(grammarAccess.getKVPairAccess().getIsKeyValueKeyKeyword_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__KVPair__ValueAssignment_2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_2_0()); }
+	ruleEStringAllTypes{ after(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_2_0()); }
 )
 
 ;

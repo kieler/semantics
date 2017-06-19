@@ -686,17 +686,32 @@ ruleKVPair returns [EObject current=null]
 )
 )(
 (
-		{ 
-	        newCompositeNode(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_1_0()); 
+		lv_isKeyValue_1_0=	'key' 
+    {
+        newLeafNode(lv_isKeyValue_1_0, grammarAccess.getKVPairAccess().getIsKeyValueKeyKeyword_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getKVPairRule());
+	        }
+       		setWithLastConsumed($current, "isKeyValue", true, "key");
 	    }
-		lv_value_1_0=ruleEStringAllTypes		{
+
+)
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getKVPairAccess().getValueEStringAllTypesParserRuleCall_2_0()); 
+	    }
+		lv_value_2_0=ruleEStringAllTypes		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getKVPairRule());
 	        }
        		set(
        			$current, 
        			"value",
-        		lv_value_1_0, 
+        		lv_value_2_0, 
         		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
 	        afterParserOrEnumRuleCall();
 	    }

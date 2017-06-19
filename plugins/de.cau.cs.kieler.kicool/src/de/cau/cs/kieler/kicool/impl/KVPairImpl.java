@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.KVPairImpl#getKey <em>Key</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.KVPairImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.KVPairImpl#isIsKeyValue <em>Is Key Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -66,6 +67,26 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
      * @ordered
      */
     protected String value = VALUE_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isIsKeyValue() <em>Is Key Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsKeyValue()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IS_KEY_VALUE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isIsKeyValue() <em>Is Key Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsKeyValue()
+     * @generated
+     * @ordered
+     */
+    protected boolean isKeyValue = IS_KEY_VALUE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -133,6 +154,27 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isIsKeyValue() {
+        return isKeyValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setIsKeyValue(boolean newIsKeyValue) {
+        boolean oldIsKeyValue = isKeyValue;
+        isKeyValue = newIsKeyValue;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.KV_PAIR__IS_KEY_VALUE, oldIsKeyValue, isKeyValue));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -140,6 +182,8 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
                 return getKey();
             case KiCoolPackage.KV_PAIR__VALUE:
                 return getValue();
+            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
+                return isIsKeyValue();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -157,6 +201,9 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
                 return;
             case KiCoolPackage.KV_PAIR__VALUE:
                 setValue((String)newValue);
+                return;
+            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
+                setIsKeyValue((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -176,6 +223,9 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
             case KiCoolPackage.KV_PAIR__VALUE:
                 setValue(VALUE_EDEFAULT);
                 return;
+            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
+                setIsKeyValue(IS_KEY_VALUE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -192,6 +242,8 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
                 return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
             case KiCoolPackage.KV_PAIR__VALUE:
                 return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+            case KiCoolPackage.KV_PAIR__IS_KEY_VALUE:
+                return isKeyValue != IS_KEY_VALUE_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -210,6 +262,8 @@ public class KVPairImpl extends MinimalEObjectImpl.Container implements KVPair {
         result.append(key);
         result.append(", value: ");
         result.append(value);
+        result.append(", isKeyValue: ");
+        result.append(isKeyValue);
         result.append(')');
         return result.toString();
     }
