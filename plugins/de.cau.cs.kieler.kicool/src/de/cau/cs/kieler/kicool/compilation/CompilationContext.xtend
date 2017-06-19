@@ -158,11 +158,19 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
 
     protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.ProcessorAlternativeGroup processorAlternativeGroup, Environment environment) {
-        val environmentLists = <Environment> newArrayList
+        val environmentList = <Environment> newArrayList
         for(processor : processorAlternativeGroup.processors) {
-            environmentLists += processor.compileEntry(environment)
+            environmentList += processor.compileEntry(environment)
         }
-        environmentLists.last
+        var selectedEnvironment = environmentList.last
+        for(e : environmentList) {
+            val selMetric = selectedEnvironment.data.get(Metric.METRIC) as Double
+            val envMetric = e.data.get(Metric.METRIC) as Double
+            if (envMetric < selMetric) {
+                selectedEnvironment = e
+            }
+        }
+        selectedEnvironment
     }
     
     protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.ProcessorSystem processorSystem, Environment environment) {

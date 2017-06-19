@@ -54,7 +54,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
         rootNode.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
-        rootNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
+        rootNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::SIMPLE);
         rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20d);
         rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d));
         

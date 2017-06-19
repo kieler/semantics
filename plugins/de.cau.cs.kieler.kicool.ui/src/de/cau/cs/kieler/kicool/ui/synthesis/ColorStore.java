@@ -54,8 +54,10 @@ public class ColorStore {
         ERROR_BACKGROUND_TARGET(222, 177, 177),      
         
         PROGRESSBAR_FOREGROUND(200, 200, 200),
-        PROGRESSBAR_BACKGROUND(120, 120, 200);
+        PROGRESSBAR_BACKGROUND(120, 120, 200),
         
+        ACTIVE_ENVIRONMENT(0, 0, 0),
+        INACTIVE_ENVIRONMENT(160, 160, 160);
 
         private final KColor color = KRenderingFactory.eINSTANCE.createKColor();
 

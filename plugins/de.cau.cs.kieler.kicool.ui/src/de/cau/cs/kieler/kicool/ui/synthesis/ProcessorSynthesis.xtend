@@ -22,32 +22,27 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import java.net.URL
 import java.util.List
-import org.eclipse.core.runtime.FileLocator
-import org.eclipse.core.runtime.Platform
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import org.osgi.framework.Bundle
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.*
-import de.cau.cs.kieler.kicool.ProcessorEntry
-import org.eclipse.elk.core.util.ElkUtil
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.PROCESSOR_IDENTIFIER
+import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
+import java.util.Map
+import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -61,7 +56,8 @@ class ProcessorSynthesis {
     
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions 
-    @Inject extension KPolylineExtensions      
+    @Inject extension KPolylineExtensions    
+    @Inject extension KRenderingExtensions  
     @Inject extension ProcessorStyles 
     @Inject extension KiCoolSynthesis
     @Inject IResourceServiceProvider.Registry regXtext;      
@@ -80,7 +76,7 @@ class ProcessorSynthesis {
         val processorNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
         val nodeId = processor.uniqueProcessorId
         processorNode.setId(nodeId)
-        processor.populateProcessorData(processorNode)
+        processor.populateProcessorData(processorNode)        
         
         newArrayList(processorNode)
     }
@@ -107,7 +103,10 @@ class ProcessorSynthesis {
                     val edge = createEdge 
                     edge.source = lastNode
                     edge.target = node
-                    edge.addPolyline(1).addHeadArrowDecorator
+                    edge.addPolyline(1) => [
+                        foreground = ACTIVE_ENVIRONMENT.color
+                        addHeadArrowDecorator
+                    ]
                 }
             }
             lastNodes.clear
@@ -120,9 +119,22 @@ class ProcessorSynthesis {
     dispatch def List<KNode> transform(ProcessorAlternativeGroup processorAlternativeGroup) {
         val alternativeGroupNodes = <KNode> newArrayList()
      
-        processorAlternativeGroup.processors.forEach[
-            alternativeGroupNodes += it.transform
-        ]
+        // Check if all groups only have one processor
+        if (processorAlternativeGroup.processors.filter(ProcessorGroup).filter[ processors.size == 1].size == 
+            processorAlternativeGroup.processors.size
+        ) {
+            
+            processorAlternativeGroup.processors.filter(ProcessorGroup).forEach[
+                alternativeGroupNodes += it.processors.head.transform
+            ]
+            
+        } else {
+     
+            processorAlternativeGroup.processors.forEach[
+                alternativeGroupNodes += it.transform
+            ]
+        
+        }
      
         alternativeGroupNodes   
     }

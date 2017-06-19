@@ -16,6 +16,7 @@ import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
+import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
  * @author ssm
@@ -29,5 +30,8 @@ class KNodeProperties {
         
     public static val IProperty<ToggleOnOffData> TOGGLE_ON_OFF_DATA = 
         new Property<ToggleOnOffData>("de.cau.cs.kieler.kicool.ui.toggleOnOffData", null)
+        
+    public static val IProperty<ProcessorEntry> PROCESSOR_IDENTIFIER = 
+        new Property<ProcessorEntry>("de.cau.cs.kieler.kicool.processorEntry", null)
         
 }

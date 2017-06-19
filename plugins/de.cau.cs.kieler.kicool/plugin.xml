@@ -33,6 +33,9 @@
       <Processor
             class="de.cau.cs.kieler.kicool.processors.Delay">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.metrics.PTime">
+      </Processor>
    </extension>
    
 </plugin>

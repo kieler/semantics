@@ -43,6 +43,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.TOGGLE_ON_OFF_DATA
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.PROCESSOR_IDENTIFIER
 import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager.*
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
@@ -58,6 +59,8 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateData
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 import static extension de.cau.cs.kieler.kicool.compilation.Metric.METRIC
 import java.util.Locale
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.krendering.KPolygon
 
 /**
  * @author ssm
@@ -80,6 +83,8 @@ class ProcessorDataManager {
     static val INTERMEDIATE_KGT = "resources/intermediate.kgt"
     
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
+        node.setProperty(PROCESSOR_IDENTIFIER, processor)
+        
         val rtProcessor = RuntimeSystems.getProcessorInstance(processor)
         
         val nodeIdMap = node.createNodeIdMap
@@ -139,6 +144,21 @@ class ProcessorDataManager {
         }
         
         processorNode.resetProcessorNode(node)
+        
+        val edges = processorNode.incomingEdges
+        if (edges.size > 1) for (edge : edges) {
+            val procId = edge.source.getProperty(PROCESSOR_IDENTIFIER)
+            if (procId != null) {
+                val proc = processorNotification.compilationContext.processorMap.get(procId)
+                if (processorUnit.sourceEnvironment != proc.environment) {
+                    edge.container.setFBColors(INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color)
+                    edge.container.children.filter(KPolygon).head.setFBColors(INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color)
+                } else {
+                    edge.container.setFBColors(ACTIVE_ENVIRONMENT.color, ACTIVE_ENVIRONMENT.color, ACTIVE_ENVIRONMENT.color)
+                    edge.container.children.filter(KPolygon).head.setFBColors(ACTIVE_ENVIRONMENT.color, ACTIVE_ENVIRONMENT.color, ACTIVE_ENVIRONMENT.color)
+                }
+            }
+        } 
     }   
     
     static private def void resetProcessorNode(KNode processorNode, KNode node) {
@@ -322,6 +342,10 @@ class ProcessorDataManager {
     
     static def getContainer(KNode node) {
         node.getData(KContainerRendering) as KContainerRendering
+    }
+
+    static def getContainer(KEdge edge) {
+        edge.getData(KContainerRendering) as KContainerRendering
     }
     
     static def Map<String, KNode> createNodeIdMap(KNode node) {
