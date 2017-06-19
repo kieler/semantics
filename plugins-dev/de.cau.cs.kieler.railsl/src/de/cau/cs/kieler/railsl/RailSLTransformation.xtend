@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.railsl
 
 import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.railsl.generator.RailSLGenerator
+import de.cau.cs.kieler.generator.RailSLGenerator
 import org.eclipse.emf.ecore.EObject
 import java.util.Set
 import com.google.common.collect.Sets
