@@ -882,7 +882,9 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                         }
                     }
 
-                    if (object instanceof Boolean) {
+                    if (object instanceof String) {
+                        program.setInput(input, (String) object);
+                    } else if (object instanceof Boolean) {
                         program.setInput(input, (boolean) object);
                     } else if (object instanceof Integer) {
                         program.setInput(input, (int) object);

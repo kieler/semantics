@@ -323,6 +323,31 @@ public abstract class SCChartsJavaProgram implements Cloneable {
         field.setDouble(this, value);
     }
 
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the input of type String.
+     * 
+     * @param key
+     *            the key
+     * @param value
+     *            the value
+     * @throws NoSuchFieldException
+     *             the no such field exception
+     * @throws SecurityException
+     *             the security exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     */
+    public void setInput(String key, String value) throws NoSuchFieldException, SecurityException,
+            IllegalArgumentException, IllegalAccessException {
+        Field field = getClass().getDeclaredField(key);
+        field.set(this, value);
+    }
+
     // -------------------------------------------------------------------------
 
     /**

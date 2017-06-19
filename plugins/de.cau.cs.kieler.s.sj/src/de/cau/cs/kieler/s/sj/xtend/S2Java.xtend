@@ -535,10 +535,16 @@ class S2Java {
    //Expand a complex expression.
    def dispatch CharSequence expand(OperatorExpression expression) {
         '''
-    «IF expression.operator  == OperatorType::EQ»
+    «IF expression.operator == OperatorType::EQ»
+        «IF expression.subExpressions.size == 2
+           && (expression.subExpressions.get(0) as ValuedObjectReference).valuedObject.type == ValueType::STRING»
+           «expression.subExpressions.get(0).expand».equals(«expression.subExpressions.get(1).expand»); 
+        «ELSE»
         («FOR subexpression : expression.subExpressions SEPARATOR " == "»
             «subexpression.expand»
         «ENDFOR»)
+        «ENDIF»
+
     «ENDIF»
     «IF expression.operator  == OperatorType::LT»
         («FOR subexpression : expression.subExpressions SEPARATOR "  <  "»
