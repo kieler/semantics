@@ -1105,7 +1105,7 @@ ${outputs}
             case "IO_LN_1": 13
             case "IO_LN_2": 14
             case "KH_LN_0": 15
-            case "KH_LN_1": 16s tracks and signals
+            case "KH_LN_1": 16
             case "KH_LN_2": 17
             case "KH_LN_3": 18
             case "KH_LN_4": 19
