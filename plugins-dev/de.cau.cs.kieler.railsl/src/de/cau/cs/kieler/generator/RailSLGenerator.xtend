@@ -526,6 +526,7 @@ class RailSLGenerator extends AbstractGenerator {
         fsa.generateFile('points.ftl', generatePointsSnippet())
         fsa.generateFile('signals.ftl', generateSignalsSnippet())
         fsa.generateFile('tracks.ftl', generateTracksSnippet())
+        fsa.generateFile('second.ftl', generateSecondSnippet())
         fsa.generateFile('ControllerMain.ftl', generateMainSnippet())
     }
 
@@ -892,6 +893,7 @@ struct railway_hardware kicking;
 
 #include "kicking.h"
 #include "railway.h"
+#include "time.h"
 
 // Basic dimension constants
 #define NUM_OF_TRACKS 48
@@ -909,6 +911,9 @@ int main(int *argn, char *argv[]) {
 
     reset();
     
+    // Variable to keep track of the last time second was true
+    clock_t lastSecond = clock();
+
     while(1) {
     
 ${inputs}
@@ -987,7 +992,7 @@ ${outputs}
      * Generate a static PROM code snippet as wrapper for the @code{lights} variable.
      */
     def String generateLightsSnippet() {
-        var result = '<#-- L I G H T S -->
+        var result = '<#-- L I G H T S// Variable to keep track of the last time second was true -->
 <#macro lights>
     <@output>
         // Set all the lights appropriately
@@ -1004,7 +1009,7 @@ ${outputs}
      * Generate a static PROM code snippet as wrapper for the @code{contacts} variable.
      */
     def String generateContactsSnippet() {
-        var result = '<#-- C O N T A C T S -->
+'<#-- C O N T A C T S -->
 <#macro contacts>
     <@input>
         // Scan the contacts at the beginning of each tick
@@ -1017,7 +1022,22 @@ ${outputs}
         }
     </@>
 </#macro>'
-        return result
+    }
+
+    def String generateSecondSnippet()  {
+'<#-- S E C O N D -->
+<#macro second>
+    <@input>
+        // Set second to true if at least one second has elapsed since the last time it was true
+        if ((double) (clock() - lastSecond) / CLOCKS_PER_SECOND) >= 1) {
+            ${varname} = 1;
+            lastSecond = clock();
+        }
+    </@>
+    <@output>
+        ${varname} = false;
+    </@>
+</#macro>'   
     }
 
     /*****************************************************************************************
