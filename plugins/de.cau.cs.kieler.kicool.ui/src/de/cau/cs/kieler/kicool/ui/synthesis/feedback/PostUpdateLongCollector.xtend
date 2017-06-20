@@ -20,7 +20,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @kieler.rating 2017-06-13 proposed yellow
  *
  */
-class PostUpdateDoubleCollector {
+class PostUpdateLongCollector {
     
     @Accessors var String key
     @Accessors var double nullPercent = 0.33 
@@ -35,8 +35,8 @@ class PostUpdateDoubleCollector {
     
     def addProcessor(de.cau.cs.kieler.kicool.compilation.Processor processor) {
         try {
-            val v = processor.environment.getData(key, 0.0) as Double
-            var double value = v.doubleValue
+            val v = processor.environment.getData(key, 0.0) as Long
+            var double value = v.longValue
             processorMap.put(processor, new Double(value))
             if (value > maxValue) maxValue = value
         } catch(Exception e) {

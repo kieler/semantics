@@ -13,31 +13,33 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.feedback
 
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.compilation.Metric
 
 /**
  * @author ssm
- * @kieler.design 2017-06-13 proposed 
- * @kieler.rating 2017-06-13 proposed yellow
+ * @kieler.design 2017-06-20 proposed 
+ * @kieler.rating 2017-06-20 proposed yellow
  *
  */
-class PostUpdateDoubleCollector {
+class PostUpdateMetricCollector {
     
     @Accessors var String key
     @Accessors var double nullPercent = 0.33 
     @Accessors var double maxValue = nullPercent
+    @Accessors var double maxPercent = 2.0
     
     private val processorMap = <de.cau.cs.kieler.kicool.compilation.Processor, Double> newHashMap
 
     
-    new(String key) {
-        this.key = key
+    new() {
+        this.key = Metric.METRIC
     }
     
     def addProcessor(de.cau.cs.kieler.kicool.compilation.Processor processor) {
         try {
-            val v = processor.environment.getData(key, 0.0) as Double
-            var double value = v.doubleValue
-            processorMap.put(processor, new Double(value))
+            val d = processor.environment.getData(key, 0.0) as Double
+            val double value = d.doubleValue 
+            processorMap.put(processor, value)
             if (value > maxValue) maxValue = value
         } catch(Exception e) {
         }
@@ -45,9 +47,14 @@ class PostUpdateDoubleCollector {
     
     def getPercentile(de.cau.cs.kieler.kicool.compilation.Processor processor) {
         val value = processorMap.get(processor) 
+        var localMaxPercent = if (maxValue < maxPercent) maxValue else maxPercent
         if (value != null) {
-            var double pVal = value.doubleValue() / maxValue
-            if (pVal < nullPercent) { pVal = nullPercent }
+            var pVal = value.doubleValue
+                var t = (pVal - 1) / (maxValue - 1) * localMaxPercent
+                pVal = t    
+                if (pVal > localMaxPercent) { pVal = localMaxPercent }
+                if (pVal < nullPercent) { pVal = nullPercent }
+            println(pVal)
             return pVal
         } else {
             return nullPercent

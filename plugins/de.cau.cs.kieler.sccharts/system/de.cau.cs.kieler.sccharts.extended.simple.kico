@@ -1,6 +1,7 @@
 system de.cau.cs.kieler.sccharts.extended.simple
 	version 1 
 	label "Extended SCCharts (simple)"
+	metric de.cau.cs.kieler.kicool.processors.metrics.eObjectCount
 	
 	de.cau.cs.kieler.sccharts.processors.transformators.signal
 	de.cau.cs.kieler.sccharts.processors.transformators.^pre

@@ -61,6 +61,7 @@ import static extension de.cau.cs.kieler.kicool.compilation.Metric.METRIC
 import java.util.Locale
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateMetricCollector
 
 /**
  * @author ssm
@@ -248,7 +249,7 @@ class ProcessorDataManager {
     
     
     static def void postUpdateProcessors(AbstractContextNotification contextNotification, KNode node, CompilerView view) {
-        val postUpdateCollector = new PostUpdateDoubleCollector(PTIME)
+        val postUpdateCollector = new PostUpdateDoubleCollector(METRIC)
         val allProcessors = contextNotification.compilationContext.processorMap.keySet
         
         // Gather data.       
@@ -275,7 +276,6 @@ class ProcessorDataManager {
         }
         
         LightDiagramServices.layoutDiagram(view)
-        
     }
     
     
