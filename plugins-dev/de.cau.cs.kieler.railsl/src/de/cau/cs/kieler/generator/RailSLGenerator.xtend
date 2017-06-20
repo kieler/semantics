@@ -35,9 +35,12 @@ import de.cau.cs.kieler.railSL.LightStatement
 import de.cau.cs.kieler.railSL.ConditionalStatement
 
 /**
- * Generates code from your model files on save.
+ * Main class for code generation and model-to-model transformations of RailSL.
  * 
- * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
+ * Able to generate an SCChart from a railsl model. Will also generate static code
+ * such as PROM snippets and C headers when the editor is saved. 
+ * 
+ * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  */
 class RailSLGenerator extends AbstractGenerator {
 

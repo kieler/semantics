@@ -18,7 +18,7 @@ import de.cau.cs.kieler.railsl.RailSLFeatures
 import de.cau.cs.kieler.railSL.Program
 
 /**
- *
+ * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  */
 class RailSL extends Feature {
     

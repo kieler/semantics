@@ -22,7 +22,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.railSL.Program
 
 /**
- * @author stu121235
+ * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  *
  */
 class RailSLTransformation extends AbstractProductionTransformation implements Traceable {

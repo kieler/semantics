@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.railsl;
 
 /**
- * 
+ * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  */
 public class RailSLFeatures {
 
