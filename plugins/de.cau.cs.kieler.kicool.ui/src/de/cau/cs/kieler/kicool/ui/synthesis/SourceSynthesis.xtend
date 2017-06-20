@@ -30,7 +30,8 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 class SourceSynthesis {
     
     @Inject extension KEdgeExtensions 
-    @Inject extension KPolylineExtensions      
+    @Inject extension KPolylineExtensions  
+    @Inject extension ProcessorStyles    
     
     private val SOURCE_KGT = "source.kgt"
     
@@ -44,7 +45,7 @@ class SourceSynthesis {
         val edge = createEdge 
         edge.source = source
         edge.target = target
-        edge.addPolyline(1).addHeadArrowDecorator
+        edge.addPolyline(0.5f).addOwnHeadArrowDecorator
         
         edge        
     }
