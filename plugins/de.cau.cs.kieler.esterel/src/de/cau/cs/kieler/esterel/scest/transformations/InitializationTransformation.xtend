@@ -30,6 +30,10 @@ import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.esterel.esterel.Loop
+import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.EveryDo
+import de.cau.cs.kieler.esterel.esterel.Suspend
 
 /**
  * @author mrb
@@ -68,77 +72,91 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
         resetConstantSuffix
         resetVariableSuffix
         prog.modules.forEach [ m | 
-            transformStatements(m.statements)
+            transformStatements(m.statements, 1)
             m.statements.add(createLabel(createNewUniqueLabel))
         ]
         return prog
     }
     
-    def void transformStatements(EList<Statement> statements) {
+    def void transformStatements(EList<Statement> statements, int depth) {
         if (statements != null) {
             for (var i=0; i<statements.length; i++) {
-                statements.get(i).transformStatement
+                statements.get(i).transformStatement(depth)
             }
         }
     }
     
-    def Statement transformStatement(Statement statement) {
+    def Statement transformStatement(Statement statement, int depth) {
         if (statement instanceof EsterelParallel) {
             var parallel = statement as EsterelParallel
             parallel.threads.forEach [ t |
-                transformStatements(t.statements)
+                transformStatements(t.statements, depth+1)
                 t.statements.add(createLabel(createNewUniqueLabel))
             ]
             
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
-                transformStatements(t.statements)
+                transformStatements(t.statements, depth+1)
                 t.statements.add(createLabel(createNewUniqueLabel))
             ]
         }
         else if (statement instanceof StatementContainer) {
             
-            transformStatements((statement as StatementContainer).statements)
+            transformStatements((statement as StatementContainer).statements, depth+1)
             
-            if (statement instanceof Trap) {
+            if (statement instanceof Loop) {
+                (statement as Loop).annotations.add(createAnnotation(depth))
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).annotations.add(createAnnotation(depth))
+            }
+            else if (statement instanceof EveryDo) {
+                (statement as EveryDo).annotations.add(createAnnotation(depth))
+            }
+            else if (statement instanceof Suspend) {
+                (statement as Suspend).annotations.add(createAnnotation(depth))
+            }
+            else if (statement instanceof Trap) {
                 if ((statement as Trap).trapHandler != null) {
-                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
+                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements, depth+1)]
                 }
             }
             else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).doStatements)
+                transformStatements((statement as Abort).doStatements, depth+1)
                 if ((statement as Abort).cases != null) {
-                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
+                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements, depth+1)]
                 }
+                (statement as Abort).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList != null) {
-                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
+                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements, depth+1)]
                 }
             }
             else if (statement instanceof Do) {
-                transformStatements((statement as Do).watchingStatements)
+                transformStatements((statement as Do).watchingStatements, depth+1)
+                (statement as Do).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Conditional) {
                 if ((statement as Conditional).getElse() != null) {
-                    transformStatements((statement as Conditional).getElse().statements)
+                    transformStatements((statement as Conditional).getElse().statements, depth+1)
                 }
             }
         }
         else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements)
+            transformStatements((statement as Present).thenStatements, depth+1)
             if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
+                (statement as Present).cases.forEach[ c | transformStatements(c.statements, depth+1)]
             }
-            transformStatements((statement as Present).elseStatements)
+            transformStatements((statement as Present).elseStatements, depth+1)
         }
         else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements)
+            transformStatements((statement as IfTest).thenStatements, depth+1)
             if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, depth+1)]
             }
-            transformStatements((statement as IfTest).elseStatements)
+            transformStatements((statement as IfTest).elseStatements, depth+1)
         }
         return statement
     }

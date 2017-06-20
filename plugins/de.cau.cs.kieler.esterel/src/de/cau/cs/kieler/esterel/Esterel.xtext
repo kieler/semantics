@@ -148,9 +148,6 @@ ISignal returns ISignal:
                 | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
           ) 
     )?;
-    
-Tick returns ISignal:
-    name="tick";
 
 // ==> 7.3.7 Sensor Declaration
 // -------------------------------------
@@ -250,16 +247,14 @@ Block:
 Emit:
     (annotations += Annotation)*
     "emit" 
-    (    signal=[ISignal|ID]
-       | tick=Tick
-    )
+    signal=[ISignal|ID]       
     ("("expr=Expression")")?;
     
 // emit a signal indefinitely
 Sustain:
     (annotations += Annotation)*
     "sustain" 
-    ((signal=[ISignal|ID]) | tick=Tick) 
+    signal=[ISignal|ID]
     ("(" expression=Expression ")")?;
 
 // ==> 7.5.2 Assignment and Procedure Call
@@ -285,8 +280,7 @@ Present:
     "present" 
     (   (
             (     expression=SignalExpression 
-                | "[" expression=SignalExpression "]" 
-                | tick=Tick
+                | "[" expression=SignalExpression "]"
             ) 
             (
                 (thenAnnotations += Annotation)*
@@ -308,8 +302,7 @@ PresentCase:
     (annotations += Annotation)*
     "case" 
     (     expression=SignalExpression 
-        | "[" expression=SignalExpression "]" 
-        | tick=Tick
+        | "[" expression=SignalExpression "]"
     )
     (   "do" 
         ( (statements+=EsterelStatement ";")* statements+=EsterelStatement? )
@@ -751,8 +744,7 @@ TrapReferenceExpr returns kexpressions::ValuedObjectReference:
 // -------------------------------------
 DelayExpr:
     ( expr=Expression | isImmediate?="immediate" )?
-    (     tick=Tick 
-        | signalExpr=SignalReferenceExpr 
+    (     signalExpr=SignalReferenceExpr 
         | "[" signalExpr=SignalExpression "]"
     );   
 

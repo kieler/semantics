@@ -94,6 +94,12 @@ class EveryDoTransformation extends AbstractExpansionTransformation implements T
             await.delay = everyDo.delay
             loop.statements.add(everyDo.statements)
             loop.delay = EcoreUtil.copy(await.delay)
+            for (a : everyDo.annotations) {
+                if (isGenerated(a)) {
+                    await.annotations.add(EcoreUtil.copy(a))
+                    loop.annotations.add(EcoreUtil.copy(a))
+                }
+            }
             statements.add(pos, await)
             statements.add(pos+1, loop)
             transformStatements(statements)

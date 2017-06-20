@@ -101,7 +101,9 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                     var lt = createLT(createValuedObjectReference(variable), await.delay.expr)
                     var conditional = createConditional(await.delay.signalExpr)
                     conditional.statements.add(incrementInt(variable))
+                    conditional.annotations.add(createAnnotation(0))
                     var conditional2 = newIfThenGoto(lt, label, false)
+                    await.annotations.copyAnnotations(conditional2)
                     scope.statements.add(label)
                     scope.statements.add(createPause)
                     scope.statements.add(conditional)
@@ -144,16 +146,16 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                 }
             }
             else {
-                // TODO cases
+                // cases
                 
                 var cases = await.cases
                 var scope = createScopeStatement(null)
-                var startLabel = createLabel(createNewUniqueLabel)
-                var endLabel = createLabel(createNewUniqueLabel)
+                var startLabel = createLabel
+                var endLabel = createLabel
                 scope.statements.add(startLabel)
                 var LinkedList<Pair<Label, Conditional>> immediateLabels = new LinkedList()
                 var label = startLabel
-                var nextLabel = createLabel(createNewUniqueLabel)
+                var nextLabel = createLabel
                 for (var i=0; i<cases.length; i++) {
                     var c = cases.get(i)
                     if (c.delay != null) {
@@ -165,7 +167,7 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                             conditional.statements.add(incrementInt(variable))
                             var lt = createLT(createValuedObjectReference(variable), c.delay.expr)
                             var conditional2 = newIfThenGoto(lt, nextLabel, false)
-                            scope.statements.add(conditional)
+                            scope.statements.add(1, conditional)
                             scope.statements.add(conditional2)
                             if (c.statements != null) {
                                 scope.statements.add(c.statements)
@@ -174,7 +176,7 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                             scope.statements.add(nextLabel)
                             if (i+1<cases.length) {
                                 label = nextLabel
-                                nextLabel = createLabel(createNewUniqueLabel)
+                                nextLabel = createLabel
                             }
                         }
                         else {
@@ -196,19 +198,21 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                     }
                 }
                 if (!immediateLabels.isEmpty) {
-                    var variable = createNewUniqueVariable(createBoolValue(true))
-                    var decl = createDeclaration(ValueType.BOOL, variable)
+                    var flag = createNewUniqueFlag(createBoolValue(true))
+                    var decl = createDeclaration(ValueType.BOOL, flag)
                     scope.declarations.add(decl)
                     scope.statements.add(0, createGotoStatement(immediateLabels.get(0).key))
                     for (var i=0; i<immediateLabels.length; i++) {
                         if (i+1<immediateLabels.length) {
-                            immediateLabels.get(i).value.statements.add(0, newIfThenGoto(createValuedObjectReference(variable), immediateLabels.get(i+1).key, false))
+                            immediateLabels.get(i).value.statements.add(
+                                0, newIfThenGoto(createValuedObjectReference(flag), immediateLabels.get(i+1).key, false)
+                            )
                         }
                         else {
                             // set 'variable' to false, since the immediate run is over
                             // now just the normal order of the cases counts
-                            var conditional = newIfThenGoto(createValuedObjectReference(variable), nextLabel, false)
-                            conditional.statements.add(0,createAssignment(variable, createBoolValue(false)))
+                            var conditional = newIfThenGoto(createValuedObjectReference(flag), nextLabel, false)
+                            conditional.statements.add(0,createAssignment(flag, createBoolValue(false)))
                             immediateLabels.get(i).value.statements.add(0, conditional)
                         }
                     }

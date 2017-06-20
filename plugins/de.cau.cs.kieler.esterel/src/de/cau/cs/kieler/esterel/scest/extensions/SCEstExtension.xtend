@@ -61,6 +61,7 @@ import de.cau.cs.kieler.scl.scl.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.annotations.Annotatable
 
 /**
  * @author mrb
@@ -99,6 +100,8 @@ class SCEstExtension {
     var static variableSuffix = 0;
     
     var static flagSuffix = 0;
+    
+    final private static String generatedAnnotation = "depth"
 
     /**
      * Searches a valuedObject in a declarations list by its name
@@ -1022,7 +1025,7 @@ class SCEstExtension {
     /**
      * Creates a new SCL ScopeStatement
      * 
-     * @param decls Already existing declarations for the Scope statement.
+     * @param decl Already existing declaration for the Scope statement.
      * @return The newly created SCL ScopeStatement
      */
     def createScopeStatement(Declaration decl) {
@@ -1031,6 +1034,15 @@ class SCEstExtension {
                 it.declarations.add(decl)
             }
         ]
+    }
+    
+    /**
+     * Creates a new SCL ScopeStatement
+     * 
+     * @return The newly created SCL ScopeStatement
+     */
+    def createScopeStatement() {
+        SclFactory::eINSTANCE.createScopeStatement
     }
 
     /**
@@ -1043,15 +1055,29 @@ class SCEstExtension {
     }
 
     /**
-     * Creates a new SCL Instruction
+     * Creates a new SCL Thread
      * 
-     * @return The newly created SCL Instruction
+     * @param statement A statement for the thread
+     * @return The newly created SCL Thread
      */
     def createThread(Statement statement) {
         SclFactory::eINSTANCE.createThread => [
             statements += statement
         ]
     }
+    
+    /**
+     * Creates a new SCL Thread
+     * 
+     * @param statements A list of statements for the thread
+     * @return The newly created SCL Thread
+     */
+    def createThread(EList<Statement> statements) {
+        SclFactory::eINSTANCE.createThread => [
+            it.statements.add(statements)
+        ]
+    }
+    
 
     /**
      * Creates a new SCL Parallel
@@ -1133,13 +1159,13 @@ class SCEstExtension {
     /**
      * Creates a new Annotation
      * 
-     * @param layer The name of the Annotation
+     * @param depth The depth of the statement which includes this annotation
      * @return The newly created Annotation
      */
-    def createAnnotation(int layer) {
+    def createAnnotation(int depth) {
         AnnotationsFactory::eINSTANCE.createIntAnnotation => [
-            name = "generated_ifTest"
-            value = layer
+            name = generatedAnnotation
+            value = depth
         ]
     }
     
@@ -1152,9 +1178,19 @@ class SCEstExtension {
     def isGenerated(EList<Annotation> annotations) {
         var generated = false
         for (a : annotations) {
-            generated = generated || a.name.equals("generated_ifTest") 
+            generated = generated || a.name.equals(generatedAnnotation) 
         }
         return generated
+    }
+    
+    /**
+     * Is the annotation generated?
+     * 
+     * @param annotation The annotation in question
+     * @return Is the annotation generated?
+     */
+    def isGenerated(Annotation annotation) {
+        return annotation.name.equals(generatedAnnotation)
     }
     
     /**
@@ -1173,31 +1209,43 @@ class SCEstExtension {
     /**
      * Insert a Conditional at the right position after a pause statement.
      * 
-     * @param statements
-     * @param conditional
-     * @param pos
-     * @param counter
+     * @param statements The list of statements
+     * @param conditional The conditional which has to be added after a pause
+     * @param pos The position of the pause statement
+     * @param depth The depth of statement which caused the pause transformations 
      */
-    def insertConditional(EList<Statement> statements, Conditional conditional, int pos, int counter) {
-        for (var i=1; pos+i<statements.length; i++) {
-            if (statements.get(pos+i) instanceof Conditional) {
-                var ifTest2 = statements.get(pos+i) as Conditional
-                if (!ifTest2.annotations.empty) {
-                    var isGenerated = false
-                    for (var j=0; j<ifTest2.annotations.length; j++) {
-                        var a = ifTest2.annotations.get(j)
-                        if (a.name.equals("generated_ifTest")) {
-                            isGenerated = true
-                            var layer = (a as IntAnnotation).value
-                            if (counter<layer) {
-                                statements.add(pos+i, conditional)
-                                i = statements.length
-                                j = ifTest2.annotations.length
+    def void insertConditional(EList<Statement> statements, Conditional conditional, int pos, int depth) {
+        // Look for already existing Conditionals after Pause.
+        // Check whether they have a higher priority than the transformed statement.
+        // Place the Conditional at the correct position.
+        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
+        if (pos+1>=statements.length) {
+            statements.add(conditional)
+        }
+        else {
+            for (var i=1; pos+i<statements.length; i++) {
+                if (statements.get(pos+i) instanceof Conditional) {
+                    var ifTest2 = statements.get(pos+i) as Conditional
+                    if (!ifTest2.annotations.empty) {
+                        var deeper = false
+                        for (var j=0; j<ifTest2.annotations.length; j++) {
+                            var a = ifTest2.annotations.get(j)
+                            if (a.name.equals(generatedAnnotation)) {
+                                deeper = true
+                                var layer = (a as IntAnnotation).value
+                                if (depth<layer) {
+                                    deeper = false
+                                    j = ifTest2.annotations.length
+                                }
                             }
+                            
                         }
-                        
+                        if (!deeper) {
+                            statements.add(pos+i, conditional)
+                            i = statements.length
+                        }
                     }
-                    if (!isGenerated) {
+                    else {
                         statements.add(pos+i, conditional)
                         i = statements.length
                     }
@@ -1206,10 +1254,9 @@ class SCEstExtension {
                     statements.add(pos+i, conditional)
                     i = statements.length
                 }
-            }
-            else {
-                statements.add(pos+i, conditional)
-                i = statements.length
+                if (pos+i+1==statements.length) {
+                    statements.add(conditional)
+                }
             }
         }
     }
@@ -1242,19 +1289,86 @@ class SCEstExtension {
         }
     }
     
-    def scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int counter) {
+    /**
+     * Create a Scope which has a counting int variable, a conditional for counting and a conditional for checking the variable
+     * 
+     * @param statements The statements which will be inside of the scope
+     * @param pos The position of the pause Statement, for which the transformation is done
+     * @param expr The counting Expression
+     * @param singalExpr The signal expression
+     * @param label The label for the goto statement
+     * @param depth The depth of statement which caused the pause transformations 
+     */
+    def scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth) {
         var variable = createNewUniqueVariable(createIntValue(0))
         var decl = createDeclaration(ValueType.INT, variable)
         var scope = createScopeStatement(decl)
         var conditional = newIfStatement(signalExpr)
         conditional.statements.add(incrementInt(variable))
-        conditional.annotations.add(createAnnotation(-1))
+        conditional.annotations.add(createAnnotation(0))
         statements.add(pos+1, conditional)
         var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), expr), label, false)
-        insertConditional(statements, conditional2, pos, counter)
+        insertConditional(statements, conditional2, pos, depth)
         scope.statements.add(statements)
         statements.add(scope)
         return scope
+    }
+    
+    /**
+     * Create an ElseScope for a Conditional.
+     * 
+     * @param statements The statements which belong in the ElseScope
+     * @return An ElseScope with statements
+     */
+    def createElseScope(EList<Statement> statements) {
+        SclFactory::eINSTANCE.createElseScope => [
+            if (statements != null) {
+                it.statements.add(statements)
+            }
+        ]
+    }
+    
+    /**
+     * Create an ElseScope for a Conditional.
+     * 
+     * @param statement The statement which belong in the ElseScope
+     * @return An ElseScope with a statement
+     */
+    def createElseScope(Statement statement) {
+        SclFactory::eINSTANCE.createElseScope => [
+            if (statement != null) {
+                it.statements.add(statement)
+            }
+        ]
+    }
+    
+    /**
+     * Copies the generated Annotations of the annotation list to a specific statement.
+     * 
+     * @param annotations The list of annotations
+     * @param statement The statement which will have a copy of the generated annotations.
+     */
+    def void copyAnnotations (EList<Annotation> annotations, Annotatable statement) {
+        for (a : annotations) {
+            if (isGenerated(a)) {
+                statement.annotations.add(EcoreUtil.copy(a))
+            }
+        }
+    }
+    
+    /**
+     * Returns the depth of the given statement, when it has one in its annotations.
+     * 
+     * @param statement The statement in question
+     * @return The depth of the given statement.
+     */
+    def int getDepth(Annotatable statement) {
+        for (Annotation a : statement.annotations) {
+            if (isGenerated(a)) {
+                return (a as IntAnnotation).value
+            }
+        }
+        return 0;
     }
  
  

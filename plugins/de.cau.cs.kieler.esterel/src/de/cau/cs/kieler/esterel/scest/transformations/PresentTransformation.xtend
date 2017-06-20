@@ -58,7 +58,7 @@ class PresentTransformation extends AbstractExpansionTransformation implements T
 //            SCEstTransformation::CONNECTOR_ID)
 //    }
 
-override getNotHandlesFeatureIds() {
+    override getNotHandlesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
     }
 
@@ -71,10 +71,12 @@ override getNotHandlesFeatureIds() {
     }
     
     def EList<Statement> transformStatements(EList<Statement> statements) {
-        for (var i=0; i<statements.length; i++) {
-            var statement = statements.get(i).transformStatement
-            if (statement instanceof Statement) {
-                statements.set(i, statement)
+        if (statements != null) {
+            for (var i=0; i<statements.length; i++) {
+                var statement = statements.get(i).transformStatement
+                if (statement instanceof Statement) {
+                    statements.set(i, statement)
+                }
             }
         }
         return statements
@@ -82,32 +84,74 @@ override getNotHandlesFeatureIds() {
     
     def Statement transformStatement(Statement statement) {
         if (statement instanceof Present) {
-            // TODO transform to Esterel IfTest or SCL Conditional
+            var present = statement as Present
+            transformStatements(present.thenStatements)
+            if (present.cases != null) {
+                present.cases.forEach[ c | transformStatements(c.statements)]
+            }
+            transformStatements(present.elseStatements)
+            
+            var Conditional conditional
+            if (!present.cases.empty) {
+                conditional = createConditional(present.cases.get(0).expression)
+                conditional.statements.add(present.cases.get(0).statements)
+                var tempConditional = conditional
+                for (var i=1; i<present.cases.length; i++) {
+                    var e = present.cases.get(i)
+                    var conditional2 = createConditional(e.expression)
+                    conditional2.statements.add(e.statements)
+                    var elseStatement = createElseScope(conditional2)
+                    tempConditional.setElse(elseStatement)
+                    tempConditional = conditional2
+                }
+                if (!present.elseStatements.isEmpty) {
+                    tempConditional.setElse(createElseScope(present.elseStatements))
+                }
+            }
+            else {
+                conditional = createConditional(present.expression)
+                conditional.statements.add(present.thenStatements)
+                if (!present.elseStatements.isEmpty) {
+                    conditional.setElse(createElseScope(present.elseStatements))
+                }
+            }
+            
+            return conditional
         }
         else if (statement instanceof StatementContainer) {
             
             transformStatements((statement as StatementContainer).statements)
             
             if (statement instanceof Trap) {
-                (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
+                if ((statement as Trap).trapHandler != null) {
+                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
+                }
             }
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
-                (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
+                if ((statement as Abort).cases != null) {
+                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
+                }
             }
             else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
+                if ((statement as Exec).execCaseList != null) {
+                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
+                }
             }
             else if (statement instanceof Do) {
                 transformStatements((statement as Do).watchingStatements)
             }
             else if (statement instanceof Conditional) {
-                transformStatements((statement as Conditional).getElse().statements)
+                if ((statement as Conditional).getElse() != null) {
+                    transformStatements((statement as Conditional).getElse().statements)
+                }
             }
         }
         else if (statement instanceof IfTest) {
             transformStatements((statement as IfTest).thenStatements)
-            (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
+            if ((statement as IfTest).elseif != null) {
+                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
+            }
             transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {

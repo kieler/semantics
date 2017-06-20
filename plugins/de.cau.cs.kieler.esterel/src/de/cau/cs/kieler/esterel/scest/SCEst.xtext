@@ -97,7 +97,6 @@ Present returns esterel::Present:
     (   (
             (     expression=SignalExpression 
                 | "[" expression=SignalExpression "]" 
-                | tick=Tick
             ) 
             (
                 (thenAnnotations += Annotation)*
@@ -120,7 +119,6 @@ PresentCase returns esterel::PresentCase:
     "case" 
     (     expression=SignalExpression 
         | "[" expression=SignalExpression "]" 
-        | tick=Tick
     )
     (   "do" 
         ( (statements+=SCEstStatement ";" | statements+=MetaStatement)* statements+=SCEstStatement? )
@@ -150,7 +148,6 @@ ElsIf returns esterel::ElsIf:
     "elsif" 
     expr=Expression 
     (
-        (thenAnnotations += Annotation)*
         "then" 
         ( (thenStatements+=SCEstStatement ";" | thenStatements+=MetaStatement)* thenStatements+=SCEstStatement? )
     )?;
@@ -339,14 +336,14 @@ Do returns esterel::Do:
 UnEmit:
     (annotations += Annotation)*
     "unemit" 
-    ((signal=[esterel::ISignal|ID]) | tick=Tick);
+    signal=[esterel::ISignal|ID];
 
 // ==> reset: Signal value reset (absolute write)
 // -------------------------------------
 Set:
     (annotations += Annotation)*
     "set" 
-    ((signal=[esterel::ISignal|ID]) | tick=Tick) 
+    signal=[esterel::ISignal|ID] 
     ("("expr=Expression")");
      
     

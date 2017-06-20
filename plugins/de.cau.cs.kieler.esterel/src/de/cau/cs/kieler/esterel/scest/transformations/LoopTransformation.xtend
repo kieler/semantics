@@ -32,6 +32,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.Loop
 import com.google.common.collect.Sets
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
@@ -99,6 +100,11 @@ class LoopTransformation extends AbstractExpansionTransformation implements Trac
                 abort.statements.add(loop.statements)
                 abort.statements.add(createHalt)
                 abort.delay = loop.delay
+                for (a : loop.annotations) {
+                    if (isGenerated(a)) {
+                        abort.annotations.add(EcoreUtil.copy(a))
+                    }
+                }
                 statements.add(pos+1, abort)
                 statements.add(pos+2, createGotoStatement(label))
             }
