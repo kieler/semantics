@@ -116,7 +116,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
             } catch (AssertionError ae) {
                 throw ae
             } catch (Exception e) {
-                throw new Exception("Error in %s".format(name), e)
+                throw new Exception("Error in %s caused by: %s".format(name, e.message), e)
             }
         }
     }
