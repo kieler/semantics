@@ -341,16 +341,69 @@ ruleSetTrackStatement returns [EObject current=null]
 				)
 			)
 		)*
-		otherlv_4='to'
+		(
+			(
+				otherlv_4='and'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_0_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_3_0_1_0());
+						}
+						lv_segments_5_0=ruleSEG_NAME
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+							}
+							add(
+								$current,
+								"segments",
+								lv_segments_5_0,
+								"de.cau.cs.kieler.RailSL.SEG_NAME");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)
+			    |
+			(
+				otherlv_6=', and'
+				{
+					newLeafNode(otherlv_6, grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_3_1_1_0());
+						}
+						lv_segments_7_0=ruleSEG_NAME
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+							}
+							add(
+								$current,
+								"segments",
+								lv_segments_7_0,
+								"de.cau.cs.kieler.RailSL.SEG_NAME");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)
+		)?
+		otherlv_8='to'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getSetTrackStatementAccess().getToKeyword_3());
+			newLeafNode(otherlv_8, grammarAccess.getSetTrackStatementAccess().getToKeyword_4());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getSetTrackStatementAccess().getModeTrackSettingParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getSetTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0());
 				}
-				lv_mode_5_0=ruleTrackSetting
+				lv_mode_9_0=ruleTrackSetting
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
@@ -358,15 +411,15 @@ ruleSetTrackStatement returns [EObject current=null]
 					set(
 						$current,
 						"mode",
-						lv_mode_5_0,
+						lv_mode_9_0,
 						"de.cau.cs.kieler.RailSL.TrackSetting");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_6='.'
+		otherlv_10='.'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getSetTrackStatementAccess().getFullStopKeyword_5());
+			newLeafNode(otherlv_10, grammarAccess.getSetTrackStatementAccess().getFullStopKeyword_6());
 		}
 	)
 ;
@@ -480,40 +533,91 @@ ruleSetPointStatement returns [EObject current=null]
 				)
 			)
 		)*
-		otherlv_4='to'
+		(
+			(
+				otherlv_4='and'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getSetPointStatementAccess().getAndKeyword_3_0_0());
+				}
+				(
+					(
+						lv_points_5_0=RULE_INT
+						{
+							newLeafNode(lv_points_5_0, grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_0_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getSetPointStatementRule());
+							}
+							addWithLastConsumed(
+								$current,
+								"points",
+								lv_points_5_0,
+								"org.eclipse.xtext.common.Terminals.INT");
+						}
+					)
+				)
+			)
+			    |
+			(
+				otherlv_6=', and'
+				{
+					newLeafNode(otherlv_6, grammarAccess.getSetPointStatementAccess().getAndKeyword_3_1_0());
+				}
+				(
+					(
+						lv_points_7_0=RULE_INT
+						{
+							newLeafNode(lv_points_7_0, grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_1_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getSetPointStatementRule());
+							}
+							addWithLastConsumed(
+								$current,
+								"points",
+								lv_points_7_0,
+								"org.eclipse.xtext.common.Terminals.INT");
+						}
+					)
+				)
+			)
+		)?
+		otherlv_8='to'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getSetPointStatementAccess().getToKeyword_3());
+			newLeafNode(otherlv_8, grammarAccess.getSetPointStatementAccess().getToKeyword_4());
 		}
 		(
 			(
 				(
-					lv_orientation_5_1='straight'
+					lv_orientation_9_1='straight'
 					{
-						newLeafNode(lv_orientation_5_1, grammarAccess.getSetPointStatementAccess().getOrientationStraightKeyword_4_0_0());
+						newLeafNode(lv_orientation_9_1, grammarAccess.getSetPointStatementAccess().getOrientationStraightKeyword_5_0_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getSetPointStatementRule());
 						}
-						setWithLastConsumed($current, "orientation", lv_orientation_5_1, null);
+						setWithLastConsumed($current, "orientation", lv_orientation_9_1, null);
 					}
 					    |
-					lv_orientation_5_2='branch'
+					lv_orientation_9_2='branch'
 					{
-						newLeafNode(lv_orientation_5_2, grammarAccess.getSetPointStatementAccess().getOrientationBranchKeyword_4_0_1());
+						newLeafNode(lv_orientation_9_2, grammarAccess.getSetPointStatementAccess().getOrientationBranchKeyword_5_0_1());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getSetPointStatementRule());
 						}
-						setWithLastConsumed($current, "orientation", lv_orientation_5_2, null);
+						setWithLastConsumed($current, "orientation", lv_orientation_9_2, null);
 					}
 				)
 			)
 		)
-		otherlv_6='.'
+		otherlv_10='.'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getSetPointStatementAccess().getFullStopKeyword_5());
+			newLeafNode(otherlv_10, grammarAccess.getSetPointStatementAccess().getFullStopKeyword_6());
 		}
 	)
 ;
@@ -843,34 +947,85 @@ ruleLightStatement returns [EObject current=null]
 		)*
 		(
 			(
+				otherlv_4='and'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getLightStatementAccess().getAndKeyword_3_0_0());
+				}
 				(
-					lv_state_4_1='on'
+					(
+						lv_lights_5_0=RULE_INT
+						{
+							newLeafNode(lv_lights_5_0, grammarAccess.getLightStatementAccess().getLightsINTTerminalRuleCall_3_0_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getLightStatementRule());
+							}
+							addWithLastConsumed(
+								$current,
+								"lights",
+								lv_lights_5_0,
+								"org.eclipse.xtext.common.Terminals.INT");
+						}
+					)
+				)
+			)
+			    |
+			(
+				otherlv_6=', and'
+				{
+					newLeafNode(otherlv_6, grammarAccess.getLightStatementAccess().getAndKeyword_3_1_0());
+				}
+				(
+					(
+						lv_lights_7_0=RULE_INT
+						{
+							newLeafNode(lv_lights_7_0, grammarAccess.getLightStatementAccess().getLightsINTTerminalRuleCall_3_1_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getLightStatementRule());
+							}
+							addWithLastConsumed(
+								$current,
+								"lights",
+								lv_lights_7_0,
+								"org.eclipse.xtext.common.Terminals.INT");
+						}
+					)
+				)
+			)
+		)?
+		(
+			(
+				(
+					lv_state_8_1='on'
 					{
-						newLeafNode(lv_state_4_1, grammarAccess.getLightStatementAccess().getStateOnKeyword_3_0_0());
+						newLeafNode(lv_state_8_1, grammarAccess.getLightStatementAccess().getStateOnKeyword_4_0_0());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getLightStatementRule());
 						}
-						setWithLastConsumed($current, "state", lv_state_4_1, null);
+						setWithLastConsumed($current, "state", lv_state_8_1, null);
 					}
 					    |
-					lv_state_4_2='off'
+					lv_state_8_2='off'
 					{
-						newLeafNode(lv_state_4_2, grammarAccess.getLightStatementAccess().getStateOffKeyword_3_0_1());
+						newLeafNode(lv_state_8_2, grammarAccess.getLightStatementAccess().getStateOffKeyword_4_0_1());
 					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getLightStatementRule());
 						}
-						setWithLastConsumed($current, "state", lv_state_4_2, null);
+						setWithLastConsumed($current, "state", lv_state_8_2, null);
 					}
 				)
 			)
 		)
-		otherlv_5='.'
+		otherlv_9='.'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getLightStatementAccess().getFullStopKeyword_4());
+			newLeafNode(otherlv_9, grammarAccess.getLightStatementAccess().getFullStopKeyword_5());
 		}
 	)
 ;

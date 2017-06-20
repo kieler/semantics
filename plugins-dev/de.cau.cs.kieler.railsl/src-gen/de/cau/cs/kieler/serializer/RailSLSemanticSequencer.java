@@ -160,7 +160,7 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     LightStatement returns LightStatement
 	 *
 	 * Constraint:
-	 *     (lights+=INT lights+=INT* (state='on' | state='off'))
+	 *     (lights+=INT lights+=INT* (lights+=INT | lights+=INT)? (state='on' | state='off'))
 	 */
 	protected void sequence_LightStatement(ISerializationContext context, LightStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -186,7 +186,7 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SetPointStatement returns SetPointStatement
 	 *
 	 * Constraint:
-	 *     (points+=INT points+=INT* (orientation='straight' | orientation='branch'))
+	 *     (points+=INT points+=INT* (points+=INT | points+=INT)? (orientation='straight' | orientation='branch'))
 	 */
 	protected void sequence_SetPointStatement(ISerializationContext context, SetPointStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -200,7 +200,7 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SetTrackStatement returns SetTrackStatement
 	 *
 	 * Constraint:
-	 *     (segments+=SEG_NAME segments+=SEG_NAME* mode=TrackSetting)
+	 *     (segments+=SEG_NAME segments+=SEG_NAME* (segments+=SEG_NAME | segments+=SEG_NAME)? mode=TrackSetting)
 	 */
 	protected void sequence_SetTrackStatement(ISerializationContext context, SetTrackStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

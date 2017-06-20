@@ -23,7 +23,7 @@ SetStatement:
 ;
 	
 SetTrackStatement:
-	'Set track' (segments+=SEG_NAME)(',' segments+=SEG_NAME)* 'to' mode=TrackSetting'.'
+	'Set track' (segments+=SEG_NAME)(',' segments+=SEG_NAME)*(( 'and' segments+=SEG_NAME) | (', and' segments+=SEG_NAME))? 'to' mode=TrackSetting'.'
 ;
 
 TrackSetting:
@@ -31,7 +31,7 @@ TrackSetting:
 ;
 
 SetPointStatement:
-	'Set point' (points+=INT)(','points+=INT)* 'to' orientation=('straight' | 'branch')'.'
+	'Set point' (points+=INT)(','points+=INT)*(( 'and' points+=INT) | (', and' points+=INT))? 'to' orientation=('straight' | 'branch')'.'
 ;
 
 WaitStatement:
@@ -55,7 +55,7 @@ CrossingStatement:
 ;
 
 LightStatement:
-	'Turn light' (lights+=INT)(',' lights+=INT)* state=('on' | 'off')'.'
+	'Turn light' (lights+=INT)(',' lights+=INT)*(( 'and' lights+=INT) | (', and' lights+=INT))? state=('on' | 'off')'.'
 ;
 
 ConditionalStatement:
