@@ -1298,8 +1298,9 @@ class SCEstExtension {
      * @param singalExpr The signal expression
      * @param label The label for the goto statement
      * @param depth The depth of statement which caused the pause transformations 
+     * @param flag A possible flag. e.g. strong delayed abort "abort when A"
      */
-    def scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth) {
+    def ScopeStatement scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth, ValuedObject flag) {
         var variable = createNewUniqueVariable(createIntValue(0))
         var decl = createDeclaration(ValueType.INT, variable)
         var scope = createScopeStatement(decl)
@@ -1307,7 +1308,32 @@ class SCEstExtension {
         conditional.statements.add(incrementInt(variable))
         conditional.annotations.add(createAnnotation(0))
         statements.add(pos+1, conditional)
-        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), expr), label, false)
+        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
+        insertConditional(statements, conditional2, pos, depth)
+        scope.statements.add(statements)
+        statements.add(scope)
+        return scope
+    }
+    
+    /**
+     * Create a Scope which has a counting int variable, a conditional for counting and a conditional for checking the variable
+     * 
+     * @param statements The statements which will be inside of the scope
+     * @param pos The position of the pause Statement, for which the transformation is done
+     * @param expr The counting Expression
+     * @param singalExpr The signal expression
+     * @param label The label for the goto statement
+     * @param depth The depth of statement which caused the pause transformations 
+     */
+    def ScopeStatement scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth) {
+        var variable = createNewUniqueVariable(createIntValue(0))
+        var decl = createDeclaration(ValueType.INT, variable)
+        var scope = createScopeStatement(decl)
+        var conditional = newIfStatement(signalExpr)
+        conditional.statements.add(incrementInt(variable))
+        conditional.annotations.add(createAnnotation(0))
+        statements.add(pos+1, conditional)
+        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
         insertConditional(statements, conditional2, pos, depth)
         scope.statements.add(statements)
         statements.add(scope)

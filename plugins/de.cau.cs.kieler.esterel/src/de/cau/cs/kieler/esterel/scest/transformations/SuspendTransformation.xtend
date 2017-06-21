@@ -102,6 +102,7 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
                 suspend.statements.get(0).transformStatement
             }
             if (suspend.delay.expr != null) {
+                // create a scope because a declaration (variable for counting) is needed
                 var scope = createScopeStatement
                 var variable = createNewUniqueVariable(createIntValue(0))
                 scope.declarations.add(createDeclaration(ValueType.INT, variable))
@@ -113,18 +114,18 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             }
             else {
                 transformPauses(suspend.statements, depth, EcoreUtil.copy(suspend.delay), null)
+                if (suspend.delay.isImmediate) {
+                    var label = createLabel
+                    statements.set(pos, label)
+                    statements.add(pos+1, newIfThenGoto(EcoreUtil.copy(suspend.delay.signalExpr), label, true))
+                    statements.add(pos+2, suspend.statements)
+                }
+                else {
+                    statements.add(pos, suspend.statements)
+                    statements.remove(statement)
+                }
+                return null
             }
-            if (suspend.delay.isImmediate) {
-                var label = createLabel
-                statements.set(pos, label)
-                statements.add(pos+1, newIfThenGoto(EcoreUtil.copy(suspend.delay.signalExpr), label, true))
-                statements.add(pos+2, suspend.statements)
-            }
-            else {
-                statements.add(pos, suspend.statements)
-                statements.remove(statement)
-            }
-            return null
         }
         else if (statement instanceof StatementContainer) {
             
@@ -182,9 +183,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
         return statement
     }
     
-    def EList<Statement> transformPauses(EList<Statement> statements, int depth, DelayExpr expr, ValuedObject variable) {
+    def void transformPauses(EList<Statement> statements, int depth, DelayExpr delay, ValuedObject variable) {
         for (var i=0; i<statements?.length; i++) {
-            var statement = statements.get(i).transformPause(depth, expr, variable)
+            var statement = statements.get(i).transformPause(depth, delay, variable)
             if (statement instanceof Statement) {
                 statements.set(i, statement)
             }
@@ -194,26 +195,26 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
                 // without 'i=i+1' pause would be transformed indefinitely often
             }
         }
-        return statements
     }
     
-    def Statement transformPause(Statement statement, int depth, DelayExpr expr, ValuedObject variable) {
+    def Statement transformPause(Statement statement, int depth, DelayExpr delay, ValuedObject variable) {
         if (statement instanceof Pause) {
-            // it is not possible to transform "suspend p when 3 A" because in this transformation delay.expr is not checked. 
             var statements = getContainingList(statement)
             var pos = statements.indexOf(statement)
             var label = createLabel
             var Conditional conditional
-            if (expr.expr != null && variable != null) {
+            // if there is an expression before the signal expression, there is the need
+            // for a second "if" to increment the counting variable
+            if (delay.expr != null && variable != null) {
                 var Conditional conditional2
-                conditional2  = createConditional(expr.signalExpr)
+                conditional2  = createConditional(EcoreUtil.copy(delay.signalExpr))
                 conditional2.statements.add(incrementInt(variable))
                 conditional2.annotations.add(createAnnotation(0))
                 statements.add(pos+1, conditional2)
-                conditional =  newIfThenGoto(createLT(createValuedObjectReference(variable), expr.expr), label, false)
+                conditional =  newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(delay.expr)), label, false)
             }
             else {
-                conditional = newIfThenGoto(EcoreUtil.copy(expr.signalExpr), label, false)
+                conditional = newIfThenGoto(EcoreUtil.copy(delay.signalExpr), label, false)
             }
             conditional.annotations.add(createAnnotation(depth))
             insertConditional(statements, conditional, pos, depth)
@@ -222,49 +223,49 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
         }
         else if (statement instanceof StatementContainer) {
             if (!(statement instanceof Conditional)) {
-                transformPauses((statement as StatementContainer).statements, depth, expr, variable)
+                transformPauses((statement as StatementContainer).statements, depth, delay, variable)
             }
             
             if (statement instanceof Trap) {
-                (statement as Trap).trapHandler?.forEach[h | transformPauses(h.statements, depth, expr, variable)]
+                (statement as Trap).trapHandler?.forEach[h | transformPauses(h.statements, depth, delay, variable)]
             }
             else if (statement instanceof Abort) {
-                transformPauses((statement as Abort).doStatements, depth, expr, variable)
-                (statement as Abort).cases?.forEach[ c | transformPauses(c.statements, depth, expr, variable)]
+                transformPauses((statement as Abort).doStatements, depth, delay, variable)
+                (statement as Abort).cases?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
             }
             else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList?.forEach[ c | transformPauses(c.statements, depth, expr, variable)]
+                (statement as Exec).execCaseList?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
             }
             else if (statement instanceof Do) {
-                transformPauses((statement as Do).watchingStatements, depth, expr, variable)
+                transformPauses((statement as Do).watchingStatements, depth, delay, variable)
             }
             else if (statement instanceof Conditional) {
                 // Don't transform the pauses in generated Conditionals.
                 var annotations = (statement as Conditional).annotations
                 if (!isGenerated(annotations)) {
-                    transformPauses((statement as StatementContainer).statements, depth, expr, variable)
-                    transformPauses((statement as Conditional).getElse()?.statements, depth, expr, variable)
+                    transformPauses((statement as StatementContainer).statements, depth, delay, variable)
+                    transformPauses((statement as Conditional).getElse()?.statements, depth, delay, variable)
                 }
             }
         }
         else if (statement instanceof Present) {
-            transformPauses((statement as Present).thenStatements, depth, expr, variable)
-            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, expr, variable)]
-            transformPauses((statement as Present).elseStatements, depth, expr, variable)
+            transformPauses((statement as Present).thenStatements, depth, delay, variable)
+            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, delay, variable)]
+            transformPauses((statement as Present).elseStatements, depth, delay, variable)
         }
         else if (statement instanceof IfTest) {
-            transformPauses((statement as IfTest).thenStatements, depth, expr, variable)
-            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, depth, expr, variable)]
-            transformPauses((statement as IfTest).elseStatements, depth, expr, variable)
+            transformPauses((statement as IfTest).thenStatements, depth, delay, variable)
+            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, depth, delay, variable)]
+            transformPauses((statement as IfTest).elseStatements, depth, delay, variable)
         }
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads?.forEach [ t |
-                transformPauses(t.statements, depth, expr, variable)
+                transformPauses(t.statements, depth, delay, variable)
             ]
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads?.forEach [ t |
-                transformPauses(t.statements, depth, expr, variable)
+                transformPauses(t.statements, depth, delay, variable)
             ]
         }
         return statement

@@ -74,14 +74,14 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
     extension SCEstExtension
     
     def SCEstProgram transform(SCEstProgram prog) {
-        prog.modules.forEach [ m | transformStatements(m.statements, 0)]
+        prog.modules.forEach [ m | transformStatements(m.statements)]
         return prog
     }
     
-    def EList<Statement> transformStatements(EList<Statement> statements, int counter) {
+    def EList<Statement> transformStatements(EList<Statement> statements) {
         if (statements != null) {
             for (var i=0; i<statements.length; i++) {
-                var statement = statements.get(i).transformStatement(counter)
+                var statement = statements.get(i).transformStatement
                 if (statement instanceof Statement) {
                     statements.set(i, statement)
                 }
@@ -91,11 +91,14 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
     }
     
     
-    def Statement transformStatement(Statement statement, int counter) {
+    def Statement transformStatement(Statement statement) {
         if (statement instanceof Abort) {
             var abort = statement as Abort
             var statements =  statement.getContainingList
             var pos = statements.indexOf(statement)
+            var scope = createScopeStatement
+            var depth = abort.getDepth
+            // check if its just a single abort delay or if this abort includes cases
             if (abort.delay != null) {
                 if (abort.weak) {
                     
@@ -103,24 +106,30 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 else {
                     if (abort.delay.isImmediate) {
                         var label = createLabel
-                        abort.statements.add(label)
                         var conditional = newIfThenGoto(EcoreUtil.copy(abort.delay.signalExpr), label, false)
-                        statements.set(pos, conditional)
-                        abort.statements.transformPauses(counter, EcoreUtil.copy(abort.delay), abort.delay.isIsImmediate, abort.weak, label, null)
-                        statements.add(pos+1, abort.statements)
+                        // the order of the next two lines is crucial! (first trasformStatements, then transformPauses)
+                        abort.statements.transformStatements
+                        abort.statements.transformPauses(depth, EcoreUtil.copy(abort.delay), abort.delay.isIsImmediate, abort.weak, label, null)
+                        abort.statements.add(label)
+                        scope.statements.add(conditional)
+                        scope.statements.add(abort.statements)
+                        statements.set(pos, scope)
                     }
                     else {
                         var flag = createNewUniqueFlag(createBoolValue(false))
                         var decl = createDeclaration(ValueType.BOOL, flag)
-                        var scope = createScopeStatement(decl)
                         var label = createLabel
+                        // the order of the next two lines is crucial! (first trasformStatements, then transformPauses)
+                        abort.statements.transformStatements
+                        abort.statements.transformPauses(depth, EcoreUtil.copy(abort.delay), abort.delay.isIsImmediate, abort.weak, label, flag)
+                        scope.declarations.add(decl)
                         abort.statements.add(label)
-                        abort.statements.transformPauses(counter, EcoreUtil.copy(abort.delay), abort.delay.isIsImmediate, abort.weak, label, flag)
                         scope.statements.add(abort.statements)
                         statements.set(pos,scope)
                     }
                 }
             }
+            // abort cases
             else {
                 // TODO cases
             }
@@ -128,77 +137,63 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
         }
         else if (statement instanceof StatementContainer) {
             
-            transformStatements((statement as StatementContainer).statements, counter+1)
+            transformStatements((statement as StatementContainer).statements)
             
             if (statement instanceof Trap) {
-                if ((statement as Trap).trapHandler != null) {
-                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements, counter+1)]
-                }
+                (statement as Trap).trapHandler?.forEach[h | transformStatements(h.statements)]
             }
             else if (statement instanceof Abort) {
-                transformStatements((statement as Abort).doStatements, counter+1)
-                if ((statement as Abort).cases != null) {
-                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements, counter+1)]
-                }
+                transformStatements((statement as Abort).doStatements)
+                (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
-                if ((statement as Exec).execCaseList != null) {
-                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements, counter+1)]
-                }
+                (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Do) {
-                transformStatements((statement as Do).watchingStatements, counter+1)
+                transformStatements((statement as Do).watchingStatements)
             }
             else if (statement instanceof Conditional) {
-                if ((statement as Conditional).getElse() != null) {
-                    transformStatements((statement as Conditional).getElse().statements, counter+1)
-                }
+                transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
         else if (statement instanceof Present) {
-            transformStatements((statement as Present).thenStatements, counter+1)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements, counter+1)]
-            }
-            transformStatements((statement as Present).elseStatements, counter+1)
+            transformStatements((statement as Present).thenStatements)
+            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
+            transformStatements((statement as Present).elseStatements)
         }
         else if (statement instanceof IfTest) {
-            transformStatements((statement as IfTest).thenStatements, counter+1)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, counter+1)]
-            }
-            transformStatements((statement as IfTest).elseStatements, counter+1)
+            transformStatements((statement as IfTest).thenStatements)
+            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
+            transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformStatements(t.statements, counter+1)
+            (statement as EsterelParallel).threads?.forEach [ t |
+                transformStatements(t.statements)
             ]
         }
         else if (statement instanceof Parallel) {
-            (statement as Parallel).threads.forEach [ t |
-                transformStatements(t.statements, counter+1)
+            (statement as Parallel).threads?.forEach [ t |
+                transformStatements(t.statements)
             ]
         }
         return statement
     }
     
-    def EList<Statement> transformPauses(EList<Statement> statements, int counter, DelayExpr delay, boolean immediate, boolean weak, Label label, ValuedObject flag) {
+    def EList<Statement> transformPauses(EList<Statement> statements, int depth, DelayExpr delay, boolean immediate, boolean weak, Label label, ValuedObject flag) {
         for (var i=0; i<statements.length; i++) {
-            var statement = statements.get(i).transformPause(counter, delay, immediate, weak, label, flag)
+            var statement = statements.get(i).transformPause(depth, delay, immediate, weak, label, flag)
             if (statement instanceof Statement) {
                 statements.set(i, statement)
-            }
-            else if (statement == null) {
-                i = i +1// a label/ifTest was added before/after the pause statement;without 'i=i+2' pause would be transformed indefinitely often
             }
         }
         return statements
     }
     
-    def Statement transformPause(Statement statement, int counter, DelayExpr delay, boolean immediate, boolean weak, Label label, ValuedObject flag) {
+    def Statement transformPause(Statement statement, int depth, DelayExpr delay, boolean immediate, boolean weak, Label label, ValuedObject flag) {
         if (statement instanceof Pause) {
             var statements =  statement.getContainingList
             var pos = statements.indexOf(statement)
+            // weak abort
             if (weak) {
                 if (immediate) {
                     
@@ -207,77 +202,87 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     
                 }
             }
+            // strong abort
             else {
+                var label2 = findClosestLabel(label, statement)
+                // e.g. abort immediate A
                 if (immediate) {
-                    var label2 = findClosestLabel(label, statement)
-                    if (delay.expr == null) {
-                        if (label2 != null) {
-                            insertConditional(statements, newIfThenGoto(delay.signalExpr, label2, false), pos, counter)
-                        }
-                    }   
-                     // TODO indefinite loop when pause in scopestatement
-                     // TODO indefinite loop when pause in scopestatement
-                     // TODO indefinite loop when pause in scopestatement
-                    else {
-                        scopeWithDecl(statements, pos, delay.expr, delay.signalExpr, label2, counter)
+                    if (label2 != null) {
+                        var conditional = newIfThenGoto(delay.signalExpr, label2, false)
+                        conditional.annotations.add(createAnnotation(depth))
+                        insertConditional(statements, conditional, pos, depth)
                     }
+                     // TODO indefinite loop when pause in scopestatement
+                     // TODO indefinite loop when pause in scopestatement
+                     // TODO indefinite loop when pause in scopestatement
                 }
                 else {
-                    
+                    // abort when A
+                    if (delay.expr == null) {
+                        var conditional = newIfThenGoto(delay.signalExpr, label2, false)
+                        conditional.annotations.add(createAnnotation(depth))
+                        conditional.statements.add(createAssignment(flag, createBoolValue(true)))
+                        insertConditional(statements, conditional, pos, depth)
+                    }
+                    // e.g. abort when 3 A
+                    else {
+                        if (label2 != null) {
+                            // TODO flag must be added to conditionals
+                            return scopeWithDecl(statements, pos, delay.expr, delay.signalExpr, label2, depth, flag)
+                        }
+                    }
                 }
             }
-            
-            
             
             return null
         }
         
         else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads.forEach [ t |
-                transformPauses(t.statements, counter, delay, immediate, weak, label, flag)
+            (statement as EsterelParallel).threads?.forEach [ t |
+                transformPauses(t.statements, depth, delay, immediate, weak, label, flag)
             ]
         }
         else if (statement instanceof Parallel) {
-            (statement as Parallel).threads.forEach [ t |
-                transformPauses(t.statements, counter, delay, immediate, weak, label, flag)
+            (statement as Parallel).threads?.forEach [ t |
+                transformPauses(t.statements, depth, delay, immediate, weak, label, flag)
             ]
         }
         else if (statement instanceof StatementContainer) {
             if (!(statement instanceof Conditional)) {
-                transformPauses((statement as StatementContainer).statements, counter, delay, immediate, weak, label, flag)
+                transformPauses((statement as StatementContainer).statements, depth, delay, immediate, weak, label, flag)
             }
             
             if (statement instanceof Trap) {
-                (statement as Trap).trapHandler.forEach[h | transformPauses(h.statements, counter, delay, immediate, weak, label, flag)]
+                (statement as Trap).trapHandler?.forEach[h | transformPauses(h.statements, depth, delay, immediate, weak, label, flag)]
             }
             else if (statement instanceof Abort) {
-                transformPauses((statement as Abort).doStatements, counter, delay, immediate, weak, label, flag)
-                (statement as Abort).cases.forEach[ c | transformPauses(c.statements, counter, delay, immediate, weak, label, flag)]
+                transformPauses((statement as Abort).doStatements, depth, delay, immediate, weak, label, flag)
+                (statement as Abort).cases?.forEach[ c | transformPauses(c.statements, depth, delay, immediate, weak, label, flag)]
             }
             else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList.forEach[ c | transformPauses(c.statements, counter, delay, immediate, weak, label, flag)]
+                (statement as Exec).execCaseList?.forEach[ c | transformPauses(c.statements, depth, delay, immediate, weak, label, flag)]
             }
             else if (statement instanceof Do) {
-                transformPauses((statement as Do).watchingStatements, counter, delay, immediate, weak, label, flag)
+                transformPauses((statement as Do).watchingStatements, depth, delay, immediate, weak, label, flag)
             }
             else if (statement instanceof Conditional) {
                 // Don't transform the pauses in generated Conditionals.
                 var annotations = (statement as Conditional).annotations
                 if (!isGenerated(annotations)) {
-                    transformPauses((statement as StatementContainer).statements, counter, delay, immediate, weak, label, flag)
-                    transformPauses((statement as Conditional).getElse().statements, counter, delay, immediate, weak, label, flag)
+                    transformPauses((statement as StatementContainer).statements, depth, delay, immediate, weak, label, flag)
+                    transformPauses((statement as Conditional).getElse().statements, depth, delay, immediate, weak, label, flag)
                 }
             }
         }
         else if (statement instanceof Present) {
-            transformPauses((statement as Present).thenStatements, counter, delay, immediate, weak, label, flag)
-            (statement as Present).cases.forEach[ c | transformPauses(c.statements, counter, delay, immediate, weak, label, flag)]
-            transformPauses((statement as Present).elseStatements, counter, delay, immediate, weak, label, flag)
+            transformPauses((statement as Present).thenStatements, depth, delay, immediate, weak, label, flag)
+            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, delay, immediate, weak, label, flag)]
+            transformPauses((statement as Present).elseStatements, depth, delay, immediate, weak, label, flag)
         }
         else if (statement instanceof IfTest) {
-            transformPauses((statement as IfTest).thenStatements, counter, delay, immediate, weak, label, flag)
-            (statement as IfTest).elseif.forEach [ elsif | transformPauses(elsif.thenStatements, counter, delay, immediate, weak, label, flag)]
-            transformPauses((statement as IfTest).elseStatements, counter, delay, immediate, weak, label, flag)
+            transformPauses((statement as IfTest).thenStatements, depth, delay, immediate, weak, label, flag)
+            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, depth, delay, immediate, weak, label, flag)]
+            transformPauses((statement as IfTest).elseStatements, depth, delay, immediate, weak, label, flag)
         }
         return statement
     }
