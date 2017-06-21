@@ -41,6 +41,33 @@ public interface KvisFactory extends EFactory
   Element createElement();
 
   /**
+   * Returns a new object of class '<em>Interaction</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Interaction</em>'.
+   * @generated
+   */
+  Interaction createInteraction();
+
+  /**
+   * Returns a new object of class '<em>Event</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Event</em>'.
+   * @generated
+   */
+  Event createEvent();
+
+  /**
+   * Returns a new object of class '<em>Action</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Action</em>'.
+   * @generated
+   */
+  Action createAction();
+
+  /**
    * Returns a new object of class '<em>Animation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -66,6 +93,24 @@ public interface KvisFactory extends EFactory
    * @generated
    */
   Mapping createMapping();
+
+  /**
+   * Returns a new object of class '<em>Condition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Condition</em>'.
+   * @generated
+   */
+  Condition createCondition();
+
+  /**
+   * Returns a new object of class '<em>Comparison</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Comparison</em>'.
+   * @generated
+   */
+  Comparison createComparison();
 
   /**
    * Returns a new object of class '<em>Domain</em>'.
@@ -102,6 +147,24 @@ public interface KvisFactory extends EFactory
    * @generated
    */
   ModelReference createModelReference();
+
+  /**
+   * Returns a new object of class '<em>Boolean Operator</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Boolean Operator</em>'.
+   * @generated
+   */
+  BooleanOperator createBooleanOperator();
+
+  /**
+   * Returns a new object of class '<em>And Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>And Expression</em>'.
+   * @generated
+   */
+  AndExpression createAndExpression();
 
   /**
    * Returns the package supported by this factory.

@@ -9,7 +9,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * Use this class to register components to be used within the IDE.
  */
 public class KVisUiModule extends de.cau.cs.kieler.kvis.ui.AbstractKVisUiModule {
-	public KVisUiModule(AbstractUIPlugin plugin) {
+ 
+    // The plug-in ID
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.kvis.ui"; //$NON-NLS-1$
+    
+    public static final String LAST_KVIS_FILE = "last_used_kvis_file";
+    
+    public KVisUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
 }

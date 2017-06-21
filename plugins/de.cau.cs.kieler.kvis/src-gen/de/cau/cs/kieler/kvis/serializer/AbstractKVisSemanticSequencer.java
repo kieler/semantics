@@ -22,10 +22,15 @@ import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
+import de.cau.cs.kieler.kvis.kvis.AndExpression;
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
+import de.cau.cs.kieler.kvis.kvis.BooleanOperator;
+import de.cau.cs.kieler.kvis.kvis.Comparison;
 import de.cau.cs.kieler.kvis.kvis.Domain;
 import de.cau.cs.kieler.kvis.kvis.Element;
+import de.cau.cs.kieler.kvis.kvis.Event;
+import de.cau.cs.kieler.kvis.kvis.Interaction;
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
@@ -166,17 +171,46 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 			}
 		else if (epackage == KvisPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KvisPackage.ACTION:
+				if (rule == grammarAccess.getSimulationActionRule()) {
+					sequence_SimulationAction(context, (de.cau.cs.kieler.kvis.kvis.Action) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getActionRule()) {
+					sequence_SimulationAction_VariableAssignment(context, (de.cau.cs.kieler.kvis.kvis.Action) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getVariableAssignmentRule()) {
+					sequence_VariableAssignment(context, (de.cau.cs.kieler.kvis.kvis.Action) semanticObject); 
+					return; 
+				}
+				else break;
+			case KvisPackage.AND_EXPRESSION:
+				sequence_AndExpression(context, (AndExpression) semanticObject); 
+				return; 
 			case KvisPackage.ANIMATION:
 				sequence_Animation(context, (Animation) semanticObject); 
 				return; 
 			case KvisPackage.ATTRIBUTE_MAPPING:
 				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
 				return; 
+			case KvisPackage.BOOLEAN_OPERATOR:
+				sequence_AndOperator(context, (BooleanOperator) semanticObject); 
+				return; 
+			case KvisPackage.COMPARISON:
+				sequence_Comparison(context, (Comparison) semanticObject); 
+				return; 
 			case KvisPackage.DOMAIN:
 				sequence_VariableDomain(context, (Domain) semanticObject); 
 				return; 
 			case KvisPackage.ELEMENT:
 				sequence_Element(context, (Element) semanticObject); 
+				return; 
+			case KvisPackage.EVENT:
+				sequence_Event(context, (Event) semanticObject); 
+				return; 
+			case KvisPackage.INTERACTION:
+				sequence_Interaction(context, (Interaction) semanticObject); 
 				return; 
 			case KvisPackage.INTERVAL:
 				sequence_Interval(context, (Interval) semanticObject); 
@@ -200,10 +234,53 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
+	 *     AndExpression returns AndExpression
+	 *     AndExpression.AndExpression_1_0_0 returns AndExpression
+	 *
+	 * Constraint:
+	 *     (left=AndExpression_AndExpression_1_0_0 operator='and' right=Comparison)
+	 */
+	protected void sequence_AndExpression(ISerializationContext context, AndExpression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_EXPRESSION__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_EXPRESSION__LEFT));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_EXPRESSION__OPERATOR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_EXPRESSION__OPERATOR));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.AND_EXPRESSION__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.AND_EXPRESSION__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getAndExpressionAccess().getOperatorAndKeyword_1_0_1_0(), semanticObject.getOperator());
+		feeder.accept(grammarAccess.getAndExpressionAccess().getRightComparisonParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AndOperator returns BooleanOperator
+	 *
+	 * Constraint:
+	 *     AND='and'
+	 */
+	protected void sequence_AndOperator(ISerializationContext context, BooleanOperator semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.BOOLEAN_OPERATOR__AND) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.BOOLEAN_OPERATOR__AND));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAndOperatorAccess().getANDAndKeyword_0(), semanticObject.getAND());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Animation returns Animation
 	 *
 	 * Constraint:
-	 *     (type=ID variable=VariableReference? attributeMappings+=AttributeMapping* condition=BoolExpression?)
+	 *     (type=ID variable=VariableReference? attributeMappings+=AttributeMapping* condition=AndExpression?)
 	 */
 	protected void sequence_Animation(ISerializationContext context, Animation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -215,9 +292,23 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     AttributeMapping returns AttributeMapping
 	 *
 	 * Constraint:
-	 *     (attribute=ID (literal=Literal | (mappings+=Mapping mappings+=Mapping*)))
+	 *     (attribute=ID (literal=AnyValue | (mappings+=Mapping mappings+=Mapping*)))
 	 */
 	protected void sequence_AttributeMapping(ISerializationContext context, AttributeMapping semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AndExpression returns Comparison
+	 *     AndExpression.AndExpression_1_0_0 returns Comparison
+	 *     Comparison returns Comparison
+	 *
+	 * Constraint:
+	 *     (left=VariableReference relation=CompareOperator (right=AnyValue | right=VariableReference))
+	 */
+	protected void sequence_Comparison(ISerializationContext context, Comparison semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -236,10 +327,43 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
+	 *     Event returns Event
+	 *
+	 * Constraint:
+	 *     (event=DOMEvent element=ID)
+	 */
+	protected void sequence_Event(ISerializationContext context, Event semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.EVENT__EVENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.EVENT__EVENT));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.EVENT__ELEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.EVENT__ELEMENT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getEventAccess().getEventDOMEventEnumRuleCall_0_0(), semanticObject.getEvent());
+		feeder.accept(grammarAccess.getEventAccess().getElementIDTerminalRuleCall_2_0(), semanticObject.getElement());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Interaction returns Interaction
+	 *
+	 * Constraint:
+	 *     (event=Event? actions+=Action* condition=AndExpression?)
+	 */
+	protected void sequence_Interaction(ISerializationContext context, Interaction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Interval returns Interval
 	 *
 	 * Constraint:
-	 *     ((from=Integer | from=Integer) (to=Integer | to=Integer))
+	 *     ((from=IntValue | from=FloatValue) (to=IntValue | to=FloatValue))
 	 */
 	protected void sequence_Interval(ISerializationContext context, Interval semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -287,11 +411,62 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
+	 *     SimulationAction returns Action
+	 *
+	 * Constraint:
+	 *     operation=SimulationOperation
+	 */
+	protected void sequence_SimulationAction(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.ACTION__OPERATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.ACTION__OPERATION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSimulationActionAccess().getOperationSimulationOperationEnumRuleCall_0_0(), semanticObject.getOperation());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Action returns Action
+	 *
+	 * Constraint:
+	 *     ((variable=VariableReference value=AnyValue) | operation=SimulationOperation)
+	 */
+	protected void sequence_SimulationAction_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     VariableAssignment returns Action
+	 *
+	 * Constraint:
+	 *     (variable=VariableReference value=AnyValue)
+	 */
+	protected void sequence_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.ACTION__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.ACTION__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, KvisPackage.Literals.ACTION__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KvisPackage.Literals.ACTION__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getVariableAssignmentAccess().getVariableVariableReferenceParserRuleCall_0_0(), semanticObject.getVariable());
+		feeder.accept(grammarAccess.getVariableAssignmentAccess().getValueAnyValueParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     VariableDomain returns Domain
 	 *     AttributeDomain returns Domain
 	 *
 	 * Constraint:
-	 *     (value=Literal | range=Interval)
+	 *     (value=AnyValue | range=Interval)
 	 */
 	protected void sequence_VariableDomain(ISerializationContext context, Domain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -315,7 +490,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     Visualization returns Visualization
 	 *
 	 * Constraint:
-	 *     (image=STRING elements+=Element*)
+	 *     (image=STRING (elements+=Element | interactions+=Interaction)*)
 	 */
 	protected void sequence_Visualization(ISerializationContext context, Visualization semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

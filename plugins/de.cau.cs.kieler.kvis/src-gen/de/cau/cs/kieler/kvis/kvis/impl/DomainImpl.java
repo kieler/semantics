@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
+import de.cau.cs.kieler.kexpressions.Value;
+
 import de.cau.cs.kieler.kvis.kvis.Domain;
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
@@ -32,24 +34,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
 {
   /**
-   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getValue()
    * @generated
    * @ordered
    */
-  protected static final String VALUE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected String value = VALUE_EDEFAULT;
+  protected Value value;
 
   /**
    * The cached value of the '{@link #getRange() <em>Range</em>}' containment reference.
@@ -87,7 +79,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getValue()
+  public Value getValue()
   {
     return value;
   }
@@ -97,12 +89,37 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(String newValue)
+  public NotificationChain basicSetValue(Value newValue, NotificationChain msgs)
   {
-    String oldValue = value;
+    Value oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.DOMAIN__VALUE, oldValue, value));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KvisPackage.DOMAIN__VALUE, oldValue, newValue);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setValue(Value newValue)
+  {
+    if (newValue != value)
+    {
+      NotificationChain msgs = null;
+      if (value != null)
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KvisPackage.DOMAIN__VALUE, null, msgs);
+      if (newValue != null)
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KvisPackage.DOMAIN__VALUE, null, msgs);
+      msgs = basicSetValue(newValue, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.DOMAIN__VALUE, newValue, newValue));
   }
 
   /**
@@ -163,6 +180,8 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
   {
     switch (featureID)
     {
+      case KvisPackage.DOMAIN__VALUE:
+        return basicSetValue(null, msgs);
       case KvisPackage.DOMAIN__RANGE:
         return basicSetRange(null, msgs);
     }
@@ -198,7 +217,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
     switch (featureID)
     {
       case KvisPackage.DOMAIN__VALUE:
-        setValue((String)newValue);
+        setValue((Value)newValue);
         return;
       case KvisPackage.DOMAIN__RANGE:
         setRange((Interval)newValue);
@@ -218,7 +237,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
     switch (featureID)
     {
       case KvisPackage.DOMAIN__VALUE:
-        setValue(VALUE_EDEFAULT);
+        setValue((Value)null);
         return;
       case KvisPackage.DOMAIN__RANGE:
         setRange((Interval)null);
@@ -238,28 +257,11 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
     switch (featureID)
     {
       case KvisPackage.DOMAIN__VALUE:
-        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+        return value != null;
       case KvisPackage.DOMAIN__RANGE:
         return range != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (value: ");
-    result.append(value);
-    result.append(')');
-    return result.toString();
   }
 
 } //DomainImpl

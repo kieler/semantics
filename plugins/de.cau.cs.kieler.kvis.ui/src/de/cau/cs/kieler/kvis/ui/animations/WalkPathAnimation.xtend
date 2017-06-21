@@ -25,11 +25,11 @@ import org.w3c.dom.svg.SVGPoint
 class WalkPathAnimation extends AnimationHandler {
     var String pathName
     var boolean autoOrientation
-    var float anchorX
-    var float anchorY
-    var float pathStart
-    var float pathEnd
-    var float pathLength
+    var double anchorX
+    var double anchorY
+    var double pathStart
+    var double pathEnd
+    var double pathLength
     
     var String initialTransform
     var SVGPoint lastPoint
@@ -42,16 +42,16 @@ class WalkPathAnimation extends AnimationHandler {
     private def void initialize() {
         // Read attribute values
         for(attributeMapping : animation.attributeMappings) {
-            val literal = attributeMapping.literal.removeQuotes
+            val literal = attributeMapping.literal
             val attributeName = attributeMapping.attribute
             switch(attributeName) {
-                case "path" : pathName = literal
-                case "autoOrientation" : autoOrientation = Boolean.valueOf(literal)
-                case "anchorX" : anchorX = Float.valueOf(literal)
-                case "anchorY" : anchorY = Float.valueOf(literal)
-                case "start" : pathStart = Float.valueOf(literal)
-                case "end" : pathEnd = Float.valueOf(literal)
-                case "length" : pathLength = Float.valueOf(literal)
+                case "path" : pathName = literal.primitiveValue.toString
+                case "autoOrientation" : autoOrientation = literal.primitiveValue as Boolean
+                case "anchorX" : anchorX = literal.primitiveValue.doubleValue
+                case "anchorY" : anchorY = literal.primitiveValue.doubleValue
+                case "start" : pathStart = literal.primitiveValue.doubleValue
+                case "end" : pathEnd = literal.primitiveValue.doubleValue
+                case "length" : pathLength = literal.primitiveValue.doubleValue
                 default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
                     + "Handled attributes are:\n"
                     + "path, autoOrientation, anchorX, anchorY, start, end, length"
@@ -68,16 +68,16 @@ class WalkPathAnimation extends AnimationHandler {
         return "walkPath"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool) as Double
+        val value = variableValue as Double
 
         // Calculate animation
         var SVGOMPathElement path
         if(pathName.isNullOrEmpty){
             throw new Exception("Path animation must have a path id set.")
         } else {
-            val pathElement = getElementById(pathName)
+            val pathElement = findElement(pathName)
             if(pathElement == null) {
                 throw new Exception("Path with id '" + pathName + "' was not found in the svg.")
             } else {
@@ -113,8 +113,8 @@ class WalkPathAnimation extends AnimationHandler {
             val width = box.width
             val height = box.height
             // Anchor position in pixels
-            var float pivotX = anchorX * width
-            var float pivotY = anchorY * height
+            var double pivotX = anchorX * width
+            var double pivotY = anchorY * height
             val xValue = currentPoint.x - posX - pivotX
             val yValue = currentPoint.y - posY - pivotY
 

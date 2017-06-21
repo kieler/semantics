@@ -85,6 +85,21 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
         return createElementAdapter();
       }
       @Override
+      public Adapter caseInteraction(Interaction object)
+      {
+        return createInteractionAdapter();
+      }
+      @Override
+      public Adapter caseEvent(Event object)
+      {
+        return createEventAdapter();
+      }
+      @Override
+      public Adapter caseAction(Action object)
+      {
+        return createActionAdapter();
+      }
+      @Override
       public Adapter caseAnimation(Animation object)
       {
         return createAnimationAdapter();
@@ -98,6 +113,16 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
       public Adapter caseMapping(Mapping object)
       {
         return createMappingAdapter();
+      }
+      @Override
+      public Adapter caseCondition(Condition object)
+      {
+        return createConditionAdapter();
+      }
+      @Override
+      public Adapter caseComparison(Comparison object)
+      {
+        return createComparisonAdapter();
       }
       @Override
       public Adapter caseDomain(Domain object)
@@ -118,6 +143,16 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
       public Adapter caseModelReference(ModelReference object)
       {
         return createModelReferenceAdapter();
+      }
+      @Override
+      public Adapter caseBooleanOperator(BooleanOperator object)
+      {
+        return createBooleanOperatorAdapter();
+      }
+      @Override
+      public Adapter caseAndExpression(AndExpression object)
+      {
+        return createAndExpressionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -172,6 +207,51 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Interaction <em>Interaction</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.Interaction
+   * @generated
+   */
+  public Adapter createInteractionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Event <em>Event</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.Event
+   * @generated
+   */
+  public Adapter createEventAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Action <em>Action</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.Action
+   * @generated
+   */
+  public Adapter createActionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Animation <em>Animation</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -212,6 +292,36 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMappingAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Condition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.Condition
+   * @generated
+   */
+  public Adapter createConditionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Comparison <em>Comparison</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.Comparison
+   * @generated
+   */
+  public Adapter createComparisonAdapter()
   {
     return null;
   }
@@ -272,6 +382,36 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModelReferenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.BooleanOperator <em>Boolean Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.BooleanOperator
+   * @generated
+   */
+  public Adapter createBooleanOperatorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.AndExpression <em>And Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression
+   * @generated
+   */
+  public Adapter createAndExpressionAdapter()
   {
     return null;
   }

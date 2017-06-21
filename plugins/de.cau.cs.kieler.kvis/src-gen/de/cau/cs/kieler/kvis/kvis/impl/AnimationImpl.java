@@ -2,10 +2,9 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
-import de.cau.cs.kieler.kexpressions.Expression;
-
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
+import de.cau.cs.kieler.kvis.kvis.Condition;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
 
@@ -91,7 +90,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * @generated
    * @ordered
    */
-  protected Expression condition;
+  protected Condition condition;
 
   /**
    * <!-- begin-user-doc -->
@@ -204,7 +203,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getCondition()
+  public Condition getCondition()
   {
     return condition;
   }
@@ -214,9 +213,9 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs)
+  public NotificationChain basicSetCondition(Condition newCondition, NotificationChain msgs)
   {
-    Expression oldCondition = condition;
+    Condition oldCondition = condition;
     condition = newCondition;
     if (eNotificationRequired())
     {
@@ -231,7 +230,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setCondition(Expression newCondition)
+  public void setCondition(Condition newCondition)
   {
     if (newCondition != condition)
     {
@@ -311,7 +310,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
         getAttributeMappings().addAll((Collection<? extends AttributeMapping>)newValue);
         return;
       case KvisPackage.ANIMATION__CONDITION:
-        setCondition((Expression)newValue);
+        setCondition((Condition)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -337,7 +336,7 @@ public class AnimationImpl extends MinimalEObjectImpl.Container implements Anima
         getAttributeMappings().clear();
         return;
       case KvisPackage.ANIMATION__CONDITION:
-        setCondition((Expression)null);
+        setCondition((Condition)null);
         return;
     }
     super.eUnset(featureID);

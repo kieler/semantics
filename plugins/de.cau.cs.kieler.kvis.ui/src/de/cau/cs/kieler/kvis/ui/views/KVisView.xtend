@@ -14,25 +14,30 @@ package de.cau.cs.kieler.kvis.ui.views
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.kvis.kvis.Visualization
+import de.cau.cs.kieler.kvis.ui.KVisUiModule
 import de.cau.cs.kieler.kvis.ui.animations.AnimationHandler
 import de.cau.cs.kieler.kvis.ui.animations.ColorAnimation
 import de.cau.cs.kieler.kvis.ui.animations.MoveAnimation
 import de.cau.cs.kieler.kvis.ui.animations.RotateAnimation
 import de.cau.cs.kieler.kvis.ui.animations.TextAnimation
 import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
+import de.cau.cs.kieler.kvis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import java.awt.event.MouseListener
 import java.awt.event.MouseWheelEvent
-import java.awt.geom.AffineTransform
+import java.awt.event.MouseWheelListener
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.List
 import org.apache.batik.swing.gvt.GVTTreeRendererAdapter
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent
+import org.apache.batik.swing.svg.SVGDocumentLoaderEvent
+import org.apache.batik.swing.svg.SVGDocumentLoaderListener
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IResourceChangeEvent
@@ -40,19 +45,17 @@ import org.eclipse.core.resources.IResourceChangeListener
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import org.eclipse.jface.action.Action
+import org.eclipse.core.runtime.preferences.InstanceScope
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
-import org.eclipse.swt.events.MouseEvent
-import org.eclipse.swt.events.MouseWheelListener
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.apache.batik.swing.JSVGCanvas.AffineAction
-import org.eclipse.jface.dialogs.MessageDialog
 
 /**
  * @author aas
@@ -64,6 +67,8 @@ class KVisView extends ViewPart {
 
     public static val KVIS_FILE_EXTENSION = "kvis"
 
+    public static val simulationListener = createSimulationListener
+
     @Accessors(PUBLIC_GETTER)
     private static var KVisView instance
 
@@ -71,13 +76,14 @@ class KVisView extends ViewPart {
     private KVisCanvas canvas
 
     private val List<AnimationHandler> animationHandlers = newArrayList()
+    private val List<InteractionHandler> interactionHandlers = newArrayList()
 
     private var IResourceChangeListener resourceChangeListener
     private var boolean updateAfterRendering
+    private var Visualization kvisConfig
     private var IFile kvisFile
     private var IFile svgImage
     private var DataPool lastPool
-    var double scale = 1
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -85,10 +91,10 @@ class KVisView extends ViewPart {
     override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
-
+        SimulationManager.addListener(simulationListener)
         // Create canvas
         createCanvas(parent)
-
+ 
         // Create menu and toolbars.
         createMenu()
         createToolbar()
@@ -116,17 +122,17 @@ class KVisView extends ViewPart {
             val model = ModelImporter.load(file)
             if (model != null) {
                 if (model instanceof Visualization) {
+                    kvisConfig = model
                     lastPool = null
                     kvisFile = file
+                    saveUsedKvisFile(kvisFile)
                     updateAfterRendering = true
                     // Load image
                     val project = file.project
-                    val imagePath = model.image
+                    val imagePath = kvisConfig.image
                     svgImage = project.getFile(imagePath)
                     canvas.setSVGFile(svgImage)
     
-                    // Load animations
-                    createAnimationHandlers(model)    
                     // Register resource change listener for the files
                     registerResourceChangeListener(file, svgImage)
                 }
@@ -136,8 +142,16 @@ class KVisView extends ViewPart {
         }
     }
     
+    private def void createInteractionHandlers(Visualization model) {
+        interactionHandlers.clear
+        for(interaction : model.interactions) {
+            val interactionHandler = new InteractionHandler(interaction)
+            interactionHandlers.add(interactionHandler)
+        }
+    }
+    
     private def void createAnimationHandlers(Visualization model) {
-        animationHandlers.clear()
+        animationHandlers.clear
         for (element : model.elements) {
             for (animation : element.animations) {
                 var AnimationHandler handler
@@ -177,6 +191,23 @@ class KVisView extends ViewPart {
         }
     }
 
+    private def void saveUsedKvisFile(IFile file) {
+        val prefs = InstanceScope.INSTANCE.getNode(KVisUiModule.PLUGIN_ID)
+        prefs.put(KVisUiModule.LAST_KVIS_FILE, file?.fullPath.toOSString)
+    }
+
+    public def void loadLastKvisFile() {
+        val prefs = InstanceScope.INSTANCE.getNode(KVisUiModule.PLUGIN_ID)
+        val path = prefs.get(KVisUiModule.LAST_KVIS_FILE, "")
+        if(!path.isNullOrEmpty) {
+            val workspaceRoot = ResourcesPlugin.workspace.root
+            val file = workspaceRoot.findMember(path)
+            if(file != null && file.exists && file.type == IResource.FILE){
+                loadFile(file as IFile)
+            }            
+        }
+    }
+
     private def void saveSVGDocument() {
         // If no image was loaded then there is no image to be saved
         if(kvisFile == null || svgImage == null) {
@@ -208,7 +239,7 @@ class KVisView extends ViewPart {
         canvas = new KVisCanvas(parent, SWT.NONE, false)
         
         // Zoom in/out via mouse wheel
-        canvas.svgCanvas.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+        canvas.svgCanvas.addMouseWheelListener(new MouseWheelListener() {
             override mouseWheelMoved(MouseWheelEvent e) {
                 val at = canvas.svgCanvas.renderingTransform
                 val direction = Math.signum(e.wheelRotation)
@@ -220,6 +251,30 @@ class KVisView extends ViewPart {
                 canvas.svgCanvas.setRenderingTransform(at, true)
             }
         })
+
+        canvas.svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderListener() {
+            
+            override documentLoadingCancelled(SVGDocumentLoaderEvent event) {
+            }
+            
+            override documentLoadingCompleted(SVGDocumentLoaderEvent event) {
+                // Now that the document is loaded,
+                // we can configure the animation and interactions from the kvis file.
+                try {
+                    createAnimationHandlers(kvisConfig)
+                    createInteractionHandlers(kvisConfig)
+                } catch (Exception e) {
+                    showError(e)
+                }
+            }
+            
+            override documentLoadingFailed(SVGDocumentLoaderEvent event) {
+            }
+            
+            override documentLoadingStarted(SVGDocumentLoaderEvent event) {
+            }
+            
+            })
 
         // Add load listener to update immediately in running simulation when changing visualization config.
         canvas.svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter(){
@@ -267,7 +322,7 @@ class KVisView extends ViewPart {
 
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(new Action("Show Controls") {
+        mgr.add(new KVisViewToolbarAction("Show Controls", "help.png") {
             override run() {
                 val title = "Controls for the Simulation Visualization View"
                 val message = "Shift + Mouse Drag : Move\n"
@@ -278,17 +333,21 @@ class KVisView extends ViewPart {
                 dialog.open
             }
         })
-        mgr.add(new Action("Save Image") {
+        mgr.add(new KVisViewToolbarAction("Export Image", "saveFile.png") {
             override run() {
                 saveSVGDocument
             }
         })
-        mgr.add(new Action("Refresh") {
+        mgr.add(new KVisViewToolbarAction("Reload", "refresh.png") {
             override run() {
-                reload()
+                if(kvisFile != null && svgImage != null) {
+                    reload()    
+                } else {
+                    loadLastKvisFile()
+                }
             }
         })
-        mgr.add(new Action("Open KVis File") {
+        mgr.add(new KVisViewToolbarAction("Open KVis File", "openFile.png") {
             override run() {
                 val rootElement = ResourcesPlugin.getWorkspace().getRoot()
 
@@ -307,20 +366,34 @@ class KVisView extends ViewPart {
     }
 
     public def void update(DataPool pool) {
-        // Make all changes to the svg in the update manager.
-        // Otherwise the svg canvas is not updated properly.
-        lastPool = pool
-        canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
-            override run() {
-                try {
-                    for (animation : animationHandlers) {
-                        animation.apply(pool)
-                    }    
-                } catch (Exception e) {
-                    showError(e)
-                }
+        if(kvisFile == null && svgImage == null) {
+            return
+        }
+        
+        // If there is no pool (simulation was stopped), then return to original state
+        if(pool == null) {
+            reload
+        } else {
+            // Execute interactions if needed
+            for(interaction : interactionHandlers) {
+                interaction.apply(pool)
             }
-        })
+            
+            // Make all changes to the svg in the update manager.
+            // Otherwise the svg canvas is not updated properly.
+            lastPool = pool
+            canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
+                override run() {
+                    try {
+                        for (animation : animationHandlers) {
+                            animation.apply(pool)
+                        }    
+                    } catch (Exception e) {
+                        showError(e)
+                    }
+                }
+            })
+        }
     }
     
     private def void showError(Exception e) {
@@ -336,5 +409,19 @@ class KVisView extends ViewPart {
         }
         val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
         StatusManager.getManager().handle(s, StatusManager.SHOW);
+    }
+    
+    private static def SimulationListener createSimulationListener() {
+        val listener = new SimulationListener() {
+            override update(SimulationEvent e) {
+                // Execute in UI thread
+                Display.getDefault().asyncExec(new Runnable() {
+                    override void run() {
+                        KVisView.instance?.update(SimulationManager.instance?.currentPool)
+                    }
+                });
+            }
+        }
+        return listener
     }
 }

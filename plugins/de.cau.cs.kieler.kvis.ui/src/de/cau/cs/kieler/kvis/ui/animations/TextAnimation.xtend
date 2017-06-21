@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
-import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.simulation.core.DataPool
 
 /**
@@ -21,7 +20,7 @@ import de.cau.cs.kieler.simulation.core.DataPool
  *
  */
 class TextAnimation extends AnimationHandler {
-    var float fontSize = -1
+    var double fontSize = -1
     var String fontFamily
     var String text
     
@@ -33,13 +32,13 @@ class TextAnimation extends AnimationHandler {
     private def void initialize() {
         // Read attribute values
         for(attributeMapping : animation.attributeMappings) {
-            val literal = attributeMapping.literal.removeQuotes
+            val literal = attributeMapping.literal
             if(literal != null) {
                 val attributeName = attributeMapping.attribute
                 switch(attributeName) {
-                    case "fontSize" : fontSize = Float.valueOf(literal)
-                    case "fontFamily" : fontFamily = literal
-                    case "text" : text = literal
+                    case "fontSize" : fontSize = literal.primitiveValue.doubleValue
+                    case "fontFamily" : fontFamily = literal.primitiveValue.toString
+                    case "text" : text = literal.primitiveValue.toString
                     default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
                         + "Handled attributes are:\n"
                         + "text, fontSize, fontFamily"
@@ -53,14 +52,14 @@ class TextAnimation extends AnimationHandler {
         return "text"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool) as Double
+        val value = variableValue
         
         // Get mapped value
-        val textValue = animation.getAttribute("text").getMappedValue(value)
-        if(textValue != null) {
-            text = textValue
+        val newText = animation.getAttribute("text").getMappedValue(value)
+        if(newText != null) {
+            text = newText.toString
         }
         
         // Apply attributes to svg element

@@ -21,9 +21,9 @@ import org.w3c.dom.svg.SVGLocatable
  *
  */
 class RotateAnimation extends AnimationHandler {
-    var float angle
-    var float anchorX
-    var float anchorY
+    var double angle
+    var double anchorX
+    var double anchorY
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
@@ -33,16 +33,16 @@ class RotateAnimation extends AnimationHandler {
     private def void initialize() {
         // Read attribute values
         for(attributeMapping : animation.attributeMappings) {
-            val literal = attributeMapping.literal.removeQuotes
+            val literal = attributeMapping.literal
             if(literal != null) {
                 val attributeName = attributeMapping.attribute
                 switch(attributeName) {
-                    case "angle" : angle = Float.valueOf(literal)
-                    case "anchorX" : anchorX = Float.valueOf(literal)
-                    case "anchorY" : anchorY = Float.valueOf(literal)
+                    case "angle" : angle = literal.primitiveValue.doubleValue
+                    case "anchorX" : anchorX = literal.primitiveValue.doubleValue
+                    case "anchorY" : anchorY = literal.primitiveValue.doubleValue
                     default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
                         + "Handled attributes are:\n"
-                        + "anchorX, anchorY"
+                        + "angle, anchorX, anchorY"
                     )
                 }
             }
@@ -53,14 +53,14 @@ class RotateAnimation extends AnimationHandler {
         return "rotate"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool) as Double
+        val value = variableValue as Double
         
         // Get mapped value
-        val angleString = animation.getAttribute("angle").getMappedValue(value)
-        if(angleString != null) {
-            angle = Float.valueOf(angleString)
+        val newAngle = animation.getAttribute("angle").getMappedValue(value)
+        if(newAngle != null) {
+            angle = newAngle as Double
         }
         
         // Compute position
@@ -71,7 +71,6 @@ class RotateAnimation extends AnimationHandler {
             // Set new transform
             var rotation =  angle + "," + (box.x+anchorX*box.width) + "," + (box.y+anchorY*box.width)
             elem.setAttributeFunction("transform", "rotate", rotation)
-            println(elem.getAttribute("transform"))
         } else {
             throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")
         }

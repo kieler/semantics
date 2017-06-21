@@ -21,8 +21,8 @@ import org.w3c.dom.svg.SVGLocatable
  *
  */
 class MoveAnimation extends AnimationHandler {
-    var float posX
-    var float posY
+    var double posX
+    var double posY
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
@@ -49,18 +49,18 @@ class MoveAnimation extends AnimationHandler {
         return "move"
     }
     
-    override apply(DataPool pool) {
+    override doApply(DataPool pool) {
         val elem = findElement()
-        val value = getVariableValue(pool) as Double
+        val value = variableValue as Double
         
         // Get mapped value
-        val posXString = animation.getAttribute("x").getMappedValue(value)
-        val posYString = animation.getAttribute("y").getMappedValue(value)
-        if(posXString != null) {
-            posX = Float.valueOf(posXString)
+        val newX = animation.getAttribute("x").getMappedValue(value)
+        val newY = animation.getAttribute("y").getMappedValue(value)
+        if(newX != null) {
+            posX = newX.doubleValue
         }
-        if(posYString != null) {
-            posY = Float.valueOf(posYString)
+        if(newY != null) {
+            posY = newY.doubleValue
         }
 
         // Compute position

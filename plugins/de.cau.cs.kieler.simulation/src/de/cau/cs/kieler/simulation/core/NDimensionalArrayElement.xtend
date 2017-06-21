@@ -45,4 +45,26 @@ class NDimensionalArrayElement implements Cloneable {
         } 
         return null
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override toString() {
+        return value.class.name + index.join("[", ",", "]", [it.toString])
+    }
+    
+    /**
+     * Two NDimensionalArrayElements are equal if the value they hold are equal.
+     */
+    override equals(Object other) {
+        if(other != null) {
+            if(other instanceof NDimensionalArrayElement) {
+                if(other.value == value) {
+                    return true
+                }
+                return other.value.equals(value)
+            }
+        }
+        return false
+    }
 }

@@ -4,6 +4,7 @@ package de.cau.cs.kieler.kvis.kvis;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -85,13 +86,22 @@ public interface KvisPackage extends EPackage
   int VISUALIZATION__ELEMENTS = 1;
 
   /**
+   * The feature id for the '<em><b>Interactions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VISUALIZATION__INTERACTIONS = 2;
+
+  /**
    * The number of structural features of the '<em>Visualization</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION_FEATURE_COUNT = 2;
+  int VISUALIZATION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ElementImpl <em>Element</em>}' class.
@@ -131,6 +141,135 @@ public interface KvisPackage extends EPackage
   int ELEMENT_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.InteractionImpl <em>Interaction</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.impl.InteractionImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getInteraction()
+   * @generated
+   */
+  int INTERACTION = 2;
+
+  /**
+   * The feature id for the '<em><b>Event</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERACTION__EVENT = 0;
+
+  /**
+   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERACTION__ACTIONS = 1;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERACTION__CONDITION = 2;
+
+  /**
+   * The number of structural features of the '<em>Interaction</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERACTION_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.EventImpl <em>Event</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.impl.EventImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getEvent()
+   * @generated
+   */
+  int EVENT = 3;
+
+  /**
+   * The feature id for the '<em><b>Event</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT__EVENT = 0;
+
+  /**
+   * The feature id for the '<em><b>Element</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT__ELEMENT = 1;
+
+  /**
+   * The number of structural features of the '<em>Event</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ActionImpl <em>Action</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.impl.ActionImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAction()
+   * @generated
+   */
+  int ACTION = 4;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__VARIABLE = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__VALUE = 1;
+
+  /**
+   * The feature id for the '<em><b>Operation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__OPERATION = 2;
+
+  /**
+   * The number of structural features of the '<em>Action</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AnimationImpl <em>Animation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -138,7 +277,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAnimation()
    * @generated
    */
-  int ANIMATION = 2;
+  int ANIMATION = 5;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -193,7 +332,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAttributeMapping()
    * @generated
    */
-  int ATTRIBUTE_MAPPING = 3;
+  int ATTRIBUTE_MAPPING = 6;
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' attribute.
@@ -205,7 +344,7 @@ public interface KvisPackage extends EPackage
   int ATTRIBUTE_MAPPING__ATTRIBUTE = 0;
 
   /**
-   * The feature id for the '<em><b>Literal</b></em>' attribute.
+   * The feature id for the '<em><b>Literal</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -239,7 +378,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getMapping()
    * @generated
    */
-  int MAPPING = 4;
+  int MAPPING = 7;
 
   /**
    * The feature id for the '<em><b>Variable Domain</b></em>' containment reference.
@@ -269,6 +408,71 @@ public interface KvisPackage extends EPackage
   int MAPPING_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ConditionImpl <em>Condition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.impl.ConditionImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getCondition()
+   * @generated
+   */
+  int CONDITION = 8;
+
+  /**
+   * The number of structural features of the '<em>Condition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITION_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ComparisonImpl <em>Comparison</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.impl.ComparisonImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getComparison()
+   * @generated
+   */
+  int COMPARISON = 9;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON__LEFT = CONDITION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Relation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON__RELATION = CONDITION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON__RIGHT = CONDITION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Comparison</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.DomainImpl <em>Domain</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -276,10 +480,10 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getDomain()
    * @generated
    */
-  int DOMAIN = 5;
+  int DOMAIN = 10;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -313,10 +517,10 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getInterval()
    * @generated
    */
-  int INTERVAL = 6;
+  int INTERVAL = 11;
 
   /**
-   * The feature id for the '<em><b>From</b></em>' attribute.
+   * The feature id for the '<em><b>From</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -325,7 +529,7 @@ public interface KvisPackage extends EPackage
   int INTERVAL__FROM = 0;
 
   /**
-   * The feature id for the '<em><b>To</b></em>' attribute.
+   * The feature id for the '<em><b>To</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -350,7 +554,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVariableReference()
    * @generated
    */
-  int VARIABLE_REFERENCE = 7;
+  int VARIABLE_REFERENCE = 12;
 
   /**
    * The feature id for the '<em><b>Model</b></em>' containment reference.
@@ -396,7 +600,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getModelReference()
    * @generated
    */
-  int MODEL_REFERENCE = 8;
+  int MODEL_REFERENCE = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -415,6 +619,100 @@ public interface KvisPackage extends EPackage
    * @ordered
    */
   int MODEL_REFERENCE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.BooleanOperatorImpl <em>Boolean Operator</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.impl.BooleanOperatorImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getBooleanOperator()
+   * @generated
+   */
+  int BOOLEAN_OPERATOR = 14;
+
+  /**
+   * The feature id for the '<em><b>AND</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_OPERATOR__AND = 0;
+
+  /**
+   * The number of structural features of the '<em>Boolean Operator</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_OPERATOR_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl <em>And Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAndExpression()
+   * @generated
+   */
+  int AND_EXPRESSION = 15;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_EXPRESSION__LEFT = CONDITION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_EXPRESSION__OPERATOR = CONDITION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_EXPRESSION__RIGHT = CONDITION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>And Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_EXPRESSION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.DOMEvent <em>DOM Event</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.DOMEvent
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getDOMEvent()
+   * @generated
+   */
+  int DOM_EVENT = 16;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.SimulationOperation <em>Simulation Operation</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kvis.kvis.SimulationOperation
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSimulationOperation()
+   * @generated
+   */
+  int SIMULATION_OPERATION = 17;
 
 
   /**
@@ -450,6 +748,17 @@ public interface KvisPackage extends EPackage
   EReference getVisualization_Elements();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions <em>Interactions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Interactions</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions()
+   * @see #getVisualization()
+   * @generated
+   */
+  EReference getVisualization_Interactions();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Element <em>Element</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -480,6 +789,124 @@ public interface KvisPackage extends EPackage
    * @generated
    */
   EReference getElement_Animations();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Interaction <em>Interaction</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Interaction</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Interaction
+   * @generated
+   */
+  EClass getInteraction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Interaction#getEvent <em>Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Event</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Interaction#getEvent()
+   * @see #getInteraction()
+   * @generated
+   */
+  EReference getInteraction_Event();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.Interaction#getActions <em>Actions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Actions</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Interaction#getActions()
+   * @see #getInteraction()
+   * @generated
+   */
+  EReference getInteraction_Actions();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Interaction#getCondition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Condition</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Interaction#getCondition()
+   * @see #getInteraction()
+   * @generated
+   */
+  EReference getInteraction_Condition();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Event <em>Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Event</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Event
+   * @generated
+   */
+  EClass getEvent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Event#getEvent <em>Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Event</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Event#getEvent()
+   * @see #getEvent()
+   * @generated
+   */
+  EAttribute getEvent_Event();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Event#getElement <em>Element</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Element</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Event#getElement()
+   * @see #getEvent()
+   * @generated
+   */
+  EAttribute getEvent_Element();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Action <em>Action</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Action</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Action
+   * @generated
+   */
+  EClass getAction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Action#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Action#getVariable()
+   * @see #getAction()
+   * @generated
+   */
+  EReference getAction_Variable();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Action#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Action#getValue()
+   * @see #getAction()
+   * @generated
+   */
+  EReference getAction_Value();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Action#getOperation <em>Operation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Operation</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Action#getOperation()
+   * @see #getAction()
+   * @generated
+   */
+  EAttribute getAction_Operation();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Animation <em>Animation</em>}'.
@@ -557,15 +984,15 @@ public interface KvisPackage extends EPackage
   EAttribute getAttributeMapping_Attribute();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.AttributeMapping#getLiteral <em>Literal</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.AttributeMapping#getLiteral <em>Literal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Literal</em>'.
+   * @return the meta object for the containment reference '<em>Literal</em>'.
    * @see de.cau.cs.kieler.kvis.kvis.AttributeMapping#getLiteral()
    * @see #getAttributeMapping()
    * @generated
    */
-  EAttribute getAttributeMapping_Literal();
+  EReference getAttributeMapping_Literal();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.AttributeMapping#getMappings <em>Mappings</em>}'.
@@ -611,6 +1038,59 @@ public interface KvisPackage extends EPackage
   EReference getMapping_AttributeDomain();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Condition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Condition</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Condition
+   * @generated
+   */
+  EClass getCondition();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Comparison <em>Comparison</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Comparison</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Comparison
+   * @generated
+   */
+  EClass getComparison();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Comparison#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Comparison#getLeft()
+   * @see #getComparison()
+   * @generated
+   */
+  EReference getComparison_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Comparison#getRelation <em>Relation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Relation</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Comparison#getRelation()
+   * @see #getComparison()
+   * @generated
+   */
+  EAttribute getComparison_Relation();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Comparison#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.Comparison#getRight()
+   * @see #getComparison()
+   * @generated
+   */
+  EReference getComparison_Right();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Domain <em>Domain</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -621,15 +1101,15 @@ public interface KvisPackage extends EPackage
   EClass getDomain();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Domain#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Domain#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
+   * @return the meta object for the containment reference '<em>Value</em>'.
    * @see de.cau.cs.kieler.kvis.kvis.Domain#getValue()
    * @see #getDomain()
    * @generated
    */
-  EAttribute getDomain_Value();
+  EReference getDomain_Value();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Domain#getRange <em>Range</em>}'.
@@ -653,26 +1133,26 @@ public interface KvisPackage extends EPackage
   EClass getInterval();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Interval#getFrom <em>From</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Interval#getFrom <em>From</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>From</em>'.
+   * @return the meta object for the containment reference '<em>From</em>'.
    * @see de.cau.cs.kieler.kvis.kvis.Interval#getFrom()
    * @see #getInterval()
    * @generated
    */
-  EAttribute getInterval_From();
+  EReference getInterval_From();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Interval#getTo <em>To</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Interval#getTo <em>To</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>To</em>'.
+   * @return the meta object for the containment reference '<em>To</em>'.
    * @see de.cau.cs.kieler.kvis.kvis.Interval#getTo()
    * @see #getInterval()
    * @generated
    */
-  EAttribute getInterval_To();
+  EReference getInterval_To();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.VariableReference <em>Variable Reference</em>}'.
@@ -739,6 +1219,90 @@ public interface KvisPackage extends EPackage
   EAttribute getModelReference_Name();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.BooleanOperator <em>Boolean Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Boolean Operator</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.BooleanOperator
+   * @generated
+   */
+  EClass getBooleanOperator();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.BooleanOperator#getAND <em>AND</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>AND</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.BooleanOperator#getAND()
+   * @see #getBooleanOperator()
+   * @generated
+   */
+  EAttribute getBooleanOperator_AND();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.AndExpression <em>And Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>And Expression</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression
+   * @generated
+   */
+  EClass getAndExpression();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression#getLeft()
+   * @see #getAndExpression()
+   * @generated
+   */
+  EReference getAndExpression_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getOperator <em>Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Operator</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression#getOperator()
+   * @see #getAndExpression()
+   * @generated
+   */
+  EAttribute getAndExpression_Operator();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.AndExpression#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.AndExpression#getRight()
+   * @see #getAndExpression()
+   * @generated
+   */
+  EReference getAndExpression_Right();
+
+  /**
+   * Returns the meta object for enum '{@link de.cau.cs.kieler.kvis.kvis.DOMEvent <em>DOM Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>DOM Event</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.DOMEvent
+   * @generated
+   */
+  EEnum getDOMEvent();
+
+  /**
+   * Returns the meta object for enum '{@link de.cau.cs.kieler.kvis.kvis.SimulationOperation <em>Simulation Operation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Simulation Operation</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.SimulationOperation
+   * @generated
+   */
+  EEnum getSimulationOperation();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -788,6 +1352,14 @@ public interface KvisPackage extends EPackage
     EReference VISUALIZATION__ELEMENTS = eINSTANCE.getVisualization_Elements();
 
     /**
+     * The meta object literal for the '<em><b>Interactions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VISUALIZATION__INTERACTIONS = eINSTANCE.getVisualization_Interactions();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ElementImpl <em>Element</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -812,6 +1384,100 @@ public interface KvisPackage extends EPackage
      * @generated
      */
     EReference ELEMENT__ANIMATIONS = eINSTANCE.getElement_Animations();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.InteractionImpl <em>Interaction</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.impl.InteractionImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getInteraction()
+     * @generated
+     */
+    EClass INTERACTION = eINSTANCE.getInteraction();
+
+    /**
+     * The meta object literal for the '<em><b>Event</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference INTERACTION__EVENT = eINSTANCE.getInteraction_Event();
+
+    /**
+     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference INTERACTION__ACTIONS = eINSTANCE.getInteraction_Actions();
+
+    /**
+     * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference INTERACTION__CONDITION = eINSTANCE.getInteraction_Condition();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.EventImpl <em>Event</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.impl.EventImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getEvent()
+     * @generated
+     */
+    EClass EVENT = eINSTANCE.getEvent();
+
+    /**
+     * The meta object literal for the '<em><b>Event</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EVENT__EVENT = eINSTANCE.getEvent_Event();
+
+    /**
+     * The meta object literal for the '<em><b>Element</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EVENT__ELEMENT = eINSTANCE.getEvent_Element();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ActionImpl <em>Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.impl.ActionImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAction()
+     * @generated
+     */
+    EClass ACTION = eINSTANCE.getAction();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACTION__VARIABLE = eINSTANCE.getAction_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACTION__VALUE = eINSTANCE.getAction_Value();
+
+    /**
+     * The meta object literal for the '<em><b>Operation</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ACTION__OPERATION = eINSTANCE.getAction_Operation();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AnimationImpl <em>Animation</em>}' class.
@@ -874,12 +1540,12 @@ public interface KvisPackage extends EPackage
     EAttribute ATTRIBUTE_MAPPING__ATTRIBUTE = eINSTANCE.getAttributeMapping_Attribute();
 
     /**
-     * The meta object literal for the '<em><b>Literal</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Literal</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ATTRIBUTE_MAPPING__LITERAL = eINSTANCE.getAttributeMapping_Literal();
+    EReference ATTRIBUTE_MAPPING__LITERAL = eINSTANCE.getAttributeMapping_Literal();
 
     /**
      * The meta object literal for the '<em><b>Mappings</b></em>' containment reference list feature.
@@ -916,6 +1582,50 @@ public interface KvisPackage extends EPackage
     EReference MAPPING__ATTRIBUTE_DOMAIN = eINSTANCE.getMapping_AttributeDomain();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ConditionImpl <em>Condition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.impl.ConditionImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getCondition()
+     * @generated
+     */
+    EClass CONDITION = eINSTANCE.getCondition();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ComparisonImpl <em>Comparison</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.impl.ComparisonImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getComparison()
+     * @generated
+     */
+    EClass COMPARISON = eINSTANCE.getComparison();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPARISON__LEFT = eINSTANCE.getComparison_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Relation</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPARISON__RELATION = eINSTANCE.getComparison_Relation();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPARISON__RIGHT = eINSTANCE.getComparison_Right();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.DomainImpl <em>Domain</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -926,12 +1636,12 @@ public interface KvisPackage extends EPackage
     EClass DOMAIN = eINSTANCE.getDomain();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute DOMAIN__VALUE = eINSTANCE.getDomain_Value();
+    EReference DOMAIN__VALUE = eINSTANCE.getDomain_Value();
 
     /**
      * The meta object literal for the '<em><b>Range</b></em>' containment reference feature.
@@ -952,20 +1662,20 @@ public interface KvisPackage extends EPackage
     EClass INTERVAL = eINSTANCE.getInterval();
 
     /**
-     * The meta object literal for the '<em><b>From</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>From</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute INTERVAL__FROM = eINSTANCE.getInterval_From();
+    EReference INTERVAL__FROM = eINSTANCE.getInterval_From();
 
     /**
-     * The meta object literal for the '<em><b>To</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>To</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute INTERVAL__TO = eINSTANCE.getInterval_To();
+    EReference INTERVAL__TO = eINSTANCE.getInterval_To();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
@@ -1018,6 +1728,78 @@ public interface KvisPackage extends EPackage
      * @generated
      */
     EAttribute MODEL_REFERENCE__NAME = eINSTANCE.getModelReference_Name();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.BooleanOperatorImpl <em>Boolean Operator</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.impl.BooleanOperatorImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getBooleanOperator()
+     * @generated
+     */
+    EClass BOOLEAN_OPERATOR = eINSTANCE.getBooleanOperator();
+
+    /**
+     * The meta object literal for the '<em><b>AND</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BOOLEAN_OPERATOR__AND = eINSTANCE.getBooleanOperator_AND();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl <em>And Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAndExpression()
+     * @generated
+     */
+    EClass AND_EXPRESSION = eINSTANCE.getAndExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AND_EXPRESSION__LEFT = eINSTANCE.getAndExpression_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AND_EXPRESSION__OPERATOR = eINSTANCE.getAndExpression_Operator();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AND_EXPRESSION__RIGHT = eINSTANCE.getAndExpression_Right();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.DOMEvent <em>DOM Event</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.DOMEvent
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getDOMEvent()
+     * @generated
+     */
+    EEnum DOM_EVENT = eINSTANCE.getDOMEvent();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.SimulationOperation <em>Simulation Operation</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kvis.kvis.SimulationOperation
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSimulationOperation()
+     * @generated
+     */
+    EEnum SIMULATION_OPERATION = eINSTANCE.getSimulationOperation();
 
   }
 

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.kvis.kvis.impl;
 import de.cau.cs.kieler.kvis.kvis.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -66,15 +67,60 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
     {
       case KvisPackage.VISUALIZATION: return createVisualization();
       case KvisPackage.ELEMENT: return createElement();
+      case KvisPackage.INTERACTION: return createInteraction();
+      case KvisPackage.EVENT: return createEvent();
+      case KvisPackage.ACTION: return createAction();
       case KvisPackage.ANIMATION: return createAnimation();
       case KvisPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
       case KvisPackage.MAPPING: return createMapping();
+      case KvisPackage.CONDITION: return createCondition();
+      case KvisPackage.COMPARISON: return createComparison();
       case KvisPackage.DOMAIN: return createDomain();
       case KvisPackage.INTERVAL: return createInterval();
       case KvisPackage.VARIABLE_REFERENCE: return createVariableReference();
       case KvisPackage.MODEL_REFERENCE: return createModelReference();
+      case KvisPackage.BOOLEAN_OPERATOR: return createBooleanOperator();
+      case KvisPackage.AND_EXPRESSION: return createAndExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case KvisPackage.DOM_EVENT:
+        return createDOMEventFromString(eDataType, initialValue);
+      case KvisPackage.SIMULATION_OPERATION:
+        return createSimulationOperationFromString(eDataType, initialValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case KvisPackage.DOM_EVENT:
+        return convertDOMEventToString(eDataType, instanceValue);
+      case KvisPackage.SIMULATION_OPERATION:
+        return convertSimulationOperationToString(eDataType, instanceValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -98,6 +144,39 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
   {
     ElementImpl element = new ElementImpl();
     return element;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Interaction createInteraction()
+  {
+    InteractionImpl interaction = new InteractionImpl();
+    return interaction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Event createEvent()
+  {
+    EventImpl event = new EventImpl();
+    return event;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Action createAction()
+  {
+    ActionImpl action = new ActionImpl();
+    return action;
   }
 
   /**
@@ -131,6 +210,28 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
   {
     MappingImpl mapping = new MappingImpl();
     return mapping;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Condition createCondition()
+  {
+    ConditionImpl condition = new ConditionImpl();
+    return condition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Comparison createComparison()
+  {
+    ComparisonImpl comparison = new ComparisonImpl();
+    return comparison;
   }
 
   /**
@@ -175,6 +276,72 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
   {
     ModelReferenceImpl modelReference = new ModelReferenceImpl();
     return modelReference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BooleanOperator createBooleanOperator()
+  {
+    BooleanOperatorImpl booleanOperator = new BooleanOperatorImpl();
+    return booleanOperator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AndExpression createAndExpression()
+  {
+    AndExpressionImpl andExpression = new AndExpressionImpl();
+    return andExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DOMEvent createDOMEventFromString(EDataType eDataType, String initialValue)
+  {
+    DOMEvent result = DOMEvent.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertDOMEventToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SimulationOperation createSimulationOperationFromString(EDataType eDataType, String initialValue)
+  {
+    SimulationOperation result = SimulationOperation.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertSimulationOperationToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

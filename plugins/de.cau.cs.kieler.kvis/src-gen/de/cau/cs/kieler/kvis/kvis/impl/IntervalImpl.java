@@ -2,12 +2,16 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
+import de.cau.cs.kieler.kexpressions.Value;
+
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -29,44 +33,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class IntervalImpl extends MinimalEObjectImpl.Container implements Interval
 {
   /**
-   * The default value of the '{@link #getFrom() <em>From</em>}' attribute.
+   * The cached value of the '{@link #getFrom() <em>From</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getFrom()
    * @generated
    * @ordered
    */
-  protected static final int FROM_EDEFAULT = 0;
+  protected Value from;
 
   /**
-   * The cached value of the '{@link #getFrom() <em>From</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getFrom()
-   * @generated
-   * @ordered
-   */
-  protected int from = FROM_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getTo() <em>To</em>}' attribute.
+   * The cached value of the '{@link #getTo() <em>To</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getTo()
    * @generated
    * @ordered
    */
-  protected static final int TO_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getTo() <em>To</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTo()
-   * @generated
-   * @ordered
-   */
-  protected int to = TO_EDEFAULT;
+  protected Value to;
 
   /**
    * <!-- begin-user-doc -->
@@ -94,7 +78,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getFrom()
+  public Value getFrom()
   {
     return from;
   }
@@ -104,12 +88,16 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFrom(int newFrom)
+  public NotificationChain basicSetFrom(Value newFrom, NotificationChain msgs)
   {
-    int oldFrom = from;
+    Value oldFrom = from;
     from = newFrom;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__FROM, oldFrom, from));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__FROM, oldFrom, newFrom);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -117,7 +105,28 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getTo()
+  public void setFrom(Value newFrom)
+  {
+    if (newFrom != from)
+    {
+      NotificationChain msgs = null;
+      if (from != null)
+        msgs = ((InternalEObject)from).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KvisPackage.INTERVAL__FROM, null, msgs);
+      if (newFrom != null)
+        msgs = ((InternalEObject)newFrom).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KvisPackage.INTERVAL__FROM, null, msgs);
+      msgs = basicSetFrom(newFrom, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__FROM, newFrom, newFrom));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Value getTo()
   {
     return to;
   }
@@ -127,12 +136,55 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTo(int newTo)
+  public NotificationChain basicSetTo(Value newTo, NotificationChain msgs)
   {
-    int oldTo = to;
+    Value oldTo = to;
     to = newTo;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__TO, oldTo, to));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__TO, oldTo, newTo);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTo(Value newTo)
+  {
+    if (newTo != to)
+    {
+      NotificationChain msgs = null;
+      if (to != null)
+        msgs = ((InternalEObject)to).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KvisPackage.INTERVAL__TO, null, msgs);
+      if (newTo != null)
+        msgs = ((InternalEObject)newTo).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KvisPackage.INTERVAL__TO, null, msgs);
+      msgs = basicSetTo(newTo, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KvisPackage.INTERVAL__TO, newTo, newTo));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case KvisPackage.INTERVAL__FROM:
+        return basicSetFrom(null, msgs);
+      case KvisPackage.INTERVAL__TO:
+        return basicSetTo(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -164,10 +216,10 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     switch (featureID)
     {
       case KvisPackage.INTERVAL__FROM:
-        setFrom((Integer)newValue);
+        setFrom((Value)newValue);
         return;
       case KvisPackage.INTERVAL__TO:
-        setTo((Integer)newValue);
+        setTo((Value)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -184,10 +236,10 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     switch (featureID)
     {
       case KvisPackage.INTERVAL__FROM:
-        setFrom(FROM_EDEFAULT);
+        setFrom((Value)null);
         return;
       case KvisPackage.INTERVAL__TO:
-        setTo(TO_EDEFAULT);
+        setTo((Value)null);
         return;
     }
     super.eUnset(featureID);
@@ -204,30 +256,11 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     switch (featureID)
     {
       case KvisPackage.INTERVAL__FROM:
-        return from != FROM_EDEFAULT;
+        return from != null;
       case KvisPackage.INTERVAL__TO:
-        return to != TO_EDEFAULT;
+        return to != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (from: ");
-    result.append(from);
-    result.append(", to: ");
-    result.append(to);
-    result.append(')');
-    return result.toString();
   }
 
 } //IntervalImpl

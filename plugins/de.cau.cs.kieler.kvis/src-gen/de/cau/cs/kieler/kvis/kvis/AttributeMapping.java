@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
+import de.cau.cs.kieler.kexpressions.Value;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -53,30 +55,30 @@ public interface AttributeMapping extends EObject
   void setAttribute(String value);
 
   /**
-   * Returns the value of the '<em><b>Literal</b></em>' attribute.
+   * Returns the value of the '<em><b>Literal</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Literal</em>' attribute isn't clear,
+   * If the meaning of the '<em>Literal</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Literal</em>' attribute.
-   * @see #setLiteral(String)
+   * @return the value of the '<em>Literal</em>' containment reference.
+   * @see #setLiteral(Value)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAttributeMapping_Literal()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getLiteral();
+  Value getLiteral();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AttributeMapping#getLiteral <em>Literal</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AttributeMapping#getLiteral <em>Literal</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Literal</em>' attribute.
+   * @param value the new value of the '<em>Literal</em>' containment reference.
    * @see #getLiteral()
    * @generated
    */
-  void setLiteral(String value);
+  void setLiteral(Value value);
 
   /**
    * Returns the value of the '<em><b>Mappings</b></em>' containment reference list.
