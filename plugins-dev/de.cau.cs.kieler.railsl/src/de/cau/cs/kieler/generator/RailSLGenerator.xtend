@@ -554,6 +554,7 @@ class RailSLGenerator extends AbstractGenerator {
         fsa.generateFile('signals.ftl', generateSignalsSnippet())
         fsa.generateFile('tracks.ftl', generateTracksSnippet())
         fsa.generateFile('second.ftl', generateSecondSnippet())
+        fsa.generateFile('crossing.ftl', generateCrossingSnippet())
         fsa.generateFile('ControllerMain.ftl', generateMainSnippet())
     }
 
@@ -925,6 +926,9 @@ struct railway_hardware kicking;
 #define NUM_OF_POINTS 30
 #define NUM_OF_LIGHTS 24
 
+#define OPEN = 0
+#define CLOSED = 1 
+
 
 int main(int *argn, char *argv[]) {
 
@@ -938,6 +942,9 @@ int main(int *argn, char *argv[]) {
     
     // Variable to keep track of the last time second was true
     clock_t lastSecond = clock();
+
+    // variable to keep track of the crossing\'s current state
+    int crossing = CLOSED;
 
     while(1) {
     
@@ -1057,6 +1064,20 @@ ${outputs}
         ${varname} = false;
     </@>
 </#macro>'   
+    }
+
+    def String generateCrossingSnippet() {
+'<#-- C R O S S I N G -->
+<#macro crossing>
+    <@output>
+        // If the crossing\'s state has been updated this tick, set it accordingly
+        if (${varname} != crossing) {
+            setgate(railway, 0, ${varname});
+            setgate(railway, 1, ${varname});
+        }
+    </@>
+</#macro>
+'
     }
 
     /*****************************************************************************************
