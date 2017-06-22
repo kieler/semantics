@@ -20,6 +20,8 @@ import java.net.MalformedURLException
 import org.osgi.framework.Bundle
 
 /**
+ * Specified class loader for processor prototyping.
+ * 
  * @author ssm
  * @kieler.design 2013-05-23 proposed ssm
  * @kieler.rating 2013-05-23 proposed yellow

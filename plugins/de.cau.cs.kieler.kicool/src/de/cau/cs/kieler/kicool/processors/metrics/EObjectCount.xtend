@@ -16,6 +16,8 @@ import de.cau.cs.kieler.kicool.compilation.Metric
 import org.eclipse.emf.ecore.EObject
 
 /**
+ * Metric that measures differences in the eObject count.
+ * 
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  

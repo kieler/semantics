@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import org.eclipse.xtend.lib.annotations.Data
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
 
 /**
+ * Class for holding the data of on/off requests.
+ * 
  * @author ssm
  * @kieler.design 2017-06-19 proposed 
  * @kieler.rating 2017-06-19 proposed yellow

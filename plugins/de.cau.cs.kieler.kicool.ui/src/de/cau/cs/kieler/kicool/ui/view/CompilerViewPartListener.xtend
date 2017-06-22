@@ -18,11 +18,10 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.ui.part.EditorPart
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import org.eclipse.ui.IEditorPart
-import org.eclipse.ui.PlatformUI
 
 /**
+ * Own PartListener for the compilation view
+ * 
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 

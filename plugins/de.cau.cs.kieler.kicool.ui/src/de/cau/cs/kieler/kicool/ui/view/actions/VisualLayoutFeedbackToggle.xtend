@@ -24,7 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class VisualLayoutFeedbackToggle extends AbstractAction {
 
-    private static val VISUAL_LAYOUT_FEEDBACK_TOGGLE_ACTION_DEFAULT = true
+    private static val VISUAL_LAYOUT_FEEDBACK_TOGGLE_ACTION_DEFAULT = false
 
     /** The action for toggling debug mode. */
     @Accessors private IToolBarManager toolBar

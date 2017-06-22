@@ -13,11 +13,20 @@
 package de.cau.cs.kieler.kicool.compilation
 
 /**
+ * Status enum for processors.
+ * 
  * @author ssm
  * @kieler.design 2017-05-17 proposed
  * @kieler.rating 2017-05-17 proposed yellow  
  *
  */
 enum ProcessorStatus {
-    OK, WARNINGS, ERRORS    
+    /** Everything is ok */
+    OK, 
+    
+    /** The processor encountered some warnings. */
+    WARNINGS, 
+    
+    /** Errors were encountered during processing. */
+    ERRORS    
 }

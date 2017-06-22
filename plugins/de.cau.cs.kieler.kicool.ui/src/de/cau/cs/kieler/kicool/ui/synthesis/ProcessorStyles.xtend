@@ -27,10 +27,9 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
 import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
 import de.cau.cs.kieler.klighd.krendering.LineJoin
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 
 /**
- * Main diagram synthesis for SCCharts.
+ * User-defined KiCool synthesis styles
  * 
  * @author ssm
  * @kieler.design 2016-10-20 proposed 
@@ -40,7 +39,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensio
 class ProcessorStyles {
     
     @Inject extension KRenderingExtensions
-//    @Inject extension KContainerRenderingExtensions
 
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
     

@@ -16,6 +16,8 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 
 /**
+ * Test processor that does nothing.
+ * 
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
-import de.cau.cs.kieler.kicool.compilation.Compile
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.ImageDescriptor

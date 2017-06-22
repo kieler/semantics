@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.kicool.compilation.observer
 
 /**
+ * Abstract notification class, which holds the compilation context of the notification.
+ * 
  * @author ssm
  * @kieler.design 2017-05-18 proposed
  * @kieler.rating 2017-05-18 proposed yellow 
@@ -20,6 +22,4 @@ package de.cau.cs.kieler.kicool.compilation.observer
 @Data
 abstract class AbstractContextNotification {
     val de.cau.cs.kieler.kicool.compilation.CompilationContext compilationContext
-    
-    
 }

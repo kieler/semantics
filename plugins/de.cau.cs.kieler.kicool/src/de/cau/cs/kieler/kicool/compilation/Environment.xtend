@@ -20,12 +20,15 @@ import java.util.List
 import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 
 /**
+ * Class for a processor environment, which is basically a key value map with some convenient methods.
+ * 
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
 class Environment {
     
+    /* Environment keys */
     public static val MODEL = "model"
     public static val CONTEXT = "context"
     public static val META_PROCESSOR = "metaProcessor"
@@ -39,6 +42,7 @@ class Environment {
     public static val SNAPSHOTS = "snapshots"
     public static val ENABLED = "enabled"
         
+    /** Environment storage */
     @Accessors Map<String, Object> data
     
     new() {

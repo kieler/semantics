@@ -30,7 +30,11 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import com.google.inject.Guice
 
 /**
+ * Main class for the registration of systems and processors.
+ * 
  * @author ssm
+ * @kieler.design 2016-10-19 proposed 
+ * @kieler.rating 2016-10-19 proposed yellow
  *
  */
 class KiCoolRegistration {

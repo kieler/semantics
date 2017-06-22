@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.ui.progress.UIJob
 
 /**
+ * UI observer that is able to run inside the UI thread (even if the context is not).
+ * 
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 

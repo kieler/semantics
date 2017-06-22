@@ -39,10 +39,11 @@ import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 import org.eclipse.jface.action.MenuManager
-import org.eclipse.jface.action.Action
 import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
 
 /**
+ * The IMB Compiler View
+ * 
  * @author ssm
  * @kieler.design 2016-11-04 proposed
  * @kieler.rating 2016-11-04 proposed yellow 
@@ -59,9 +60,7 @@ class CompilerView extends DiagramViewPart {
     
     // Must be initialized in the view contributions. Hence, maybe null!
     @Accessors private var SystemSelectionManager systemSelectionManager = null
-//    @Accessors private var SmartSystemSelectionToggle smartSystemSelectionToggle = null
     @Accessors private var DeveloperToggle developerToggle = null
-//    @Accessors private var DebugToggle debugToggle = null
     @Accessors private var ForwardResultToggle forwardResultToggle = null
     @Accessors private var AutoCompileToggle autoCompileToggle = null
     @Accessors private var VisualLayoutFeedbackToggle visualLayoutFeedbackToggle = null
@@ -88,6 +87,7 @@ class CompilerView extends DiagramViewPart {
         partListener = new CompilerViewPartListener(this, parent)
     }
     
+    /* Workaround for the creation order of the DiagramViewPart */
     protected override addButtons() {
         if (addButtonsDelay) {
             addButtonsDelay = false

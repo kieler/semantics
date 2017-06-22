@@ -12,13 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
-import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.ui.IEditorPart
-import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager
 
 /**
+ * The EditPartSystemManager keeps track of the active editors and associated systems. 
+ * It is important to clean up no longer used references to avoid memory leaks.
+ * 
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow  
@@ -63,7 +64,7 @@ class EditPartSystemManager implements EditorActionAdapter.EditorSaveListener,
     }
     
     def removeAttachedContextFromEditor(IEditorPart part) {
-        val context = editPartCompilationContextMap.get(part)
+        editPartCompilationContextMap.get(part)
         
         editorActionAdapters.get(part)?.deactivate
         editorActionAdapters.remove(part)

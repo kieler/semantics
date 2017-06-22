@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import java.util.List
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
@@ -36,12 +35,8 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.PROCESSOR_IDENTIFIER
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
-import java.util.Map
-import de.cau.cs.kieler.kicool.ProcessorEntry
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import static extension org.eclipse.xtext.EcoreUtil2.*
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
 
 /**
@@ -56,10 +51,8 @@ class ProcessorSynthesis {
     
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions 
-    @Inject extension KPolylineExtensions    
     @Inject extension KRenderingExtensions  
     @Inject extension ProcessorStyles 
-    @Inject extension KiCoolSynthesis
     @Inject IResourceServiceProvider.Registry regXtext;      
     
     static private val PROCESSOR_KGT = "processor.kgt"

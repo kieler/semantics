@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 
 /**
+ * Class for holding the data that is required when the user request an intermediate model.
+ * 
  * @author ssm
  * @kieler.design 2017-06-12 proposed 
  * @kieler.rating 2017-06-12 proposed yellow

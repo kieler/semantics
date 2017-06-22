@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kicool.compilation
 import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
+ * You can use this class to create processors for type safe models.
+ * 
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  

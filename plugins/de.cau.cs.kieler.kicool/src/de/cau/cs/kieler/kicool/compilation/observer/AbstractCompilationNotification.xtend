@@ -15,6 +15,10 @@ package de.cau.cs.kieler.kicool.compilation.observer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 
 /**
+ * 
+ * Abstract class for compilation notifications such as start or stop of a compilation.
+ * Holds the compilation context of the notification.
+ * 
  * @author ssm
  * @kieler.design 2017-05-17 proposed
  * @kieler.rating 2017-05-17 proposed yellow 

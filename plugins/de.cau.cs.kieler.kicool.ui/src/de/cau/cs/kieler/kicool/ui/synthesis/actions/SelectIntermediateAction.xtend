@@ -15,15 +15,13 @@ package de.cau.cs.kieler.kicool.ui.synthesis.actions
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.IAction.ActionContext
 import de.cau.cs.kieler.klighd.IAction.ActionResult
-import de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager
 import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.getId
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.getShapeLayout
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
-import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager
 
 /**
+ * Class that handles the intermediate model requests.
+ * 
  * @author ssm
  * @kieler.design 2017-06-10 proposed 
  * @kieler.rating 2017-06-10 proposed yellow

@@ -16,6 +16,8 @@ import de.cau.cs.kieler.kicool.compilation.IKiCoolCloneable
 import java.util.LinkedList
 
 /**
+ * Data storage for snapshots.
+ * 
  * @author ssm
  * @kieler.design 2017-06-12 proposed
  * @kieler.rating 2017-06-12 proposed yellow  

@@ -20,7 +20,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 
 /**
- * Main diagram synthesis for SCCharts.
+ * Generic synthesis for strings.
+ * I use this for displaying messages in the model view.
  * 
  * @author ssm
  * @kieler.design 2016-10-20 proposed 
@@ -39,7 +40,7 @@ class GenericStringSynthesis extends AbstractDiagramSynthesis<Container<String>>
         val node = model.toString.createNode
         
         node.setMinimalNodeSize(34, 34)
-        val figure = node.addRoundedRectangle(17, 17, 2)
+        node.addRoundedRectangle(17, 17, 2)
         node.KContainerRendering.addText(model.toString) => [
             fontSize = 11;
             setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 0, 0)

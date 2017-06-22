@@ -13,6 +13,9 @@
 package de.cau.cs.kieler.kicool.compilation.observer
 
 /**
+ * Abstract class for processor notifications such as start or stop of a processor.
+ * Holds the compilation context of the notification and also processor specific data.
+ * 
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 

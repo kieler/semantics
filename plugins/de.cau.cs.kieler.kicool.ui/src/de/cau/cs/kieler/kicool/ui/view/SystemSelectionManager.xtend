@@ -18,6 +18,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
 
 /**
+ * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
+ * 
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 
@@ -38,7 +40,6 @@ class SystemSelectionManager {
     def createSystemComboList() {
         view.combo.items.clear
         indexMap.clear
-        var int i = 0
         for(system : KiCoolRegistration.getSystemModels.filter(de.cau.cs.kieler.kicool.System)) {
             val name = if (system.label.nullOrEmpty) system.id else system.label
             view.combo.items.add(name)

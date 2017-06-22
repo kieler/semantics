@@ -21,6 +21,8 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.setFBCol
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
 
 /**
+ * Class that handles on/off requests of users.
+ * 
  * @author ssm
  * @kieler.design 2017-06-19 proposed 
  * @kieler.rating 2017-06-19 proposed yellow

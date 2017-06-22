@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -18,6 +18,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
+ * Abstract action for the compiler view
+ * 
  * @author ssm
  * @kieler.design 2017-05-12 proposed
  * @kieler.rating 2017-05-12 proposed yellow  

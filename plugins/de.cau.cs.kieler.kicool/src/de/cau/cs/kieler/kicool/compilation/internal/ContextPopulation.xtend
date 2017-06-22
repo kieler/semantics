@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -18,12 +18,17 @@ import de.cau.cs.kieler.kicool.compilation.Environment
 import de.cau.cs.kieler.kicool.compilation.Compile
 
 /**
+ * Internal class that creates all necessary instances of a compilation context.
+ * 
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
 class ContextPopulation {
     
+    /**
+     * Create instances for all processors (including metrics).
+     */
      static def void populateContext(CompilationContext cc) {
         cc.system.processors.populate(cc)     
         cc.system.metrics.forEach[ it.populate(cc) ]

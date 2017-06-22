@@ -22,6 +22,8 @@ import de.cau.cs.kieler.kicool.compilation.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.KVPair
 
 /**
+ * Internal class for handling the processor environments.
+ * 
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  

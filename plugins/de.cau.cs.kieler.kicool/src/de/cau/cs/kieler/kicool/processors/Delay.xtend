@@ -16,12 +16,15 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 
 /**
+ * Example processor: Delay
+ * 
  * @author ssm
  * @kieler.design 2017-05-18 proposed
  * @kieler.rating 2017-05-18 proposed yellow  
  */
 class Delay extends Processor {
     
+    /* Static fields */
     static val MINIMUM_DELAY = "minimumDelay"
     static val MAXIMUM_DELAY = "maximumDelay"
     static int DEFAULT_MINIMUM_DELAY = 500

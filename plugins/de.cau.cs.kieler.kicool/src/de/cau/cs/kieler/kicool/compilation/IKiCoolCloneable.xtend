@@ -21,7 +21,20 @@ package de.cau.cs.kieler.kicool.compilation
  * @kieler.rating 2017-02-19 proposed yellow  
  */
 interface IKiCoolCloneable {
+    
+    /**
+     * The class is mutable. If not, the clones object may be the original object and 
+     * you are not allowed to change it in the environment. 
+     */
     public def boolean isMutable()
+    
+    /**
+     * Returns the cloned object.
+     */
     public def Object cloneObject()
+    
+    /**
+     * Determines if the object is lost when preparing prime environments.
+     */
     def isVolatile() { false }
 }

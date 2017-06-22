@@ -16,6 +16,8 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Notification class for the compilation has finished event.
+ * 
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 

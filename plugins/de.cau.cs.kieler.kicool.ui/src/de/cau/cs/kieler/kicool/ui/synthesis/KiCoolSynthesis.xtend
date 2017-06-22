@@ -69,6 +69,9 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode
     }
     
+    /**
+     * Load a KGT from a bundle.
+     */
     protected def static getKGTFromBundle(String bundleId, String resourceLocation) {
         val Bundle bundle = Platform.getBundle(bundleId)
         val URL fileURL = bundle.getEntry(SkinSelector.skinPrefix + resourceLocation)

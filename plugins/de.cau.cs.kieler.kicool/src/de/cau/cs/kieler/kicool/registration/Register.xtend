@@ -13,12 +13,13 @@
 package de.cau.cs.kieler.kicool.registration
 
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.runtime.Platform
 import org.osgi.framework.BundleContext
 import org.osgi.framework.FrameworkUtil
 import org.osgi.framework.Bundle
 
 /**
+ * Class for handling runtime registration of processors.
+ * 
  * @author ssm
  * @kieler.design 2017-05-19 proposed
  * @kieler.rating 2017-05-19 proposed yellow  

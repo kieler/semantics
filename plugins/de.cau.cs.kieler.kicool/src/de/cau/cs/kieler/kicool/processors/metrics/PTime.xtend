@@ -16,6 +16,8 @@ import de.cau.cs.kieler.kicool.compilation.Metric
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 
 /**
+ * PTime metric
+ * 
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  

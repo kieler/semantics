@@ -19,6 +19,8 @@ import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleOnOffData
 import de.cau.cs.kieler.kicool.ProcessorEntry
 
 /**
+ * Additional properties
+ * 
  * @author ssm
  * @kieler.design 2017-06-12 proposed 
  * @kieler.rating 2017-06-12 proposed yellow

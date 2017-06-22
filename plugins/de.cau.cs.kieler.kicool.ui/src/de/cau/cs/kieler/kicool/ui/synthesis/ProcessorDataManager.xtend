@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -64,6 +64,8 @@ import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateMetricCollector
 
 /**
+ * The data manager handles all synthesis updates.
+ * 
  * @author ssm
  * @kieler.design 2017-02-27 proposed 
  * @kieler.rating 2017-02-27 proposed yellow

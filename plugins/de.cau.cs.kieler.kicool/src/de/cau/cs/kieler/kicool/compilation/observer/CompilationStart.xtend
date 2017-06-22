@@ -15,6 +15,9 @@ package de.cau.cs.kieler.kicool.compilation.observer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 
 /**
+ * 
+ * Notification class for the compilation has started event.
+ * 
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 
