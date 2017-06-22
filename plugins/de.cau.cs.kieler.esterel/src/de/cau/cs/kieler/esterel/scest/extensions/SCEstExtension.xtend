@@ -219,7 +219,7 @@ class SCEstExtension {
      * Resets the flag count, should be called before a transformation.
      */
     def resetFlagSuffix() {
-        variableSuffix = 0;
+        flagSuffix = 0;
     }
     
     /**
@@ -227,11 +227,11 @@ class SCEstExtension {
      * 
      * @return An unused constant
      */
-    def createNewUniqueConstantName() {
-        constantSuffix++
-
-        "_c" + constantSuffix
-    }
+//    def createNewUniqueConstantName() {
+//        constantSuffix++
+//
+//        "_c" + constantSuffix
+//    }
 
     /**
      * Returns a new variable, i.e., one with a name which is not already on the signalToVariableMap
@@ -287,7 +287,7 @@ class SCEstExtension {
      */
     def createNewUniqueVariableName() {
         variableSuffix++
-        "_v" + variableSuffix
+        "v" + variableSuffix
     }
     
     /**
@@ -296,7 +296,7 @@ class SCEstExtension {
      */
     def createNewUniqueFlagName() {
         flagSuffix++
-        "_f" + flagSuffix
+        "f" + flagSuffix
     }
 
     /**
@@ -1208,12 +1208,12 @@ class SCEstExtension {
     }
     
     /**
-     * Insert a Conditional at the right position after a pause statement.
+     * Insert a Conditional at the right position after a pause/parallel statement.
      * 
      * @param statements The list of statements
-     * @param conditional The conditional which has to be added after a pause
-     * @param pos The position of the pause statement
-     * @param depth The depth of statement which caused the pause transformations 
+     * @param conditional The conditional which has to be added after a pause/parallel
+     * @param pos The position of the pause/parallel statement
+     * @param depth The depth of statement which caused the transformation 
      */
     def void insertConditional(EList<Statement> statements, Conditional conditional, int pos, int depth) {
         // Look for already existing Conditionals after Pause.
@@ -1263,6 +1263,61 @@ class SCEstExtension {
     }
     
     /**
+     * Insert a Conditional at the right position above a pause statement.
+     * 
+     * @param statements The list of statements
+     * @param conditional The conditional which has to be added above a pause
+     * @param pos The position of the pause statement
+     * @param depth The depth of statement which caused the pause transformation 
+     */
+    def void insertConditionalAbove(EList<Statement> statements, Conditional conditional, int pos, int depth) {
+        // Look for already existing Conditionals above Pause.
+        // Check whether they have a higher priority than the transformed statement.
+        // Place the Conditional at the correct position.
+        // Because there is no 'break' in Xtend "i = statements.length" is used to end the for loop.
+        if (pos == 0) {
+            statements.add(0, conditional)
+        }
+        else {
+            for (var i=1; pos-i>=0; i++) {
+                if (statements.get(pos-i) instanceof Conditional) {
+                    var conditional2 = statements.get(pos-i) as Conditional
+                    if (!conditional2.annotations.empty) {
+                        var deeper = false
+                        for (var j=0; j<conditional2.annotations.length; j++) {
+                            var a = conditional2.annotations.get(j)
+                            if (a.name.equals(generatedAnnotation)) {
+                                deeper = true
+                                var layer = (a as IntAnnotation).value
+                                if (layer<depth) {
+                                    deeper = false
+                                    j = conditional2.annotations.length
+                                }
+                            }
+                            
+                        }
+                        if (!deeper) {
+                            statements.add(pos+1-i, conditional)
+                            i = statements.length
+                        }
+                    }
+                    else {
+                        statements.add(pos+1-i, conditional)
+                        i = statements.length
+                    }
+                }
+                else {
+                    statements.add(pos+1-i, conditional)
+                    i = statements.length
+                }
+                if (pos-i==0) {
+                    statements.add(0, conditional)
+                }
+            }
+        }
+    }
+    
+    /**
      * Returns the given label or the thread end label. Depends on which comes first.
      * 
      * @param label
@@ -1297,6 +1352,37 @@ class SCEstExtension {
             }
             parent = parent.eContainer
         }
+    }
+    
+    /**
+     * Create a Scope which has a counting int variable, a conditional for counting and a conditional for checking the variable
+     * 
+     * @param statements The statements which will be inside of the scope
+     * @param pos The position of the pause Statement, for which the transformation is done
+     * @param expr The counting Expression
+     * @param singalExpr The signal expression
+     * @param label The label for the goto statement
+     * @param depth The depth of statement which caused the pause transformations 
+     * @param flag A possible flag. e.g. strong delayed abort "abort when A"
+     * @param depthFlag A depth flag is used to not invoke an abort in the first cycle 
+     */
+    def ScopeStatement scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth, ValuedObject flag, ValuedObject depthFlag) {
+        var variable = createNewUniqueVariable(createIntValue(0))
+        var decl = createDeclaration(ValueType.INT, variable)
+        var scope = createScopeStatement(decl)
+        var signalAndDepthFlag = createAnd(EcoreUtil.copy(signalExpr), createValuedObjectReference(depthFlag))
+        var conditional = newIfStatement(signalAndDepthFlag)
+        statements.add(pos+1, createAssignment(depthFlag, createBoolValue(true)))
+        conditional.statements.add(incrementInt(variable))
+        conditional.annotations.add(createAnnotation(0))
+        insertConditionalAbove(statements, conditional, pos, depth)
+        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
+        conditional2.statements.add(0, createAssignment(flag, createBoolValue(true)))
+        conditional2.annotations.add(createAnnotation(depth))
+        insertConditionalAbove(statements, conditional2, pos+1, depth)
+        scope.statements.add(statements)
+        statements.add(scope)
+        return scope
     }
     
     /**

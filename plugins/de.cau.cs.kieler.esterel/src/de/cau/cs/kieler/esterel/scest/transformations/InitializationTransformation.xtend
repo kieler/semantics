@@ -71,6 +71,7 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
         resetLabelSuffix
         resetConstantSuffix
         resetVariableSuffix
+        resetFlagSuffix
         prog.modules.forEach [ m | 
             transformStatements(m.statements, 1)
             m.statements.add(createLabel(createNewUniqueLabel))
