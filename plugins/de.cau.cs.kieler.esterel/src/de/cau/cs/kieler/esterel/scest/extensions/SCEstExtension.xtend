@@ -45,6 +45,7 @@ import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.ScopeStatement
+import de.cau.cs.kieler.scl.scl.Thread
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import de.cau.cs.kieler.esterel.scest.transformations.SCEstTransformation
@@ -1275,9 +1276,17 @@ class SCEstExtension {
             if (parent == labelParent) {
                 return label
             }
-            else if (parent instanceof Thread ||  parent instanceof EsterelThread) {
-                if ((parent as StatementContainer).statements.last instanceof Label) {
-                    return (parent as StatementContainer).statements.last as Label
+            else if (parent instanceof Thread) {
+                if ((parent as Thread).statements.last instanceof Label) {
+                    return (parent as Thread).statements.last as Label
+                }
+                else { 
+                    return null
+                }
+            }
+            else if (parent instanceof EsterelThread) {
+                if ((parent as EsterelThread).statements.last instanceof Label) {
+                    return (parent as EsterelThread).statements.last as Label
                 }
                 else { 
                     return null
@@ -1286,6 +1295,7 @@ class SCEstExtension {
             else if (parent instanceof SCEstModule) {
                 return null // shouldn't be possible
             }
+            parent = parent.eContainer
         }
     }
     
@@ -1309,6 +1319,8 @@ class SCEstExtension {
         conditional.annotations.add(createAnnotation(0))
         statements.add(pos+1, conditional)
         var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
+        conditional2.statements.add(0, createAssignment(flag, createBoolValue(true)))
+        conditional2.annotations.add(createAnnotation(depth))
         insertConditional(statements, conditional2, pos, depth)
         scope.statements.add(statements)
         statements.add(scope)
@@ -1334,6 +1346,7 @@ class SCEstExtension {
         conditional.annotations.add(createAnnotation(0))
         statements.add(pos+1, conditional)
         var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
+        conditional2.annotations.add(createAnnotation(depth))
         insertConditional(statements, conditional2, pos, depth)
         scope.statements.add(statements)
         statements.add(scope)

@@ -107,25 +107,25 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     if (abort.delay.isImmediate) {
                         var label = createLabel
                         var conditional = newIfThenGoto(EcoreUtil.copy(abort.delay.signalExpr), label, false)
-                        // the order of the next two lines is crucial! (first trasformStatements, then transformPauses)
+                        // the order of the next three lines is crucial! (first trasformStatements, add(Label), then transformPauses)
                         abort.statements.transformStatements
-                        abort.statements.transformPauses(depth, EcoreUtil.copy(abort.delay), abort.delay.isIsImmediate, abort.weak, label, null)
                         abort.statements.add(label)
+                        abort.statements.transformPauses(depth, EcoreUtil.copy(abort.delay), abort.weak, label, null)
                         scope.statements.add(conditional)
                         scope.statements.add(abort.statements)
-                        statements.set(pos, scope)
+//                        statements.set(pos, scope)
                     }
                     else {
                         var flag = createNewUniqueFlag(createBoolValue(false))
                         var decl = createDeclaration(ValueType.BOOL, flag)
                         var label = createLabel
-                        // the order of the next two lines is crucial! (first trasformStatements, then transformPauses)
+                        // the order of the next two lines is crucial! (first trasformStatements, add(Label), then transformPauses)
                         abort.statements.transformStatements
-                        abort.statements.transformPauses(depth, EcoreUtil.copy(abort.delay), abort.delay.isIsImmediate, abort.weak, label, flag)
-                        scope.declarations.add(decl)
                         abort.statements.add(label)
+                        abort.statements.transformPauses(depth, EcoreUtil.copy(abort.delay), abort.weak, label, flag)
+                        scope.declarations.add(decl)
                         scope.statements.add(abort.statements)
-                        statements.set(pos,scope)
+//                        statements.set(pos,scope)
                     }
                 }
             }
@@ -133,7 +133,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             else {
                 // TODO cases
             }
-            return null
+            return scope
         }
         else if (statement instanceof StatementContainer) {
             
@@ -179,9 +179,9 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
         return statement
     }
     
-    def EList<Statement> transformPauses(EList<Statement> statements, int depth, DelayExpr delay, boolean immediate, boolean weak, Label label, ValuedObject flag) {
-        for (var i=0; i<statements.length; i++) {
-            var statement = statements.get(i).transformPause(depth, delay, immediate, weak, label, flag)
+    def EList<Statement> transformPauses(EList<Statement> statements, int depth, DelayExpr delay, boolean weak, Label label, ValuedObject flag) {
+        for (var i=0; i<statements?.length; i++) {
+            var statement = statements.get(i).transformPause(depth, delay, weak, label, flag)
             if (statement instanceof Statement) {
                 statements.set(i, statement)
             }
@@ -189,13 +189,13 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
         return statements
     }
     
-    def Statement transformPause(Statement statement, int depth, DelayExpr delay, boolean immediate, boolean weak, Label label, ValuedObject flag) {
+    def Statement transformPause(Statement statement, int depth, DelayExpr delay, boolean weak, Label label, ValuedObject flag) {
         if (statement instanceof Pause) {
             var statements =  statement.getContainingList
             var pos = statements.indexOf(statement)
             // weak abort
             if (weak) {
-                if (immediate) {
+                if (delay.isImmediate) {
                     
                 }
                 else {
@@ -206,29 +206,25 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             else {
                 var label2 = findClosestLabel(label, statement)
                 // e.g. abort immediate A
-                if (immediate) {
+                if (delay.isImmediate) {
                     if (label2 != null) {
                         var conditional = newIfThenGoto(delay.signalExpr, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
                         insertConditional(statements, conditional, pos, depth)
                     }
-                     // TODO indefinite loop when pause in scopestatement
-                     // TODO indefinite loop when pause in scopestatement
-                     // TODO indefinite loop when pause in scopestatement
                 }
                 else {
                     // abort when A
                     if (delay.expr == null) {
                         var conditional = newIfThenGoto(delay.signalExpr, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
-                        conditional.statements.add(createAssignment(flag, createBoolValue(true)))
+                        conditional.statements.add(0, createAssignment(flag, createBoolValue(true)))
                         insertConditional(statements, conditional, pos, depth)
                     }
                     // e.g. abort when 3 A
                     else {
                         if (label2 != null) {
-                            // TODO flag must be added to conditionals
-                            return scopeWithDecl(statements, pos, delay.expr, delay.signalExpr, label2, depth, flag)
+                            scopeWithDecl(statements, pos, delay.expr, delay.signalExpr, label2, depth, flag)
                         }
                     }
                 }
@@ -239,52 +235,70 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
         
         else if (statement instanceof EsterelParallel) {
             (statement as EsterelParallel).threads?.forEach [ t |
-                transformPauses(t.statements, depth, delay, immediate, weak, label, flag)
+                transformPauses(t.statements, depth, delay, weak, label, flag)
             ]
+            transformJoin(statement, depth, delay, weak, label, flag)
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads?.forEach [ t |
-                transformPauses(t.statements, depth, delay, immediate, weak, label, flag)
+                transformPauses(t.statements, depth, delay, weak, label, flag)
             ]
+            transformJoin(statement, depth, delay, weak, label, flag)
+            
         }
         else if (statement instanceof StatementContainer) {
             if (!(statement instanceof Conditional)) {
-                transformPauses((statement as StatementContainer).statements, depth, delay, immediate, weak, label, flag)
+                transformPauses((statement as StatementContainer).statements, depth, delay, weak, label, flag)
             }
             
             if (statement instanceof Trap) {
-                (statement as Trap).trapHandler?.forEach[h | transformPauses(h.statements, depth, delay, immediate, weak, label, flag)]
+                (statement as Trap).trapHandler?.forEach[h | transformPauses(h.statements, depth, delay, weak, label, flag)]
             }
             else if (statement instanceof Abort) {
-                transformPauses((statement as Abort).doStatements, depth, delay, immediate, weak, label, flag)
-                (statement as Abort).cases?.forEach[ c | transformPauses(c.statements, depth, delay, immediate, weak, label, flag)]
+                transformPauses((statement as Abort).doStatements, depth, delay, weak, label, flag)
+                (statement as Abort).cases?.forEach[ c | transformPauses(c.statements, depth, delay, weak, label, flag)]
             }
             else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList?.forEach[ c | transformPauses(c.statements, depth, delay, immediate, weak, label, flag)]
+                (statement as Exec).execCaseList?.forEach[ c | transformPauses(c.statements, depth, delay, weak, label, flag)]
             }
             else if (statement instanceof Do) {
-                transformPauses((statement as Do).watchingStatements, depth, delay, immediate, weak, label, flag)
+                transformPauses((statement as Do).watchingStatements, depth, delay, weak, label, flag)
             }
             else if (statement instanceof Conditional) {
                 // Don't transform the pauses in generated Conditionals.
                 var annotations = (statement as Conditional).annotations
                 if (!isGenerated(annotations)) {
-                    transformPauses((statement as StatementContainer).statements, depth, delay, immediate, weak, label, flag)
-                    transformPauses((statement as Conditional).getElse().statements, depth, delay, immediate, weak, label, flag)
+                    transformPauses((statement as StatementContainer).statements, depth, delay, weak, label, flag)
+                    transformPauses((statement as Conditional).getElse()?.statements, depth, delay, weak, label, flag)
                 }
             }
         }
         else if (statement instanceof Present) {
-            transformPauses((statement as Present).thenStatements, depth, delay, immediate, weak, label, flag)
-            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, delay, immediate, weak, label, flag)]
-            transformPauses((statement as Present).elseStatements, depth, delay, immediate, weak, label, flag)
+            transformPauses((statement as Present).thenStatements, depth, delay, weak, label, flag)
+            (statement as Present).cases?.forEach[ c | transformPauses(c.statements, depth, delay, weak, label, flag)]
+            transformPauses((statement as Present).elseStatements, depth, delay, weak, label, flag)
         }
         else if (statement instanceof IfTest) {
-            transformPauses((statement as IfTest).thenStatements, depth, delay, immediate, weak, label, flag)
-            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, depth, delay, immediate, weak, label, flag)]
-            transformPauses((statement as IfTest).elseStatements, depth, delay, immediate, weak, label, flag)
+            transformPauses((statement as IfTest).thenStatements, depth, delay, weak, label, flag)
+            (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, depth, delay, weak, label, flag)]
+            transformPauses((statement as IfTest).elseStatements, depth, delay, weak, label, flag)
         }
         return statement
+    }
+    
+    def void transformJoin(Statement statement, int depth, DelayExpr delay, boolean weak, Label label, ValuedObject flag) {
+        var statements =  statement.getContainingList
+        var pos = statements.indexOf(statement)
+        var conditional = newIfThenGoto(delay.signalExpr, findClosestLabel(label, statement), false)
+        conditional.annotations.add(createAnnotation(depth))
+        if (delay.isImmediate && !weak) {
+            // just for an immediate strong abort
+            conditional = newIfThenGoto(delay.signalExpr, findClosestLabel(label, statement), false)
+        } 
+        else {
+            conditional = newIfThenGoto(createValuedObjectReference(flag), findClosestLabel(label, statement), false)
+        }
+        insertConditional(statements, conditional, pos, depth)
     }
     
 }
