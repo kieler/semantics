@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.prom.ui.console.PromConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -24,8 +23,7 @@ class StepSimulationMacroTick extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(simulation != null) {
-            PromConsole.print("Step macro tick")
+        if(simulation != null && !justRestarted) {
             simulation.stepMacroTick()
         }
         return null

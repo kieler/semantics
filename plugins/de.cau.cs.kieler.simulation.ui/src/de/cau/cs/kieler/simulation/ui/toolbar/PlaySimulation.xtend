@@ -25,7 +25,7 @@ class PlaySimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
-        if(SimulationManager.instance != null) {
+        if(simulation != null && !justRestarted) {
             PromConsole.print("Play")
             simulation.play()
         }

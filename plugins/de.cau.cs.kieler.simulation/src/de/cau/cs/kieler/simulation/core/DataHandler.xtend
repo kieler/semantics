@@ -37,9 +37,4 @@ interface DataHandler {
      * Stop everything and clean up
      */
     public def void stop()
-    
-    /**
-     * Determines if this data handler's read method should be called after each step of the simulation.
-     */
-    public def boolean updateEachStep()
 }
