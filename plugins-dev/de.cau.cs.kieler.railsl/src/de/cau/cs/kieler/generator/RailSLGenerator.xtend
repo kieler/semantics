@@ -785,7 +785,8 @@ void setgate(struct railway_system *railway, int gate, int state);
 
 /* Get the state of one gate. A value of -1 for (gate) acts as a wildcard. The
    function will return the state of the first matching gate in this case. */
-int getgate(struct railway_system *railway, int gate);
+int getgate(stru
+        return resultct railway_system *railway, int gate);
 
 /* Set the state of one or more bells.
 
@@ -875,16 +876,13 @@ struct railway_hardware kicking;
 
 #define _KICKING_H_
 #endif'
-
         fsa.generateFile("kicking.h", kickingH)
-
     }
 
     /**
      * Generate the static PROM main code snippet 
      */
     def String generateMainSnippet() {
-        var result = 
 '/******************************************************************
  * T E S T   H E A D E R                                          *
  *                                                                *
@@ -931,14 +929,13 @@ ${outputs}
     
     return 0;
 }'
-        return result
     }
 
     /**
      * Generate a static PROM code snippet as wrapper for the @code{tracks} variable.
      */
     def String generateTracksSnippet() {
-        var result = '<#-- T R A C K S -->
+'<#-- T R A C K S -->
 <#macro tracks>
     <@output>
         // Set the tracks to the appropriate speed
@@ -947,14 +944,13 @@ ${outputs}
         }
     </@>
 </#macro>'
-        return result
     }
 
     /**
      * Generate a static PROM code snippet as wrapper for the @code{signals} variable.
      */
     def String generateSignalsSnippet() {
-        var result = '<#-- S I G N A L S -->
+'<#-- S I G N A L S -->
 <#macro signals>
     <@output>
         // Set all the signals appropriately
@@ -967,15 +963,14 @@ ${outputs}
         }
     </@>
 </#macro>'
-        return result
-    }
+   }
 
 
     /**
      * Generate a static PROM code snippet as wrapper for the @code{points} variable.
      */
     def String generatePointsSnippet() {
-        var result = '<#-- S W I T C H   P O I N T S -->
+'<#-- S W I T C H   P O I N T S -->
 <#macro points>
     <@output>
         // Set all the switch points appropriately
@@ -984,7 +979,6 @@ ${outputs}
         }
     </@>
 </#macro>'
-        return result
     }
 
 
@@ -992,7 +986,7 @@ ${outputs}
      * Generate a static PROM code snippet as wrapper for the @code{lights} variable.
      */
     def String generateLightsSnippet() {
-        var result = '<#-- L I G H T S// Variable to keep track of the last time second was true -->
+'<#-- L I G H T S// Variable to keep track of the last time second was true -->
 <#macro lights>
     <@output>
         // Set all the lights appropriately
@@ -1001,8 +995,6 @@ ${outputs}
         }
     </@>
 </#macro>'
-
-        return result
     }
     
     /**
