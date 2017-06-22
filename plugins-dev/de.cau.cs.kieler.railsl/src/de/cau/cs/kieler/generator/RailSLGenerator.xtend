@@ -33,6 +33,7 @@ import de.cau.cs.kieler.railSL.SetTrackStatement
 import de.cau.cs.kieler.railSL.SetPointStatement
 import de.cau.cs.kieler.railSL.LightStatement
 import de.cau.cs.kieler.railSL.ConditionalStatement
+import de.cau.cs.kieler.railSL.CrossingStatement
 
 /**
  * Main class for code generation and model-to-model transformations of RailSL.
@@ -194,6 +195,16 @@ class RailSLGenerator extends AbstractGenerator {
 
         chart.declarations.add(secondDecl)
         valObjects.put("second", second);
+        
+        // output bool crossing
+        val crossingDecl = createDeclaration(ValueType.BOOL)
+        crossingDecl.output = true
+        val crossing = createValuedObject("crossing")
+        crossingDecl.attach(crossing)
+        crossingDecl.annotations.add(createStringAnnotation("Wrapper", "crossing"))
+        
+        chart.declarations.add(crossingDecl)
+        valObjects.put("crossing", crossing);
 
         // A C T U A L   D I A G R A M   S Y N T H E S I S
         nextRegionID = 0
@@ -276,9 +287,24 @@ class RailSLGenerator extends AbstractGenerator {
             state.makeLightStatement(statement as LightStatement)
         } else if (statement instanceof ConditionalStatement) {
             state.makeConditionalStatement(statement as ConditionalStatement)
+        } else if (statement instanceof CrossingStatement) {
+            state.makeCrossingStatement(statement as CrossingStatement)
         }
 
         return state
+    }
+
+    def void makeCrossingStatement(State state, CrossingStatement cStatement) {
+        state.label = "_" + getStateID() + "_Crossing"
+        val region = state.createControlflowRegion(cStatement.mode + " crossing")
+        var init = region.createInitialState("init")
+        var done = region.createFinalState("done")
+        var transition = init.createImmediateTransitionTo(done)
+
+        // Fetch variable crossing from root SCChart
+        val crossing = valObjects.get("crossing")
+
+        transition.addEffect(crossing.assign(createBoolValue(cStatement.parseCrossingSetting)))
     }
 
     /**
@@ -356,6 +382,7 @@ class RailSLGenerator extends AbstractGenerator {
             i++
         }
         currentState.final = true
+        
     }
 
     /**
@@ -1096,6 +1123,10 @@ ${outputs}
         } else {
             return 0;
         }
+    }
+
+    def boolean parseCrossingSetting(CrossingStatement cStatement) {
+        return cStatement.mode.equals("Open")
     }
 
     /**
