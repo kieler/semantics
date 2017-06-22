@@ -17,8 +17,15 @@ import java.math.BigInteger;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+
 import com.google.common.collect.HashMultimap;
 
+import de.cau.cs.kieler.klighd.kgraph.KGraphData;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
+import de.cau.cs.kieler.klighd.kgraph.KShapeLayout;
 import de.cau.cs.kieler.klighd.krendering.Colors;
 import de.cau.cs.kieler.klighd.krendering.KBackground;
 import de.cau.cs.kieler.klighd.krendering.KLineWidth;
@@ -26,8 +33,10 @@ import de.cau.cs.kieler.klighd.krendering.KRectangle;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.KText;
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.timing.TimingAnalysis.TimingValueRepresentation;
+
 
 /**
  * Provides methods to highlight model parts according to timing related information. 
@@ -60,38 +69,48 @@ public class TimingHighlighter {
 	 * @param regionRectangles 
 	 *            The mapping that says which region belongs to which rectangle.
 	 */
-	public void highlightRegion(Region region, int percentage,
-			Set<WeakReference<KText>> labels,HashMultimap<Region, 
-			WeakReference<KRectangle>> regionRectangles, KRenderingExtensions renderingExtensions) {
-		Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
-		for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
-			KRectangle regionRectangle = rectangleRef.get();
-			KRectangle inner = KRenderingFactory.eINSTANCE.createKRectangle();
-			regionRectangle.getChildren().add(0, inner);
-			if (percentage > 50) {
-				regionRectangle.getStyles().add(renderingFactory.createKForeground()
-						.setColor(Colors.RED));
-			}
-			KBackground background = renderingFactory.createKBackground();
-			// in casting percentage, all percentages below zero will be set to
-			// 0, thus they will
-			// not be marked as hot spots
-			int alpha = (int) percentage;
-			background.setAlpha(alpha);
-			inner.getStyles().add(background.setColor(Colors.RED));
-			if (percentage > 50) {
-				final KLineWidth lwStyle = KRenderingFactory.eINSTANCE.createKLineWidth();
-				lwStyle.setLineWidth(3);
-				regionRectangle.getStyles().add(lwStyle);
-				// the red numbers on red ground will not be readable well, so
-				// change them to black
-				for (WeakReference<KText> labelRef : labels) {
-					KText label = labelRef.get();
-					renderingExtensions.setForegroundColor(label, 0, 0, 0);
-				}
-			}
-		}
-	}
+    public void highlightRegion(Region region, int percentage, Set<WeakReference<KText>> labels,
+            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles,
+            KRenderingExtensions renderingExtensions) {
+        Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
+        for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
+            KRectangle regionRectangle = rectangleRef.get();
+            KNode regionNode = null;
+            EObject regionRectangleContainer = regionRectangle.eContainer();
+            if (regionRectangleContainer instanceof KNode) {
+                regionNode = (KNode) regionRectangleContainer;
+            }
+            KRectangle inner = KRenderingFactory.eINSTANCE.createKRectangle();
+            regionRectangle.getChildren().add(0, inner);
+            if (percentage > 50) {
+                regionRectangle.getStyles()
+                        .add(renderingFactory.createKForeground().setColor(Colors.RED));
+            }
+            KBackground background = renderingFactory.createKBackground();
+            // in casting percentage, all percentages below zero will be set to
+            // 0, thus they will
+            // not be marked as hot spots
+            int alpha = (int) percentage;
+            background.setAlpha(alpha);
+            inner.getStyles().add(background.setColor(Colors.RED));
+            if (percentage > 50) {
+                final KLineWidth lwStyle = KRenderingFactory.eINSTANCE.createKLineWidth();
+                lwStyle.setLineWidth(3);
+                regionRectangle.getStyles().add(lwStyle);
+                // the red numbers on red ground will not be readable well, so
+                // change them to black
+                for (WeakReference<KText> labelRef : labels) {
+                    KText label = labelRef.get();
+                    renderingExtensions.setForegroundColor(label, 0, 0, 0);
+                }
+                /////////// TEST///////////////////////////////////////////////////////////////
+                if (regionNode != null) {
+                    regionNode.setProperty(KlighdProperties.EXPAND, false);   
+                }
+                //////////////////////////////////////////////////////////////////////////////
+            }
+        }
+    }
 	
 	/**
 	 * The method adapts the timing representation, if it is not in the default
