@@ -14,7 +14,9 @@ import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.HorizontalAlignment;
@@ -138,11 +140,13 @@ public class TimingAnalysisHook extends SynthesisHook {
 					0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5, 5, 0, 0);
 			innerRect.getChildren().add(text);
 			timingLabels.put(null, new WeakReference<KText>(text));
+			ViewContext viewContext = getUsedContext();
 			// start analysis job
             new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource,
                     regionRectangles,
 					getBooleanValue(SHOW_TIMING_HIGHLIGHTING),
-                    (TimingAnalysis.TimingValueRepresentation) getObjectValue(TIMING_REP))
+                    (TimingAnalysis.TimingValueRepresentation) getObjectValue(TIMING_REP), 
+                    viewContext)
                             .schedule();
 		}
 	}

@@ -14,6 +14,7 @@ package de.cau.cs.kieler.sccharts.timing;
 
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -23,6 +24,9 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.collect.HashMultimap;
 
+import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.kgraph.KGraphData;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.kgraph.KShapeLayout;
@@ -35,6 +39,7 @@ import de.cau.cs.kieler.klighd.krendering.KText;
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.timing.TimingAnalysis.TimingValueRepresentation;
 
 
@@ -46,6 +51,8 @@ import de.cau.cs.kieler.sccharts.timing.TimingAnalysis.TimingValueRepresentation
 public class TimingHighlighter {
 	
 	private KRenderingFactory renderingFactory;
+	
+	private TimingAnnotationProvider annotationProvider = new TimingAnnotationProvider();
 	
 	public TimingHighlighter(KRenderingFactory renderingFactory) {
 		this.renderingFactory = renderingFactory;
@@ -68,10 +75,12 @@ public class TimingHighlighter {
 	 *            The set with the timing labels of the regions of the model
 	 * @param regionRectangles 
 	 *            The mapping that says which region belongs to which rectangle.
+	 * @param viewContext 
 	 */
     public void highlightRegion(Region region, int percentage, Set<WeakReference<KText>> labels,
             HashMultimap<Region, WeakReference<KRectangle>> regionRectangles,
-            KRenderingExtensions renderingExtensions) {
+            KRenderingExtensions renderingExtensions, ViewContext viewContext) {
+        IViewer view = viewContext.getViewer();
         Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
         for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
             KRectangle regionRectangle = rectangleRef.get();
@@ -103,13 +112,18 @@ public class TimingHighlighter {
                     KText label = labelRef.get();
                     renderingExtensions.setForegroundColor(label, 0, 0, 0);
                 }
-                /////////// TEST///////////////////////////////////////////////////////////////
+            } else if (percentage < 10) {
                 if (regionNode != null) {
-                    regionNode.setProperty(KlighdProperties.EXPAND, false);   
+                    State regionParentState = region.getParentState();
+                    List<State> macroChildren = annotationProvider.getMacroChildStates(regionParentState);
+                    //TODO: Check for sibling regions that have more timing?
+                    if (macroChildren.isEmpty()){
+                    view.collapse(regionNode);
+                    }
                 }
-                //////////////////////////////////////////////////////////////////////////////
             }
         }
+        LightDiagramServices.layoutDiagram(viewContext);
     }
 	
 	/**
