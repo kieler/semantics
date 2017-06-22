@@ -17,7 +17,7 @@ import java.util.List
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.CircuitFactory
-
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author fry
@@ -27,7 +27,7 @@ import de.cau.cs.kieler.circuit.CircuitFactory
  */
 class CircuitInitialization {
 
-	def initialize(List<Declaration> declarations, Actor init, Actor logic, Actor newCircuit) {
+	def initialize(List<? extends Declaration> declarations, Actor init, Actor logic, Actor newCircuit) {
 		
 		createLocalResetAndGo(init, logic)
 		
@@ -83,9 +83,9 @@ class CircuitInitialization {
 	//
 	// for each input: create one register in InitilizationRegion
 	// //////////////////////////////////////////////////////////////////// 
-	def createInAndOutputs(List<Declaration> list, Actor init, Actor logic, Actor circuit) {
+	def createInAndOutputs(List<? extends Declaration> list, Actor init, Actor logic, Actor circuit) {
 		// inserts in- and output Nodes of circuit
-		list.forEach [ d |
+		list.filter(VariableDeclaration).forEach [ d |
 			d.valuedObjects.forEach [ vo |
 				val name = (vo.name)
 				if (d.isInput) {

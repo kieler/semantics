@@ -29,6 +29,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*im
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Deferred Transformation.
@@ -147,4 +148,27 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
         }
     }
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
+
+//       
+// -- FORMER IMPLEMENTATION --
+// 
+// For all deferred transitions T from S1 to S2, create a new State _S
+// create a new transition _T from _S to S2 and change T's target to _S.
+// Remove the deferred flag from T.
+//
+//     def void transformDeferred(Transition transition) {
+//         if (transition.deferred) {
+//             // Create a new state _S
+//             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
+//             // Create a new transition _T
+//             _S.createTransitionTo(transition.targetState)
+//             // Re-target transition T
+//             transition.setTargetState(_S)
+//             // Remove deferred flag
+//             transition.setDeferred(false)
+//         }
+//     }
 }

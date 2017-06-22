@@ -33,98 +33,98 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static CircuitFactory init() {
-		try {
-			CircuitFactory theCircuitFactory = (CircuitFactory)EPackage.Registry.INSTANCE.getEFactory(CircuitPackage.eNS_URI);
-			if (theCircuitFactory != null) {
-				return theCircuitFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new CircuitFactoryImpl();
-	}
+        try {
+            CircuitFactory theCircuitFactory = (CircuitFactory)EPackage.Registry.INSTANCE.getEFactory(CircuitPackage.eNS_URI);
+            if (theCircuitFactory != null) {
+                return theCircuitFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new CircuitFactoryImpl();
+    }
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public CircuitFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case CircuitPackage.ACTOR: return createActor();
-			case CircuitPackage.PORT: return createPort();
-			case CircuitPackage.LINK: return createLink();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case CircuitPackage.ACTOR: return createActor();
+            case CircuitPackage.PORT: return createPort();
+            case CircuitPackage.LINK: return createLink();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Actor createActor() {
-		ActorImpl actor = new ActorImpl();
-		return actor;
-	}
+        ActorImpl actor = new ActorImpl();
+        return actor;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Link createLink() {
-		LinkImpl link = new LinkImpl();
-		return link;
-	}
+        LinkImpl link = new LinkImpl();
+        return link;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Port createPort() {
-		PortImpl port = new PortImpl();
-		return port;
-	}
+        PortImpl port = new PortImpl();
+        return port;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public CircuitPackage getCircuitPackage() {
-		return (CircuitPackage)getEPackage();
-	}
+        return (CircuitPackage)getEPackage();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
 	@Deprecated
 	public static CircuitPackage getPackage() {
-		return CircuitPackage.eINSTANCE;
-	}
+        return CircuitPackage.eINSTANCE;
+    }
 
 } //CircuitFactoryImpl

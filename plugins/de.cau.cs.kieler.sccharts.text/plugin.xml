@@ -2,18 +2,18 @@
 <?eclipse version="3.4"?>
 
 <plugin>
-   <extension-point id="de.cau.cs.kieler.sccharts.text.sct.generator.extension" 
+
+   <extension-point id="de.cau.cs.kieler.sccharts.text.generator.extension" 
         name="SCT Generator Extension" 
-        schema="schema/de.cau.cs.kieler.sccharts.text.sct.generator.extension.exsd"/>
+        schema="schema/de.cau.cs.kieler.sccharts.text.generator.extension.exsd"/>
    <extension
-         point="de.cau.cs.kieler.sccharts.text.sct.generator.extension">
+         point="de.cau.cs.kieler.sccharts.text.generator.extension">
       <SCTGeneratorExtension
-            class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.AbortExtension">
+            class="de.cau.cs.kieler.sccharts.text.sctgenerator.extensions.AbortExtension">
       </SCTGeneratorExtension>
       <SCTGeneratorExtension
-            class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.ActionExtension">
+            class="de.cau.cs.kieler.sccharts.text.sctgenerator.extensions.ActionExtension">
       </SCTGeneratorExtension>
    </extension>
-   
-</plugin>
 
+</plugin>

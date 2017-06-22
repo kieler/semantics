@@ -19,15 +19,14 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import com.google.inject.Scopes
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts For Transformation.
@@ -181,6 +180,10 @@ class For extends AbstractExpansionTransformation {
             }
         }
         return null;
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

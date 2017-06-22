@@ -19,7 +19,7 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://kieler.cs.cau.de/sccharts/0.1.0"
+            uri="http://kieler.cs.cau.de/sccharts/0.3.0"
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
             genModel="model/sccharts.genmodel"/>
    </extension>
@@ -112,6 +112,9 @@
         </expansionTransformationClass>
         <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.enforcer.EnforcerTransformation">
         </expansionTransformationClass>
      </extension>
      <extension
@@ -209,7 +212,91 @@
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.SyncCharts">
         </featureGroupClass>
-     </extension>   
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.enforcer.EnforcerFeature">
+        </featureClass>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.kicool.processor">
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.SurfaceDepthWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.TriggerEffectWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.AbortWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ComplexFinalStateWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ConnectorWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.WeakSuspendWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.SuspendWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.StaticWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.SignalWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ReferenceWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.PreWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.MapWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.InitializationWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.HistoryWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ForWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ExitActionWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.EntryActionWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.DuringActionWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.DeferredWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.CountDelayWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.ConstWrapper">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.Snapshot">
+        </Processor>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.kicool.system">
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.core.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.extended.simple.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.extended.kico">
+        </TransformationSystem>
+     </extension>
 
 
 </plugin>

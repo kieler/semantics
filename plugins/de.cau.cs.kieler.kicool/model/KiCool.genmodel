@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kicool/src" modelPluginID="de.cau.cs.kieler.kicool"
+    modelName="KiCool" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>KiCool.ecore</foreignModel>
+  <genPackages prefix="KiCool" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      ecorePackage="KiCool.ecore#/">
+    <genClasses ecoreClass="KiCool.ecore#//System">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//System/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//System/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//System/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//System/processors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//System/metrics"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="KiCool.ecore#//ProcessorEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//ProcessorEntry/id"/>
+    </genClasses>
+    <genClasses ecoreClass="KiCool.ecore#//Processor">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//Processor/preAnnotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//Processor/postAnnotations"/>
+    </genClasses>
+    <genClasses ecoreClass="KiCool.ecore#//ProcessorGroup">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//ProcessorGroup/processors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//ProcessorGroup/alternative"/>
+    </genClasses>
+    <genClasses ecoreClass="KiCool.ecore#//Metric">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//Metric/alias"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

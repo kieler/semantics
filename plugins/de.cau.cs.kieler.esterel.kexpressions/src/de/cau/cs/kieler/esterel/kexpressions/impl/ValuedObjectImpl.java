@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions.impl;
 
@@ -34,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ValuedObjectImpl extends de.cau.cs.kieler.annotations.impl.AnnotatableImpl implements ValuedObject {
+public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->

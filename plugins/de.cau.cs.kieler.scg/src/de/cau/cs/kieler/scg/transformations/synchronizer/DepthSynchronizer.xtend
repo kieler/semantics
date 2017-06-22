@@ -136,7 +136,7 @@ class DepthSynchronizer extends AbstractSynchronizer {
 	 * @return
 	 * 		Returns a {@code SynchronizerData} class including all mandatory data for the scheduler.
 	 */  
-    override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+    override build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
     	// Create a new SynchronizerData class which holds the data to return.
         var data = new SynchronizerData() => [ 
             setJoin(join)

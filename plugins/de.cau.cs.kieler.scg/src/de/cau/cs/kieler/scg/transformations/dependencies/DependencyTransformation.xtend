@@ -37,8 +37,14 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import com.google.inject.Injector
 import de.cau.cs.kieler.kexpressions.keffects.util.ValuedObjectContainer
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -88,6 +94,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     @Inject extension SCGCoreExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions    
     @Inject Injector injector
@@ -96,6 +103,11 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
+    
+    protected val parameterMapping = <String, List<ValuedObject>> newHashMap
+    protected val HashMultimap<Assignment, ValuedObject> writerObjectCache = HashMultimap.create 
+    protected val HashMultimap<Node, ValuedObject> readerObjectCache = HashMultimap.create 
+    
     
     /**
      * transformSCGToSCGDEP executes the transformation from a standard SCG to 
@@ -118,6 +130,17 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 		val writer = HashMultimap.create
 		val relativeWriter = <Assignment> newHashSet
 		val reader = HashMultimap.create
+		parameterMapping.clear
+		writerObjectCache.clear
+		readerObjectCache.clear
+
+        for(entry : scg.nodes.filter(Entry)) {
+            val parameterList = <ValuedObject> newArrayList
+            for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(entry.id)]) {
+                parameterList += scg.findValuedObjectByName(tsa.type)
+            }
+            parameterMapping.put(entry.id, parameterList)
+        }
 
 		nodeMapping.createNodeCaches(assignments, conditionals, writer, relativeWriter, reader)
 
@@ -142,6 +165,13 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 			if (node instanceof Assignment) {
 				if (node.valuedObject != null) {
 					assignments += node
+//<<<<<<< HEAD
+//					writer.put(node.valuedObject, node)
+//					writerObjectCache.put(node, node.valuedObject)
+//					node.expression.getAllReferences.forEach[
+//						reader.put(it.valuedObject, node)
+//						if (it.valuedObject.equals(node.valuedObject)) {
+//=======
 					
 					val VOC = injector.getInstance(ValuedObjectContainer) => [ set(node) ]
 					writer.put(VOC, node)
@@ -154,6 +184,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 						reader.put(expVOC, node)
 						
 						if (expVOC.equals(VOC)) {
+//>>>>>>> master
 							relativeWriter += node
 						}
 					]
@@ -161,12 +192,42 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 					if (node.operator != AssignOperator::ASSIGN) {
 						relativeWriter += node
 					}
+				} else {
+				    val expression = node.expression
+				    if (expression instanceof ReferenceCall) {
+				        assignments += node
+				        val refName = expression.valuedObject.declaration.asReferenceDeclaration.extern
+				        val refList = parameterMapping.get(refName)
+				        for(var i = 0; i < refList.size; i++) {
+				            val pex = expression.parameters.get(i).expression
+				            if (pex instanceof ValuedObjectReference) {
+				                val vo = pex.valuedObject
+				                val refVODeclaration = refList.get(i).declaration
+				                if (refVODeclaration instanceof VariableDeclaration) {
+				                    val VOC =  injector.getInstance(ValuedObjectContainer) => [ set(vo) ]
+				                    if (refVODeclaration.input) {
+				                        reader.put(VOC, node)
+				                        readerObjectCache.put(node, vo)
+				                    } else {
+				                        writer.put(VOC, node)
+                                        writerObjectCache.put(node, vo)
+				                    }
+				                }
+				            }  
+				        }
+				    }
 				}
 			} else if (node instanceof Conditional) {
 				conditionals += node
+//<<<<<<< HEAD
+//				node.condition.getAllReferences.forEach[
+//					reader.put(it.valuedObject, node)
+//					readerObjectCache.put(node, it.valuedObject)
+//=======
 				node.condition.getAllReferences.forEach[ vor |
                     val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
                     reader.put(expVOC, node)
+//>>>>>>> master
 				]
 			}
 		}
@@ -198,5 +259,5 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     		dependency.trace(assignment)
     	}	
     }
- 
+
 }

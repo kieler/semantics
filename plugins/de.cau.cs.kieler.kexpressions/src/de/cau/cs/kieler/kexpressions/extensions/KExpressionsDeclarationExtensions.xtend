@@ -21,11 +21,15 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.emf.ecore.EObject
 import java.util.List
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.DoubleValue
 
 /**
  * @author ssm
@@ -34,41 +38,56 @@ import de.cau.cs.kieler.kexpressions.StringValue
  */
 class KExpressionsDeclarationExtensions {
     
-    def public Declaration createDeclaration() {
-        KExpressionsFactory::eINSTANCE.createDeclaration
+    def dispatch Declaration createDeclaration(VariableDeclaration declaration) {
+        declaration.createVariableDeclaration
+    }
+    
+    def dispatch Declaration createDeclaration(ReferenceDeclaration declaration) {
+        declaration.createReferenceDeclaration
+    }
+    
+    /**
+     * @deprecated
+     */
+    def VariableDeclaration createDeclaration() {
+        createVariableDeclaration
     }   
     
-    def public Declaration createDeclaration(ValueType valueType) {
-        KExpressionsFactory::eINSTANCE.createDeclaration => [
+    def VariableDeclaration createVariableDeclaration() {
+        KExpressionsFactory::eINSTANCE.createVariableDeclaration
+    }   
+    
+    def VariableDeclaration createVariableDeclaration(ValueType valueType) {
+        KExpressionsFactory::eINSTANCE.createVariableDeclaration => [
             type = valueType
         ]
     }   
     
     
     def public Declaration createSignalDeclaration() {
-        val decl = createDeclaration(ValueType::PURE)
+        val decl = createVariableDeclaration(ValueType::PURE)
         decl.signal = true
         decl
     }    
     
     def public Declaration createIntDeclaration() {
-        createDeclaration(ValueType::INT)
+        createVariableDeclaration(ValueType::INT)
     }    
 
-    def public Declaration createBoolDeclaration() {
-        createDeclaration(ValueType::BOOL)
+    def VariableDeclaration createBoolDeclaration() {
+        createVariableDeclaration(ValueType::BOOL)
     }    
 
-    def public Declaration createFloatDeclaration() {
-        createDeclaration(ValueType::FLOAT)
+    def VariableDeclaration createDoubleDeclaration() {
+        createVariableDeclaration(ValueType::DOUBLE)
+    }    
+
+    def VariableDeclaration createStringDeclaration() {
+        createVariableDeclaration(ValueType::STRING)
     }    
     
-    def public Declaration createStringDeclaration() {
-        createDeclaration(ValueType::STRING)
-    }    
-    
-    def public Declaration createDeclaration(Declaration declaration) {
-        createDeclaration => [
+    def VariableDeclaration createVariableDeclaration(VariableDeclaration declaration) {
+        (createVariableDeclaration as VariableDeclaration) => [
             type = declaration.type
             input = declaration.input
             output = declaration.output
@@ -84,12 +103,12 @@ class KExpressionsDeclarationExtensions {
     def Declaration createDeclaration(Value value) {
         if (value instanceof IntValue) createIntDeclaration
         else if (value instanceof BoolValue) createBoolDeclaration
-        else if (value instanceof FloatValue) createFloatDeclaration
+        else if (value instanceof DoubleValue) createDoubleDeclaration
         else if (value instanceof StringValue) createStringDeclaration
         else createDeclaration
     }
     
-    def Declaration applyAttributes(Declaration declaration, Declaration declarationWithAttributes) {
+    def VariableDeclaration applyAttributes(VariableDeclaration declaration, VariableDeclaration declarationWithAttributes) {
         declaration => [
             input = declarationWithAttributes.input
             output = declarationWithAttributes.output
@@ -100,12 +119,23 @@ class KExpressionsDeclarationExtensions {
         ]
     }
     
+    def ReferenceDeclaration createReferenceDeclaration() {
+        KExpressionsFactory::eINSTANCE.createReferenceDeclaration
+    } 
+    
+    def ReferenceDeclaration createReferenceDeclaration(ReferenceDeclaration declaration) {
+        (createReferenceDeclaration as ReferenceDeclaration) => [
+            reference = declaration.reference
+            extern = declaration.extern
+        ]
+    }
+    
     def void delete(Declaration declaration) {
         declaration.valuedObjects.immutableCopy.forEach[ remove ]
         declaration.remove
     }
     
-    public def List<Declaration> copyDeclarations(EObject source) {
+    def List<Declaration> copyDeclarations(EObject source) {
         <Declaration> newArrayList => [ targetList | 
             for (declaration : source.eContents.filter(typeof(Declaration))) {
                 // @als: is this trace necessary?
@@ -120,5 +150,18 @@ class KExpressionsDeclarationExtensions {
         val newValuedObject = sourceObject.copy
         targetDeclaration.valuedObjects += newValuedObject
     }            
+    
+    
+    def List<VariableDeclaration> getVariableDeclarations(EObject eObject) {
+        <VariableDeclaration> newArrayList => [ list |
+            eObject.eContents.filter(VariableDeclaration).forEach[ list += it ]
+        ]
+    }  
+    
+    def List<ReferenceDeclaration> getReferenceDeclarations(EObject eObject) {
+        <ReferenceDeclaration> newArrayList => [ list |
+            eObject.eContents.filter(ReferenceDeclaration).forEach[ list += it ]
+        ]
+    }      
     
 }

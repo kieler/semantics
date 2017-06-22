@@ -17,11 +17,11 @@ import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
 
 /**
- * The {@link SynthesisOption}s generally used in the {@link SCChartsSynthesis}. <br>
+ * The {@link SynthesisOption}s generally used in the {@link SRTGSynthesis}. <br>
  * Specific {@link SynthesisOption} related to {@link SynthesisHook} are declared in the
  * corresponding class.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
@@ -37,16 +37,19 @@ public final class GeneralSynthesisOptions {
     
     /** The appearance category */
     public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");
-    /** The layout category */
-    public static final SynthesisOption LAYOUT = SynthesisOption.createCategory("Layout");
     /** The debugging category */
-    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Debugging");
+    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Debugging", false);
+    /** The layout category */
+    public static final SynthesisOption LAYOUT = SynthesisOption.createCategory("Layout", false);
+    /** Dataflow category */
+    public static final SynthesisOption DATAFLOW = SynthesisOption.createCategory("Dataflow", false).
+            setCategory(APPEARANCE);
     
     //-- OPTIONS --
     
     /** Option for setting the KLayLayered layout */
     public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("KLayLayered",
-            true).setCategory(APPEARANCE);
+            true).setCategory(LAYOUT);
 
     /** Option for enabling adaptive zoom */
     public static final SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption.createCheckOption(

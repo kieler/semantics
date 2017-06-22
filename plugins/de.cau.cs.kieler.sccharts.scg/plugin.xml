@@ -19,6 +19,12 @@
             isXMI="true">
       </ExtensionInformation>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.sccharts.scg.processors.transformators.SCGTransformationWrapper">
+      </Processor>
+   </extension>
 
 
 </plugin>

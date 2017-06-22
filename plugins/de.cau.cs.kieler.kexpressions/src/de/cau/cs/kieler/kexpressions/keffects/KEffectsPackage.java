@@ -142,13 +142,22 @@ public interface KEffectsPackage extends EPackage {
     int ASSIGNMENT__OPERATOR = EFFECT_FEATURE_COUNT + 3;
 
     /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__SUB_REFERENCE = EFFECT_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Assignment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 4;
+    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl <em>Emission</em>}' class.
@@ -234,6 +243,70 @@ public interface KEffectsPackage extends EPackage {
     int HOSTCODE_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl <em>Reference Call Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getReferenceCallEffect()
+     * @generated
+     */
+    int REFERENCE_CALL_EFFECT = 4;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__INDICES = EFFECT_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__SUB_REFERENCE = EFFECT_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 3;
+
+    /**
+     * The number of structural features of the '<em>Reference Call Effect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 4;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -241,7 +314,7 @@ public interface KEffectsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getFunctionCallEffect()
      * @generated
      */
-    int FUNCTION_CALL_EFFECT = 4;
+    int FUNCTION_CALL_EFFECT = 5;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -253,22 +326,22 @@ public interface KEffectsPackage extends EPackage {
     int FUNCTION_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Function Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FUNCTION_CALL_EFFECT__FUNCTION_NAME = EFFECT_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FUNCTION_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 1;
+    int FUNCTION_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Function Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_EFFECT__FUNCTION_NAME = EFFECT_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Function Call Effect</em>' class.
@@ -287,7 +360,7 @@ public interface KEffectsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getAssignOperator()
      * @generated
      */
-    int ASSIGN_OPERATOR = 5;
+    int ASSIGN_OPERATOR = 6;
 
 
     /**
@@ -355,6 +428,17 @@ public interface KEffectsPackage extends EPackage {
     EAttribute getAssignment_Operator();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getSubReference <em>Sub Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Sub Reference</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Assignment#getSubReference()
+     * @see #getAssignment()
+     * @generated
+     */
+    EReference getAssignment_SubReference();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.Emission <em>Emission</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -395,6 +479,16 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EClass getHostcodeEffect();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect <em>Reference Call Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Reference Call Effect</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
+     * @generated
+     */
+    EClass getReferenceCallEffect();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect <em>Function Call Effect</em>}'.
@@ -491,6 +585,14 @@ public interface KEffectsPackage extends EPackage {
         EAttribute ASSIGNMENT__OPERATOR = eINSTANCE.getAssignment_Operator();
 
         /**
+         * The meta object literal for the '<em><b>Sub Reference</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ASSIGNMENT__SUB_REFERENCE = eINSTANCE.getAssignment_SubReference();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl <em>Emission</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -525,6 +627,16 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EClass HOSTCODE_EFFECT = eINSTANCE.getHostcodeEffect();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl <em>Reference Call Effect</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.ReferenceCallEffectImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getReferenceCallEffect()
+         * @generated
+         */
+        EClass REFERENCE_CALL_EFFECT = eINSTANCE.getReferenceCallEffect();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.

@@ -13,12 +13,13 @@
         eType="#//Guard" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Identifiable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1"
         eType="#//Link" eOpposite="#//Link/target"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
         eType="#//Dependency" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="schizophrenic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//ControlFlow"

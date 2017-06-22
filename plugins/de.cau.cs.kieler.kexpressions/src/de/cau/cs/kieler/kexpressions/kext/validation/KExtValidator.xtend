@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author ssm
@@ -39,7 +40,7 @@ class KExtValidator extends AbstractKExtJavaValidator {
                 if (card instanceof IntValue) ok = true
                 if (card instanceof ValuedObjectReference) {
                     val refVO = card.valuedObject
-                    val refDecl = refVO.eContainer as Declaration
+                    val refDecl = refVO.eContainer as VariableDeclaration
                     if (refDecl.const && refDecl.type == ValueType.INT) {
                         if (refVO.initialValue != null && refVO.initialValue instanceof IntValue) ok = true
                     }
@@ -53,7 +54,7 @@ class KExtValidator extends AbstractKExtJavaValidator {
     }
 
    @Check
-   def void checkConstBinding(Declaration declaration) {
+   def void checkConstBinding(VariableDeclaration declaration) {
        if (declaration.isConst) {
            for (valuedObject : declaration.getValuedObjects) {
                val initialValue = valuedObject.getInitialValue

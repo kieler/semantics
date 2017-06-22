@@ -19,7 +19,11 @@ import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
 import org.eclipse.xtext.conversion.impl.INTValueConverter;
 import org.eclipse.xtext.util.Strings;
+
+import com.google.inject.Inject;
+
 import org.eclipse.xtext.nodemodel.INode;
+
 
 /**
  * Custom
@@ -55,6 +59,13 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
         };
     }
     
+    @Inject private QualifiedIDValueConverter qualifiedIDValueConverter;
+    
+    @ValueConverter(rule = "QualifiedID") 
+    public IValueConverter<String> convertQualifiedID() {
+        return qualifiedIDValueConverter;
+    }
+    
     /**
      * Provides EString converter dropping/attaching the leading/trailing character.
      * 
@@ -62,12 +73,26 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
      */
     @ValueConverter(rule = "EString")
     public IValueConverter<String> convertEString() {
+        return genericStringValueConverter();
+    }
+
+    @ValueConverter(rule = "EStringBoolean")
+    public IValueConverter<String> convertEStringBoolean() {
+        return genericStringValueConverter();
+    }
+
+    @ValueConverter(rule = "EStringAllTypes")
+    public IValueConverter<String> convertEStringAllTypes() {
+        return genericStringValueConverter();
+    }
+    
+    private IValueConverter<String> genericStringValueConverter() {
         return new IValueConverter<String>() {
 
             public String toValue(final String string, final INode node) {
                 if (!Strings.isEmpty(string)) {
                     if (string.startsWith("\"") || string.startsWith("'")) {
-                        return string.substring(1, string.length() - 1);
+                        return removeEscapeChars(string.substring(1, string.length() - 1));
                     } else {
                         return string;
                     }
@@ -87,6 +112,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                 return res;
             }
         };
+
     }
     
     /**
@@ -104,4 +130,8 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
             // each value is supported!
         }
     }
+    
+    public static String removeEscapeChars(String string) {
+        return string.replaceAll("\\\\\\\"", "\"").replaceAll("\\\\\\\\", "\\\\");
+    }    
 }

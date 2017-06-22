@@ -37,11 +37,12 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
@@ -57,6 +58,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
     @Inject
     extension SCChartsSerializeHRExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
 
     @Inject
     extension StateSynthesis
@@ -88,7 +92,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         if (!region.states.empty) {
 
-            val label = if(region.label.nullOrEmpty) "" else " " + region.label;
+            val label = if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString;
 
             // Expanded
             node.addRegionFigure => [
@@ -99,7 +103,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 } else {
                     addStatesAndDeclarationsArea();
                     // Add declarations
-                    for (declaration : region.declarations) {
+                    for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(declaration);
@@ -127,7 +131,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure;
         }
 
-        return node;
+        return <KNode> newArrayList(node)
     }
 
     /**

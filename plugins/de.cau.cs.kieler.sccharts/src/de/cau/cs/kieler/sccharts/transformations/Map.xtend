@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Map Transformation.
@@ -78,6 +79,10 @@ class Map extends AbstractExpansionTransformation {
     def void transformMap(State state, State targetRootState) {
         state.setDefaultTrace
         //TODO
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

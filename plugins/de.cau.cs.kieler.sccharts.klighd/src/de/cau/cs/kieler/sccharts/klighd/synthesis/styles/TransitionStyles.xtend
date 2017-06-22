@@ -26,7 +26,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
@@ -74,6 +73,12 @@ class TransitionStyles {
             lineWidth = 2;
         ]
     }
+    
+    def KPolyline addTransitionPolyline(KEdge edge) {
+        edge.addPolyline => [
+            lineWidth = 2;
+        ]
+    }    
     
     /**
      * Sets the style of the line to immediate.

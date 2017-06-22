@@ -27,6 +27,7 @@ import java.util.Map.Entry
 
 import static extension java.lang.Character.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+
 /**
  * Evaluates synthesis option annotations in the model.
  * 

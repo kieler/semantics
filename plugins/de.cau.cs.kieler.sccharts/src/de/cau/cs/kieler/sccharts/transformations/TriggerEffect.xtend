@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts TriggerEffect Transformation.
@@ -115,6 +116,10 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
 
             lastTransition.setTargetState(transitionOriginalTarget)
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ it.transform ] ]
     }
 
 }

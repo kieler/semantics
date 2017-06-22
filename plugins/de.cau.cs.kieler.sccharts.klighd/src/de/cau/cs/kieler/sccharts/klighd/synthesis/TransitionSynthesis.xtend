@@ -25,18 +25,15 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.EdgeRouting
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.EdgeLabelPlacement
-import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
@@ -94,6 +91,8 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         switch (transition.type) {
             case STRONGABORT: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
+            default: {
+            }
         };
 
         // Add Label
@@ -111,7 +110,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             edge.addLabel(label.toString).associateWith(transition);
         }
 
-        return edge;
+        return <KEdge> newArrayList(edge)
     }
 
 }

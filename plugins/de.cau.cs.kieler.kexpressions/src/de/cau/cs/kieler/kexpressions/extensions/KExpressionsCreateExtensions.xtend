@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 /**
  * @author ssm
@@ -278,6 +279,10 @@ class KExpressionsCreateExtensions {
     // Create an empty text expression.
     def TextExpression createTextExpression() {
         KExpressionsFactory::eINSTANCE.createTextExpression()
+    }
+    
+    def ReferenceCall createReferenceCall() {
+        KExpressionsFactory::eINSTANCE.createReferenceCall()
     }
 
     def FunctionCall createFunctionCall() {

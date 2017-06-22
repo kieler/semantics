@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
+import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
@@ -33,13 +34,23 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getFunctionName <em>Function Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getFunctionName <em>Function Name</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEffect {
+    /**
+     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> parameters;
+
     /**
      * The default value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -59,16 +70,6 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
      * @ordered
      */
     protected String functionName = FUNCTION_NAME_EDEFAULT;
-
-    /**
-     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getParameters()
-     * @generated
-     * @ordered
-     */
-    protected EList<Parameter> parameters;
 
     /**
      * <!-- begin-user-doc -->
@@ -144,10 +145,10 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                return getFunctionName();
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return getParameters();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                return getFunctionName();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -161,12 +162,12 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                setFunctionName((String)newValue);
-                return;
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
                 getParameters().addAll((Collection<? extends Parameter>)newValue);
+                return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                setFunctionName((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -180,11 +181,11 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                setFunctionName(FUNCTION_NAME_EDEFAULT);
-                return;
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 getParameters().clear();
+                return;
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                setFunctionName(FUNCTION_NAME_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -198,10 +199,10 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
             case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+                return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
         }
         return super.eIsSet(featureID);
     }
@@ -218,10 +219,15 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
                 default: return -1;
             }
         }
+        if (baseClass == Call.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS: return KExpressionsPackage.CALL__PARAMETERS;
+                default: return -1;
+            }
+        }
         if (baseClass == FunctionCall.class) {
             switch (derivedFeatureID) {
                 case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME: return KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME;
-                case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS: return KExpressionsPackage.FUNCTION_CALL__PARAMETERS;
                 default: return -1;
             }
         }
@@ -240,10 +246,15 @@ public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEf
                 default: return -1;
             }
         }
+        if (baseClass == Call.class) {
+            switch (baseFeatureID) {
+                case KExpressionsPackage.CALL__PARAMETERS: return KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS;
+                default: return -1;
+            }
+        }
         if (baseClass == FunctionCall.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME: return KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME;
-                case KExpressionsPackage.FUNCTION_CALL__PARAMETERS: return KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS;
                 default: return -1;
             }
         }

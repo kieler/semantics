@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.scg.Assignment
 import java.util.List
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 /**
  * @author ssm
@@ -62,6 +63,9 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             (assignment.expression as TextExpression).text
         } else if (assignment.expression instanceof FunctionCall) {
             serialize(assignment.expression) 
+        }
+        else if (assignment.expression instanceof ReferenceCall) {
+            (assignment.expression as ReferenceCall).serializeHR
         }
     }
     

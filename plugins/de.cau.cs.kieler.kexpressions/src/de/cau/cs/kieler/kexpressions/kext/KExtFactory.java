@@ -49,6 +49,24 @@ public interface KExtFactory extends EFactory {
     AnnotatedExpression createAnnotatedExpression();
 
     /**
+     * Returns a new object of class '<em>Declaration Scope</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Declaration Scope</em>'.
+     * @generated
+     */
+    DeclarationScope createDeclarationScope();
+
+    /**
+     * Returns a new object of class '<em>KEXT Scope</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>KEXT Scope</em>'.
+     * @generated
+     */
+    KEXTScope createKEXTScope();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

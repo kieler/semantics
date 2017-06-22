@@ -94,7 +94,7 @@ public class CompilerSelectionStore implements KiCoSelectionChangeEventListerner
         selections.put(editorID, newSelection);
         for (KiCoModelUpdateController listener : listeners) {
             if (listener.getEditor() != null && listener.getEditor().hashCode() == editorID) {
-                listener.update(ChangeEvent.SELECTION);
+//                listener.update(ChangeEvent.SELECTION);
             }
         }
     }

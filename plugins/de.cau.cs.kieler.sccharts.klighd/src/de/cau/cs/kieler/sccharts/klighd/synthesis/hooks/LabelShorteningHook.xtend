@@ -28,6 +28,9 @@ import org.eclipse.elk.core.labels.LabelManagementOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+
 /**
  * Shows or hides or shortens transition labels.
  * 
@@ -43,13 +46,12 @@ class LabelShorteningHook extends SynthesisActionHook {
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook";
     
     /** The sub category for the label management */
-    public static final SynthesisOption LABEL_MANAGEMENT_CATEGORY = SynthesisOption.createCategory("Label Management", false).
-        setCategory(GeneralSynthesisOptions::APPEARANCE)
+    public static final SynthesisOption LABEL_MANAGEMENT_CATEGORY = GeneralSynthesisOptions::LAYOUT
     /** The synthesis option to generally hide/show labels */
     public static final SynthesisOption HIDE_LABELS = SynthesisOption.createCheckOption("Hide Transition Labels",
         false).setCategory(LABEL_MANAGEMENT_CATEGORY).setUpdateAction(LabelShorteningHook.ID); // Register this action as updater
     /** The synthesis option to shorten labels */
-    public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Strategy",
+    public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Label Management",
         newLinkedList(
             LabelShorteningStrategies.NO,
             LabelShorteningStrategies.TRUNCATE,

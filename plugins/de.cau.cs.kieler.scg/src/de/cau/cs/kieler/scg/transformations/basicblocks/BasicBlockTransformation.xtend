@@ -47,6 +47,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -86,21 +87,17 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+        return newHashSet(SCGFeatures::STRUCTURALDEPTHJOIN_ID)
     }
     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension SCGControlFlowExtensions
-    
-    @Inject
-    extension AnnotationsExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension AnnotationsExtensions
          
          
     // -------------------------------------------------------------------------
@@ -314,8 +311,10 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
             	 * Afterwards, set the node to null which will ensure the exiting of this function instance.
             	 */
                 val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
-                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, basicBlockCache, newLinkedList(block))
-                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, basicBlockCache, newLinkedList(block))
+                if (node.asConditional.then != null)
+                    newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, basicBlockCache, newLinkedList(block))
+                if (node.asConditional.^else != null)                    
+                    newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, basicBlockCache, newLinkedList(block))
                 node = null
             } else 
             if (node instanceof Surface) {
@@ -557,7 +556,8 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     		
         		// Additionally, check the last node of the predecessor block.
         		val lastNode = bb.schedulingBlocks.last.nodes.last
-                if (lastNode != null && lastNode instanceof Conditional) {
+                if (lastNode != null)
+                if (lastNode instanceof Conditional) {
        		   	   /**
                	    * If it is a conditional, we want to mark this block appropriately and store a reference
           		    * to the condition of the conditional. The scheduler can use this information without extra 
@@ -565,12 +565,13 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
        			    * Therefore, check whether first node of the target block is the target of the then or else 
        			    * branch of the conditional and add this information to the predecessor object. 
        			    */
-       			    if (target.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
+       			    if (lastNode.then != null && 
+       			      target.schedulingBlocks.head.nodes.head == lastNode.then.target) {
 						predecessor.branchType = BranchType::TRUEBRANCH
        			    } else {
        			    	predecessor.branchType = BranchType::ELSEBRANCH
        			    }
-                    predecessor.conditional = lastNode as Conditional
+                    predecessor.conditional = lastNode
                 }
     		
                 // Add the predecessor to the predecessors list.

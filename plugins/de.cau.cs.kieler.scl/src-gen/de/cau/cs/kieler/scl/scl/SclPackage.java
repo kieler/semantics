@@ -327,6 +327,15 @@ public interface SclPackage extends EPackage {
     int ASSIGNMENT__OPERATOR = KEffectsPackage.ASSIGNMENT__OPERATOR;
 
     /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__SUB_REFERENCE = KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
+
+    /**
      * The number of structural features of the '<em>Assignment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

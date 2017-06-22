@@ -33,7 +33,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.IterateAction
@@ -41,7 +40,6 @@ import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
@@ -57,13 +55,10 @@ import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 
-//import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
 import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Extensions.
@@ -82,6 +77,9 @@ class SCChartsExtension {
 
     @Inject
     extension KExpressionsReplacementExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions       
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -128,6 +126,16 @@ class SCChartsExtension {
             return null;
         }
     }
+    
+    
+    def SCCharts getSCCharts(Scope scope) {
+        if (scope.eContainer != null) {
+            return (scope.eContainer as Scope).getSCCharts as SCCharts
+        } else {
+            return scope as SCCharts
+        }
+    }    
+    
 
     //====== GENERAL MODEL ELEMENTS =====
     // Get the single normal termination Transition. Return null if there is 
@@ -248,7 +256,7 @@ class SCChartsExtension {
     }
 
     def boolean isRootState(State state) {
-        state.parentRegion == null
+        state.parentRegion == null 
     }
 
     def dispatch State getRootState(State state) {
@@ -261,6 +269,12 @@ class SCChartsExtension {
 
         // There should exactly be one state in the root region
         region.parentState.getRootState
+    }
+    
+    
+    def EObject getRoot(EObject eObject) {
+        if (eObject.eContainer == null) return eObject 
+            else eObject.eContainer.root
     }
 
     // Returns true iff the state contains regions.
@@ -544,22 +558,12 @@ class SCChartsExtension {
     }
 
     def State setTypeConnector(State state) {
-        state.setType(StateType::CONNECTOR);
+        state.connector = true
         state
     }
 
     def State setTypeNormal(State state) {
-        state.setType(StateType::NORMAL);
-        state
-    }
-
-    def State setTypeReference(State state) {
-        state.setType(StateType::REFERENCE);
-        state
-    }
-
-    def State setTypeTextual(State state) {
-        state.setType(StateType::TEXTUAL);
+        state.connector = false
         state
     }
 
@@ -800,7 +804,7 @@ class SCChartsExtension {
     // 1. the source state is a connector node, then the transition is always (implicityly) immediate OR
     // 2. the transition is a normal termination and has NOT trigger, then it is also (implicityly) immediate.
     def Boolean isImmediate2(Transition transition) {
-        (transition.immediate) || (transition.sourceState.type == StateType::CONNECTOR) || (transition.type ==
+        (transition.immediate) || (transition.sourceState.isConnector) || (transition.type ==
             TransitionType::TERMINATION && transition.trigger == null
         )
     }
@@ -1253,12 +1257,12 @@ class SCChartsExtension {
         // Exclude the top level state
         if (state == targetRootState) {
             for(valuedObject : state.valuedObjects.filter[!isInput && !isOutput].toList.immutableCopy) {
-                valuedObject.declaration.output = true
+                valuedObject.variableDeclaration.output = true
             }
             return;
         }
         
-        val declarations = state.declarations.toList
+        val declarations = state.variableDeclarations
         val hierarchicalStateName = state.getHierarchicalName("LOCAL");
         for(declaration : declarations.immutableCopy) {
             targetRootState.declarations += declaration
@@ -1296,7 +1300,7 @@ class SCChartsExtension {
         }
 
         var hierarchicalScopeName = targetScope.getHierarchicalName("local")
-        val declarations = scope.declarations.iterator.toList
+        val declarations = scope.variableDeclarations
         for(declaration : declarations) {
             targetScope.declarations.add(declaration)
             if (expose) declaration.output = true
@@ -1328,7 +1332,7 @@ class SCChartsExtension {
         val relevantObjects = scope.eAllContents.filter(
             e|
                 e instanceof ValuedObjectReference || e instanceof Assignment ||
-                    e instanceof Emission || e instanceof Binding || e instanceof Equation
+                    e instanceof Emission || e instanceof Binding || e instanceof Assignment
         ).immutableCopy;
         for (obj : relevantObjects) {
             if (obj instanceof ValuedObjectReference && (obj as ValuedObjectReference).valuedObject == valuedObject) {
@@ -1353,8 +1357,8 @@ class SCChartsExtension {
             } else if (obj instanceof Binding) {
                 if((obj as Binding).formal == valuedObject) (obj as Binding).formal = replacement
                 if((obj as Binding).actual == valuedObject) (obj as Binding).actual = replacement
-            } else if (obj instanceof Equation && (obj as Equation).valuedObject == valuedObject) {
-                (obj as Equation).valuedObject = replacement;
+            } else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject) {
+                (obj as Assignment).valuedObject = replacement;
             }      
 
         }
@@ -1397,5 +1401,26 @@ class SCChartsExtension {
         ]
         newState
     }
+    
+    
+    
+    def asSCCharts(EObject eObject) {
+        eObject as SCCharts
+    }
+    
+    def asState(EObject eObject) {
+        eObject as State
+    }
 
+    def asControlflowRegion(EObject eObject) {
+        eObject as ControlflowRegion
+    }
+    
+    def asDataflowRegion(EObject eObject) {
+        eObject as DataflowRegion
+    }
+    
+    def asTransition(EObject eObject) {
+        eObject as Transition
+    }
 }

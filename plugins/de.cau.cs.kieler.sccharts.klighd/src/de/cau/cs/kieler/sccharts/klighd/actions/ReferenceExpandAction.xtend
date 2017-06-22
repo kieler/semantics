@@ -17,6 +17,9 @@ import de.cau.cs.kieler.klighd.IAction.ActionContext
 import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * This Action provides the normal collapse expand behavior for a reference {@link State} and
@@ -45,7 +48,16 @@ class ReferenceExpandAction extends CollapseExpandAction {
                     context.getKNode.children += diagram.children;
                 }
             }
-
+            else if (modelElement instanceof ValuedObject) {
+                val declaration = modelElement.eContainer
+                if (declaration instanceof ReferenceDeclaration) {
+                    val diagram = LightDiagramServices.translateModel(
+                        declaration.reference,
+                        context.viewContext
+                    )
+                    context.getKNode.children += diagram.children
+                } 
+            }
         }
         super.execute(context)
     }

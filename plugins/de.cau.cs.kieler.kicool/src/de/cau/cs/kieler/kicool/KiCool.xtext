@@ -1,0 +1,81 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+grammar de.cau.cs.kieler.kicool.KiCool with  de.cau.cs.kieler.annotations.Annotations
+
+import "http://kieler.cs.cau.de/kicool/0.1.0" as kicool
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+
+/**
+ * @author ssm
+ * @kieler.design 2016-10-19 proposed 
+ * @kieler.rating 2016-10-19 proposed yellow
+ */
+ 
+System returns kicool::System:
+    'system' id = QualifiedID 'version' version = INT 'label' label = EString
+    ('input' inputClass = ID)?
+    (metrics += Metric)*
+    processors = ProcessorGroup
+;
+
+Metric returns kicool::Metric:
+    'metric' id = QualifiedID ('alias' alias = EString)?
+;
+
+ProcessorGroup returns kicool::ProcessorGroup:
+    ('label' label = EString)?
+    
+    (
+        processors += Processor
+        |
+        'system' processors += ProcessorSystem
+        |
+        ('['
+            processors += ProcessorAlternativeGroup
+        ']')
+        |
+        ('['
+            processors += ProcessorGroup
+        ']')
+    )+
+;
+
+Processor returns kicool::Processor:
+    ('pre' 
+        ('set' presets += KVPair)+
+    )?
+    id = QualifiedID ('metric' metric = [kicool::Metric|QualifiedID])?
+    ('post' 
+        ('set' postsets += KVPair)+
+    )?
+;
+
+ProcessorSystem returns kicool::ProcessorSystem:
+    id = QualifiedID
+;
+
+ProcessorAlternativeGroup returns kicool::ProcessorAlternativeGroup:
+    ('label' label = EString)? 
+    
+    (
+        processors += ProcessorGroup
+    ('|'
+        processors += ProcessorGroup)+
+    )
+;
+
+KVPair returns kicool::KVPair:
+    key=EString isKeyValue?='key'? value=EStringAllTypes
+;

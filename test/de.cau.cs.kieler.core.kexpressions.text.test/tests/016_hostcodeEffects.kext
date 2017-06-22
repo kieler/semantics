@@ -1,8 +1,0 @@
-/* KEXT Test File for hostcode effects
- * 
- * @author ssm
- * @date 2015-06-10
- */
-
-@check hostcode#001
-expression 'printf("Hallo Welt!");'

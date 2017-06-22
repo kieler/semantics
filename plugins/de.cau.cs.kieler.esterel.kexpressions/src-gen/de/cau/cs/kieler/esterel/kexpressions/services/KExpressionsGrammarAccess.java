@@ -2405,8 +2405,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// General rule for annotations
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	//Annotation:
-	//	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
@@ -2415,13 +2414,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//PragmaAnnotation Annotation:
+	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
+		return gaAnnotations.getPragmaAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaAnnotationRule() {
+		return getPragmaAnnotationAccess().getRule();
+	}
+
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -2430,20 +2440,32 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedAnnotationAccess().getRule();
 	}
 
-	//// Restiricted Annotation Rule
-	//// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+	//// Restricted Type Annotation Rule
+	//// The restricted type annotation rule does not allow typed string annotations. 
+	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
+	//RestrictedTypeAnnotation Annotation:
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypeAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypeAnnotationRule() {
+		return getRestrictedTypeAnnotationAccess().getRule();
+	}
+
+	//// Quoted String Annotation Rule
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
-	//RestrictedAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
-	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
-		return gaAnnotations.getRestrictedAnnotationAccess();
+	//QuotedStringAnnotation Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getRestrictedAnnotationRule() {
-		return getRestrictedAnnotationAccess().getRule();
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
 	}
 
 	//// CommentAnnotation
@@ -2470,11 +2492,21 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTagAnnotation PragmaAnnotation:
+	//	'#' name=ExtendedID
+	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
+		return gaAnnotations.getPragmaTagAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaTagAnnotationRule() {
+		return getPragmaTagAnnotationAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
 	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EString (',' values+=EString)*
+	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -2483,16 +2515,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
+	//RestrictedKeyStringValueAnnotation StringAnnotation:
+	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
+		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getPramgaKeyStringValueAnnotationRule() {
+		return getPramgaKeyStringValueAnnotationAccess().getRule();
+	}
+
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
+		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// QuotedKeyStringValueAnnotation
@@ -2521,42 +2583,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// KeyBooleanValueAnnotation    
-	//// e.g.: @visible true;
-	//KeyBooleanValueAnnotation BooleanAnnotation:
-	//	'@' name=ExtendedID value=BOOLEAN
-	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
-		return gaAnnotations.getKeyBooleanValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyBooleanValueAnnotationRule() {
-		return getKeyBooleanValueAnnotationAccess().getRule();
-	}
-
-	//// KeyIntValueAnnotation
-	//// e.g.: @minSpace 10;    
-	//KeyIntValueAnnotation IntAnnotation:
-	//	'@' name=ExtendedID value=Integer
-	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
-		return gaAnnotations.getKeyIntValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyIntValueAnnotationRule() {
-		return getKeyIntValueAnnotationAccess().getRule();
-	}
-
-	//// KeyFloatValueAnnotation
-	//// e.g.: @minSpace 10.0;    
-	//KeyFloatValueAnnotation FloatAnnotation:
-	//	'@' name=ExtendedID value=Floateger
-	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
-		return gaAnnotations.getKeyFloatValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyFloatValueAnnotationRule() {
-		return getKeyFloatValueAnnotationAccess().getRule();
-	}
-
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -2580,6 +2606,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringBooleanAccess().getRule();
 	}
 
+	//EStringAllTypes:
+	//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
+		return gaAnnotations.getEStringAllTypesAccess();
+	}
+	
+	public ParserRule getEStringAllTypesRule() {
+		return getEStringAllTypesAccess().getRule();
+	}
+
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
@@ -2591,6 +2627,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
+	}
+
+	//QualifiedID:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
+		return gaAnnotations.getQualifiedIDAccess();
+	}
+	
+	public ParserRule getQualifiedIDRule() {
+		return getQualifiedIDAccess().getRule();
 	}
 
 	//// Integer

@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
  *
  * @generated
@@ -57,6 +58,16 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
      * @ordered
      */
     protected EList<Expression> indices;
+
+    /**
+     * The cached value of the '{@link #getSubReference() <em>Sub Reference</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSubReference()
+     * @generated
+     * @ordered
+     */
+    protected ValuedObjectReference subReference;
 
     /**
      * <!-- begin-user-doc -->
@@ -132,11 +143,56 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
      * <!-- end-user-doc -->
      * @generated
      */
+    public ValuedObjectReference getSubReference() {
+        return subReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetSubReference(ValuedObjectReference newSubReference, NotificationChain msgs) {
+        ValuedObjectReference oldSubReference = subReference;
+        subReference = newSubReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE, oldSubReference, newSubReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSubReference(ValuedObjectReference newSubReference) {
+        if (newSubReference != subReference) {
+            NotificationChain msgs = null;
+            if (subReference != null)
+                msgs = ((InternalEObject)subReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE, null, msgs);
+            if (newSubReference != null)
+                msgs = ((InternalEObject)newSubReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE, null, msgs);
+            msgs = basicSetSubReference(newSubReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE, newSubReference, newSubReference));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
                 return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE:
+                return basicSetSubReference(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -154,6 +210,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
                 return basicGetValuedObject();
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
                 return getIndices();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE:
+                return getSubReference();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -174,6 +232,9 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
                 getIndices().clear();
                 getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -192,6 +253,9 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
                 getIndices().clear();
                 return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -208,6 +272,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
                 return valuedObject != null;
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
                 return indices != null && !indices.isEmpty();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE:
+                return subReference != null;
         }
         return super.eIsSet(featureID);
     }

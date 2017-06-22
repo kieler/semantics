@@ -79,6 +79,7 @@ Workflow {
 
             // formatter API 
             fragment = ecore2xtext.FormatterFragment {}
+            fragment = formatting2.Formatter2Fragment auto-inject {}
 
             // labeling API 
             fragment = labeling.LabelProviderFragment {}

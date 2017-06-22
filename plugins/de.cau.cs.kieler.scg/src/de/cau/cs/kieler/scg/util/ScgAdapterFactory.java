@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.kexpressions.Identifiable;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.scg.*;
 
@@ -172,6 +173,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter caseIdentifiable(Identifiable object) {
+                return createIdentifiableAdapter();
             }
             @Override
             public Adapter caseEffect(Effect object) {
@@ -520,6 +525,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Identifiable
+     * @generated
+     */
+    public Adapter createIdentifiableAdapter() {
         return null;
     }
 

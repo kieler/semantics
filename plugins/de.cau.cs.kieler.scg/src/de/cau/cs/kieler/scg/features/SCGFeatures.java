@@ -29,6 +29,9 @@ public class SCGFeatures {
     public final static String DEPENDENCY_ID = "scg.dependency";
     public final static String DEPENDENCY_NAME = "Dependency";
 
+    public final static String STRUCTURALDEPTHJOIN_ID = "scg.sdj";
+    public final static String STRUCTURALDEPTHJOIN_NAME = "SDJ";
+
     public final static String BASICBLOCK_ID = "scg.basicblock";
     public final static String BASICBLOCK_NAME = "BasicBlock";
     

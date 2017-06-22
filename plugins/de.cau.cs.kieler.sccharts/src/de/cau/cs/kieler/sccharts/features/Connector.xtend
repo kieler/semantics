@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Connector Feature.
@@ -47,11 +48,18 @@ class Connector extends Feature {
     def isContained(State model) {
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
-            if (state.type == StateType::CONNECTOR) {
+            if (state.isConnector) {
                 return true
             }
         }
         return false
     }
+
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }  
 
 }
