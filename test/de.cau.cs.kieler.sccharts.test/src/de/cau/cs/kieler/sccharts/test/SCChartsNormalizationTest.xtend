@@ -24,6 +24,8 @@ import java.io.ByteArrayOutputStream
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -103,20 +105,25 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
             
             assertNotNull("The %s is null".format(name), iResult.result)
             assertTrue("The %s is not an SCChart".format(name), iResult.result instanceof State)
-            
+
             try {
                 // Serialize
                 val outputStream = new ByteArrayOutputStream(25000);
                 val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
-                val resource = uri.xtextResourceSet.createResource(uri)
+                val resourceSet = uri.xtextResourceSet as XtextResourceSet
+                
+                // create model resource
+                val resource = resourceSet.createResource(uri) as XtextResource
                 resource.getContents().add(iResult.result as State)
+
+                // save
                 resource.save(outputStream, saveOptions)
                 
                 assertTrue("Serialized %s is empty".format(name), outputStream.size > 0)
             } catch (AssertionError ae) {
                 throw ae
             } catch (Exception e) {
-                throw new Exception("Error in %s caused by: %s".format(name, e.message), e)
+                throw new Exception("Error while serializing %s caused by: %s".format(name, e.message), e)
             }
         }
     }
