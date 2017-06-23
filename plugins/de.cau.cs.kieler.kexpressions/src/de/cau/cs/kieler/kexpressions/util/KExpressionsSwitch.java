@@ -7,6 +7,7 @@
 package de.cau.cs.kieler.kexpressions.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.*;
 
 import java.util.List;
@@ -82,7 +83,9 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.VALUED_OBJECT: {
                 ValuedObject valuedObject = (ValuedObject)theEObject;
                 T result = caseValuedObject(valuedObject);
+                if (result == null) result = caseNamedObject(valuedObject);
                 if (result == null) result = caseAnnotatable(valuedObject);
+                if (result == null) result = caseReferenceable(valuedObject);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -145,10 +148,19 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExpressionsPackage.FUNCTION_CALL: {
-                FunctionCall functionCall = (FunctionCall)theEObject;
-                T result = caseFunctionCall(functionCall);
-                if (result == null) result = caseExpression(functionCall);
+            case KExpressionsPackage.VARIABLE_DECLARATION: {
+                VariableDeclaration variableDeclaration = (VariableDeclaration)theEObject;
+                T result = caseVariableDeclaration(variableDeclaration);
+                if (result == null) result = caseDeclaration(variableDeclaration);
+                if (result == null) result = caseAnnotatable(variableDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.REFERENCE_DECLARATION: {
+                ReferenceDeclaration referenceDeclaration = (ReferenceDeclaration)theEObject;
+                T result = caseReferenceDeclaration(referenceDeclaration);
+                if (result == null) result = caseDeclaration(referenceDeclaration);
+                if (result == null) result = caseAnnotatable(referenceDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -163,6 +175,42 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 T result = caseStringValue(stringValue);
                 if (result == null) result = caseValue(stringValue);
                 if (result == null) result = caseExpression(stringValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.CALL: {
+                Call call = (Call)theEObject;
+                T result = caseCall(call);
+                if (result == null) result = caseExpression(call);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.REFERENCE_CALL: {
+                ReferenceCall referenceCall = (ReferenceCall)theEObject;
+                T result = caseReferenceCall(referenceCall);
+                if (result == null) result = caseValuedObjectReference(referenceCall);
+                if (result == null) result = caseCall(referenceCall);
+                if (result == null) result = caseExpression(referenceCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.FUNCTION_CALL: {
+                FunctionCall functionCall = (FunctionCall)theEObject;
+                T result = caseFunctionCall(functionCall);
+                if (result == null) result = caseCall(functionCall);
+                if (result == null) result = caseExpression(functionCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.REFERENCEABLE: {
+                Referenceable referenceable = (Referenceable)theEObject;
+                T result = caseReferenceable(referenceable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.IDENTIFIABLE: {
+                Identifiable identifiable = (Identifiable)theEObject;
+                T result = caseIdentifiable(identifiable);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -321,6 +369,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseVariableDeclaration(VariableDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Reference Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Reference Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceDeclaration(ReferenceDeclaration object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -332,6 +410,51 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseFunctionCall(FunctionCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceable(Referenceable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNamedObject(NamedObject object) {
         return null;
     }
 
@@ -362,6 +485,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseStringValue(StringValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCall(Call object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceCall(ReferenceCall object) {
         return null;
     }
 

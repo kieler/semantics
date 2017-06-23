@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -201,6 +202,11 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                 termination.setTrigger(termination.trigger.and(termVariable.reference))
             }
         }
+    }
+
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

@@ -34,6 +34,9 @@ import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -114,6 +117,8 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	for(var i = 0; i < schedule.size-1; i++) {
     		schedule.get(i).createScheduleDependency(schedule.get(i+1))
     	}
+    	val threadEntry = ScgFactory.eINSTANCE.createEntry
+    	val threadExit = ScgFactory.eINSTANCE.createExit
     	
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
@@ -126,6 +131,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     		var sl = "";
     		for(s : schedule) {
     			sl += (s as Assignment).valuedObject.name + " "
+//    			System.out.print(s.printNode + " ")
     		}
     		SCGPlugin.log(sl, Level.FINE)
     	}
@@ -183,6 +189,18 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 			d instanceof ControlDependency ||
 			(d instanceof DataDependency && ((d as DataDependency).concurrent && !(d as DataDependency).confluent))
 		]
+	}
+	
+	protected def dispatch printNode(Assignment assignment) {
+	    assignment.valuedObject.name
+	}
+	
+	protected def dispatch printNode(Entry entry) {
+	    "ENTRY"
+	}
+	
+	protected def dispatch printNode(Exit exit) {
+	    "EXIT"
 	}
 
 }

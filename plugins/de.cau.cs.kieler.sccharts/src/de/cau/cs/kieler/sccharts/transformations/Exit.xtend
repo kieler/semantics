@@ -28,6 +28,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*im
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Exit Transformation.
@@ -233,6 +234,10 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 state.localActions.remove(exitAction)
             }
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

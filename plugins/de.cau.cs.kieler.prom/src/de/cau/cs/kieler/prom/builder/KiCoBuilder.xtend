@@ -64,6 +64,7 @@ import java.lang.ProcessBuilder.Redirect
 import com.google.common.io.CharStreams
 import com.google.common.io.ByteStreams
 import org.eclipse.core.runtime.Status
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author aas
@@ -455,7 +456,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         monitor.subTask("Fetching variables in model:" + file.name)
         val List<WrapperCodeAnnotationData> variables = newArrayList()
         if (model instanceof State) {
-            for(decl : model.declarations) {
+            for(decl : model.declarations.filter(VariableDeclaration)) {
                 for(valuedObject : decl.valuedObjects) {
                     // At the moment, send only inputs and outputs
                     if(decl.input || decl.output) {

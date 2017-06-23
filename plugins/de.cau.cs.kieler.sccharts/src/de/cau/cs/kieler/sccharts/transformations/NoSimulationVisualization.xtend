@@ -17,7 +17,7 @@ import com.google.common.collect.Sets
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.features.SCChartsFeatureimport de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * This class handles the default NO simulation visualization
@@ -56,6 +56,10 @@ class NoSimulationVisualization extends AbstractExpansionTransformation {
     // Do nothing
     def State transform(State rootState) {
         rootState;
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

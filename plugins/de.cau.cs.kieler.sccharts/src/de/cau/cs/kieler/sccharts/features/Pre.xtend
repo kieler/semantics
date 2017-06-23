@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.Iterator
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Pre Feature.
@@ -98,4 +99,12 @@ class Pre extends Feature {
         )
         preValExpressions
     }
+    
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }     
+    
 }

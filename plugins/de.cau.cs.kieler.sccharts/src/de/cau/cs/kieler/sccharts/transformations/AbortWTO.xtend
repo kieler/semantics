@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.StateType
 
 /**
@@ -203,7 +204,7 @@ class AbortWTO extends AbstractExpansionTransformation {
                     // Inside every region create a _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
-                    for (innerState : region.states.filter[!final && type!=StateType::CONNECTOR]) {
+                    for (innerState : region.states.filter[!final && !isConnector]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
@@ -544,4 +545,7 @@ class AbortWTO extends AbstractExpansionTransformation {
         }
     }
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
 }

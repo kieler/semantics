@@ -15,22 +15,28 @@ package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.ScgPackage;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -46,6 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getSubReference <em>Sub Reference</em>}</li>
  * </ul>
  *
  * @generated
@@ -74,34 +81,44 @@ public class GuardImpl extends NodeImpl implements Guard {
     /**
      * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getIndices()
      * @generated
      * @ordered
      */
-	protected EList<Expression> indices;
+    protected EList<Expression> indices;
 
-				/**
+    /**
      * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getOperator()
      * @generated
      * @ordered
      */
-	protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
+    protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
 
-				/**
+    /**
      * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getOperator()
      * @generated
      * @ordered
      */
-	protected AssignOperator operator = OPERATOR_EDEFAULT;
+    protected AssignOperator operator = OPERATOR_EDEFAULT;
 
-				/**
+    /**
+     * The cached value of the '{@link #getSubReference() <em>Sub Reference</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSubReference()
+     * @generated
+     * @ordered
+     */
+    protected ValuedObjectReference subReference;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -139,14 +156,14 @@ public class GuardImpl extends NodeImpl implements Guard {
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ValuedObject basicGetValuedObject() {
+    public ValuedObject basicGetValuedObject() {
         return valuedObject;
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -203,38 +220,81 @@ public class GuardImpl extends NodeImpl implements Guard {
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Expression> getIndices() {
+    public EList<Expression> getIndices() {
         if (indices == null) {
             indices = new EObjectContainmentEList<Expression>(Expression.class, this, ScgPackage.GUARD__INDICES);
         }
         return indices;
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public AssignOperator getOperator() {
+    public AssignOperator getOperator() {
         return operator;
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setOperator(AssignOperator newOperator) {
+    public void setOperator(AssignOperator newOperator) {
         AssignOperator oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__OPERATOR, oldOperator, operator));
     }
 
-				/**
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ValuedObjectReference getSubReference() {
+        return subReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetSubReference(ValuedObjectReference newSubReference, NotificationChain msgs) {
+        ValuedObjectReference oldSubReference = subReference;
+        subReference = newSubReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__SUB_REFERENCE, oldSubReference, newSubReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSubReference(ValuedObjectReference newSubReference) {
+        if (newSubReference != subReference) {
+            NotificationChain msgs = null;
+            if (subReference != null)
+                msgs = ((InternalEObject)subReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__SUB_REFERENCE, null, msgs);
+            if (newSubReference != null)
+                msgs = ((InternalEObject)newSubReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__SUB_REFERENCE, null, msgs);
+            msgs = basicSetSubReference(newSubReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__SUB_REFERENCE, newSubReference, newSubReference));
+    }
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -246,6 +306,8 @@ public class GuardImpl extends NodeImpl implements Guard {
                 return basicSetExpression(null, msgs);
             case ScgPackage.GUARD__INDICES:
                 return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+            case ScgPackage.GUARD__SUB_REFERENCE:
+                return basicSetSubReference(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -267,6 +329,8 @@ public class GuardImpl extends NodeImpl implements Guard {
                 return getIndices();
             case ScgPackage.GUARD__OPERATOR:
                 return getOperator();
+            case ScgPackage.GUARD__SUB_REFERENCE:
+                return getSubReference();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -277,7 +341,7 @@ public class GuardImpl extends NodeImpl implements Guard {
      * @generated
      */
     @SuppressWarnings("unchecked")
-				@Override
+    @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case ScgPackage.GUARD__VALUED_OBJECT:
@@ -292,6 +356,9 @@ public class GuardImpl extends NodeImpl implements Guard {
                 return;
             case ScgPackage.GUARD__OPERATOR:
                 setOperator((AssignOperator)newValue);
+                return;
+            case ScgPackage.GUARD__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -317,6 +384,9 @@ public class GuardImpl extends NodeImpl implements Guard {
             case ScgPackage.GUARD__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
                 return;
+            case ScgPackage.GUARD__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -337,17 +407,19 @@ public class GuardImpl extends NodeImpl implements Guard {
                 return indices != null && !indices.isEmpty();
             case ScgPackage.GUARD__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
+            case ScgPackage.GUARD__SUB_REFERENCE:
+                return subReference != null;
         }
         return super.eIsSet(featureID);
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
         if (baseClass == Effect.class) {
             switch (derivedFeatureID) {
                 default: return -1;
@@ -359,19 +431,20 @@ public class GuardImpl extends NodeImpl implements Guard {
                 case ScgPackage.GUARD__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
                 case ScgPackage.GUARD__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
                 case ScgPackage.GUARD__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
+                case ScgPackage.GUARD__SUB_REFERENCE: return KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
                 default: return -1;
             }
         }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
         if (baseClass == Effect.class) {
             switch (baseFeatureID) {
                 default: return -1;
@@ -383,19 +456,20 @@ public class GuardImpl extends NodeImpl implements Guard {
                 case KEffectsPackage.ASSIGNMENT__EXPRESSION: return ScgPackage.GUARD__EXPRESSION;
                 case KEffectsPackage.ASSIGNMENT__INDICES: return ScgPackage.GUARD__INDICES;
                 case KEffectsPackage.ASSIGNMENT__OPERATOR: return ScgPackage.GUARD__OPERATOR;
+                case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE: return ScgPackage.GUARD__SUB_REFERENCE;
                 default: return -1;
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());

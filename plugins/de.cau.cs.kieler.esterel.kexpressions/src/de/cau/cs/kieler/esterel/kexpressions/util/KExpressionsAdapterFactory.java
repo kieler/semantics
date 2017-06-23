@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions.util;
 
@@ -174,7 +170,7 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createReturnAdapter();
             }
             @Override
-            public Adapter caseAnnotatable(de.cau.cs.kieler.annotations.Annotatable object) {
+            public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
             @Override

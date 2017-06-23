@@ -1,0 +1,59 @@
+grammar de.cau.cs.kieler.sccharts.text.actions.Actions with de.cau.cs.kieler.kexpressions.kext.KExt
+  
+//// we do not need to generate the transitionlabel ecore model, because we
+//// only reuse classes of the official sccharts metamodel
+//generate transitionlabel "http://kieler.cs.cau.de/sccharts/actionlabel"
+ 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+
+// haf: We need a Rule for transitions in order to serialize them
+// here we only want to have the features isImmediate, delay, trigger and effects
+// the features type, targetState, priority, isHistory are ignored and set as transient
+// you need to override the rule to support transitions properly
+
+Transition returns sccharts::Transition:
+	{sccharts::Transition}
+    (annotations += Annotation)*
+	(immediate?='immediate')? (delay=INT)? (deferred?='deferred')?  (history=HistoryType)? (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 
+
+
+//// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
+//Action returns sccharts::Action:
+//    {sccharts::Action}
+////    (annotations += Annotation)*
+//	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
+EntryAction returns sccharts::EntryAction:
+      {sccharts::EntryAction}
+//    (annotations += Annotation)*
+   'entry' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';'?;      
+DuringAction returns sccharts::DuringAction:
+    {sccharts::DuringAction}
+//    (annotations += Annotation)*
+   (immediate?='immediate')? 'during' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';'?;      
+ExitAction returns sccharts::ExitAction:
+    {sccharts::ExitAction}
+//    (annotations += Annotation)*
+   'exit' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';'?;      
+SuspendAction returns sccharts::SuspendAction:
+    {sccharts::SuspendAction}
+//    (annotations += Annotation)*
+   (immediate?='immediate')? (weak?='weak')? 'suspend'  (trigger=BoolExpression)? ';'?;   
+IterateAction returns sccharts::IterateAction:
+    {sccharts::IterateAction}
+    (immediate?='immediate')? 'iterate' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';'?;
+
+
+enum DivOperator returns kexpressions::OperatorType:	
+	DIV=":";
+	
+
+enum HistoryType returns sccharts::HistoryType:
+    RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
+    
+	
+	

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions;
 
@@ -389,5 +385,5 @@ public enum ValueType implements Enumerator {
     public String toString() {
         return literal;
     }
-
+    
 } //ValueType

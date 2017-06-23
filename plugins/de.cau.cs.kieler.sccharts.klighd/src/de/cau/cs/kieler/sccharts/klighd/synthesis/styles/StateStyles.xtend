@@ -23,7 +23,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.sccharts.State
 import java.util.List
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
@@ -68,13 +67,13 @@ class StateStyles {
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.declarations", null);
 
-    private var baseLineWidth = 1;
+    protected var baseLineWidth = 1;
     
     /**
      * Adds a connector figure.
      */
     def KRoundedRectangle addConnectorFigure(KNode node) {
-        node.setNodeSize(7, 7);
+        node.setNodeSize(2, 2);
         node.addRoundedRectangle(7, 7, baseLineWidth) => [
             background = STATE_CONNECTOR.color;
             foreground = STATE_CONNECTOR.color;
@@ -145,6 +144,42 @@ class StateStyles {
             setGridPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
         ]
     }
+    
+    /**
+     * Sets the style of an existing figure to violation.
+     */
+    def setViolationStyle(KNode node, boolean isHaltState) {
+        if (isHaltState) {
+            val outer = node.getKContainerRendering as KRoundedRectangle;
+            val inner = outer.copy;
+            val offset = outer.lineWidthValue + if(outer.lineWidthValue == baseLineWidth) 3 else 1;
+            outer => [
+                // This figure is no longer the container for content
+                lineWidth = baseLineWidth +1
+                setProperty(IS_CONTENT_CONTAINER, false);
+                setCornerSize(offset + cornerWidth, offset + cornerHeight);
+                // Update minimal node size according to new corner radius (corner radius x 2)
+                node.setMinimalNodeSize(cornerWidth * 2, cornerHeight * 2);
+                setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
+                foreground = STATE_FIANL_FOREGROND.color;
+                // Add grid placement to correctly use offsets
+                setGridPlacement(1);
+                children += inner
+            ]
+            inner => [
+                lineWidth = baseLineWidth;
+                foreground = STATE_FIANL_FOREGROND.color;
+                setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
+                // Add surrounding space (white border)
+                setGridPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
+            ]   
+            return outer         
+        } else {
+            node.getKContainerRendering => [
+                setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
+            ]
+        }
+    }    
 
     /**
      * Sets the style of an existing figure to referenced.
@@ -229,9 +264,15 @@ class StateStyles {
                 while (entries.hasNext) {
                 	val entry = entries.next
                 	if (builder.length > 0 && keyword != entry.value) {
+// I'm not sure about this. I take the master version. Please check.
+//<<<<<<< HEAD
+//                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
+//		                ktext = it.addText(builder.append(possibleSpace).toString)
+//=======
 		                ktext = it.addText(builder.append(" ").toString) => [
                             horizontalAlignment = H_LEFT
                         ]
+//>>>>>>> master
 		                if (keyword) {
 		                	ktext.highlightKeyword
 		                }                		
@@ -239,7 +280,8 @@ class StateStyles {
                 		parts++
                 	}
                 	if (builder.length > 0) {
-                		builder.append(" ")
+                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
+                		builder.append(possibleSpace)
                 	}
                 	builder.append(entry.key)
                 	keyword = entry.value

@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.FloatValue
+import java.util.List
 
 /**
  * @author ssm
@@ -76,4 +77,15 @@ class KExpressionsValueExtensions {
 	def getIntValue(Expression expression) {
 	    expression.asIntValue.value 
 	}
+	
+    def List<Value> getAllValues(Expression expression) {
+        <Value> newArrayList => [
+            if (expression == null) {
+            } else if (expression instanceof Value) { 
+                it += expression
+            } else { 
+                it += expression.eAllContents.filter(Value).toList
+            }
+        ]  
+    }  	
 }

@@ -27,7 +27,6 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import org.eclipse.elk.core.data.LayoutMetaDataService
@@ -39,7 +38,6 @@ import org.eclipse.elk.graph.properties.Property
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
-import java.util.WeakHashMap
 
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.

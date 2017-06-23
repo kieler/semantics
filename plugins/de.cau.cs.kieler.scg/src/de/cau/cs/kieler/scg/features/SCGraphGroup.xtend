@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.features
 import de.cau.cs.kieler.kico.features.FeatureGroup
 
 /**
- * @author als
+ * @author als ssm
  *
  */
 class SCGraphGroup extends FeatureGroup {
@@ -36,6 +36,7 @@ class SCGraphGroup extends FeatureGroup {
         newHashSet(
         	SCGFeatures::BASIC_ID, 
         	SCGFeatures::DEPENDENCY_ID, 
+        	SCGFeatures::STRUCTURALDEPTHJOIN_ID,
         	SCGFeatures::BASICBLOCK_ID, 
         	SCGFeatures::GUARD_EXPRESSIONS_ID, 
         	SCGFeatures::GUARDS_ID,

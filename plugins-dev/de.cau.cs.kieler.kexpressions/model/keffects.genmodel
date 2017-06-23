@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kexpressions/src" modelPluginID="de.cau.cs.kieler.kexpressions"
+    modelName="KEffects" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations kexpressions.genmodel#//kexpressions"
+    importOrganizing="true">
+  <foreignModel>keffects.ecore</foreignModel>
+  <genPackages prefix="KEffects" basePackage="de.cau.cs.kieler.kexpressions" disposableProviderFactory="true"
+      ecorePackage="keffects.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="keffects.ecore#//AssignOperator">
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/ASSIGN"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/ASSIGNADD"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/ASSIGNSUB"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/ASSIGNMUL"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/ASSIGNDIV"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/POSTFIXADD"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/POSTFIXSUB"/>
+    </genEnums>
+    <genClasses ecoreClass="keffects.ecore#//Effect"/>
+    <genClasses ecoreClass="keffects.ecore#//Assignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/indices"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//Assignment/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="keffects.ecore#//Emission">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Emission/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Emission/newValue"/>
+    </genClasses>
+    <genClasses ecoreClass="keffects.ecore#//HostcodeEffect"/>
+    <genClasses ecoreClass="keffects.ecore#//FunctionCallEffect"/>
+  </genPackages>
+</genmodel:GenModel>

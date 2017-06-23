@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER SCCharts Textual Editor
+Bundle-Vendor: Kiel University
+Bundle-Version: 0.1.2.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.builder,
+ org.eclipse.elk.graph,
+ org.eclipse.elk.core,
+ de.cau.cs.kieler.kexpressions.ui,
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.annotations.ui,
+ org.eclipse.xtext.generator;bundle-version="2.8.3",
+ org.eclipse.xtend.lib,
+ de.cau.cs.kieler.klighd;bundle-version="0.9.0",
+ de.cau.cs.kieler.sccharts.preferences,
+ org.eclipse.ui.editors,
+ org.eclipse.ui
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist,
+ de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,
+ de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.sccharts.text.actions.ui.quickfix,
+ de.cau.cs.kieler.sccharts.text.sct.ui,
+ de.cau.cs.kieler.sccharts.text.sct.ui.contentassist,
+ de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.antlr,
+ de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.sccharts.text.sct.ui.quickfix,
+ de.cau.cs.kieler.sccharts.text.ui,
+ de.cau.cs.kieler.sccharts.text.ui.sctgenerator
+Bundle-Activator: de.cau.cs.kieler.sccharts.text.sct.ui.internal.SctActivator

@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 
 /**
  * @author ssm
@@ -53,5 +54,9 @@ class KEffectsExtensions {
        effect.text = hostCode;
        effect        
    }    
+   
+    def ReferenceCallEffect createReferenceCallEffect() {
+        KEffectsFactory::eINSTANCE.createReferenceCallEffect()
+    }
 
 }

@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.sccharts.text.ui.sctgenerator
 
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ChanceMax
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.MinMax
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
+import de.cau.cs.kieler.sccharts.text.sctgenerator.ChanceMax
+import de.cau.cs.kieler.sccharts.text.sctgenerator.MinMax
+import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator
+import de.cau.cs.kieler.sccharts.text.sctgenerator.Value
 import java.util.List
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.jface.dialogs.IMessageProvider

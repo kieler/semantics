@@ -13,26 +13,31 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
-import java.util.List
-import java.util.logging.Logger
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.graph.properties.IProperty
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import org.eclipse.elk.core.options.CoreOptions
 import de.cau.cs.kieler.core.model.PluginLog
 import de.cau.cs.kieler.core.model.Log
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -42,89 +47,96 @@ import de.cau.cs.kieler.core.model.Log
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
+class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
 
-    @Inject 
-    extension KNodeExtensions
-    
-    // -------------------------------------------------------------------------
-    // SubSyntheses
-    @Inject
-    StateSynthesis stateSynthesis
-    
-    @Inject
-    ControlflowRegionSynthesis controlflowSynthesis    
-    
-    @Inject
-    DataflowRegionSynthesis dataflowSynthesis  
-      
-    @Inject
-    TransitionSynthesis transitionSynthesis
+    @Inject extension KNodeExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension SCChartsExtension 
+    @Inject extension SCChartsSerializeHRExtension
+    @Inject extension AnnotationsExtensions
+    @Inject StateSynthesis stateSynthesis
+    @Inject ControlflowRegionSynthesis controlflowSynthesis    
+    @Inject DataflowRegionSynthesis dataflowSynthesis  
+    @Inject TransitionSynthesis transitionSynthesis
         
-    // -------------------------------------------------------------------------
-    // Hooks
-    @Inject
-    SynthesisHooks hooks  
+    @Inject SynthesisHooks hooks  
+
+    static val PRAGMA_SYMBOLS = "symbols"       
+    static val PRAGMA_SYMBOL = "symbol"       
+    static val PRAGMA_SYMBOLS_GREEK = "greek"
+    static val PRAGMA_SYMBOLS_SUBSCRIPT = "subscript"       
+    static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
+    static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
+    static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
+    static val PRAGMA_FONT = "font"        
+    static val PRAGMA_SKINPATH = "skinpath"
     
-    // -------------------------------------------------------------------------
-    // Fields
-    public val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
-       
-    // -------------------------------------------------------------------------
-    // Sidebar Options
-    
+    public static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
+        setCategory(GeneralSynthesisOptions::APPEARANCE)
+        
     override getDisplayedActions() {
         return newLinkedList => [ list |
             hooks.allHooks.forEach[list.addAll(getDisplayedActions)];
         ]
     }
 
+    val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
+    
+    @Accessors private var String skinPath = ""
+       
     override getDisplayedSynthesisOptions() {
-        val options = new LinkedHashSet();
-        
-        // Add general options
-        options.addAll(USE_KLAY);//USE_ADAPTIVEZOOM
-        
-        // Add options of subsyntheses
-        options.addAll(stateSynthesis.displayedSynthesisOptions);
-        options.addAll(transitionSynthesis.displayedSynthesisOptions);
-        options.addAll(controlflowSynthesis.displayedSynthesisOptions);
-        options.addAll(dataflowSynthesis.displayedSynthesisOptions);
-        
-        // Add options of hooks
-        hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)];
+        val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, DEBUGGING, LAYOUT)
+        options.addAll(APPEARANCE, DATAFLOW, LAYOUT, DEBUGGING)
+        options.add(SHOW_ALL_SCCHARTS)
+        options.add(USE_KLAY)
+        options.addAll(dataflowSynthesis.displayedSynthesisOptions)
         
-        return options.toList;
+        // Add options of hooks
+        hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]
+        
+        return options.toList
     }
 
-//    override getDisplayedLayoutOptions() {
-//        return newLinkedList(
-//            specifyLayoutOption(CoreOptions::DIRECTION, #[Direction::UNDEFINED, Direction::RIGHT, Direction::DOWN]),
-//            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
-//        );
-//    }
-           
-    // -------------------------------------------------------------------------
-    // The main entry transform function   
     override transform(Scope root) {
-        val startTime = System.currentTimeMillis;
+        val startTime = System.currentTimeMillis
         
-        val rootNode = createNode();
+        val rootNode = createNode
                 
         //START
-        hooks.invokeStart(root, rootNode);
+        hooks.invokeStart(root, rootNode)
         
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
-        usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
+        usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
+        
+        val scc = root.getSCCharts
+        clearSymbols
+        for(symbolTable : scc.getPragmas(PRAGMA_SYMBOLS)) {  
+            var prefix = ""
+            if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_GREEK)) { defineGreekSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_SUBSCRIPT)) { defineSubscriptSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_SCRIPT)) { defineMathScriptSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
+        }             
+        for(symbol : scc.getPragmas(PRAGMA_SYMBOL)) {
+            symbol.values.head.defineSymbol(symbol.values.get(1))
+        }
+        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getPragmas(PRAGMA_SKINPATH).head.values.head
 
-        if (root instanceof State) {
+        if (root instanceof SCCharts) {
+            if (SHOW_ALL_SCCHARTS.booleanValue) {
+                rootNode.children += root.rootStates.map[ stateSynthesis.transform(it); ]
+            } else {
+                rootNode.children += stateSynthesis.transform(root.rootStates.head) 
+            }
+        } else if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
         } else if (root instanceof ControlflowRegion) {
             //Adding all children to the root node will hide the graphical representation of the region itself.
-            rootNode.children += controlflowSynthesis.transform(root).children;
+//            rootNode.children += controlflowSynthesis.transform(root).children;
         }
         
         // Add tracking adapter to allow access to source model associations
@@ -133,21 +145,19 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
         rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
-        hooks.invokeFinish(root, rootNode);
+        val pragmaFont = scc.getPragmas(PRAGMA_FONT).last
+        if (pragmaFont != null) {
+            rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
+        }
+        
+        hooks.invokeFinish(root, rootNode)
 
         // Log elapsed time
         Log.log(
             "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
-                ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
+                ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
 		
-        return rootNode;
+        return rootNode
     }
-
-    // -------------------------------------------------------------------------
-    // Increase Visibility of needed protected inherited methods
-    
-    override getUsedContext() {
-        return super.usedContext;
-    }
-    
+   
 }

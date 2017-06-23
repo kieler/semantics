@@ -57,6 +57,7 @@ public class KEXTTest {
     
     public static String KEXT_HUMANREADABLE_ANNOTATION = "readable";  
     public static String KEXT_STRICT_ANNOTATION = "strict";
+    public static String KEXT_CHECKALIAS_ANNOTATOIN = "aliasCheck";
     
     public static String KEXT_EXPRESSION_KEYWORD = "expression";
 
@@ -117,6 +118,8 @@ public class KEXTTest {
         	System.out.println(assertMessage);
             Assert.fail(assertMessage);
         }
+        
+        StringAnnotation aliasCheckAnnotation = getAnnotation(entity, KEXT_CHECKALIAS_ANNOTATOIN);
     }
     
     @Test

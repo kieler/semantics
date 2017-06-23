@@ -1,26 +1,42 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -36,6 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getSubReference <em>Sub Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
  * </ul>
  *
@@ -55,24 +72,24 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getExpression()
      * @generated
      * @ordered
      */
-	protected Expression expression;
+    protected Expression expression;
 
-				/**
+    /**
      * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getIndices()
      * @generated
      * @ordered
      */
-	protected EList<Expression> indices;
+    protected EList<Expression> indices;
 
-				/**
+    /**
      * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -92,7 +109,17 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      */
     protected AssignOperator operator = OPERATOR_EDEFAULT;
 
-				/**
+    /**
+     * The cached value of the '{@link #getSubReference() <em>Sub Reference</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSubReference()
+     * @generated
+     * @ordered
+     */
+    protected ValuedObjectReference subReference;
+
+    /**
      * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -102,7 +129,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      */
     protected ControlFlow next;
 
-                /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -119,6 +146,163 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     @Override
     protected EClass eStaticClass() {
         return ScgPackage.Literals.ASSIGNMENT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ValuedObject getValuedObject() {
+        if (valuedObject != null && valuedObject.eIsProxy()) {
+            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+            if (valuedObject != oldValuedObject) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
+            }
+        }
+        return valuedObject;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ValuedObject basicGetValuedObject() {
+        return valuedObject;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setValuedObject(ValuedObject newValuedObject) {
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Expression getExpression() {
+        return expression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+        Expression oldExpression = expression;
+        expression = newExpression;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__EXPRESSION, oldExpression, newExpression);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setExpression(Expression newExpression) {
+        if (newExpression != expression) {
+            NotificationChain msgs = null;
+            if (expression != null)
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+            if (newExpression != null)
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+            msgs = basicSetExpression(newExpression, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Expression> getIndices() {
+        if (indices == null) {
+            indices = new EObjectContainmentEList<Expression>(Expression.class, this, ScgPackage.ASSIGNMENT__INDICES);
+        }
+        return indices;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public AssignOperator getOperator() {
+        return operator;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setOperator(AssignOperator newOperator) {
+        AssignOperator oldOperator = operator;
+        operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__OPERATOR, oldOperator, operator));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ValuedObjectReference getSubReference() {
+        return subReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetSubReference(ValuedObjectReference newSubReference, NotificationChain msgs) {
+        ValuedObjectReference oldSubReference = subReference;
+        subReference = newSubReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__SUB_REFERENCE, oldSubReference, newSubReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSubReference(ValuedObjectReference newSubReference) {
+        if (newSubReference != subReference) {
+            NotificationChain msgs = null;
+            if (subReference != null)
+                msgs = ((InternalEObject)subReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
+            if (newSubReference != null)
+                msgs = ((InternalEObject)newSubReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
+            msgs = basicSetSubReference(newSubReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__SUB_REFERENCE, newSubReference, newSubReference));
     }
 
     /**
@@ -169,120 +353,6 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObject getValuedObject() {
-        if (valuedObject != null && valuedObject.eIsProxy()) {
-            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
-            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
-            if (valuedObject != oldValuedObject) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
-            }
-        }
-        return valuedObject;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ValuedObject basicGetValuedObject() {
-        return valuedObject;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setValuedObject(ValuedObject newValuedObject) {
-        ValuedObject oldValuedObject = valuedObject;
-        valuedObject = newValuedObject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public Expression getExpression() {
-        return expression;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
-        Expression oldExpression = expression;
-        expression = newExpression;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__EXPRESSION, oldExpression, newExpression);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public void setExpression(Expression newExpression) {
-        if (newExpression != expression) {
-            NotificationChain msgs = null;
-            if (expression != null)
-                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__EXPRESSION, null, msgs);
-            if (newExpression != null)
-                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__EXPRESSION, null, msgs);
-            msgs = basicSetExpression(newExpression, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EList<Expression> getIndices() {
-        if (indices == null) {
-            indices = new EObjectContainmentEList<Expression>(Expression.class, this, ScgPackage.ASSIGNMENT__INDICES);
-        }
-        return indices;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public AssignOperator getOperator() {
-        return operator;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public void setOperator(AssignOperator newOperator) {
-        AssignOperator oldOperator = operator;
-        operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__OPERATOR, oldOperator, operator));
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -290,6 +360,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return basicSetExpression(null, msgs);
             case ScgPackage.ASSIGNMENT__INDICES:
                 return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                return basicSetSubReference(null, msgs);
             case ScgPackage.ASSIGNMENT__NEXT:
                 return basicSetNext(null, msgs);
         }
@@ -313,6 +385,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return getIndices();
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 return getOperator();
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                return getSubReference();
             case ScgPackage.ASSIGNMENT__NEXT:
                 return getNext();
         }
@@ -325,7 +399,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * @generated
      */
     @SuppressWarnings("unchecked")
-				@Override
+    @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
@@ -340,6 +414,9 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return;
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 setOperator((AssignOperator)newValue);
+                return;
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)newValue);
                 return;
             case ScgPackage.ASSIGNMENT__NEXT:
                 setNext((ControlFlow)newValue);
@@ -368,6 +445,9 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
                 return;
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)null);
+                return;
             case ScgPackage.ASSIGNMENT__NEXT:
                 setNext((ControlFlow)null);
                 return;
@@ -391,6 +471,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return indices != null && !indices.isEmpty();
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                return subReference != null;
             case ScgPackage.ASSIGNMENT__NEXT:
                 return next != null;
         }
@@ -399,11 +481,11 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
         if (baseClass == Effect.class) {
             switch (derivedFeatureID) {
                 default: return -1;
@@ -415,19 +497,20 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 case ScgPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
                 case ScgPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
                 case ScgPackage.ASSIGNMENT__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
+                case ScgPackage.ASSIGNMENT__SUB_REFERENCE: return KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
                 default: return -1;
             }
         }
         return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
         if (baseClass == Effect.class) {
             switch (baseFeatureID) {
                 default: return -1;
@@ -439,13 +522,14 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 case KEffectsPackage.ASSIGNMENT__EXPRESSION: return ScgPackage.ASSIGNMENT__EXPRESSION;
                 case KEffectsPackage.ASSIGNMENT__INDICES: return ScgPackage.ASSIGNMENT__INDICES;
                 case KEffectsPackage.ASSIGNMENT__OPERATOR: return ScgPackage.ASSIGNMENT__OPERATOR;
+                case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE: return ScgPackage.ASSIGNMENT__SUB_REFERENCE;
                 default: return -1;
             }
         }
         return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

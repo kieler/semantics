@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.sccharts.transformations
-
+ 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
@@ -28,6 +28,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*import 
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
+
 
 /**
  * SCCharts CountDelay Transformation.
@@ -133,5 +135,10 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
             transition.setDelay(1)
         }
     }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
 
 }
+

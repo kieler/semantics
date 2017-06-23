@@ -112,7 +112,6 @@
     <module>de.cau.cs.kieler.simulation.ui</module>
     <module>de.cau.cs.kieler.sj</module>
     <module>de.cau.cs.kieler.sjl</module>
-    <module>de.cau.cs.kieler.synccharts</module>
     <module>org.freemarker</module>
     <module>org.json</module>
   </modules>

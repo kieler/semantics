@@ -26,7 +26,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -44,6 +43,7 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
@@ -65,8 +65,8 @@ class S2SCC {
     extension KExpressionsValueExtensions      
 
     @Inject
-    extension SExtension    
-    
+    extension KExpressionsDeclarationExtensions    
+
     // General method to create the c simulation interface.
     def transform (Program program) {
        '''
@@ -256,7 +256,7 @@ class S2SCC {
    
    // Generate variables.
    def sVariablesOLD(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
             «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
@@ -463,7 +463,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
         cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«signal.name»));
         //cJSON_AddItemToObject(output, "«signal.name»", cJSON_CreateNumber(«signal.name»));
         cJSON_AddItemToObject(output, "«signal.name»", value);
-    }
+        }
     «ENDFOR»'''»
     '''
    }

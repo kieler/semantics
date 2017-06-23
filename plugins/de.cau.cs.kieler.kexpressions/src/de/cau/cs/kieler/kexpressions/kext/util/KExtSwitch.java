@@ -3,6 +3,8 @@
 package de.cau.cs.kieler.kexpressions.kext.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.kext.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -70,6 +72,11 @@ public class KExtSwitch<T> extends Switch<T> {
             case KExtPackage.KEXT: {
                 Kext kext = (Kext)theEObject;
                 T result = caseKext(kext);
+                if (result == null) result = caseKEXTScope(kext);
+                if (result == null) result = caseDeclarationScope(kext);
+                if (result == null) result = caseAnnotatable(kext);
+                if (result == null) result = caseIdentifiable(kext);
+                if (result == null) result = caseReferenceable(kext);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -83,6 +90,22 @@ public class KExtSwitch<T> extends Switch<T> {
                 AnnotatedExpression annotatedExpression = (AnnotatedExpression)theEObject;
                 T result = caseAnnotatedExpression(annotatedExpression);
                 if (result == null) result = caseAnnotatable(annotatedExpression);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExtPackage.DECLARATION_SCOPE: {
+                DeclarationScope declarationScope = (DeclarationScope)theEObject;
+                T result = caseDeclarationScope(declarationScope);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExtPackage.KEXT_SCOPE: {
+                KEXTScope kextScope = (KEXTScope)theEObject;
+                T result = caseKEXTScope(kextScope);
+                if (result == null) result = caseDeclarationScope(kextScope);
+                if (result == null) result = caseAnnotatable(kextScope);
+                if (result == null) result = caseIdentifiable(kextScope);
+                if (result == null) result = caseReferenceable(kextScope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -136,6 +159,36 @@ public class KExtSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Declaration Scope</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Declaration Scope</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDeclarationScope(DeclarationScope object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>KEXT Scope</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>KEXT Scope</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseKEXTScope(KEXTScope object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -147,6 +200,36 @@ public class KExtSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceable(Referenceable object) {
         return null;
     }
 

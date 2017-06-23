@@ -15,9 +15,15 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -27,10 +33,6 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * SCCharts Termination Transformation.
@@ -77,6 +79,9 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
 
     @Inject
     extension KExpressionsComplexCreateExtensions
+
+    @Inject
+    extension KExpressionsDeclarationExtensions
 
     @Inject
     extension SCChartsTransformationExtension
@@ -151,7 +156,6 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             // should be taken.
             val finishedValuedObject = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
                 setTypeBool.uniqueName;
-                
             val resetFinished = state.createEntryAction
             resetFinished.effects.add(finishedValuedObject.assign(FALSE))
 
@@ -196,6 +200,10 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                 if (!hasConditionalTerminations) {
                     finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
                 }
+                //val T2 = finalState.createImmediateTransitionTo(Final)
+                // Set the final state flag to false
+                //finalState.setFinal(false);
+                finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
             }
             
 
@@ -223,6 +231,12 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                 terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
                 terminationTransition.setImmediate(true);
             }
+        }
+
+        for (terminationTransition : terminationTransitions) {
+            terminationTransition.setType(TransitionType::WEAKABORT);
+            // TODO: check if optimization is correct in all cases!
+            terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
 
             // A normal termination should immediately be trigger-able! (test 145) 
             // if not a delayed-conditional termination!
@@ -240,9 +254,9 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         }
 
     }
-    
-    
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
     
-
 }

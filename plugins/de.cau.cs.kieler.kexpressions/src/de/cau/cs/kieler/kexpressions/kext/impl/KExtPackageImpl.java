@@ -8,6 +8,8 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
+import de.cau.cs.kieler.kexpressions.kext.KEXTScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtFactory;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
@@ -46,6 +48,20 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * @generated
      */
     private EClass annotatedExpressionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass declarationScopeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass kextScopeEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -125,24 +141,6 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getKext_Declarations() {
-        return (EReference)kextEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getKext_Entities() {
-        return (EReference)kextEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getTestEntity() {
         return testEntityEClass;
     }
@@ -188,6 +186,51 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getDeclarationScope() {
+        return declarationScopeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDeclarationScope_Declarations() {
+        return (EReference)declarationScopeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getKEXTScope() {
+        return kextScopeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getKEXTScope_Entities() {
+        return (EReference)kextScopeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getKEXTScope_Scopes() {
+        return (EReference)kextScopeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public KExtFactory getKExtFactory() {
         return (KExtFactory)getEFactoryInstance();
     }
@@ -212,8 +255,6 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
         // Create classes and their features
         kextEClass = createEClass(KEXT);
-        createEReference(kextEClass, KEXT__DECLARATIONS);
-        createEReference(kextEClass, KEXT__ENTITIES);
 
         testEntityEClass = createEClass(TEST_ENTITY);
         createEReference(testEntityEClass, TEST_ENTITY__EFFECT);
@@ -221,6 +262,13 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
         annotatedExpressionEClass = createEClass(ANNOTATED_EXPRESSION);
         createEReference(annotatedExpressionEClass, ANNOTATED_EXPRESSION__EXPRESSION);
+
+        declarationScopeEClass = createEClass(DECLARATION_SCOPE);
+        createEReference(declarationScopeEClass, DECLARATION_SCOPE__DECLARATIONS);
+
+        kextScopeEClass = createEClass(KEXT_SCOPE);
+        createEReference(kextScopeEClass, KEXT_SCOPE__ENTITIES);
+        createEReference(kextScopeEClass, KEXT_SCOPE__SCOPES);
     }
 
     /**
@@ -247,21 +295,24 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
+        KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
         // Create type parameters
 
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        kextEClass.getESuperTypes().add(this.getKEXTScope());
         annotatedExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        kextScopeEClass.getESuperTypes().add(this.getDeclarationScope());
+        kextScopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        kextScopeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
+        kextScopeEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceable());
 
         // Initialize classes and features; add operations and parameters
         initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getKext_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getKext_Entities(), this.getTestEntity(), null, "entities", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(testEntityEClass, TestEntity.class, "TestEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTestEntity_Effect(), theKEffectsPackage.getEffect(), null, "effect", null, 0, 1, TestEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -269,6 +320,13 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
 
         initEClass(annotatedExpressionEClass, AnnotatedExpression.class, "AnnotatedExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAnnotatedExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, AnnotatedExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(declarationScopeEClass, DeclarationScope.class, "DeclarationScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getDeclarationScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, DeclarationScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(kextScopeEClass, KEXTScope.class, "KEXTScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getKEXTScope_Entities(), this.getTestEntity(), null, "entities", null, 0, -1, KEXTScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getKEXTScope_Scopes(), this.getKEXTScope(), null, "scopes", null, 0, -1, KEXTScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

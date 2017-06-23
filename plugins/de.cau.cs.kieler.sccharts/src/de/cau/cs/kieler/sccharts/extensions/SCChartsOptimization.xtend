@@ -43,6 +43,7 @@ class SCChartsOptimization {
         rootState;
     }
 
+    // TODO: at the moment this will not work with referenced valued objects    
     def void optimizeSuperflousImmediateTransitions(State state, State targetRootState) {
         if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrControlflowRegions) {
             val transition = state.outgoingTransitions.get(0)
@@ -79,6 +80,7 @@ class SCChartsOptimization {
         rootState;
     }
 
+    // TODO: at the moment this will not work with referenced valued objects    
     def void optimizeSuperflousConditionalStates(State state, State targetRootState) {
         if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrControlflowRegions) {
             val transition1 = state.outgoingTransitions.get(0)

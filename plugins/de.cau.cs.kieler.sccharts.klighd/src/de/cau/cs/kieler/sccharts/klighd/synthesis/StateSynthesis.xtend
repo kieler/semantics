@@ -23,7 +23,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
@@ -35,11 +34,12 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import java.util.List
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
@@ -52,7 +52,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject
     extension SCChartsExtension
-
+    
     @Inject
     extension SCChartsSerializeHRExtension
 
@@ -68,7 +68,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject
     extension StateStyles
 
-    override performTranformation(State state) {
+    override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state);
 
         // Set KIdentifier for use with incremental update
@@ -82,7 +82,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0);
 
         //pre-evaluate type
-        val isConnector = state.type == StateType::CONNECTOR
+        val isConnector = state.isConnector
 
         // Basic state style
         switch state {
@@ -107,6 +107,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (state.isFinal) {
             node.setFinalStyle
         }
+        if (state.isViolation) {
+            val isHaltState = state.outgoingTransitions.size == 0 
+                || !state.outgoingTransitions.exists[ targetState != state ]
+            node.setViolationStyle(isHaltState)
+        }
 
         // Shadow
         if (!isConnector) {
@@ -120,12 +125,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 switch state {
                     case state.isReferencedState:
                         node.addMacroStateLabel(
-                            state.label + " @ " + (state.referencedScope as State).label ?: "UnresolvedReference").
-                            associateWith(state)
+                            state.serializeHR + " @ " + ((state.referencedScope as State).serializeHR ?: "UnresolvedReference") +
+                            state.parameters.serializeHRParameters).associateWith(state)
                     case state.isMacroState:
-                        node.addMacroStateLabel(state.label).associateWith(state)
+                        node.addMacroStateLabel(state.serializeHR.toString).associateWith(state)
                     default:
-                        node.addSimpleStateLabel(state.label).associateWith(state)
+                        node.addSimpleStateLabel(state.serializeHR.toString).associateWith(state)
                 }
             } else {
                 node.addEmptyStateLabel
@@ -138,7 +143,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     associateWith(declaration);
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)];
                 ]
-            }
+            }           
 
             // Add actions
             for (action : state.localActions) {
@@ -163,7 +168,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 val target = transition.targetState;
                 if (!target.id.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.id + counter]
+                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.id + counter]
                 }
             ];
         }
@@ -181,7 +186,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.children += state.createReferenceRegion
         }
 
-        return node;
+        return <KNode> newArrayList(node)
     }
 
     /** Checks if given state should be visualized as macro state */
@@ -189,5 +194,5 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.localActions.empty ||
             !state.declarations.empty || state.isReferencedState;
     }
-
+    
 }

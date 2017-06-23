@@ -1,0 +1,201 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2012 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+grammar de.cau.cs.kieler.core.annotations.text.Annotations with org.eclipse.xtext.common.Terminals
+
+import "http://kieler.cs.cau.de/annotations"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+/**
+ * @author ssm
+ * @kieler.design 2015-08-21 proposed 
+ * @kieler.rating 2015-08-21 proposed yellow
+ */
+ 
+// ------------------ //
+//  Annotation Rules  // 
+// ------------------ //
+
+// General rule for annotations
+// The different annotation sub rules are tested in order. Hence, order matters! 
+Annotation returns Annotation:
+    CommentAnnotation | 
+    KeyBooleanValueAnnotation |
+    KeyStringValueAnnotation |
+    TypedKeyStringValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation |
+    TagAnnotation 
+;
+
+
+// Valued Annotation Rule
+// Valued annotations must have a value. For instance, tag annotations are not allowed.
+// Derived grammars may use this rule if the general annotation rules compromises the grammar
+// due to ambiguities.
+ValuedAnnotation returns Annotation:
+    CommentAnnotation |
+    KeyStringValueAnnotation |
+    TypedKeyStringValueAnnotation |
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation
+;
+
+
+// Restiricted Annotation Rule
+// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+// derived grammars if you don't want to permit unquoted strings. 
+// (If you are looking for an example, the keffects grammar uses this rule for their emission
+// rule and to avoid grammar ambiguities.)  
+RestrictedAnnotation returns Annotation:
+    CommentAnnotation |
+    QuotedKeyStringValueAnnotation |
+    QuotedTypedKeyStringValueAnnotation |
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation |
+    TagAnnotation
+;
+
+
+// CommentAnnotation
+// e.g.: /** semantic comment */
+CommentAnnotation returns CommentAnnotation:
+    values += COMMENT_ANNOTATION;
+
+
+// TagAnnotation
+// e.g.: @HVlayout
+TagAnnotation returns Annotation:
+    '@' name=ExtendedID;
+    
+// KeyStringValueAnnotation
+// e.g.: @layouter dot
+// You may separate different values via comma.   
+KeyStringValueAnnotation returns StringAnnotation:
+    '@' name=ExtendedID values += EString (',' values += EString)*;
+
+
+// TypedKeyStringValueAnnotation
+// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
+
+
+// QuotedKeyStringValueAnnotation
+// The quoted key string value annotation is a replacement derived grammars may use
+// if they want to disallow quote-less strings in a key string annotation. 
+QuotedKeyStringValueAnnotation returns StringAnnotation:
+    '@' name=ExtendedID values += STRING (',' values += STRING)*;
+
+
+// QuotedTypedKeyStringValueAnnotation
+// The quoted typed key string value annotation is a replacement derived grammars may use
+// if they want to disallow quote-less strings in a key string annotation. 
+QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
+
+// KeyBooleanValueAnnotation    
+// e.g.: @visible true;
+KeyBooleanValueAnnotation returns BooleanAnnotation:
+    '@' name=ExtendedID value=BOOLEAN;   
+
+// KeyIntValueAnnotation
+// e.g.: @minSpace 10;    
+KeyIntValueAnnotation returns IntAnnotation:
+    '@' name=ExtendedID value=Integer;
+
+
+// KeyFloatValueAnnotation
+// e.g.: @minSpace 10.0;    
+KeyFloatValueAnnotation returns FloatAnnotation:
+    '@' name=ExtendedID value=Floateger;
+
+
+// EString
+// Allow strings without quotes if they don't contain spaces.
+// For quoteless strings the ExtendedID rule is used.
+EString returns ecore::EString:
+    STRING | ExtendedID;
+
+EStringBoolean returns ecore::EString:
+    STRING | ExtendedID | BOOLEAN;
+
+
+// ExtendedID
+// ExtendedID extends the ID rule provided by the terminals grammar.
+// An ID may have dot separated parts and may close with a number separated by a hash mark.
+ExtendedID returns ecore::EString:
+  ID ("."ID)* ("#"INT)?;
+
+
+// Integer
+// The integer rule extends the EInt terminal by an optional sign for negative numbers.
+Integer returns ecore::EInt:
+    '-'? INT;
+
+
+// Floateger
+// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
+Floateger returns ecore::EFloat:
+    '-'? FLOAT;
+
+
+// ---------------------- //
+//  Annotation Terminals  // 
+// ---------------------- //
+
+// Comment Annotation Terminal
+// Custom terminal rule introducing semantic comments.
+terminal COMMENT_ANNOTATION returns ecore::EString: 
+    '/**' -> '*/';
+
+
+// Multiline Comment Terminal
+// Modified version of Terminals.ML_COMMENT as
+// COMMENT_ANNOTATION is not recognized correctly with original one.
+terminal ML_COMMENT returns ecore::EString:
+    '/*'!'*' -> '*/';
+
+
+// Number Terminal
+terminal fragment NUMBER :
+    '0'..'9';
+
+
+// Integer Terminal
+// An INT is a list of numbers.   
+terminal INT returns ecore::EInt:
+    NUMBER+;
+
+
+// Float Terminal    
+// Make sure the Float rule does not shadow the INT rule
+terminal FLOAT returns ecore::EFloatObject :
+    NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
+    NUMBER+ 'f';
+
+    
+// Boolean Terminal   
+// Introduce boolean values.
+terminal BOOLEAN returns ecore::EBooleanObject :
+    'true' | 'false';
+
+
+// String Terminal
+// Custom terminal rule for strings, only use double quotes.
+terminal STRING returns ecore::EString:
+    '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
+
+    

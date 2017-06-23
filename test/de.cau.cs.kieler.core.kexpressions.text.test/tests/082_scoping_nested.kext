@@ -1,0 +1,502 @@
+/* KEXT Test File for nested scoping
+ * 
+ * @author ssm
+ * @date 2016-02-17
+ */
+
+bool global;
+bool @alias "globalA" A;
+bool @alias "globalB" B;
+bool @alias "globalC" C;
+bool @alias "globalD" D; // global
+
+scope X {
+	bool parent;
+	bool @alias "XA" A;
+	bool @alias "XB" B; // parent override
+	bool @alias "XE" E;
+	bool @alias "XF" F; // parent
+
+	scope Y {
+		bool local;
+		bool @alias "YA" A; // overridden twice
+		bool @alias "YE" E; // overridden parent
+		bool @alias "YC" C; // overridden global 
+		bool @alias "YH" H; // new local
+	
+		@check scoping.nested.XY.global
+		global = true
+	
+		@check scoping.nested.XY.local
+		local = true
+
+		@check scoping.nested.XY.parent
+		parent = true
+
+
+		// global	
+		@check scoping.nested.XY.literal.global
+		@aliasCheck D, globalD
+		D = false
+
+		// parent	
+		@check scoping.nested.XY.literal.parent
+		@aliasCheck F, XF
+		F = false
+
+		// local	
+		@check scoping.nested.XY.literal.local
+		@aliasCheck H, YH
+		H = false
+
+		// overridden global	
+		@check scoping.nested.XY.literal.overridden.global
+		@aliasCheck C, YC
+		C = false
+
+		// overridden parent	
+		@check scoping.nested.XY.literal.overridden.parent
+		@aliasCheck E, YE
+		E = false
+
+		// overridden twice	
+		@check scoping.nested.XY.literal.overridden.twice
+		@aliasCheck A, YA
+		A = false
+
+		// parent override	
+		@check scoping.nested.XY.literal.parent.override
+		@aliasCheck B, XB
+		B = false
+
+
+		
+		// global
+		@check scoping.nested.XY.reference.global
+		@aliasCheck D, globalD
+		global = D
+		
+		// parent
+		@check scoping.nested.XY.reference.parent
+		@aliasCheck F, XF
+		global = F
+		
+		// local
+		@check scoping.nested.XY.reference.local
+		@aliasCheck H, YH
+		global = H
+		
+		// overridden global
+		@check scoping.nested.XY.reference.overridden.global
+		@aliasCheck C, YC
+		global = C
+		
+		// overridden parent
+		@check scoping.nested.XY.reference.overridden.parent
+		@aliasCheck E, YE
+		global = E
+		
+		// overridden twice
+		@check scoping.nested.XY.reference.overridden.twice
+		@aliasCheck A, YA
+		global = A
+		
+		// parent override
+		@check scoping.nested.XY.reference.parent.override
+		@aliasCheck B, XB
+		global = B
+
+
+
+
+		// global
+		@check scoping.nested.XY.reference.global.parent
+		@aliasCheck D, globalD
+		@aliasCheck B, XB
+		B = D
+		
+		// parent
+		@check scoping.nested.XY.reference.parent.parent
+		@aliasCheck F, XF
+		@aliasCheck B, XB
+		B = F
+		
+		// local
+		@check scoping.nested.XY.reference.local.parent
+		@aliasCheck H, YH
+		@aliasCheck B, XB
+		B = H
+		
+		// overridden global
+		@check scoping.nested.XY.reference.overridden.global.parent
+		@aliasCheck C, YC
+		@aliasCheck B, XB
+		B = C
+		
+		// overridden parent
+		@check scoping.nested.XY.reference.overridden.parent.parent
+		@aliasCheck E, YE
+		@aliasCheck B, XB
+		B = E
+		
+		// overridden twice
+		@check scoping.nested.XY.reference.overridden.twice.parent
+		@aliasCheck A, YA
+		@aliasCheck B, XB
+		B = A
+		
+		// parent override
+		@check scoping.nested.XY.reference.parent.override.parent
+		@aliasCheck B, XB
+		B = B
+		
+
+	
+
+		// global
+		@check scoping.nested.XY.reference.global.twice
+		@aliasCheck D, globalD
+		@aliasCheck A, YA
+		A = D
+		
+		// parent
+		@check scoping.nested.XY.reference.parent.twice
+		@aliasCheck F, XF
+		@aliasCheck A, YA
+		A = F
+		
+		// local
+		@check scoping.nested.XY.reference.local.twice
+		@aliasCheck H, YH
+		@aliasCheck A, YA
+		A = H
+		
+		// overridden global
+		@check scoping.nested.XY.reference.overridden.global.twice
+		@aliasCheck C, YC
+		@aliasCheck A, YA
+		A = C
+		
+		// overridden parent
+		@check scoping.nested.XY.reference.overridden.parent.twice
+		@aliasCheck E, YE
+		@aliasCheck A, YA
+		A = E
+		
+		// overridden twice
+		@check scoping.nested.XY.reference.overridden.twice.twice
+		@aliasCheck A, YA
+		A = A
+		
+		// parent override
+		@check scoping.nested.XY.reference.parent.override.twice
+		@aliasCheck A, YA
+		A = B
+
+
+	
+		
+		// global
+		@check scoping.nested.XY.operator.unary.global
+		@aliasCheck D, globalD
+		@strict
+		global = pre(D)
+		
+		// parent
+		@check scoping.nested.XY.operator.unary.parent
+		@aliasCheck F, XF
+		@strict
+		global = pre(F)
+		
+		// local
+		@check scoping.nested.XY.operator.unary.local
+		@aliasCheck H, YH
+		@strict
+		global = pre(H)
+		
+		// overridden global
+		@check scoping.nested.XY.operator.unary.overridden.global
+		@aliasCheck C, YC
+		@strict
+		global = pre(C)
+		
+		// overridden parent
+		@check scoping.nested.XY.operator.unary.overridden.parent
+		@aliasCheck E, YE
+		@strict
+		global = pre(E)
+		
+		// overridden twice
+		@check scoping.nested.XY.operator.unary.overridden.twice
+		@aliasCheck A, YA
+		@strict
+		global = pre(A)
+		
+		// parent override
+		@check scoping.nested.XY.operator.unary.parent.override
+		@aliasCheck B, XB
+		@strict
+		global = pre(B)
+		
+		
+		
+		
+
+		// global: 				D		parent: 			F		local: 				H
+		// overridden global:	C		overridden parent: 	E		overridden twice: 	A
+		// parent override: 	B	
+		//
+		// Combinations: DD, DF, DH, DC, DE, DA, DB
+		@check scoping.nested.XY.operator.binary.DD
+		@aliasCheck D, globalD
+		local = D & D
+		
+		@check scoping.nested.XY.operator.binary.DF
+		@aliasCheck D, globalD
+		@aliasCheck F, XF
+		local = D & F
+
+		@check scoping.nested.XY.operator.binary.DH
+		@aliasCheck D, globalD
+		@aliasCheck H, YH
+		local = D & H
+
+		@check scoping.nested.XY.operator.binary.DC
+		@aliasCheck D, globalD
+		@aliasCheck C, YC
+		local = D & C
+
+		@check scoping.nested.XY.operator.binary.DE
+		@aliasCheck D, globalD
+		@aliasCheck E, YE
+		local = D & E
+
+		@check scoping.nested.XY.operator.binary.DA
+		@aliasCheck D, globalD
+		@aliasCheck A, YA
+		local = D & A
+
+		@check scoping.nested.XY.operator.binary.DB
+		@aliasCheck D, globalD
+		@aliasCheck B, XB
+		local = D & B
+
+
+		// Combinations: FD, FF, FH, FC, FE, FA, FB
+		@check scoping.nested.XY.operator.binary.FD
+		@aliasCheck D, globalD
+		@aliasCheck F, XF
+		local = F & D
+
+		@check scoping.nested.XY.operator.binary.FF
+		@aliasCheck F, XF
+		local = F & F
+		
+		@check scoping.nested.XY.operator.binary.FH
+		@aliasCheck F, XF
+		@aliasCheck H, YH
+		local = F & H
+
+		@check scoping.nested.XY.operator.binary.FC
+		@aliasCheck F, XF
+		@aliasCheck C, YC
+		local = F & C
+
+		@check scoping.nested.XY.operator.binary.FE
+		@aliasCheck F, XF
+		@aliasCheck E, YE
+		local = F & E
+
+		@check scoping.nested.XY.operator.binary.FA
+		@aliasCheck F, XF
+		@aliasCheck A, YA
+		local = F & A
+
+		@check scoping.nested.XY.operator.binary.FB
+		@aliasCheck F, XF
+		@aliasCheck B, XB
+		local = F & B
+
+		
+		// Combinations: HD, HF, HH, HC, HE, HA, HB
+		@check scoping.nested.XY.operator.binary.HD
+		@aliasCheck D, globalD
+		@aliasCheck H, YH
+		local = H & D
+
+		@check scoping.nested.XY.operator.binary.HF
+		@aliasCheck F, XF
+		@aliasCheck H, YH
+		local = F & H
+
+		@check scoping.nested.XY.operator.binary.HH
+		@aliasCheck H, YH
+		local = H & H
+
+		@check scoping.nested.XY.operator.binary.HC
+		@aliasCheck H, YH
+		@aliasCheck C, YC
+		local = H & C
+
+		@check scoping.nested.XY.operator.binary.HE
+		@aliasCheck H, YH
+		@aliasCheck E, YE
+		local = H & E
+
+		@check scoping.nested.XY.operator.binary.HA
+		@aliasCheck H, YH
+		@aliasCheck A, YA
+		local = H & A
+
+		@check scoping.nested.XY.operator.binary.HB
+		@aliasCheck H, YH
+		@aliasCheck B, XB
+		local = H & B
+
+
+		// Combinations: CD, CF, CH, CC, CE, CA, CB
+		@check scoping.nested.XY.operator.binary.CD
+		@aliasCheck D, globalD
+		@aliasCheck C, YC
+		local = C & D
+
+		@check scoping.nested.XY.operator.binary.CF
+		@aliasCheck F, XF
+		@aliasCheck C, YC
+		local = F & C
+
+		@check scoping.nested.XY.operator.binary.CH
+		@aliasCheck H, YH
+		@aliasCheck C, YC
+		local = H & C
+
+		@check scoping.nested.XY.operator.binary.CC
+		@aliasCheck C, YC
+		local = C & C
+
+		@check scoping.nested.XY.operator.binary.CE
+		@aliasCheck C, YC
+		@aliasCheck E, YE
+		local = C & E
+
+		@check scoping.nested.XY.operator.binary.CA
+		@aliasCheck C, YC
+		@aliasCheck A, YA
+		local = C & A
+
+		@check scoping.nested.XY.operator.binary.CB
+		@aliasCheck C, YC
+		@aliasCheck B, XB
+		local = C & B		
+		
+		
+		// Combinations: ED, EF, EH, EC, EE, EA, EB
+		@check scoping.nested.XY.operator.binary.ED
+		@aliasCheck D, globalD
+		@aliasCheck E, YE
+		local = E & D
+
+		@check scoping.nested.XY.operator.binary.EF
+		@aliasCheck F, XF
+		@aliasCheck E, YE
+		local = F & E
+
+		@check scoping.nested.XY.operator.binary.EH
+		@aliasCheck H, YH
+		@aliasCheck E, YE
+		local = H & E
+
+		@check scoping.nested.XY.operator.binary.EC
+		@aliasCheck C, YC
+		@aliasCheck E, YE
+		local = C & E
+
+		@check scoping.nested.XY.operator.binary.EE
+		@aliasCheck E, YE
+		local = E & E
+
+		@check scoping.nested.XY.operator.binary.EA
+		@aliasCheck E, YE
+		@aliasCheck A, YA
+		local = E & A
+
+		@check scoping.nested.XY.operator.binary.EB
+		@aliasCheck E, YE
+		@aliasCheck B, XB
+		local = E & B
+		
+		
+		// Combinations: AD, AF, AH, AC, AE, AA, AB
+		@check scoping.nested.XY.operator.binary.AD
+		@aliasCheck D, globalD
+		@aliasCheck A, YA
+		local = A & D
+
+		@check scoping.nested.XY.operator.binary.AF
+		@aliasCheck F, XF
+		@aliasCheck A, YA
+		local = A & F
+
+		@check scoping.nested.XY.operator.binary.AH
+		@aliasCheck H, YH
+		@aliasCheck A, YA
+		local = H & A
+
+		@check scoping.nested.XY.operator.binary.AC
+		@aliasCheck C, YC
+		@aliasCheck A, YA
+		local = C & A
+
+		@check scoping.nested.XY.operator.binary.AE
+		@aliasCheck E, YE
+		@aliasCheck A, YA
+		local = E & A
+
+		@check scoping.nested.XY.operator.binary.AA
+		@aliasCheck A, YA
+		local = A & A
+
+		@check scoping.nested.XY.operator.binary.AB
+		@aliasCheck A, YA
+		@aliasCheck B, XB
+		local = A & B	
+
+
+		// Combinations: BD, BF, BH, BC, BE, BA, BB
+		@check scoping.nested.XY.operator.binary.BD
+		@aliasCheck D, globalD
+		@aliasCheck B, XB
+		local = B & D
+
+		@check scoping.nested.XY.operator.binary.BF
+		@aliasCheck F, XF
+		@aliasCheck B, XB
+		local = B & F
+
+		@check scoping.nested.XY.operator.binary.BH
+		@aliasCheck H, YH
+		@aliasCheck B, XB
+		local = H & B
+
+		@check scoping.nested.XY.operator.binary.BC
+		@aliasCheck C, YC
+		@aliasCheck B, XB
+		local = C & B
+
+		@check scoping.nested.XY.operator.binary.BE
+		@aliasCheck E, YE
+		@aliasCheck B, XB
+		local = E & B
+
+		@check scoping.nested.XY.operator.binary.BA
+		@aliasCheck A, YA
+		@aliasCheck B, XB
+		local = A & B	
+			
+		@check scoping.nested.XY.operator.binary.BB
+		@aliasCheck B, XB
+		local = B & B
+	}
+
+}
+

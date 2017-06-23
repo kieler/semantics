@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.features
 
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Simulation Visualization Feature.
@@ -43,4 +44,10 @@ class SimulationVisualization extends Feature {
         return true
     }
 
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }  
 }

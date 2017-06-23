@@ -18,13 +18,13 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 
 /**
@@ -102,6 +102,10 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
+//        targetRootState.fixAllTextualOrdersByPriorities
+//            .optimizeSuperflousConditionalStates
+//            .optimizeSuperflousImmediateTransitions
+//            .fixDeadCode
         targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
             optimizeSuperflousImmediateTransitions.fixDeadCode
 //            optimizeSuperflousImmediateTransitions.fixDeadCode
@@ -349,5 +353,9 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             }
         }
     }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ it.transform ] ]
+    }    
 
 }
