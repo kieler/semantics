@@ -53,6 +53,7 @@ class BenchmarkSuite extends UIJob {
         super("Benchmarks")
         this.isBambooRun = isBambooRun
         this.dbLocation = dbLocation
+        this.user = !isBambooRun
     }
 
     /**
