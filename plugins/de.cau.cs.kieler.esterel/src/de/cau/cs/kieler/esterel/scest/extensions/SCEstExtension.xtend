@@ -63,6 +63,11 @@ import de.cau.cs.kieler.esterel.esterel.EsterelThread
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.esterel.esterel.Trap
+import de.cau.cs.kieler.esterel.esterel.Abort
+import de.cau.cs.kieler.esterel.esterel.Exec
+import de.cau.cs.kieler.esterel.esterel.Do
 
 /**
  * @author mrb
@@ -1289,7 +1294,7 @@ class SCEstExtension {
                             if (a.name.equals(generatedAnnotation)) {
                                 deeper = true
                                 var layer = (a as IntAnnotation).value
-                                if (layer<depth) {
+                                if (layer<=depth) {
                                     deeper = false
                                     j = conditional2.annotations.length
                                 }
@@ -1494,6 +1499,70 @@ class SCEstExtension {
             }
         }
         return 0;
+    }
+    
+    /**
+     * Check every Goto statement if its target is still inside its Thread.
+     * 
+     * @param statements The statements which need to be checked
+     */
+    def void checkGotos(EList<Statement> statements) {
+        statements?.forEach [ s |
+            s.checkGotos
+        ]
+    }
+    
+    /**
+     * Check if 'statement' is a Goto statement and when it is, check if its target is still inside its Thread.
+     * 
+     * @param statement A statement which needs to be checked
+     */
+    def void checkGotos(Statement statement) {
+        if (statement instanceof Goto) {
+            var goto = (statement as Goto)
+            goto.target = findClosestLabel(goto.target, statement)
+        }
+        else if (statement instanceof StatementContainer) {
+            
+            checkGotos((statement as StatementContainer).statements)
+            
+            if (statement instanceof Trap) {
+                (statement as Trap).trapHandler?.forEach[h | checkGotos(h.statements)]
+            }
+            else if (statement instanceof Abort) {
+                checkGotos((statement as Abort).doStatements)
+                (statement as Abort).cases?.forEach[ c | checkGotos(c.statements)]
+            }
+            else if (statement instanceof Exec) {
+                (statement as Exec).execCaseList?.forEach[ c | checkGotos(c.statements)]
+            }
+            else if (statement instanceof Do) {
+                checkGotos((statement as Do).watchingStatements)
+            }
+            else if (statement instanceof Conditional) {
+                checkGotos((statement as Conditional).getElse()?.statements)
+            }
+        }
+        else if (statement instanceof Present) {
+            checkGotos((statement as Present).thenStatements)
+            (statement as Present).cases?.forEach[ c | checkGotos(c.statements)]
+            checkGotos((statement as Present).elseStatements)
+        }
+        else if (statement instanceof IfTest) {
+            checkGotos((statement as IfTest).thenStatements)
+            (statement as IfTest).elseif?.forEach [ elsif | checkGotos(elsif.thenStatements)]
+            checkGotos((statement as IfTest).elseStatements)
+        }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                checkGotos(t.statements)
+            ]
+        }
+        else if (statement instanceof Parallel) {
+            (statement as Parallel).threads.forEach [ t |
+                checkGotos(t.statements)
+            ]
+        }
     }
  
  

@@ -35,9 +35,7 @@ import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.DelayExpr
 import de.cau.cs.kieler.scl.scl.Pause
 import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
@@ -103,13 +101,37 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             }
             if (suspend.delay.expr != null) {
                 // create a scope because a declaration (variable for counting) is needed
-                var scope = createScopeStatement
                 var variable = createNewUniqueVariable(createIntValue(0))
-                scope.declarations.add(createDeclaration(ValueType.INT, variable))
+                var scope = createScopeStatement(createDeclaration(ValueType.INT, variable))
                 transformStatements(suspend.statements)
-                transformPauses(suspend.statements, depth, EcoreUtil.copy(suspend.delay), variable)
-                scope.statements.add(suspend.statements)
-                statements.set(pos, scope)
+                var parallel = createParallel
+                var thread1 = createThread
+                var thread2 = createThread
+                parallel.threads.add(thread1)
+                parallel.threads.add(thread2)
+                var label = createLabel
+                var label2 = createLabel
+                var termFlag = createNewUniqueFlag(createBoolValue(false))
+                scope.declarations.add(createDeclaration(ValueType.BOOL, termFlag))
+                var conditional = newIfThenGoto(createValuedObjectReference(termFlag), label2, false)
+                conditional.annotations.add(createAnnotation(depth))
+                var conditional2  = createConditional(EcoreUtil.copy(suspend.delay.signalExpr))
+                var conditional3 = createConditional(createEquals(createValuedObjectReference(variable), EcoreUtil.copy(suspend.delay.expr)))
+                conditional3.statements.add(createAssignment(variable, createIntValue(0)))
+                conditional2.statements.add(conditional3)
+                conditional2.statements.add(incrementInt(variable))
+                thread1.statements.add(label)
+                thread1.statements.add(conditional) 
+                thread1.statements.add(createPause)
+                thread1.statements.add(conditional2)
+                thread1.statements.add(createGotoStatement(label))
+                thread1.statements.add(label2)
+                thread2.statements.add(suspend.statements)
+                thread2.statements.add(createAssignment(termFlag, createBoolValue(true)))
+                thread2.statements.add(createLabel)
+                thread2.statements.transformPauses(depth, EcoreUtil.copy(suspend.delay), variable)
+                scope.statements.add(parallel)
+                statements.set(pos,scope)
                 return null
             }
             else {
@@ -132,42 +154,30 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             transformStatements((statement as StatementContainer).statements)
             
             if (statement instanceof Trap) {
-                if ((statement as Trap).trapHandler != null) {
-                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
-                }
+                (statement as Trap).trapHandler?.forEach[h | transformStatements(h.statements)]
             }
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
-                if ((statement as Abort).cases != null) {
-                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
-                }
+                (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
-                if ((statement as Exec).execCaseList != null) {
-                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
-                }
+                (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Do) {
                 transformStatements((statement as Do).watchingStatements)
             }
             else if (statement instanceof Conditional) {
-                if ((statement as Conditional).getElse() != null) {
-                    transformStatements((statement as Conditional).getElse().statements)
-                }
+                transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
         else if (statement instanceof Present) {
             transformStatements((statement as Present).thenStatements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
+            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
             transformStatements((statement as Present).elseStatements)
         }
         else if (statement instanceof IfTest) {
             transformStatements((statement as IfTest).thenStatements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            }
+            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
             transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {
@@ -203,15 +213,8 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             var pos = statements.indexOf(statement)
             var label = createLabel
             var Conditional conditional
-            // if there is an expression before the signal expression, there is the need
-            // for a second "if" to increment the counting variable
             if (delay.expr != null && variable != null) {
-                var Conditional conditional2
-                conditional2  = createConditional(EcoreUtil.copy(delay.signalExpr))
-                conditional2.statements.add(incrementInt(variable))
-                conditional2.annotations.add(createAnnotation(0))
-                statements.add(pos+1, conditional2)
-                conditional =  newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(delay.expr)), label, false)
+                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), EcoreUtil.copy(delay.expr)), label, false)
             }
             else {
                 conditional = newIfThenGoto(EcoreUtil.copy(delay.signalExpr), label, false)
