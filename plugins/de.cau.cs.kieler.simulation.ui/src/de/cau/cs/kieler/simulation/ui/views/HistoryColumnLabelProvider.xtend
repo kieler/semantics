@@ -35,7 +35,6 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
     }
     
     override Image getToolTipImage(Object element) {
-        println("TT IMAGE OLD")
         if(img != null) {
             img.dispose()
             img = null

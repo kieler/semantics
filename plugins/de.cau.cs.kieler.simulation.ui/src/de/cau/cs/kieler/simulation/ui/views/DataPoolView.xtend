@@ -16,12 +16,14 @@ import de.cau.cs.kieler.prom.ui.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport
@@ -33,8 +35,10 @@ import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
+import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
+import com.google.common.base.Strings
 
 /**
  * @author aas
@@ -57,6 +61,8 @@ class DataPoolView extends ViewPart {
     var TableViewerColumn inputColumn
     var TableViewerColumn outputColumn
     
+    var TickInfoContribution tickInfo
+    
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
      */
@@ -71,7 +77,7 @@ class DataPoolView extends ViewPart {
         // Create menu and toolbars.
         createMenu();
         createToolbar();
-        
+
         // Add key listeners for fast controls
         addKeyListeners()
     }
@@ -124,14 +130,11 @@ class DataPoolView extends ViewPart {
      */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
-            override run() {
-                val title = "Controls for the Data Pool View"
-                val message = "Right Arrow : Step simulation macro tick\n"
-                val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
-                dialog.open
-            }
-        })
+        
+        tickInfo = new TickInfoContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo")
+        mgr.add(tickInfo)
+        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.delay"))
+        
         mgr.add(new Action("Reset All"){
             override run(){
                 for(i : viewer.input as ArrayList<Object>) {
@@ -153,6 +156,15 @@ class DataPoolView extends ViewPart {
                 } 
             }
         });
+        mgr.add(new Separator())
+        mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
+            override run() {
+                val title = "Controls for the Data Pool View"
+                val message = "Right Arrow : Step simulation macro tick\n"
+                val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
+                dialog.open
+            }
+        })
     }
     
     private def void addKeyListeners() {
@@ -269,12 +281,31 @@ class DataPoolView extends ViewPart {
         return viewerColumn
     }
     
+    private def void updateStatusBar(SimulationEvent e) {
+        val bars = getViewSite().getActionBars();
+        if(bars != null) {
+            val statusLineManager = bars.getStatusLineManager()
+            var String txt = null
+            if(e.type != SimulationEventType.STOP) {
+                txt = "Tick #"+SimulationManager.instance.currentMacroTickNumber
+                if(SimulationManager.instance.positionInHistory > 0) {
+                    txt += " (-" + SimulationManager.instance.positionInHistory + ")"
+                }
+            }
+            statusLineManager.setMessage(txt);
+            tickInfo?.label?.setText(Strings.nullToEmpty(txt))
+        }
+    }
+    
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
                 // Execute in UI thread
                 Display.getDefault().asyncExec(new Runnable() {
                     override void run() {
+                        // Update status line
+                        DataPoolView.instance?.updateStatusBar(e)
+                        // Set pool data
                         DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
                     }
                 });
