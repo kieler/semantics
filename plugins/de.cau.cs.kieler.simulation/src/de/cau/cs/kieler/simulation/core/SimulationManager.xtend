@@ -371,6 +371,16 @@ class SimulationManager {
         for(m : currentPool.models) {
             for(v : m.variables) {
                 if(v.isDirty) {
+                    // Apply user value of changed array elements
+                    if(v.userValue instanceof NDimensionalArray) {
+                        val arr = v.userValue as NDimensionalArray
+                        for(elem : arr.elements) {
+                            if(elem.isDirty) {
+                                elem.value = elem.userValue
+                            }
+                        }
+                    }
+                    // Apply user value
                     v.value = v.userValue
                 }
             }

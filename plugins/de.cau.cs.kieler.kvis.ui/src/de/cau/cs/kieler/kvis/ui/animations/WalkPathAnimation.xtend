@@ -136,10 +136,12 @@ class WalkPathAnimation extends AnimationHandler {
         var double deltaX
         var double deltaY
         var double alpha
-
+        
         deltaX = p2.getX() - p1.getX();// Ankathete
         deltaY = p2.getY() - p1.getY();// Gegenkathete
-
+        if(deltaX == 0) {
+            return 0;
+        }
         alpha = Math.atan(deltaY / deltaX) * RADTODEG;
 
         if (deltaX > 0 && deltaY <= 0) {

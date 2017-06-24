@@ -105,19 +105,20 @@ class ValueColumnEditingSupport extends EditingSupport {
                 }
             } else if(element instanceof NDimensionalArrayElement) {
                 if(element.value instanceof Float) {
-                    element.value = Float.valueOf(value.toString)    
+                    element.userValue = Float.valueOf(value.toString)    
                 } else if(element.value instanceof Double) {
-                    element.value = Double.valueOf(value.toString)
+                    element.userValue = Double.valueOf(value.toString)
                 } else if(element.value instanceof Integer) {
-                    element.value = Integer.valueOf(value.toString)
+                    element.userValue = Integer.valueOf(value.toString)
                 } else {
-                    element.value = value
+                    element.userValue = value
                 }
             }
 //            println("New value:"+element.value)
         } catch (NumberFormatException e) {
             PromConsole.print("Can't set value of " + element + " to "+value)
         }
+        // Update this element
         viewer.update(element, null);
     }
 }

@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.simulation.ui.toolbar
 
 import de.cau.cs.kieler.prom.ui.console.PromConsole
-import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
