@@ -94,22 +94,30 @@ class ValueColumnEditingSupport extends EditingSupport {
         // Try to set value
         try {
             if(element instanceof Variable){
-                if(element.value instanceof Float) {
-                    element.userValue = Float.valueOf(value.toString)    
-                } else if(element.value instanceof Double) {
-                    element.userValue = Double.valueOf(value.toString)    
-                } else if(element.value instanceof Integer) {
-                    element.userValue = Integer.valueOf(value.toString)
+                if(element.value instanceof Float
+                    || element.value instanceof Double
+                    || element.value instanceof Integer) {
+                    val doubleValue = Double.valueOf(value.toString)
+                    val intValue = doubleValue.intValue
+                    if(doubleValue == intValue) {
+                        element.userValue = intValue
+                    } else {
+                        element.userValue = doubleValue
+                    }
                 } else {
                     element.userValue = value
                 }
             } else if(element instanceof NDimensionalArrayElement) {
-                if(element.value instanceof Float) {
-                    element.userValue = Float.valueOf(value.toString)    
-                } else if(element.value instanceof Double) {
-                    element.userValue = Double.valueOf(value.toString)
-                } else if(element.value instanceof Integer) {
-                    element.userValue = Integer.valueOf(value.toString)
+                if(element.value instanceof Float
+                    || element.value instanceof Double
+                    || element.value instanceof Integer) {
+                    val doubleValue = Double.valueOf(value.toString)
+                    val intValue = doubleValue.intValue
+                    if(doubleValue == intValue) {
+                        element.userValue = intValue
+                    } else {
+                        element.userValue = doubleValue
+                    }
                 } else {
                     element.userValue = value
                 }
