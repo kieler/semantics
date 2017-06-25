@@ -447,7 +447,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
 
         // Set target directory
         if(targetDirectoryKielerGen.selection) {
-            launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+            launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
         } else {
             launchData.targetDirectory = ""
         }
