@@ -46,7 +46,7 @@ class SctValidator extends SctJavaValidator {
     static val String CANNOT_BIND_LITERAL_TO_OUTPUT = "You cannot bind a literal to an output object."
     static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this scope."
     static val String NON_IMMEDIATE_CONNECTOR = "Outgoing transitions of connector states should be marked as immediate."
-    static val String NON_DEFAULT_TRANSITION = "Connector states should have an outgoing transition without trigger."
+    static val String NO_DEFAULT_TRANSITION = "Connector states should have an outgoing transition without trigger."
     static val String NO_OUTGOING_TRANSITION = "Connector states must have an outgoing transition."
     static val String NON_REACHABLE_TRANSITION = "The transition is not reachable."
 
@@ -102,7 +102,7 @@ class SctValidator extends SctJavaValidator {
                 lastTransition = trans
             }
             if(!transitionWithoutTrigger) {
-                warning(NON_DEFAULT_TRANSITION, lastTransition, null)
+                warning(NO_DEFAULT_TRANSITION, lastTransition, null)
             }
             if(lastTransition == null) {
                 error(NO_OUTGOING_TRANSITION, state, null)
