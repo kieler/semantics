@@ -24,6 +24,8 @@ import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.StateType
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
@@ -43,11 +45,80 @@ class SctValidator extends SctJavaValidator {
     static val String CANNOT_BIND_ARRAYCELL_TO_ARRAY = "You cannot bind a single array cell to an array."
     static val String CANNOT_BIND_LITERAL_TO_OUTPUT = "You cannot bind a literal to an output object."
     static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this scope."
+    static val String NON_IMMEDIATE_CONNECTOR = "Outgoing transitions of connector states should be marked as immediate."
+    static val String NON_DEFAULT_TRANSITION = "Connector states should have an outgoing transition without trigger."
+    static val String NO_OUTGOING_TRANSITION = "Connector states must have an outgoing transition."
+    static val String NON_REACHABLE_TRANSITION = "The transition is not reachable."
 
+    /**
+     * Check that there are no transitions that are not reachable, i.e.,
+     * no transitions after a transition without guard.
+     * 
+     * @param state The state 
+     */
     @Check
-    public def void checkDuplicateVariable(Scope s) {
+    public def void checkTransitionsAreReachable(de.cau.cs.kieler.sccharts.State state) {
+        var boolean delayedTransitionWithoutTrigger = false
+        var boolean immediateTransitionWithoutTrigger = false
+        for(trans : state.outgoingTransitions) {
+            if(trans.isImmediate2) { 
+                // An immediate transition may follow after a delayed transition without trigger, and still be reachable.
+                if(immediateTransitionWithoutTrigger) {
+                    warning(NON_REACHABLE_TRANSITION, trans, null)
+                }
+                if(!immediateTransitionWithoutTrigger && trans.trigger == null) {
+                    immediateTransitionWithoutTrigger = true
+                }
+            } else {
+                // An delayed transition after a delayed transition without trigger is not reachable.
+                // Neither is a delayed transition after an immediate transition without trigger.
+                if(delayedTransitionWithoutTrigger || immediateTransitionWithoutTrigger) {
+                    warning(NON_REACHABLE_TRANSITION, trans, null)
+                }
+                if(!delayedTransitionWithoutTrigger && trans.trigger == null) {
+                    delayedTransitionWithoutTrigger = true
+                }
+            }
+        }
+    }
+
+    /**
+     * Check that connector states have only immediate transitions and have a default transition.
+     * 
+     * @param state The state 
+     */
+    @Check
+    public def void checkDuplicateVariable(de.cau.cs.kieler.sccharts.State state) {
+        if(state.type == StateType.CONNECTOR) {
+            var Transition lastTransition
+            var boolean transitionWithoutTrigger = false
+            for(trans : state.outgoingTransitions) {
+                if(!trans.isImmediate) {
+                    warning(NON_IMMEDIATE_CONNECTOR, trans, null)
+                }
+                if(trans.trigger == null) {
+                    transitionWithoutTrigger = true
+                }
+                lastTransition = trans
+            }
+            if(!transitionWithoutTrigger) {
+                warning(NON_DEFAULT_TRANSITION, lastTransition, null)
+            }
+            if(lastTransition == null) {
+                error(NO_OUTGOING_TRANSITION, state, null)
+            }
+        }
+    }
+
+    /**
+     * Check that names of variables are unique within a scope.
+     * 
+     * @param scope The scope 
+     */
+    @Check
+    public def void checkDuplicateVariable(Scope scope) {
         val Set<String> variableNames = newHashSet()
-        for(decl : s.declarations) { 
+        for(decl : scope.declarations) { 
             for(valuedObject : decl.valuedObjects) {
                 val name = valuedObject.name
                 if(variableNames.contains(name)) {
