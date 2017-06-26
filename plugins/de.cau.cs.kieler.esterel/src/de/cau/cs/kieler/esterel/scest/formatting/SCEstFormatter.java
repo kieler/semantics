@@ -221,7 +221,7 @@ public class SCEstFormatter extends AbstractDeclarativeFormatter {
          c.setLinewrap().before(f.getIfTestAccess().getEndKeyword_6());
          // ElsIf
          c.setLinewrap().before(f.getElsIfAccess().getElsifKeyword_1());
-         c.setIndentationIncrement().after(f.getElsIfAccess().getThenKeyword_3_1());
+         c.setIndentationIncrement().after(f.getElsIfAccess().getThenKeyword_3_0());
          c.setIndentationDecrement().after(f.getElsIfAccess().getRule());
          // Then
          c.setIndentationIncrement().after(f.getIfTestAccess().getThenKeyword_3_1());

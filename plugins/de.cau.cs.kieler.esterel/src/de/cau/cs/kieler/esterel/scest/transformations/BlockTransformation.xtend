@@ -67,12 +67,10 @@ class  BlockTransformation extends AbstractExpansionTransformation implements Tr
     }
     
     def EList<Statement> transformStatements(EList<Statement> statements) {
-        if (statements != null) {
-            for (var i=0; i<statements.length; i++) {
-                var statement = statements.get(i).transformStatement
-                if (statement instanceof Statement) {
-                    statements.set(i, statement)
-                }
+        for (var i=0; i<statements?.length; i++) {
+            var statement = statements.get(i).transformStatement
+            if (statement instanceof Statement) {
+                statements.set(i, statement)
             }
         }
         return statements
@@ -88,42 +86,30 @@ class  BlockTransformation extends AbstractExpansionTransformation implements Tr
             transformStatements((statement as StatementContainer).statements)
             
             if (statement instanceof Trap) {
-                if ((statement as Trap).trapHandler != null) {
-                    (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements)]
-                }
+                (statement as Trap).trapHandler?.forEach[h | transformStatements(h.statements)]
             }
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
-                if ((statement as Abort).cases != null) {
-                    (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
-                }
+                (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
-                if ((statement as Exec).execCaseList != null) {
-                    (statement as Exec).execCaseList.forEach[ c | transformStatements(c.statements)]
-                }
+                (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Do) {
                 transformStatements((statement as Do).watchingStatements)
             }
             else if (statement instanceof Conditional) {
-                if ((statement as Conditional).getElse() != null) {
-                    transformStatements((statement as Conditional).getElse().statements)
-                }
+                transformStatements((statement as Conditional).getElse()?.statements)
             }
         }
         else if (statement instanceof Present) {
             transformStatements((statement as Present).thenStatements)
-            if ((statement as Present).cases != null) {
-                (statement as Present).cases.forEach[ c | transformStatements(c.statements)]
-            }
+            (statement as Present).cases?.forEach[ c | transformStatements(c.statements)]
             transformStatements((statement as Present).elseStatements)
         }
         else if (statement instanceof IfTest) {
             transformStatements((statement as IfTest).thenStatements)
-            if ((statement as IfTest).elseif != null) {
-                (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements)]
-            }
+            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements)]
             transformStatements((statement as IfTest).elseStatements)
         }
         else if (statement instanceof EsterelParallel) {

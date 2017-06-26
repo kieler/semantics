@@ -72,9 +72,11 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
         resetConstantSuffix
         resetVariableSuffix
         resetFlagSuffix
+        resetAbortFlagSuffix
+        resetDepthFlagSuffix 
+        resetTrapSuffix 
         prog.modules.forEach [ m | 
             transformStatements(m.statements, 1)
-            m.statements.add(createLabel(createNewUniqueLabel))
         ]
         return prog
     }
@@ -92,14 +94,14 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
             var parallel = statement as EsterelParallel
             parallel.threads.forEach [ t |
                 transformStatements(t.statements, depth+1)
-                t.statements.add(createLabel(createNewUniqueLabel))
+//                t.statements.add(createLabel(createNewUniqueLabel))
             ]
             
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements, depth+1)
-                t.statements.add(createLabel(createNewUniqueLabel))
+//                t.statements.add(createLabel(createNewUniqueLabel))
             ]
         }
         else if (statement instanceof StatementContainer) {
@@ -119,6 +121,7 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
                 (statement as Suspend).annotations.add(createAnnotation(depth))
             }
             else if (statement instanceof Trap) {
+                (statement as Trap).annotations.add(createAnnotation(depth))
                 if ((statement as Trap).trapHandler != null) {
                     (statement as Trap).trapHandler.forEach[h | transformStatements(h.statements, depth+1)]
                 }

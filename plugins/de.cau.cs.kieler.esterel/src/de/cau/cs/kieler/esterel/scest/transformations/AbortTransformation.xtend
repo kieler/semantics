@@ -61,12 +61,11 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
     }
         
 //    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
+//        return Sets.newHashSet()
 //    }
 //
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID)
     }
 
     @Inject
@@ -102,11 +101,12 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             var thread2 = createThread
             parallel.threads.add(thread1)
             parallel.threads.add(thread2)
+            
             // check if its just a single abort delay or if this abort includes cases
             if (abort.delay != null) {
                 // abort with expression before signal expression. e.g. "abort when 3 A" or "weak abort when 3 A"
                 if (abort.delay.expr != null) {
-                    var abortFlag = createNewUniqueFlag(createBoolValue(false))
+                    var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
                     var decl = createDeclaration(ValueType.BOOL, abortFlag)
                     var label = createLabel
                     scope.declarations.add(decl)
@@ -135,6 +135,11 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     thread2.statements.add(createLabel)
                     thread2.statements.transformPauses(abort, label, abortFlag, null, countingVariables)
                     scope.statements.add(label)
+                    if (!abort.doStatements.empty) {
+                                var conditional3 = createConditional(createValuedObjectReference(abortFlag))
+                                conditional3.statements.add(abort.doStatements)
+                                scope.statements.add(conditional3)
+                            }
                     statements.set(pos,scope)
                 }
                 else {
@@ -142,21 +147,26 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     if (abort.weak) {
                         // e.g. "weak abort when immediate A"
                         if (abort.delay.isImmediate) {
-                            var flag = createNewUniqueFlag(createBoolValue(false))
-                            var decl = createDeclaration(ValueType.BOOL, flag)
+                            var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
+                            var decl = createDeclaration(ValueType.BOOL, abortFlag)
                             var label = createLabel
                             // the order of the next three lines is crucial! (first trasformStatements, add(Label), then transformPauses)
                             abort.statements.transformStatements
                             abort.statements.add(label)
-                            abort.statements.transformPauses(abort, label, flag, null, null)
+                            abort.statements.transformPauses(abort, label, abortFlag, null, null)
                             scope.declarations.add(decl)
                             scope.statements.add(abort.statements)
+                            if (!abort.doStatements.empty) {
+                                var conditional = createConditional(createValuedObjectReference(abortFlag))
+                                conditional.statements.add(abort.doStatements)
+                                scope.statements.add(conditional)
+                            }
                             statements.set(pos,scope)
                         }
                         // e.g. "weak abort when A"
                         else {
-                            var abortFlag = createNewUniqueFlag(createBoolValue(false))
-                            var depthFlag = createNewUniqueFlag(createBoolValue(false))
+                            var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
+                            var depthFlag = createNewUniqueDepthFlag(createBoolValue(false))
                             var decl = createDeclaration(ValueType.BOOL, abortFlag)
                             var label = createLabel
                             scope.declarations.add(decl)
@@ -167,6 +177,11 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                             abort.statements.add(label)
                             abort.statements.transformPauses(abort, label, abortFlag, depthFlag, null)
                             scope.statements.add(abort.statements)
+                            if (!abort.doStatements.empty) {
+                                var conditional = createConditional(createValuedObjectReference(abortFlag))
+                                conditional.statements.add(abort.doStatements)
+                                scope.statements.add(conditional)
+                            }
                             statements.set(pos,scope)
                         }
                     }
@@ -182,11 +197,16 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                             abort.statements.transformPauses(abort, label, null, null, null)
                             scope.statements.add(conditional)
                             scope.statements.add(abort.statements)
+                            if (!abort.doStatements.empty) {
+                                var conditional2 = createConditional(EcoreUtil.copy(abort.delay.signalExpr))
+                                conditional2.statements.add(abort.doStatements)
+                                scope.statements.add(conditional2)
+                            }
                             statements.set(pos, scope)
                         }
                         // e.g. "abort when A"
                         else {
-                            var abortFlag = createNewUniqueFlag(createBoolValue(false))
+                            var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
                             var decl = createDeclaration(ValueType.BOOL, abortFlag)
                             var label = createLabel
                             scope.declarations.add(decl)
@@ -195,6 +215,11 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                             abort.statements.add(label)
                             abort.statements.transformPauses(abort, label, abortFlag, null, null)
                             scope.statements.add(abort.statements)
+                            if (!abort.doStatements.empty) {
+                                var conditional = createConditional(createValuedObjectReference(abortFlag))
+                                conditional.statements.add(abort.doStatements)
+                                scope.statements.add(conditional)
+                            }
                             statements.set(pos,scope)
                         }
                     }
@@ -205,9 +230,9 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             else {
                 var label2 = createLabel
                 var countingVariables = new LinkedList<ValuedObject>()
-                var depthFlag = createNewUniqueFlag(createBoolValue(false))
+                var depthFlag = createNewUniqueDepthFlag(createBoolValue(false))
                 
-                var abortFlag = createNewUniqueFlag(createBoolValue(false))
+                var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
                 var decl = createDeclaration(ValueType.BOOL, abortFlag)
                 decl.valuedObjects.add(depthFlag)
                 var label = createLabel
