@@ -95,9 +95,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 setAsExpandedView
                 associateWith(region)
                 if (region.declarations.empty) {
-                    addStatesArea(label.nullOrEmpty);
+                    addStatesArea(!label.nullOrEmpty);
                 } else {
-                    addStatesAndDeclarationsArea();
+                    addStatesAndDeclarationsArea(!label.nullOrEmpty);
                     // Add declarations
                     for (declaration : region.declarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [
@@ -108,7 +108,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                 }
                 // Add Button after area to assure correct overlapping
-                addButton("[+]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addButton("[-]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Collapsed
@@ -155,7 +155,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         // Expanded
         node.addRegionFigure => [
             setAsExpandedView;
-            addStatesArea(true);
+            addStatesArea(false);
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
             addButton("[-]").addDoubleClickAction(ReferenceExpandAction::ID);

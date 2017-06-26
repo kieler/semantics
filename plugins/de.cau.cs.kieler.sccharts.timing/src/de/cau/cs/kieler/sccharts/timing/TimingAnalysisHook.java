@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.kico.KiCoProperties;
@@ -21,6 +22,8 @@ import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering;
+import de.cau.cs.kieler.klighd.krendering.KPlacementData;
+import de.cau.cs.kieler.klighd.krendering.KPointPlacementData;
 import de.cau.cs.kieler.klighd.krendering.KRectangle;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle;
@@ -110,6 +113,15 @@ public class TimingAnalysisHook extends SynthesisHook {
 					Object sourceElem = rect.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
 					if (sourceElem instanceof Region) {
 						KText text = KRenderingFactory.eINSTANCE.createKText();
+						// Find region label and calculate padding
+						float leftMargin = 5;
+						KText regionLabel = Iterables.getFirst(Iterables.filter(rect.getChildren(), KText.class), null);
+						if (regionLabel != null) {
+						    KPlacementData data = regionLabel.getPlacementData();
+				            if (data instanceof KPointPlacementData) {
+				                leftMargin = 10 + ((KPointPlacementData) data).getMinWidth();
+				            }
+						}
 						if (TimingAnalysis.REGION_TIMING) {
 							text.setText("???/???");
 						}
@@ -117,7 +129,7 @@ public class TimingAnalysisHook extends SynthesisHook {
 						renderingExtensions.setForegroundColor(text, 255, 0, 0);
                         renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT,
                                 5, 0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
-                                VerticalAlignment.TOP, 5, 5, 0, 0);
+                                VerticalAlignment.TOP, leftMargin, 5, 0, 0);
 						rect.getChildren().add(text);
 						timingLabels.put((Region) sourceElem, new WeakReference<KText>(text));
                         regionRectangles.put((Region) sourceElem,
