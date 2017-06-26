@@ -252,7 +252,7 @@ class ModelsRepository {
             if (propertyFile.containsKey("modelProperties")) {
                 for (prop : propertyFile.getProperty("modelProperties").split(",").map[trim].toSet) {
                     if (prop.startsWith("!")) {
-                        modelProperties.remove(prop.substring(1))
+                        modelProperties.remove(prop.substring(1).trim)
                     } else {
                         modelProperties.add(prop)
                     }
