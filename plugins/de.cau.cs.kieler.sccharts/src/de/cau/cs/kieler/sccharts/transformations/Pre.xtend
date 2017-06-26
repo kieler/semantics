@@ -98,10 +98,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        // FIXME: getAllStates will return (at least!) the root state twice! fix this!
-        // Woraround now: convert to a set
-        for (targetState : targetRootState.getAllStates.toSet.immutableCopy) {
-            //System.out.println("STATE: " + targetState + ", " + targetState.id)
+        for (targetState : targetRootState.getAllStates.immutableCopy) {
             targetState.transformPre(targetRootState);
         }
 
@@ -114,9 +111,9 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         
         // If the state has outgoing terminations, we need to finalize the during
         // actions in case we end the states over these transitions
-         val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
-         val hasOutgoingTerminations = outgoingTerminations.length > 0
-         val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
+        val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+        val hasOutgoingTerminations = outgoingTerminations.length > 0
+        val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
 
 
         // The transition with the assignment of the pre variables

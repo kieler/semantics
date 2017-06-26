@@ -27,13 +27,15 @@ PROJECT_PREFIX = 'de.cau.cs.kieler'
 
 def main(args):
     print '- Processing Plugins -'
-    # check pluging path
-    plugins = join(args.path, 'plugins')
-    if not isdir(plugins):
-        print 'No plugins directory found in ' + args.path
-        pause(args)
-    else:
-        setProjectVersion(plugins, args, [setMainfestVersion, setPomVersion])
+
+    for pluginFolder in ['plugins', 'test']:
+        # check pluging path
+        plugins = join(args.path, pluginFolder)
+        if not isdir(plugins):
+            print 'No plugins directory found in ' + args.path
+            pause(args)
+        else:
+            setProjectVersion(plugins, args, [setMainfestVersion, setPomVersion])
 
     print '\n- Processing Features -'
     # check features path
@@ -47,6 +49,13 @@ def main(args):
     print '\n- Updating p2 repository -'
     # check category file
     category = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/category.xml')
+    if not isfile(category):
+        print 'category.xml does not exist: ' + category
+        pause(args)
+    else:
+        updateCategory(features, category, args)
+    # check benchmark category file
+    category = join(args.path, 'build/de.cau.cs.kieler.semantics.benchmark.repository/category.xml')
     if not isfile(category):
         print 'category.xml does not exist: ' + category
         pause(args)

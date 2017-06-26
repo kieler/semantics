@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
 import org.eclipse.emf.ecore.EObject
+import com.google.common.base.Strings
 
 /**
  * This class generates wrapper code for models.
@@ -93,7 +94,8 @@ class WrapperCodeGenerator {
     /**
      * The launch data
      */
-    private KiCoLaunchData launchData
+    private String snippetDirectory
+    
     /**
      * The project
      */
@@ -102,8 +104,8 @@ class WrapperCodeGenerator {
     /**
      * Constructor
      */
-    new(IProject project, KiCoLaunchData launchData) {
-        this.launchData = launchData
+    new(IProject project, String snippetDirectory) {
+        this.snippetDirectory = Strings.nullToEmpty(snippetDirectory)
         this.project = project
     }
     
@@ -127,7 +129,7 @@ class WrapperCodeGenerator {
         // Set model names
         val mapping = #{MODEL_NAME_VARIABLE -> modelName,
                         MODEL_NAMES_VARIABLE -> modelNames}
-        generateWrapperCode(templatePath, mapping, annotationDatas)
+        generateWrapperCode(templatePath, annotationDatas, mapping)
     }
     
     /**
@@ -137,7 +139,7 @@ class WrapperCodeGenerator {
      * @param annotationDatas The annotations that injected as macro calls
      */
     def public String generateWrapperCode(String templatePath, List<WrapperCodeAnnotationData> annotationDatas) {
-        generateWrapperCode(templatePath, #{}, annotationDatas)
+        generateWrapperCode(templatePath, annotationDatas, #{})
     }
     
     /**
@@ -147,8 +149,7 @@ class WrapperCodeGenerator {
      * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
      * @param annotationDatas The annotations that injected as macro calls
      */
-    def public String generateWrapperCode(String templatePath, Map<String, Object> additionalMappings,
-            List<WrapperCodeAnnotationData> annotationDatas) {
+    def public String generateWrapperCode(String templatePath, List<WrapperCodeAnnotationData> annotationDatas, Map<String, Object> additionalMappings) {
                 
         // Check consistency of path
         if (!templatePath.isNullOrEmpty()) {
@@ -215,7 +216,7 @@ class WrapperCodeGenerator {
     private def String processTemplateWithSnippetDefinitions(String templateWithMacroCalls) {
         
         // Resolve snippet path
-        val resolvedWrapperCodeSnippetDirectory = PromPlugin.performStringSubstitution(launchData.wrapperCodeSnippetDirectory, project)
+        val resolvedWrapperCodeSnippetDirectory = PromPlugin.performStringSubstitution(snippetDirectory, project)
         
         // Load snippet definitions
         if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
@@ -470,6 +471,31 @@ class WrapperCodeGenerator {
                 val annotations = analyzer.getAnnotations(model)
                 if (annotations != null) {
                     annotationDatas.addAll(annotations)    
+                }
+            }
+
+        }
+    }
+    
+    /**
+     * Looks for the interface (inputs / outputs) in the model
+     * and based on this, creates data objects suited for simulation of the model.
+     * 
+     * @param model The model
+     * @param datas List to add found datas objects to
+     */
+    public static def void getSimulationInterfaceData(EObject model,
+        List<WrapperCodeAnnotationData> simulationDatas) {
+
+        // Load EObject from file
+        if (model != null) {
+            initAnalyzers()
+            
+            // Analyze the model with all wrapper code annotation analyzers
+            for (analyzer : wrapperCodeAnnotationAnalyzers) {
+                val datas = analyzer.getSimulationInterface(model)
+                if (!datas.isNullOrEmpty) {
+                    simulationDatas.addAll(datas)    
                 }
             }
 

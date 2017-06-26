@@ -12,24 +12,33 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
+import de.cau.cs.kieler.prom.ui.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationEventType
+import de.cau.cs.kieler.simulation.core.SimulationListener
+import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.Separator
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
-import org.eclipse.swt.graphics.GC
-import org.eclipse.swt.graphics.Image
-import org.eclipse.swt.graphics.Point
+import org.eclipse.swt.events.KeyAdapter
+import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
+import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
+import com.google.common.base.Strings
 
 /**
  * @author aas
@@ -37,15 +46,22 @@ import org.eclipse.ui.part.ViewPart
  */
 class DataPoolView extends ViewPart {
     
+    public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
+    
     public static var DataPoolView instance
+    
+    public static val simulationListener = createSimulationListener
     
     var TableViewer viewer
     
     var TableViewerColumn variableColumn
     var TableViewerColumn valueColumn
+    var TableViewerColumn userValueColumn
     var TableViewerColumn historyColumn
     var TableViewerColumn inputColumn
     var TableViewerColumn outputColumn
+    
+    var TickInfoContribution tickInfo
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -53,18 +69,37 @@ class DataPoolView extends ViewPart {
      override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
-         
+        SimulationManager.addListener(simulationListener)
+        
         // Create viewer.
         viewer = createDataPoolTable(parent);
 
         // Create menu and toolbars.
         createMenu();
         createToolbar();
+
+        // Add key listeners for fast controls
+        addKeyListeners()
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override setFocus() {
+        viewer.control.setFocus
     }
     
+    /**
+     * Dispose and clear reference to singleton instance.
+     */
+    override dispose() {
+        super.dispose()
+        instance = null
+    }
+    
+    /**
+     * Set the data pool to be displayed.
+     */
     public def void setDataPool(DataPool pool) {
         if(pool == null) {
             viewer.input = null
@@ -95,7 +130,24 @@ class DataPoolView extends ViewPart {
      */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(new Action("Reset Value"){
+        
+        tickInfo = new TickInfoContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo")
+        mgr.add(tickInfo)
+        mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.delay"))
+        
+        mgr.add(new Action("Reset All"){
+            override run(){
+                for(i : viewer.input as ArrayList<Object>) {
+                    if(i instanceof Variable) {
+                        val variable = i as Variable
+                        variable.userValue = null
+                    } 
+                }
+                // Refresh the viewer by applying "new" input
+                viewer.input = viewer.input
+            }
+        });
+        mgr.add(new Action("Reset Selection"){
             override run(){
                 val variable = viewer.structuredSelection.firstElement as Variable
                 if(variable != null) {
@@ -104,6 +156,30 @@ class DataPoolView extends ViewPart {
                 } 
             }
         });
+        mgr.add(new Separator())
+        mgr.add(new DataPoolViewToolbarAction("Show Controls", "help.png") {
+            override run() {
+                val title = "Controls for the Data Pool View"
+                val message = "Right Arrow : Step simulation macro tick\n"
+                val dialog = new MessageDialog(viewer.control.shell, title, null, message, 0, #["OK"], 0)
+                dialog.open
+            }
+        })
+    }
+    
+    private def void addKeyListeners() {
+        // Step through simulation via ARROW_RIGHT.
+        viewer.control.addKeyListener(new KeyAdapter() {
+            override keyPressed(KeyEvent e) {
+                val manager = SimulationManager.instance
+                if(e.keyCode == SWT.ARROW_RIGHT) {
+                    if(manager != null) {
+                        PromConsole.print("Step macro tick")
+                        manager.stepMacroTick()
+                    }
+                }
+            }
+        })
     }
     
     private def TableViewer createDataPoolTable(Composite parent) {
@@ -116,11 +192,11 @@ class DataPoolView extends ViewPart {
         
         // Create columns
         variableColumn = createTableColumn(viewer, "Variable", 120, true)
-        variableColumn.labelProvider = new DataPoolViewerColumn() {
+        variableColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable) {
                     if(element.isDirty)
-                        return element.name+"*"
+                        return "*"+element.name
                     else
                         return element.name
                 } else if(element instanceof Model) { 
@@ -128,54 +204,31 @@ class DataPoolView extends ViewPart {
                 }
             }
         };
-        valueColumn = createTableColumn(viewer, "Value", 80, true)
-        valueColumn.labelProvider = new DataPoolViewerColumn() {
+        valueColumn = createTableColumn(viewer, "Current Value", 100, true)
+        valueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                  if(element instanceof Variable) {
-                    if(element.isDirty)
-                        return "* "+element.userValue?.toString
-                    else
-                        return element.value?.toString
+                    return element.value?.toString
                 }
                 return ""
             }
         };
-        historyColumn = createTableColumn(viewer, "History", 80, true)
-        historyColumn.labelProvider = new DataPoolViewerColumn() {
-            var Image img
-            
+        userValueColumn = createTableColumn(viewer, "User Value", 100, true)
+        userValueColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
-                var txt = ""
-                if(element instanceof Variable) {
-                    val history = element.history
-                    var size = history.size()
-                    val max = 6
-                    if(size > max) {
-                        txt += "..."
+                 if(element instanceof Variable) {
+                    if(element.isDirty) {
+                        return element.userValue.toString    
                     }
-                    for(var i = size - Math.min(size, max); i < size-1; i++) {
-                        val v = history.get(i)
-                        txt += v.value
-                        if(i < history.size()-2)
-                            txt += ", "
-                    }
-                }                    
-                return txt
-            }
-            
-            override Image getToolTipImage(Object element) {
-                if(img != null) {
-                    img.dispose()
-                    img = null
                 }
-                if(element instanceof Variable) {
-                    img = createHistoryGraph(element.history)
-                }
-                return img
+                return ""
             }
         };
+        historyColumn = createTableColumn(viewer, "History", 200, true)
+        historyColumn.labelProvider = new HistoryColumnLabelProvider()
+        
         inputColumn = createTableColumn(viewer, "Is Input", 80, false)
-        inputColumn.labelProvider = new DataPoolViewerColumn() {
+        inputColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable)
                     return String.valueOf(element.isInput)
@@ -183,7 +236,7 @@ class DataPoolView extends ViewPart {
             }
         };
         outputColumn = createTableColumn(viewer, "Is Output", 80, false)
-        outputColumn.labelProvider = new DataPoolViewerColumn() {
+        outputColumn.labelProvider = new DataPoolColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable)
                     return String.valueOf(element.isOutput)
@@ -199,7 +252,7 @@ class DataPoolView extends ViewPart {
         viewer.input = newArrayList()
         
         // Make cells editable
-        valueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
+        userValueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
         return viewer
     }
@@ -228,89 +281,36 @@ class DataPoolView extends ViewPart {
         return viewerColumn
     }
     
-    private static def Image createHistoryGraph(List<Variable> history) {
-        if(!history.isNullOrEmpty) {
-            val firstValue = history.get(0).value
-            if(firstValue instanceof Double) {
-                val List<Double> numbers = history.map[it.value as Double]
-                return createNumberGraph(numbers)
-            } else if(firstValue instanceof Boolean) {
-                val List<Boolean> booleans = history.map[it.value as Boolean]
-                return createBooleanGraph(booleans)
+    private def void updateStatusBar(SimulationEvent e) {
+        val bars = getViewSite().getActionBars();
+        if(bars != null) {
+            val statusLineManager = bars.getStatusLineManager()
+            var String txt = null
+            if(e.type != SimulationEventType.STOP) {
+                txt = "Tick #"+SimulationManager.instance.currentMacroTickNumber
+                if(SimulationManager.instance.positionInHistory > 0) {
+                    txt += " (-" + SimulationManager.instance.positionInHistory + ")"
+                }
             }
+            statusLineManager.setMessage(txt);
+            tickInfo?.label?.setText(Strings.nullToEmpty(txt))
         }
-        
-        return null
     }
     
-    private static def Image createNumberGraph(List<Double> numbers) {
-        // Min / max value from history        
-        val min = numbers.min
-        val max = numbers.max
-        
-        // Create image
-        val w = 92
-        val h = 48
-        val display = Display.getCurrent()
-        val img = new Image(display, w, h);
-        
-        val gc = new GC(img)
-        // Draw scale
-        gc.drawText(max.toString, 0, 0)
-        gc.drawText(min.toString, 0, h-16)
-        // Draw graph
-        gc.foreground = display.getSystemColor(SWT.COLOR_RED)
-        val int step = w/numbers.size
-        var int x
-        var int y
-        var Point lastPos = null
-        for(n : numbers) {
-            val fraction = ((n-min) / (max-min))
-            y = (h * fraction).intValue
-            val pos = new Point(x, h-y-1)
-            x += step
-            
-            if(lastPos != null) {
-                gc.drawLine(lastPos.x, lastPos.y, pos.x, pos.y)
+    private static def SimulationListener createSimulationListener() {
+        val listener = new SimulationListener() {
+            override update(SimulationEvent e) {
+                // Execute in UI thread
+                Display.getDefault().asyncExec(new Runnable() {
+                    override void run() {
+                        // Update status line
+                        DataPoolView.instance?.updateStatusBar(e)
+                        // Set pool data
+                        DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
+                    }
+                });
             }
-            
-            lastPos = pos
         }
-        
-        gc.dispose()
-        
-        return img
-    }
-    
-    private static def Image createBooleanGraph(List<Boolean> booleans) {
-        // Create image
-        val w = 92
-        val h = 48
-        val display = Display.getCurrent()
-        val img = new Image(display, w, h);
-        
-        val gc = new GC(img)
-        // Draw graph
-        gc.foreground = display.getSystemColor(SWT.COLOR_RED)
-        val int spacing = 8
-        val int step = w/booleans.size
-        var int x
-        var int y
-        var Point lastPos = null
-        for(b : booleans) {
-            y = if(b) (h - spacing) else spacing
-            val pos = new Point(x, h-y-1)
-            x += step
-            
-            if(lastPos != null) {
-                gc.drawLine(lastPos.x, lastPos.y, pos.x, pos.y)
-            }
-            
-            lastPos = pos
-        }
-        
-        gc.dispose()
-        
-        return img
+        return listener
     }
 }

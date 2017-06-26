@@ -13,18 +13,22 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.validation
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import org.eclipse.xtext.validation.Check
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.Declaration
+import java.util.Set
+import org.eclipse.xtext.validation.Check
 
 /**
  * @author ssm, cmot
@@ -38,6 +42,22 @@ class SctValidator extends SctJavaValidator {
     static val String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object.";
     static val String CANNOT_BIND_ARRAYCELL_TO_ARRAY = "You cannot bind a single array cell to an array."
     static val String CANNOT_BIND_LITERAL_TO_OUTPUT = "You cannot bind a literal to an output object."
+    static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this scope."
+
+    @Check
+    public def void checkDuplicateVariable(Scope s) {
+        val Set<String> variableNames = newHashSet()
+        for(decl : s.declarations) { 
+            for(valuedObject : decl.valuedObjects) {
+                val name = valuedObject.name
+                if(variableNames.contains(name)) {
+                    warning(DUPLICATE_VARIABLE, valuedObject, null)
+                } else {
+                    variableNames.add(name)
+                }
+            }
+        }
+    }
 
     /**
      * Check if valued signal has a combine functions
@@ -45,7 +65,7 @@ class SctValidator extends SctJavaValidator {
      * @param valuedObject the valuedObject
      */
     @Check
-    public def void checkCombineFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+    public def void checkCombineFunction(ValuedObject valuedObject) {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
@@ -62,7 +82,7 @@ class SctValidator extends SctJavaValidator {
      * @param valuedObject the valuedObject
      */
     @Check
-    public def void checkMinMaxUsedCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+    public def void checkMinMaxUsedCombinationFunction(ValuedObject valuedObject) {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
@@ -174,7 +194,7 @@ class SctValidator extends SctJavaValidator {
      */
     // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
     @Check
-    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+    public def void checkValuedSignalHasCombinationFunction(ValuedObject valuedObject) {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
@@ -189,7 +209,7 @@ class SctValidator extends SctJavaValidator {
      * If it is not initialized the static modifier is useless from a modeling perspective.   
      */
     @Check
-    public def void checkStaticVariableIsInitialized(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+    public def void checkStaticVariableIsInitialized(ValuedObject valuedObject) {
         if(valuedObject.isStatic && valuedObject.initialValue == null) {
             warning(STATIC_VARIABLE_WITHOUT_INITIALIZATION, valuedObject, null)
         }
@@ -231,7 +251,7 @@ class SctValidator extends SctJavaValidator {
      * Checks scope of valued objects of transition triggers are correct.
      */
     @Check
-    public def void checkScopeOfOutgoingTransitionVarRefs(de.cau.cs.kieler.kexpressions.ValuedObject testValuedObject) {
+    public def void checkScopeOfOutgoingTransitionVarRefs(ValuedObject testValuedObject) {
         val stateOrRegion = testValuedObject.eContainer.eContainer
         var de.cau.cs.kieler.sccharts.State state
         if (stateOrRegion instanceof de.cau.cs.kieler.sccharts.State) {
@@ -247,25 +267,14 @@ class SctValidator extends SctJavaValidator {
                 error(VALUEDOBJECT_TRANSITION_SCOPE_WRONG, testValuedObject, null, -1);
             }
         }
-    }  
-
-    
-    /**
-     * Checks currently unsupported INPUT OUTPUT variables and displays a warning.
-     */
-    @Check
-    public def void checkNoInputOutput(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
-        if(valuedObject.isInput && valuedObject.isOutput) {
-                warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
-       }
-    }  
+    }
     
     /**
      *
      * @param state the state
      */
     @Check
-    def void checkAssignmentToConst(de.cau.cs.kieler.kexpressions.keffects.Assignment assignment) {
+    def void checkAssignmentToConst(Assignment assignment) {
         if (assignment.getValuedObject() != null) {
             val declaration =  assignment.getValuedObject.eContainer as Declaration
             if (declaration.isConst()) {
@@ -275,7 +284,7 @@ class SctValidator extends SctJavaValidator {
     }    
     
     @Check
-    def void checkArrayCellToArrayBinding(de.cau.cs.kieler.sccharts.Binding binding) {
+    def void checkArrayCellToArrayBinding(Binding binding) {
         if (binding.indices.size > 0) {
             if (binding.formal.cardinalities.size > 0) {
                 error(CANNOT_BIND_ARRAYCELL_TO_ARRAY, binding, null, -1)
@@ -284,7 +293,7 @@ class SctValidator extends SctJavaValidator {
     }
     
     @Check
-    def void checkLiteralToOutputBinding(de.cau.cs.kieler.sccharts.Binding binding) {
+    def void checkLiteralToOutputBinding(Binding binding) {
         if (binding.value != null) {
             if (binding.formal.declaration.output) {
                 error(CANNOT_BIND_LITERAL_TO_OUTPUT, binding, null, -1);

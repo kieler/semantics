@@ -58,8 +58,15 @@ class NDimensionalArray implements Cloneable{
         return indices.get(dimension);
     }
     
-    public def Object get(int... indices) {
-        return elements.get(getOneDimensionalIndex(indices)).value
+    public def Object get(List<Integer> index) {
+        val oneDimIndex = getOneDimensionalIndex(index)
+        return elements.get(oneDimIndex).value
+    }
+    
+    public def Object set(List<Integer> index, Object value) {
+        val oneDimIndex = getOneDimensionalIndex(index)
+        val newArrayElement = new NDimensionalArrayElement(value, index) 
+        elements.set(oneDimIndex, newArrayElement)
     }
     
     private def int getOneDimensionalIndex(List<Integer> indices) {
@@ -75,12 +82,43 @@ class NDimensionalArray implements Cloneable{
     }
     
     public override NDimensionalArray clone() {
-        val arr = new NDimensionalArray(elements.map[it.cloneOfValue], indices.clone)
+        val arr = new NDimensionalArray(elements.map[NDimensionalArrayElement.getCloneOfValue(it.value)], indices.clone)
+        for(var i = 0; i < elements.size; i++) {
+            val oldElem = elements.get(i)
+            val newElem = arr.elements.get(i)
+            newElem.userValue = NDimensionalArrayElement.getCloneOfValue(oldElem.userValue)
+        }
         return arr 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override toString() {
-        val values = elements.map[it.value]
+        val values = elements.map[if(it.isDirty)
+                                      "*"+it.userValue
+                                  else
+                                      it.value]
         return values.toString()
+    }
+    
+    /**
+     * Two NDimensionalArrays are equal, if they have the same size of elements
+     * and all their elements are equal within the same order.
+     */
+    override equals(Object other) {
+        if(other != null) {
+            if(other instanceof NDimensionalArray) {
+                if(other.elements.size == elements.size) {
+                    for(var i = 0; i < elements.size; i++) {
+                        if(!elements.get(i).equals(other.elements.get(i))) {
+                            return false
+                        }
+                    }
+                    return true
+                }    
+            }
+        }
+        return false
     }
 }

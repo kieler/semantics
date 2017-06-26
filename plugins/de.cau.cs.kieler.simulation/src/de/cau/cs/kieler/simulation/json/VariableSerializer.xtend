@@ -53,6 +53,12 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
         if(value instanceof JsonPrimitive) {
             val primitive = JsonManager.jsonAsObject(value)
             variable.value = primitive
+            // Use Integer instead Double if possible
+            if(primitive instanceof Double) {
+                if(primitive == primitive.intValue) {
+                    variable.value = primitive.intValue
+                }
+            }
         } else if (value instanceof JsonObject){
             val array = context.deserialize(value, typeof(NDimensionalArray))
             variable.value = array

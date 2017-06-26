@@ -153,7 +153,10 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         }
         
         // Create sbHeadNodes
+        // and also create control dependencies within basic blocks
         for(bb : scg.basicBlocks) {
+            var SchedulingBlock lastSB = null
+            var i = 0
         	for(sb : bb.schedulingBlocks) {
         		val assignment = GAMap.get(sb.guards.head)
         		if (assignment != null) {
@@ -161,6 +164,17 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
             		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
             		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
         		}
+        		
+        		// The first one is superfluous, because it is already handled by the expression dependency.
+        		if (lastSB != null && i > 1) {
+        		    val lastAssignment = GAMap.get(lastSB.guards.head)
+        		    if (lastAssignment != null) {
+            		    lastAssignment.createControlDependency(assignment)
+        		    }
+        		}
+        		
+        		lastSB = sb
+        		i++
         	}
         }
         

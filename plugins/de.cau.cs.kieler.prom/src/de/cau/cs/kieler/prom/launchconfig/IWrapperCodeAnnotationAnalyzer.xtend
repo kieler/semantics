@@ -29,4 +29,11 @@ interface IWrapperCodeAnnotationAnalyzer {
      * @param model The model to fetch wrapper code annotations from 
      */
     public def List<WrapperCodeAnnotationData> getAnnotations(EObject model)
+    
+   /**
+     * Searches for variables (inputs / outputs) in the model that can be used in the simulation. 
+     * 
+     * @param model The model
+     */
+    public def List<WrapperCodeAnnotationData> getSimulationInterface(EObject model)
 }

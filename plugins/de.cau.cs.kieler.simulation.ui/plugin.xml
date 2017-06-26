@@ -18,8 +18,8 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulation"
-            commandId="de.cau.cs.kieler.simulation.ui.step">
+            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulationSubTick"
+            commandId="de.cau.cs.kieler.simulation.ui.stepSubTick">
       </handler>
       <handler
             class="de.cau.cs.kieler.simulation.ui.toolbar.StopSimulation"
@@ -51,12 +51,13 @@
                id="de.cau.cs.kieler.simulation.ui.simulationToolbar"
                label="KIELER Simulation">
             <command
-                  commandId="de.cau.cs.kieler.simulation.ui.step"
+                  commandId="de.cau.cs.kieler.simulation.ui.stepSubTick"
                   disabledIcon="icons/stepIconDisabled.png"
                   icon="icons/stepIcon.png"
-                  id="de.cau.cs.kieler.simulation.ui.menus.step"
-                  label="Step Simulation"
-                  style="push">
+                  id="de.cau.cs.kieler.simulation.ui.menus.stepSubTick"
+                  label="Step Sub Tick"
+                  style="push"
+                  tooltip="Step Sub Tick">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -73,7 +74,8 @@
                   icon="icons/macroStepIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.stepMacroTick"
                   label="Step Macro Tick"
-                  style="push">
+                  style="push"
+                  tooltip="Step Macro Tick">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -90,7 +92,8 @@
                   icon="icons/stopIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.stop"
                   label="Stop Simulation"
-                  style="push">
+                  style="push"
+                  tooltip="Stop Simulation">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -107,7 +110,8 @@
                   icon="icons/runIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.play"
                   label="Play Simulation"
-                  style="push">
+                  style="push"
+                  tooltip="Play Simulation">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -124,7 +128,8 @@
                   icon="icons/pauseIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.pause"
                   label="Pause Simulation"
-                  style="push">
+                  style="push"
+                  tooltip="Pause Simulation">
                <visibleWhen
                      checkEnabled="false">
                   <with
@@ -140,7 +145,8 @@
                   icon="icons/stepBackIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.back"
                   label="Step Back"
-                  style="push">
+                  style="push"
+                  tooltip="Step Back">
             </command>
          </toolbar>
       </menuContribution>
@@ -155,5 +161,42 @@
             name="Data Pool"
             restorable="true">
       </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.simulation.ui.category"
+            id="de.cau.cs.kieler.simulation.ui.stepSubTick"
+            name="Step Sub Tick">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.simulation.ui.category"
+            id="de.cau.cs.kieler.simulation.ui.back"
+            name="Step Back">
+      </command>
+      <category
+            id="de.cau.cs.kieler.simulation.ui.category"
+            name="Simulation Category">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.simulation.ui.category"
+            id="de.cau.cs.kieler.simulation.ui.pause"
+            name="Pause Simulation">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.simulation.ui.category"
+            id="de.cau.cs.kieler.simulation.ui.play"
+            name="Play Simulation">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.simulation.ui.category"
+            id="de.cau.cs.kieler.simulation.ui.stepMacroTick"
+            name="Step Macro Tick">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.simulation.ui.category"
+            id="de.cau.cs.kieler.simulation.ui.stop"
+            name="Stop Simulation">
+      </command>
    </extension>
 </plugin>

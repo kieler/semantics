@@ -76,6 +76,13 @@ class Model implements Cloneable {
     }
     
     /**
+     * Returns the variable with the given name.
+     */
+    public def Variable getVariable(String name) {
+        variables.findFirst[it.name == name]
+    }
+    
+    /**
      * Returns the variables.
      */
     public def List<Variable> getVariables() {

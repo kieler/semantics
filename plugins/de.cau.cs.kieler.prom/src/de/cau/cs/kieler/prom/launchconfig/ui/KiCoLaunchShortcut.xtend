@@ -104,7 +104,7 @@ class KiCoLaunchShortcut extends PromLaunchShortcut {
         }
 
         // Set KiCo target
-        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".c"
         

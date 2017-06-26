@@ -45,7 +45,7 @@ class SCChartsOptimization {
 
     def void optimizeSuperflousImmediateTransitions(State state, State targetRootState) {
         if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrControlflowRegions) {
-            val transition = state.outgoingTransitions.get(0)
+            val transition = state.outgoingTransitions.head
             val targetState = transition.targetState
             if (transition.immediate2) {
                 if (transition.trigger == null && transition.effects.nullOrEmpty) {

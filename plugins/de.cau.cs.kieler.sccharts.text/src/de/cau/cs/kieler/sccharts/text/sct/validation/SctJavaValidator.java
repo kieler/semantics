@@ -70,9 +70,6 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     
     public static final String MISSING_BINDING_FOR = "Missing binding for variable: ";
 
-    //TODO: fix this or move this check to the simulation component only
-    public static final String INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR = "Variables that war input AND output at the same time are currently not supported by the simulator";
-
     public static final String VALUEDOBJECT_TRANSITION_SCOPE_WRONG = "Variable or signal used out of its scope. Declare it one hierarchy layer up!";
     
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
