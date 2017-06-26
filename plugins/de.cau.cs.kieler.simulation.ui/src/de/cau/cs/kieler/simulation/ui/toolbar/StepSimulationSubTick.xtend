@@ -20,7 +20,7 @@ import org.eclipse.core.commands.ExecutionException
  * @author aas
  *
  */
-class StepSimulation extends SimulationToolbarButton {
+class StepSimulationSubTick extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)

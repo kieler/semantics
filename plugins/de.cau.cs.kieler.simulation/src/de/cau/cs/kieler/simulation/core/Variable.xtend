@@ -140,10 +140,7 @@ class Variable implements Cloneable {
      * and the user value differs from the actual value.
      */
     public def boolean isDirty() {
-        if(userValue == null)
-            return false
-        else
-            return !userValue.equals(value)
+        return userValue != null && !userValue.equals(value)
     }
     
     public def Object getUserValue() {

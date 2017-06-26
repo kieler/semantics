@@ -43,9 +43,32 @@ class SimulationManager {
     public static var SimulationManager instance
     
     /**
+     * Default delay in milliseconds when playing the simulation
+     */
+    public static val DEFAULT_DELAY = 200;
+    
+    /**
+     * Default delay in milliseconds when playing the simulation
+     */
+    public static val MIN_DELAY = 5;
+    
+    /**
+     * Default delay in milliseconds when playing the simulation
+     */
+    public static val MAX_DELAY = 3000;
+    
+    /**
+     * The pause in milliseconds that is waited
+     * until the next tick is simulated when in play mode. 
+     */
+    @Accessors(PUBLIC_GETTER)
+    private static var int playDelay = DEFAULT_DELAY
+    
+    
+    /**
      * List of event listeners
      */
-     private static val List<SimulationListener> listeners = newArrayList
+    private static val List<SimulationListener> listeners = newArrayList
     
     /**
      * The job that executes the step actions concurrently when playing.
@@ -58,17 +81,13 @@ class SimulationManager {
     private var boolean isPlaying
     
     /**
-     * The pause in milliseconds that is waited
-     * until the next tick is simulated when in play mode. 
-     */
-    @Accessors
-    private var int playDelay = 100
-    
-    /**
      * Has the simulation been stopped? 
      */
      @Accessors(PUBLIC_GETTER)
     private var boolean isStopped
+    
+    @Accessors(PUBLIC_GETTER)
+    private var int positionInHistory;
     
     /**
      * Instances of the data handlers in the step actions without duplicates.
@@ -85,8 +104,9 @@ class SimulationManager {
      * The current state of the simulation.
      */
     private var StepState currentState
+    
     /**
-     * The history of state of the simulation from old to new.
+     * The history of step states of this simulation run from old to new.
      */
     private var List<StepState> history = newArrayList()
     
@@ -98,6 +118,28 @@ class SimulationManager {
             instance.stop()
         }
         instance = this
+    }
+    
+    /**
+     * Sets the play delay.
+     */
+    public static def void setPlayDelay(int value) {
+        if(value >= MIN_DELAY && value <= MAX_DELAY) {
+            playDelay = value
+        } else {
+            throw new IllegalArgumentException("Delay for simulation does not fit in range "+MIN_DELAY+" to "+MAX_DELAY)
+        }
+    }
+    
+    /**
+     * Returns the number of the current macro tick to be exectued.
+     */
+    public def int getCurrentMacroTickNumber() {
+        if(currentState != null) {
+            return currentState.actionIndex / actions.size
+        } else {
+            return 0
+        }
     }
     
     /**
@@ -152,7 +194,6 @@ class SimulationManager {
      */
     public def void stepSubTick() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         } else if(isPlaying) {
             pause()
@@ -177,7 +218,6 @@ class SimulationManager {
      */
     public def void stepMacroTick() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         } else if(isPlaying) {
             pause()
@@ -201,17 +241,37 @@ class SimulationManager {
      */
     public def void stepBack() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         } else if(isPlaying) {
             pause()
         }
         
         // Load state from history
-        val previousState = history.last
-        if(previousState != null) {
-            history.remove(previousState)
-            currentState = previousState
+        positionInHistory++;
+        if(positionInHistory > history.size) {
+            positionInHistory = 0;
+        }
+        if(positionInHistory > 0) {
+            val oldState = history.get(history.size - positionInHistory)
+            if(oldState != null) {
+                // Set user value of all variables to value of old state
+                for(m : currentPool.models) {
+                    val oldModel = oldState.pool.getModel(m.name)
+                    if(oldModel != null) {
+                        for(v : m.variables) {
+                            val oldVariable = oldModel.getVariable(v.name)
+                            if(oldVariable != null) {
+                                v.userValue = oldVariable.value
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            // Reset all user values
+            for(v : currentPool.allVariables) {
+                v.userValue = null
+            }
         }
         
         notifyListeners(SimulationEventType.STEP_BACK)
@@ -222,7 +282,6 @@ class SimulationManager {
      */
     public def void play() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         }
         if(!isPlaying) {
@@ -231,7 +290,6 @@ class SimulationManager {
             steppingJob = new Job("Simulation Player") {
                 override protected run(IProgressMonitor monitor) {
                     while(isPlaying) {
-                        println("Playing simulation")
                         // Perform a step after a period of time
                         Thread.sleep(playDelay);
                         
@@ -258,7 +316,6 @@ class SimulationManager {
      */
     public def void pause() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         }
         if(isPlaying) {
@@ -273,12 +330,21 @@ class SimulationManager {
      */
     public def void stop() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         }
         
-        isStopped = true
         isPlaying = false
+        // Wait for the concurrent thread to terminate
+        if(steppingJob != null) {
+            if(steppingJob.join(3000, null)) {
+                steppingJob = null
+            } else {
+                throw new Exception("The concurrent thread that plays the simulation does not seem to terminate.")
+            }
+        }
+        
+        // Stop simulation
+        isStopped = true
         for(handler : dataHandlers) {
             handler.stop()
         }
@@ -332,6 +398,7 @@ class SimulationManager {
      * Create the data pool for the following state.
      */
     private def DataPool createNextPool() {
+        positionInHistory = 0
         val pool = currentState.pool.clone()  
         pool.previousPool = currentPool
         return pool
@@ -361,6 +428,16 @@ class SimulationManager {
         for(m : currentPool.models) {
             for(v : m.variables) {
                 if(v.isDirty) {
+                    // Apply user value of changed array elements
+                    if(v.userValue instanceof NDimensionalArray) {
+                        val arr = v.userValue as NDimensionalArray
+                        for(elem : arr.elements) {
+                            if(elem.isDirty) {
+                                elem.value = elem.userValue
+                            }
+                        }
+                    }
+                    // Apply user value
                     v.value = v.userValue
                 }
             }

@@ -94,30 +94,39 @@ class ValueColumnEditingSupport extends EditingSupport {
         // Try to set value
         try {
             if(element instanceof Variable){
-                if(element.value instanceof Float) {
-                    element.userValue = Float.valueOf(value.toString)    
-                } else if(element.value instanceof Double) {
-                    element.userValue = Double.valueOf(value.toString)    
-                } else if(element.value instanceof Integer) {
-                    element.userValue = Integer.valueOf(value.toString)
+                if(element.value instanceof Float
+                    || element.value instanceof Double
+                    || element.value instanceof Integer) {
+                    val doubleValue = Double.valueOf(value.toString)
+                    val intValue = doubleValue.intValue
+                    if(doubleValue == intValue) {
+                        element.userValue = intValue
+                    } else {
+                        element.userValue = doubleValue
+                    }
                 } else {
                     element.userValue = value
                 }
             } else if(element instanceof NDimensionalArrayElement) {
-                if(element.value instanceof Float) {
-                    element.value = Float.valueOf(value.toString)    
-                } else if(element.value instanceof Double) {
-                    element.value = Double.valueOf(value.toString)
-                } else if(element.value instanceof Integer) {
-                    element.value = Integer.valueOf(value.toString)
+                if(element.value instanceof Float
+                    || element.value instanceof Double
+                    || element.value instanceof Integer) {
+                    val doubleValue = Double.valueOf(value.toString)
+                    val intValue = doubleValue.intValue
+                    if(doubleValue == intValue) {
+                        element.userValue = intValue
+                    } else {
+                        element.userValue = doubleValue
+                    }
                 } else {
-                    element.value = value
+                    element.userValue = value
                 }
             }
 //            println("New value:"+element.value)
         } catch (NumberFormatException e) {
             PromConsole.print("Can't set value of " + element + " to "+value)
         }
+        // Update this element
         viewer.update(element, null);
     }
 }

@@ -101,7 +101,7 @@ class DataPool implements Cloneable {
      */
     public def List<DataPool> getHistory() {
         val List<DataPool> history = newArrayList()
-        history.add(this)
+//        history.add(this)
         var next = this.previousPool
         while(next != null) {
             history.add(next)
