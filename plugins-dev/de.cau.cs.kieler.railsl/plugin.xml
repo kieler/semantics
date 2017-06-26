@@ -19,4 +19,16 @@
           class="de.cau.cs.kieler.railsl.RailSL">
     </featureClass>
  </extension>
+ <extension
+       point="de.cau.cs.kieler.kicool.processor">
+    <Processor
+          class="de.cau.cs.kieler.railsl.RailSLWrapper">
+    </Processor>
+ </extension>
+ <extension
+       point="de.cau.cs.kieler.kicool.system">
+    <TransformationSystem
+          system="de.cau.cs.kieler.railsl.railSLSystem">
+    </TransformationSystem>
+ </extension>
 </plugin>

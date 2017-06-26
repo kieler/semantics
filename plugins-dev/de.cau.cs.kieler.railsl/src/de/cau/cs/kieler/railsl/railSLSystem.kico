@@ -1,0 +1,6 @@
+system de.cau.cs.kieler.railSL.railSLSystem 
+    version 1 
+    label "RaiLSL"
+    metric de.cau.cs.kieler.kicool.processors.metrics.eObjectCount      
+    
+de.cau.cs.kieler.railSL.raiLSLWrapper
