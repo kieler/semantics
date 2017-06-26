@@ -88,7 +88,7 @@ class SctValidator extends SctJavaValidator {
      * @param state The state 
      */
     @Check
-    public def void checkDuplicateVariable(de.cau.cs.kieler.sccharts.State state) {
+    public def void checkConnectorTransitions(de.cau.cs.kieler.sccharts.State state) {
         if(state.type == StateType.CONNECTOR) {
             var Transition lastTransition
             var boolean transitionWithoutTrigger = false
