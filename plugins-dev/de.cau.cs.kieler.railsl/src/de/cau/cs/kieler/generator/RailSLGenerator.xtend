@@ -34,6 +34,7 @@ import de.cau.cs.kieler.railSL.SetPointStatement
 import de.cau.cs.kieler.railSL.LightStatement
 import de.cau.cs.kieler.railSL.ConditionalStatement
 import de.cau.cs.kieler.railSL.CrossingStatement
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Main class for code generation and model-to-model transformations of RailSL.
@@ -129,7 +130,7 @@ class RailSLGenerator extends AbstractGenerator {
 
         // I N T E R F A C E
         // input bool contacts[48][2];
-        val contactsDecl = createDeclaration(ValueType.BOOL)
+        val contactsDecl = createBoolDeclaration
         contactsDecl.input = true;
         val contacts = createValuedObject("contacts")
         contacts.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
@@ -141,7 +142,7 @@ class RailSLGenerator extends AbstractGenerator {
         valObjects.put("contacts", contacts)
 
         // output int tracks[48][2];
-        val tracksDecl = createDeclaration(ValueType.INT)
+        val tracksDecl = createIntDeclaration
         tracksDecl.output = true;
         val tracks = createValuedObject("tracks")
         tracks.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
@@ -153,7 +154,7 @@ class RailSLGenerator extends AbstractGenerator {
         valObjects.put("tracks", tracks)
 
         // output bool points[30];
-        val pointsDecl = createDeclaration(ValueType.BOOL)
+        val pointsDecl = createBoolDeclaration
         pointsDecl.output = true
         val points = createValuedObject("points")
         points.cardinalities.add(createIntValue(NUM_OF_POINTS))
@@ -164,7 +165,7 @@ class RailSLGenerator extends AbstractGenerator {
         valObjects.put("points", points)
 
         // output int signals[48][2];
-        val signalsDecl = createDeclaration(ValueType.INT)
+        val signalsDecl = createIntDeclaration
         signalsDecl.output = true
         val signals = createValuedObject("signals")
         signals.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
@@ -176,7 +177,7 @@ class RailSLGenerator extends AbstractGenerator {
         valObjects.put("signals", signals)
 
         // output bool lights[24];
-        val lightsDecl = createDeclaration(ValueType.BOOL)
+        val lightsDecl = createBoolDeclaration
         lightsDecl.output = true
         val lights = createValuedObject("lights")
         lights.cardinalities.add(createIntValue(NUM_OF_LIGHTS))
@@ -187,7 +188,7 @@ class RailSLGenerator extends AbstractGenerator {
         valObjects.put("lights", lights)
 
         // input bool second;
-        val secondDecl = createDeclaration(ValueType.BOOL)
+        val secondDecl = createBoolDeclaration
         secondDecl.input = true
         val second = createValuedObject("second")
         secondDecl.attach(second)
@@ -197,7 +198,7 @@ class RailSLGenerator extends AbstractGenerator {
         valObjects.put("second", second);
         
         // output bool crossing
-        val crossingDecl = createDeclaration(ValueType.BOOL)
+        val crossingDecl = createBoolDeclaration
         crossingDecl.output = true
         val crossing = createValuedObject("crossing")
         crossingDecl.attach(crossing)
