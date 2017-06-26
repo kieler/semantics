@@ -186,7 +186,6 @@ class KVisView extends ViewPart {
 
     public def void reload() {
         if (kvisFile != null) {
-            println("Reloading KVis View")
             loadFile(kvisFile)
         }
     }

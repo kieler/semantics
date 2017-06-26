@@ -194,7 +194,6 @@ class SimulationManager {
      */
     public def void stepSubTick() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         } else if(isPlaying) {
             pause()
@@ -219,7 +218,6 @@ class SimulationManager {
      */
     public def void stepMacroTick() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         } else if(isPlaying) {
             pause()
@@ -243,7 +241,6 @@ class SimulationManager {
      */
     public def void stepBack() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         } else if(isPlaying) {
             pause()
@@ -285,7 +282,6 @@ class SimulationManager {
      */
     public def void play() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         }
         if(!isPlaying) {
@@ -294,7 +290,6 @@ class SimulationManager {
             steppingJob = new Job("Simulation Player") {
                 override protected run(IProgressMonitor monitor) {
                     while(isPlaying) {
-                        println("Playing simulation")
                         // Perform a step after a period of time
                         Thread.sleep(playDelay);
                         
@@ -321,7 +316,6 @@ class SimulationManager {
      */
     public def void pause() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         }
         if(isPlaying) {
@@ -336,7 +330,6 @@ class SimulationManager {
      */
     public def void stop() {
         if(isStopped) {
-            System.err.println("Simulation was stopped")
             return
         }
         
