@@ -24,11 +24,9 @@
     </genClasses>
     <genClasses ecoreClass="SCEst.ecore#//UnEmit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCEst.ecore#//UnEmit/signal"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//UnEmit/tick"/>
     </genClasses>
     <genClasses ecoreClass="SCEst.ecore#//Set">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCEst.ecore#//Set/signal"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//Set/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//Set/expr"/>
     </genClasses>
   </genPackages>

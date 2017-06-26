@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl#getExpr <em>Expr</em>}</li>
  * </ul>
  *
@@ -45,16 +44,6 @@ public class SetImpl extends StatementImpl implements Set
    * @ordered
    */
   protected ISignal signal;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected ISignal tick;
 
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
@@ -135,54 +124,6 @@ public class SetImpl extends StatementImpl implements Set
    * <!-- end-user-doc -->
    * @generated
    */
-  public ISignal getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
-  {
-    ISignal oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScestPackage.SET__TICK, oldTick, newTick);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(ISignal newTick)
-  {
-    if (newTick != tick)
-    {
-      NotificationChain msgs = null;
-      if (tick != null)
-        msgs = ((InternalEObject)tick).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScestPackage.SET__TICK, null, msgs);
-      if (newTick != null)
-        msgs = ((InternalEObject)newTick).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScestPackage.SET__TICK, null, msgs);
-      msgs = basicSetTick(newTick, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScestPackage.SET__TICK, newTick, newTick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Expression getExpr()
   {
     return expr;
@@ -236,8 +177,6 @@ public class SetImpl extends StatementImpl implements Set
   {
     switch (featureID)
     {
-      case ScestPackage.SET__TICK:
-        return basicSetTick(null, msgs);
       case ScestPackage.SET__EXPR:
         return basicSetExpr(null, msgs);
     }
@@ -257,8 +196,6 @@ public class SetImpl extends StatementImpl implements Set
       case ScestPackage.SET__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
-      case ScestPackage.SET__TICK:
-        return getTick();
       case ScestPackage.SET__EXPR:
         return getExpr();
     }
@@ -277,9 +214,6 @@ public class SetImpl extends StatementImpl implements Set
     {
       case ScestPackage.SET__SIGNAL:
         setSignal((ISignal)newValue);
-        return;
-      case ScestPackage.SET__TICK:
-        setTick((ISignal)newValue);
         return;
       case ScestPackage.SET__EXPR:
         setExpr((Expression)newValue);
@@ -301,9 +235,6 @@ public class SetImpl extends StatementImpl implements Set
       case ScestPackage.SET__SIGNAL:
         setSignal((ISignal)null);
         return;
-      case ScestPackage.SET__TICK:
-        setTick((ISignal)null);
-        return;
       case ScestPackage.SET__EXPR:
         setExpr((Expression)null);
         return;
@@ -323,8 +254,6 @@ public class SetImpl extends StatementImpl implements Set
     {
       case ScestPackage.SET__SIGNAL:
         return signal != null;
-      case ScestPackage.SET__TICK:
-        return tick != null;
       case ScestPackage.SET__EXPR:
         return expr != null;
     }

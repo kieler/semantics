@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
 
 import de.cau.cs.kieler.kexpressions.Expression;
@@ -27,7 +26,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl#getTick <em>Tick</em>}</li>
  * </ul>
  *
  * @generated
@@ -43,16 +41,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * @ordered
    */
   protected Expression expression;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected ISignal tick;
 
   /**
    * <!-- begin-user-doc -->
@@ -128,54 +116,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public ISignal getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
-  {
-    ISignal oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__TICK, oldTick, newTick);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(ISignal newTick)
-  {
-    if (newTick != tick)
-    {
-      NotificationChain msgs = null;
-      if (tick != null)
-        msgs = ((InternalEObject)tick).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__TICK, null, msgs);
-      if (newTick != null)
-        msgs = ((InternalEObject)newTick).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__TICK, null, msgs);
-      msgs = basicSetTick(newTick, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__TICK, newTick, newTick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -183,8 +123,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
     {
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         return basicSetExpression(null, msgs);
-      case EsterelPackage.PRESENT_CASE__TICK:
-        return basicSetTick(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -201,8 +139,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
     {
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         return getExpression();
-      case EsterelPackage.PRESENT_CASE__TICK:
-        return getTick();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -219,9 +155,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
     {
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         setExpression((Expression)newValue);
-        return;
-      case EsterelPackage.PRESENT_CASE__TICK:
-        setTick((ISignal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -240,9 +173,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         setExpression((Expression)null);
         return;
-      case EsterelPackage.PRESENT_CASE__TICK:
-        setTick((ISignal)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -259,8 +189,6 @@ public class PresentCaseImpl extends StatementContainerImpl implements PresentCa
     {
       case EsterelPackage.PRESENT_CASE__EXPRESSION:
         return expression != null;
-      case EsterelPackage.PRESENT_CASE__TICK:
-        return tick != null;
     }
     return super.eIsSet(featureID);
   }

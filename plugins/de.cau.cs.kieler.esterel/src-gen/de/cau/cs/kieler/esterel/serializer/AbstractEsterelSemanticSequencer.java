@@ -267,10 +267,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					sequence_Sensor(context, (ISignal) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTickRule()) {
-					sequence_Tick(context, (ISignal) semanticObject); 
-					return; 
-				}
 				else break;
 			case EsterelPackage.IVARIABLE:
 				sequence_IVariable(context, (IVariable) semanticObject); 
@@ -936,7 +932,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     DelayExpr returns DelayExpr
 	 *
 	 * Constraint:
-	 *     ((expr=Expression | isImmediate?='immediate')? (tick=Tick | signalExpr=SignalReferenceExpr | signalExpr=SignalExpression))
+	 *     ((expr=Expression | isImmediate?='immediate')? (signalExpr=SignalReferenceExpr | signalExpr=SignalExpression))
 	 */
 	protected void sequence_DelayExpr(ISerializationContext context, DelayExpr semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -971,7 +967,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ElsIf returns ElsIf
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* expr=Expression thenAnnotations+=Annotation* thenStatements+=EsterelStatement* thenStatements+=EsterelStatement?)
+	 *     (annotations+=Annotation* expr=Expression thenStatements+=EsterelStatement* thenStatements+=EsterelStatement?)
 	 */
 	protected void sequence_ElsIf(ISerializationContext context, ElsIf semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -985,7 +981,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Emit returns Emit
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (signal=[ISignal|ID] | tick=Tick) expr=Expression?)
+	 *     (annotations+=Annotation* signal=[ISignal|ID] expr=Expression?)
 	 */
 	protected void sequence_Emit(ISerializationContext context, Emit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1445,7 +1441,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         (expression=SignalExpression | expression=SignalExpression | tick=Tick) 
+	 *         (expression=SignalExpression | expression=SignalExpression) 
 	 *         statements+=EsterelStatement* 
 	 *         statements+=EsterelStatement?
 	 *     )
@@ -1466,7 +1462,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         annotations+=Annotation* 
 	 *         (
 	 *             (
-	 *                 (expression=SignalExpression | expression=SignalExpression | tick=Tick) 
+	 *                 (expression=SignalExpression | expression=SignalExpression) 
 	 *                 thenAnnotations+=Annotation* 
 	 *                 thenStatements+=EsterelStatement* 
 	 *                 thenStatements+=EsterelStatement?
@@ -1799,7 +1795,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     Sustain returns Sustain
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (signal=[ISignal|ID] | tick=Tick) expression=Expression?)
+	 *     (annotations+=Annotation* signal=[ISignal|ID] expression=Expression?)
 	 */
 	protected void sequence_Sustain(ISerializationContext context, Sustain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1848,24 +1844,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 */
 	protected void sequence_Task(ISerializationContext context, Task semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Tick returns ISignal
-	 *
-	 * Constraint:
-	 *     name='tick'
-	 */
-	protected void sequence_Tick(ISerializationContext context, ISignal semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTickAccess().getNameTickKeyword_0(), semanticObject.getName());
-		feeder.finish();
 	}
 	
 	

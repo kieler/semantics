@@ -68,6 +68,8 @@ import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Exec
 import de.cau.cs.kieler.esterel.esterel.Do
+import de.cau.cs.kieler.esterel.esterel.DelayExpr
+import de.cau.cs.kieler.esterel.esterel.TrapSignal
 
 /**
  * @author mrb
@@ -106,6 +108,12 @@ class SCEstExtension {
     var static variableSuffix = 0;
     
     var static flagSuffix = 0;
+    
+    var static abortFlagSuffix = 0;
+    
+    var static depthFlagSuffix = 0;
+    
+    var static trapSuffix = 0;
     
     final private static String generatedAnnotation = "depth"
 
@@ -228,6 +236,27 @@ class SCEstExtension {
     }
     
     /**
+     * Resets the abortFlag count, should be called before a transformation.
+     */
+    def resetAbortFlagSuffix() {
+        abortFlagSuffix = 0;
+    }
+    
+    /**
+     * Resets the depthFlag count, should be called before a transformation.
+     */
+    def resetDepthFlagSuffix() {
+        depthFlagSuffix = 0;
+    }
+    
+    /**
+     * Resets the trap count, should be called before a transformation.
+     */
+    def resetTrapSuffix() {
+        trapSuffix = 0;
+    }
+    
+    /**
      * Returns an unused constant by appending the constantCount to "_l" and incrementing constantCount.
      * 
      * @return An unused constant
@@ -270,6 +299,42 @@ class SCEstExtension {
     }
     
     /**
+     * Returns a new trap variable.
+     * 
+     * @param exp The value of the variable. Can be null.
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createTrapVariable(ISignal trap) {
+        if (trap != null) {
+            createValuedObject(createNewUniqueTrapName(trap.name)) => [
+                it.initialValue = trap.expression
+                it.combineOperator = trap.combineOperator
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueTrapName)
+        }
+    }
+    
+    /**
+     * Returns a new trap variable.
+     * 
+     * @param exp The value of the variable. Can be null.
+     * @param name The name of the variable. Can be null.
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createTrapVariable(Expression expr, String name) {
+        if (name != null) {
+            createValuedObject(createNewUniqueTrapName(name)) => [
+                it.initialValue = expr 
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueTrapName)
+        }
+    }
+    
+    /**
      * Returns a new flag.
      * 
      * @param exp The value of the flag. true or false
@@ -287,6 +352,40 @@ class SCEstExtension {
     }
     
     /**
+     * Returns a new abortFlag.
+     * 
+     * @param exp The value of the abortFlag. true or false
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createNewUniqueAbortFlag(Expression exp) {
+        if (exp instanceof Expression) {
+            createValuedObject(createNewUniqueAbortFlagName) => [
+                it.initialValue = exp
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueAbortFlagName)
+        }
+    }
+    
+    /**
+     * Returns a new depthFlag.
+     * 
+     * @param exp The value of the flag. true or false
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createNewUniqueDepthFlag(Expression exp) {
+        if (exp instanceof Expression) {
+            createValuedObject(createNewUniqueDepthFlagName) => [
+                it.initialValue = exp
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueDepthFlagName)
+        }
+    }
+    
+    /**
      * Returns an unused variable name. String: ( "_v" + counter )
      * @return Returns an unused variable name. String: ( "_v" + counter )
      */
@@ -296,12 +395,49 @@ class SCEstExtension {
     }
     
     /**
-     * Returns an unused flag name. String: ( "_f" + counter )
-     * @return Returns an unused flag name. String: ( "_f" + counter )
+     * Returns an unused flag name. String: ( "f" + counter )
+     * @return Returns an unused flag name. String: ( "f" + counter )
      */
     def createNewUniqueFlagName() {
         flagSuffix++
         "f" + flagSuffix
+    }
+    
+    /**
+     * Returns an unused abortFag name. String: ( "abort" + counter )
+     * @return Returns an unused abortFlag name. String: ( "abort" + counter )
+     */
+    def createNewUniqueAbortFlagName() {
+        abortFlagSuffix++
+        "abort" + abortFlagSuffix
+    }
+    
+    /**
+     * Returns an unused depthFlag name. String: ( "depth" + counter )
+     * @return Returns an unused depthFlag name. String: ( "depth" + counter )
+     */
+    def createNewUniqueDepthFlagName() {
+        depthFlagSuffix++
+        "depth" + depthFlagSuffix
+    }
+    
+    /**
+     * Returns an unused trap name. String: ( "T"  + counter )
+     * @return Returns an unused trap name. String: ( "T"  + counter )
+     */
+    def createNewUniqueTrapName() {
+        trapSuffix++
+        "T" + trapSuffix
+    }
+    
+    /**
+     * Returns an unused trap name. String: ( "T" + counter + "_" + name)
+     * @param name The name of the previous trap signal
+     * @return Returns an unused trap name. String: ( "T" + counter + "_" + name)
+     */
+    def createNewUniqueTrapName(String name) {
+        trapSuffix++
+        "T" + trapSuffix + "_" + name
     }
 
     /**
@@ -1113,6 +1249,18 @@ class SCEstExtension {
     }
     
     /**
+     * Creates a new Esterel Abort
+     * 
+     * @param delay The delay expression for the abort statement
+     * @return The newly created Esterel Abort
+     */
+    def createAbort(DelayExpr delay) {
+        EsterelFactory::eINSTANCE.createAbort => [
+            it.delay = EcoreUtil.copy(delay)
+        ]
+    }
+    
+    /**
      * Creates a new Esterel Halt
      * 
      * @return The newly created Esterel Halt
@@ -1337,23 +1485,33 @@ class SCEstExtension {
                 return label
             }
             else if (parent instanceof Thread) {
-                if ((parent as Thread).statements.last instanceof Label) {
-                    return (parent as Thread).statements.last as Label
+                var thread = parent as Thread
+                if (thread.statements.last instanceof Label) {
+                    return thread.statements.last as Label
                 }
                 else { 
-                    return null
+                    var newLabel = createLabel
+                    thread.statements.add(newLabel)
+                    return newLabel
                 }
             }
             else if (parent instanceof EsterelThread) {
-                if ((parent as EsterelThread).statements.last instanceof Label) {
-                    return (parent as EsterelThread).statements.last as Label
+                var thread = parent as EsterelThread
+                if (thread.statements.last instanceof Label) {
+                    return thread.statements.last as Label
                 }
                 else { 
-                    return null
+                    var newLabel = createLabel
+                    thread.statements.add(newLabel)
+                    return newLabel
                 }
             }
             else if (parent instanceof SCEstModule) {
-                return null // shouldn't be possible
+                // shouldn't be possible
+                var module = parent as SCEstModule
+                var newLabel = createLabel
+                module.statements.add(newLabel)
+                return newLabel 
             }
             parent = parent.eContainer
         }
@@ -1564,6 +1722,7 @@ class SCEstExtension {
             ]
         }
     }
+    
  
  
  

@@ -16,7 +16,6 @@ import de.cau.cs.kieler.scl.scl.StatementContainer;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getTick <em>Tick</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase()
@@ -50,31 +49,5 @@ public interface PresentCase extends StatementContainer
    * @generated
    */
   void setExpression(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Tick</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Tick</em>' containment reference.
-   * @see #setTick(ISignal)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCase_Tick()
-   * @model containment="true"
-   * @generated
-   */
-  ISignal getTick();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getTick <em>Tick</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Tick</em>' containment reference.
-   * @see #getTick()
-   * @generated
-   */
-  void setTick(ISignal value);
 
 } // PresentCase

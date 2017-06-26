@@ -64,7 +64,7 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
     /**
      * {@inheritDoc}
      */
-    @Override
+    @Override 
     override  IScope getScope( EObject context,  EReference reference) {
         switch (reference.EReferenceType) {
             // TODO

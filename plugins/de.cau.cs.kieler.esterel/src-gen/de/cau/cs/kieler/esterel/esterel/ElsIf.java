@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenAnnotations <em>Then Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenStatements <em>Then Statements</em>}</li>
  * </ul>
  *
@@ -74,22 +73,6 @@ public interface ElsIf extends EObject
    * @generated
    */
   void setExpr(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Then Annotations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Then Annotations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Then Annotations</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_ThenAnnotations()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Annotation> getThenAnnotations();
 
   /**
    * Returns the value of the '<em><b>Then Statements</b></em>' containment reference list.

@@ -269,10 +269,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					sequence_Sensor(context, (ISignal) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTickRule()) {
-					sequence_Tick(context, (ISignal) semanticObject); 
-					return; 
-				}
 				else break;
 			case EsterelPackage.IVARIABLE:
 				sequence_IVariable(context, (IVariable) semanticObject); 
@@ -764,13 +760,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     ElsIf returns ElsIf
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         expr=Expression 
-	 *         thenAnnotations+=Annotation* 
-	 *         (thenStatements+=SCEstStatement | thenStatements+=MetaStatement)* 
-	 *         thenStatements+=SCEstStatement?
-	 *     )
+	 *     (annotations+=Annotation* expr=Expression (thenStatements+=SCEstStatement | thenStatements+=MetaStatement)* thenStatements+=SCEstStatement?)
 	 */
 	protected void sequence_ElsIf(ISerializationContext context, ElsIf semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -991,7 +981,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         (expression=SignalExpression | expression=SignalExpression | tick=Tick) 
+	 *         (expression=SignalExpression | expression=SignalExpression) 
 	 *         statements+=SCEstStatement? 
 	 *         (statements+=MetaStatement? statements+=SCEstStatement?)* 
 	 *         statements+=SCEstStatement?
@@ -1015,7 +1005,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         annotations+=Annotation* 
 	 *         (
 	 *             (
-	 *                 (expression=SignalExpression | expression=SignalExpression | tick=Tick) 
+	 *                 (expression=SignalExpression | expression=SignalExpression) 
 	 *                 thenAnnotations+=Annotation* 
 	 *                 thenStatements+=MetaStatement? 
 	 *                 (thenStatements+=SCEstStatement? thenStatements+=MetaStatement?)* 
@@ -1124,7 +1114,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     Set returns Set
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (signal=[ISignal|ID] | tick=Tick) expr=Expression)
+	 *     (annotations+=Annotation* signal=[ISignal|ID] expr=Expression)
 	 */
 	protected void sequence_Set(ISerializationContext context, de.cau.cs.kieler.esterel.scest.scest.Set semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1205,7 +1195,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     UnEmit returns UnEmit
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (signal=[ISignal|ID] | tick=Tick))
+	 *     (annotations+=Annotation* signal=[ISignal|ID])
 	 */
 	protected void sequence_UnEmit(ISerializationContext context, UnEmit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

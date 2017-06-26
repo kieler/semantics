@@ -4,7 +4,6 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.ISignal;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
@@ -27,7 +26,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#isIsImmediate <em>Is Immediate</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getSignalExpr <em>Signal Expr</em>}</li>
  * </ul>
  *
@@ -64,16 +62,6 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
    * @ordered
    */
   protected boolean isImmediate = IS_IMMEDIATE_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected ISignal tick;
 
   /**
    * The cached value of the '{@link #getSignalExpr() <em>Signal Expr</em>}' containment reference.
@@ -182,54 +170,6 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
    * <!-- end-user-doc -->
    * @generated
    */
-  public ISignal getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
-  {
-    ISignal oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__TICK, oldTick, newTick);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(ISignal newTick)
-  {
-    if (newTick != tick)
-    {
-      NotificationChain msgs = null;
-      if (tick != null)
-        msgs = ((InternalEObject)tick).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__TICK, null, msgs);
-      if (newTick != null)
-        msgs = ((InternalEObject)newTick).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DELAY_EXPR__TICK, null, msgs);
-      msgs = basicSetTick(newTick, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EXPR__TICK, newTick, newTick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Expression getSignalExpr()
   {
     return signalExpr;
@@ -285,8 +225,6 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
     {
       case EsterelPackage.DELAY_EXPR__EXPR:
         return basicSetExpr(null, msgs);
-      case EsterelPackage.DELAY_EXPR__TICK:
-        return basicSetTick(null, msgs);
       case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
         return basicSetSignalExpr(null, msgs);
     }
@@ -307,8 +245,6 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
         return getExpr();
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         return isIsImmediate();
-      case EsterelPackage.DELAY_EXPR__TICK:
-        return getTick();
       case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
         return getSignalExpr();
     }
@@ -330,9 +266,6 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
         return;
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         setIsImmediate((Boolean)newValue);
-        return;
-      case EsterelPackage.DELAY_EXPR__TICK:
-        setTick((ISignal)newValue);
         return;
       case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
         setSignalExpr((Expression)newValue);
@@ -357,9 +290,6 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         setIsImmediate(IS_IMMEDIATE_EDEFAULT);
         return;
-      case EsterelPackage.DELAY_EXPR__TICK:
-        setTick((ISignal)null);
-        return;
       case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
         setSignalExpr((Expression)null);
         return;
@@ -381,8 +311,6 @@ public class DelayExprImpl extends MinimalEObjectImpl.Container implements Delay
         return expr != null;
       case EsterelPackage.DELAY_EXPR__IS_IMMEDIATE:
         return isImmediate != IS_IMMEDIATE_EDEFAULT;
-      case EsterelPackage.DELAY_EXPR__TICK:
-        return tick != null;
       case EsterelPackage.DELAY_EXPR__SIGNAL_EXPR:
         return signalExpr != null;
     }

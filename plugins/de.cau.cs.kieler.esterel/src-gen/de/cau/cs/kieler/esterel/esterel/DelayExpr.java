@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getSignalExpr <em>Signal Expr</em>}</li>
  * </ul>
  *
@@ -78,32 +77,6 @@ public interface DelayExpr extends EObject
    * @generated
    */
   void setIsImmediate(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Tick</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Tick</em>' containment reference.
-   * @see #setTick(ISignal)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Tick()
-   * @model containment="true"
-   * @generated
-   */
-  ISignal getTick();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick <em>Tick</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Tick</em>' containment reference.
-   * @see #getTick()
-   * @generated
-   */
-  void setTick(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Signal Expr</b></em>' containment reference.

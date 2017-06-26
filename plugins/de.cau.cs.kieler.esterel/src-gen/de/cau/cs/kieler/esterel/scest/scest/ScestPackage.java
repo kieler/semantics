@@ -242,22 +242,13 @@ public interface ScestPackage extends EPackage
   int UN_EMIT__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int UN_EMIT__TICK = SclPackage.STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The number of structural features of the '<em>Un Emit</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UN_EMIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int UN_EMIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl <em>Set</em>}' class.
@@ -288,22 +279,13 @@ public interface ScestPackage extends EPackage
   int SET__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SET__TICK = SclPackage.STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SET__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int SET__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Set</em>' class.
@@ -312,7 +294,7 @@ public interface ScestPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int SET_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
 
 
   /**
@@ -478,17 +460,6 @@ public interface ScestPackage extends EPackage
   EReference getUnEmit_Signal();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.UnEmit#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.UnEmit#getTick()
-   * @see #getUnEmit()
-   * @generated
-   */
-  EReference getUnEmit_Tick();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.scest.scest.Set <em>Set</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -508,17 +479,6 @@ public interface ScestPackage extends EPackage
    * @generated
    */
   EReference getSet_Signal();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.Set#getTick()
-   * @see #getSet()
-   * @generated
-   */
-  EReference getSet_Tick();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpr <em>Expr</em>}'.
@@ -681,14 +641,6 @@ public interface ScestPackage extends EPackage
     EReference UN_EMIT__SIGNAL = eINSTANCE.getUnEmit_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference UN_EMIT__TICK = eINSTANCE.getUnEmit_Tick();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl <em>Set</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -705,14 +657,6 @@ public interface ScestPackage extends EPackage
      * @generated
      */
     EReference SET__SIGNAL = eINSTANCE.getSet_Signal();
-
-    /**
-     * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SET__TICK = eINSTANCE.getSet_Tick();
 
     /**
      * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.

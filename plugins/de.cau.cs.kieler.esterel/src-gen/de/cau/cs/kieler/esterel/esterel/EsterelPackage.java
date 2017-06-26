@@ -1177,22 +1177,13 @@ public interface EsterelPackage extends EPackage
   int EMIT__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EMIT__TICK = SclPackage.STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EMIT__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int EMIT__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Emit</em>' class.
@@ -1201,7 +1192,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int EMIT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl <em>Sustain</em>}' class.
@@ -1232,22 +1223,13 @@ public interface EsterelPackage extends EPackage
   int SUSTAIN__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSTAIN__TICK = SclPackage.STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SUSTAIN__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int SUSTAIN__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Sustain</em>' class.
@@ -1256,7 +1238,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSTAIN_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int SUSTAIN_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelAssignmentImpl <em>Assignment</em>}' class.
@@ -1388,22 +1370,13 @@ public interface EsterelPackage extends EPackage
   int PRESENT__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRESENT__TICK = SclPackage.STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Then Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRESENT__THEN_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 2;
+  int PRESENT__THEN_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Then Statements</b></em>' containment reference list.
@@ -1412,7 +1385,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__THEN_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 3;
+  int PRESENT__THEN_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -1421,7 +1394,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__CASES = SclPackage.STATEMENT_FEATURE_COUNT + 4;
+  int PRESENT__CASES = SclPackage.STATEMENT_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Else Annotations</b></em>' containment reference list.
@@ -1430,7 +1403,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__ELSE_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 5;
+  int PRESENT__ELSE_ANNOTATIONS = SclPackage.STATEMENT_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Else Statements</b></em>' containment reference list.
@@ -1439,7 +1412,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__ELSE_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 6;
+  int PRESENT__ELSE_STATEMENTS = SclPackage.STATEMENT_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Present</em>' class.
@@ -1448,7 +1421,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 7;
+  int PRESENT_FEATURE_COUNT = SclPackage.STATEMENT_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseImpl <em>Present Case</em>}' class.
@@ -1488,22 +1461,13 @@ public interface EsterelPackage extends EPackage
   int PRESENT_CASE__EXPRESSION = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRESENT_CASE__TICK = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
-
-  /**
    * The number of structural features of the '<em>Present Case</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRESENT_CASE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 2;
+  int PRESENT_CASE_FEATURE_COUNT = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl <em>If Test</em>}' class.
@@ -1616,22 +1580,13 @@ public interface EsterelPackage extends EPackage
   int ELS_IF__EXPR = 1;
 
   /**
-   * The feature id for the '<em><b>Then Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ELS_IF__THEN_ANNOTATIONS = 2;
-
-  /**
    * The feature id for the '<em><b>Then Statements</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ELS_IF__THEN_STATEMENTS = 3;
+  int ELS_IF__THEN_STATEMENTS = 2;
 
   /**
    * The number of structural features of the '<em>Els If</em>' class.
@@ -1640,7 +1595,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ELS_IF_FEATURE_COUNT = 4;
+  int ELS_IF_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl <em>Loop</em>}' class.
@@ -2993,22 +2948,13 @@ public interface EsterelPackage extends EPackage
   int DELAY_EXPR__IS_IMMEDIATE = 1;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DELAY_EXPR__TICK = 2;
-
-  /**
    * The feature id for the '<em><b>Signal Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DELAY_EXPR__SIGNAL_EXPR = 3;
+  int DELAY_EXPR__SIGNAL_EXPR = 2;
 
   /**
    * The number of structural features of the '<em>Delay Expr</em>' class.
@@ -3017,7 +2963,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DELAY_EXPR_FEATURE_COUNT = 4;
+  int DELAY_EXPR_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelTypeImpl <em>Type</em>}' class.
@@ -4404,17 +4350,6 @@ public interface EsterelPackage extends EPackage
   EReference getEmit_Signal();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Emit#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Emit#getTick()
-   * @see #getEmit()
-   * @generated
-   */
-  EReference getEmit_Tick();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Emit#getExpr <em>Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4445,17 +4380,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getSustain_Signal();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Sustain#getTick()
-   * @see #getSustain()
-   * @generated
-   */
-  EReference getSustain_Tick();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getExpression <em>Expression</em>}'.
@@ -4565,17 +4489,6 @@ public interface EsterelPackage extends EPackage
   EReference getPresent_Expression();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Present#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Present#getTick()
-   * @see #getPresent()
-   * @generated
-   */
-  EReference getPresent_Tick();
-
-  /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.esterel.Present#getThenAnnotations <em>Then Annotations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4650,17 +4563,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getPresentCase_Expression();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.PresentCase#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.PresentCase#getTick()
-   * @see #getPresentCase()
-   * @generated
-   */
-  EReference getPresentCase_Tick();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.IfTest <em>If Test</em>}'.
@@ -4769,17 +4671,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getElsIf_Expr();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenAnnotations <em>Then Annotations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Then Annotations</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.ElsIf#getThenAnnotations()
-   * @see #getElsIf()
-   * @generated
-   */
-  EReference getElsIf_ThenAnnotations();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenStatements <em>Then Statements</em>}'.
@@ -5710,17 +5601,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EAttribute getDelayExpr_IsImmediate();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.DelayExpr#getTick()
-   * @see #getDelayExpr()
-   * @generated
-   */
-  EReference getDelayExpr_Tick();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getSignalExpr <em>Signal Expr</em>}'.
@@ -6654,14 +6534,6 @@ public interface EsterelPackage extends EPackage
     EReference EMIT__SIGNAL = eINSTANCE.getEmit_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EMIT__TICK = eINSTANCE.getEmit_Tick();
-
-    /**
      * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6686,14 +6558,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference SUSTAIN__SIGNAL = eINSTANCE.getSustain_Signal();
-
-    /**
-     * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SUSTAIN__TICK = eINSTANCE.getSustain_Tick();
 
     /**
      * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -6782,14 +6646,6 @@ public interface EsterelPackage extends EPackage
     EReference PRESENT__EXPRESSION = eINSTANCE.getPresent_Expression();
 
     /**
-     * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PRESENT__TICK = eINSTANCE.getPresent_Tick();
-
-    /**
      * The meta object literal for the '<em><b>Then Annotations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6846,14 +6702,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference PRESENT_CASE__EXPRESSION = eINSTANCE.getPresentCase_Expression();
-
-    /**
-     * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PRESENT_CASE__TICK = eINSTANCE.getPresentCase_Tick();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl <em>If Test</em>}' class.
@@ -6938,14 +6786,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference ELS_IF__EXPR = eINSTANCE.getElsIf_Expr();
-
-    /**
-     * The meta object literal for the '<em><b>Then Annotations</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ELS_IF__THEN_ANNOTATIONS = eINSTANCE.getElsIf_ThenAnnotations();
 
     /**
      * The meta object literal for the '<em><b>Then Statements</b></em>' containment reference list feature.
@@ -7696,14 +7536,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EAttribute DELAY_EXPR__IS_IMMEDIATE = eINSTANCE.getDelayExpr_IsImmediate();
-
-    /**
-     * The meta object literal for the '<em><b>Tick</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DELAY_EXPR__TICK = eINSTANCE.getDelayExpr_Tick();
 
     /**
      * The meta object literal for the '<em><b>Signal Expr</b></em>' containment reference feature.

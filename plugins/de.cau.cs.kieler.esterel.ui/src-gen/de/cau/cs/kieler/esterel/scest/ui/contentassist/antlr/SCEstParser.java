@@ -55,7 +55,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPresentCaseAccess().getAlternatives_3_1_0(), "rule__PresentCase__Alternatives_3_1_0");
 					put(grammarAccess.getIfTestAccess().getAlternatives_3_2_0(), "rule__IfTest__Alternatives_3_2_0");
 					put(grammarAccess.getIfTestAccess().getAlternatives_5_2_0(), "rule__IfTest__Alternatives_5_2_0");
-					put(grammarAccess.getElsIfAccess().getAlternatives_3_2_0(), "rule__ElsIf__Alternatives_3_2_0");
+					put(grammarAccess.getElsIfAccess().getAlternatives_3_1_0(), "rule__ElsIf__Alternatives_3_1_0");
 					put(grammarAccess.getLoopAccess().getAlternatives_3_0(), "rule__Loop__Alternatives_3_0");
 					put(grammarAccess.getLoopAccess().getAlternatives_4(), "rule__Loop__Alternatives_4");
 					put(grammarAccess.getRepeatAccess().getAlternatives_5_0(), "rule__Repeat__Alternatives_5_0");
@@ -80,8 +80,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDoAccess().getAlternatives_2_0(), "rule__Do__Alternatives_2_0");
 					put(grammarAccess.getDoAccess().getAlternatives_3(), "rule__Do__Alternatives_3");
 					put(grammarAccess.getDoAccess().getAlternatives_3_1_3_1_0(), "rule__Do__Alternatives_3_1_3_1_0");
-					put(grammarAccess.getUnEmitAccess().getAlternatives_2(), "rule__UnEmit__Alternatives_2");
-					put(grammarAccess.getSetAccess().getAlternatives_2(), "rule__Set__Alternatives_2");
 					put(grammarAccess.getConditionalAccess().getAlternatives_3_3_0(), "rule__Conditional__Alternatives_3_3_0");
 					put(grammarAccess.getElseScopeAccess().getAlternatives_5_0(), "rule__ElseScope__Alternatives_5_0");
 					put(grammarAccess.getMetaStatementAccess().getAlternatives(), "rule__MetaStatement__Alternatives");
@@ -109,8 +107,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRelationTypeAccess().getAlternatives(), "rule__RelationType__Alternatives");
 					put(grammarAccess.getEsterelStatementAccess().getAlternatives(), "rule__EsterelStatement__Alternatives");
 					put(grammarAccess.getAtomicStatementAccess().getAlternatives(), "rule__AtomicStatement__Alternatives");
-					put(grammarAccess.getEmitAccess().getAlternatives_2(), "rule__Emit__Alternatives_2");
-					put(grammarAccess.getSustainAccess().getAlternatives_2(), "rule__Sustain__Alternatives_2");
 					put(grammarAccess.getTrapSignalAccess().getAlternatives_2(), "rule__TrapSignal__Alternatives_2");
 					put(grammarAccess.getTrapSignalAccess().getAlternatives_2_0(), "rule__TrapSignal__Alternatives_2_0");
 					put(grammarAccess.getTrapSignalAccess().getAlternatives_2_0_2_1(), "rule__TrapSignal__Alternatives_2_0_2_1");
@@ -203,8 +199,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIfTestAccess().getGroup_5_2_0_0(), "rule__IfTest__Group_5_2_0_0__0");
 					put(grammarAccess.getElsIfAccess().getGroup(), "rule__ElsIf__Group__0");
 					put(grammarAccess.getElsIfAccess().getGroup_3(), "rule__ElsIf__Group_3__0");
-					put(grammarAccess.getElsIfAccess().getGroup_3_2(), "rule__ElsIf__Group_3_2__0");
-					put(grammarAccess.getElsIfAccess().getGroup_3_2_0_0(), "rule__ElsIf__Group_3_2_0_0__0");
+					put(grammarAccess.getElsIfAccess().getGroup_3_1(), "rule__ElsIf__Group_3_1__0");
+					put(grammarAccess.getElsIfAccess().getGroup_3_1_0_0(), "rule__ElsIf__Group_3_1_0_0__0");
 					put(grammarAccess.getLoopAccess().getGroup(), "rule__Loop__Group__0");
 					put(grammarAccess.getLoopAccess().getGroup_3(), "rule__Loop__Group_3__0");
 					put(grammarAccess.getLoopAccess().getGroup_3_0_0(), "rule__Loop__Group_3_0_0__0");
@@ -435,7 +431,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalPreExprAccess().getGroup(), "rule__SignalPreExpr__Group__0");
 					put(grammarAccess.getTrapReferenceExprAccess().getGroup(), "rule__TrapReferenceExpr__Group__0");
 					put(grammarAccess.getDelayExprAccess().getGroup(), "rule__DelayExpr__Group__0");
-					put(grammarAccess.getDelayExprAccess().getGroup_1_2(), "rule__DelayExpr__Group_1_2__0");
+					put(grammarAccess.getDelayExprAccess().getGroup_1_1(), "rule__DelayExpr__Group_1_1__0");
 					put(grammarAccess.getOrExpressionAccess().getGroup(), "rule__OrExpression__Group__0");
 					put(grammarAccess.getOrExpressionAccess().getGroup_1(), "rule__OrExpression__Group_1__0");
 					put(grammarAccess.getOrExpressionAccess().getGroup_1_1(), "rule__OrExpression__Group_1_1__0");
@@ -553,7 +549,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPresentAccess().getAnnotationsAssignment_0(), "rule__Present__AnnotationsAssignment_0");
 					put(grammarAccess.getPresentAccess().getExpressionAssignment_2_0_0_0(), "rule__Present__ExpressionAssignment_2_0_0_0");
 					put(grammarAccess.getPresentAccess().getExpressionAssignment_2_0_0_1_1(), "rule__Present__ExpressionAssignment_2_0_0_1_1");
-					put(grammarAccess.getPresentAccess().getTickAssignment_2_0_0_2(), "rule__Present__TickAssignment_2_0_0_2");
 					put(grammarAccess.getPresentAccess().getThenAnnotationsAssignment_2_0_1_0(), "rule__Present__ThenAnnotationsAssignment_2_0_1_0");
 					put(grammarAccess.getPresentAccess().getThenStatementsAssignment_2_0_1_2_0_0_0(), "rule__Present__ThenStatementsAssignment_2_0_1_2_0_0_0");
 					put(grammarAccess.getPresentAccess().getThenStatementsAssignment_2_0_1_2_0_1(), "rule__Present__ThenStatementsAssignment_2_0_1_2_0_1");
@@ -566,7 +561,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPresentCaseAccess().getAnnotationsAssignment_0(), "rule__PresentCase__AnnotationsAssignment_0");
 					put(grammarAccess.getPresentCaseAccess().getExpressionAssignment_2_0(), "rule__PresentCase__ExpressionAssignment_2_0");
 					put(grammarAccess.getPresentCaseAccess().getExpressionAssignment_2_1_1(), "rule__PresentCase__ExpressionAssignment_2_1_1");
-					put(grammarAccess.getPresentCaseAccess().getTickAssignment_2_2(), "rule__PresentCase__TickAssignment_2_2");
 					put(grammarAccess.getPresentCaseAccess().getStatementsAssignment_3_1_0_0_0(), "rule__PresentCase__StatementsAssignment_3_1_0_0_0");
 					put(grammarAccess.getPresentCaseAccess().getStatementsAssignment_3_1_0_1(), "rule__PresentCase__StatementsAssignment_3_1_0_1");
 					put(grammarAccess.getPresentCaseAccess().getStatementsAssignment_3_1_1(), "rule__PresentCase__StatementsAssignment_3_1_1");
@@ -583,10 +577,9 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIfTestAccess().getElseStatementsAssignment_5_2_1(), "rule__IfTest__ElseStatementsAssignment_5_2_1");
 					put(grammarAccess.getElsIfAccess().getAnnotationsAssignment_0(), "rule__ElsIf__AnnotationsAssignment_0");
 					put(grammarAccess.getElsIfAccess().getExprAssignment_2(), "rule__ElsIf__ExprAssignment_2");
-					put(grammarAccess.getElsIfAccess().getThenAnnotationsAssignment_3_0(), "rule__ElsIf__ThenAnnotationsAssignment_3_0");
-					put(grammarAccess.getElsIfAccess().getThenStatementsAssignment_3_2_0_0_0(), "rule__ElsIf__ThenStatementsAssignment_3_2_0_0_0");
-					put(grammarAccess.getElsIfAccess().getThenStatementsAssignment_3_2_0_1(), "rule__ElsIf__ThenStatementsAssignment_3_2_0_1");
-					put(grammarAccess.getElsIfAccess().getThenStatementsAssignment_3_2_1(), "rule__ElsIf__ThenStatementsAssignment_3_2_1");
+					put(grammarAccess.getElsIfAccess().getThenStatementsAssignment_3_1_0_0_0(), "rule__ElsIf__ThenStatementsAssignment_3_1_0_0_0");
+					put(grammarAccess.getElsIfAccess().getThenStatementsAssignment_3_1_0_1(), "rule__ElsIf__ThenStatementsAssignment_3_1_0_1");
+					put(grammarAccess.getElsIfAccess().getThenStatementsAssignment_3_1_1(), "rule__ElsIf__ThenStatementsAssignment_3_1_1");
 					put(grammarAccess.getLoopAccess().getAnnotationsAssignment_1(), "rule__Loop__AnnotationsAssignment_1");
 					put(grammarAccess.getLoopAccess().getStatementsAssignment_3_0_0_0(), "rule__Loop__StatementsAssignment_3_0_0_0");
 					put(grammarAccess.getLoopAccess().getStatementsAssignment_3_0_1(), "rule__Loop__StatementsAssignment_3_0_1");
@@ -688,11 +681,9 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDoAccess().getWatchingStatementsAssignment_3_1_3_1_0_1(), "rule__Do__WatchingStatementsAssignment_3_1_3_1_0_1");
 					put(grammarAccess.getDoAccess().getWatchingStatementsAssignment_3_1_3_1_1(), "rule__Do__WatchingStatementsAssignment_3_1_3_1_1");
 					put(grammarAccess.getUnEmitAccess().getAnnotationsAssignment_0(), "rule__UnEmit__AnnotationsAssignment_0");
-					put(grammarAccess.getUnEmitAccess().getSignalAssignment_2_0(), "rule__UnEmit__SignalAssignment_2_0");
-					put(grammarAccess.getUnEmitAccess().getTickAssignment_2_1(), "rule__UnEmit__TickAssignment_2_1");
+					put(grammarAccess.getUnEmitAccess().getSignalAssignment_2(), "rule__UnEmit__SignalAssignment_2");
 					put(grammarAccess.getSetAccess().getAnnotationsAssignment_0(), "rule__Set__AnnotationsAssignment_0");
-					put(grammarAccess.getSetAccess().getSignalAssignment_2_0(), "rule__Set__SignalAssignment_2_0");
-					put(grammarAccess.getSetAccess().getTickAssignment_2_1(), "rule__Set__TickAssignment_2_1");
+					put(grammarAccess.getSetAccess().getSignalAssignment_2(), "rule__Set__SignalAssignment_2");
 					put(grammarAccess.getSetAccess().getExprAssignment_3_1(), "rule__Set__ExprAssignment_3_1");
 					put(grammarAccess.getConditionalAccess().getAnnotationsAssignment_0(), "rule__Conditional__AnnotationsAssignment_0");
 					put(grammarAccess.getConditionalAccess().getExpressionAssignment_2(), "rule__Conditional__ExpressionAssignment_2");
@@ -808,7 +799,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getISignalAccess().getTypeIDAssignment_2_2_2_1_1(), "rule__ISignal__TypeIDAssignment_2_2_2_1_1");
 					put(grammarAccess.getISignalAccess().getFuncAssignment_2_2_2_3_0(), "rule__ISignal__FuncAssignment_2_2_2_3_0");
 					put(grammarAccess.getISignalAccess().getCombineOperatorAssignment_2_2_2_3_1(), "rule__ISignal__CombineOperatorAssignment_2_2_2_3_1");
-					put(grammarAccess.getTickAccess().getNameAssignment(), "rule__Tick__NameAssignment");
 					put(grammarAccess.getSensorDeclAccess().getAnnotationsAssignment_0(), "rule__SensorDecl__AnnotationsAssignment_0");
 					put(grammarAccess.getSensorDeclAccess().getSensorsAssignment_2(), "rule__SensorDecl__SensorsAssignment_2");
 					put(grammarAccess.getSensorDeclAccess().getSensorsAssignment_3_1(), "rule__SensorDecl__SensorsAssignment_3_1");
@@ -829,12 +819,10 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNothingAccess().getAnnotationsAssignment_1(), "rule__Nothing__AnnotationsAssignment_1");
 					put(grammarAccess.getHaltAccess().getAnnotationsAssignment_1(), "rule__Halt__AnnotationsAssignment_1");
 					put(grammarAccess.getEmitAccess().getAnnotationsAssignment_0(), "rule__Emit__AnnotationsAssignment_0");
-					put(grammarAccess.getEmitAccess().getSignalAssignment_2_0(), "rule__Emit__SignalAssignment_2_0");
-					put(grammarAccess.getEmitAccess().getTickAssignment_2_1(), "rule__Emit__TickAssignment_2_1");
+					put(grammarAccess.getEmitAccess().getSignalAssignment_2(), "rule__Emit__SignalAssignment_2");
 					put(grammarAccess.getEmitAccess().getExprAssignment_3_1(), "rule__Emit__ExprAssignment_3_1");
 					put(grammarAccess.getSustainAccess().getAnnotationsAssignment_0(), "rule__Sustain__AnnotationsAssignment_0");
-					put(grammarAccess.getSustainAccess().getSignalAssignment_2_0(), "rule__Sustain__SignalAssignment_2_0");
-					put(grammarAccess.getSustainAccess().getTickAssignment_2_1(), "rule__Sustain__TickAssignment_2_1");
+					put(grammarAccess.getSustainAccess().getSignalAssignment_2(), "rule__Sustain__SignalAssignment_2");
 					put(grammarAccess.getSustainAccess().getExpressionAssignment_3_1(), "rule__Sustain__ExpressionAssignment_3_1");
 					put(grammarAccess.getEsterelAssignmentAccess().getVarAssignment_0(), "rule__EsterelAssignment__VarAssignment_0");
 					put(grammarAccess.getEsterelAssignmentAccess().getExprAssignment_2(), "rule__EsterelAssignment__ExprAssignment_2");
@@ -928,9 +916,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTrapReferenceExprAccess().getValuedObjectAssignment_1(), "rule__TrapReferenceExpr__ValuedObjectAssignment_1");
 					put(grammarAccess.getDelayExprAccess().getExprAssignment_0_0(), "rule__DelayExpr__ExprAssignment_0_0");
 					put(grammarAccess.getDelayExprAccess().getIsImmediateAssignment_0_1(), "rule__DelayExpr__IsImmediateAssignment_0_1");
-					put(grammarAccess.getDelayExprAccess().getTickAssignment_1_0(), "rule__DelayExpr__TickAssignment_1_0");
-					put(grammarAccess.getDelayExprAccess().getSignalExprAssignment_1_1(), "rule__DelayExpr__SignalExprAssignment_1_1");
-					put(grammarAccess.getDelayExprAccess().getSignalExprAssignment_1_2_1(), "rule__DelayExpr__SignalExprAssignment_1_2_1");
+					put(grammarAccess.getDelayExprAccess().getSignalExprAssignment_1_0(), "rule__DelayExpr__SignalExprAssignment_1_0");
+					put(grammarAccess.getDelayExprAccess().getSignalExprAssignment_1_1_1(), "rule__DelayExpr__SignalExprAssignment_1_1_1");
 					put(grammarAccess.getOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__OrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__OrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getAndExpressionAccess().getOperatorAssignment_1_1_0(), "rule__AndExpression__OperatorAssignment_1_1_0");

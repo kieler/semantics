@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -44,16 +43,6 @@ public class SustainImpl extends StatementImpl implements Sustain
    * @ordered
    */
   protected ISignal signal;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected ISignal tick;
 
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -134,54 +123,6 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public ISignal getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
-  {
-    ISignal oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__TICK, oldTick, newTick);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(ISignal newTick)
-  {
-    if (newTick != tick)
-    {
-      NotificationChain msgs = null;
-      if (tick != null)
-        msgs = ((InternalEObject)tick).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.SUSTAIN__TICK, null, msgs);
-      if (newTick != null)
-        msgs = ((InternalEObject)newTick).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.SUSTAIN__TICK, null, msgs);
-      msgs = basicSetTick(newTick, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__TICK, newTick, newTick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Expression getExpression()
   {
     return expression;
@@ -235,8 +176,6 @@ public class SustainImpl extends StatementImpl implements Sustain
   {
     switch (featureID)
     {
-      case EsterelPackage.SUSTAIN__TICK:
-        return basicSetTick(null, msgs);
       case EsterelPackage.SUSTAIN__EXPRESSION:
         return basicSetExpression(null, msgs);
     }
@@ -256,8 +195,6 @@ public class SustainImpl extends StatementImpl implements Sustain
       case EsterelPackage.SUSTAIN__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
-      case EsterelPackage.SUSTAIN__TICK:
-        return getTick();
       case EsterelPackage.SUSTAIN__EXPRESSION:
         return getExpression();
     }
@@ -276,9 +213,6 @@ public class SustainImpl extends StatementImpl implements Sustain
     {
       case EsterelPackage.SUSTAIN__SIGNAL:
         setSignal((ISignal)newValue);
-        return;
-      case EsterelPackage.SUSTAIN__TICK:
-        setTick((ISignal)newValue);
         return;
       case EsterelPackage.SUSTAIN__EXPRESSION:
         setExpression((Expression)newValue);
@@ -300,9 +234,6 @@ public class SustainImpl extends StatementImpl implements Sustain
       case EsterelPackage.SUSTAIN__SIGNAL:
         setSignal((ISignal)null);
         return;
-      case EsterelPackage.SUSTAIN__TICK:
-        setTick((ISignal)null);
-        return;
       case EsterelPackage.SUSTAIN__EXPRESSION:
         setExpression((Expression)null);
         return;
@@ -322,8 +253,6 @@ public class SustainImpl extends StatementImpl implements Sustain
     {
       case EsterelPackage.SUSTAIN__SIGNAL:
         return signal != null;
-      case EsterelPackage.SUSTAIN__TICK:
-        return tick != null;
       case EsterelPackage.SUSTAIN__EXPRESSION:
         return expression != null;
     }

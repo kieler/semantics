@@ -5,7 +5,6 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.annotations.Annotation;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.ISignal;
 import de.cau.cs.kieler.esterel.esterel.Present;
 import de.cau.cs.kieler.esterel.esterel.PresentCase;
 
@@ -39,7 +38,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getThenAnnotations <em>Then Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getThenStatements <em>Then Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getCases <em>Cases</em>}</li>
@@ -60,16 +58,6 @@ public class PresentImpl extends StatementImpl implements Present
    * @ordered
    */
   protected Expression expression;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected ISignal tick;
 
   /**
    * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
@@ -195,54 +183,6 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public ISignal getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetTick(ISignal newTick, NotificationChain msgs)
-  {
-    ISignal oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__TICK, oldTick, newTick);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(ISignal newTick)
-  {
-    if (newTick != tick)
-    {
-      NotificationChain msgs = null;
-      if (tick != null)
-        msgs = ((InternalEObject)tick).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__TICK, null, msgs);
-      if (newTick != null)
-        msgs = ((InternalEObject)newTick).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT__TICK, null, msgs);
-      msgs = basicSetTick(newTick, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__TICK, newTick, newTick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Annotation> getThenAnnotations()
   {
     if (thenAnnotations == null)
@@ -320,8 +260,6 @@ public class PresentImpl extends StatementImpl implements Present
     {
       case EsterelPackage.PRESENT__EXPRESSION:
         return basicSetExpression(null, msgs);
-      case EsterelPackage.PRESENT__TICK:
-        return basicSetTick(null, msgs);
       case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
         return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.PRESENT__THEN_STATEMENTS:
@@ -348,8 +286,6 @@ public class PresentImpl extends StatementImpl implements Present
     {
       case EsterelPackage.PRESENT__EXPRESSION:
         return getExpression();
-      case EsterelPackage.PRESENT__TICK:
-        return getTick();
       case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
         return getThenAnnotations();
       case EsterelPackage.PRESENT__THEN_STATEMENTS:
@@ -377,9 +313,6 @@ public class PresentImpl extends StatementImpl implements Present
     {
       case EsterelPackage.PRESENT__EXPRESSION:
         setExpression((Expression)newValue);
-        return;
-      case EsterelPackage.PRESENT__TICK:
-        setTick((ISignal)newValue);
         return;
       case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
         getThenAnnotations().clear();
@@ -418,9 +351,6 @@ public class PresentImpl extends StatementImpl implements Present
       case EsterelPackage.PRESENT__EXPRESSION:
         setExpression((Expression)null);
         return;
-      case EsterelPackage.PRESENT__TICK:
-        setTick((ISignal)null);
-        return;
       case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
         getThenAnnotations().clear();
         return;
@@ -452,8 +382,6 @@ public class PresentImpl extends StatementImpl implements Present
     {
       case EsterelPackage.PRESENT__EXPRESSION:
         return expression != null;
-      case EsterelPackage.PRESENT__TICK:
-        return tick != null;
       case EsterelPackage.PRESENT__THEN_ANNOTATIONS:
         return thenAnnotations != null && !thenAnnotations.isEmpty();
       case EsterelPackage.PRESENT__THEN_STATEMENTS:

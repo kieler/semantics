@@ -40,7 +40,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	protected AbstractElementAlias match_Conditional_ThenKeyword_3_0_q;
 	protected AbstractElementAlias match_Do_TimeoutKeyword_3_1_3_3_q;
 	protected AbstractElementAlias match_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q;
-	protected AbstractElementAlias match_ElsIf_ThenKeyword_3_1_q;
+	protected AbstractElementAlias match_ElsIf_ThenKeyword_3_0_q;
 	protected AbstractElementAlias match_EveryDo_EveryKeyword_6_q;
 	protected AbstractElementAlias match_ExecCase_DoKeyword_11_0_q;
 	protected AbstractElementAlias match_Exec_DoKeyword_1_0_10_0_q;
@@ -86,7 +86,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 		match_Conditional_ThenKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getConditionalAccess().getThenKeyword_3_0());
 		match_Do_TimeoutKeyword_3_1_3_3_q = new TokenAlias(false, true, grammarAccess.getDoAccess().getTimeoutKeyword_3_1_3_3());
 		match_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDoAccess().getTimeoutKeyword_3_1_3_0()), new TokenAlias(false, false, grammarAccess.getDoAccess().getEndKeyword_3_1_3_2()), new TokenAlias(false, true, grammarAccess.getDoAccess().getTimeoutKeyword_3_1_3_3()));
-		match_ElsIf_ThenKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getElsIfAccess().getThenKeyword_3_1());
+		match_ElsIf_ThenKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getElsIfAccess().getThenKeyword_3_0());
 		match_EveryDo_EveryKeyword_6_q = new TokenAlias(false, true, grammarAccess.getEveryDoAccess().getEveryKeyword_6());
 		match_ExecCase_DoKeyword_11_0_q = new TokenAlias(false, true, grammarAccess.getExecCaseAccess().getDoKeyword_11_0());
 		match_Exec_DoKeyword_1_0_10_0_q = new TokenAlias(false, true, grammarAccess.getExecAccess().getDoKeyword_1_0_10_0());
@@ -160,8 +160,8 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 				emit_Do_TimeoutKeyword_3_1_3_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q.equals(syntax))
 				emit_Do___TimeoutKeyword_3_1_3_0_EndKeyword_3_1_3_2_TimeoutKeyword_3_1_3_3_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ElsIf_ThenKeyword_3_1_q.equals(syntax))
-				emit_ElsIf_ThenKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ElsIf_ThenKeyword_3_0_q.equals(syntax))
+				emit_ElsIf_ThenKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_EveryDo_EveryKeyword_6_q.equals(syntax))
 				emit_EveryDo_EveryKeyword_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ExecCase_DoKeyword_11_0_q.equals(syntax))
@@ -455,7 +455,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 * This ambiguous syntax occurs at:
 	 *     expr=Expression (ambiguity) (rule end)
 	 */
-	protected void emit_ElsIf_ThenKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ElsIf_ThenKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -645,7 +645,6 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 * This ambiguous syntax occurs at:
 	 *     expression=SignalExpression ']' (ambiguity) (rule end)
 	 *     expression=SignalExpression (ambiguity) (rule end)
-	 *     tick=Tick (ambiguity) (rule end)
 	 */
 	protected void emit_PresentCase_DoKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -662,7 +661,6 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     thenAnnotations+=Annotation 'then' (ambiguity) 'end' 'present'? (rule end)
 	 *     thenStatements+=EsterelStatement ';' (ambiguity) 'end' 'present'? (rule end)
 	 *     thenStatements+=EsterelStatement (ambiguity) 'end' 'present'? (rule end)
-	 *     tick=Tick 'then'? (ambiguity) 'end' 'present'? (rule end)
 	 */
 	protected void emit_Present_ElseKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -682,7 +680,6 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     thenAnnotations+=Annotation 'then' 'else'? 'end' (ambiguity) (rule end)
 	 *     thenStatements+=EsterelStatement ';' 'else'? 'end' (ambiguity) (rule end)
 	 *     thenStatements+=EsterelStatement 'else'? 'end' (ambiguity) (rule end)
-	 *     tick=Tick 'then'? 'else'? 'end' (ambiguity) (rule end)
 	 */
 	protected void emit_Present_PresentKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -699,9 +696,6 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     expression=SignalExpression (ambiguity) 'else' elseStatements+=EsterelStatement
 	 *     expression=SignalExpression (ambiguity) 'else'? 'end' 'present'? (rule end)
 	 *     expression=SignalExpression (ambiguity) elseAnnotations+=Annotation
-	 *     tick=Tick (ambiguity) 'else' elseStatements+=EsterelStatement
-	 *     tick=Tick (ambiguity) 'else'? 'end' 'present'? (rule end)
-	 *     tick=Tick (ambiguity) elseAnnotations+=Annotation
 	 */
 	protected void emit_Present_ThenKeyword_2_0_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

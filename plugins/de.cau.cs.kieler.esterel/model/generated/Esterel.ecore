@@ -145,15 +145,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="Block" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Emit" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="#//ISignal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="#//ISignal"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sustain" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="#//ISignal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="#//ISignal"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
@@ -173,8 +169,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Present" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="#//ISignal"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenAnnotations" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
         containment="true"/>
@@ -192,8 +186,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PresentCase" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="#//ISignal"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IfTest" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
@@ -219,9 +211,6 @@
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="thenAnnotations" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotation"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="thenStatements" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement"
@@ -378,8 +367,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tick" eType="#//ISignal"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signalExpr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>

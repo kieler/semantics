@@ -279,16 +279,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUnEmit_Tick()
-  {
-    return (EReference)unEmitEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getSet()
   {
     return setEClass;
@@ -309,19 +299,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSet_Tick()
-  {
-    return (EReference)setEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getSet_Expr()
   {
-    return (EReference)setEClass.getEStructuralFeatures().get(2);
+    return (EReference)setEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -371,11 +351,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
 
     unEmitEClass = createEClass(UN_EMIT);
     createEReference(unEmitEClass, UN_EMIT__SIGNAL);
-    createEReference(unEmitEClass, UN_EMIT__TICK);
 
     setEClass = createEClass(SET);
     createEReference(setEClass, SET__SIGNAL);
-    createEReference(setEClass, SET__TICK);
     createEReference(setEClass, SET__EXPR);
   }
 
@@ -435,11 +413,9 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
 
     initEClass(unEmitEClass, UnEmit.class, "UnEmit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getUnEmit_Signal(), theEsterelPackage.getISignal(), null, "signal", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUnEmit_Tick(), theEsterelPackage.getISignal(), null, "tick", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(setEClass, Set.class, "Set", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSet_Signal(), theEsterelPackage.getISignal(), null, "signal", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSet_Tick(), theEsterelPackage.getISignal(), null, "tick", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSet_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

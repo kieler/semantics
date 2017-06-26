@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenAnnotations <em>Then Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenStatements <em>Then Statements</em>}</li>
  * </ul>
  *
@@ -64,16 +63,6 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * @ordered
    */
   protected Expression expr;
-
-  /**
-   * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getThenAnnotations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Annotation> thenAnnotations;
 
   /**
    * The cached value of the '{@link #getThenStatements() <em>Then Statements</em>}' containment reference list.
@@ -173,20 +162,6 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Annotation> getThenAnnotations()
-  {
-    if (thenAnnotations == null)
-    {
-      thenAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.ELS_IF__THEN_ANNOTATIONS);
-    }
-    return thenAnnotations;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Statement> getThenStatements()
   {
     if (thenStatements == null)
@@ -210,8 +185,6 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
         return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.ELS_IF__EXPR:
         return basicSetExpr(null, msgs);
-      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
-        return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         return ((InternalEList<?>)getThenStatements()).basicRemove(otherEnd, msgs);
     }
@@ -232,8 +205,6 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
         return getAnnotations();
       case EsterelPackage.ELS_IF__EXPR:
         return getExpr();
-      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
-        return getThenAnnotations();
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         return getThenStatements();
     }
@@ -257,10 +228,6 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
         return;
       case EsterelPackage.ELS_IF__EXPR:
         setExpr((Expression)newValue);
-        return;
-      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
-        getThenAnnotations().clear();
-        getThenAnnotations().addAll((Collection<? extends Annotation>)newValue);
         return;
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         getThenStatements().clear();
@@ -286,9 +253,6 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
       case EsterelPackage.ELS_IF__EXPR:
         setExpr((Expression)null);
         return;
-      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
-        getThenAnnotations().clear();
-        return;
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         getThenStatements().clear();
         return;
@@ -310,8 +274,6 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
         return annotations != null && !annotations.isEmpty();
       case EsterelPackage.ELS_IF__EXPR:
         return expr != null;
-      case EsterelPackage.ELS_IF__THEN_ANNOTATIONS:
-        return thenAnnotations != null && !thenAnnotations.isEmpty();
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         return thenStatements != null && !thenStatements.isEmpty();
     }
