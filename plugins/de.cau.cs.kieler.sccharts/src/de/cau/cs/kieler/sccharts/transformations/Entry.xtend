@@ -92,7 +92,7 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
             
             state.setDefaultTrace //All following states etc. will be traced to state
             
-            if (state.final) {
+            if (state.final && !state.initial && !state.incomingTransitions.empty) {
                 val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 for (transition : state.incomingTransitions.immutableCopy) {
                     transition.setTargetState(connector)
