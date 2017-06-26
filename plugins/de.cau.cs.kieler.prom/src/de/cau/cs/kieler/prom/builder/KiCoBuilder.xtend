@@ -303,41 +303,36 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 if(!monitor.isCanceled) {
                     // Remove all warnings and errors from a previous KiCo build.
                     deleteMarkers(file)
-                    // Compile model files
-                    switch(file.fileExtension.toLowerCase) {
-                        case "sct",
-                        case "strl" : {
-                            monitor.subTask("Loading model "+file.name)
-                            val model = ModelImporter.getEObject(file, resourceSet)
-                            if(model == null) {
-                                throw new Exception("Couldn't load model "+file.name)
+                    // Compile models
+                    monitor.subTask("Loading model "+file.name)
+                    val model = ModelImporter.getEObject(file, resourceSet)
+                    if(model == null) {
+                        throw new Exception("Couldn't load model "+file.name)
+                    }
+                    // Compile model
+                    if(!monitor.isCanceled) {
+                        for(modelCompiler : modelCompilers) {
+                            monitor.subTask("Compiling model '"+file.name+ "' using "+modelCompiler.name)
+                            val result = modelCompiler.compile(file, model)
+                            // Show problems of result
+                            showBuildProblems(result.problems)
+                            if(result.simulationGenerationResult != null) {
+                                showBuildProblems(result.simulationGenerationResult.problems)
                             }
-                            // Compile model
-                            if(!monitor.isCanceled) {
-                                for(modelCompiler : modelCompilers) {
-                                    monitor.subTask("Compiling model '"+file.name+ "' using "+modelCompiler.name)
-                                    val result = modelCompiler.compile(file, model)
-                                    // Show problems of result
-                                    showBuildProblems(result.problems)
-                                    if(result.simulationGenerationResult != null) {
-                                        showBuildProblems(result.simulationGenerationResult.problems)
-                                    }
-                                    // Compile generated simulation code
-                                    val simGenResult = result.simulationGenerationResult
-                                    if(simGenResult != null) {
-                                        for(f : simGenResult.createFiles) {
-                                            compileSimulationCode(f)
-                                        }
-                                    }
+                            // Compile generated simulation code
+                            val simGenResult = result.simulationGenerationResult
+                            if(simGenResult != null) {
+                                for(f : simGenResult.createFiles) {
+                                    compileSimulationCode(f)
                                 }
                             }
-                            // Generate wrapper code for first model in the list
-                            if(!monitor.isCanceled) {
-                                if(isFirstModel) {
-                                    monitor.subTask("Generating wrapper code.")
-                                    generateWrapperCode(file, model)
-                                }
-                            }
+                        }
+                    }
+                    // Generate wrapper code for first model in the list
+                    if(!monitor.isCanceled) {
+                        if(isFirstModel) {
+                            monitor.subTask("Generating wrapper code.")
+                            generateWrapperCode(file, model)
                         }
                     }
                 }

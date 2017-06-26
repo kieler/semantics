@@ -384,29 +384,50 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
      * @param stream Input stream with initial content for the resource
      */
     public static def void createResource(IResource resource, InputStream stream) throws CoreException {
-        if (resource == null || resource.exists())
+        createResource(resource, stream, false)
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders in a project.
+     * The created resource is initialized with the inputs of the stream.
+     * The stream is closed afterwards.
+     * 
+     * @param resource The resource handle to be created
+     * @param stream Input stream with initial content for the resource
+     * @param overwrite Determines if an already existing resource should be updated with new content. 
+     */
+    public static def void createResource(IResource resource, InputStream inputStream, boolean overwrite) throws CoreException {
+        if (resource == null || (resource.exists && !overwrite))
             return;
 
-        if (!resource.getParent().exists())
-            createResource(resource.getParent(), stream);
+        if (!resource.parent.exists)
+            createResource(resource.parent, inputStream);
 
         switch(resource.getType()){
             case IResource.FILE : {
-                // Create new
-                if(stream != null) {
+                // Select a stream with content
+                val stream = if(inputStream != null)
+                                  inputStream
+                              else
+                                  new StringInputStream("")
+                // Update or create the file with the content from the stream
+                if(overwrite && resource.exists) {
+                    (resource as IFile).setContents(stream, true, false, null)
+                } else if(!resource.exists) {
                     (resource as IFile).create(stream, true, null)
-                    stream.close()
-                } else {
-                    val stringStream = new StringInputStream("")
-                    (resource as IFile).create(stringStream, true, null)
-                    stringStream.close()
                 }
+                // Close stream with content
+                stream.close()
             }
             case IResource.FOLDER :
-                (resource as IFolder).create(IResource.NONE, true, null)
+                if(!resource.exists) {
+                    (resource as IFolder).create(IResource.NONE, true, null)
+                }
             case IResource.PROJECT : {
-                (resource as IProject).create(null)
-                (resource as IProject).open(null)
+                if(!resource.exists) {
+                    (resource as IProject).create(null)
+                    (resource as IProject).open(null)
+                }
             }
         }
     }

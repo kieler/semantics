@@ -84,6 +84,21 @@ class KiCoModelCompiler extends ModelCompiler {
         }
         // Compile model
         if (model != null) {
+            // Skip compilation of models
+            // TODO: Remove this if the black- and whitelist compilation configuration works
+            var ignore = false
+            if(model instanceof State) {
+                for(ann : model.annotations) {
+                    if(ann.name == "SkipCompilation") {
+                        ignore = true
+                    }
+                }
+            }
+            // Don't compiles files that should be ignored
+            if(ignore) {
+                return result
+            }
+            
             // Compile
             val kicoResult = compileWithKiCo(model)
             
@@ -161,7 +176,7 @@ class KiCoModelCompiler extends ModelCompiler {
             val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate, file.project)
             if (resolvedTargetTemplate.isNullOrEmpty) {
                 val inputStream = new StringInputStream(result.string)
-                PromPlugin.createResource(targetFile, inputStream)
+                PromPlugin.createResource(targetFile, inputStream, true)
             } else {
                 // Inject compilation result into target template
                 val modelName = Files.getNameWithoutExtension(file.name)
@@ -175,7 +190,7 @@ class KiCoModelCompiler extends ModelCompiler {
                       WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]})
                 // Save output
                 val inputStream = new StringInputStream(wrapperCode)
-                PromPlugin.createResource(targetFile.parent, inputStream)
+                PromPlugin.createResource(targetFile.parent, inputStream, true)
             }
         }
     }

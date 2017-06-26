@@ -35,7 +35,6 @@ class SimulationToolbarButton extends AbstractHandler {
             justRestarted = true
             PromConsole.print("Restarting last simulation")
             new SimulationLaunchShortcut().launchLastSelection
-            println("Restarted last simulation")
         }
         return null
     }
