@@ -1,7 +1,7 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://rtsys.informatik.uni-kiel.de/kieler
+ * http:// rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
  * + Kiel University
@@ -242,11 +242,11 @@ class SCLPTransformation extends AbstractProductionTransformation{
             + " * Automatically generated C code by\n" 
             + " * KIELER SCCharts - The Key to Efficient Modeling\n" 
             + " *\n" 
-            + " * http://rtsys.informatik.uni-kiel.de/kieler\n" 
+            + " * http:// rtsys.informatik.uni-kiel.de/kieler\n" 
             + " */\n"
             + "\n"
             + "#define _SC_NO_SIGNALS2VARS\n"
-            //+ "#define _SC_NOTRACE\n"
+            // + "#define _SC_NOTRACE\n"
             + "#define _SC_ID_MAX " + maxPID + "\n\n" 
             + "#include \"scl.h\"\n"
             + "#include \"sc.h\"\n"
@@ -258,9 +258,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
             + "\n\n")
     }
  
- //----------------------------------------------------------------------------------------------------------------
- //----------------------------------------NODE TRANSLATION--------------------------------------------------------   
- //----------------------------------------------------------------------------------------------------------------
+ // ----------------------------------------------------------------------------------------------------------------
+ // ----------------------------------------NODE TRANSLATION--------------------------------------------------------   
+ // ----------------------------------------------------------------------------------------------------------------
      
     /**
      *  Transforms a node into corresponding c code
@@ -273,13 +273,14 @@ class SCLPTransformation extends AbstractProductionTransformation{
     private def void transformNode(StringBuilder sb, Node node) {
         valuedObjectPrefix = "";
         
-        //If the node is a Join, we don't want it to be called within the controlFlow. It is supposed to be 
-        //called from the Fork-Node. This guarantees that a Join will not get a label
+        // If the node is a Join, we don't want it to be called within the controlFlow. It is supposed to be 
+        //   called from the Fork-Node. This guarantees that a Join will not get a label.
+        // This should further never be the case, since the fork calls the join directly.
         if(node instanceof Join) {
             return
         }
 
-        if(!previousNode.empty()) {
+        if(!previousNode.empty() && !(node instanceof Depth)) {
             val prev = previousNode.peek()
             val prevPrio = prev.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
@@ -292,14 +293,14 @@ class SCLPTransformation extends AbstractProductionTransformation{
         }
         
         if(!(node instanceof Exit)) {
-            //If the node has already been visited before, add a goto, instead of translating it again
+            // If the node has already been visited before, add a goto, instead of translating it again
             if(visited.containsKey(node) && visited.get(node) && labeledNodes.containsKey(node)) {
-            //if(labeledNodes.containsKey(node)) {
+            // if(labeledNodes.containsKey(node)) {
                 sb.appendInd("goto " + labeledNodes.get(node) + ";\n")
                 return
             } else {
                 if(!labeledNodes.containsKey(node)) {
-                    //If a node has multiple incoming control flows, create a goto label
+                    // If a node has multiple incoming control flows, create a goto label
                     val incomingControlFlows = node.incoming.filter(ControlFlow).toList
                     if(incomingControlFlows.size > 1) {
                         val newLabel = "label_" + labelNr++
@@ -312,7 +313,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         visited.put(node, true)
         
         previousNode.push(node)
-        //Translate the node depending on its type
+        // Translate the node depending on its type
         if (node instanceof Assignment) {
             sb.transformNode(node as Assignment)
         } else if (node instanceof Conditional) {
@@ -320,7 +321,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         } else if (node instanceof Fork) {
             sb.transformNode(node as Fork)
         } else if (node instanceof Join) {
-            //Don't do anything here, Join will be called from the Fork node
+            // Don't do anything here, Join will be called from the Fork node
         } else if (node instanceof Entry) {
             sb.transformNode(node as Entry)
         } else if (node instanceof Exit) {
@@ -365,7 +366,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
     private def void transformNode(StringBuilder sb, Conditional cond) {
         
 
-        //IF-Case
+        // IF-Case
         sb.appendInd("if(" + cond.condition.serializeHR + "){\n")
         currentIndentation += DEFAULT_INDENTATION
         
@@ -374,7 +375,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         sb.appendInd("} ")
         
-        //ELSE-Case
+        // ELSE-Case
         sb.append("else {\n")
         currentIndentation += DEFAULT_INDENTATION
         sb.transformNode(cond.^else.target)
@@ -408,7 +409,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         
         currentIndentation += DEFAULT_INDENTATION
         
-        //Find threads with maximal entry priority and minimal exit priority
+        // Find threads with maximal entry priority and minimal exit priority
         for(child : children) {
             val entry = child.target
             val exit = (entry as Entry).exit
@@ -424,7 +425,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
             }
         }
         
-        //Translate the nodes and create labels
+        // Translate the nodes and create labels
         for(child : children) {
             var node = child.target
             if(!node.equals(minNode)) {
@@ -465,20 +466,21 @@ class SCLPTransformation extends AbstractProductionTransformation{
                         }
                     }
                 }
-                //Create label
+                // Create label
                 forkBody.appendInd(newLabel + ":\n")
+                labeledNodes.put(node, newLabel)
                 
-                //Translate thread
+                // Translate thread
                 forkBody.transformNode(node)
                 
-                //Create par-statement between threads
+                // Create par-statement between threads
                 currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
                 forkBody.append("\n")
                 forkBody.appendInd("} par {\n")
                 currentIndentation += DEFAULT_INDENTATION
             }
         }
-        //Translate minNode
+        // Translate minNode
         val regionName = minNode.getStringAnnotationValue("regionName").replaceAll(" ","")
         var String newLabel
         if(minNode.equals(maxNode)) {
@@ -515,138 +517,29 @@ class SCLPTransformation extends AbstractProductionTransformation{
                 }
             }
         }
-        //Create label
+        // Create label
         forkBody.appendInd(newLabel + ":\n")
+        labeledNodes.put(minNode, newLabel)
         
-        //Translate thread
+        // Translate thread
         forkBody.transformNode(minNode)
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         
         
         
-        //Create fork
+        // Create fork
         sb.generateForkn(children.length - 1, labelHead, labelList, prioList)      
-        //Append Body
+        // Append Body
         sb.append(forkBody)
-        //Create join
+        // Create join
         sb.appendInd("\n")
         
         sb.generateJoinn(joinPrioList.size, joinPrioList)
         
-        /*
-        var labelList = <String> newArrayList
-        var nodeList = <Node> newArrayList
-        var prioList = <Integer> newArrayList
-        var endPrioList = <Integer> newArrayList
-        var Node nodeHead
-        var String labelHead
-        var children = fork.next
-        
-        val xchildren = children.sortBy[(it.target.getAnnotation("optPrioIDs") as IntAnnotation).value].reverse
-        
-        
-        nodeHead = xchildren.head.target
-        
-        //Naming of Regions --> Naming of Labels in C code
-        //FIXME: Dumb enumeration of regions
-        for (child : xchildren) {
-            val nxt = child.target
-            val ann = nxt.getAnnotation("optPrioIDs") as IntAnnotation
-            val last = (nxt as Entry).exit
-            val regionName = nxt.getStringAnnotationValue("regionName").replaceAll(" ","")
-            
-            if(!nxt.equals(nodeHead)) {                
-                nodeList.add(nxt)
-                prioList.add(ann.value)
-                endPrioList.add((last.getAnnotation("optPrioIDs") as IntAnnotation).value) 
-                
-                if (regionName == "") {
-                    labelList.add("_region_" + regionNr++)
-                } else {
-                    if(regionNames.contains(regionName)) {
-                        val newName = "_" + regionName + "_" + regionNr++
-                        labelList.add(newName)
-                        regionNames.add(newName)
-                    } else {
-                        labelList.add(regionName)
-                        regionNames.add(regionName)
-                    }
-                }
-            } else {
-                if(regionName == "") {
-                    labelHead = "_region_" + regionNr++
-                } else {
-                    if(regionNames.contains(regionName)) {
-                        val newName = "_" + regionName + "_" + regionNr++
-                        labelHead = newName
-                        regionNames.add(newName)
-                    } else {
-                        labelHead = regionName
-                        regionNames.add(regionName)
-                    }
-                }
-            }
-            
-        }
-        sb.generateForkn(nodeList.length, labelHead, labelList, prioList)
-                
-        var joinPrioList = <Integer> newArrayList
-        val nodeHeadExitPrio = ((nodeHead as Entry).exit.getAnnotation("optPrioIDs") as IntAnnotation).value
-        joinPrioList.add(nodeHeadExitPrio)
-        joinPrioList.addAll(endPrioList)
-        val min = joinPrioList.min()
-        joinPrioList.remove(min)
-
-        //Creates the Strings for the different threads
-        if(nodeHeadExitPrio != min) {
-            sb.appendInd(labelHead + ":\n")
-            labeledNodes.put(nodeHead, labelHead)
-            sb.transformNode(nodeHead)            
-            currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
-            sb.append("\n")
-            sb.appendInd("} par {\n")
-            currentIndentation += DEFAULT_INDENTATION
-        }
-        
-        val end = nodeList.last
-        for(node : nodeList) {
-
-              
-            //sb.appendInd(labelList.get(nodeList.indexOf(node)) + ":\n") 
-            
-            val newLabel = labelList.get(nodeList.indexOf(node))
-            sb.appendInd(newLabel + ":\n") 
-            labeledNodes.put(node, newLabel)
-            
-            sb.transformNode(node)
-            //Caution: The forked threads are not allowed to call the compilation of the join node by themselves. 
-            //Only this fork node may call the join node after all threads are created!
-            
-            if(!end.equals(node)) {
-                currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
-                sb.append("\n")
-                sb.appendInd("} par {\n")
-                currentIndentation += DEFAULT_INDENTATION                
-            }
-        }
-        
-        if(nodeHeadExitPrio == min) {
-            currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
-            sb.append("\n")
-            sb.appendInd("} par {\n")
-            currentIndentation += DEFAULT_INDENTATION
-            sb.appendInd(labelHead + ":\n")
-            labeledNodes.put(nodeHead, labelHead)
-            sb.transformNode(nodeHead)            
-        }
-        
-        currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
-        sb.appendInd("\n")
-        
-        sb.generateJoinn(joinPrioList.size, joinPrioList)
-        */
-        //Joins all the threads together again
+        // Joins all the threads together again
+        previousNode.push(fork.join)
         sb.transformNode(fork.join)
+        previousNode.pop
     }
     
     
@@ -673,7 +566,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *              The Entry node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Entry entry) {
-        //If entry is the root node
+        // If entry is the root node
         if(entry.incoming.empty) {
             if(entry.hasAnnotation("optPrioIDs")) {
                 val p = entry.getAnnotation("optPrioIDs") as IntAnnotation
@@ -696,8 +589,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *              The Exit node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Exit exit) {
-        //Does absolutely nothing
-        //Cannot have more than one incoming edge and cannot lower the priority.
+        // Does absolutely nothing
+        // Cannot have more than one incoming edge and cannot lower the priority.
         sb.appendInd("\n")
         if(exit.next != null) {
             sb.transformNode(exit.next.target)
@@ -715,9 +608,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
      */
     private def void transformNode(StringBuilder sb, Surface sur) {
 
-        //if the priority after the pause is higher than before the pause, we must increase it 
-        //before the pause. Else the increase of the priority would happen after other threads, whose
-        //priorities might be higher at first, but lower after the increase of the priority.
+        // If the priority after the pause is higher than before the pause, we must increase it 
+        //   before the pause. Else the increase of the priority would happen after other threads, whose
+        //   priorities might be higher at first, but lower after the increase of the priority.
         val depthPrio = sur.depth.getAnnotation("optPrioIDs") as IntAnnotation
         val prio = sur.getAnnotation("optPrioIDs") as IntAnnotation
         
@@ -726,8 +619,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
         }
 
         sb.appendInd("pause;\n");
-        
+        previousNode.push(sur.depth)
         sb.transformNode(sur.depth)
+        previousNode.pop
     }
     
     
@@ -745,9 +639,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
         sb.transformNode(dep.next.target)
     }
     
- //----------------------------------------------------------------------------------------------------------------    
- //----------------------------------------AUXILIARY FUNCTIONS-----------------------------------------------------   
- //----------------------------------------------------------------------------------------------------------------
+ // ----------------------------------------------------------------------------------------------------------------    
+ // ----------------------------------------AUXILIARY FUNCTIONS-----------------------------------------------------   
+ // ----------------------------------------------------------------------------------------------------------------
 
     /**
      *  Appends a String @s to the StringBuilder @sb with the current indentation
@@ -789,7 +683,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
             }
         }
         sb.append(labelsAndPrios + ") {\n")
-//        currentIndentation += DEFAULT_INDENTATION
+//         currentIndentation += DEFAULT_INDENTATION
         
         if(n > 4 && !generatedForks.contains(n)) {
             forkSb.append("#define fork" + n + "(label, ")
@@ -837,12 +731,12 @@ class SCLPTransformation extends AbstractProductionTransformation{
             var overWordsizeString = ""
             for(var i = 0; i < n; i++) {
                 s1 = s1.concat("sib" + i)
-                //s2 = s2.concat("  join1(sib" + i + "); ")
+                // s2 = s2.concat("  join1(sib" + i + "); ")
                 overWordsizeString = overWordsizeString.concat("isEnabled(sib" + i + ")")
                 underWordsizeString = underWordsizeString.concat("sib" + i)
                 if(i != n - 1) {
                     s1 = s1.concat(", ")
-                   // s2 = s2.concat("\\")
+                   //  s2 = s2.concat("\\")
                    underWordsizeString = underWordsizeString.concat(" | ")
                    overWordsizeString  = overWordsizeString.concat(" | ")
                 }

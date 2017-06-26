@@ -47,6 +47,7 @@ class SCGPriority extends AbstractProductionTransformation{
     @Inject
     extension OptimizedPrioIDs
     
+    
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     
     override getProducedFeatureId() {
@@ -74,29 +75,30 @@ class SCGPriority extends AbstractProductionTransformation{
      */
     public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
         val nodes = scg.nodes
-        val scc = findSCCs(nodes)
+        var scc = findSCCs(nodes)
         
         val sccMap = createNodeToSCCMap(scc)
+        val schizoSccMap = createNodeToSCCMap(schizoSccList)
         val auxData = new PriorityAuxiliaryData()
         auxData.stronglyConnectedComponents = scc
         
-        //If we find a viable schedule, calculate the Priorities of the nodes.
+        // If we find a viable schedule, calculate the Priorities of the nodes.
         if(schedulable(scc)) {
+                        
+            // Calculate node priorities with the help of strongly connected components
+            val nodePrios = calcNodePrios(scc, sccMap, nodes, schizoSccList, schizoSccMap)
             
-            //Calculate node priorities with the help of strongly connected components
-            val nodePrios = calcNodePrios(scc, sccMap, nodes)
-            
-            //Calculate Thread Segment IDs
+            // Calculate Thread Segment IDs
             val threadSegmentIDs = calcThreadSegmentIDs(nodes, nodePrios)
             
-            //Calculate Prio IDs of the nodes
+            // Calculate Prio IDs of the nodes
             val prioIDs = calcPrioIDs(nodePrios, threadSegmentIDs, getNumberOfThreadSegmentIDs, nodes)
             
-            //Optimize the PrioIDs
+            // Optimize the PrioIDs
             val optPrioIDs = calcOptimizedPrioIDs(prioIDs, nodes)
             val max = getMaxPID
             
-            //Create Annotations to pass the information to the klighd synthesis 
+            // Create Annotations to pass the information to the klighd synthesis 
             for(node : nodes) {
                 node.annotations += createIntAnnotation => [
                     name  = PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION
@@ -124,10 +126,10 @@ class SCGPriority extends AbstractProductionTransformation{
             
         } else {
             if (context != null) {
+                context.compilationResult.addAuxiliaryData(auxData)
                 context.getCompilationResult().addPostponedWarning(
                     new KielerCompilerException(getId, getId, "The SCG is NOT IASC-schedulable!"));
             }
-//            println("NOT SCHEDULABLE")
         }
         
         

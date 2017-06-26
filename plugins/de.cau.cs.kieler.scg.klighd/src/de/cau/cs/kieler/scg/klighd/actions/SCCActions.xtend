@@ -24,6 +24,8 @@ import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.elk.graph.properties.IProperty
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * Action class to display Strongly Connected Components in the SCG.
@@ -37,8 +39,12 @@ class SCCActions implements IAction {
     public static final SynthesisOption SHOW_SCC = SynthesisOption::createCheckOption("Strongly Connected Components", 
         true).setUpdateAction(SCC_ID);
         
+    public static val IProperty<Boolean> P = new org.eclipse.elk.graph.properties.Property("id")
+        
     @Inject
     extension KRenderingExtensions
+    /** Bound rendering extensions */
+    extension KRenderingFactory = KRenderingFactory.eINSTANCE
             
     override execute(ActionContext context) {
         val viewContext = context.viewContext
@@ -50,10 +56,15 @@ class SCCActions implements IAction {
                 if(container.getProperty(SCGraphDiagramSynthesis.SCC_PROPERTY)) {
                     if(getBooleanValue(SHOW_SCC, viewContext)) {
                         container.lineWidth.lineWidth = getIntValue(SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS, viewContext) * 2
-                        container.foreground = SCGraphDiagramSynthesis.STRONGLY_CONNECTED_COMPONENT_COLOR.copy                       
+                        //container.foreground = SCGraphDiagramSynthesis.STRONGLY_CONNECTED_COMPONENT_COLOR.copy   
+                        val style = createKForeground().setColor2(SCGraphDiagramSynthesis.STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                        style.properties.put(P, true)
+                        style.propagateToChildren = true
+                        container.styles += style                    
                     } else {
                         container.lineWidth.lineWidth = getIntValue(SCGraphDiagramSynthesis.CONTROLFLOW_THICKNESS, viewContext)
-                        container.foreground = SCGraphDiagramSynthesis.STANDARD_CONTROLFLOWEDGE.copy
+                        //container.foreground = SCGraphDiagramSynthesis.STANDARD_CONTROLFLOWEDGE.copy
+                        container.styles.removeIf[(properties.get(P)?:false) as Boolean]
                     }
                 }
             }

@@ -112,7 +112,7 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
     /**
      * Tick.
      */
-    abstract protected void tick();
+    abstract public void tick();
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -138,6 +138,14 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
         }
         // Return whether the program terminated
         return isTerminated();
+    }
+    
+    
+    /** 
+     *  Setup a tick
+     */
+    public void setupTick() {
+        setCopyFrom(active, alive);
     }
 
     // -------------------------------------------------------------------------
@@ -287,16 +295,16 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
      * @param forkedStates the forked states
      * @param prios the prios
      */
-    protected void fork(State[] forkedStates, int[] prios) {
-        for(int i = 0; i < prios.length; i++) {
-            debug("Forking", currentThread, forkedStates[i]);
-            // Create a new thread
-            coarseProgramCounter.set(prios[i], forkedStates[i]);
-            // Set new thread as an alive & enabled one
-            setAdd(alive, prios[i]);
-            setAdd(active, prios[i]);
-        }
-    }
+//    protected void fork(State[] forkedStates, int[] prios) {
+//        for(int i = 0; i < prios.length; i++) {
+//            debug("Forking", currentThread, forkedStates[i]);
+//            // Create a new thread
+//            coarseProgramCounter.set(prios[i], forkedStates[i]);
+//            // Set new thread as an alive & enabled one
+//            setAdd(alive, prios[i]);
+//            setAdd(active, prios[i]);
+//        }
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -405,13 +413,22 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
      *
      * @return true, if successful
      */
-    protected boolean join(int[] children) {
-        // Goes through all given children/siblings and checks if they have terminated
-        int[] childset = new int[alive.length];
-        for(int i = 0; i < children.length; i++) {
-            setAdd(childset, children[i]);
-        }
-        return (setDisjoint(alive, childset ));
+//    protected boolean join(int[] children) {
+//        // Goes through all given children/siblings and checks if they have terminated
+//        int[] childset = new int[alive.length];
+//        for(int i = 0; i < children.length; i++) {
+//            setAdd(childset, children[i]);
+//        }
+//        return (setDisjoint(alive, childset ));
+//    }
+    
+    /**
+     * Join.
+     * 
+     * @return true, if successful
+     */
+    protected boolean join(int child) {
+        return !(setContains(alive, child));
     }
 
     // -------------------------------------------------------------------------

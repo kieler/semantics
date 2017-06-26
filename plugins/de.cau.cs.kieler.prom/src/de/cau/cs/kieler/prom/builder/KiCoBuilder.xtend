@@ -541,7 +541,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             executableFile.delete(true, null)
         
         // Run gcc on simulation code
-        val pBuilder = new ProcessBuilder("gcc","-std=c99",fileName,"-o", parentDir + executableName)
+        val pBuilder = new ProcessBuilder("gcc",fileName,"-o", parentDir + executableName)
         pBuilder.directory(project.location.append(directory).toFile)
         val p = pBuilder.start()
         // Wait until the process finished
@@ -767,10 +767,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     }
     
     private def boolean isCTarget() {
-        return launchData.targetLanguage.contains("s.c")
+        return launchData.targetLanguage.contains("s.c") || launchData.targetLanguage.contains("sclp.sclpTrans")
     }
     
     private def boolean isJavaTarget() {
-        return launchData.targetLanguage.contains("s.java")
+        return launchData.targetLanguage.contains("s.java") || launchData.targetLanguage.contains("sclp.sjTrans") 
     }
 }

@@ -164,6 +164,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Inject color extensions. */
     @Inject
     extension KColorExtensions
+    
+    /** Bind rendering extensions */
+    extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
     /** Inject SCGraph shapes extensions. */
     @Inject
@@ -760,7 +763,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 ]
             }
             
-            //Draw strongly connected components
+            // Draw strongly connected components
             if(scc != null) {
                 for(component : scc) {
                     if(component.size > 1) {
@@ -768,13 +771,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             for(n2CF : n.allNext) {
                                 val n2 = n2CF.target
                                 if(component.contains(n2)) {
-                                    val edge = n2CF.allEdges.head
-                                    val edgeRendering = edge.getData(typeof(KRoundedBendsPolyline))
-                                    edgeRendering.setProperty(SCC_PROPERTY, true)
+                                    val edges = n2CF.allEdges
+                                    for(edge : edges) {
+                                        val edgeRendering = edge.getData(typeof(KRoundedBendsPolyline))
+                                        edgeRendering.setProperty(SCC_PROPERTY, true)
+                                        val style = createKForeground().setColor2(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                                        style.properties.put(SCCActions.P, true)
+                                        style.propagateToChildren = true
+                                        edgeRendering.styles += style
+                                    }
                                     n2CF.thickenControlFlow(4)
-                                    n2CF.colorControlFlow(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
                                     
                                 } 
+                            }
+                            for(n2Dep : n.dependencies) {
+                                val n2 = n2Dep.target
+                                if(component.contains(n2)) {
+                                    val edges = n2Dep.allEdges
+                                    for(edge : edges) {
+                                        if(edge != null) {
+                                            val edgeRendering = edge.getData(typeof(KRoundedBendsPolyline))
+                                            edgeRendering.setProperty(SCC_PROPERTY, true)
+                                            val style = createKForeground().setColor2(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                                            style.properties.put(SCCActions.P, true)
+                                            style.propagateToChildren = true
+                                            edgeRendering.styles += style
+                                        }                                        
+                                    }
+                                    n2Dep.thickenDependency(4)
+//                                    n2Dep.colorDependency(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)                                   
+                                }
                             }
                         }
                     }
@@ -867,7 +893,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
  				}
             }
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
             if(assignment.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
@@ -882,7 +908,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontSize(7)
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(assignment.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (assignment.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                             as IntAnnotation).value
@@ -981,7 +1007,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             port.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
 
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
             if(conditional.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
@@ -997,7 +1023,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(conditional.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (conditional.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                             as IntAnnotation).value
@@ -1057,7 +1083,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
             if(surface.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
@@ -1073,7 +1099,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(surface.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (surface.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                         as IntAnnotation).value
@@ -1136,7 +1162,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
             if(depth.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
@@ -1152,7 +1178,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(depth.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (depth.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                     as IntAnnotation).value
@@ -1202,7 +1228,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
 
@@ -1220,7 +1246,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(entry.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (entry.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                     as IntAnnotation).value
@@ -1270,7 +1296,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
             if(exit.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
@@ -1286,7 +1312,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(exit.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (exit.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                     as IntAnnotation).value
@@ -1348,7 +1374,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
             if(fork.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
@@ -1364,7 +1390,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(fork.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (fork.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                     as IntAnnotation).value
@@ -1428,7 +1454,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5)
             }
             
-            //Draw the node priorities
+            // Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
             if(join.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
@@ -1444,7 +1470,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             }
             
-            //Draw the optimized node priority IDs
+            // Draw the optimized node priority IDs
             if(join.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
                 optNodePrio = (join.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                     as IntAnnotation).value

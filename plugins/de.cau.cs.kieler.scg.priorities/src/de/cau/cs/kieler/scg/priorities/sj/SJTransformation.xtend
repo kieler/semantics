@@ -123,8 +123,10 @@ class SJTransformation extends AbstractProductionTransformation {
         labeledNodes.clear
         regionNr.clear
         labelNr = 0
+        startPriority = -1
+        maxPriority = -1
         
-        //Add Header
+        // Add Header
         if(!(scg.label.isNullOrEmpty)) {
             programName = scg.label
         } else {
@@ -159,10 +161,7 @@ class SJTransformation extends AbstractProductionTransformation {
     /** 
      *  Adds the required imports to the file
      */
-    protected def void addImports(StringBuilder sb, String programName) {
-        
-        sb.appendInd("package model;\n\n")
-        
+    protected def void addImports(StringBuilder sb, String programName) {        
         sb.appendInd("import model." + programName + ".State;\n")
         sb.appendInd("import static model." + programName + ".State.*;\n")
         sb.appendInd("import model.SJLProgramForPriorities;\n\n\n")
@@ -250,7 +249,8 @@ class SJTransformation extends AbstractProductionTransformation {
      */
     protected def void addProgram(StringBuilder sb, SCGraph scg, String programName) {
         sb.appendInd("@Override\n")
-        sb.appendInd("protected final void tick() {\n")
+        sb.appendInd("public final void tick() {\n")
+        sb.appendInd("setupTick();\n")
         currentIndentation += DEFAULT_INDENTATION
         sb.appendInd("while(!isTickDone()) {\n")
         currentIndentation += DEFAULT_INDENTATION
@@ -300,7 +300,6 @@ class SJTransformation extends AbstractProductionTransformation {
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             if(!(prev instanceof Fork) && (!(prev instanceof Surface)) && prevPrio.value != prio.value) {
                 var newLabel = "_L_" + labelNr++
-                //labeledNodes.put(node, newLabel)
                 sb.appendInd("prioB(" + prio.value + ", " + newLabel +  ");\n")
                 sb.appendInd("break;\n\n")
                 sb.addCase(newLabel)
@@ -324,8 +323,10 @@ class SJTransformation extends AbstractProductionTransformation {
             if(incomingControlFlows.size > 1) {
                 val newLabel = "_L_" + labelNr++
                 labeledNodes.put(node, newLabel)
-                sb.appendInd("gotoB(" + newLabel + ");\n")
-                sb.appendInd("break;\n\n")
+                // Fall-Through case
+                //sb.appendInd("gotoB(" + newLabel + ");\n")
+                //sb.appendInd("break;\n\n")
+                sb.appendInd("\n")
                 sb.addCase(newLabel)
             }                
         }
@@ -421,7 +422,7 @@ class SJTransformation extends AbstractProductionTransformation {
         
         if(labeledNodes.containsKey(cond.^else.target)) {
 
-            //Goto already translated node
+            // Goto already translated node
             sb.appendInd("gotoB(" + labeledNodes.get(cond.^else.target) + ");\n")
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("}\n")
@@ -436,7 +437,7 @@ class SJTransformation extends AbstractProductionTransformation {
             currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
             sb.appendInd("}\n")
     
-            //Translate else-case
+            // Translate else-case
             elseSB.transformNode(cond.^else.target)
         }
         // Create break
@@ -481,8 +482,7 @@ class SJTransformation extends AbstractProductionTransformation {
 
         val Node joinThread = sortedChildrenByExit.head
         var joinPrios = <Integer> newLinkedList
-        var forkPrios = <Integer> newLinkedList
-        var threadNames = <String> newLinkedList
+        var threadInfo = <Pair<String, Integer>> newLinkedList
         
         var forkSB = new StringBuilder
         var joinSB = new StringBuilder
@@ -503,7 +503,7 @@ class SJTransformation extends AbstractProductionTransformation {
         for(child : sortedChildrenByExit.tail) {
             if(!child.equals(forkThread)) {
                 var childSB = new StringBuilder
-                child.transformThread(childSB, threadNames, forkPrios, joinPrios)
+                child.transformThread(childSB, threadInfo, joinPrios)
                 childrenStringBuilders.add(childSB)                
             }
         }
@@ -529,13 +529,14 @@ class SJTransformation extends AbstractProductionTransformation {
             // labels and priorities to be forked
             val joinThreadPrio = (joinThread.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)
                                                             as IntAnnotation).value
-            forkPrios.add(joinThreadPrio)
-            threadNames.add(joinLabel)
+            threadInfo.add(new Pair(joinLabel, joinThreadPrio))
             joinPrios.add(forkThreadExitPrio)
         } 
         
         // Create the fork
-        sb.appendInd("fork(new State[]{" + threadNames.listToString + "}, new int[]{" + forkPrios.toPrios + "});\n")
+        for(thread : threadInfo) {
+            sb.appendInd("fork(" + thread.key + ", " + thread.value + ");\n")
+        }
         sb.appendInd("gotoB(" + forkLabel + ");\n")
         sb.appendInd("break;\n\n")
 
@@ -573,16 +574,18 @@ class SJTransformation extends AbstractProductionTransformation {
         
         // Create the join-"state"
         sb.addCase(newLabel)
-        sb.appendInd("if(!join(new int[]{" + joinPrios.toPrios + "})) {\n")
+        sb.appendInd("if(")
+        sb.append("!join(" + joinPrios.head + ")")
+        for(prio : joinPrios.tail) {
+            sb.append(" || !join(" + prio + ")")
+        }
+        sb.append(") {\n")
         currentIndentation += DEFAULT_INDENTATION
         sb.appendInd("pauseB(" + newLabel + ");\n")
+        sb.appendInd("break;\n")
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
-        sb.appendInd("} else {\n")
-        currentIndentation += DEFAULT_INDENTATION
-        sb.appendInd("gotoB(" + nextLabel + ");\n")
-        currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
-        sb.appendInd("}\n")
-        sb.appendInd("break;\n\n")
+        sb.appendInd("}\n\n")
+        
         
         // Create the following state
         sb.addCase(nextLabel)
@@ -716,43 +719,6 @@ class SJTransformation extends AbstractProductionTransformation {
         states.add(newLabel)
     }
     
-    /** 
-     *  Converts a list of priorities to a String
-     * 
-     *  @param priorities
-     *              The list of priorities to be converted to a String
-     * 
-     *  @returns
-     *              A String of numbers in the form of "priority1, priority2, priority3, ..."
-     */
-    private def String toPrios(LinkedList<Integer> priorities) {
-        var s = ""
-        s += priorities.head
-        for(prio : priorities.tail) {
-            s += ", "
-            s += prio.toString
-        }
-        return s
-    }
-    
-    /** 
-     *  Converts a list of Strings to a String separated by commas
-     * 
-     *  @param priorities
-     *              The list of Strings to be converted to a String
-     * 
-     *  @returns
-     *              A String in the form of "String1, String2, String3, ..."
-     */
-    private def String listToString(LinkedList<String> strings) {
-        var s = ""
-        s += strings.head
-        for(string : strings.tail) {
-            s += ", "
-            s += string
-        }
-        return s
-    }
     
     /** 
      *  Generates a new region name for states after a fork.
@@ -790,7 +756,7 @@ class SJTransformation extends AbstractProductionTransformation {
      *  @param threads a list of threadnames
      *  @param prios a list of initial priorities
      */
-    private def void transformThread(Node node, StringBuilder sb, LinkedList<String> threads, LinkedList<Integer> prios,
+    private def void transformThread(Node node, StringBuilder sb, LinkedList<Pair<String, Integer>> threadInfo,
                                             LinkedList<Integer> exitPrios) {
         var newLabel = node.getNewRegionName
         var prio = (node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
@@ -798,8 +764,7 @@ class SJTransformation extends AbstractProductionTransformation {
         var exitPrio = ((node as Entry).exit.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                                                 as IntAnnotation).value
         
-        threads.add(newLabel)
-        prios.add(prio)
+        threadInfo.add(new Pair(newLabel, prio))
         exitPrios.add(exitPrio)
         labeledNodes.put(node, newLabel)
         sb.addCase(newLabel)

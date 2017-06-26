@@ -35,7 +35,9 @@ class NodePriorities {
     private HashMap<LinkedList<Node>, Boolean> visited
     private HashMap<LinkedList<Node>, Integer> index
     private LinkedList<LinkedList<Node>> sccs
+    private LinkedList<LinkedList<Node>> schizoSccList
     private HashMap<Node, Integer> sccMap
+    private HashMap<Node, Integer> schizoSccMap
     private HashMap<Node, Integer> nodePrio
     private HashMap<LinkedList<Node>, Integer> min
     private HashMap<LinkedList<Node>, Integer> max
@@ -53,7 +55,8 @@ class NodePriorities {
      * 
      */
     public def HashMap<Node, Integer> calcNodePrios(LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccMap, 
-                                                        List<Node> nodes) {
+                                                        List<Node> nodes, LinkedList<LinkedList<Node>> schizoSccList,
+                                                        HashMap<Node, Integer> schizoSccMap) {
         visited = newHashMap
         index = newHashMap
         nodePrio = newHashMap
@@ -63,43 +66,46 @@ class NodePriorities {
         visitedNodes = newHashMap
         this.sccs = sccs
         this.sccMap = sccMap
+        this.schizoSccList = schizoSccList
+        this.schizoSccMap = schizoSccMap
         
-        //Reset visited nodes
+        // Reset visited nodes
         for(scc : sccs) {
             visited.put(scc, false)
         }
         
-        //Calculate min
+        
+        // Calculate min
         for(scc : sccs) {
             if(!visited.get(scc)) {
+                visited.put(scc, true)
                 longestPath(scc)
-                visited.put(scc, true)
             }
         }
         
-        //Reset visited nodes
+        // Reset visited nodes
         for(scc : sccs) {
             visited.put(scc, false)
         }
         
-        //Calculate max
+        // Calculate max
         for(scc : sccs) {
             if(!visited.get(scc)) {
+                visited.put(scc, true)
                 longestPathBackwards(scc)
-                visited.put(scc, true)
             }
         }
         
-        //Reset visited nodes
+        // Reset visited nodes
         for(scc : sccs) {
             visited.put(scc, false)
         }
         
-        //Calculate node priorities
+        // Calculate node priorities
         for(scc : sccs) {
             if(!visited.get(scc)) {
-                calculateNodePrios(scc)
                 visited.put(scc, true)
+                calculateNodePrios(scc)
             }
         }
         
@@ -118,27 +124,51 @@ class NodePriorities {
         
         val neighbors = currentSCC.findNeighborsOfSCC
         val dependencies = currentSCC.findAllDependenciesOfScc
+        val head = currentSCC.head
         var int prio = 0
         
         for(dep : dependencies) {
             val depSCC = sccs.get(sccMap.get(dep))
             if(!visited.get(depSCC)) {
-                longestPath(depSCC)
                 visited.put(depSCC, true)
+                longestPath(depSCC)
                 prio = Math.max(prio, min.get(depSCC) + 1)
             } else {
-                prio = Math.max(prio, min.get(depSCC) + 1)
+                if(min.containsKey(depSCC)) {
+                    prio = Math.max(prio, min.get(depSCC) + 1)                    
+                }
+            }
+        }
+        
+        // If there were depth-joins we will have to take into account that all nodes in the cycle should 
+        // be executed before all dependencies of this cycle. This is doing that.
+        if(schizoSccMap.containsKey(head)) {
+            val schizoScc = schizoSccList.get(schizoSccMap.get(head))
+            val schizoDependencies = schizoScc.findAllExternalDependenciesOfScc(schizoSccMap)
+            for(node : schizoDependencies) {
+                val depSCC = sccs.get(sccMap.get(node))
+                if (!visited.get(depSCC)) {
+                    visited.put(depSCC, true)
+                    longestPath(depSCC)
+                    prio = Math.max(prio, min.get(depSCC) + 1)
+                } else {
+                    if (min.containsKey(depSCC)) {
+                        prio = Math.max(prio, min.get(depSCC) + 1)
+                    }
+                }
             }
         }
         
         for(n : neighbors) {
             val nSCC = sccs.get(sccMap.get(n))
             if(!visited.get(nSCC)) {
-                longestPath(nSCC)
                 visited.put(nSCC, true)
+                longestPath(nSCC)
                 prio = Math.max(prio, min.get(nSCC))
             } else {
-                prio = Math.max(prio, min.get(nSCC))
+                if(min.containsKey(nSCC)) {
+                    prio = Math.max(prio, min.get(nSCC))                    
+                }
             }
         }
         maxPrio = Math.max(maxPrio, prio)
@@ -169,11 +199,15 @@ class NodePriorities {
             }
             val nSCC = sccs.get(sccMap.get(n))
             if(!visited.get(nSCC)) {
-                longestPathBackwards(nSCC)
                 visited.put(nSCC, true)
-                prio = Math.min(prio, max.get(nSCC))
+                longestPathBackwards(nSCC)
+                if(max.containsKey(nSCC)) {
+                    prio = Math.min(prio, max.get(nSCC))                    
+                }
             } else {
-                prio = Math.min(prio, max.get(nSCC))
+                if(max.containsKey(nSCC)) {
+                    prio = Math.min(prio, max.get(nSCC))                    
+                }
             }
         }
         if(isEntry || (predecessors.empty && currentSCC.head instanceof Entry)) {
@@ -200,10 +234,12 @@ class NodePriorities {
             if(!(n instanceof Join)) {
                 val nextSCC = sccs.get(sccMap.get(n))
                 if(!visited.containsKey(nextSCC) || !visited.get(nextSCC)) {
-                    succPrio = Math.max(calculateNodePrios(nextSCC), succPrio)  
                     visited.put(nextSCC, true)              
+                    succPrio = Math.max(calculateNodePrios(nextSCC), succPrio)  
                 } else {
-                    succPrio = Math.max(nodePrio.get(n), succPrio)
+                    if(nodePrio.containsKey(n)) {
+                        succPrio = Math.max(nodePrio.get(n), succPrio)                        
+                    }
                 }                
             }
         }
@@ -211,9 +247,21 @@ class NodePriorities {
         if(succPrio >= min.get(currentSCC)) {
             nextPrio = succPrio   
         }
-        for(node : currentSCC) {
-            nodePrio.put(node, nextPrio)
+        
+        if(min.get(currentSCC) > max.get(currentSCC)) {
+            for(node : currentSCC) {
+                if(node instanceof Join) {
+                    nodePrio.put(node, max.get(currentSCC))                    
+                } else {
+                    nodePrio.put(node, nextPrio)
+                }
+            }
+        } else {
+            for(node : currentSCC) {
+                nodePrio.put(node, nextPrio)
+            }            
         }
+        
         
         return nextPrio
     }

@@ -14,6 +14,7 @@ package de.cau.cs.kieler.scg.priorities.extensions
 
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
@@ -24,7 +25,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import java.util.HashMap
 import java.util.LinkedList
-import de.cau.cs.kieler.scg.ControlFlow
 
 /**
  * A class with extensions for the calculation of Strongly Connected Components
@@ -106,7 +106,7 @@ class SCCExtensions {
         }
         
         if(n instanceof Surface) {
-            //Do nothing
+            // Do nothing
         }
         
         neighbors
@@ -167,11 +167,13 @@ class SCCExtensions {
      */
     public def LinkedList<Node> getConcurrentDependencies(Node n) {
         var deps = <Node> newLinkedList
-        //Get only concurrent dependencies!!
+        // Get only concurrent dependencies!!
         for(dep : n.dependencies) {
             if(dep instanceof DataDependency) {
                 if(dep.concurrent && !dep.confluent) {
-                    deps.add(dep.target)
+                    if(dep.target != null) {
+                        deps.add(dep.target)                        
+                    }
                 }
                 
             }
@@ -214,6 +216,7 @@ class SCCExtensions {
      *          The following neighbor(s) of the node
      */
     public def LinkedList<Node> getNeighborsAndDependencies(Node n) {
+        System.out.flush
         var neighbors = <Node> newLinkedList
         neighbors.addAll(n.neighbors)
         neighbors.addAll(n.concurrentDependencies)
@@ -284,6 +287,29 @@ class SCCExtensions {
         }
         dependencies
         
+    }
+    
+    private HashMap<LinkedList<Node>, LinkedList<Node>> externalDependencies = newHashMap
+    
+    public def LinkedList<Node> findAllExternalDependenciesOfScc(LinkedList<Node> scc, HashMap<Node, Integer> sccMap) {
+        var dependencies = <Node> newLinkedList
+        var originalScc = -1
+        if(externalDependencies.containsKey(scc)) {
+            return externalDependencies.get(scc)
+        } else {
+            if(sccMap.containsKey(scc.head)) {
+                originalScc = sccMap.get(scc.head)
+                for(node : scc) {
+                    for(dep : node.concurrentDependencies) {
+                        if(!sccMap.containsKey(dep) || sccMap.get(dep) != originalScc) {
+                            dependencies.add(dep)
+                        }
+                    }
+                }
+            }
+            externalDependencies.put(scc, dependencies)
+        }
+        return dependencies
     }
     
     /**
