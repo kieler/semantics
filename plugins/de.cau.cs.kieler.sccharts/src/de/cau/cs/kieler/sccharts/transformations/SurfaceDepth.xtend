@@ -104,9 +104,6 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
         targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
             optimizeSuperflousImmediateTransitions.fixDeadCode
-//            optimizeSuperflousImmediateTransitions.fixDeadCode
-//            optimizeSuperflousImmediateTransitions.fixDeadCode;
-//        targetRootState.fixAllTextualOrdersByPriorities.fixDeadCode;
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
@@ -312,32 +309,29 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                     // T2 is the incoming node from the feedback
                     val K1 = T1.sourceState
                     val K2 = T2.sourceState
-                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty && !K2.outgoingTransitions.filter(
-                        e |
-                            e != T2
-                    ).nullOrEmpty) {
-                        val TK1s = K1.outgoingTransitions.filter(e|e != T1)
-                        val TK2s = K2.outgoingTransitions.filter(e|e != T2)
-                        if (TK1s.size > 0 && TK2s.size > 0) {
-                            val TK1 = TK1s.get(0)
-                            val TK2 = TK2s.get(0)
-                            if ((TK1.targetState == TK2.targetState) && // TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
-                            ((TK1.trigger == TK2.trigger) ||
-                                (TK2.trigger != null && TK1.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
-                                stateAfterDepth = K1
+                    if (K1.outgoingTransitions.exists[it != T1]
+                        && K2.outgoingTransitions.exists[it != T2]
+                        && K1 != K2
+                    ) {
+                        val TK1 = K1.outgoingTransitions.findFirst[it != T1]
+                        val TK2 = K2.outgoingTransitions.findFirst[it != T2]
+                        if ((TK1.targetState == TK2.targetState)
+                                && ((TK1.trigger == TK2.trigger)
+                            || (TK2.trigger !== null && TK1.trigger !== null
+                                && (TK1.trigger.equals2(TK2.trigger))
+                            ))) {// TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
+                            stateAfterDepth = K1
 
-                                //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
-                                val t = K2.incomingTransitions.get(0)
-                                t.setTargetState(stateAfterDepth)
-                                for (transition : K2.outgoingTransitions) {
-                                    stateAfterDepth.trace(transition) // KITT: Redirect tracing before removing
-                                    transition.targetState.incomingTransitions.remove(transition)
-                                }
-                                stateAfterDepth.trace(K2) // KITT: Redirect tracing before removing
-                                K2.parentRegion.states.remove(K2)
-                                done = false
-                                T2tmp = t
+                            val t = K2.incomingTransitions.get(0)
+                            t.setTargetState(stateAfterDepth)
+                            for (transition : K2.outgoingTransitions) {
+                                stateAfterDepth.trace(transition) // KITT: Redirect tracing before removing
+                                transition.targetState.incomingTransitions.remove(transition)
                             }
+                            stateAfterDepth.trace(K2) // KITT: Redirect tracing before removing
+                            K2.parentRegion.states.remove(K2)
+                            done = false
+                            T2tmp = t
                         }
                     }
                 }

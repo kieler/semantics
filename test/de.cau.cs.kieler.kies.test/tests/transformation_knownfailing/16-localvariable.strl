@@ -1,5 +1,0 @@
-module localVarModule:
-var v1 : integer in 
-	v1 := 5
-end
-end module
