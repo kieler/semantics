@@ -23,11 +23,9 @@ import org.eclipse.emf.ecore.EObject
 import java.util.List
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.DoubleValue
 
@@ -64,13 +62,13 @@ class KExpressionsDeclarationExtensions {
     }   
     
     
-    def public Declaration createSignalDeclaration() {
+    def VariableDeclaration createSignalDeclaration() {
         val decl = createVariableDeclaration(ValueType::PURE)
         decl.signal = true
         decl
     }    
     
-    def public Declaration createIntDeclaration() {
+    def VariableDeclaration createIntDeclaration() {
         createVariableDeclaration(ValueType::INT)
     }    
 
@@ -100,7 +98,7 @@ class KExpressionsDeclarationExtensions {
         ]
     } 
     
-    def Declaration createDeclaration(Value value) {
+    def dispatch Declaration createDeclaration(Value value) {
         if (value instanceof IntValue) createIntDeclaration
         else if (value instanceof BoolValue) createBoolDeclaration
         else if (value instanceof DoubleValue) createDoubleDeclaration
