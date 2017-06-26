@@ -281,9 +281,9 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     + "Please make sure that all paths are valid."
                 
                 // Log error
-                val bundle = Platform.getBundle(PromPlugin.ID)
+                val bundle = Platform.getBundle(PromPlugin.PLUGIN_ID)
                 val log = Platform.getLog(bundle)
-                log.log(new Status(Status.ERROR, PromPlugin.ID, msg, e))
+                log.log(new Status(Status.ERROR, PromPlugin.PLUGIN_ID, msg, e))
                 
                 // Open dialog
                 MessageDialog.openError(shell, "Error", msg)

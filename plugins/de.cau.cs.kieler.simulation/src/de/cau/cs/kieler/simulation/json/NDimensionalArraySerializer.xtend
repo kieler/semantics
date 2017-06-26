@@ -22,6 +22,7 @@ import java.lang.reflect.Type
 import com.google.gson.JsonElement
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonParseException
+import java.util.List
 
 /**
  * @author aas
@@ -63,13 +64,22 @@ class NDimensionalArraySerializer implements JsonSerializer<NDimensionalArray>,
         val indices = newArrayList()
         for(jsonIndex : jsonIndices) {
             val i = context.deserialize(jsonIndex, typeof(Integer))
-            indices += i
+            indices.add(i)
         }
         
-        val values = newArrayList()        
+        val List<Object> values = newArrayList()        
         for(jsonValue : jsonValues) {
             val value = JsonManager.jsonAsObject(jsonValue)
-            values += value
+            if(value instanceof Double) {
+                val intValue = value.intValue 
+                if(value == intValue) {
+                    values.add(intValue)
+                } else {
+                    values.add(value)
+                }
+            } else {
+                values.add(value)    
+            }
         }
         
         val array = new NDimensionalArray(values, indices)

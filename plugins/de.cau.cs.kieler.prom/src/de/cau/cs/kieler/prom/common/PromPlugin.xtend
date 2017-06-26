@@ -37,14 +37,17 @@ import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.core.runtime.Status
 import org.eclipse.core.variables.IStringVariableManager
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.ui.plugin.AbstractUIPlugin
+import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
+import org.eclipse.ui.statushandlers.StatusAdapter
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -54,20 +57,25 @@ import org.osgi.framework.BundleContext
 class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     
     // The plug-in ID
-    public static val ID = "de.cau.cs.kieler.prom"
+    public static val PLUGIN_ID = "de.cau.cs.kieler.prom"
     
     // The shared instance
     private static PromPlugin plugin;
     
     /**
+     * The directory in which compiled output of this launch will be saved per default.
+     */
+    public static val BUILD_DIRECTORY = "kieler-gen"
+    
+    /**
      * Qualifier used to set the environment name property of a project.
      */
-    public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.ID, "environment")
+    public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "environment")
     
     /**
      * Qualifier used to set the main file's project relative path of a project.
      */
-    public static val MAIN_FILE_QUALIFIER = new QualifiedName(PromPlugin.ID, "main.file")
+    public static val MAIN_FILE_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "main.file")
 
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
@@ -83,7 +91,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     public static val COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE = "compiled_main_name_no_ext"
     
     private static var IStringVariableManager varManager
-    
+     
     /**
      * The constructor
      */
@@ -118,6 +126,30 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
      */
     public static def PromPlugin getDefault() {
         return plugin;
+    }
+    
+    /**
+     * Log an information
+     */
+    public static def void log(String msg) {
+        log(Status.INFO, msg, null)
+    }
+    
+    /**
+     * Log an error
+     */
+    public static def void log(String msg, Exception e) {
+        log(Status.ERROR, msg, e)
+    }
+    
+    /**
+     * Log a message
+     */
+    public static def void log(int severity, String msg, Exception e) {
+        val status = new Status(severity, PLUGIN_ID, msg, e)
+        val statusAdapter = new StatusAdapter(status)
+        val style = StatusManager.LOG//.bitwiseOr(StatusManager.SHOW)
+        StatusManager.getManager().handle(statusAdapter, style)
     }
     
     /**
@@ -225,13 +257,13 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
      * @param resources The resources in which the search takes place
      * @param fileExtensions The file extensions that files must have, or null if all files should be included
      */
-    public static def List<IFile> findFiles(IResource[] resources, String[] fileExtension) {
+    public static def List<IFile> findFiles(IResource[] resources, String[] fileExtensions) {
         val ArrayList<IFile> findings = newArrayList()
         for(IResource res : resources) {
             if (res instanceof IContainer) {
-                findings.addAll(findFiles(res.members, fileExtension));
+                findings.addAll(findFiles(res.members, fileExtensions));
             } else if (res instanceof IFile) {
-                if(fileExtension == null || res.fileExtension != null && fileExtension.contains(res.fileExtension.toLowerCase) ){
+                if(fileExtensions == null || res.fileExtension != null && fileExtensions.contains(res.fileExtension.toLowerCase) ){
                     findings.add(res)
                 }
             }
@@ -346,6 +378,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     /**
      * Creates a resource and all needed parent folders in a project.
      * The created resource is initialized with the inputs of the stream.
+     * The stream is closed afterwards.
      * 
      * @param resource The resource handle to be created
      * @param stream Input stream with initial content for the resource
@@ -359,6 +392,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
 
         switch(resource.getType()){
             case IResource.FILE : {
+                // Create new
                 if(stream != null) {
                     (resource as IFile).create(stream, true, null)
                     stream.close()
@@ -375,6 +409,15 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                 (resource as IProject).open(null)
             }
         }
+    }
+    
+    /**
+     * Creates the folder structure for a fully qualified file path.
+     * 
+     * @param path The path to a fully qualified file
+     */
+    public static def void createDirectories(String filePath) {
+        new File(filePath).parentFile.mkdirs()
     }
     
     /**
@@ -498,7 +541,6 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             }
         }
     }
-    
     
     /**
      * Copy the contents of a folder recursively.
