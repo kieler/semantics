@@ -10,7 +10,6 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.railsl
 
 import com.google.inject.Inject
 import com.google.inject.Injector

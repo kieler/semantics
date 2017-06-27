@@ -22,13 +22,13 @@
  <extension
        point="de.cau.cs.kieler.kicool.processor">
     <Processor
-          class="de.cau.cs.kieler.railsl.RailSLWrapper">
+          class="RailSLWrapper">
     </Processor>
  </extension>
  <extension
        point="de.cau.cs.kieler.kicool.system">
     <TransformationSystem
-          system="src/de/cau/cs/kieler/railsl/railSLSystem.kico">
+          system="compilation/railSLSystem.kico">
     </TransformationSystem>
  </extension>
 </plugin>
