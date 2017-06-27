@@ -46,6 +46,8 @@ import de.cau.cs.kieler.railSL.CrossingStatement
 
 
 /**
+ * Transforms a RailSL model to an SCChart.
+ * 
  * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  *
  */
@@ -66,7 +68,6 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     override transform(EObject eObject) {
         return (eObject as Program).railSLtoSCChart
     }
-    
     
     /*************************************************************************
      * I N J E C T I O N S ***************************************************
@@ -554,7 +555,6 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         ]
     }
     
-    
     /*****************************************************************************************
      * H E L P E R   M E T H O D S ***********************************************************
      *****************************************************************************************/
@@ -682,5 +682,4 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             default: -1
         };
     }
-    
 }

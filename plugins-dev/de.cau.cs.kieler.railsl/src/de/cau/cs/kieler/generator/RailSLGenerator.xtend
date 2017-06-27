@@ -11,16 +11,13 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.generator.IFileSystemAccess
 
 /**
- * Main class for code generation and model-to-model transformations of RailSL.
+ * Main class for code generation of RailSL.
  * 
- * Able to generate an SCChart from a railsl model. Will also generate static code
- * such as PROM snippets and C headers when the editor is saved. 
+ * Will generate static code such as PROM snippets and C headers when the editor is saved. 
  * 
  * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  */
 class RailSLGenerator extends AbstractGenerator {
-
-    
 
     /*************************************************************************
      * S T A T I C   C O D E   G E N E R A T I O N ***************************
