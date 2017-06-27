@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.legacy
 
+import de.cau.cs.kieler.sccharts.legacy.text.SctStandaloneSetup
 import org.eclipse.core.resources.IFile
 
 /**
@@ -22,9 +23,10 @@ import org.eclipse.core.resources.IFile
 class SCChartsLegacyConverter {
     
     public static val INPUT_EXTENSION = "sct"
+    public static val OUTPUT_EXTENSION = "sctx"
     
     static def export(IFile file) {
-        println(file.name)
+        val sctInjector = SctStandaloneSetup.doSetup
     }
     
 }
