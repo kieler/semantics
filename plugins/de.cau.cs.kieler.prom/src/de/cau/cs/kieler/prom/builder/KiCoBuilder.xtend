@@ -76,6 +76,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private static var Set<Transformation> codeGenerationTransformations
     
     private val List<SimulationCompiler> simulationCompilers = newArrayList
+    private val List<ModelCompiler> modelCompilers = newArrayList
     
     /**
      * The monitor of the current build process.
@@ -269,7 +270,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             } 
 
             // TODO: hard coded stuff
-            val List<KiCoModelCompiler> modelCompilers = newArrayList
+            modelCompilers.clear()
             
             // Simulation generator
             var simTemplate = project.getFile("Simulation.ftl")
@@ -320,11 +321,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                                 showBuildProblems(result.simulationGenerationResult.problems)
                             }
                             // Compile generated simulation code
-                            val simGenResult = result.simulationGenerationResult
-                            if(simGenResult != null) {
-                                for(f : simGenResult.createFiles) {
-                                    compileSimulationCode(f)
-                                }
+                            for(f : result.createdSimulationFiles) {
+                                compileSimulationCode(f)
                             }
                         }
                     }
@@ -496,6 +494,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 try {
                     for(simulationCompiler : simulationCompilers) {
                         if(simulationCompiler.canCompile(file)) {
+                            println(file+","+simulationCompiler.class.name)
                             val result = simulationCompiler.compile(file)
                             showBuildProblems(result.problems)
                         }
