@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
@@ -44,7 +45,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ReferenceCallEffectImpl extends EffectImpl implements ReferenceCallEffect {
+public class ReferenceCallEffectImpl extends AnnotatableImpl implements ReferenceCallEffect {
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->

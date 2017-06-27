@@ -26,15 +26,6 @@ public interface KExpressionsFactory extends EFactory {
     KExpressionsFactory eINSTANCE = de.cau.cs.kieler.kexpressions.impl.KExpressionsFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Expression</em>'.
-     * @generated
-     */
-    Expression createExpression();
-
-    /**
      * Returns a new object of class '<em>Valued Object</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -51,15 +42,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     ValuedObjectReference createValuedObjectReference();
-
-    /**
-     * Returns a new object of class '<em>Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Value</em>'.
-     * @generated
-     */
-    Value createValue();
 
     /**
      * Returns a new object of class '<em>Int Value</em>'.
@@ -107,15 +89,6 @@ public interface KExpressionsFactory extends EFactory {
     TextExpression createTextExpression();
 
     /**
-     * Returns a new object of class '<em>Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Declaration</em>'.
-     * @generated
-     */
-    Declaration createDeclaration();
-
-    /**
      * Returns a new object of class '<em>Variable Declaration</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -143,24 +116,6 @@ public interface KExpressionsFactory extends EFactory {
     FunctionCall createFunctionCall();
 
     /**
-     * Returns a new object of class '<em>Referenceable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Referenceable</em>'.
-     * @generated
-     */
-    Referenceable createReferenceable();
-
-    /**
-     * Returns a new object of class '<em>Identifiable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Identifiable</em>'.
-     * @generated
-     */
-    Identifiable createIdentifiable();
-
-    /**
      * Returns a new object of class '<em>Parameter</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -177,15 +132,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     StringValue createStringValue();
-
-    /**
-     * Returns a new object of class '<em>Call</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Call</em>'.
-     * @generated
-     */
-    Call createCall();
 
     /**
      * Returns a new object of class '<em>Reference Call</em>'.

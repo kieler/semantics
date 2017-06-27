@@ -1,15 +1,18 @@
 package de.cau.cs.kieler.annotations.extensions
 
-import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.Annotatable
-import de.cau.cs.kieler.annotations.StringAnnotation
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.CommentAnnotation
-import java.util.List
-import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.annotations.Pragma
 import de.cau.cs.kieler.annotations.PragmaStringAnnotation
+import de.cau.cs.kieler.annotations.Pragmatable
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import java.util.Set
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Annotations extensions
@@ -18,23 +21,27 @@ import java.util.Set
  */
 class AnnotationsExtensions {
 	
-	def public Annotation getAnnotation(Annotatable annotatable, String name) {
+	def Annotation getAnnotation(Annotatable annotatable, String name) {
 		annotatable.getAnnotations(name)?.head
 	} 
 
-    def public Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
-        annotatable.getAllAnnotations(name)
+    def Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
+        annotatable.annotations.filter[ it.name.equals(name) ]
     } 
     
-    def public Annotation getPragma(Annotatable annotatable, String name) {
-        annotatable.getPragmas(name)?.head
+    def Pragma getPragma(Pragmatable pragmatable, String name) {
+        pragmatable.getPragmas(name)?.head
     } 
 
-    def public getPragmas(Annotatable annotatable, String name) {
-        annotatable.getAllAnnotations(name).filter(PragmaStringAnnotation).toList
+    def getPragmas(Pragmatable pragmatable, String name) {
+        pragmatable.pragmas.filter[ it.name.equals(name) ]
     }     
+    
+    def getStringPragma(Pragmatable pragmatable, String name) {
+        pragmatable.getPragmas(name).filter(StringPragma)
+    }
 	
-	def public String getStringAnnotationValue(Annotatable annotatable, String name) {
+	def String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
 		if (annotation != null) 
 			(annotation as StringAnnotation).values.head
@@ -42,18 +49,18 @@ class AnnotationsExtensions {
 			""
 	}
 
-	def public Annotatable createStringAnnotation(Annotatable source, String name, String value) {
+	def Annotatable createStringAnnotation(Annotatable source, String name, String value) {
 		source => [ annotations += name.createStringAnnotation(value) ]
 	}
 	
-	def public Annotation createStringAnnotation(String name, String value) {
+	def Annotation createStringAnnotation(String name, String value) {
 		AnnotationsFactory::eINSTANCE.createStringAnnotation => [
 			it.name = name
 			it.values += value
 		]
 	}
 
-    def public Annotation createTypedStringAnnotation(String name, String type, String value) {
+    def Annotation createTypedStringAnnotation(String name, String type, String value) {
         AnnotationsFactory::eINSTANCE.createTypedStringAnnotation => [
             it.name = name
             it.type = type
@@ -61,53 +68,52 @@ class AnnotationsExtensions {
         ]
     }
 
-	def public void copyAnnotations(Annotatable source, Annotatable target) {
+	def void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[
 	        target.annotations += it.copy
 	    ]
 	}
 
-    def public void copyAnnotations(Annotatable source, Annotatable target, Set<String> filter) {
+    def copyAnnotations(Annotatable source, Annotatable target, Set<String> filter) {
         source.annotations.filter[ filter.contains(it.name) ].forEach[
             target.annotations += it.copy
         ]
     }
 	
-	def public boolean hasAnnotation(Annotatable annotatable, String name) {
+	def boolean hasAnnotation(Annotatable annotatable, String name) {
 		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
 	}
 
-    def public boolean hasPragma(Annotatable annotatable, String name) {
+    def boolean hasPragma(Annotatable annotatable, String name) {
         !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(PragmaStringAnnotation).filter[ it.name == name ].empty
     }
 	
-    def public void removeAnnotations(Annotatable annotatable, String name) {
+    def void removeAnnotations(Annotatable annotatable, String name) {
         if (!annotatable.annotations.nullOrEmpty) {
             !annotatable.annotations.removeIf[ it.name.equals(name) ]
         }    
     }	
 	
-	def public boolean hasCommentAnnotation(Annotatable annotatable) {
+	def boolean hasCommentAnnotation(Annotatable annotatable) {
 	   !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(typeof(CommentAnnotation)).empty    
 	}
 	
-	def public List<CommentAnnotation> getCommentAnnotations(Annotatable annotatable) {
-	    annotatable.annotations.filter(typeof(CommentAnnotation)).toList
+	def getCommentAnnotations(Annotatable annotatable) {
+	    annotatable.annotations.filter(CommentAnnotation)
 	}
 	
 	
-	def public boolean hasTypedAnnotation(Annotatable annotatable) {
+	def boolean hasTypedAnnotation(Annotatable annotatable) {
        !annotatable.annotations.nullOrEmpty && !annotatable.typedAnnotations.empty    
     }
     
-    def public List<TypedStringAnnotation> getTypedAnnotations(Annotatable annotatable) {
-        annotatable.annotations.filter(typeof(TypedStringAnnotation)).toList
+    def getTypedAnnotations(Annotatable annotatable) {
+        annotatable.annotations.filter(TypedStringAnnotation)
     }
     
-    def public List<TypedStringAnnotation> getTypedAnnotations(Annotatable annotatable, String name) {
-        annotatable.getAllAnnotations(name).filter(typeof(TypedStringAnnotation)).toList
+    def getTypedAnnotations(Annotatable annotatable, String name) {
+        annotatable.getAnnotations(name).filter(TypedStringAnnotation)
     }
-    
     
     def asStringAnnotation(Annotation annotation) {
         annotation as StringAnnotation

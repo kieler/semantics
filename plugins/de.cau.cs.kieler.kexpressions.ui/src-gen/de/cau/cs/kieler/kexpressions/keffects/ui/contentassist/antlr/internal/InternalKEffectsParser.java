@@ -3506,23 +3506,23 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     // $ANTLR end "ruleTagAnnotation"
 
 
-    // $ANTLR start "entryRulePragmaTagAnnotation"
-    // InternalKEffects.g:1195:1: entryRulePragmaTagAnnotation : rulePragmaTagAnnotation EOF ;
-    public final void entryRulePragmaTagAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRulePragmaTag"
+    // InternalKEffects.g:1195:1: entryRulePragmaTag : rulePragmaTag EOF ;
+    public final void entryRulePragmaTag() throws RecognitionException {
         try {
-            // InternalKEffects.g:1196:1: ( rulePragmaTagAnnotation EOF )
-            // InternalKEffects.g:1197:1: rulePragmaTagAnnotation EOF
+            // InternalKEffects.g:1196:1: ( rulePragmaTag EOF )
+            // InternalKEffects.g:1197:1: rulePragmaTag EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPragmaTagAnnotationRule()); 
+               before(grammarAccess.getPragmaTagRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            rulePragmaTagAnnotation();
+            rulePragmaTag();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPragmaTagAnnotationRule()); 
+               after(grammarAccess.getPragmaTagRule()); 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -3537,30 +3537,30 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "entryRulePragmaTagAnnotation"
+    // $ANTLR end "entryRulePragmaTag"
 
 
-    // $ANTLR start "rulePragmaTagAnnotation"
-    // InternalKEffects.g:1204:1: rulePragmaTagAnnotation : ( ( rule__PragmaTagAnnotation__Group__0 ) ) ;
-    public final void rulePragmaTagAnnotation() throws RecognitionException {
+    // $ANTLR start "rulePragmaTag"
+    // InternalKEffects.g:1204:1: rulePragmaTag : ( ( rule__PragmaTag__Group__0 ) ) ;
+    public final void rulePragmaTag() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:1208:2: ( ( ( rule__PragmaTagAnnotation__Group__0 ) ) )
-            // InternalKEffects.g:1209:1: ( ( rule__PragmaTagAnnotation__Group__0 ) )
+            // InternalKEffects.g:1208:2: ( ( ( rule__PragmaTag__Group__0 ) ) )
+            // InternalKEffects.g:1209:1: ( ( rule__PragmaTag__Group__0 ) )
             {
-            // InternalKEffects.g:1209:1: ( ( rule__PragmaTagAnnotation__Group__0 ) )
-            // InternalKEffects.g:1210:1: ( rule__PragmaTagAnnotation__Group__0 )
+            // InternalKEffects.g:1209:1: ( ( rule__PragmaTag__Group__0 ) )
+            // InternalKEffects.g:1210:1: ( rule__PragmaTag__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPragmaTagAnnotationAccess().getGroup()); 
+               before(grammarAccess.getPragmaTagAccess().getGroup()); 
             }
-            // InternalKEffects.g:1211:1: ( rule__PragmaTagAnnotation__Group__0 )
-            // InternalKEffects.g:1211:2: rule__PragmaTagAnnotation__Group__0
+            // InternalKEffects.g:1211:1: ( rule__PragmaTag__Group__0 )
+            // InternalKEffects.g:1211:2: rule__PragmaTag__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PragmaTagAnnotation__Group__0();
+            rule__PragmaTag__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -3568,7 +3568,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPragmaTagAnnotationAccess().getGroup()); 
+               after(grammarAccess.getPragmaTagAccess().getGroup()); 
             }
 
             }
@@ -3588,7 +3588,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rulePragmaTagAnnotation"
+    // $ANTLR end "rulePragmaTag"
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
@@ -3761,23 +3761,23 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     // $ANTLR end "ruleRestrictedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRulePramgaKeyStringValueAnnotation"
-    // InternalKEffects.g:1279:1: entryRulePramgaKeyStringValueAnnotation : rulePramgaKeyStringValueAnnotation EOF ;
-    public final void entryRulePramgaKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleStringPragma"
+    // InternalKEffects.g:1279:1: entryRuleStringPragma : ruleStringPragma EOF ;
+    public final void entryRuleStringPragma() throws RecognitionException {
         try {
-            // InternalKEffects.g:1280:1: ( rulePramgaKeyStringValueAnnotation EOF )
-            // InternalKEffects.g:1281:1: rulePramgaKeyStringValueAnnotation EOF
+            // InternalKEffects.g:1280:1: ( ruleStringPragma EOF )
+            // InternalKEffects.g:1281:1: ruleStringPragma EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationRule()); 
+               before(grammarAccess.getStringPragmaRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            rulePramgaKeyStringValueAnnotation();
+            ruleStringPragma();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationRule()); 
+               after(grammarAccess.getStringPragmaRule()); 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -3792,30 +3792,30 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "entryRulePramgaKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleStringPragma"
 
 
-    // $ANTLR start "rulePramgaKeyStringValueAnnotation"
-    // InternalKEffects.g:1288:1: rulePramgaKeyStringValueAnnotation : ( ( rule__PramgaKeyStringValueAnnotation__Group__0 ) ) ;
-    public final void rulePramgaKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleStringPragma"
+    // InternalKEffects.g:1288:1: ruleStringPragma : ( ( rule__StringPragma__Group__0 ) ) ;
+    public final void ruleStringPragma() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:1292:2: ( ( ( rule__PramgaKeyStringValueAnnotation__Group__0 ) ) )
-            // InternalKEffects.g:1293:1: ( ( rule__PramgaKeyStringValueAnnotation__Group__0 ) )
+            // InternalKEffects.g:1292:2: ( ( ( rule__StringPragma__Group__0 ) ) )
+            // InternalKEffects.g:1293:1: ( ( rule__StringPragma__Group__0 ) )
             {
-            // InternalKEffects.g:1293:1: ( ( rule__PramgaKeyStringValueAnnotation__Group__0 ) )
-            // InternalKEffects.g:1294:1: ( rule__PramgaKeyStringValueAnnotation__Group__0 )
+            // InternalKEffects.g:1293:1: ( ( rule__StringPragma__Group__0 ) )
+            // InternalKEffects.g:1294:1: ( rule__StringPragma__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup()); 
+               before(grammarAccess.getStringPragmaAccess().getGroup()); 
             }
-            // InternalKEffects.g:1295:1: ( rule__PramgaKeyStringValueAnnotation__Group__0 )
-            // InternalKEffects.g:1295:2: rule__PramgaKeyStringValueAnnotation__Group__0
+            // InternalKEffects.g:1295:1: ( rule__StringPragma__Group__0 )
+            // InternalKEffects.g:1295:2: rule__StringPragma__Group__0
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__Group__0();
+            rule__StringPragma__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -3823,7 +3823,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup()); 
+               after(grammarAccess.getStringPragmaAccess().getGroup()); 
             }
 
             }
@@ -3843,7 +3843,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rulePramgaKeyStringValueAnnotation"
+    // $ANTLR end "ruleStringPragma"
 
 
     // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
@@ -25522,23 +25522,23 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     // $ANTLR end "rule__TagAnnotation__Group__1__Impl"
 
 
-    // $ANTLR start "rule__PragmaTagAnnotation__Group__0"
-    // InternalKEffects.g:8853:1: rule__PragmaTagAnnotation__Group__0 : rule__PragmaTagAnnotation__Group__0__Impl rule__PragmaTagAnnotation__Group__1 ;
-    public final void rule__PragmaTagAnnotation__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__PragmaTag__Group__0"
+    // InternalKEffects.g:8853:1: rule__PragmaTag__Group__0 : rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 ;
+    public final void rule__PragmaTag__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:8857:1: ( rule__PragmaTagAnnotation__Group__0__Impl rule__PragmaTagAnnotation__Group__1 )
-            // InternalKEffects.g:8858:2: rule__PragmaTagAnnotation__Group__0__Impl rule__PragmaTagAnnotation__Group__1
+            // InternalKEffects.g:8857:1: ( rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 )
+            // InternalKEffects.g:8858:2: rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
-            rule__PragmaTagAnnotation__Group__0__Impl();
+            rule__PragmaTag__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PragmaTagAnnotation__Group__1();
+            rule__PragmaTag__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -25557,12 +25557,12 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PragmaTagAnnotation__Group__0"
+    // $ANTLR end "rule__PragmaTag__Group__0"
 
 
-    // $ANTLR start "rule__PragmaTagAnnotation__Group__0__Impl"
-    // InternalKEffects.g:8865:1: rule__PragmaTagAnnotation__Group__0__Impl : ( '#' ) ;
-    public final void rule__PragmaTagAnnotation__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PragmaTag__Group__0__Impl"
+    // InternalKEffects.g:8865:1: rule__PragmaTag__Group__0__Impl : ( '#' ) ;
+    public final void rule__PragmaTag__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -25574,11 +25574,11 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:8871:1: '#'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPragmaTagAnnotationAccess().getNumberSignKeyword_0()); 
+               before(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
             }
             match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPragmaTagAnnotationAccess().getNumberSignKeyword_0()); 
+               after(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
             }
 
             }
@@ -25598,21 +25598,21 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PragmaTagAnnotation__Group__0__Impl"
+    // $ANTLR end "rule__PragmaTag__Group__0__Impl"
 
 
-    // $ANTLR start "rule__PragmaTagAnnotation__Group__1"
-    // InternalKEffects.g:8884:1: rule__PragmaTagAnnotation__Group__1 : rule__PragmaTagAnnotation__Group__1__Impl ;
-    public final void rule__PragmaTagAnnotation__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__PragmaTag__Group__1"
+    // InternalKEffects.g:8884:1: rule__PragmaTag__Group__1 : rule__PragmaTag__Group__1__Impl ;
+    public final void rule__PragmaTag__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:8888:1: ( rule__PragmaTagAnnotation__Group__1__Impl )
-            // InternalKEffects.g:8889:2: rule__PragmaTagAnnotation__Group__1__Impl
+            // InternalKEffects.g:8888:1: ( rule__PragmaTag__Group__1__Impl )
+            // InternalKEffects.g:8889:2: rule__PragmaTag__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PragmaTagAnnotation__Group__1__Impl();
+            rule__PragmaTag__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -25631,30 +25631,30 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PragmaTagAnnotation__Group__1"
+    // $ANTLR end "rule__PragmaTag__Group__1"
 
 
-    // $ANTLR start "rule__PragmaTagAnnotation__Group__1__Impl"
-    // InternalKEffects.g:8895:1: rule__PragmaTagAnnotation__Group__1__Impl : ( ( rule__PragmaTagAnnotation__NameAssignment_1 ) ) ;
-    public final void rule__PragmaTagAnnotation__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PragmaTag__Group__1__Impl"
+    // InternalKEffects.g:8895:1: rule__PragmaTag__Group__1__Impl : ( ( rule__PragmaTag__NameAssignment_1 ) ) ;
+    public final void rule__PragmaTag__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:8899:1: ( ( ( rule__PragmaTagAnnotation__NameAssignment_1 ) ) )
-            // InternalKEffects.g:8900:1: ( ( rule__PragmaTagAnnotation__NameAssignment_1 ) )
+            // InternalKEffects.g:8899:1: ( ( ( rule__PragmaTag__NameAssignment_1 ) ) )
+            // InternalKEffects.g:8900:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
             {
-            // InternalKEffects.g:8900:1: ( ( rule__PragmaTagAnnotation__NameAssignment_1 ) )
-            // InternalKEffects.g:8901:1: ( rule__PragmaTagAnnotation__NameAssignment_1 )
+            // InternalKEffects.g:8900:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
+            // InternalKEffects.g:8901:1: ( rule__PragmaTag__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPragmaTagAnnotationAccess().getNameAssignment_1()); 
+               before(grammarAccess.getPragmaTagAccess().getNameAssignment_1()); 
             }
-            // InternalKEffects.g:8902:1: ( rule__PragmaTagAnnotation__NameAssignment_1 )
-            // InternalKEffects.g:8902:2: rule__PragmaTagAnnotation__NameAssignment_1
+            // InternalKEffects.g:8902:1: ( rule__PragmaTag__NameAssignment_1 )
+            // InternalKEffects.g:8902:2: rule__PragmaTag__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PragmaTagAnnotation__NameAssignment_1();
+            rule__PragmaTag__NameAssignment_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -25662,7 +25662,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPragmaTagAnnotationAccess().getNameAssignment_1()); 
+               after(grammarAccess.getPragmaTagAccess().getNameAssignment_1()); 
             }
 
             }
@@ -25682,7 +25682,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PragmaTagAnnotation__Group__1__Impl"
+    // $ANTLR end "rule__PragmaTag__Group__1__Impl"
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__0"
@@ -26729,23 +26729,23 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__0"
-    // InternalKEffects.g:9292:1: rule__PramgaKeyStringValueAnnotation__Group__0 : rule__PramgaKeyStringValueAnnotation__Group__0__Impl rule__PramgaKeyStringValueAnnotation__Group__1 ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__0"
+    // InternalKEffects.g:9292:1: rule__StringPragma__Group__0 : rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 ;
+    public final void rule__StringPragma__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9296:1: ( rule__PramgaKeyStringValueAnnotation__Group__0__Impl rule__PramgaKeyStringValueAnnotation__Group__1 )
-            // InternalKEffects.g:9297:2: rule__PramgaKeyStringValueAnnotation__Group__0__Impl rule__PramgaKeyStringValueAnnotation__Group__1
+            // InternalKEffects.g:9296:1: ( rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 )
+            // InternalKEffects.g:9297:2: rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_3);
-            rule__PramgaKeyStringValueAnnotation__Group__0__Impl();
+            rule__StringPragma__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__Group__1();
+            rule__StringPragma__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -26764,12 +26764,12 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__0"
+    // $ANTLR end "rule__StringPragma__Group__0"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKEffects.g:9304:1: rule__PramgaKeyStringValueAnnotation__Group__0__Impl : ( '#' ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__0__Impl"
+    // InternalKEffects.g:9304:1: rule__StringPragma__Group__0__Impl : ( '#' ) ;
+    public final void rule__StringPragma__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26781,11 +26781,11 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:9310:1: '#'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNumberSignKeyword_0()); 
+               before(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
             }
             match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNumberSignKeyword_0()); 
+               after(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
             }
 
             }
@@ -26805,26 +26805,26 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__0__Impl"
+    // $ANTLR end "rule__StringPragma__Group__0__Impl"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__1"
-    // InternalKEffects.g:9323:1: rule__PramgaKeyStringValueAnnotation__Group__1 : rule__PramgaKeyStringValueAnnotation__Group__1__Impl rule__PramgaKeyStringValueAnnotation__Group__2 ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__1"
+    // InternalKEffects.g:9323:1: rule__StringPragma__Group__1 : rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 ;
+    public final void rule__StringPragma__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9327:1: ( rule__PramgaKeyStringValueAnnotation__Group__1__Impl rule__PramgaKeyStringValueAnnotation__Group__2 )
-            // InternalKEffects.g:9328:2: rule__PramgaKeyStringValueAnnotation__Group__1__Impl rule__PramgaKeyStringValueAnnotation__Group__2
+            // InternalKEffects.g:9327:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
+            // InternalKEffects.g:9328:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_46);
-            rule__PramgaKeyStringValueAnnotation__Group__1__Impl();
+            rule__StringPragma__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__Group__2();
+            rule__StringPragma__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -26843,30 +26843,30 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__1"
+    // $ANTLR end "rule__StringPragma__Group__1"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKEffects.g:9335:1: rule__PramgaKeyStringValueAnnotation__Group__1__Impl : ( ( rule__PramgaKeyStringValueAnnotation__NameAssignment_1 ) ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__1__Impl"
+    // InternalKEffects.g:9335:1: rule__StringPragma__Group__1__Impl : ( ( rule__StringPragma__NameAssignment_1 ) ) ;
+    public final void rule__StringPragma__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9339:1: ( ( ( rule__PramgaKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKEffects.g:9340:1: ( ( rule__PramgaKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKEffects.g:9339:1: ( ( ( rule__StringPragma__NameAssignment_1 ) ) )
+            // InternalKEffects.g:9340:1: ( ( rule__StringPragma__NameAssignment_1 ) )
             {
-            // InternalKEffects.g:9340:1: ( ( rule__PramgaKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKEffects.g:9341:1: ( rule__PramgaKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKEffects.g:9340:1: ( ( rule__StringPragma__NameAssignment_1 ) )
+            // InternalKEffects.g:9341:1: ( rule__StringPragma__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameAssignment_1()); 
+               before(grammarAccess.getStringPragmaAccess().getNameAssignment_1()); 
             }
-            // InternalKEffects.g:9342:1: ( rule__PramgaKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKEffects.g:9342:2: rule__PramgaKeyStringValueAnnotation__NameAssignment_1
+            // InternalKEffects.g:9342:1: ( rule__StringPragma__NameAssignment_1 )
+            // InternalKEffects.g:9342:2: rule__StringPragma__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__NameAssignment_1();
+            rule__StringPragma__NameAssignment_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -26874,7 +26874,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameAssignment_1()); 
+               after(grammarAccess.getStringPragmaAccess().getNameAssignment_1()); 
             }
 
             }
@@ -26894,26 +26894,26 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__1__Impl"
+    // $ANTLR end "rule__StringPragma__Group__1__Impl"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__2"
-    // InternalKEffects.g:9352:1: rule__PramgaKeyStringValueAnnotation__Group__2 : rule__PramgaKeyStringValueAnnotation__Group__2__Impl rule__PramgaKeyStringValueAnnotation__Group__3 ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__2"
+    // InternalKEffects.g:9352:1: rule__StringPragma__Group__2 : rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 ;
+    public final void rule__StringPragma__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9356:1: ( rule__PramgaKeyStringValueAnnotation__Group__2__Impl rule__PramgaKeyStringValueAnnotation__Group__3 )
-            // InternalKEffects.g:9357:2: rule__PramgaKeyStringValueAnnotation__Group__2__Impl rule__PramgaKeyStringValueAnnotation__Group__3
+            // InternalKEffects.g:9356:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
+            // InternalKEffects.g:9357:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_47);
-            rule__PramgaKeyStringValueAnnotation__Group__2__Impl();
+            rule__StringPragma__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__Group__3();
+            rule__StringPragma__Group__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -26932,30 +26932,30 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__2"
+    // $ANTLR end "rule__StringPragma__Group__2"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKEffects.g:9364:1: rule__PramgaKeyStringValueAnnotation__Group__2__Impl : ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__2__Impl"
+    // InternalKEffects.g:9364:1: rule__StringPragma__Group__2__Impl : ( ( rule__StringPragma__ValuesAssignment_2 ) ) ;
+    public final void rule__StringPragma__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9368:1: ( ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalKEffects.g:9369:1: ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKEffects.g:9368:1: ( ( ( rule__StringPragma__ValuesAssignment_2 ) ) )
+            // InternalKEffects.g:9369:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
             {
-            // InternalKEffects.g:9369:1: ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalKEffects.g:9370:1: ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKEffects.g:9369:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
+            // InternalKEffects.g:9370:1: ( rule__StringPragma__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
+               before(grammarAccess.getStringPragmaAccess().getValuesAssignment_2()); 
             }
-            // InternalKEffects.g:9371:1: ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalKEffects.g:9371:2: rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2
+            // InternalKEffects.g:9371:1: ( rule__StringPragma__ValuesAssignment_2 )
+            // InternalKEffects.g:9371:2: rule__StringPragma__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2();
+            rule__StringPragma__ValuesAssignment_2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -26963,7 +26963,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
+               after(grammarAccess.getStringPragmaAccess().getValuesAssignment_2()); 
             }
 
             }
@@ -26983,21 +26983,21 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__2__Impl"
+    // $ANTLR end "rule__StringPragma__Group__2__Impl"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__3"
-    // InternalKEffects.g:9381:1: rule__PramgaKeyStringValueAnnotation__Group__3 : rule__PramgaKeyStringValueAnnotation__Group__3__Impl ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__3"
+    // InternalKEffects.g:9381:1: rule__StringPragma__Group__3 : rule__StringPragma__Group__3__Impl ;
+    public final void rule__StringPragma__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9385:1: ( rule__PramgaKeyStringValueAnnotation__Group__3__Impl )
-            // InternalKEffects.g:9386:2: rule__PramgaKeyStringValueAnnotation__Group__3__Impl
+            // InternalKEffects.g:9385:1: ( rule__StringPragma__Group__3__Impl )
+            // InternalKEffects.g:9386:2: rule__StringPragma__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__Group__3__Impl();
+            rule__StringPragma__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -27016,26 +27016,26 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__3"
+    // $ANTLR end "rule__StringPragma__Group__3"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKEffects.g:9392:1: rule__PramgaKeyStringValueAnnotation__Group__3__Impl : ( ( rule__PramgaKeyStringValueAnnotation__Group_3__0 )* ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group__3__Impl"
+    // InternalKEffects.g:9392:1: rule__StringPragma__Group__3__Impl : ( ( rule__StringPragma__Group_3__0 )* ) ;
+    public final void rule__StringPragma__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9396:1: ( ( ( rule__PramgaKeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalKEffects.g:9397:1: ( ( rule__PramgaKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKEffects.g:9396:1: ( ( ( rule__StringPragma__Group_3__0 )* ) )
+            // InternalKEffects.g:9397:1: ( ( rule__StringPragma__Group_3__0 )* )
             {
-            // InternalKEffects.g:9397:1: ( ( rule__PramgaKeyStringValueAnnotation__Group_3__0 )* )
-            // InternalKEffects.g:9398:1: ( rule__PramgaKeyStringValueAnnotation__Group_3__0 )*
+            // InternalKEffects.g:9397:1: ( ( rule__StringPragma__Group_3__0 )* )
+            // InternalKEffects.g:9398:1: ( rule__StringPragma__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup_3()); 
+               before(grammarAccess.getStringPragmaAccess().getGroup_3()); 
             }
-            // InternalKEffects.g:9399:1: ( rule__PramgaKeyStringValueAnnotation__Group_3__0 )*
+            // InternalKEffects.g:9399:1: ( rule__StringPragma__Group_3__0 )*
             loop66:
             do {
                 int alt66=2;
@@ -27048,10 +27048,10 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
 
                 switch (alt66) {
             	case 1 :
-            	    // InternalKEffects.g:9399:2: rule__PramgaKeyStringValueAnnotation__Group_3__0
+            	    // InternalKEffects.g:9399:2: rule__StringPragma__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_16);
-            	    rule__PramgaKeyStringValueAnnotation__Group_3__0();
+            	    rule__StringPragma__Group_3__0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -27065,7 +27065,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup_3()); 
+               after(grammarAccess.getStringPragmaAccess().getGroup_3()); 
             }
 
             }
@@ -27085,26 +27085,26 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group__3__Impl"
+    // $ANTLR end "rule__StringPragma__Group__3__Impl"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group_3__0"
-    // InternalKEffects.g:9417:1: rule__PramgaKeyStringValueAnnotation__Group_3__0 : rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl rule__PramgaKeyStringValueAnnotation__Group_3__1 ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group_3__0() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group_3__0"
+    // InternalKEffects.g:9417:1: rule__StringPragma__Group_3__0 : rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 ;
+    public final void rule__StringPragma__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9421:1: ( rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl rule__PramgaKeyStringValueAnnotation__Group_3__1 )
-            // InternalKEffects.g:9422:2: rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl rule__PramgaKeyStringValueAnnotation__Group_3__1
+            // InternalKEffects.g:9421:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
+            // InternalKEffects.g:9422:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_46);
-            rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl();
+            rule__StringPragma__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__Group_3__1();
+            rule__StringPragma__Group_3__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -27123,12 +27123,12 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group_3__0"
+    // $ANTLR end "rule__StringPragma__Group_3__0"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalKEffects.g:9429:1: rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group_3__0__Impl"
+    // InternalKEffects.g:9429:1: rule__StringPragma__Group_3__0__Impl : ( ',' ) ;
+    public final void rule__StringPragma__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -27140,11 +27140,11 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:9435:1: ','
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
+               before(grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0()); 
             }
             match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
+               after(grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0()); 
             }
 
             }
@@ -27164,21 +27164,21 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group_3__0__Impl"
+    // $ANTLR end "rule__StringPragma__Group_3__0__Impl"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group_3__1"
-    // InternalKEffects.g:9448:1: rule__PramgaKeyStringValueAnnotation__Group_3__1 : rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group_3__1() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group_3__1"
+    // InternalKEffects.g:9448:1: rule__StringPragma__Group_3__1 : rule__StringPragma__Group_3__1__Impl ;
+    public final void rule__StringPragma__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9452:1: ( rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalKEffects.g:9453:2: rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl
+            // InternalKEffects.g:9452:1: ( rule__StringPragma__Group_3__1__Impl )
+            // InternalKEffects.g:9453:2: rule__StringPragma__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl();
+            rule__StringPragma__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -27197,30 +27197,30 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group_3__1"
+    // $ANTLR end "rule__StringPragma__Group_3__1"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalKEffects.g:9459:1: rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__Group_3__1__Impl"
+    // InternalKEffects.g:9459:1: rule__StringPragma__Group_3__1__Impl : ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) ;
+    public final void rule__StringPragma__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:9463:1: ( ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalKEffects.g:9464:1: ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKEffects.g:9463:1: ( ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) )
+            // InternalKEffects.g:9464:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
             {
-            // InternalKEffects.g:9464:1: ( ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalKEffects.g:9465:1: ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKEffects.g:9464:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
+            // InternalKEffects.g:9465:1: ( rule__StringPragma__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
+               before(grammarAccess.getStringPragmaAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKEffects.g:9466:1: ( rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalKEffects.g:9466:2: rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalKEffects.g:9466:1: ( rule__StringPragma__ValuesAssignment_3_1 )
+            // InternalKEffects.g:9466:2: rule__StringPragma__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1();
+            rule__StringPragma__ValuesAssignment_3_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -27228,7 +27228,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
+               after(grammarAccess.getStringPragmaAccess().getValuesAssignment_3_1()); 
             }
 
             }
@@ -27248,7 +27248,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__Group_3__1__Impl"
+    // $ANTLR end "rule__StringPragma__Group_3__1__Impl"
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__0"
@@ -34747,9 +34747,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     // $ANTLR end "rule__TagAnnotation__NameAssignment_1"
 
 
-    // $ANTLR start "rule__PragmaTagAnnotation__NameAssignment_1"
-    // InternalKEffects.g:12147:1: rule__PragmaTagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
-    public final void rule__PragmaTagAnnotation__NameAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__PragmaTag__NameAssignment_1"
+    // InternalKEffects.g:12147:1: rule__PragmaTag__NameAssignment_1 : ( ruleExtendedID ) ;
+    public final void rule__PragmaTag__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -34761,7 +34761,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:12153:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+               before(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleExtendedID();
@@ -34769,7 +34769,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+               after(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
 
             }
@@ -34789,7 +34789,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PragmaTagAnnotation__NameAssignment_1"
+    // $ANTLR end "rule__PragmaTag__NameAssignment_1"
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__NameAssignment_1"
@@ -35062,9 +35062,9 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
     // $ANTLR end "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKEffects.g:12252:1: rule__PramgaKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__NameAssignment_1"
+    // InternalKEffects.g:12252:1: rule__StringPragma__NameAssignment_1 : ( ruleExtendedID ) ;
+    public final void rule__StringPragma__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -35076,7 +35076,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:12258:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+               before(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleExtendedID();
@@ -35084,7 +35084,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+               after(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
 
             }
@@ -35104,12 +35104,12 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__NameAssignment_1"
+    // $ANTLR end "rule__StringPragma__NameAssignment_1"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalKEffects.g:12267:1: rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__ValuesAssignment_2"
+    // InternalKEffects.g:12267:1: rule__StringPragma__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
+    public final void rule__StringPragma__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -35121,7 +35121,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:12273:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
+               before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleEStringAllTypes();
@@ -35129,7 +35129,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
+               after(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
             }
 
             }
@@ -35149,12 +35149,12 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2"
+    // $ANTLR end "rule__StringPragma__ValuesAssignment_2"
 
 
-    // $ANTLR start "rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalKEffects.g:12282:1: rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
-    public final void rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
+    // $ANTLR start "rule__StringPragma__ValuesAssignment_3_1"
+    // InternalKEffects.g:12282:1: rule__StringPragma__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
+    public final void rule__StringPragma__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -35166,7 +35166,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             // InternalKEffects.g:12288:1: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
+               before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleEStringAllTypes();
@@ -35174,7 +35174,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
+               after(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
             }
 
             }
@@ -35194,7 +35194,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1"
+    // $ANTLR end "rule__StringPragma__ValuesAssignment_3_1"
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__NameAssignment_1"

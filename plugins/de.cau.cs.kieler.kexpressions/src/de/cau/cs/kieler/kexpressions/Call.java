@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getCall()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface Call extends Expression {

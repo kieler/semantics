@@ -31,6 +31,15 @@ public interface KExtFactory extends EFactory {
     Kext createKext();
 
     /**
+     * Returns a new object of class '<em>Scope</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Scope</em>'.
+     * @generated
+     */
+    KExtScope createKExtScope();
+
+    /**
      * Returns a new object of class '<em>Test Entity</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -47,24 +56,6 @@ public interface KExtFactory extends EFactory {
      * @generated
      */
     AnnotatedExpression createAnnotatedExpression();
-
-    /**
-     * Returns a new object of class '<em>Declaration Scope</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Declaration Scope</em>'.
-     * @generated
-     */
-    DeclarationScope createDeclarationScope();
-
-    /**
-     * Returns a new object of class '<em>KEXT Scope</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>KEXT Scope</em>'.
-     * @generated
-     */
-    KEXTScope createKEXTScope();
 
     /**
      * Returns the package supported by this factory.

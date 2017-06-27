@@ -14,24 +14,24 @@
 package de.cau.cs.kieler.annotations.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.annotations.PragmaAnnotation;
+import de.cau.cs.kieler.annotations.Pragma;
 
 import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Pragma Annotation</b></em>'.
+ * An implementation of the model object '<em><b>Pragma</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class PragmaAnnotationImpl extends AnnotationImpl implements PragmaAnnotation {
+public class PragmaImpl extends NamedObjectImpl implements Pragma {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected PragmaAnnotationImpl() {
+    protected PragmaImpl() {
         super();
     }
 
@@ -42,7 +42,7 @@ public class PragmaAnnotationImpl extends AnnotationImpl implements PragmaAnnota
      */
     @Override
     protected EClass eStaticClass() {
-        return AnnotationsPackage.Literals.PRAGMA_ANNOTATION;
+        return AnnotationsPackage.Literals.PRAGMA;
     }
 
-} //PragmaAnnotationImpl
+} //PragmaImpl

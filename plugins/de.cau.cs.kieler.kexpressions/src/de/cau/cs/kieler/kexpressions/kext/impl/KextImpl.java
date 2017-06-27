@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class KextImpl extends KEXTScopeImpl implements Kext {
+public class KextImpl extends KExtScopeImpl implements Kext {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

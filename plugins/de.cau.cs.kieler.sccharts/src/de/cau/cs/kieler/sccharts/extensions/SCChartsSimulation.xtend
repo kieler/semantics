@@ -35,11 +35,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class SCChartsSimulation { 
 
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsExtension
         
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
@@ -175,7 +173,7 @@ class SCChartsSimulation {
                immediateDuringAction.effects.add(auxiliaryEmission);
                
                // Add during action to state
-               state.localActions.add(immediateDuringAction);
+               state.actions.add(immediateDuringAction);
           }
           
      }     

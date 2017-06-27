@@ -14,6 +14,9 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Pragmatable;
+import de.cau.cs.kieler.kexpressions.Call;
+import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Identifiable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
@@ -85,10 +88,42 @@ public class SCChartsSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
+            case SCChartsPackage.SC_CHARTS: {
+                SCCharts scCharts = (SCCharts)theEObject;
+                T result = caseSCCharts(scCharts);
+                if (result == null) result = casePragmatable(scCharts);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.SCOPE: {
+                Scope scope = (Scope)theEObject;
+                T result = caseScope(scope);
+                if (result == null) result = caseAnnotatable(scope);
+                if (result == null) result = caseDeclarationScope(scope);
+                if (result == null) result = caseIdentifiable(scope);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.SCOPE_CALL: {
+                ScopeCall scopeCall = (ScopeCall)theEObject;
+                T result = caseScopeCall(scopeCall);
+                if (result == null) result = caseCall(scopeCall);
+                if (result == null) result = caseExpression(scopeCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case SCChartsPackage.ACTION: {
                 Action action = (Action)theEObject;
                 T result = caseAction(action);
                 if (result == null) result = caseAnnotatable(action);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.LOCAL_ACTION: {
+                LocalAction localAction = (LocalAction)theEObject;
+                T result = caseLocalAction(localAction);
+                if (result == null) result = caseAction(localAction);
+                if (result == null) result = caseAnnotatable(localAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -134,59 +169,11 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.NODE: {
-                Node node = (Node)theEObject;
-                T result = caseNode(node);
-                if (result == null) result = caseAnnotatable(node);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.REFERENCE_NODE: {
-                ReferenceNode referenceNode = (ReferenceNode)theEObject;
-                T result = caseReferenceNode(referenceNode);
-                if (result == null) result = caseNode(referenceNode);
-                if (result == null) result = caseAnnotatable(referenceNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.CALL_NODE: {
-                CallNode callNode = (CallNode)theEObject;
-                T result = caseCallNode(callNode);
-                if (result == null) result = caseNode(callNode);
-                if (result == null) result = caseAnnotatable(callNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.DEFINE_NODE: {
-                DefineNode defineNode = (DefineNode)theEObject;
-                T result = caseDefineNode(defineNode);
-                if (result == null) result = caseNode(defineNode);
-                if (result == null) result = caseAnnotatable(defineNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case SCChartsPackage.TRANSITION: {
                 Transition transition = (Transition)theEObject;
                 T result = caseTransition(transition);
                 if (result == null) result = caseAction(transition);
                 if (result == null) result = caseAnnotatable(transition);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.SCOPE: {
-                Scope scope = (Scope)theEObject;
-                T result = caseScope(scope);
-                if (result == null) result = caseAnnotatable(scope);
-                if (result == null) result = caseDeclarationScope(scope);
-                if (result == null) result = caseIdentifiable(scope);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.LOCAL_ACTION: {
-                LocalAction localAction = (LocalAction)theEObject;
-                T result = caseLocalAction(localAction);
-                if (result == null) result = caseAction(localAction);
-                if (result == null) result = caseAnnotatable(localAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -226,40 +213,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.ITERATE_ACTION: {
-                IterateAction iterateAction = (IterateAction)theEObject;
-                T result = caseIterateAction(iterateAction);
-                if (result == null) result = caseLocalAction(iterateAction);
-                if (result == null) result = caseAction(iterateAction);
-                if (result == null) result = caseAnnotatable(iterateAction);
+            case SCChartsPackage.PRECEDING_ACTION: {
+                PrecedingAction precedingAction = (PrecedingAction)theEObject;
+                T result = casePrecedingAction(precedingAction);
+                if (result == null) result = caseLocalAction(precedingAction);
+                if (result == null) result = caseAction(precedingAction);
+                if (result == null) result = caseAnnotatable(precedingAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.INIT_ACTION: {
-                InitAction initAction = (InitAction)theEObject;
-                T result = caseInitAction(initAction);
-                if (result == null) result = caseLocalAction(initAction);
-                if (result == null) result = caseAction(initAction);
-                if (result == null) result = caseAnnotatable(initAction);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.FINAL_ACTION: {
-                FinalAction finalAction = (FinalAction)theEObject;
-                T result = caseFinalAction(finalAction);
-                if (result == null) result = caseLocalAction(finalAction);
-                if (result == null) result = caseAction(finalAction);
-                if (result == null) result = caseAnnotatable(finalAction);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.SC_CHARTS: {
-                SCCharts scCharts = (SCCharts)theEObject;
-                T result = caseSCCharts(scCharts);
-                if (result == null) result = caseScope(scCharts);
-                if (result == null) result = caseAnnotatable(scCharts);
-                if (result == null) result = caseDeclarationScope(scCharts);
-                if (result == null) result = caseIdentifiable(scCharts);
+            case SCChartsPackage.SUCCEEDING_ACTION: {
+                SucceedingAction succeedingAction = (SucceedingAction)theEObject;
+                T result = caseSucceedingAction(succeedingAction);
+                if (result == null) result = caseLocalAction(succeedingAction);
+                if (result == null) result = caseAction(succeedingAction);
+                if (result == null) result = caseAnnotatable(succeedingAction);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -343,66 +311,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Node</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseNode(Node object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Reference Node</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Reference Node</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseReferenceNode(ReferenceNode object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Call Node</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Call Node</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseCallNode(CallNode object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Define Node</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Define Node</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseDefineNode(DefineNode object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Transition</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -429,6 +337,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseScope(Scope object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Scope Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Scope Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseScopeCall(ScopeCall object) {
         return null;
     }
 
@@ -508,51 +431,51 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Iterate Action</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Preceding Action</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Iterate Action</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Preceding Action</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIterateAction(IterateAction object) {
+    public T casePrecedingAction(PrecedingAction object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Init Action</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Succeeding Action</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Init Action</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Succeeding Action</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseInitAction(InitAction object) {
+    public T caseSucceedingAction(SucceedingAction object) {
         return null;
     }
 
-				/**
-     * Returns the result of interpreting the object as an instance of '<em>Final Action</em>'.
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Final Action</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseFinalAction(FinalAction object) {
+    public T casePragmatable(Pragmatable object) {
         return null;
     }
 
-				/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>SC Charts</em>'.
      * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -609,6 +532,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExpression(Expression object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCall(Call object) {
         return null;
     }
 

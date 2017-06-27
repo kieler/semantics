@@ -47,7 +47,7 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Expression">
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" abstract="true" interface="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Expression is the supertype of all kinds of Expressions over Signals, Variables or Values. &#xA;It is used as a simple common entry point. In this metamodel there are no more specializations avaliable&#xA;according to return value of the Expressions (e.g. BooleanExpression or ValuedExpression). These&#xA;might be provided by more specialized textual grammars for this metamodel."/>
     </eAnnotations>
@@ -185,7 +185,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="#//ValuedObjectReference"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Value" eSuperTypes="#//Expression">
+  <eClassifiers xsi:type="ecore:EClass" name="Value" abstract="true" interface="true"
+      eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Interface representing values, e.g. Integers, Floats or Booleans. Subclasses should contain a field with the value.&#xA;Values may be used as Expressions, e.g. used as subExpressions in OperatorExpressions.&#xA;"/>
     </eAnnotations>
@@ -208,6 +209,12 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringValue" eSuperTypes="#//Value">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An Integer value object."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperatorExpression" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An OperatorExpression is the most obvious ComplexExpression containing&#xA;an operator and a list of subExpressions. The meaning is that the operator &#xA;should be applied to all elements of the ordered subExpression list.&#xA;Note that some pre-defined operators are not commutative, hence the&#xA;order of the subExpressions list is of importance."/>
@@ -222,7 +229,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Declaration" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="Declaration" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
         eType="#//ValuedObject" containment="true"/>
   </eClassifiers>
@@ -254,13 +261,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StringValue" eSuperTypes="#//Value">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="An Integer value object."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Call" eSuperTypes="#//Expression">
+  <eClassifiers xsi:type="ecore:EClass" name="Call" abstract="true" interface="true"
+      eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//Parameter" containment="true"/>
   </eClassifiers>
@@ -268,8 +270,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="FunctionCall" eSuperTypes="#//Call">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Referenceable"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Identifiable">
+  <eClassifiers xsi:type="ecore:EClass" name="Referenceable" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Identifiable" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

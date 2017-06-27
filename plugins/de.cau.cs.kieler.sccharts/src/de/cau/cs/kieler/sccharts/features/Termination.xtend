@@ -16,7 +16,7 @@ package de.cau.cs.kieler.sccharts.features
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.SCCharts
 
@@ -49,7 +49,7 @@ class Termination extends Feature {
         val allStates = model.getAllContainedStatesList;
         for (state : allStates) {
             for (transition : state.outgoingTransitions) {
-                if (transition.type == TransitionType::TERMINATION) {
+                if (transition.preemption == PreemptionType::TERMINATION) {
                     return true
                 }
             }

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -37,7 +38,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType;
  *
  * @generated
  */
-public class OperatorExpressionImpl extends ExpressionImpl implements OperatorExpression {
+public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpression {
     /**
      * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->

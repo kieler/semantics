@@ -61,25 +61,19 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case KExpressionsPackage.EXPRESSION: return createExpression();
             case KExpressionsPackage.VALUED_OBJECT: return createValuedObject();
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
-            case KExpressionsPackage.VALUE: return createValue();
             case KExpressionsPackage.INT_VALUE: return createIntValue();
             case KExpressionsPackage.FLOAT_VALUE: return createFloatValue();
             case KExpressionsPackage.BOOL_VALUE: return createBoolValue();
+            case KExpressionsPackage.STRING_VALUE: return createStringValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
-            case KExpressionsPackage.DECLARATION: return createDeclaration();
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
             case KExpressionsPackage.REFERENCE_DECLARATION: return createReferenceDeclaration();
             case KExpressionsPackage.PARAMETER: return createParameter();
-            case KExpressionsPackage.STRING_VALUE: return createStringValue();
-            case KExpressionsPackage.CALL: return createCall();
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
             case KExpressionsPackage.FUNCTION_CALL: return createFunctionCall();
-            case KExpressionsPackage.REFERENCEABLE: return createReferenceable();
-            case KExpressionsPackage.IDENTIFIABLE: return createIdentifiable();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -128,16 +122,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression createExpression() {
-        ExpressionImpl expression = new ExpressionImpl();
-        return expression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public ValuedObject createValuedObject() {
         ValuedObjectImpl valuedObject = new ValuedObjectImpl();
         return valuedObject;
@@ -151,16 +135,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public ValuedObjectReference createValuedObjectReference() {
         ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
         return valuedObjectReference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Value createValue() {
-        ValueImpl value = new ValueImpl();
-        return value;
     }
 
     /**
@@ -218,16 +192,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public Declaration createDeclaration() {
-        DeclarationImpl declaration = new DeclarationImpl();
-        return declaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public VariableDeclaration createVariableDeclaration() {
         VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
         return variableDeclaration;
@@ -258,26 +222,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public Referenceable createReferenceable() {
-        ReferenceableImpl referenceable = new ReferenceableImpl();
-        return referenceable;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Identifiable createIdentifiable() {
-        IdentifiableImpl identifiable = new IdentifiableImpl();
-        return identifiable;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public Parameter createParameter() {
         ParameterImpl parameter = new ParameterImpl();
         return parameter;
@@ -291,16 +235,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public StringValue createStringValue() {
         StringValueImpl stringValue = new StringValueImpl();
         return stringValue;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Call createCall() {
-        CallImpl call = new CallImpl();
-        return call;
     }
 
     /**

@@ -1673,14 +1673,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
-	//PragmaAnnotation Annotation:
-	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
-	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
-		return gaAnnotations.getPragmaAnnotationAccess();
+	//Pragma:
+	//	StringPragma | PragmaTag;
+	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaAnnotations.getPragmaAccess();
 	}
 	
-	public ParserRule getPragmaAnnotationRule() {
-		return getPragmaAnnotationAccess().getRule();
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
 	}
 
 	//// Valued Annotation Rule
@@ -1749,14 +1749,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
-	//PragmaTagAnnotation PragmaAnnotation:
+	//PragmaTag Pragma:
 	//	'#' name=ExtendedID
-	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
-		return gaAnnotations.getPragmaTagAnnotationAccess();
+	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
+		return gaAnnotations.getPragmaTagAccess();
 	}
 	
-	public ParserRule getPragmaTagAnnotationRule() {
-		return getPragmaTagAnnotationAccess().getRule();
+	public ParserRule getPragmaTagRule() {
+		return getPragmaTagAccess().getRule();
 	}
 
 	//// KeyStringValueAnnotation
@@ -1782,14 +1782,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
-	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
-	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
-		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	//StringPragma:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
+		return gaAnnotations.getStringPragmaAccess();
 	}
 	
-	public ParserRule getPramgaKeyStringValueAnnotationRule() {
-		return getPramgaKeyStringValueAnnotationAccess().getRule();
+	public ParserRule getStringPragmaRule() {
+		return getStringPragmaAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation

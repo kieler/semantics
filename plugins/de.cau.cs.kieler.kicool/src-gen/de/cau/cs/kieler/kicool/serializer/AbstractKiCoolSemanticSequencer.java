@@ -7,9 +7,9 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
-import de.cau.cs.kieler.annotations.PragmaAnnotation;
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation;
+import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.kicool.KVPair;
@@ -50,11 +50,8 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.PRAGMA_ANNOTATION:
-				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
-				sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA:
+				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
@@ -74,6 +71,9 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 					return; 
 				}
 				else break;
+			case AnnotationsPackage.STRING_PRAGMA:
+				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {

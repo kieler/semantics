@@ -91,6 +91,12 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case AnnotationsPackage.PRAGMATABLE: {
+                Pragmatable pragmatable = (Pragmatable)theEObject;
+                T result = casePragmatable(pragmatable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case AnnotationsPackage.ANNOTATION: {
                 Annotation annotation = (Annotation)theEObject;
                 T result = caseAnnotation(annotation);
@@ -172,20 +178,18 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case AnnotationsPackage.PRAGMA_ANNOTATION: {
-                PragmaAnnotation pragmaAnnotation = (PragmaAnnotation)theEObject;
-                T result = casePragmaAnnotation(pragmaAnnotation);
-                if (result == null) result = caseAnnotation(pragmaAnnotation);
-                if (result == null) result = caseNamedObject(pragmaAnnotation);
+            case AnnotationsPackage.PRAGMA: {
+                Pragma pragma = (Pragma)theEObject;
+                T result = casePragma(pragma);
+                if (result == null) result = caseNamedObject(pragma);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case AnnotationsPackage.PRAGMA_STRING_ANNOTATION: {
-                PragmaStringAnnotation pragmaStringAnnotation = (PragmaStringAnnotation)theEObject;
-                T result = casePragmaStringAnnotation(pragmaStringAnnotation);
-                if (result == null) result = caseStringAnnotation(pragmaStringAnnotation);
-                if (result == null) result = caseAnnotation(pragmaStringAnnotation);
-                if (result == null) result = caseNamedObject(pragmaStringAnnotation);
+            case AnnotationsPackage.STRING_PRAGMA: {
+                StringPragma stringPragma = (StringPragma)theEObject;
+                T result = caseStringPragma(stringPragma);
+                if (result == null) result = casePragma(stringPragma);
+                if (result == null) result = caseNamedObject(stringPragma);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -220,6 +224,21 @@ public class AnnotationsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePragmatable(Pragmatable object) {
         return null;
     }
 
@@ -374,32 +393,32 @@ public class AnnotationsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Pragma Annotation</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Pragma</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Pragma Annotation</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Pragma</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T casePragmaAnnotation(PragmaAnnotation object) {
+    public T casePragma(Pragma object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Pragma String Annotation</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>String Pragma</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Pragma String Annotation</em>'.
+     * @return the result of interpreting the object as an instance of '<em>String Pragma</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T casePragmaStringAnnotation(PragmaStringAnnotation object) {
+    public T caseStringPragma(StringPragma object) {
         return null;
     }
 

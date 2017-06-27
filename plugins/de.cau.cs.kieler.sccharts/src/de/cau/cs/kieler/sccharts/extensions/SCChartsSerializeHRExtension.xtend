@@ -20,7 +20,6 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.IterateAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
@@ -37,6 +36,9 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 import com.google.common.base.Function
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.SucceedingAction
+import de.cau.cs.kieler.sccharts.PrecedingAction
 
 /**
  * @author ssm
@@ -59,7 +61,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         val label = new StringBuilder();
 
         if (transition.trigger != null) {
-            if (transition.delay > 1) {
+            if (transition.triggerDelay > 1) {
                 label.append(transition.delay.toString).append(" ");
             }
             if (hr) {
@@ -104,7 +106,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
     def List<Pair<CharSequence, Boolean>> serializeHighlighted(Action action, boolean hr) {
         val components = newArrayList
 
-        if (action.immediate) {
+        if (action.delay == DelayType.IMMEDIATE) {
             components.addKeyword("immediate");
         }
 
@@ -114,7 +116,8 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
             ExitAction: "exit"
             SuspendAction case action.isWeak: "weak suspend"
             SuspendAction: "suspend"
-            IterateAction: "iterate"
+            PrecedingAction: "preceding"
+            SucceedingAction: "succeeding"
             default: ""
         })
 

@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
@@ -40,7 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEffect {
+public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionCallEffect {
     /**
      * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
      * <!-- begin-user-doc -->

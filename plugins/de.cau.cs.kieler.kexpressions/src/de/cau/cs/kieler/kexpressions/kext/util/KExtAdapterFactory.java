@@ -75,6 +75,10 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
                 return createKextAdapter();
             }
             @Override
+            public Adapter caseKExtScope(KExtScope object) {
+                return createKExtScopeAdapter();
+            }
+            @Override
             public Adapter caseTestEntity(TestEntity object) {
                 return createTestEntityAdapter();
             }
@@ -85,10 +89,6 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseDeclarationScope(DeclarationScope object) {
                 return createDeclarationScopeAdapter();
-            }
-            @Override
-            public Adapter caseKEXTScope(KEXTScope object) {
-                return createKEXTScopeAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
@@ -137,6 +137,20 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.KExtScope <em>Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtScope
+     * @generated
+     */
+    public Adapter createKExtScopeAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.TestEntity <em>Test Entity</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -175,20 +189,6 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDeclarationScopeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.KEXTScope <em>KEXT Scope</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.kext.KEXTScope
-     * @generated
-     */
-    public Adapter createKEXTScopeAdapter() {
         return null;
     }
 

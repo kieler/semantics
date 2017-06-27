@@ -127,6 +127,14 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.STRING_VALUE: {
+                StringValue stringValue = (StringValue)theEObject;
+                T result = caseStringValue(stringValue);
+                if (result == null) result = caseValue(stringValue);
+                if (result == null) result = caseExpression(stringValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.OPERATOR_EXPRESSION: {
                 OperatorExpression operatorExpression = (OperatorExpression)theEObject;
                 T result = caseOperatorExpression(operatorExpression);
@@ -167,14 +175,6 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.PARAMETER: {
                 Parameter parameter = (Parameter)theEObject;
                 T result = caseParameter(parameter);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KExpressionsPackage.STRING_VALUE: {
-                StringValue stringValue = (StringValue)theEObject;
-                T result = caseStringValue(stringValue);
-                if (result == null) result = caseValue(stringValue);
-                if (result == null) result = caseExpression(stringValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

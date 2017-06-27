@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
-import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -28,7 +27,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -40,7 +38,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl#getEquations <em>Equations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl#getNodes <em>Nodes</em>}</li>
  * </ul>
  *
  * @generated
@@ -64,16 +61,6 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     protected EList<Assignment> equations;
 
 				/**
-     * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getNodes()
-     * @generated
-     * @ordered
-     */
-    protected EList<Node> nodes;
-
-    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -90,18 +77,6 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     @Override
     protected EClass eStaticClass() {
         return SCChartsPackage.Literals.DATAFLOW_REGION;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Node> getNodes() {
-        if (nodes == null) {
-            nodes = new EObjectResolvingEList<Node>(Node.class, this, SCChartsPackage.DATAFLOW_REGION__NODES);
-        }
-        return nodes;
     }
 
     /**
@@ -140,8 +115,6 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
                 return getEquations();
-            case SCChartsPackage.DATAFLOW_REGION__NODES:
-                return getNodes();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -159,10 +132,6 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
                 getEquations().clear();
                 getEquations().addAll((Collection<? extends Assignment>)newValue);
                 return;
-            case SCChartsPackage.DATAFLOW_REGION__NODES:
-                getNodes().clear();
-                getNodes().addAll((Collection<? extends Node>)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -178,9 +147,6 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
             case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
                 getEquations().clear();
                 return;
-            case SCChartsPackage.DATAFLOW_REGION__NODES:
-                getNodes().clear();
-                return;
         }
         super.eUnset(featureID);
     }
@@ -195,8 +161,6 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
                 return equations != null && !equations.isEmpty();
-            case SCChartsPackage.DATAFLOW_REGION__NODES:
-                return nodes != null && !nodes.isEmpty();
         }
         return super.eIsSet(featureID);
     }

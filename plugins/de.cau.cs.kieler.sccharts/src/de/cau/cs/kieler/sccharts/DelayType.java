@@ -21,133 +21,154 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Transition Type</b></em>',
+ * A representation of the literals of the enumeration '<em><b>Delay Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * <!-- begin-model-doc -->
- * A Transition has a type specifying some special property.
- * 
- * <!-- end-model-doc -->
- * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransitionType()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDelayType()
  * @model
  * @generated
  */
-public enum TransitionType implements Enumerator {
+public enum DelayType implements Enumerator {
     /**
-     * The '<em><b>WEAKABORT</b></em>' literal object.
+     * The '<em><b>UNDEFINED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #WEAKABORT_VALUE
+     * @see #UNDEFINED_VALUE
      * @generated
      * @ordered
      */
-    WEAKABORT(0, "WEAKABORT", "WEAKABORT"),
+    UNDEFINED(0, "UNDEFINED", "UNDEFINED"),
 
     /**
-     * The '<em><b>STRONGABORT</b></em>' literal object.
+     * The '<em><b>DELAYED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #STRONGABORT_VALUE
+     * @see #DELAYED_VALUE
      * @generated
      * @ordered
      */
-    STRONGABORT(1, "STRONGABORT", "STRONGABORT"),
+    DELAYED(1, "DELAYED", "DELAYED"),
 
     /**
-     * The '<em><b>TERMINATION</b></em>' literal object.
+     * The '<em><b>IMMEDIATE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #TERMINATION_VALUE
+     * @see #IMMEDIATE_VALUE
      * @generated
      * @ordered
      */
-    TERMINATION(2, "TERMINATION", "TERMINATION");
+    IMMEDIATE(2, "IMMEDIATE", "IMMEDIATE"),
+
+    /**
+     * The '<em><b>AUTOMATIC</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #AUTOMATIC_VALUE
+     * @generated
+     * @ordered
+     */
+    AUTOMATIC(3, "AUTOMATIC", "AUTOMATIC");
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
-     * The '<em><b>WEAKABORT</b></em>' literal value.
+    /**
+     * The '<em><b>UNDEFINED</b></em>' literal value.
      * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>UNDEFINED</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
      * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A WEAKABORT transition allows the
-     * exited State to execute its contents in that tick.
-     * <!-- end-model-doc -->
-     * @see #WEAKABORT
+     * @see #UNDEFINED
      * @model
      * @generated
      * @ordered
      */
-    public static final int WEAKABORT_VALUE = 0;
+    public static final int UNDEFINED_VALUE = 0;
 
     /**
-     * The '<em><b>STRONGABORT</b></em>' literal value.
+     * The '<em><b>DELAYED</b></em>' literal value.
      * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>DELAYED</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
      * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A STRONGABORT will immediately
-     * leave the state and not allow any actions in
-     * the source State in that tick. 
-     * <!-- end-model-doc -->
-     * @see #STRONGABORT
+     * @see #DELAYED
      * @model
      * @generated
      * @ordered
      */
-    public static final int STRONGABORT_VALUE = 1;
+    public static final int DELAYED_VALUE = 1;
 
     /**
-     * The '<em><b>TERMINATION</b></em>' literal value.
+     * The '<em><b>IMMEDIATE</b></em>' literal value.
      * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>IMMEDIATE</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
      * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A NORMALTERMINATION will leave a State whenever all contained
-     * Regions are in final States. A normal termination may not define a guard trigger.
-     * <!-- end-model-doc -->
-     * @see #TERMINATION
+     * @see #IMMEDIATE
      * @model
      * @generated
      * @ordered
      */
-    public static final int TERMINATION_VALUE = 2;
+    public static final int IMMEDIATE_VALUE = 2;
 
     /**
-     * An array of all the '<em><b>Transition Type</b></em>' enumerators.
+     * The '<em><b>AUTOMATIC</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>AUTOMATIC</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #AUTOMATIC
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int AUTOMATIC_VALUE = 3;
+
+    /**
+     * An array of all the '<em><b>Delay Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private static final TransitionType[] VALUES_ARRAY =
-        new TransitionType[] {
-            WEAKABORT,
-            STRONGABORT,
-            TERMINATION,
+    private static final DelayType[] VALUES_ARRAY =
+        new DelayType[] {
+            UNDEFINED,
+            DELAYED,
+            IMMEDIATE,
+            AUTOMATIC,
         };
 
     /**
-     * A public read-only list of all the '<em><b>Transition Type</b></em>' enumerators.
+     * A public read-only list of all the '<em><b>Delay Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static final List<TransitionType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+    public static final List<DelayType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
     /**
-     * Returns the '<em><b>Transition Type</b></em>' literal with the specified literal value.
+     * Returns the '<em><b>Delay Type</b></em>' literal with the specified literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param literal the literal.
      * @return the matching enumerator or <code>null</code>.
      * @generated
      */
-    public static TransitionType get(String literal) {
+    public static DelayType get(String literal) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TransitionType result = VALUES_ARRAY[i];
+            DelayType result = VALUES_ARRAY[i];
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -156,16 +177,16 @@ public enum TransitionType implements Enumerator {
     }
 
     /**
-     * Returns the '<em><b>Transition Type</b></em>' literal with the specified name.
+     * Returns the '<em><b>Delay Type</b></em>' literal with the specified name.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param name the name.
      * @return the matching enumerator or <code>null</code>.
      * @generated
      */
-    public static TransitionType getByName(String name) {
+    public static DelayType getByName(String name) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TransitionType result = VALUES_ARRAY[i];
+            DelayType result = VALUES_ARRAY[i];
             if (result.getName().equals(name)) {
                 return result;
             }
@@ -174,18 +195,19 @@ public enum TransitionType implements Enumerator {
     }
 
     /**
-     * Returns the '<em><b>Transition Type</b></em>' literal with the specified integer value.
+     * Returns the '<em><b>Delay Type</b></em>' literal with the specified integer value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the integer value.
      * @return the matching enumerator or <code>null</code>.
      * @generated
      */
-    public static TransitionType get(int value) {
+    public static DelayType get(int value) {
         switch (value) {
-            case WEAKABORT_VALUE: return WEAKABORT;
-            case STRONGABORT_VALUE: return STRONGABORT;
-            case TERMINATION_VALUE: return TERMINATION;
+            case UNDEFINED_VALUE: return UNDEFINED;
+            case DELAYED_VALUE: return DELAYED;
+            case IMMEDIATE_VALUE: return IMMEDIATE;
+            case AUTOMATIC_VALUE: return AUTOMATIC;
         }
         return null;
     }
@@ -217,7 +239,7 @@ public enum TransitionType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    private TransitionType(int value, String name, String literal) {
+    private DelayType(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;
@@ -261,4 +283,4 @@ public enum TransitionType implements Enumerator {
         return literal;
     }
     
-} //TransitionType
+} //DelayType

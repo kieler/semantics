@@ -11,7 +11,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
  *
  *
  * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getEffect()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface Effect extends Annotatable {

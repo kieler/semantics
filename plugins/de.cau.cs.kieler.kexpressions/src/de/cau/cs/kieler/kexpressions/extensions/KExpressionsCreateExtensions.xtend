@@ -33,11 +33,6 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
  */
 class KExpressionsCreateExtensions {
     
-    // Create an Expression.
-    def Expression createExpression() {
-        KExpressionsFactory::eINSTANCE.createExpression()        
-    }
-
     // Create an Operator Expression.
     def OperatorExpression createOperatorExpression() {
         KExpressionsFactory::eINSTANCE.createOperatorExpression()

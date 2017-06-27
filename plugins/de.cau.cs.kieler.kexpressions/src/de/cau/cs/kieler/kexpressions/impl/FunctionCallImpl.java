@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -29,12 +30,23 @@ import de.cau.cs.kieler.kexpressions.Parameter;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.FunctionCallImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.FunctionCallImpl#getFunctionName <em>Function Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FunctionCallImpl extends CallImpl implements FunctionCall {
+public class FunctionCallImpl extends EObjectImpl implements FunctionCall {
+    /**
+     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> parameters;
+
     /**
      * The default value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -79,6 +91,18 @@ public class FunctionCallImpl extends CallImpl implements FunctionCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Parameter> getParameters() {
+        if (parameters == null) {
+            parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.FUNCTION_CALL__PARAMETERS);
+        }
+        return parameters;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getFunctionName() {
         return functionName;
     }
@@ -101,8 +125,24 @@ public class FunctionCallImpl extends CallImpl implements FunctionCall {
      * @generated
      */
     @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
+                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
+                return getParameters();
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 return getFunctionName();
         }
@@ -118,6 +158,10 @@ public class FunctionCallImpl extends CallImpl implements FunctionCall {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
+                getParameters().clear();
+                getParameters().addAll((Collection<? extends Parameter>)newValue);
+                return;
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 setFunctionName((String)newValue);
                 return;
@@ -133,6 +177,9 @@ public class FunctionCallImpl extends CallImpl implements FunctionCall {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
+                getParameters().clear();
+                return;
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 setFunctionName(FUNCTION_NAME_EDEFAULT);
                 return;
@@ -148,6 +195,8 @@ public class FunctionCallImpl extends CallImpl implements FunctionCall {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
+                return parameters != null && !parameters.isEmpty();
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
         }

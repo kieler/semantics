@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.annotations.impl;
 
+import de.cau.cs.kieler.annotations.*;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -20,8 +22,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import de.cau.cs.kieler.annotations.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -78,8 +78,8 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
             case AnnotationsPackage.IMPORT_ANNOTATION: return createImportAnnotation();
             case AnnotationsPackage.TYPED_STRING_ANNOTATION: return createTypedStringAnnotation();
             case AnnotationsPackage.COMMENT_ANNOTATION: return createCommentAnnotation();
-            case AnnotationsPackage.PRAGMA_ANNOTATION: return createPragmaAnnotation();
-            case AnnotationsPackage.PRAGMA_STRING_ANNOTATION: return createPragmaStringAnnotation();
+            case AnnotationsPackage.PRAGMA: return createPragma();
+            case AnnotationsPackage.STRING_PRAGMA: return createStringPragma();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -200,9 +200,9 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
-    public PragmaAnnotation createPragmaAnnotation() {
-        PragmaAnnotationImpl pragmaAnnotation = new PragmaAnnotationImpl();
-        return pragmaAnnotation;
+    public Pragma createPragma() {
+        PragmaImpl pragma = new PragmaImpl();
+        return pragma;
     }
 
     /**
@@ -210,9 +210,9 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
      * @generated
      */
-    public PragmaStringAnnotation createPragmaStringAnnotation() {
-        PragmaStringAnnotationImpl pragmaStringAnnotation = new PragmaStringAnnotationImpl();
-        return pragmaStringAnnotation;
+    public StringPragma createStringPragma() {
+        StringPragmaImpl stringPragma = new StringPragmaImpl();
+        return stringPragma;
     }
 
     /**

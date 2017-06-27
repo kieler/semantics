@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kext" nsURI="http://kieler.cs.cau.de/kext/0.1.0" nsPrefix="kext">
-  <eClassifiers xsi:type="ecore:EClass" name="Kext" eSuperTypes="#//KEXTScope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Kext" eSuperTypes="#//KExtScope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="KExtScope" eSuperTypes="#//DeclarationScope ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable kexpressions.ecore#//Identifiable kexpressions.ecore#//Referenceable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entities" upperBound="-1"
+        eType="#//TestEntity" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
+        eType="#//KExtScope" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestEntity">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass keffects.ecore#//Effect"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//AnnotatedExpression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AnnotatedExpression" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DeclarationScope">
+  <eClassifiers xsi:type="ecore:EClass" name="DeclarationScope" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="KEXTScope" eSuperTypes="#//DeclarationScope ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Identifiable ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Referenceable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="entities" upperBound="-1"
-        eType="#//TestEntity" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
-        eType="#//KEXTScope" containment="true"/>
+        eType="ecore:EClass kexpressions.ecore#//Declaration" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

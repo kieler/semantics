@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -38,7 +39,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
  *
  * @generated
  */
-public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedObjectReference {
+public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObjectReference {
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->

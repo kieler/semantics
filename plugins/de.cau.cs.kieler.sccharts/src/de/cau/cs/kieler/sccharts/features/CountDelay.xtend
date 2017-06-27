@@ -48,7 +48,7 @@ class CountDelay extends Feature {
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             for (transition : state.outgoingTransitions) {
-                if (transition.delay > 1) {
+                if (transition.triggerDelay > 1) {
                     return true
                 }
             }

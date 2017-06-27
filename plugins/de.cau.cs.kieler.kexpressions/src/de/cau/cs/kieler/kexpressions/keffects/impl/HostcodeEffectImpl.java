@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.TextExpression;
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class HostcodeEffectImpl extends EffectImpl implements HostcodeEffect {
+public class HostcodeEffectImpl extends AnnotatableImpl implements HostcodeEffect {
     /**
      * The default value of the '{@link #getText() <em>Text</em>}' attribute.
      * <!-- begin-user-doc -->

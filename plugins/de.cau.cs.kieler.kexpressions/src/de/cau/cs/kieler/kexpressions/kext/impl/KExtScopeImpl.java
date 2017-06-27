@@ -6,12 +6,13 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Identifiable;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 
-import de.cau.cs.kieler.kexpressions.kext.KEXTScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 
 import java.util.Collection;
@@ -25,27 +26,39 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>KEXT Scope</b></em>'.
+ * An implementation of the model object '<em><b>Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl#getAnnotations <em>Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl#getEntities <em>Entities</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl#getScopes <em>Scopes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getEntities <em>Entities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getScopes <em>Scopes</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
+public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtScope {
+    /**
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDeclarations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Declaration> declarations;
+
     /**
      * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -94,14 +107,14 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
      * @generated
      * @ordered
      */
-    protected EList<KEXTScope> scopes;
+    protected EList<KExtScope> scopes;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected KEXTScopeImpl() {
+    protected KExtScopeImpl() {
         super();
     }
 
@@ -113,6 +126,18 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
     @Override
     protected EClass eStaticClass() {
         return KExtPackage.Literals.KEXT_SCOPE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Declaration> getDeclarations() {
+        if (declarations == null) {
+            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KExtPackage.KEXT_SCOPE__DECLARATIONS);
+        }
+        return declarations;
     }
 
     /**
@@ -165,44 +190,11 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<KEXTScope> getScopes() {
+    public EList<KExtScope> getScopes() {
         if (scopes == null) {
-            scopes = new EObjectContainmentEList<KEXTScope>(KEXTScope.class, this, KExtPackage.KEXT_SCOPE__SCOPES);
+            scopes = new EObjectContainmentEList<KExtScope>(KExtScope.class, this, KExtPackage.KEXT_SCOPE__SCOPES);
         }
         return scopes;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Annotation getAnnotation(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Annotation> getAllAnnotations(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void removeAllAnnotations(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -213,6 +205,8 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
             case KExtPackage.KEXT_SCOPE__ENTITIES:
@@ -231,6 +225,8 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
+                return getDeclarations();
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return getAnnotations();
             case KExtPackage.KEXT_SCOPE__ID:
@@ -252,6 +248,10 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+                return;
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 getAnnotations().clear();
                 getAnnotations().addAll((Collection<? extends Annotation>)newValue);
@@ -265,7 +265,7 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
                 return;
             case KExtPackage.KEXT_SCOPE__SCOPES:
                 getScopes().clear();
-                getScopes().addAll((Collection<? extends KEXTScope>)newValue);
+                getScopes().addAll((Collection<? extends KExtScope>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -279,6 +279,9 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                return;
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 getAnnotations().clear();
                 return;
@@ -303,6 +306,8 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return annotations != null && !annotations.isEmpty();
             case KExtPackage.KEXT_SCOPE__ID:
@@ -385,4 +390,4 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
         return result.toString();
     }
 
-} //KEXTScopeImpl
+} //KExtScopeImpl

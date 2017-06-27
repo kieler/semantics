@@ -102,6 +102,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createBoolValueAdapter();
             }
             @Override
+            public Adapter caseStringValue(StringValue object) {
+                return createStringValueAdapter();
+            }
+            @Override
             public Adapter caseOperatorExpression(OperatorExpression object) {
                 return createOperatorExpressionAdapter();
             }
@@ -124,10 +128,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseParameter(Parameter object) {
                 return createParameterAdapter();
-            }
-            @Override
-            public Adapter caseStringValue(StringValue object) {
-                return createStringValueAdapter();
             }
             @Override
             public Adapter caseCall(Call object) {

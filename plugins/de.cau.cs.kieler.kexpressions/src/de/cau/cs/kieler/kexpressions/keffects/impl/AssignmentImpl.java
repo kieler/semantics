@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
@@ -42,7 +43,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class AssignmentImpl extends EffectImpl implements Assignment {
+public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->

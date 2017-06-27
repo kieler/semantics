@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getIdentifiable()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface Identifiable extends EObject {

@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DeclarationImpl extends AnnotatableImpl implements Declaration {
+public abstract class DeclarationImpl extends AnnotatableImpl implements Declaration {
     /**
      * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
      * <!-- begin-user-doc -->

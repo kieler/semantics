@@ -128,14 +128,14 @@ public abstract class AbstractAnnotationsRuntimeModule extends org.eclipse.xtext
 		return de.cau.cs.kieler.annotations.formatting.AnnotationsFormatter.class;
 	}
 
-//	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
-//	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
-//		return de.cau.cs.kieler.annotations.formatting2.AnnotationsFormatter.class;
-//	}
-//
-//	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
-//	public void configureFormatterPreferences(com.google.inject.Binder binder) {
-//		binder.bind(org.eclipse.xtext.preferences.IPreferenceValuesProvider.class).annotatedWith(org.eclipse.xtext.formatting2.FormatterPreferences.class).to(org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider.class);
-//	}
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
+		return de.cau.cs.kieler.annotations.formatting2.AnnotationsFormatter.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public void configureFormatterPreferences(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.preferences.IPreferenceValuesProvider.class).annotatedWith(org.eclipse.xtext.formatting2.FormatterPreferences.class).to(org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider.class);
+	}
 
 }

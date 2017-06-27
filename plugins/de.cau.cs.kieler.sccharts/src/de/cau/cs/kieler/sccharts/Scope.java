@@ -13,13 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import org.eclipse.emf.common.util.EList;
-
 import de.cau.cs.kieler.annotations.Annotatable;
+
 import de.cau.cs.kieler.kexpressions.Identifiable;
-import de.cau.cs.kieler.kexpressions.Parameter;
+
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,9 +49,8 @@ import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getActions <em>Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReference <em>Reference</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope()
@@ -61,12 +60,12 @@ import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 public interface Scope extends Annotatable, DeclarationScope, Identifiable {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
+    /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -93,61 +92,45 @@ public interface Scope extends Annotatable, DeclarationScope, Identifiable {
     void setLabel(String value);
 
     /**
-     * Returns the value of the '<em><b>Local Actions</b></em>' containment reference list.
+     * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.LocalAction}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Local Actions</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Actions</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Local Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_LocalActions()
+     * @return the value of the '<em>Actions</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Actions()
      * @model containment="true"
      * @generated
      */
-    EList<LocalAction> getLocalActions();
+    EList<LocalAction> getActions();
 
     /**
-     * Returns the value of the '<em><b>Referenced Scope</b></em>' reference.
+     * Returns the value of the '<em><b>Reference</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Referenced Scope</em>' reference isn't clear,
+     * If the meaning of the '<em>Reference</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Referenced Scope</em>' reference.
-     * @see #setReferencedScope(Scope)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_ReferencedScope()
+     * @return the value of the '<em>Reference</em>' reference.
+     * @see #setReference(ScopeCall)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Reference()
      * @model
      * @generated
      */
-    Scope getReferencedScope();
+    ScopeCall getReference();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getReference <em>Reference</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Referenced Scope</em>' reference.
-     * @see #getReferencedScope()
+     * @param value the new value of the '<em>Reference</em>' reference.
+     * @see #getReference()
      * @generated
      */
-    void setReferencedScope(Scope value);
-
-    /**
-     * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Parameter}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Parameters</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Parameters()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Parameter> getParameters();
+    void setReference(ScopeCall value);
 
 } // Scope

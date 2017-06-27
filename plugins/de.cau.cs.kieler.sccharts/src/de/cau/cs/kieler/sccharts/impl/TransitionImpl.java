@@ -14,11 +14,10 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.sccharts.HistoryType;
+import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.TransitionType;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -36,10 +35,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#isDeferred <em>Deferred</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getPreemption <em>Preemption</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getHistory <em>History</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#isDeferred <em>Deferred</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getSourceState <em>Source State</em>}</li>
  * </ul>
@@ -55,44 +53,44 @@ public class TransitionImpl extends ActionImpl implements Transition {
 	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
 				/**
-     * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
+     * The default value of the '{@link #getPreemption() <em>Preemption</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPriority()
+     * @see #getPreemption()
      * @generated
      * @ordered
      */
-    protected static final int PRIORITY_EDEFAULT = 0;
+    protected static final PreemptionType PREEMPTION_EDEFAULT = PreemptionType.WEAKABORT;
 
     /**
-     * The cached value of the '{@link #getPriority() <em>Priority</em>}' attribute.
+     * The cached value of the '{@link #getPreemption() <em>Preemption</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPriority()
+     * @see #getPreemption()
      * @generated
      * @ordered
      */
-    protected int priority = PRIORITY_EDEFAULT;
+    protected PreemptionType preemption = PREEMPTION_EDEFAULT;
+
+                /**
+     * The default value of the '{@link #getHistory() <em>History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getHistory()
+     * @generated
+     * @ordered
+     */
+    protected static final HistoryType HISTORY_EDEFAULT = HistoryType.RESET;
 
     /**
-     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+     * The cached value of the '{@link #getHistory() <em>History</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getType()
+     * @see #getHistory()
      * @generated
      * @ordered
      */
-    protected static final TransitionType TYPE_EDEFAULT = TransitionType.WEAKABORT;
-
-    /**
-     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected TransitionType type = TYPE_EDEFAULT;
+    protected HistoryType history = HISTORY_EDEFAULT;
 
     /**
      * The default value of the '{@link #isDeferred() <em>Deferred</em>}' attribute.
@@ -113,26 +111,6 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @ordered
      */
     protected boolean deferred = DEFERRED_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getHistory() <em>History</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getHistory()
-     * @generated
-     * @ordered
-     */
-    protected static final HistoryType HISTORY_EDEFAULT = HistoryType.RESET;
-
-    /**
-     * The cached value of the '{@link #getHistory() <em>History</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getHistory()
-     * @generated
-     * @ordered
-     */
-    protected HistoryType history = HISTORY_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getTargetState() <em>Target State</em>}' reference.
@@ -168,8 +146,8 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
-    public int getPriority() {
-        return priority;
+    public PreemptionType getPreemption() {
+        return preemption;
     }
 
     /**
@@ -177,32 +155,11 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setPriority(int newPriority) {
-        int oldPriority = priority;
-        priority = newPriority;
+    public void setPreemption(PreemptionType newPreemption) {
+        PreemptionType oldPreemption = preemption;
+        preemption = newPreemption == null ? PREEMPTION_EDEFAULT : newPreemption;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__PRIORITY, oldPriority, priority));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TransitionType getType() {
-        return type;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setType(TransitionType newType) {
-        TransitionType oldType = type;
-        type = newType == null ? TYPE_EDEFAULT : newType;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__PREEMPTION, oldPreemption, preemption));
     }
 
     /**
@@ -406,14 +363,12 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.TRANSITION__PRIORITY:
-                return getPriority();
-            case SCChartsPackage.TRANSITION__TYPE:
-                return getType();
-            case SCChartsPackage.TRANSITION__DEFERRED:
-                return isDeferred();
+            case SCChartsPackage.TRANSITION__PREEMPTION:
+                return getPreemption();
             case SCChartsPackage.TRANSITION__HISTORY:
                 return getHistory();
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                return isDeferred();
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 if (resolve) return getTargetState();
                 return basicGetTargetState();
@@ -431,17 +386,14 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.TRANSITION__PRIORITY:
-                setPriority((Integer)newValue);
-                return;
-            case SCChartsPackage.TRANSITION__TYPE:
-                setType((TransitionType)newValue);
-                return;
-            case SCChartsPackage.TRANSITION__DEFERRED:
-                setDeferred((Boolean)newValue);
+            case SCChartsPackage.TRANSITION__PREEMPTION:
+                setPreemption((PreemptionType)newValue);
                 return;
             case SCChartsPackage.TRANSITION__HISTORY:
                 setHistory((HistoryType)newValue);
+                return;
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                setDeferred((Boolean)newValue);
                 return;
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 setTargetState((State)newValue);
@@ -461,17 +413,14 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.TRANSITION__PRIORITY:
-                setPriority(PRIORITY_EDEFAULT);
-                return;
-            case SCChartsPackage.TRANSITION__TYPE:
-                setType(TYPE_EDEFAULT);
-                return;
-            case SCChartsPackage.TRANSITION__DEFERRED:
-                setDeferred(DEFERRED_EDEFAULT);
+            case SCChartsPackage.TRANSITION__PREEMPTION:
+                setPreemption(PREEMPTION_EDEFAULT);
                 return;
             case SCChartsPackage.TRANSITION__HISTORY:
                 setHistory(HISTORY_EDEFAULT);
+                return;
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                setDeferred(DEFERRED_EDEFAULT);
                 return;
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 setTargetState((State)null);
@@ -491,14 +440,12 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.TRANSITION__PRIORITY:
-                return priority != PRIORITY_EDEFAULT;
-            case SCChartsPackage.TRANSITION__TYPE:
-                return type != TYPE_EDEFAULT;
-            case SCChartsPackage.TRANSITION__DEFERRED:
-                return deferred != DEFERRED_EDEFAULT;
+            case SCChartsPackage.TRANSITION__PREEMPTION:
+                return preemption != PREEMPTION_EDEFAULT;
             case SCChartsPackage.TRANSITION__HISTORY:
                 return history != HISTORY_EDEFAULT;
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                return deferred != DEFERRED_EDEFAULT;
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 return targetState != null;
             case SCChartsPackage.TRANSITION__SOURCE_STATE:
@@ -517,14 +464,12 @@ public class TransitionImpl extends ActionImpl implements Transition {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (priority: ");
-        result.append(priority);
-        result.append(", type: ");
-        result.append(type);
-        result.append(", deferred: ");
-        result.append(deferred);
+        result.append(" (preemption: ");
+        result.append(preemption);
         result.append(", history: ");
         result.append(history);
+        result.append(", deferred: ");
+        result.append(deferred);
         result.append(')');
         return result.toString();
     }
