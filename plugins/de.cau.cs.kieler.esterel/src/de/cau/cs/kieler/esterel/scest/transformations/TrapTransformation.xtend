@@ -97,7 +97,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
     def Statement transformStatement(Statement statement) {
         if (statement instanceof Trap) {
             var trap = statement as Trap
-            var statements =  statement.getContainingList
+            var statements = statement.getContainingList
             var pos = statements.indexOf(statement)
             var scope = createScopeStatement
             var depth = trap.getDepth
@@ -337,10 +337,10 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 newOperator = OperatorType.LOGICAL_AND
             }
             else {
-                throw new UnsupportedOperationException("The following combine operator is not supported!" + operator.toString)
+                throw new UnsupportedOperationException("The following combine operator is not supported! " + operator.toString)
             }
             var expr = createOperatorExpression(createValuedObjectReference(pair.value), exit.expression, newOperator)
-            statements.add(createAssignment(pair.value, expr))
+            statements.add(pos+1, createAssignment(pair.value, expr))
         }
     }
     

@@ -57,9 +57,6 @@
            class="de.cau.cs.kieler.esterel.scest.features.EmitFeature">
      </featureClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.EsterelAssignmentFeature">
-     </featureClass>
-     <featureClass
            class="de.cau.cs.kieler.esterel.scest.features.EsterelParallelFeature">
      </featureClass>
      <featureClass
@@ -119,6 +116,9 @@
      <featureClass
            class="de.cau.cs.kieler.esterel.scest.features.OptimizationLabelRenaming">
      </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.SignalFeature">
+     </featureClass>
      <featureGroupClass
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstControlFlowStatements">
      </featureGroupClass>
@@ -154,9 +154,6 @@
      </expansionTransformationClass>
      <expansionTransformationClass
            class="de.cau.cs.kieler.esterel.scest.transformations.EmitTransformation">
-     </expansionTransformationClass>
-     <expansionTransformationClass
-           class="de.cau.cs.kieler.esterel.scest.transformations.EsterelAssignmentTransformation">
      </expansionTransformationClass>
      <expansionTransformationClass
            class="de.cau.cs.kieler.esterel.scest.transformations.EsterelParallelTransformation">
@@ -217,6 +214,9 @@
      </expansionTransformationClass>
      <expansionTransformationClass
            class="de.cau.cs.kieler.esterel.scest.transformations.InitializationTransformation">
+     </expansionTransformationClass>
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.scest.transformations.SignalTransformation">
      </expansionTransformationClass>
   </extension>
   <!--extension

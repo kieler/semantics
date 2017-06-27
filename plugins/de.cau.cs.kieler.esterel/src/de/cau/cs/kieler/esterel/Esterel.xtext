@@ -133,10 +133,11 @@ InterfaceSignalDecl:
 ISignal returns ISignal:
     {ISignal}
     name=ID (   
-          (":"    type=Esterel_ValueType
+          ":" 
+          (      type=Esterel_ValueType
                 | typeID=ID
                 | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
-                )
+          )
         | ("(" 
               type=Esterel_ValueType
             | typeID=ID
@@ -441,10 +442,11 @@ TrapSignal returns ISignal:
     {TrapSignal} 
     name=ID 
     ( 
-          (":"    type=Esterel_ValueType
+          ":"?
+          (    type=Esterel_ValueType
                 | typeID=ID
                 | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
-                )
+          )
         | ("(" 
               type=Esterel_ValueType
             | typeID=ID

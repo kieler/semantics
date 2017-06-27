@@ -36,11 +36,8 @@ class SCEstSignalHandlingStatements extends FeatureGroup {
     override getFeatureIds() {
         Sets.newHashSet(
              SCEstFeature::PRESENT_ID,
-             SCEstFeature::LOCALSIGNALDECL_ID,
+             SCEstFeature::SIGNAL_ID,
              SCEstFeature::LOCALVARIABLE_ID,
-             SCEstFeature::EMIT_ID,
-             SCEstFeature::UNEMIT_ID,
-             SCEstFeature::ESTERELASSIGNMENT_ID,
              SCEstFeature::IFTEST_ID,
              SCEstFeature::SUSTAIN_ID
         )

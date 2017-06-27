@@ -19,21 +19,21 @@ import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
  * @author mrb
  *
  */
-class EsterelAssignmentFeature extends Feature {
+class SignalFeature extends Feature {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCEstFeature::ESTERELASSIGNMENT_ID
+        return SCEstFeature::SIGNAL_ID
     }
     
     override getName() {
-        return SCEstFeature::ESTERELASSIGNMENT_NAME
+        return SCEstFeature::SIGNAL_NAME
     }
     
     def isContained(SCEstProgram program) {
-        !program.eAllContents.filter(de.cau.cs.kieler.esterel.esterel.EsterelAssignment).empty
+        true
     }
     
 }

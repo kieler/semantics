@@ -75,6 +75,7 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
         resetAbortFlagSuffix
         resetDepthFlagSuffix 
         resetTrapSuffix 
+        resetSignalSuffix 
         prog.modules.forEach [ m | 
             transformStatements(m.statements, 1)
         ]

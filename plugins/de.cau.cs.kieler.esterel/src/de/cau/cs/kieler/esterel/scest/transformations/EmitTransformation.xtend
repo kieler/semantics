@@ -52,6 +52,6 @@ class EmitTransformation extends AbstractExpansionTransformation implements Trac
 
     def SCEstProgram transform(SCEstProgram prog) {
         return prog
-    }
+    } 
     
 }

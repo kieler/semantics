@@ -70,6 +70,7 @@ import de.cau.cs.kieler.esterel.esterel.Exec
 import de.cau.cs.kieler.esterel.esterel.Do
 import de.cau.cs.kieler.esterel.esterel.DelayExpr
 import de.cau.cs.kieler.esterel.esterel.TrapSignal
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * @author mrb
@@ -114,6 +115,8 @@ class SCEstExtension {
     var static depthFlagSuffix = 0;
     
     var static trapSuffix = 0;
+    
+    var static signalSuffix = 0;
     
     final private static String generatedAnnotation = "depth"
 
@@ -257,6 +260,13 @@ class SCEstExtension {
     }
     
     /**
+     * Resets the signal count, should be called before a transformation.
+     */
+    def resetSignalSuffix() {
+        signalSuffix = 0;
+    }
+    
+    /**
      * Returns an unused constant by appending the constantCount to "_l" and incrementing constantCount.
      * 
      * @return An unused constant
@@ -332,6 +342,20 @@ class SCEstExtension {
         else {
             createValuedObject(createNewUniqueTrapName)
         }
+    }
+    
+    /**
+     * Returns a new signal variable.
+     * 
+     * @param exp The value of the variable. Can be null.
+     * @param name The name of the variable. Can be null.
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createSignalVariable(Expression expr, CombineOperator op, String name) {
+        createValuedObject(createNewUniqueSignalName(name)) => [
+            it.initialValue = expr 
+            it.combineOperator = op
+        ]
     }
     
     /**
@@ -438,6 +462,21 @@ class SCEstExtension {
     def createNewUniqueTrapName(String name) {
         trapSuffix++
         "T" + trapSuffix + "_" + name
+    }
+    
+    /**
+     * Returns an unused signal name. String: ( name + "_s" + counter)
+     * @param name The name of the previous signal
+     * @return Returns an unused signal name. String: ( name + "_s" + counter)
+     */
+    def createNewUniqueSignalName(String name) {
+        signalSuffix++
+        if (name != null) {
+            return name + "_s" + signalSuffix
+        }
+        else {
+            "s" + signalSuffix
+        }
     }
 
     /**
@@ -1060,11 +1099,23 @@ class SCEstExtension {
     /**
      * Creates a KExpression Bool Value
      * 
-     * @param value The wanted value for BoolValue.
+     * @param value The wanted value for Bool Value.
      * @return A KExpression Bool Value
      */
     def createBoolValue(boolean value) {
         KExpressionsFactory::eINSTANCE.createBoolValue => [
+            it.value = value
+        ]
+    }
+    
+    /**
+     * Creates a KExpression String Value
+     * 
+     * @param value The wanted value for String Value.
+     * @return A KExpression String Value
+     */
+    def createStringValue(String value) {
+        KExpressionsFactory::eINSTANCE.createStringValue => [
             it.value = value
         ]
     }
@@ -1143,7 +1194,7 @@ class SCEstExtension {
      */
     def createAssignment(ValuedObject objectToAssign, Expression expression) {
         SclFactory::eINSTANCE.createAssignment => [
-            valuedObject = objectToAssign
+            it.valuedObject = objectToAssign
             it.expression = expression
         ]
     }
