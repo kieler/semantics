@@ -153,6 +153,8 @@ class ArrayCellEditor extends CellEditor {
         
         // Create viewer
         viewer = new TableViewer(table)
+        // Support objects that are "equal" yet two different objects in memory.
+        viewer.comparer = new IdentityComparer()
         
         // Create columns
         indexColumn = DataPoolView.createTableColumn(viewer, "Index", 50, true)

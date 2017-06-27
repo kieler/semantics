@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.ui.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
@@ -35,10 +36,8 @@ import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
-import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
-import com.google.common.base.Strings
 
 /**
  * @author aas
@@ -72,7 +71,7 @@ class DataPoolView extends ViewPart {
         SimulationManager.addListener(simulationListener)
         
         // Create viewer.
-        viewer = createDataPoolTable(parent);
+        viewer = createTable(parent);
 
         // Create menu and toolbars.
         createMenu();
@@ -182,13 +181,15 @@ class DataPoolView extends ViewPart {
         })
     }
     
-    private def TableViewer createDataPoolTable(Composite parent) {
+    private def TableViewer createTable(Composite parent) {
         val table = new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
 
         // Create viewer
         val viewer = new TableViewer(table)
+        // Support objects that are "equal" yet two different objects in memory.
+        viewer.comparer = new IdentityComparer()
         
         // Create columns
         variableColumn = createTableColumn(viewer, "Variable", 120, true)
