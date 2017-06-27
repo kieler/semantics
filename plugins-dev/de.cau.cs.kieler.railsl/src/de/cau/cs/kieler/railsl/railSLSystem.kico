@@ -3,4 +3,28 @@ system de.cau.cs.kieler.railSL.railSLSystem
     label "RaiLSL"
     metric de.cau.cs.kieler.kicool.processors.metrics.eObjectCount      
     
-de.cau.cs.kieler.railSL.raiLSLWrapper
+de.cau.cs.kieler.railsl.railsl
+
+[ label "SyncCharts"    
+    de.cau.cs.kieler.sccharts.processors.transformators.signal
+    de.cau.cs.kieler.sccharts.processors.transformators.^pre
+    de.cau.cs.kieler.sccharts.processors.transformators.suspend
+    de.cau.cs.kieler.sccharts.processors.transformators.countDelay
+]   
+
+[ label "Scade / Quartz / Esterel V7"
+    de.cau.cs.kieler.sccharts.processors.transformators.weakSuspend
+    de.cau.cs.kieler.sccharts.processors.transformators.history
+    de.cau.cs.kieler.sccharts.processors.transformators.deferred
+    de.cau.cs.kieler.sccharts.processors.transformators.static
+]
+    
+[ label "Statecharts"
+    de.cau.cs.kieler.sccharts.processors.transformators.duringAction
+    de.cau.cs.kieler.sccharts.processors.transformators.complexFinalState
+    de.cau.cs.kieler.sccharts.processors.transformators.abort
+    de.cau.cs.kieler.sccharts.processors.transformators.exitAction
+    de.cau.cs.kieler.sccharts.processors.transformators.initialization
+    de.cau.cs.kieler.sccharts.processors.transformators.entryAction
+    de.cau.cs.kieler.sccharts.processors.transformators.connector
+]
