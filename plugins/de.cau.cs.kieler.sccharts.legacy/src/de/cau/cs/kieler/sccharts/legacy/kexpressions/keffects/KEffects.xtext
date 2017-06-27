@@ -1,0 +1,105 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+grammar de.cau.cs.kieler.sccharts.legacy.kexpressions.keffects.KEffects with de.cau.cs.kieler.sccharts.legacy.kexpressions.KExpressions
+ 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/sccharts/legacy/annotations" as annotations
+import "http://kieler.cs.cau.de/sccharts/legacy/kexpressions" as kexpressions  
+import "http://kieler.cs.cau.de/sccharts/legacy/keffects" as keffects 
+
+/**
+ * @author ssm
+ * @kieler.design 2015-08-23 proposed 
+ * @kieler.rating 2015-08-23 proposed yellow
+ */
+
+/*
+ * KEffects allow deriving grammars to use a range of different effects, namely assignments,
+ * postfix effects, esterel like emissions, host code and function call effects.
+ * Of course other grammars may extend this list.
+ */
+
+// ---------------- //
+//  KEffects Rules  // 
+// ---------------- //
+
+// Effect Rule
+// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+// function call effect.
+Effect returns keffects::Effect: 
+    Assignment | 
+	PostfixEffect | 
+	Emission |
+	HostcodeEffect | 
+	FunctionCallEffect;
+
+// Emission Rule
+// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
+// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
+// a new value in the case of valued signals. 
+// Example: A, B(2)
+// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
+// annotations defined in the annotations grammar.		
+Emission returns keffects::Emission:
+    (annotations+=RestrictedAnnotation)*    
+	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
+
+// Assignment Rule
+// An assignment may start with a list of arbitrary annotatations.
+// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+// indices part. The type of assignment is determined by the type of the operator.
+// Example: A = true, I[0] = I[1], I += 1     
+Assignment returns keffects::Assignment:
+    (annotations+=Annotation)*    
+	valuedObject=[kexpressions::ValuedObject]
+	('[' indices+=Expression ']')*
+	 operator=AssignOperator expression = Expression;
+	 
+// Postfix Effect
+// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
+// must be a postfix operator.
+// Example: I++, I-- 
+PostfixEffect returns keffects::Assignment:
+    (annotations+=Annotation)*    
+    valuedObject=[kexpressions::ValuedObject]
+    ('[' indices+=Expression ']')*
+     operator=PostfixOperator;
+
+// Hostcode Effect Rule
+// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
+HostcodeEffect returns keffects::HostcodeEffect:
+    (annotations+=Annotation)*    
+ 	text=HOSTCODE;
+ 	
+// Function Call Effect Rule
+// A function call effect works similar to the function call expression. Additionally, it may be
+// preceded by a list of annotations.
+FunctionCallEffect returns keffects::FunctionCallEffect:
+    (annotations+=Annotation)*    
+    '<' functionName=ExtendedID 
+      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
+    '>';
+
+// ---------------- //
+//  KEffects Enums  // 
+// ---------------- //
+    
+// Assign Operator Enum    
+enum AssignOperator returns keffects::AssignOperator:
+    ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max=";
+
+// Postfix Operator Enum    
+enum PostfixOperator returns keffects::AssignOperator:
+    POSTFIXADD="++" | POSTFIXSUB="--"; 
+	
