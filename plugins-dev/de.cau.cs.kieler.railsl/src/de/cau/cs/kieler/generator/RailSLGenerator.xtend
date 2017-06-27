@@ -8,33 +8,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.OperatorType
-import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.xtext.generator.IFileSystemAccess
-import java.util.ArrayList
-import java.util.List
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.railSL.Program
-import de.cau.cs.kieler.railSL.Block
-import de.cau.cs.kieler.railSL.Statement
-import de.cau.cs.kieler.railSL.TimeWaitStatement
-import de.cau.cs.kieler.railSL.ContactWaitStatement
-import de.cau.cs.kieler.railSL.SetTrackStatement
-import de.cau.cs.kieler.railSL.SetPointStatement
-import de.cau.cs.kieler.railSL.LightStatement
-import de.cau.cs.kieler.railSL.ConditionalStatement
-import de.cau.cs.kieler.railSL.CrossingStatement
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Main class for code generation and model-to-model transformations of RailSL.
