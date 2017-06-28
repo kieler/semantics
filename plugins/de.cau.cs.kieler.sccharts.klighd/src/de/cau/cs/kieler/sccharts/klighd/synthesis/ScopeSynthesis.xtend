@@ -27,9 +27,6 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.core.model.PluginLog
-import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
@@ -47,7 +44,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
+class ScopeSynthesis extends AbstractSCChartsSynthesis<Scope> {
 
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
@@ -99,14 +96,18 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
         return options.toList
     }
 
-    override transform(SCCharts scc) {
+    override transform(Scope root) {
         val startTime = System.currentTimeMillis
         
         val rootNode = createNode
                 
+        //START
+        hooks.invokeStart(root, rootNode)
+        
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
         
+        val scc = root.getSCCharts
         clearSymbols
         for(symbolTable : scc.getStringPragmas(PRAGMA_SYMBOLS)) {  
             var prefix = ""
@@ -122,16 +123,17 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
         }
         if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head
 
-        if (SHOW_ALL_SCCHARTS.booleanValue) {
-            for(rootState : scc.rootStates) {
-                hooks.invokeStart(rootState, rootNode)
-                rootNode.children += stateSynthesis.transform(rootState)
-                hooks.invokeFinish(rootState, rootNode)
+        if (root instanceof SCCharts) {
+            if (SHOW_ALL_SCCHARTS.booleanValue) {
+                rootNode.children += root.rootStates.map[ stateSynthesis.transform(it); ]
+            } else {
+                rootNode.children += stateSynthesis.transform(root.rootStates.head) 
             }
-        } else {
-            hooks.invokeStart(scc.rootStates.head, rootNode)
-            rootNode.children += stateSynthesis.transform(scc.rootStates.head)
-            hooks.invokeFinish(scc.rootStates.head, rootNode) 
+        } else if (root instanceof State) {
+            rootNode.children += stateSynthesis.transform(root);
+        } else if (root instanceof ControlflowRegion) {
+            //Adding all children to the root node will hide the graphical representation of the region itself.
+//            rootNode.children += controlflowSynthesis.transform(root).children;
         }
         
         // Add tracking adapter to allow access to source model associations
@@ -145,9 +147,11 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }
         
+        hooks.invokeFinish(root, rootNode)
+
         // Log elapsed time
         Log.log(
-            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.id) + " in " +
+            "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
 		
         return rootNode
