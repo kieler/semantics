@@ -100,6 +100,6 @@ public class SCEstTransformation {
     public final static String LABELRENAMING_NAME = "Label Renaming";
 
     public final static String SIGNAL_ID = "esterel.signal";
-    public final static String SIGNAL_NAME = "Signal/Emit/Unemit";
+    public final static String SIGNAL_NAME = "Module Signals";
     
 }

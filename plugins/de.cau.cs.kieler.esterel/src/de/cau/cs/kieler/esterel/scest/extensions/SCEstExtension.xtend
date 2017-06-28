@@ -33,8 +33,6 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
@@ -48,14 +46,11 @@ import de.cau.cs.kieler.scl.scl.ScopeStatement
 import de.cau.cs.kieler.scl.scl.Thread
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
-import de.cau.cs.kieler.esterel.scest.transformations.SCEstTransformation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.IfTest
-import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.esterel.esterel.ISignal
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.scl.scl.StatementContainer
@@ -69,8 +64,8 @@ import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Exec
 import de.cau.cs.kieler.esterel.esterel.Do
 import de.cau.cs.kieler.esterel.esterel.DelayExpr
-import de.cau.cs.kieler.esterel.esterel.TrapSignal
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import java.util.HashMap
 
 /**
  * @author mrb
@@ -110,6 +105,9 @@ class SCEstExtension {
     var static signalSuffix = 0;
     
     final private static String generatedAnnotation = "depth"
+    
+    // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
+    var static HashMap<ISignal, NewSignals> newSignals = new HashMap<ISignal, NewSignals>()
 
     /**
      * Searches a valuedObject in a declarations list by its name
@@ -125,6 +123,10 @@ class SCEstExtension {
                 return valuedObject
         }
         throw new TransformerException("getValuedObject: Signal not declared: " + searchedName)
+    }
+    
+    def getNewSignals() {
+        newSignals
     }
 
     /**
