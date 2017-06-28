@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.sccharts.test
 
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
@@ -36,9 +36,9 @@ import org.eclipse.xtext.Keyword
 class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<State> {
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     /** The SCCharts grammar */
-    static val grammar = resourceSetInjector.getInstance(SctGrammarAccess)
+    static val grammar = resourceSetInjector.getInstance(SCTXGrammarAccess)
     
     //-----------------------------------------------------------------------------------------------------------------
     
@@ -58,7 +58,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<State> {
     
     @Test
     def void testReferences(State scc, TestModelData modelData) {
-        val keyword = grammar.stateAccess.referencesKeyword_6_0_0
+        val keyword = grammar.stateAccess.isKeyword_8_0_0
         for (res : scc.eResource.resourceSet.resources.filter(XtextResource)) {
             val parserNodes = res.parseResult.rootNode
             parserNodes.asTreeIterable.filter[
@@ -67,7 +67,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<State> {
                 && (grammarElement as Keyword).value == keyword.value
             ].forEach[
                 assertTrue("Referenced state " + (semanticElement as State).id + " in " + res.URI.segment(res.URI.segmentCount - 1) + " cannot be resolved",
-                    (semanticElement as State).referencedScope !== null)
+                    (semanticElement as State).reference.scope !== null)
             ]
         }
     }

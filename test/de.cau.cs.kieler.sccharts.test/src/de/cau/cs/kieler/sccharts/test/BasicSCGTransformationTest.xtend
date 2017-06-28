@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.test
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
@@ -71,7 +71,7 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<State>
     //-----------------------------------------------------------------------------------------------------------------
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     
     /**
      * Constructor
