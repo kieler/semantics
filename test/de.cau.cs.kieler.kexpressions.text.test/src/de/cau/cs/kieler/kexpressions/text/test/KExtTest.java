@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.kexpressions.text.test;
+package de.cau.cs.kieler.kexpressions.text.test;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -27,17 +27,18 @@ import com.google.inject.Guice;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsFactory;
 import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
-import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtSerializeExtensions;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath;
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtSerializeExtensions;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.BundleId;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.ModelFilter;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.ModelPath;
 
 
 /**
@@ -49,17 +50,19 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
  * 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(KEXTTestRunner.class)
-@BundleId("de.cau.cs.kieler.core.kexpressions.text.test")
+@RunWith(KExtTestRunner.class)
+@BundleId("de.cau.cs.kieler.kexpressions.text.test")
 @ModelPath("tests/")
 @ModelFilter("*.kext")
-public class KEXTTest {
+public class KExtTest {
     
     public static String KEXT_HUMANREADABLE_ANNOTATION = "readable";  
     public static String KEXT_STRICT_ANNOTATION = "strict";
     public static String KEXT_CHECKALIAS_ANNOTATOIN = "aliasCheck";
     
     public static String KEXT_EXPRESSION_KEYWORD = "expression";
+    
+    static AnnotationsExtensions ANNOTATIONS = Guice.createInjector().getInstance(AnnotationsExtensions.class);
 
     /**
      * Provides a {@link ResourceSet} in order to load the models properly.
@@ -109,7 +112,7 @@ public class KEXTTest {
         }
         
         if (!serialized.equals(expected)) {
-            StringAnnotation checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+            StringAnnotation checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
         	String assertMessage = "Serialization of " + checkAnnotation.getValues().get(0) + 
                     " was \"" + serialized + 
                     "\" but does not match expected output \"" + 
@@ -138,7 +141,7 @@ public class KEXTTest {
         }
         
         if (!serialized.equals(expected)) {
-                StringAnnotation checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+                StringAnnotation checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
                 String assertMessage = "Human readable serialization of " + checkAnnotation.getValues().get(0) + 
                     " was \"" + serialized + 
                     "\" but does not match expected output \"" + 
@@ -153,9 +156,9 @@ public class KEXTTest {
     private StringAnnotation getAnnotation(TestEntity entity, String name) {
         Annotation annotation = null;
     	if (entity.getEffect() != null) {
-    	    annotation = entity.getEffect().getAnnotation(name);
+    	    annotation = ANNOTATIONS.getAnnotation(entity.getEffect(), name);
     	} else {
-    	    annotation =  entity.getExpression().getAnnotation(name);
+    	    annotation = ANNOTATIONS.getAnnotation(entity.getExpression(), name);
     	}
         if (annotation instanceof StringAnnotation) {
             return (StringAnnotation) annotation; 
