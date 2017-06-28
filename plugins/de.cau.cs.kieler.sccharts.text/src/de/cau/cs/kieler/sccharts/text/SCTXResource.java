@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.State;
  *
  * @author chsch
  * @author als
+ * @author ssm
  */
 
 public class SCTXResource extends LazyLinkingResource {
@@ -97,9 +98,6 @@ public class SCTXResource extends LazyLinkingResource {
             if (SCChartsPackage.eINSTANCE.getScope().isInstance(o)) {
                 setupScopeLabel((Scope) o);
             }
-            if (SCChartsPackage.eINSTANCE.getState().isInstance(o)) {
-                setupPriorities((State) o);
-            }
         }
     }
     
@@ -112,13 +110,5 @@ public class SCTXResource extends LazyLinkingResource {
         }
     }
 
-    /**
-     * Initializes the transition priority to 1 one exactly 1 transition is present.
-     */
-    private void setupPriorities(State s) {
-        if (s.getOutgoingTransitions().size()==1) {
-            s.getOutgoingTransitions().get(0).setPriority(1);
-        }
-    }
 
 }

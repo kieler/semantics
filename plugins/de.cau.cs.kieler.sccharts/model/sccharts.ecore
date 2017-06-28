@@ -12,7 +12,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
         eType="#//LocalAction" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="#//ScopeCall"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="#//ScopeCall"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScopeCall" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Call">
     <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//Scope"/>

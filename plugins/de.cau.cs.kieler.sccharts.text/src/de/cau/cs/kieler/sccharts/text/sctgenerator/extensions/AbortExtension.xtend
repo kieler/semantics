@@ -23,11 +23,11 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.Declaration
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.TransitionType
 import com.google.inject.Singleton
 import static extension de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerator.isSuperstate
 import org.eclipse.core.resources.IProject
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.PreemptionType
 
 /**
  * Abort extension for the SCT Generator
@@ -92,9 +92,9 @@ class AbortExtension implements ISCTGeneratorExtension {
          * check whether or not it should get marked as strong or weak abort. */
         if (transition.sourceState.isSuperstate) {
             if (CHANCE_FOR_STRONG_ABORTS.random != 0) {
-                transition.type = TransitionType.STRONGABORT
+                transition.preemption = PreemptionType.STRONGABORT
             } else if (CHANCE_FOR_WEAK_ABORTS.random != 0) {
-                transition.type = TransitionType.WEAKABORT
+                transition.preemption = PreemptionType.WEAKABORT
             }
         }
     }

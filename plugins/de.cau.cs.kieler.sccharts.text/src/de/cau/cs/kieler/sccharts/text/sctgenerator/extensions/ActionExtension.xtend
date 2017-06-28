@@ -75,7 +75,7 @@ class ActionExtension implements ISCTGeneratorExtension {
                     effects += createAssignmentEffect(
                         state.getRootState.declarations.filter(VariableDeclaration).filter[output].head
                     )
-                    state.localActions += it
+                    state.actions += it
                 ]
             }
             actionCount = CHANCE_FOR_DURING_ACTION.random
@@ -87,7 +87,7 @@ class ActionExtension implements ISCTGeneratorExtension {
                     effects += createAssignmentEffect(
                         state.getRootState.declarations.filter(VariableDeclaration).filter[output].head
                     )
-                    state.localActions += it
+                    state.actions += it
                 ]
             }
             actionCount = CHANCE_FOR_EXIT_ACTION.random
@@ -99,7 +99,7 @@ class ActionExtension implements ISCTGeneratorExtension {
                     effects += createAssignmentEffect(
                         state.getRootState.declarations.filter(VariableDeclaration).filter[output].head
                     )
-                    state.localActions += it
+                    state.actions += it
                 ]
             }
         }

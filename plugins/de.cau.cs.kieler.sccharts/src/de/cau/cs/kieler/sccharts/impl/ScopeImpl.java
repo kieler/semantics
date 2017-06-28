@@ -124,7 +124,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EList<LocalAction> actions;
 
     /**
-     * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
+     * The cached value of the '{@link #getReference() <em>Reference</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getReference()
@@ -216,14 +216,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      */
     public ScopeCall getReference() {
-        if (reference != null && reference.eIsProxy()) {
-            InternalEObject oldReference = (InternalEObject)reference;
-            reference = (ScopeCall)eResolveProxy(oldReference);
-            if (reference != oldReference) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE__REFERENCE, oldReference, reference));
-            }
-        }
         return reference;
     }
 
@@ -232,8 +224,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ScopeCall basicGetReference() {
-        return reference;
+    public NotificationChain basicSetReference(ScopeCall newReference, NotificationChain msgs) {
+        ScopeCall oldReference = reference;
+        reference = newReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, oldReference, newReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
 
     /**
@@ -242,10 +240,17 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      */
     public void setReference(ScopeCall newReference) {
-        ScopeCall oldReference = reference;
-        reference = newReference;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, oldReference, reference));
+        if (newReference != reference) {
+            NotificationChain msgs = null;
+            if (reference != null)
+                msgs = ((InternalEObject)reference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
+            if (newReference != null)
+                msgs = ((InternalEObject)newReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__REFERENCE, null, msgs);
+            msgs = basicSetReference(newReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCE, newReference, newReference));
     }
 
     /**
@@ -272,6 +277,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__ACTIONS:
                 return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__REFERENCE:
+                return basicSetReference(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -293,8 +300,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__ACTIONS:
                 return getActions();
             case SCChartsPackage.SCOPE__REFERENCE:
-                if (resolve) return getReference();
-                return basicGetReference();
+                return getReference();
         }
         return super.eGet(featureID, resolve, coreType);
     }

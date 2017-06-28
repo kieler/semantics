@@ -26,13 +26,13 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.emf.ecore.EObject
 import com.google.inject.Singleton
 import static de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.PreemptionType
 
 /**
  * The Model Generator class
@@ -351,7 +351,7 @@ class ModelGenerator {
             transition.createTransitionTrigger
             transition.createTransitionEffects
             if (transition.sourceState.isSuperstate)
-                transition.type = TransitionType.TERMINATION
+                transition.preemption = PreemptionType.TERMINATION
                 
             // Call the transition creation hooks.
             generatorExtensions.forEach[ onTransitionCreate(transition) ]        
@@ -377,7 +377,7 @@ class ModelGenerator {
      * @param eObject gives an arbitrary {@code EObject}.
      * @returns the object as state.
      */
-    private static def State asState(EObject eObject) {
+    protected static def State asState(EObject eObject) {
         eObject as State
     }
     

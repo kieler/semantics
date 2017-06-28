@@ -171,7 +171,7 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -427,7 +427,7 @@ public interface SCChartsPackage extends EPackage {
     int STATE__ACTIONS = SCOPE__ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -572,7 +572,7 @@ public interface SCChartsPackage extends EPackage {
     int REGION__ACTIONS = SCOPE__ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -654,7 +654,7 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__ACTIONS = REGION__ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -745,7 +745,7 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__ACTIONS = REGION__ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1439,10 +1439,10 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_Actions();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Scope#getReference <em>Reference</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getReference <em>Reference</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Reference</em>'.
+     * @return the meta object for the containment reference '<em>Reference</em>'.
      * @see de.cau.cs.kieler.sccharts.Scope#getReference()
      * @see #getScope()
      * @generated
@@ -1950,7 +1950,7 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__ACTIONS = eINSTANCE.getScope_Actions();
 
         /**
-         * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Reference</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

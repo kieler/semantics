@@ -59,8 +59,8 @@ class KiCoModelCompiler extends ModelCompiler {
                     val iter = StateIterator.sccAllStates(state)
                     while(iter.hasNext) {
                         val s = iter.next
-                        if(s.referencedScope != null) {
-                            val refResource = s.referencedScope.eResource
+                        if(s.reference.scope != null) {
+                            val refResource = s.reference.scope.eResource
                             val refFile = ModelImporter.toPlatformResource(refResource)
                             val refNode = dependencies.getOrCreate(refFile)
                             node.addDependency(refNode)

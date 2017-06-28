@@ -12,17 +12,20 @@
  */
 package de.cau.cs.kieler.sccharts.text.validation
 
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import com.google.inject.Inject
 
 /**
  * @author ssm
  *
  */
 class SCTXValidatorX extends SCTXJavaValidator {
+    
+    @Inject extension AnnotationsExtensions
     
     public static final val DIRECTOR = "director"
     public static final val ENFORCER = "Enforcer"
@@ -34,9 +37,7 @@ class SCTXValidatorX extends SCTXJavaValidator {
     def void checkViolationState(de.cau.cs.kieler.sccharts.State state) {
         if (state.violation) {
             val scc = state.getSCCharts
-            if (scc.annotations.filter(PragmaStringAnnotation).
-                filter[ name.equals(DIRECTOR) && values.head.equals(ENFORCER)].size == 0
-            ) {
+            if (!scc.getStringPragmas(DIRECTOR).last.values.head.equals(ENFORCER)) {
                 error(CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR, state, 
                     SCChartsPackage.eINSTANCE.state_Violation, CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR
                 )

@@ -27,7 +27,6 @@ import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
 import java.util.List
@@ -44,6 +43,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.PreemptionType
 
 /**
  * Converts a SyncChart into an S program.
@@ -248,7 +248,7 @@ class SCCharts2STransformation {
             if (state.outgoingTransitions.length > 0) {
                 val transition = state.outgoingTransitions.get(0)
 
-                if (transition.type == TransitionType::TERMINATION) {
+                if (transition.preemption == PreemptionType::TERMINATION) {
                     // if not joined yet - continue at state depth
                     val sjoin = joinElseContinueAt(transition.sourceState.sJoinState)
                     sJoinState.addInstruction(sjoin);
@@ -383,12 +383,6 @@ class SCCharts2STransformation {
         createTextExpression(expression.text)
     }    
     
-    // Apply conversion to the default case
-    def dispatch Expression convertToSExpression(Expression expression) {
-        createExpression
-    }
-
-
 
     //-------------------------------------------------------------------------
     //--                   C O N V E R T    E F F E C T S                    --

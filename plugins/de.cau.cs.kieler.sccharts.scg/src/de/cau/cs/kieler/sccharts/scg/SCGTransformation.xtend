@@ -23,25 +23,29 @@ import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.scg.Assignment
@@ -58,7 +62,9 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnalyzer
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
+import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.Set
@@ -68,13 +74,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnalyzer
-import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
+import de.cau.cs.kieler.sccharts.PreemptionType
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -415,7 +415,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------   
     def boolean isPause(State state) {
         ((state.outgoingTransitions.filter [e|
-            !e.isImmediate && e.trigger == null && e.effects.nullOrEmpty && e.type != TransitionType::TERMINATION
+            !e.isImmediate && e.trigger == null && e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
@@ -430,7 +430,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
     def boolean isAssignment(State state) {
         ((state.outgoingTransitions.filter [e|
-            e.isImmediate && e.trigger == null && !e.effects.nullOrEmpty && e.type != TransitionType::TERMINATION
+            e.isImmediate && e.trigger == null && !e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
@@ -867,10 +867,4 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         ]
     }
 
-    // Apply conversion to the default case
-    def dispatch Expression convertToSCGExpression(Expression expression) {
-        createExpression.trace(expression)
-    }
-    
-// -------------------------------------------------------------------------   
 }

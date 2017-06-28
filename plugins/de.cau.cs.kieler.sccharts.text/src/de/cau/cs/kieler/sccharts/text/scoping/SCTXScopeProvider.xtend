@@ -15,6 +15,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.annotations.PragmaStringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * This class contains custom scoping description.
@@ -26,6 +27,7 @@ import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider {
     
     @Inject extension SCChartsExtension
+    @Inject extension AnnotationsExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
 
@@ -59,7 +61,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
                 val superScope = super.getScope(context.eContainer, reference)
                 val root = context.root.asSCCharts
                 candidates += root.rootStates
-                val imports = root.annotations.filter(PragmaStringAnnotation).filter[ name.equals("import") ].toList
+                val imports = root.getStringPragmas("import").toList
                 
                 val res = context.eResource      
                 if (res != null) {

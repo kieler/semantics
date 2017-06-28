@@ -81,7 +81,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
             val annotationDatas = new ArrayList<WrapperCodeAnnotationData>()
             
             if (model instanceof State) {
-                for(decl : model.declarations) {
+                for(decl : model.declarations.filter(VariableDeclaration)) {
                     for(valuedObject : decl.valuedObjects) {
                         // At the moment, send only inputs and outputs
                         if(decl.input || decl.output) {

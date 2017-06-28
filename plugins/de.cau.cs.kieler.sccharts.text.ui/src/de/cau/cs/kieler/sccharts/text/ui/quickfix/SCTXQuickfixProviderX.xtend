@@ -38,9 +38,9 @@ class SCTXQuickfixProviderX extends SCTXQuickfixProvider {
                             
                                 if (element instanceof Scope) {
                                     val scc = SCTXValidatorX.getSCCharts(element)
-                                    scc.annotations.removeIf[ it instanceof PragmaStringAnnotation &&
+                                    scc.pragmas.removeIf[ it instanceof PragmaStringAnnotation &&
                                                               (it as PragmaStringAnnotation).name.equals(SCTXValidatorX.DIRECTOR) ]
-                                    scc.annotations += AnnotationsFactory.eINSTANCE.createPragmaStringAnnotation => [
+                                    scc.pragmas += AnnotationsFactory.eINSTANCE.createStringPragma => [
                                         name = SCTXValidatorX.DIRECTOR
                                         values += SCTXValidatorX.ENFORCER
                                     ]
