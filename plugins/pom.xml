@@ -83,6 +83,8 @@
     <module>de.cau.cs.kieler.sccharts.text</module>
     <module>de.cau.cs.kieler.sccharts.text.ui</module>
 	<module>de.cau.cs.kieler.sccharts.timing</module>
+    <module>de.cau.cs.kieler.sccharts.legacy</module>
+    <module>de.cau.cs.kieler.sccharts.legacy.ui</module>
     <module>de.cau.cs.kieler.scg</module>
     <module>de.cau.cs.kieler.scg.circuit</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
