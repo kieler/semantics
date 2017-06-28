@@ -11,12 +11,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
+import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
+import de.cau.cs.kieler.klighd.kgraph.KEdge;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering;
@@ -28,11 +31,13 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.klighd.krendering.KText;
 import de.cau.cs.kieler.klighd.krendering.VerticalAlignment;
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
 
 public class TimingAnalysisHook extends SynthesisHook {
@@ -159,4 +164,20 @@ public class TimingAnalysisHook extends SynthesisHook {
                             .schedule();
 		}
 	}
+	
+    @Override
+    public void processTransition(Transition transition, KEdge edge) {
+        String text = "";
+        // Find hostcode
+        Iterator<TextExpression> hostCodeIter = Iterators.filter(transition.eAllContents(), TextExpression.class);
+        while (hostCodeIter.hasNext()) {
+            TextExpression hostcode = hostCodeIter.next();
+            text += "Tolles Timing!";
+        }
+        // Add tooltip
+        if (!text.isEmpty()) {
+            edge.getLabels().get(0).setProperty(KlighdProperties.TOOLTIP, text);
+            edge.setProperty(KlighdProperties.TOOLTIP, text);
+        }
+    }
 }
