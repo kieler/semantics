@@ -101,7 +101,7 @@ class SimulationGenerator {
             result.addProblem(problem)
         }
         
-        PromPlugin.createResource(target, new StringInputStream(simulationCode), true)
+        PromPlugin.createResource(target, simulationCode, true)
         return result
     }
     
