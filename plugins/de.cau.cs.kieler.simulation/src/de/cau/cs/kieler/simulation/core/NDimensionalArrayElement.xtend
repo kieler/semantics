@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -26,12 +26,19 @@ class NDimensionalArrayElement implements Cloneable {
     @Accessors
     private var Object value;
     
+    @Accessors
+    private var Object userValue;
+    
     new(Object value, Integer... index) {
         this.value = value
         this.index = index.clone
     }
     
-    public def Object getCloneOfValue() {
+    public def boolean isDirty() {
+        return userValue != null && !userValue.equals(value)
+    }
+    
+    public static def Object getCloneOfValue(Object value) {
         if(value instanceof String) {
             return new String(value)  
         } else if(value instanceof Boolean) {
@@ -55,14 +62,22 @@ class NDimensionalArrayElement implements Cloneable {
     
     /**
      * Two NDimensionalArrayElements are equal if the value they hold are equal.
+     * If a user value is set, then this value is taken as the value to be compared.
      */
     override equals(Object other) {
         if(other != null) {
             if(other instanceof NDimensionalArrayElement) {
-                if(other.value == value) {
+                val thisVal = if(isDirty) userValue else value
+                val otherVal = if(other.isDirty) other.userValue else other.value
+                
+                if(thisVal != null) {
+                    return thisVal.equals(otherVal)
+                } else if(otherVal != null) {
+                    return otherVal.equals(value)
+                } else {
+                    // Both are null
                     return true
                 }
-                return other.value.equals(value)
             }
         }
         return false

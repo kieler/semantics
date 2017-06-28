@@ -12,9 +12,14 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.sccharts.transformations
- 
+
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -23,8 +28,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -56,7 +63,7 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::ENTRY_ID)
+        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::ENTRY_ID, SCChartsFeature::PRE_ID)
     }
 
     override getNotHandlesFeatureIds() {
@@ -120,6 +127,51 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
                 entryAction2.setTrigger(transition.trigger.copy)
             }
 
+            // Pre allows to put the during action in the source state and not in the parent state
+            // Add during action
+            val duringAction = sourceState.createImmediateDuringAction
+            duringAction.setTrigger(transition.trigger.copy)
+            duringAction.addEffect(counter.assign(counter.reference.add((1.createIntValue))))
+
+            // Modify original trigger
+            // trigger := (pre(counter) == delay - 1) && trigger
+            val trigger = createLogicalAndExpression(
+                createEQExpression(
+                    createOperatorExpression(OperatorType.PRE) => [
+                        subExpressions += counter.reference
+                    ],
+                    (transition.delay - 1).createIntValue
+                ),
+                transition.trigger
+            )
+            transition.setTrigger(trigger)
+            transition.setDelay(1)
+        }
+    }
+
+    // This will encode count delays in transitions.
+    def void transformCountDelay_NoPre(Transition transition, State targetRootState) {
+        if (transition.delay > 1) {
+            transition.setDefaultTrace
+            val sourceState = transition.sourceState
+            val parentState = sourceState.parentRegion.parentState
+            val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
+
+            //Add entry action
+            val entryAction = sourceState.createEntryAction
+            entryAction.addEffect(counter.assign(0.createIntValue))
+            
+            if (!transition.isImmediate2) {
+                // Meeting 2016-11-09 Semantics Meetings (ssm)
+                // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
+                
+                // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick", i.e., the tick
+                // when the state is entered 
+                val entryAction2 = sourceState.createEntryAction
+                entryAction2.addEffect(counter.assign((-1).createIntValue))
+                entryAction2.setTrigger(transition.trigger.copy)
+            }
+
             // The during action MUST be added to the PARENT state NOT the SOURCE state because
             // otherwise (for a strong abort) taking the strong abort transition would not be
             // allowed to be triggered from inside!
@@ -141,4 +193,3 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
     }
 
 }
-

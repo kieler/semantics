@@ -19,9 +19,11 @@ import de.cau.cs.kieler.annotations.FloatAnnotation
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
-import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
@@ -36,6 +38,9 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
     
     private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
     
+    /**
+     * {@inheritDoc}
+     */
     override getAnnotations(EObject model) {
         if (model instanceof State) {
             val annotationDatas = new ArrayList<WrapperCodeAnnotationData>()
@@ -58,6 +63,59 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                          if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
                              KiCoLaunchConfig.writeToConsole('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
                          }
+                    }
+                }
+            }
+            
+            return annotationDatas
+        } else {
+            return null
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getSimulationInterface(EObject model) {
+        if (model instanceof State) {
+            val annotationDatas = new ArrayList<WrapperCodeAnnotationData>()
+            
+            if (model instanceof State) {
+                for(decl : model.declarations) {
+                    for(valuedObject : decl.valuedObjects) {
+                        // At the moment, send only inputs and outputs
+                        if(decl.input || decl.output) {
+                            val data = new WrapperCodeAnnotationData();
+                            data.arguments.add(String.valueOf(decl.input))
+                            data.arguments.add(String.valueOf(decl.output))
+                            // add array sizes if any
+                            if(!valuedObject.cardinalities.nullOrEmpty) {
+                                for(card : valuedObject.cardinalities) {
+                                    var IntValue intValue = null;
+                                    if(card instanceof IntValue) {
+                                        intValue = card as IntValue
+                                    } else if(card instanceof ValuedObjectReference) {
+                                        if(card.valuedObject.initialValue instanceof IntValue) {
+                                            intValue = card.valuedObject.initialValue as IntValue
+                                        } else {
+                                            throw new Exception("Array sizes must have an integer or integer constant as initial value")
+                                        }
+                                    }
+                                    if(intValue != null) {
+                                        data.arguments.add(intValue.value.toString)
+                                    }
+                                }
+                            }
+                            
+                            data.modelName = model.id
+                            data.input = true
+                            data.output = true
+                            data.name = "Simulate"
+                            data.varType = decl.type.literal
+                            data.varName = valuedObject.name
+                            
+                            annotationDatas.add(data)
+                        }
                     }
                 }
             }

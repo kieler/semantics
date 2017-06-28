@@ -59,6 +59,8 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.krendering.KRectangle;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.KText;
@@ -155,11 +157,12 @@ public class TimingAnalysis extends Job {
 	private ICodePreparer codePreparer;
 	private final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
 	private TimingHighlighter timingHighlighter = new TimingHighlighter(renderingFactory);
+	private final ViewContext viewContext;
 
 	protected TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
 			Region scchartDummyRegion, Resource resource,
 			HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
-			TimingValueRepresentation rep) {
+			TimingValueRepresentation rep, ViewContext context) {
 		super("Timing Analysis");
 		this.scchart = rootState;
 		this.timingLabels = regionLabels;
@@ -169,6 +172,7 @@ public class TimingAnalysis extends Job {
 		this.highlight = highlight;
 		this.rep = rep;
 		this.codePreparer = new KTACodePreparer();
+		this.viewContext = context;
 	}
 
 	/**
@@ -506,6 +510,7 @@ public class TimingAnalysis extends Job {
                                 timingLabels.get(region), regionRectangles, renderingExtensions);
                     }
 				}
+				LightDiagramServices.layoutDiagram(viewContext);
 				return Status.OK_STATUS;
 			}
 		}.schedule();

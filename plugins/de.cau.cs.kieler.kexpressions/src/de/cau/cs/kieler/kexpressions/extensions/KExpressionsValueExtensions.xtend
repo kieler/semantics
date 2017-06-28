@@ -35,13 +35,7 @@ class KExpressionsValueExtensions {
 	}
 	
 	def boolean isSameValueType(Expression expression1, Expression expression2) {
-		expression1.isValue && expression2.isValue && (
-			expression1 instanceof IntValue == expression2 instanceof IntValue ||
-			expression1 instanceof StringValue == expression2 instanceof StringValue ||
-			expression1 instanceof BoolValue == expression2 instanceof BoolValue ||
-			expression1 instanceof DoubleValue == expression2 instanceof DoubleValue ||
-			expression1 instanceof FloatValue == expression2 instanceof FloatValue
-		)	
+		expression1.isValue && expression2.isValue && expression1.eClass.equals(expression2.eClass)
 	}
 
 	def boolean isSameValue(Expression expression1, Expression expression2) {

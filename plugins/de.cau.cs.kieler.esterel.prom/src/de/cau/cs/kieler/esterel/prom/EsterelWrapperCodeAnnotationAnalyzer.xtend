@@ -30,22 +30,10 @@ import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
     
-<<<<<<< HEAD
-    override getModelName(EObject model) {
-<<<<<<< HEAD
-        if (model instanceof ProgramImpl) {
-=======
-        if(model instanceof ProgramImpl){ 
->>>>>>> ssm/dataflow
-            val modules = model.modules
-            if(!modules.isNullOrEmpty)
-                return modules.get(0).name
-        }
+    override getSimulationInterface(EObject model) {
         return null
     }
     
-=======
->>>>>>> master
     override getAnnotations(EObject model) {
         // At the moment there are no annotations for inputs/outputs in the esterel grammar.
         // So instead we parse the text file manually and search for special comments.

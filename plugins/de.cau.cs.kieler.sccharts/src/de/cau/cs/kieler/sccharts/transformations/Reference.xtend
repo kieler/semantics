@@ -156,7 +156,9 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                     if (eObject instanceof Assignment) {
                         val assignment = (eObject as Assignment);
                         val assignmentCopy = assignment.nontracingCopy;
-                        if (assignment.valuedObject.name == binding.formal.name) {
+                        if ((assignment.valuedObject.declaration.input ||
+                             assignment.valuedObject.declaration.output)
+                            && assignment.valuedObject.name == binding.formal.name) {
                             assignment.valuedObject = binding.actual
                             assignment.indices.clear
                             for (index : assignmentCopy.indices) {
@@ -174,7 +176,9 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                     } else if (eObject instanceof ValuedObjectReference) {
                         val valuedObjectReference = (eObject as ValuedObjectReference);
                         val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
-                        if (valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
+                        if ((valuedObjectReference.valuedObject.declaration.input ||
+                             valuedObjectReference.valuedObject.declaration.output)
+                            && valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
                             
                             if (binding.actual != null) {
                                 valuedObjectReference.valuedObject = binding.actual 
@@ -204,11 +208,13 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         }
                     } else if (eObject instanceof Binding) {
                         val bing = eObject as Binding
-                        if (bing.actual.name == binding.formal.name) {
+                        if ((bing.actual.declaration.input ||
+                             bing.actual.declaration.output)
+                            && bing.actual.name == binding.formal.name) {
                             bing.actual = binding.actual
                             for(index : binding.indices) {
                                 bing.indices.add(index.nontracingCopy.rtrace(binding))
-                            }                               
+                            }
                         }
                     } else if (eObject instanceof TextExpression) {
                         if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {

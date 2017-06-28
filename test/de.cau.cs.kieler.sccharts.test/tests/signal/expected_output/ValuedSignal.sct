@@ -1,6 +1,0 @@
-// When it is possible to have valued signals without combine operator
-// this dummy file has to be revised.
-@Transformation SIGNAL
-scchart ValuedSignal {
-  initial state dummy;
-}

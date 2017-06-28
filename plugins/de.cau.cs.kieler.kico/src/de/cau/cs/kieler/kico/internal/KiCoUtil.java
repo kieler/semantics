@@ -186,7 +186,20 @@ public class KiCoUtil {
                         context.setModelResourceSet(resourceSet);
                     }
                 }
-
+                
+                if (model.eResource() != null && model.eResource().getResourceSet() != null) {
+                    for (Resource resource : model.eResource().getResourceSet().getResources()) {
+                        if (resource != model.eResource()) {
+                            resourceSet.getResource(resource.getURI(), true);
+                        }
+                    }
+                    for (Resource resource : resourceSet.getResources()) {
+                        if (resource instanceof XtextResource) {
+                            ((XtextResource) resource).relink();
+                        }
+                    }
+                }
+                    
                 Resource res = resourceSet.getResource(uri, false);
                 if (res == null) {
                     res = resourceSet.createResource(uri);

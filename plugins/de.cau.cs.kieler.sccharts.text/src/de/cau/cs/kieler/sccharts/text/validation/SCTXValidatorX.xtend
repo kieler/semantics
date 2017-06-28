@@ -51,4 +51,5 @@ class SCTXValidatorX extends SCTXJavaValidator {
             return scope as SCCharts
         }
     }
+
 }

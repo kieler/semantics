@@ -211,6 +211,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             if (termTriggerDelayed && !finishedValuedObject.name.endsWith("D")) {
                  finishedValuedObject.name = finishedValuedObject.name + "D"
             }
+            finishedValuedObject.uniqueName
             
             if (triggerExpression == null) {
                 triggerExpression = finishedValuedObject.reference;

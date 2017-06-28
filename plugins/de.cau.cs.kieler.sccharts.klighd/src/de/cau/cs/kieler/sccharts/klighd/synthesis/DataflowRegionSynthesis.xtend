@@ -111,7 +111,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             if (region.declarations.empty) {
                 addStatesArea(label.nullOrEmpty);
             } else {
-                addStatesAndDeclarationsArea();
+                addStatesAndDeclarationsArea(false);
                 // Add declarations
                 for (declaration : region.variableDeclarations) {
                     addDeclarationLabel(declaration.serializeHighlighted(true)) => [

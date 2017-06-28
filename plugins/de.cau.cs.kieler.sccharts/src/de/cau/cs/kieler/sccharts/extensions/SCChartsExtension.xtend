@@ -162,14 +162,15 @@ class SCChartsExtension {
 
     // Returns a list of all contained States.
     def List<State> getAllContainedStatesList(State state) {
-        <State>newLinkedList => [ l |
-            state.regions.filter(ControlflowRegion).forEach [ r |
-                r.states.forEach [ s |
-                    l += s;
-                    l += s.getAllContainedStatesList
-                ]
-            ]
-        ]
+//        <State>newLinkedList => [ l |
+//            state.regions.filter(ControlflowRegion).forEach [ r |
+//                r.states.forEach [ s |
+//                    l += s;
+//                    l += s.getAllContainedStatesList
+//                ]
+//            ]
+//        ]
+        return state.allContainedStates.toList
     }
 
     // Return the list of all contained States and the root state if the scope is already a state.

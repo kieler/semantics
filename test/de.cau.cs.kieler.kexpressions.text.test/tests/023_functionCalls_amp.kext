@@ -1,0 +1,58 @@
+/* KEXT Test File for function call effects
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+ 
+string S = "Hallo Welt!";
+bool B;
+int I;
+
+@check "functionCallAmp.basic"
+@expect "<rand()>"
+expression extern rand()
+
+@check functionCallAmp.basic.^int
+@expect "<srand(4)>"
+expression extern srand(4)
+
+@check functionCallAmp.basic.^string
+@expect "<printf(\"Hallo Welt!\")>"
+expression extern printf("Hallo Welt!")
+
+@check functionCallAmp.basic.parameter.^string
+@expect "<printf(\"%s\", S)>"
+expression extern printf("%s", S)
+
+@check functionCallAmp.nested
+@expect "<srand(<time()>)>"
+expression extern srand(extern time())
+
+@check functionCallAmp.nested.^string
+@expect "<printf(\"%s\", <getValue()>)>"
+expression extern printf("%s", <getValue()>)
+
+
+
+
+@check functionCallAmp.returnValue
+@expect "B = <scanf(\"\")>"
+B = extern scanf("")
+
+@check functionCallAmp.returnValue.parameter.byReference
+@expect "B = <scanf(\"%d\", &I)>"
+B = extern scanf("%d", &I)
+
+@check functionCallAmp.returnValue.parameter.byPureOutput
+@expect "B = <scanf(\"%d\", !&I)>"
+B = extern scanf("%d", !&I)
+
+@check functionCallAmp.returnValue.parameter.byReference.nested
+@expect "B = <scanf(\"%d\", <getValue()>)>"
+B = extern scanf("%d", <getValue()>)
+
+@check functionCallAmp.returnValue.parameter.byPureOutput.hostcode
+@expect "B = <scanf(\"%d\", !&`x`)>"
+B = extern scanf("%d", !&`x`)
+
+

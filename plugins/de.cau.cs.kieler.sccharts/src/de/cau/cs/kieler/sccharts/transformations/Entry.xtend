@@ -93,7 +93,7 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
             
             state.setDefaultTrace //All following states etc. will be traced to state
             
-            if (state.final) {
+            if (state.final && !state.initial && !state.incomingTransitions.empty) {
                 val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 for (transition : state.incomingTransitions.immutableCopy) {
                     transition.setTargetState(connector)
@@ -106,11 +106,15 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createState(GENERATED_PREFIX + "Done")
                 lastState.final = state.outgoingTransitions.exists[!isTypeTermination]
-                val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
-                for (transition : state.outgoingTransitions.immutableCopy) {
-                    exitState.outgoingTransitions.add(transition)
+                if (!state.outgoingTransitions.empty) {
+                    val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
+                    exitState.final = state.final // propagate final state
+                    for (transition : state.outgoingTransitions.immutableCopy) {
+                        exitState.outgoingTransitions.add(transition)
+                    }
+                    state.createTransitionTo(exitState).setTypeTermination
                 }
-                state.createTransitionTo(exitState).setTypeTermination
+                state.final = false // Do not create complex final state
             } else if (state.regions.filter(ControlflowRegion).size == 1) {
                 val region = state.regions.filter(ControlflowRegion).get(0)
                 lastState = region.states.filter[initial].get(0) //every region MUST have an initial state

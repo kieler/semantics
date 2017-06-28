@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -101,7 +101,7 @@ class DataPool implements Cloneable {
      */
     public def List<DataPool> getHistory() {
         val List<DataPool> history = newArrayList()
-        history.add(this)
+//        history.add(this)
         var next = this.previousPool
         while(next != null) {
             history.add(next)
