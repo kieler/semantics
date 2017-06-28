@@ -68,6 +68,9 @@ class EmitTransformation extends AbstractExpansionTransformation implements Trac
     @Inject
     extension SCEstExtension
     
+    // TODO only works with in place transformation
+    // need to talk about solution
+    
     def SCEstProgram transform(SCEstProgram prog) {
         for (m : prog.modules) { 
             transformStatements(m.statements)

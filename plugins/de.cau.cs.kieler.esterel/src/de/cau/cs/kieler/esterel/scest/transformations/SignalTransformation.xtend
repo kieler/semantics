@@ -78,8 +78,8 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     def SCEstProgram transform(SCEstProgram prog) {
         for (m : prog.modules) { 
             m.intSignalDecls.transformSignals(m)
-            transformStatements(m.statements)
-//            m.intSignalDecls.clear
+//            transformStatements(m.statements)
+            m.intSignalDecls.clear
         }
         return prog
     }

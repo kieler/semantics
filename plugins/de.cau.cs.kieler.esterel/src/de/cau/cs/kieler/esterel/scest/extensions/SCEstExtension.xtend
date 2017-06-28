@@ -260,6 +260,13 @@ class SCEstExtension {
     }
     
     /**
+     * Clear the newSignals map
+     */
+    def clearNewSignalsMap() {
+        newSignals.clear
+    }
+    
+    /**
      * Returns an unused constant by appending the constantCount to "_l" and incrementing constantCount.
      * 
      * @return An unused constant
