@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.core
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.runtime.Assert
 
 /**
  * @author aas
@@ -59,6 +60,14 @@ class NDimensionalArray implements Cloneable{
     }
     
     public def Object get(List<Integer> index) {
+        // Check array sizes
+        Assert.isTrue(index.size == dimension)
+        for(var i = 0; i < index.size; i++) {
+            if(index.get(i) < 0 || index.get(i) >= indices.get(i)) {
+                throw new IllegalArgumentException("Array index out of bounds (index was "+index+", array size is "+indices.toString+")")
+            }
+        }
+        // Return element at the given index
         val oneDimIndex = getOneDimensionalIndex(index)
         return elements.get(oneDimIndex).value
     }
@@ -120,5 +129,13 @@ class NDimensionalArray implements Cloneable{
             }
         }
         return false
+    }
+    
+    /**
+     * Returns a string representation for an array.
+     * @param arr The array
+     */
+    private def <T> String toString(T[] arr) {
+        return "["+arr.map[it.toString].join(", ")+"]"
     }
 }

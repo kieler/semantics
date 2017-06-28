@@ -47,7 +47,7 @@ class WalkPathAnimation extends AnimationHandler {
     }
     
     override doApply(DataPool pool) {
-        val elem = findElement()
+        val elem = findElement(true)
         
         val newPathName = getAttribute("path").stringValue
         if(newPathName != null) {

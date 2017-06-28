@@ -30,7 +30,7 @@ class TextAnimation extends AnimationHandler {
     }
     
     override doApply(DataPool pool) {
-        val elem = findElement()
+        val elem = findElement(true)
         // Apply attributes to svg element
         val text = getAttribute("text").stringValue
         if(text != null) {
