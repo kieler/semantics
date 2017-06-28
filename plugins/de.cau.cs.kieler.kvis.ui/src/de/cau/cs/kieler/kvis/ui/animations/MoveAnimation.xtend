@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -26,23 +26,7 @@ class MoveAnimation extends AnimationHandler {
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        initialize()
-    }
-    
-    private def void initialize() {
-        // Read attribute values
-//        for(attributeMapping : animation.attributeMappings) {
-//            val literal = attributeMapping.literal.removeQuotes
-//            val attributeName = attributeMapping.attribute
-//            switch(attributeName) {
-//                case "x" : posX = Float.valueOf(literal)
-//                case "y" : posY = Float.valueOf(literal)
-//                default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
-//                    + "Handled attributes are:\n"
-//                    + "x, y"
-//                )
-//            }
-//        }
+        setAttributes("x", "y")
     }
     
     override getName() {
@@ -51,11 +35,9 @@ class MoveAnimation extends AnimationHandler {
     
     override doApply(DataPool pool) {
         val elem = findElement()
-        val value = variableValue as Double
-        
         // Get mapped value
-        val newX = animation.getAttribute("x").getMappedValue(value)
-        val newY = animation.getAttribute("y").getMappedValue(value)
+        val newX = getAttribute("x").floatValue
+        val newY = getAttribute("y").floatValue
         if(newX != null) {
             posX = newX.doubleValue
         }
@@ -71,7 +53,6 @@ class MoveAnimation extends AnimationHandler {
             // Set new transform
             var translation = posX + "," + posY
             elem.setAttributeFunction("transform", "translate", translation)
-            println(elem.getAttribute("transform"))
         } else {
             throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")
         }

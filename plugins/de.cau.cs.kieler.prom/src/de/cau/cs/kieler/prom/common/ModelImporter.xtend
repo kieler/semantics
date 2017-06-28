@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.prom.common
 
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
@@ -40,14 +42,18 @@ class ModelImporter {
     
     public static def EObject load(IFile file, ResourceSet resourceSet) {
         val resource = getResource(file, resourceSet)
-        resource.unload()
-        resource.load(resourceSet.loadOptions)
+        reload(resource, resourceSet)
         
         if(!resource.getContents().isEmpty) {
             return resource.getContents().get(0)
         } else {
             return null
         }
+    }
+    
+    public static def void reload(Resource res, ResourceSet resourceSet) {
+        res.unload()
+        res.load(resourceSet.loadOptions)
     }
     
     public static def Resource getResource(IFile file, ResourceSet resourceSet) {
@@ -64,6 +70,13 @@ class ModelImporter {
         } else {
             return null
         }
+    }
+    
+    public static def IFile toPlatformResource(Resource eResource) {
+        val eUri = eResource.URI;
+        val path = new Path(eUri.toFileString());
+        val file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
+        return file
     }
     
     /**

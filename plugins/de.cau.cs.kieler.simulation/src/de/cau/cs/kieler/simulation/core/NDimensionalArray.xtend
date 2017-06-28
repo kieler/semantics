@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -58,7 +58,7 @@ class NDimensionalArray implements Cloneable{
         return indices.get(dimension);
     }
     
-    public def Object get(int... index) {
+    public def Object get(List<Integer> index) {
         val oneDimIndex = getOneDimensionalIndex(index)
         return elements.get(oneDimIndex).value
     }
@@ -82,7 +82,12 @@ class NDimensionalArray implements Cloneable{
     }
     
     public override NDimensionalArray clone() {
-        val arr = new NDimensionalArray(elements.map[it.cloneOfValue], indices.clone)
+        val arr = new NDimensionalArray(elements.map[NDimensionalArrayElement.getCloneOfValue(it.value)], indices.clone)
+        for(var i = 0; i < elements.size; i++) {
+            val oldElem = elements.get(i)
+            val newElem = arr.elements.get(i)
+            newElem.userValue = NDimensionalArrayElement.getCloneOfValue(oldElem.userValue)
+        }
         return arr 
     }
     
@@ -90,7 +95,10 @@ class NDimensionalArray implements Cloneable{
      * {@inheritDoc}
      */
     override toString() {
-        val values = elements.map[it.value]
+        val values = elements.map[if(it.isDirty)
+                                      "*"+it.userValue
+                                  else
+                                      it.value]
         return values.toString()
     }
     

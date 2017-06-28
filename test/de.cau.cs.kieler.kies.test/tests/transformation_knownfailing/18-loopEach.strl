@@ -1,6 +1,0 @@
-module loopEachModule:
-input A;
-loop
-	nothing
-each [ A and pre(A) ] 
-end module

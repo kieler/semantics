@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -186,7 +186,6 @@ class KVisView extends ViewPart {
 
     public def void reload() {
         if (kvisFile != null) {
-            println("Reloading KVis View")
             loadFile(kvisFile)
         }
     }

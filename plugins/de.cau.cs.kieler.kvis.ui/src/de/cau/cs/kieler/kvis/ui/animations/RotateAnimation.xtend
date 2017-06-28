@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -22,45 +22,33 @@ import org.w3c.dom.svg.SVGLocatable
  */
 class RotateAnimation extends AnimationHandler {
     var double angle
-    var double anchorX
-    var double anchorY
+    var double anchorX = 0.5
+    var double anchorY = 0.5
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        initialize()
+        setAttributes("angle", "anchorX", "anchorY")
     }
     
-    private def void initialize() {
-        // Read attribute values
-        for(attributeMapping : animation.attributeMappings) {
-            val literal = attributeMapping.literal
-            if(literal != null) {
-                val attributeName = attributeMapping.attribute
-                switch(attributeName) {
-                    case "angle" : angle = literal.primitiveValue.doubleValue
-                    case "anchorX" : anchorX = literal.primitiveValue.doubleValue
-                    case "anchorY" : anchorY = literal.primitiveValue.doubleValue
-                    default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
-                        + "Handled attributes are:\n"
-                        + "angle, anchorX, anchorY"
-                    )
-                }
-            }
-        }
-    }
-
     override getName() {
         return "rotate"
     }
     
     override doApply(DataPool pool) {
         val elem = findElement()
-        val value = variableValue as Double
         
         // Get mapped value
-        val newAngle = animation.getAttribute("angle").getMappedValue(value)
+        val newAngle = getAttribute("angle").floatValue
         if(newAngle != null) {
-            angle = newAngle as Double
+            angle = newAngle
+        }
+        val newAnchorX = getAttribute("anchorX").floatValue
+        if(newAnchorX != null) {
+            anchorX = newAnchorX
+        }
+        val newAnchorY = getAttribute("anchorY").floatValue
+        if(newAnchorY != null) {
+            anchorY = newAnchorY
         }
         
         // Compute position
