@@ -125,8 +125,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 switch state {
                     case state.isReferencedState:
                         node.addMacroStateLabel(
-                            state.serializeHR + " @ " + ((state.referencedScope as State).serializeHR ?: "UnresolvedReference") +
-                            state.parameters.serializeHRParameters).associateWith(state)
+                            state.serializeHR + " @ " + ((state.reference.scope as State).serializeHR ?: "UnresolvedReference") +
+                            state.reference.parameters.serializeHRParameters).associateWith(state)
                     case state.isMacroState:
                         node.addMacroStateLabel(state.serializeHR.toString).associateWith(state)
                     default:
@@ -146,7 +146,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }           
 
             // Add actions
-            for (action : state.localActions) {
+            for (action : state.actions) {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(action);
@@ -191,7 +191,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
-        return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.localActions.empty ||
+        return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.actions.empty ||
             !state.declarations.empty || state.isReferencedState;
     }
     

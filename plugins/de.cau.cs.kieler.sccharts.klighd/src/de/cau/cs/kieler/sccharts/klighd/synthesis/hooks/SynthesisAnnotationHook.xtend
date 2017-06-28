@@ -12,9 +12,11 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -25,8 +27,8 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import java.util.List
 import java.util.Map.Entry
 
-import static extension java.lang.Character.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension java.lang.Character.*
 
 /**
  * Evaluates synthesis option annotations in the model.
@@ -36,6 +38,8 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * @kieler.rating 2015-11-4 proposed yellow
  */
 class SynthesisAnnotationHook extends SynthesisHook {
+    
+    @Inject extension AnnotationsExtensions
 
     // Annotation Keyword
     /** The annotation keyword for setting synthesis options */
@@ -65,7 +69,7 @@ class SynthesisAnnotationHook extends SynthesisHook {
     override start(Scope source, KNode node) {
         initializeNameOptionMap();
         // Configure synthesis options via annotation
-        source.getAllAnnotations(SYNTHESIS_OPTIONS_ANNOTATION).forEach[processSynthesisOptionAnnotation];
+        source.getAnnotations(SYNTHESIS_OPTIONS_ANNOTATION).forEach[processSynthesisOptionAnnotation];
     }
     
     override finish(Scope source, KNode node) {

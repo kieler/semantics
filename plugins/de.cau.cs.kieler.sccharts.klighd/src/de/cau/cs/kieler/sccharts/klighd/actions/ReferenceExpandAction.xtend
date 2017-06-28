@@ -40,9 +40,9 @@ class ReferenceExpandAction extends CollapseExpandAction {
             val modelElement = context.getDomainElement(context.KNode);
             if (modelElement instanceof State) {
                 val state = modelElement as State;
-                if (state.referencedScope != null) {
+                if (state.reference != null) {
                     val diagram = LightDiagramServices.translateModel(
-                        state.referencedScope,
+                        state.reference.scope,
                         context.viewContext
                     );
                     context.getKNode.children += diagram.children;

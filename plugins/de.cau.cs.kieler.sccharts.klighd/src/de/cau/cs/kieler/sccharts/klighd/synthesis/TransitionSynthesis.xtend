@@ -88,7 +88,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                 transition.history == HistoryType::SHALLOW);
         }
 
-        switch (transition.type) {
+        switch (transition.preemption) {
             case STRONGABORT: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
             default: {

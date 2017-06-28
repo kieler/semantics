@@ -112,7 +112,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         
         val scc = root.getSCCharts
         clearSymbols
-        for(symbolTable : scc.getPragmas(PRAGMA_SYMBOLS)) {  
+        for(symbolTable : scc.getStringPragmas(PRAGMA_SYMBOLS)) {  
             var prefix = ""
             if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_GREEK)) { defineGreekSymbols(prefix) }
@@ -121,10 +121,10 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
             if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
         }             
-        for(symbol : scc.getPragmas(PRAGMA_SYMBOL)) {
+        for(symbol : scc.getStringPragmas(PRAGMA_SYMBOL)) {
             symbol.values.head.defineSymbol(symbol.values.get(1))
         }
-        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getPragmas(PRAGMA_SKINPATH).head.values.head
+        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head
 
         if (root instanceof SCCharts) {
             if (SHOW_ALL_SCCHARTS.booleanValue) {
@@ -145,7 +145,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
         rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
-        val pragmaFont = scc.getPragmas(PRAGMA_FONT).last
+        val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
         if (pragmaFont != null) {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }

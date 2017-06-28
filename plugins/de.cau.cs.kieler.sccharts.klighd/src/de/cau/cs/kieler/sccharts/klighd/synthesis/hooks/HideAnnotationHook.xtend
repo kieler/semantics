@@ -64,7 +64,7 @@ class HideAnnotationHook extends SynthesisHook {
         if (!SHOW_HIDDEN_ELEMENTS.booleanValue) {
             if (state.hasHideAnnotation) {
                 node.initiallyHide;
-            } else if (!state.declarations.empty || !state.localActions.empty || !state.regions.empty) { // Remove content
+            } else if (!state.declarations.empty || !state.actions.empty || !state.regions.empty) { // Remove content
                 // Remove hidden declarations
                 val parent = node.contentContainer;
                 if (!state.declarations.empty) {
@@ -83,10 +83,10 @@ class HideAnnotationHook extends SynthesisHook {
                     }
                 }
                 // Remove hidden actions
-                if (!state.localActions.empty) {
+                if (!state.actions.empty) {
                     val actionsContainer = parent?.getProperty(StateStyles.ACTIONS_CONTAINER);
                     if (actionsContainer != null) {
-                        for (action : state.localActions) {
+                        for (action : state.actions) {
                             if (action.hasHideAnnotation) {
                                 val actionLabel = actionsContainer.children.findFirst [
                                     isAssociatedWith(action)

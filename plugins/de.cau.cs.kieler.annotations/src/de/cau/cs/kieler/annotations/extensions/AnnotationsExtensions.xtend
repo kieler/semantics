@@ -37,7 +37,7 @@ class AnnotationsExtensions {
         pragmatable.pragmas.filter[ it.name.equals(name) ]
     }     
     
-    def getStringPragma(Pragmatable pragmatable, String name) {
+    def getStringPragmas(Pragmatable pragmatable, String name) {
         pragmatable.getPragmas(name).filter(StringPragma)
     }
 	
@@ -84,8 +84,8 @@ class AnnotationsExtensions {
 		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
 	}
 
-    def boolean hasPragma(Annotatable annotatable, String name) {
-        !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(PragmaStringAnnotation).filter[ it.name == name ].empty
+    def boolean hasPragma(Pragmatable pragmatable, String name) {
+        !pragmatable.pragmas.nullOrEmpty && !pragmatable.getStringPragmas(name).empty
     }
 	
     def void removeAnnotations(Annotatable annotatable, String name) {
