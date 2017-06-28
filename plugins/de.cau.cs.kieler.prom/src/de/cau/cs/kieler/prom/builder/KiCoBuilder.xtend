@@ -29,6 +29,7 @@ import java.util.HashMap
 import java.util.List
 import java.util.Map
 import java.util.Set
+import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IProject
@@ -204,6 +205,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private def void fullBuild() {
         // Re-initialize
         isInitialized = false
+        // Find all templates that should be built
+        val templateFiles = findTemplateFilesInProject()
+        processTemplates(templateFiles)
         // Find all model files
         val modelFiles = findModelFilesInProject()
         build(modelFiles)
@@ -213,16 +217,26 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // Find changed files
         monitor.subTask("Searching files")
         
-        val ArrayList<IFile> changedFiles = newArrayList()
+        val List<IFile> templatesToBeProcessed = newArrayList
+        val ArrayList<IFile> modelsToBeBuilt = newArrayList()
+        
         try {
             delta.accept(new IResourceDeltaVisitor() {
                 override visit(IResourceDelta delta) throws CoreException {
                     val res = delta.getResource()
                     if(res.type == IResource.FILE && res.fileExtension != null && res.exists) {
+                        val file = res as IFile
+                        println(file.name)
                         // Only take care of files with the following extensions
-                        switch(res.fileExtension.toLowerCase) {
+                        switch(file.fileExtension.toLowerCase) {
                             case "sct",
-                            case "strl": changedFiles.add(res as IFile)
+                            case "strl": modelsToBeBuilt.add(file)
+                            case "ftl": {
+                                // TODO: Hard coded stuff. Make this configurable
+                                if(file.name.startsWith("Process")) {
+                                    templatesToBeProcessed.add(file)
+                                }
+                            }
                         }
                     } else if(res.type == IResource.FOLDER) {
                         // Ignore files that were copied to bin folder by eclipse 
@@ -237,9 +251,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             e.printStackTrace();
         }
 
-        // Build the changed files
+        // Process templates
+        processTemplates(templatesToBeProcessed)
+        println(templatesToBeProcessed)
+
+        // Build the changed models
         monitor.subTask("Building files")
-        build(changedFiles)
+        build(modelsToBeBuilt)
     }
     
     /**
@@ -404,6 +422,17 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     }
     
     /**
+     * Returns a list with all template files in the project that should be processed.
+     * @return the list of template files that should be processed
+     */ 
+    private def List<IFile> findTemplateFilesInProject() {
+        val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
+        val allTemplates = PromPlugin.findFiles(membersWithoutBinDirectory, #["ftl"])
+        // TODO: Make this configurable
+        return allTemplates.filter[it.name.startsWith("Process")].toList
+    }
+    
+    /**
      * Return the launch data of the used environment
      * @return the launch data
      */
@@ -441,11 +470,33 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private def void showBuildProblems(List<BuildProblem> problems) {
         for(problem : problems) {
             if(problem.file != null) {
+                var IMarker marker
                 if(problem.isWarning) {
-                    createWarningMarker(problem.file, problem.message)
+                    marker = createWarningMarker(problem.file, problem.message)
                 } else {
-                    createErrorMarker(problem.file, problem.message)
+                    marker = createErrorMarker(problem.file, problem.message)
                 }
+                if(marker != null && problem.line > 0) {
+                    marker.setAttribute(IMarker.LINE_NUMBER, problem.line)
+                }
+            }
+        }
+    }
+    
+    private def void processTemplates(List<IFile> templates) {
+        for(file : templates) {
+            val name = Files.getNameWithoutExtension(file.name)
+            val generator = new WrapperCodeGenerator(project, null)
+            val generatedCode = generator.processTemplate(file.projectRelativePath.toOSString, 
+                    #{WrapperCodeGenerator.FILE_NAME_VARIABLE -> name} )
+            
+            // Save output
+            if(!generatedCode.isNullOrEmpty) {
+                val folder = file.parent as IContainer
+                // TODO: Hard coded stuff. Make this configurable
+                val outputName = file.name.replace("Process","").replace(".ftl", "")
+                val outputFile = folder.getFile(new Path(outputName))
+                PromPlugin.createResource(outputFile, generatedCode, true)
             }
         }
     }
@@ -494,7 +545,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 try {
                     for(simulationCompiler : simulationCompilers) {
                         if(simulationCompiler.canCompile(file)) {
-                            println(file+","+simulationCompiler.class.name)
                             val result = simulationCompiler.compile(file)
                             showBuildProblems(result.problems)
                         }

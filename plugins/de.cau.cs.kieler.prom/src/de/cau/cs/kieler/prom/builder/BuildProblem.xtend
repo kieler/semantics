@@ -23,6 +23,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class BuildProblem {
     @Accessors(PUBLIC_GETTER)
     private var IFile file
+    @Accessors
+    private var int line = -1
     @Accessors(PUBLIC_GETTER)
     private var Exception cause = null
     @Accessors(PUBLIC_GETTER)

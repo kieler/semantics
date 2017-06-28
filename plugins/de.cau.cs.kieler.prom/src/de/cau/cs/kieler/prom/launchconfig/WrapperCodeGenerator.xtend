@@ -143,6 +143,28 @@ class WrapperCodeGenerator {
     }
     
     /**
+     * Generates code by running the template engine on a template file.
+     * 
+     * @param templatePath The project relative path to the template
+     * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
+     */
+    def public String processTemplate(String templatePath, Map<String, Object> additionalMappings) {
+        
+        // Check consistency of path
+        if (!templatePath.isNullOrEmpty()) {
+            FreeMarkerPlugin.newConfiguration(project.location.toOSString)
+            
+            val template = FreeMarkerPlugin.configuration.getTemplate(templatePath)
+
+            val writer = new StringWriter()
+            template.process(additionalMappings, writer)
+    
+            return writer.toString()
+        }
+        return ""
+    }
+    
+    /**
      * Generates wrapper code for a list of annotated model files.
      * 
      * @param templatePath The project relative path to the wrapper code template

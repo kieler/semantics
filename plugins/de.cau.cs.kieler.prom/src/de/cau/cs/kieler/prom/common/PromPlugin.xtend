@@ -376,9 +376,58 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     }
     
     /**
+     * Creates an empty resource and all needed parent folders.
+     * If the resource already exists, nothing happens.
+     * 
+     * @param resource The resource handle to be created
+     */
+    public static def void createResource(IResource resource) throws CoreException {
+        createResource(resource, null as InputStream, false)
+    }
+    
+    /**
+     * Creates an empty resource and all needed parent folders.
+     * 
+     * @param resource The resource handle to be created
+     * @param overwrite Determines if an existing resource should be replaced.
+     */
+    public static def void createResource(IResource resource, boolean overwrite) throws CoreException {
+        createResource(resource, null as InputStream, overwrite)
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders.
+     * If the resource is a file, it can be initialized with some text.
+     * If the resource already exists, nothing happens.
+     * 
+     * @param resource The resource handle to be created
+     * @param text Initial content for the resource
+     */
+    public static def void createResource(IResource resource, String text) throws CoreException {
+        createResource(resource, text, false)
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders.
+     * If the resource is a file, it can be initialized with some text.
+     * 
+     * @param resource The resource handle to be created
+     * @param text Initial content for the resource
+     * @param overwrite Determines if an existing resource should be replaced.
+     */
+    public static def void createResource(IResource resource, String text, boolean overwrite) throws CoreException {
+        val stream = if(text.isNullOrEmpty)
+                         null
+                     else
+                         new StringInputStream(text)
+        createResource(resource, stream, overwrite)
+    }
+    
+    /**
      * Creates a resource and all needed parent folders in a project.
      * The created resource is initialized with the inputs of the stream.
      * The stream is closed afterwards.
+     * If the resource already exists, nothing happens.
      * 
      * @param resource The resource handle to be created
      * @param stream Input stream with initial content for the resource
@@ -394,7 +443,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
      * 
      * @param resource The resource handle to be created
      * @param stream Input stream with initial content for the resource
-     * @param overwrite Determines if an already existing resource should be updated with new content. 
+     * @param overwrite Determines if an already existing resource should be replaced.
      */
     public static def void createResource(IResource resource, InputStream inputStream, boolean overwrite) throws CoreException {
         if (resource == null || (resource.exists && !overwrite))
@@ -485,7 +534,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         val resource = project.getFile(projectRelativePath)
        // Create empty file
        if(origin.trim.isNullOrEmpty) {
-           PromPlugin.createResource(resource, null)
+           PromPlugin.createResource(resource)
        } else {
            // Create file with initial content from origin
            val initialContentStream = PromPlugin.getInputStream(origin, null)
@@ -508,7 +557,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         } else if(origin.isNullOrEmpty) {
             // Create empty directory
             val newFolder = project.getFolder(projectRelativePath)
-            PromPlugin.createResource(newFolder, null);
+            PromPlugin.createResource(newFolder);
         } else {
             // Copy directory from file system
             val source = new File(origin)
