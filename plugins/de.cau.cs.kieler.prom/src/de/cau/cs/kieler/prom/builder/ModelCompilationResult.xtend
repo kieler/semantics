@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.prom.builder
 
+import java.util.List
+import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -21,4 +23,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class ModelCompilationResult extends FileGenerationResult {
     @Accessors    
     var SimulationGenerationResult simulationGenerationResult
+    
+    public def List<IFile> getCreatedSimulationFiles() {
+        if(simulationGenerationResult != null) {
+            return simulationGenerationResult.createdFiles    
+        }
+        return newArrayList
+    }
 }

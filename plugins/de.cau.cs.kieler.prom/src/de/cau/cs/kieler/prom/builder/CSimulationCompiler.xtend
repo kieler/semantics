@@ -33,9 +33,7 @@ class CSimulationCompiler extends SimulationCompiler {
     }
     
     override compile(IFile file) {
-        if(result == null) {
-            result = new SimulationGenerationResult()
-        }
+        result = new SimulationGenerationResult()
         
         // Compile this file
         monitor.subTask("Compiling simulation via gcc:" + file.name)
@@ -114,6 +112,10 @@ class CSimulationCompiler extends SimulationCompiler {
      */
     private def void createCJsonLibrary(IProject project, IPath simDirectory) {
         val libPath = simDirectory.append("lib")
-        PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON")
+        val libFolder = project.getFolder(libPath)
+        if(!libFolder.exists) {
+            PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON")
+            libFolder.parent.refreshLocal(1, null)
+        }
     }
 }

@@ -27,7 +27,7 @@ class FileGenerationResult {
         createdFiles.add(createdFile)
     }
     
-    public def List<IFile> getCreateFiles() {
+    public def List<IFile> getCreatedFiles() {
         return createdFiles
     }
     

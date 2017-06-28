@@ -79,9 +79,8 @@ class KiCoModelCompiler extends ModelCompiler {
      */
     override compile(IFile file, EObject model) {
         // Prepare result
-        if(result == null) {
-            result = new ModelCompilationResult()
-        }
+        result = new ModelCompilationResult()
+        
         // Compile model
         if (model != null) {
             // Skip compilation of models
@@ -140,10 +139,12 @@ class KiCoModelCompiler extends ModelCompiler {
     
     private def CompilationResult compileWithKiCo(EObject model) {
         // Get compiler context with settings for KiCo
-        // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
-        // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-        // TODO: ABORTWTO often makes trouble and is not deterministicly choosen, so we explicitly disable it.
-        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO"
+        // TODO: There are several transformations that do not work correctly or throw exceptions, so we explicitly disable them.
+        // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015)
+        // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015)
+        // TODO: ABORTWTO often makes trouble and is not deterministicly choosen
+        // TODO: scg.guards.ft and scg.scheduling.dc are experimental transformations and have issues (KISEMA-1188)
+        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO, !scg.guards.ft, !scg.scheduling.dc"
         if(KiCoBuilder.isCompileChain(compileChain)) {
             chain += ", " + compileChain
         } else {

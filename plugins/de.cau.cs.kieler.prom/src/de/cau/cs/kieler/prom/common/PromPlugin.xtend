@@ -419,10 +419,18 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                 // Close stream with content
                 stream.close()
             }
-            case IResource.FOLDER :
+            case IResource.FOLDER : {
                 if(!resource.exists) {
-                    (resource as IFolder).create(IResource.NONE, true, null)
+                    try {
+                        (resource as IFolder).create(true, true, null)
+                    } catch(CoreException e) {
+                        // There seem to be cases in which the resource does exist,
+                        // yet resource.exists returns false and thus an exception is thrown, because the resource already exists...
+                        // However, this exception can be safely ignored here.
+                        e.printStackTrace()
+                    }
                 }
+            }
             case IResource.PROJECT : {
                 if(!resource.exists) {
                     (resource as IProject).create(null)
@@ -497,16 +505,16 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             // Fill folder with files from plugin
             val newFolder = project.getFolder(projectRelativePath)
             initializeFolderViaPlatformURL(newFolder, origin)
-        } else if(!origin.isNullOrEmpty) {
+        } else if(origin.isNullOrEmpty) {
+            // Create empty directory
+            val newFolder = project.getFolder(projectRelativePath)
+            PromPlugin.createResource(newFolder, null);
+        } else {
             // Copy directory from file system
             val source = new File(origin)
             val target = new File(project.location + File.separator + projectRelativePath)
             
             copyFolder(source, target)
-        } else {
-            // Create empty directory
-            val newFolder = project.getFolder(projectRelativePath)
-            PromPlugin.createResource(newFolder, null);
         }
     }
     
@@ -555,6 +563,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                         PromPlugin.createResource(file, stream)
                         stream.close()
                     }
+                    newFolder.refreshLocal(IResource.DEPTH_INFINITE, null)
                 } else {
                     throw new Exception("The directory '"+dir+"'\n"
                         + "of the plugin '"+bundleName+"' does not exist or is empty.")
