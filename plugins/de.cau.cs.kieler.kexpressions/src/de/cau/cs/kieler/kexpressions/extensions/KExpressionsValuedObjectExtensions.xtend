@@ -75,7 +75,7 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.variableDeclaration.type
     }
     
-    def ImmutableList<ValuedObject> getValuedObjects(EObject eObject) {
+    def ImmutableList<ValuedObject> getValuedObjectsFromEObject(EObject eObject) {
         ImmutableList.copyOf(<ValuedObject> newArrayList => [ list |
             eObject.eContents.filter(Declaration).forEach[ list += valuedObjects ]
         ])
@@ -119,6 +119,10 @@ class KExpressionsValuedObjectExtensions {
         if (valuedObject.isModelReference) return false
         valuedObject.variableDeclaration.isSignal
     }   
+    
+    def boolean isPureSignal(ValuedObject valuedObject) {
+        valuedObject.isSignal && valuedObject.type == ValueType::PURE
+    }    
 
     def public boolean isValuedSignal(ValuedObject valuedObject) {
         valuedObject.variableDeclaration.isSignal && valuedObject.type != ValueType::PURE
@@ -176,9 +180,6 @@ class KExpressionsValuedObjectExtensions {
             declaration.remove
         }
     }
-    
-    
-
 
     def Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
@@ -189,6 +190,9 @@ class KExpressionsValuedObjectExtensions {
             newDeclaration
         }
     }
-    
+        
+    def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
+        declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
+    }    
     
 }

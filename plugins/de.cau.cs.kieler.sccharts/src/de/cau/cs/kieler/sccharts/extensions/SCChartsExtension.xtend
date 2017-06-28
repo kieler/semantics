@@ -220,17 +220,17 @@ class SCChartsExtension {
 
     // Return the list of pure signals of a state.
     def List<ValuedObject> getPureSignals(State state) {
-        state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
+        state.valuedObjectsFromEObject.filter[e|e.isSignal && e.type == ValueType::PURE].toList
     }
 
     // Return the list of valued signals of a state.
     def List<ValuedObject> getValuedSignals(State state) {
-        state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
+        state.valuedObjectsFromEObject.filter[e|e.isSignal && e.type != ValueType::PURE].toList
     }
 
     // Return the list of all signals of a state.
     def List<ValuedObject> getSignals(State state) {
-        state.valuedObjects.filter[e|e.isSignal].toList
+        state.valuedObjectsFromEObject.filter[e|e.isSignal].toList
     }
 
     // Return true if the valued Object is a pure signal
@@ -244,7 +244,7 @@ class SCChartsExtension {
     // If necessary, these function should be re-implemented.
     // Checks if all regions have at least one final state. Note that the final
     // state may not be reachable and this method conservatively still returns
-    // true. It only returns fals iff there is at least one region without
+    // true. It only returns false iff there is at least one region without
     // a final state.
     def boolean regionsMayTerminate(State state) {
         for (region : state.regions.filter(ControlflowRegion)) {
@@ -357,7 +357,7 @@ class SCChartsExtension {
             return true
         }
         
-        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].empty
+        val notFoundOtherValuedObjectInState = state.valuedObjectsFromEObject.filter[it != valuedObject && name == newName].empty
         return notFoundOtherValuedObjectInState
     }
 
@@ -1181,7 +1181,7 @@ class SCChartsExtension {
         // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
         // Exclude the top level state
         if (state == targetRootState) {
-            for(valuedObject : state.valuedObjects.filter[!isInput && !isOutput].toList.immutableCopy) {
+            for(valuedObject : state.valuedObjectsFromEObject.filter[!isInput && !isOutput].toList.immutableCopy) {
                 valuedObject.variableDeclaration.output = true
             }
             return;
@@ -1319,7 +1319,7 @@ class SCChartsExtension {
         val newState = state.nontracingCopy
 
         // Fix valued object references
-        state.valuedObjects.forEach [
+        state.valuedObjectsFromEObject.forEach [
             val newValuedObject = newState.findValuedObjectByName(it.name)
             if (newValuedObject != null) {
                 newState.replaceAllOccurrences(it, newValuedObject)
