@@ -90,16 +90,7 @@ import de.cau.cs.kieler.kexpressions.CombineOperator
 class SCEstExtension {
 
     @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
     extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension SCEstTransformation
 
     // Current labelSuffix ensures the creation of fresh labels, i.e. labels are numbered (l1, l2,...)
     var static labelSuffix = 0;
@@ -410,6 +401,23 @@ class SCEstExtension {
     }
     
     /**
+     * Returns a new termFlag.
+     * 
+     * @param exp The value of the flag. true or false
+     * @return A new ValuedObject with an unused name
+     */
+    def ValuedObject createNewUniqueTermFlag(Expression exp) {
+        if (exp instanceof Expression) {
+            createValuedObject(createNewUniqueTermFlagName) => [
+                it.initialValue = exp
+            ]
+        }
+        else {
+            createValuedObject(createNewUniqueTermFlagName)
+        }
+    }
+    
+    /**
      * Returns an unused variable name. String: ( "_v" + counter )
      * @return Returns an unused variable name. String: ( "_v" + counter )
      */
@@ -443,6 +451,15 @@ class SCEstExtension {
     def createNewUniqueDepthFlagName() {
         depthFlagSuffix++
         "depth" + depthFlagSuffix
+    }
+    
+    /**
+     * Returns an unused termFlag name. String: ( "term" + counter )
+     * @return Returns an unused termFlag name. String: ( "term" + counter )
+     */
+    def createNewUniqueTermFlagName() {
+        flagSuffix++
+        "term" + flagSuffix
     }
     
     /**
@@ -1167,7 +1184,7 @@ class SCEstExtension {
      * @param statementSequenceToAdd The StatementSequence which should be added to the other one
      * @return The StatementSequence with the statements of the other one added
      */
-    def dispatch add(EList<Statement> statementSequence, int pos, EList<Statement> statementSequenceToAdd) {
+    def add(EList<Statement> statementSequence, int pos, EList<Statement> statementSequenceToAdd) {
         var length = statementSequenceToAdd.length
         for (var i=0; i<length; i++) {
             statementSequence.add(pos+i, statementSequenceToAdd.get(0))
@@ -1336,29 +1353,6 @@ class SCEstExtension {
      */
     def createAwait() {
         EsterelFactory::eINSTANCE.createAwait
-    }
-    
-     /**
-      * Creates "if c then pause; goto l"
-      * 
-      * @param condition The condition
-      * @param targetLabel The targetlabel
-      * @param pause With or without a Pause Statement
-      * @return The created IfTest
-      */
-    def IfTest newIfThenPauseGoto(de.cau.cs.kieler.esterel.esterel.DelayExpr condition, Label targetLabel, boolean pause) {
-        EsterelFactory::eINSTANCE.createIfTest => [
-            // TODO delayExpr also includes a counter expression: Signal A: ( suspend 3 A ...) or (suspend 3*X A)
-            // TODO delayExpr also includes a "Tick" delayExpr.tick
-            expr = (condition.signalExpr as Expression)
-            if (pause) {
-                thenStatements.addAll(SclFactory::eINSTANCE.createPause)                
-            }
-            thenStatements.add(
-                    SclFactory::eINSTANCE.createGoto => [
-                        it.target = targetLabel
-                    ])
-        ]
     }
     
     /**
@@ -1774,6 +1768,69 @@ class SCEstExtension {
         }
     }
     
+    /**
+     * Check the combine operator and return a corresponding operator of type 'OperatorType' or throw Exception
+     * 
+     * @param operator The combine operator to check
+     * @return The corresponding OperatorType
+     */
+    def OperatorType getOperator(CombineOperator operator) {
+        var OperatorType newOperator
+        if (operator == CombineOperator.ADD) {
+            newOperator = OperatorType.ADD
+        }
+        else if (operator == CombineOperator.MULT) {
+            newOperator = OperatorType.MULT
+        }
+        else if (operator == CombineOperator.OR) {
+            newOperator = OperatorType.LOGICAL_OR
+        }
+        else if (operator == CombineOperator.AND) {
+            newOperator = OperatorType.LOGICAL_AND
+        }
+        else {
+            throw new UnsupportedOperationException("The following combine operator is not supported! " + operator.toString)
+        }
+        return newOperator
+    }
+    
+    /**
+     * Create a bool expression 'true'
+     */
+    def createTrue() {
+        createBoolValue(true)
+    }
+    
+    /**
+     * Create a bool expression 'false'
+     */
+    def createFalse() {
+        createBoolValue(false)
+    }
+    
+    /**
+     * Return the neutral element for a specific combine function
+     * 
+     * @param op The combine operator which specifies the combine function
+     */
+    def Expression getNeutral(CombineOperator op) {
+        switch op {
+            case CombineOperator.ADD:
+                return createIntValue(0)
+            case CombineOperator.MULT:
+                return createIntValue(1)
+            case CombineOperator.OR :
+                return createFalse
+            case CombineOperator.AND :
+                return createTrue
+// TODO 
+//            case CombineOperator.NONE
+            default : {
+                throw new UnsupportedOperationException(
+                        "No neutral Element for: " + op.toString)
+            }
+        }
+    }
  
  
  

@@ -44,12 +44,10 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.esterel.Input
 import de.cau.cs.kieler.esterel.esterel.Output
 import de.cau.cs.kieler.esterel.esterel.InputOutput
-import de.cau.cs.kieler.esterel.esterel.Return
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
+import de.cau.cs.kieler.scl.scl.ScopeStatement
 
 /**
  * @author mrb
@@ -80,9 +78,8 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     extension SCEstExtension
     
     def SCEstProgram transform(SCEstProgram prog) {
-        // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val
-        var HashMap<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals = 
-                new HashMap<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>>()
+        // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
+        var HashMap<ISignal, NewSignals> newSignals = new HashMap<ISignal, NewSignals>()
         for (m : prog.modules) {
             m.intSignalDecls.transformSignals(newSignals, m)
             transformStatements(m.statements, newSignals)
@@ -92,7 +89,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     }
     
     def EList<Statement> transformStatements(EList<Statement> statements, 
-            Map<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals ) {
+            Map<ISignal, NewSignals> newSignals ) {
         for (var i=0; i<statements?.length; i++) {
             statements.get(i).transformStatement(newSignals)
         }
@@ -100,7 +97,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     }
     
     def transformStatement(Statement statement, 
-            Map<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals) {
+            Map<ISignal, NewSignals> newSignals) {
         if (statement instanceof Emit) {
             transformEmit(statement, newSignals)
         }
@@ -156,26 +153,22 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
         }
     }
     
-    def transformSignals(EList<InterfaceSignalDecl> signalDecl, 
-        Map<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals, SCEstModule module
-    ) {
+    def transformSignals(EList<InterfaceSignalDecl> signalDecl, Map<ISignal, NewSignals> newSignals, SCEstModule module) {
         var scope = createScopeStatement
         scope.statements.add(module.statements)
         module.statements.add(scope)
         for (interfaceSD : signalDecl) {
             for (signal : interfaceSD.signals) {
-                var s = createSignalVariable(createBoolValue(false), null, signal.name)
+                var s = createSignalVariable(createFalse, null, signal.name)
                 var decl = createDeclaration(ValueType.BOOL, s)
                 var Declaration decl2 = createDeclaration(null, null)
                 if (signal.type != null) {
                     scope.declarations.add(decl)
                     if (signal.type == ValueType.PURE) {
-                        newSignals.put(signal, 
-                            new Pair(new Pair(s, null), new Pair(null, null))
-                        )
+                        newSignals.put(signal, new NewSignals(s))
                     }
                     else {
-                        var s_set = createSignalVariable(createBoolValue(false), null, signal.name + "_set")
+                        var s_set = createSignalVariable(createFalse, null, signal.name + "_set")
                         decl.valuedObjects.add(s_set)
                         var s_val = createSignalVariable(signal.expression, signal.combineOperator, signal.name + "_val")
                         var tempType = if (signal.type == ValueType.DOUBLE) ValueType.FLOAT else signal.type
@@ -189,9 +182,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                             s_cur = createSignalVariable(null, signal.combineOperator, signal.name + "_cur")
                         }
                         decl2.valuedObjects.add(s_cur)
-                        newSignals.put(signal, 
-                            new Pair(new Pair(s, s_set), new Pair(s_cur, s_val))
-                        )
+                        newSignals.put(signal, new NewSignals(s, s_set, s_cur, s_val))
                         scope.declarations.add(decl2)
                     }
                 }
@@ -218,68 +209,127 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                 }
             }
         }
+        createParallelForSignals(scope, newSignals)
     }
     
-    def transformEmit(Statement statement, 
-        Map<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals
-    ) {
+    def transformEmit(Statement statement, Map<ISignal, NewSignals> newSignals) {
         var emit = statement as Emit
         var signal = emit.signal
+        // when emitting a valued signal, 'expr' can't be null
+        if (emit.expr == null && signal.type != ValueType.PURE) {
+            throw new UnsupportedOperationException("The following signal is a valued signal. 
+                                    Thus a non valued emit is invalid! " + signal.toString)
+        }
         if (newSignals.containsKey(signal)) {
             var statements = statement.getContainingList
             var pos = statements.indexOf(statement)
-            var s = newSignals.get(signal).key.key
-            var expr = createOperatorExpression(createValuedObjectReference(s), createBoolValue(true), OperatorType.LOGICAL_OR)
-            if (emit.expr == null) {
-                statements.set(pos, createAssignment(s, expr))
-            }
-            else {
-                // TODO
+            var s = newSignals.get(signal).s
+            var expr = createOr(createValuedObjectReference(s), createTrue)
+            statements.set(pos, createAssignment(s, expr))
+            // valued emit
+            if (emit.expr != null) {
+                if (signal.type != ValueType.PURE) {
+                    var s_cur = newSignals.get(signal).s_cur
+                    var assign2 = createAssignment(s_cur, 
+                        createOperatorExpression(createValuedObjectReference(s_cur), emit.expr, getOperator(signal.combineOperator)))
+                    statements.add(pos+1, assign2)
+                }
+                else {
+                    throw new UnsupportedOperationException("The following signal is not a valued signal! 
+                                                            Thus a valued emit is invalid! " + signal.toString)
+                }
             }
         }
     }
     
-    def transformUnEmit(Statement statement, 
-        Map<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals
-    ) {
+    def transformUnEmit(Statement statement, Map<ISignal, NewSignals> newSignals) {
         var unEmit = statement as UnEmit
         var signal = unEmit.signal
         if (newSignals.containsKey(signal)) {
             var statements = statement.getContainingList
             var pos = statements.indexOf(statement)
-            var s = newSignals.get(signal).key.key
-            statements.set(pos, createAssignment(s, createBoolValue(false)))
+            var s = newSignals.get(signal).s
+            statements.set(pos, createAssignment(s, createFalse))
         }
     }
     
-    def transformSet(Statement statement, 
-        Map<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals
-    ) {
+    def transformSet(Statement statement, Map<ISignal, NewSignals> newSignals) {
+        var set = statement as Set
+        var signal = set.signal
+        if (newSignals.containsKey(signal)) {
+            var statements = statement.getContainingList
+            var pos = statements.indexOf(statement)
+            var s = newSignals.get(signal).s
+            var s_set = newSignals.get(signal).s_set
+            var s_cur = newSignals.get(signal).s_cur
+            var assign1 = createAssignment(s, createOr(createValuedObjectReference(s), createTrue))
+            var assign2 = createAssignment(s_set, createOr(createValuedObjectReference(s_set), createTrue))
+            var assign3 = createAssignment(s_cur, set.expr)
+            statements.set(pos, assign3)
+            statements.add(pos, assign2)
+            statements.add(pos, assign1)
+        }
+    }
+    
+    def transformLocalSignal(Statement statement, Map<ISignal, NewSignals> newSignals) {
         
     }
     
-    def transformLocalSignal(Statement statement, 
-        Map<ISignal, Pair<Pair<ValuedObject, ValuedObject>, Pair<ValuedObject, ValuedObject>>> newSignals
-    ) {
-        
-    }
-    
-    def Expression getNeutral(CombineOperator op) {
-        switch op {
-            case CombineOperator.ADD:
-                return createIntValue(0)
-            case CombineOperator.MULT:
-                return createIntValue(1)
-            case CombineOperator.OR :
-                return createBoolValue(false)
-            case CombineOperator.AND :
-                return createBoolValue(true)
-// TODO 
-//            case CombineOperator.NONE
-            default : {
-                throw new UnsupportedOperationException(
-                        "No neutral Element for: " + op.toString)
+    def createParallelForSignals(ScopeStatement scope, Map<ISignal, NewSignals> newSignals) {
+        var necessary = false
+        var it = newSignals.keySet.iterator
+        while (!necessary && it.hasNext) {
+            var ISignal signal = it.next
+            necessary = necessary || (signal.type != ValueType.PURE) || (signal.eContainer instanceof Output)
+        }
+        if (necessary) {
+            var term = createNewUniqueTermFlag(createFalse)
+            var decl = createDeclaration(ValueType.BOOL, term)
+            var parallel = createParallel
+            var thread1 = createThread
+            var thread2 = createThread
+            parallel.threads.add(thread1)
+            parallel.threads.add(thread2)
+            thread2.statements.add(scope.statements)
+            thread2.statements.add(createAssignment(term, createTrue))
+            scope.statements.add(parallel)
+            scope.declarations.add(decl)
+            
+            // thread1 statements: the initializations of the output signals
+            var label = createLabel
+            thread1.statements.add(label)
+            it = newSignals.keySet.iterator
+            while (it.hasNext) {
+                var signal = it.next
+                var keyValue = newSignals.get(signal)
+                var s = keyValue.s
+                if (signal.type != ValueType.PURE) {
+                    var s_set = keyValue.s_set
+                    var s_cur = keyValue.s_cur
+                    var s_val = keyValue.s_val
+                    if (signal.eContainer instanceof Output) {
+                        var assign1 = createAssignment(s, createFalse)
+                        thread1.statements.add(assign1)
+                    }
+                    var assign2 = createAssignment(s_set, createFalse)
+                    thread1.statements.add(assign2)
+                    var conditional1 = createConditional(createNot(createValuedObjectReference(s_set)))
+                    var assign3 = createAssignment(s_cur, getNeutral(s_cur.combineOperator))
+                    conditional1.statements.add(assign3)
+                    thread1.statements.add(conditional1)
+                    var conditional2 = createConditional(createValuedObjectReference(s))
+                    var assign4 = createAssignment(s_val, createValuedObjectReference(s_cur))
+                    conditional2.statements.add(assign4)
+                    thread1.statements.add(conditional2)
+                    
+                }
+                else if (signal.eContainer instanceof Output) {
+                    var assign1 = createAssignment(s, createFalse)
+                    thread1.statements.add(assign1)
+                }
             }
+            var conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), label, true)
+            thread1.statements.add(conditional)
         }
     }
 
