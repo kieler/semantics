@@ -59,5 +59,11 @@
             name="Interactive Timing Analysis">
       </page>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sccharts.text.sct.generator.extension">
+      <SCTGeneratorExtension
+            class="de.cau.cs.kieler.sccharts.timing.sctgenerator.extensions.HostCodeTimingExtension">
+      </SCTGeneratorExtension>
+   </extension>
 
 </plugin>

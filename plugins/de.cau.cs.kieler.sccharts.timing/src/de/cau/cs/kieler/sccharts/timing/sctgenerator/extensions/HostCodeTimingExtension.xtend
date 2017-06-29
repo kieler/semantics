@@ -13,21 +13,20 @@
 package de.cau.cs.kieler.sccharts.timing.sctgenerator.extensions
 
 import com.google.inject.Inject
-import com.google.inject.Singleton
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
 import org.eclipse.core.resources.IProject
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-
-import static extension de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator.isSuperstate
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ima
@@ -37,6 +36,7 @@ class HostCodeTimingExtension implements ISCTGeneratorExtension {
     
     /* Injections */
     @Inject extension SCTGenerator
+    @Inject extension KEffectsExtensions
     
     /* 
      * Static extension to generate models with host code calls chosen from a list in random mode.
@@ -74,17 +74,9 @@ class HostCodeTimingExtension implements ISCTGeneratorExtension {
      */
     override onTransitionCreate(Transition transition) {
         if (CHANCE_FOR_HOST_CODE_CALL.random != 0) {
-            
+            val hostCodeCallText = "workFor1000()";
+            transition.effects.add(asHostcodeEffect(hostCodeCallText));
         }
-//        /* If the source state of the transition is a superstate,
-//         * check whether or not it should get marked as strong or weak abort. */
-//        if (transition.sourceState.isSuperstate) {
-//            if (CHANCE_FOR_STRONG_ABORTS.random != 0) {
-//                transition.type = TransitionType.STRONGABORT
-//            } else if (CHANCE_FOR_WEAK_ABORTS.random != 0) {
-//                transition.type = TransitionType.WEAKABORT
-//            }
-//        }
     }
     
     override onStateCreate(State state) {
