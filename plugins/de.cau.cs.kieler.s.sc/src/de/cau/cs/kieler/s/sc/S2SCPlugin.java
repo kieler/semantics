@@ -149,7 +149,7 @@ public class S2SCPlugin extends AbstractUIPluginLog {
      */
     public static String estimateBufferSize(final Program program) {
         int bufferSizeInt = 0;
-        for (ValuedObject signal : kExpressionValuedObjectExtensions.getValuedObjects(program)) {
+        for (ValuedObject signal : kExpressionValuedObjectExtensions.getValuedObjectsFromEObject(program)) {
             if (kExpressionValuedObjectExtensions.isSignal(signal)) {
                 if (kExpressionValuedObjectExtensions.getType(signal) == ValueType.PURE) {
                     bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;

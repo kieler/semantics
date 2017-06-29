@@ -255,7 +255,7 @@ public class SCChartsGenerateRandomInputs implements IHandler {
     private List<String> getInputSignalList(final State rootState) {
         List<String> returnList = new LinkedList<String>();
         if (rootState != null) {
-            for (ValuedObject valuedObject : kExpressionsExtension.getValuedObjects(rootState)) {
+            for (ValuedObject valuedObject : kExpressionsExtension.getValuedObjectsFromEObject(rootState)) {
                 if (kExpressionsExtension.isInput(valuedObject)) {
                     returnList.add(valuedObject.getName());
                 }

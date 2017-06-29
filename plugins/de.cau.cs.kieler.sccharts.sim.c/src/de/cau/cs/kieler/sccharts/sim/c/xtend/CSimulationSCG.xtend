@@ -98,7 +98,7 @@ void readInputs() {
 
     object = cJSON_Parse(buffer);
     
-    «FOR valuedObject : scg.getValuedObjects().filter[ isInput ]» 
+    «FOR valuedObject : scg.getValuedObjectsFromEObject().filter[ isInput ]» 
     child = cJSON_GetObjectItem(object, "«valuedObject.name»");
     if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -134,7 +134,7 @@ void readInputs() {
    	'''
 void writeOutputs() {
     cJSON* value;;
-	«FOR output : scg.getValuedObjects().filter[ !isInput ]»
+	«FOR output : scg.getValuedObjectsFromEObject().filter[ !isInput ]»
 	«SCChartsSimCPlugin.log("=====> " + output.name)»
 	value = cJSON_CreateObject();
     «IF output.type != ValueType::STRING»

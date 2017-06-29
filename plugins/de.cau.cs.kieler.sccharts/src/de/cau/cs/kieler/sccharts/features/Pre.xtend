@@ -57,7 +57,7 @@ class Pre extends Feature {
     def isContained(State model) {
         for (state : model.allStates.toIterable) {
             val allActions = state.eAllContents.filter(typeof(Action)).toList
-            val allPreValuedObjects = state.valuedObjects.filter(
+            val allPreValuedObjects = state.getValuedObjectsFromEObject.filter(
                 valuedObject|
                     allActions.filter(
                         action|

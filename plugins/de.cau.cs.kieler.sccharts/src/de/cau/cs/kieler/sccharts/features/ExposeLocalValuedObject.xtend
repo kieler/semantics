@@ -49,14 +49,14 @@ class ExposeLocalValuedObject extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        if (model.valuedObjects.filter[!isOutput && !isInput].size > 0) {
+        if (model.getValuedObjectsFromEObject.filter[!isOutput && !isInput].size > 0) {
             return true;
         }
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             // NOT need to check for root state because we chose all-CONTAINED-states above
             //if (!state.isRootState) { 
-                if (state.valuedObjects.size > 0) {
+                if (state.getValuedObjectsFromEObject.size > 0) {
                     return true
                 }
             //}

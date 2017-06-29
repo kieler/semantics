@@ -50,7 +50,7 @@ class Static extends Feature {
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
         for (state : model.allStates.toIterable) {
-            val staticValuedObjects = state.valuedObjects.filter[isStatic].toList
+            val staticValuedObjects = state.getValuedObjectsFromEObject.filter[isStatic].toList
             if (staticValuedObjects.size > 0) {
                 return true
             }

@@ -123,7 +123,7 @@ class S2SC {
 	#define _SC_ID_MAX «program.priority» 
 
 	// Highest signal id in use;
-	#define _SC_SIG_MAX «program.getValuedObjects().filter[e|e.isSignal].size» 
+	#define _SC_SIG_MAX «program.getValuedObjectsFromEObject().filter[e|e.isSignal].size» 
 
 	#include "sc.h"
 
@@ -141,10 +141,10 @@ class S2SC {
    
    // Generate signal constants.
    def sSignalConstant(Program program) {
-   	'''typedef enum {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ",
+   	'''typedef enum {«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal] SEPARATOR ",
  "»sig_«signal.name»«ENDFOR»} signaltype;
    	
-   	const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
+   	const char *s2signame[] = {«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal] SEPARATOR ", 
 "»"sig_«signal.name»"«ENDFOR»};'''
    }
    
@@ -154,7 +154,7 @@ class S2SC {
    	int reset() {
 	RESET();
 	/* initialize all valued integer signals */
-	«FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
+	«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal]»
 	valSigInt[sig_«signal.name»] = 0;
 	«ENDFOR»
 	return 0; 
@@ -165,7 +165,7 @@ class S2SC {
    // Generate simple signal inputs.
    def sInputs(Program program) {
    	''' 
-	«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
+	«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
 void INPUT_«signal.name»() {
 	   _sigAdd(signals, sig_«signal.name»);
 «//     signalsPtr[sig_«signal.name»] = u2b(«signal.name»);
@@ -183,7 +183,7 @@ void INPUT_«signal.name»() {
    def sSetOutputFunction(Program program) {
    	'''
 	void callOutputs() {
-	«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
+	«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal].filter(e|e.isOutput)»
 		OUTPUT_«signal.name»(_sigContains(signals, sig_«signal.name»));«/*OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»)); */»
 	«ENDFOR»
 		}
@@ -200,7 +200,7 @@ void INPUT_«signal.name»() {
 		//signals=0;
 		_sigClear(signals);
 		//_checkTickInit;
-	«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
+	«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal].filter(e|e.isOutput)»
 	  _sigDel(signals, sig_«signal.name»);
 	«ENDFOR»
 	}
@@ -228,7 +228,7 @@ void setInputs(){
 
 	object = cJSON_Parse(buffer);
 	
-   «'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
+   «'''«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
 	       		«signal.callInputs»
    «ENDFOR»'''»	
    }'''
@@ -283,7 +283,7 @@ void setInputs(){
 
    // Define output functions to return JSON for each s signal.
    def sSimpleOutputs(Program program) {
-	'''«'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e | e.isOutput)»
+	'''«'''«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal].filter(e | e.isOutput)»
 		void OUTPUT_«signal.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
