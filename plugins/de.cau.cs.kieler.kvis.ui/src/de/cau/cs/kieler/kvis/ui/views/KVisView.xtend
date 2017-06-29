@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
 import de.cau.cs.kieler.kvis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.common.ModelImporter
+import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationListener
@@ -49,7 +50,6 @@ import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
@@ -84,6 +84,7 @@ class KVisView extends ViewPart {
     private var Visualization kvisConfig
     private var IFile kvisFile
     private var IFile svgImage
+    @Accessors(PUBLIC_GETTER)
     private var DataPool lastPool
     
     /**
@@ -115,9 +116,10 @@ class KVisView extends ViewPart {
     override setFocus() {
     }
 
-    private def void loadFile(IFile file) {
-        // Don't load a file that has not been modified.
-        if(isImageUnchanged) {
+    private def void loadFile(IFile file, boolean force) {
+        // Only load the file if anything has changed
+        // or we are forced to load the file no matter what.
+        if(!force && isImageUnchanged) {
             return;                
         }
         try {
@@ -127,13 +129,13 @@ class KVisView extends ViewPart {
             val model = ModelImporter.load(file)
             if (model != null) {
                 if (model instanceof Visualization) {
-                    isImageUnchanged = true
                     kvisConfig = model
-                    lastPool = null
                     kvisFile = file
                     saveUsedKvisFile(kvisFile)
                     updateAfterRendering = true
-                    // Load image
+                    isImageUnchanged = true
+                    lastPool = null
+                    // Load image file relative to the location of the configuration file
                     val project = file.project
                     val imagePath = file.parent.projectRelativePath.append(kvisConfig.image)
                     svgImage = project.getFile(imagePath)
@@ -194,9 +196,9 @@ class KVisView extends ViewPart {
         }
     }
 
-    public def void reload() {
+    public def void reload(boolean force) {
         if (kvisFile != null) {
-            loadFile(kvisFile)
+            loadFile(kvisFile, force)
         }
     }
 
@@ -212,7 +214,7 @@ class KVisView extends ViewPart {
             val workspaceRoot = ResourcesPlugin.workspace.root
             val file = workspaceRoot.findMember(path)
             if(file != null && file.exists && file.type == IResource.FILE){
-                loadFile(file as IFile)
+                loadFile(file as IFile, true)
             }            
         }
     }
@@ -262,28 +264,34 @@ class KVisView extends ViewPart {
         })
 
         canvas.svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderListener() {
-            
-            override documentLoadingCancelled(SVGDocumentLoaderEvent e) {
+            override documentLoadingCancelled(SVGDocumentLoaderEvent event) {
             }
-            
-            override documentLoadingCompleted(SVGDocumentLoaderEvent e) {
+            override documentLoadingCompleted(SVGDocumentLoaderEvent event) {
                 // Now that the document is loaded,
                 // we can configure the animation and interactions from the kvis file.
-                createAnimationHandlers(kvisConfig)
-                createInteractionHandlers(kvisConfig)
+                try {
+                    createAnimationHandlers(kvisConfig)
+                    createInteractionHandlers(kvisConfig)
+                } catch(Exception ex) {
+                    showError(ex)
+                }
             }
-            
-            override documentLoadingFailed(SVGDocumentLoaderEvent e) {
+            override documentLoadingFailed(SVGDocumentLoaderEvent event) {
+                // Show an error that the loading failed.
+                // This might be caused by flowed text created in Inkscape
+                // because this feature is not yet fully supported in SVG specification.
+                // (see http://wiki.inkscape.org/wiki/index.php/Frequently_asked_questions#What_about_flowed_text.3F)
+                val e = new Exception("Loading of the SVG document failed.\n\n"
+                                     + "This might be caused by flowed text in the SVG, which is not supported.\n"
+                                     + "(http://wiki.inkscape.org/wiki/index.php/Frequently_asked_questions#What_about_flowed_text.3F)")
+                showError(e)
             }
-            
-            override documentLoadingStarted(SVGDocumentLoaderEvent e) {
+            override documentLoadingStarted(SVGDocumentLoaderEvent event) {
             }
-            
-            })
+        })
 
         // Add load listener to update immediately in running simulation when changing visualization config.
         canvas.svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter(){
-            
             override gvtRenderingCompleted(GVTTreeRendererEvent e) {
                 // Immediately update svg with new data pool after refresh
                 if(updateAfterRendering) {
@@ -291,7 +299,7 @@ class KVisView extends ViewPart {
                     if(SimulationManager.instance != null
                         && !SimulationManager.instance.isStopped
                         && SimulationManager.instance.currentPool != null
-                        && SimulationManager.instance.currentPool != lastPool) {
+                        && SimulationManager.instance.currentPool !== lastPool) {
                         update(SimulationManager.instance.currentPool)
                     }
                 }
@@ -312,8 +320,7 @@ class KVisView extends ViewPart {
                     for(file : files) {
                         val fileDelta = rootDelta.findMember(file.fullPath);
                         if (fileDelta != null) {
-                            isImageUnchanged = false
-                            reload()
+                            reload(true)
                         }
                     }
                 }
@@ -336,6 +343,8 @@ class KVisView extends ViewPart {
                              + "Ctrl + Left Mouse Button : Zoom to rectangle\n"
                              + "Ctrl + Right Mouse Button : Rotate\n"
                              + "Mouse Wheel : Zoom in / out\n"
+                             + "Arrow keys : Scroll\n"
+                             + "Shift + Arrow keys : Fast scroll\n"
                 val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }
@@ -348,7 +357,7 @@ class KVisView extends ViewPart {
         mgr.add(new KVisViewToolbarAction("Reload", "refresh.png") {
             override run() {
                 if(kvisFile != null && svgImage != null) {
-                    reload()    
+                    reload(true)    
                 } else {
                     loadLastKvisFile()
                 }
@@ -365,13 +374,17 @@ class KVisView extends ViewPart {
                 if (results != null && results.size > 0) {
                     val result = results.get(0) as IResource
                     if (result.type == IResource.FILE) {
-                        loadFile(result as IFile)
+                        loadFile(result as IFile, true)
                     }
                 }
             }
         })
     }
 
+    /**
+     * Updates the image with the loaded configuration.
+     * This method has to be called in the UI thread.
+     */
     public def void update(DataPool pool) {
         if(kvisFile == null && svgImage == null) {
             return
@@ -379,7 +392,7 @@ class KVisView extends ViewPart {
         
         // If there is no pool (simulation was stopped), then return to original state
         if(pool == null) {
-            reload
+            reload(false)
         } else {
             isImageUnchanged = false
             // Execute interactions if needed
@@ -387,20 +400,27 @@ class KVisView extends ViewPart {
                 interaction.apply(pool)
             }
             
-            // Make all changes to the svg in the update manager.
-            // Otherwise the svg canvas is not updated properly.
-            lastPool = pool
-            canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
-                override run() {
-                    try {
-                        for (animation : animationHandlers) {
-                            animation.apply(pool)
-                        }    
-                    } catch (Exception e) {
-                        showError(e)
+            // Update svg with data from pool
+            if(pool !== lastPool) {
+                // Make all changes to the svg in the update manager.
+                // Otherwise the svg canvas is not updated properly.
+                lastPool = pool
+                canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
+                    override run() {
+                        // As this is invoked later in another thread,
+                        // the pool that should be visualized might already be outdated
+                        if(SimulationManager.instance != null && pool == SimulationManager.instance.currentPool) {
+                            try {
+                                for (animation : animationHandlers) {
+                                    animation.apply(pool)
+                                }    
+                            } catch (Exception e) {
+                                showError(e)
+                            }
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
     
@@ -422,12 +442,10 @@ class KVisView extends ViewPart {
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
-                // Execute in UI thread
-                Display.getDefault().asyncExec(new Runnable() {
-                    override void run() {
-                        KVisView.instance?.update(SimulationManager.instance?.currentPool)
-                    }
-                });
+                if(KVisView.instance != null && KVisView.instance.lastPool !== e.newPool) {
+                    // Update the view in the UI thread
+                    PromPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
+                }
             }
         }
         return listener

@@ -32,6 +32,7 @@ abstract class AnimationHandler {
     protected var String svgElementId
     protected var Animation animation
     protected var Object variableValue
+    protected var DataPool lastPool
     
     abstract public def String getName()
     abstract protected def void doApply(DataPool pool)
@@ -51,6 +52,13 @@ abstract class AnimationHandler {
     }
     
     public def void apply(DataPool pool) {
+        // Only update the svg if the pool changed since last time
+        if(pool == lastPool) {
+            return
+        } else {
+            lastPool = pool
+        }
+        // Update the svg with the new pool
         variableValue = getVariableValue(pool)
         if(isActive(pool)) {
             // Update attributes

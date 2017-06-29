@@ -27,17 +27,25 @@ class WalkPathAnimation extends AnimationHandler {
     var double pathStart
     var double pathEnd
     var double pathLength
+    
     var boolean autoOrientation
+    var double forwardX = 0
+    var double forwardY = 1
+    // TODO: if forwardX and forwardY can be negative, this is no longer needed
+    var double angleOffset
+    
     var double anchorX = 0.5
     var double anchorY = 0.5
     var double angleValue = 0
+    var boolean appendTransform = false
     
     var String initialTransform
     var SVGPoint lastPoint
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        setAttributes("autoOrientation", "anchorX", "anchorY", "start", "end", "length")
+        setAttributes("autoOrientation", "angleOffset", "forwardX", "forwardY", "anchorX",
+                      "anchorY", "start", "end", "length", "appendTransform")
         val pathAttr = addAttribute("path")
         pathAttr.mandatory = true
     }
@@ -49,6 +57,7 @@ class WalkPathAnimation extends AnimationHandler {
     override doApply(DataPool pool) {
         val elem = findElement(true)
         
+        // Path and length
         val newPathName = getAttribute("path").stringValue
         if(newPathName != null) {
             pathName = newPathName
@@ -73,11 +82,28 @@ class WalkPathAnimation extends AnimationHandler {
         if(length <= 0) {
             throw new IllegalArgumentException("The length of the path in the "+name+" animation must be greater than 0.")
         }
-        
+        // Orientation
         val newAutoOrientation = getAttribute("autoOrientation").boolValue
         if(newAutoOrientation != null) {
             autoOrientation = newAutoOrientation
         }
+        val newAngleOffset = getAttribute("angleOffset").floatValue
+        if(newAngleOffset != null) {
+            angleOffset = newAngleOffset
+        }
+        val newForwardX = getAttribute("forwardX").floatValue
+        if(newForwardX != null) {
+            forwardX = newForwardX
+        }
+        val newForwardY = getAttribute("forwardY").floatValue
+        if(newForwardY != null) {
+            forwardY = newForwardY
+        }
+        if(forwardX == 0 && forwardY == 0) {
+            throw new IllegalArgumentException("Forward vector of animation "+name+" cannot be the 0 vector, "
+                                             + " but is ("+forwardX+","+forwardY+")")
+        }
+        // Anchor
         val newAnchorX = getAttribute("anchorX").floatValue
         if(newAnchorX != null) {
             anchorX = newAnchorX
@@ -85,6 +111,11 @@ class WalkPathAnimation extends AnimationHandler {
         val newAnchorY = getAttribute("anchorY").floatValue
         if(newAnchorY != null) {
             anchorY = newAnchorY
+        }
+        // Append
+        val newAppendTransform = getAttribute("appendTransform").boolValue
+        if(newAppendTransform != null) {
+            appendTransform = newAppendTransform
         }
         
         // Calculate animation
@@ -116,12 +147,19 @@ class WalkPathAnimation extends AnimationHandler {
             // Calculate slope ("Steigung" bzw. "Ableitung") on path on current position
             val currentPointPlusDelta = path.getPointAtLength(scaledValue.floatValue + delta)
             angleValue = computeAngle(currentPoint, currentPointPlusDelta);
+            if(angleOffset != 0) {
+                angleValue += angleOffset
+            }
         }
         lastPoint = currentPoint;
         
         if(elem instanceof SVGLocatable) {
-            if(initialTransform == null) {
-                initialTransform = elem.getAttribute("transform");
+            if(appendTransform) {
+                if(initialTransform == null) {
+                    initialTransform = elem.getAttribute("transform");
+                }
+            } else {
+                initialTransform = ""    
             }
             // Position and size of the element
             val SVGLocatable locatable = elem as SVGLocatable
@@ -137,11 +175,9 @@ class WalkPathAnimation extends AnimationHandler {
             val yValue = currentPoint.y - posY - pivotY
 
             var translate = "translate(" + xValue + "," + yValue + ")"
-            if (angleValue != 0) {
-                if (autoOrientation) {
-                    translate += "rotate(" + angleValue + "," + (posX + pivotX) + "," + (posY + pivotY) + ")";
-                } 
-            }
+            if (autoOrientation) {
+                translate += "rotate(" + angleValue + "," + (posX + pivotX) + "," + (posY + pivotY) + ")";
+            } 
             val newTransform = initialTransform + translate
             elem.setAttribute("transform", newTransform)
         } else {
@@ -150,10 +186,12 @@ class WalkPathAnimation extends AnimationHandler {
     }
     
     private def double computeAngle(SVGPoint p1, SVGPoint p2) {
+//        return angleBetweenVectors(forwardX, forwardY, p2.x - p1.x, p2.y - p1.y)
+
         val double RADTODEG = 180.0 / Math.PI;
-        var double deltaX = 0
-        var double deltaY = 0
-        var double alpha = 0
+        var double deltaX
+        var double deltaY
+        var double alpha
         
         deltaX = p2.getX() - p1.getX();// Ankathete
         deltaY = p2.getY() - p1.getY();// Gegenkathete
@@ -178,5 +216,20 @@ class WalkPathAnimation extends AnimationHandler {
             alpha *= -1;
         }
         return alpha;
+    }
+    
+    private def double angleBetweenVectors(double ax, double ay, double bx, double by) {
+        // Angle between two vectors a, b: cos(alpha) = (a*b) / (|a|*|b|)
+        val a_magnitude =  Math.sqrt(ax*ax + ay*ay)
+        val b_magnitude =  Math.sqrt(bx*bx + by*by)
+        if(a_magnitude == 0 || b_magnitude == 0) {
+            return 0
+        }
+        //  alphs = acos             (a*b)     /          (|a|*|b|)
+        val alpha = Math.acos( (ax*bx + ay*by) / (a_magnitude * b_magnitude) )
+        val double RADTODEG = 180.0 / Math.PI;
+        val degrees = alpha * RADTODEG
+        
+        return degrees;
     }
 }

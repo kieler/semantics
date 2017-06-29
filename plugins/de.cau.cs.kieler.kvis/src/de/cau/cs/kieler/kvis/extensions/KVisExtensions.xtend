@@ -168,13 +168,11 @@ class KVisExtensions {
         if(action.variable != null && action.value != null) {
             action.variable.performAssignment(action.value, pool)
         } else if(action.operation != null) {
-            println(">>>>ACTION:"+action.operation+":"+action.operation.getName)
             perform(action.operation)
         }
     }
     
     public def void perform(SimulationOperation operation) {
-        println("Performing simulation "+operation.getName)
         val simulation = SimulationManager.instance
         if(simulation != null && !simulation.isStopped) {
             switch(operation) {
@@ -199,8 +197,6 @@ class KVisExtensions {
         val modelName = variableReference.model?.name
         val variableName = variableReference.name
         val index = variableReference.indices
-        val indexText = if(index.isNullOrEmpty) "" else index.toString
-        println("Performing "+variableName+indexText+" = "+primitive)
         
         val variable = pool.getVariable(modelName, variableName)
         if(variable != null) {
