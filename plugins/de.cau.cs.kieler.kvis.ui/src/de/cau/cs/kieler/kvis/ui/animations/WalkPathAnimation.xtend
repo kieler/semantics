@@ -29,9 +29,6 @@ class WalkPathAnimation extends AnimationHandler {
     var double pathLength
     
     var boolean autoOrientation
-    var double forwardX = 0
-    var double forwardY = 1
-    // TODO: if forwardX and forwardY can be negative, this is no longer needed
     var double angleOffset
     
     var double anchorX = 0.5
@@ -90,18 +87,6 @@ class WalkPathAnimation extends AnimationHandler {
         val newAngleOffset = getAttribute("angleOffset").floatValue
         if(newAngleOffset != null) {
             angleOffset = newAngleOffset
-        }
-        val newForwardX = getAttribute("forwardX").floatValue
-        if(newForwardX != null) {
-            forwardX = newForwardX
-        }
-        val newForwardY = getAttribute("forwardY").floatValue
-        if(newForwardY != null) {
-            forwardY = newForwardY
-        }
-        if(forwardX == 0 && forwardY == 0) {
-            throw new IllegalArgumentException("Forward vector of animation "+name+" cannot be the 0 vector, "
-                                             + " but is ("+forwardX+","+forwardY+")")
         }
         // Anchor
         val newAnchorX = getAttribute("anchorX").floatValue
@@ -186,50 +171,36 @@ class WalkPathAnimation extends AnimationHandler {
     }
     
     private def double computeAngle(SVGPoint p1, SVGPoint p2) {
-//        return angleBetweenVectors(forwardX, forwardY, p2.x - p1.x, p2.y - p1.y)
-
         val double RADTODEG = 180.0 / Math.PI;
         var double deltaX
         var double deltaY
         var double alpha
-        
         deltaX = p2.getX() - p1.getX();// Ankathete
         deltaY = p2.getY() - p1.getY();// Gegenkathete
-        if(deltaX == 0) {
-            return 0;
+        // Edge cases
+        if(deltaX == 0 && deltaY > 0) {
+            // 90 degrees up
+            return 90;
+        } else if(deltaX == 0 && deltaY < 0) {
+            // 90 degrees down
+            return 270;
+        } if(deltaX == 0 && deltaY == 0) {
+             throw new IllegalArgumentException("Delta of points cannot be 0. Can't compute angle in "+name+" animation.")
         }
         alpha = Math.atan(deltaY / deltaX) * RADTODEG;
 
-        if (deltaX > 0 && deltaY <= 0) {
-            // values from 0 - -90 nothing to do change here
-        } else if (deltaX <= 0 && deltaY <= 0) {
-            // mapping from 90 - 0 to -90 - -180
-            alpha = 180 - alpha;
-            alpha *= -1;
-        } else if (deltaX <= 0 && deltaY > 0) {
-            // mapping from 0 - 90 to -180 - -270
-            alpha = 180 - alpha;
-            alpha *= -1;
-        } else if (deltaX > 0 && deltaY > 0) {
-            // mapping from 90 - 0 to -90 - -180
-            alpha = 360 - alpha;
-            alpha *= -1;
+        if (deltaX > 0 && deltaY >= 0) {
+            // values from 0..90 nothing to do change here
+        } else if (deltaX < 0 && deltaY >= 0) {
+            // mapping from -90..0 to 90..180
+            alpha += 180
+        } else if (deltaX < 0 && deltaY <= 0) {
+            // mapping from 0..90 to 180..270
+            alpha += 180
+        } else if (deltaX > 0 && deltaY <= 0) {
+            // mapping from -90..0 to 270..360
+            alpha += 360
         }
         return alpha;
-    }
-    
-    private def double angleBetweenVectors(double ax, double ay, double bx, double by) {
-        // Angle between two vectors a, b: cos(alpha) = (a*b) / (|a|*|b|)
-        val a_magnitude =  Math.sqrt(ax*ax + ay*ay)
-        val b_magnitude =  Math.sqrt(bx*bx + by*by)
-        if(a_magnitude == 0 || b_magnitude == 0) {
-            return 0
-        }
-        //  alphs = acos             (a*b)     /          (|a|*|b|)
-        val alpha = Math.acos( (ax*bx + ay*by) / (a_magnitude * b_magnitude) )
-        val double RADTODEG = 180.0 / Math.PI;
-        val degrees = alpha * RADTODEG
-        
-        return degrees;
     }
 }

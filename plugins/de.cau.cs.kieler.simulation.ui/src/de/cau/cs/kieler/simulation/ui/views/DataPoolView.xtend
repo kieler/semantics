@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.base.Strings
+import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.ui.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
@@ -34,7 +35,6 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
@@ -302,14 +302,12 @@ class DataPoolView extends ViewPart {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
                 // Execute in UI thread
-                Display.getDefault().asyncExec(new Runnable() {
-                    override void run() {
+                PromPlugin.asyncExecInUI[
                         // Update status line
                         DataPoolView.instance?.updateStatusBar(e)
                         // Set pool data
                         DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
-                    }
-                });
+                    ]
             }
         }
         return listener

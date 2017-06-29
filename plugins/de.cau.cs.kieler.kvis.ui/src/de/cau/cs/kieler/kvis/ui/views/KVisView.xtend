@@ -405,7 +405,7 @@ class KVisView extends ViewPart {
                 // Make all changes to the svg in the update manager.
                 // Otherwise the svg canvas is not updated properly.
                 lastPool = pool
-                canvas.svgCanvas.getUpdateManager().getUpdateRunnableQueue().invokeLater(new Runnable() {
+                val runnable = new Runnable() {
                     override run() {
                         // As this is invoked later in another thread,
                         // the pool that should be visualized might already be outdated
@@ -419,7 +419,8 @@ class KVisView extends ViewPart {
                             }
                         }
                     }
-                })
+                }
+                canvas?.svgCanvas?.getUpdateManager()?.getUpdateRunnableQueue()?.invokeLater(runnable)
             }
         }
     }
