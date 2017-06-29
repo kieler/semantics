@@ -35,7 +35,7 @@ abstract class AnimationHandler {
     protected var DataPool lastPool
     
     abstract public def String getName()
-    abstract protected def void doApply(DataPool pool)
+    abstract protected def void doApply(DataPool pool, Element element)
     
     @Extension
     protected KVisExtensions kvisExtensions
@@ -49,6 +49,9 @@ abstract class AnimationHandler {
         // Initialize extension methods
         kvisExtensions = new KVisExtensions
         svgExtensions = new SVGExtensions
+        // Add attribute to determine if everything of this animation should be applied recursively
+        // to child elements of this animation's svg element.
+        addAttribute("recursive")
     }
     
     public def void apply(DataPool pool) {
@@ -81,7 +84,18 @@ abstract class AnimationHandler {
                 }
             }
             // Apply
-            doApply(pool)
+            val element = findElement(true)
+            val recursiveAttr = getAttribute("recursive")
+            if(recursiveAttr == null || recursiveAttr.value == null || !recursiveAttr.boolValue) {
+                // Don't apply this animation recursively
+                doApply(pool, element)
+            } else {
+                // Apply this animation recursively to all child elements
+                val elementAndChildren = element.getChildrenElements(true)
+                for(elem : elementAndChildren) {
+                    doApply(pool, elem)
+                }
+            }
         }
     }
     
@@ -145,8 +159,7 @@ abstract class AnimationHandler {
         }
     }
     
-    protected def void setAttributes(String... name) {
-        attributes.clear()
+    protected def void addAttributes(String... name) {
         for(n : name) {
             addAttribute(n)
         }

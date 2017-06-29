@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kvis.ui.svg
 
+import java.util.List
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.events.EventListener
@@ -60,6 +61,40 @@ class SVGExtensions {
             }
         }
         return null
+    }
+    
+    /**
+     * Returns a list filled recursively with all child nodes of the given node, that fit with respect to nodeType.
+     * If nodeType is negative, all children are included.
+     * 
+     * @param node The node
+     * @param includeRoot True to include the node itself in the returned list
+     * @param nodeType The type that nodes must have to be included in the returned list,
+     *        or -1 to include all nodes.
+     */
+    public def List<Node> getChildren(Node node, boolean includeRoot, int nodeType) {
+        val List<Node> elements = newArrayList
+        if(includeRoot && (nodeType < 0 || node.nodeType == nodeType)) {
+            elements.add(node)
+        }
+        val children = node.getChildNodes()
+        if (children != null) {
+            for(var i = 0; i < children.length; i++) {
+                val child = children.item(i)
+                if(nodeType < 0 || child.nodeType == nodeType) {
+                    elements.add(child)
+                }
+                elements.addAll(child.getChildren(false, nodeType))
+            }
+        }
+        return elements
+    }
+    
+    public def List<Element> getChildrenElements(Node node, boolean includeRoot) {
+        val children = getChildren(node, includeRoot, Node.ELEMENT_NODE)
+        // Actually children is the correct return list, because nodes are filtered already using the nodeType.
+        // However, we have to cast every element again for Java to accept the list as a List<Element>
+        return children.map[it as Element]
     }
     
     public def String changeField(String attribute, String fieldName, String fieldValue) {

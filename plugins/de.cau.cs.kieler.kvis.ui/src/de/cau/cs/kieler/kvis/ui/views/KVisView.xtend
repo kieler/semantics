@@ -29,6 +29,7 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import java.awt.event.MouseMotionListener
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.io.File
@@ -56,6 +57,9 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.awt.event.MouseEvent
+import org.apache.batik.swing.gvt.AbstractImageZoomInteractor
+import java.awt.event.InputEvent
 
 /**
  * @author aas
@@ -248,7 +252,8 @@ class KVisView extends ViewPart {
 
     private def void createCanvas(Composite parent) {
         canvas = new KVisCanvas(parent, SWT.NONE, false)
-        
+        canvas.svgCanvas.enableRotateInteractor = false
+    
         // Zoom in/out via mouse wheel
         canvas.svgCanvas.addMouseWheelListener(new MouseWheelListener() {
             override mouseWheelMoved(MouseWheelEvent e) {
@@ -340,11 +345,12 @@ class KVisView extends ViewPart {
             override run() {
                 val title = "Controls for the Simulation Visualization View"
                 val message = "Shift + Mouse Drag : Move\n"
+                             + "Shift + Right Mouse Button : Zoom\n"
                              + "Ctrl + Left Mouse Button : Zoom to rectangle\n"
-                             + "Ctrl + Right Mouse Button : Rotate\n"
+                             + "Ctrl + Shift + Right Mouse Button : Reset perspective\n"
                              + "Mouse Wheel : Zoom in / out\n"
-                             + "Arrow keys : Scroll\n"
-                             + "Shift + Arrow keys : Fast scroll\n"
+                             + "Arrow Keys : Scroll\n"
+                             + "Shift + Arrow Keys : Fast scroll\n"
                 val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
                 dialog.open
             }

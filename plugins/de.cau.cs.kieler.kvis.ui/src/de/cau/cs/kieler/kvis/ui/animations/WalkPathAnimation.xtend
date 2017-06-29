@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kvis.ui.animations
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.apache.batik.dom.svg.SVGOMPathElement
+import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
 import org.w3c.dom.svg.SVGPoint
 
@@ -41,7 +42,7 @@ class WalkPathAnimation extends AnimationHandler {
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        setAttributes("autoOrientation", "angleOffset", "forwardX", "forwardY", "anchorX",
+        addAttributes("autoOrientation", "angleOffset", "forwardX", "forwardY", "anchorX",
                       "anchorY", "start", "end", "length", "appendTransform")
         val pathAttr = addAttribute("path")
         pathAttr.mandatory = true
@@ -51,9 +52,7 @@ class WalkPathAnimation extends AnimationHandler {
         return "walkPath"
     }
     
-    override doApply(DataPool pool) {
-        val elem = findElement(true)
-        
+    override doApply(DataPool pool, Element elem) {
         // Path and length
         val newPathName = getAttribute("path").stringValue
         if(newPathName != null) {
