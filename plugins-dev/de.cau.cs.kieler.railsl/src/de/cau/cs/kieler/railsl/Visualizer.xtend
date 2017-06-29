@@ -34,8 +34,13 @@ class Visualizer {
     
     @Inject extension RailSLExtensions
     
+    private val pool = new DataPool()
+    
+    public def DataPool getDataPool() {
+        return pool
+    } 
+    
     def void assembleModel(Program program) {
-        val pool = new DataPool()
         
         for (block : program.blocks) {
             pool.addModel(assembleBlock(block))
@@ -57,7 +62,7 @@ class Visualizer {
             SetTrackStatement: model.addTrackValues(statement as SetTrackStatement)
             SetPointStatement: model.addPointValues(statement as SetPointStatement)
             LightStatement: model.addLightValues(statement as LightStatement)
-            default: throw new UnsupportedOperationException("Missing Statement type: " + statement.class)
+            default: return
             
         }
         
@@ -65,32 +70,24 @@ class Visualizer {
     
     def addLightValues(Model model, LightStatement statement) {
         for (index : statement.lights) {
-            // TODO correct syntax for lights from SVG
-            model.addVariable(new Variable("", index))
+            model.addVariable(new Variable("light_" + index, statement.state))
         }
     }
     
     def addPointValues(Model model, SetPointStatement statement) {
-        val setting = statement.parsePointSetting
         for (index : statement.points) {
-            // TODO correct syntax for points from SVG
-            model.addVariable(new Variable("", setting))
+            model.addVariable(new Variable("point_" + index, statement.orientation))
         }
     }
     
     def addTrackValues(Model model, SetTrackStatement statement) {
-        val speed = statement.parseSpeed
         val direction = statement.parseDirection
+        val speed = statement.parseSpeed
         for (segment : statement.segments) {
-            // TODO correct syntax for tracks from SVG
-            // Also for signals.
-            model.addVariable(new Variable("", speed))
-            model.addVariable(new Variable("", direction))
+            model.addVariable(new Variable(segment, speed))
+            model.addVariable(new Variable(segment + "_direction", direction))
         }
         
     }
 
-    
-    
-    
 }
