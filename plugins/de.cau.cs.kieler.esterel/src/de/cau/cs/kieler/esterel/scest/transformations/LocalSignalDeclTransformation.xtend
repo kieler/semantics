@@ -61,12 +61,17 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
     }
         
 //    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
+//        return Sets.newHashSet()
 //    }
 //
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID,
+            SCEstTransformation::ABORT_ID, SCEstTransformation::SUSPEND_ID,
+            SCEstTransformation::LOOP_ID, SCEstTransformation::DO_ID,
+            SCEstTransformation::AWAIT_ID, SCEstTransformation::EVERYDO_ID,
+            SCEstTransformation::PRESENT_ID
+            
+        )
     }
 
     @Inject
@@ -170,9 +175,14 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
                 }
         }
         createParallelForSignals(scope, signalsMap)
-        statements.set(pos, scope)
+        
+        // One of the next two lines can be used. First: ISignals will be deleted; Second: ISignals stay
+//        statements.set(pos, scope)
+        localSignals.statements.add(scope)
+        
         newSignals.putAll(signalsMap)
         scope.statements.transformStatements
+        scope.transformReferences
     }
     
     def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {

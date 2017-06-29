@@ -68,8 +68,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
     }
         
 //    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
+//        return Sets.newHashSet()
 //    }
 //
     override getNotHandlesFeatureIds() {
@@ -78,7 +77,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
 
     @Inject
     extension SCEstExtension
-    
+        
     def SCEstProgram transform(SCEstProgram prog) {
         prog.modules.forEach [ m | transformStatements(m.statements)]
         return prog
@@ -181,8 +180,8 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                     var thread = createThread(conditional2)
                     parallel.threads.add(thread)
                 }
+                transformReferences(parallel, exitVariables)
             }
-            
             return scope
         }
         else if (statement instanceof StatementContainer) {
@@ -344,4 +343,22 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
         }
     }
     
+    def transformReferences(Statement statement, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+        // iterate over all valued object references contained in the scope
+        // if a reference references a transformed signal then set the reference to the new signal
+        var references = statement.eAllContents.filter(ValuedObjectReference)
+        while (references.hasNext) {
+            var ref = references.next
+            if (ref.valuedObject instanceof ISignal) {
+                var signal = ref.valuedObject as ISignal
+                // if the valued object reference references a transformed trap signal
+                if (exitVariables.containsKey(signal)) {
+                    if (exitVariables.get(signal).value == null) {
+                            throw new UnsupportedOperationException("There is no second valued object for the following valued trap! " + signal.name)
+                    }
+                    ref.valuedObject = exitVariables.get(signal).value
+                }
+            }
+        }
+    }
 }

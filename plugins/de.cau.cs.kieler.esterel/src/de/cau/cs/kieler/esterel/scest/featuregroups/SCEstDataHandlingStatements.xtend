@@ -35,7 +35,6 @@ class SCEstDataHandlingStatements extends FeatureGroup {
 
     override getFeatureIds() {
         Sets.newHashSet(
-             SCEstFeature::SET_ID,
              SCEstFeature::EXEC_ID,
              SCEstFeature::PROCCALL_ID,
              SCEstFeature::RUN_ID

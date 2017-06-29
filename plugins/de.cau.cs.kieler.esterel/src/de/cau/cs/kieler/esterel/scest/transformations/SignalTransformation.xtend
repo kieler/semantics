@@ -69,17 +69,29 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     }
     
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID,
+            SCEstTransformation::ABORT_ID, SCEstTransformation::SUSPEND_ID,
+            SCEstTransformation::LOOP_ID, SCEstTransformation::DO_ID,
+            SCEstTransformation::AWAIT_ID, SCEstTransformation::EVERYDO_ID,
+            SCEstTransformation::PRESENT_ID
+        )
     }
 
     @Inject
     extension SCEstExtension
     
+    /*
+     *  TODO only the signals with type != null will be transformed
+     *  signals with typeID != null are not handled
+     *  SCL doesn't allow anything else then the predefined types
+     *  see KExt.xtext => Declaration
+    */
+    
     def SCEstProgram transform(SCEstProgram prog) {
         for (m : prog.modules) { 
             m.intSignalDecls.transformSignals(m)
 //            transformStatements(m.statements)
-            m.intSignalDecls.clear
+//            m.intSignalDecls.clear
         }
         return prog
     }
@@ -135,6 +147,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
             }
         }
         createParallelForSignals(scope, newSignals)
+        scope.transformReferences
     }
     
     def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {
@@ -204,6 +217,12 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
         }
     }
     
+    
+/* ###########################################################################################
+ * # If this signal transformation included an emit, unemit, set, localSignal transformation #
+ * # the following cod would be needed.                                                      #
+ * ###########################################################################################
+ */    
     def EList<Statement> transformStatements(EList<Statement> statements) {
         for (var i=0; i<statements?.length; i++) {
             statements.get(i).transformStatement
@@ -364,7 +383,11 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                 }
         }
         createParallelForSignals(scope, signalsMap)
-        statements.set(pos, scope)
+        
+        // One of the next two lines can be used. First: ISignals will be deleted; Second: ISignals stay
+//        statements.set(pos, scope)
+        localSignals.statements.add(scope)
+        
         newSignals.putAll(signalsMap)
         scope.statements.transformStatements
     }

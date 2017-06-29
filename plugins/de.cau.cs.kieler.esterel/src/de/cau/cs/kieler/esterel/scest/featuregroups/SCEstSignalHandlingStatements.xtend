@@ -43,7 +43,8 @@ class SCEstSignalHandlingStatements extends FeatureGroup {
              SCEstFeature::UNEMIT_ID,
              SCEstFeature::SET_ID,
              SCEstFeature::IFTEST_ID,
-             SCEstFeature::SUSTAIN_ID
+             SCEstFeature::SUSTAIN_ID,
+             SCEstFeature::SET_ID
         )
     }
 }

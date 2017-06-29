@@ -49,7 +49,7 @@ TypeIdentifier:
       type=Esterel_ValueType
     | typeID=ID
     | ("combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator)
-    | {EsterelType} estType=[Type|ID];
+    | {EsterelType} estType=[Type|ID]; // doesn't work, should be before typeID=ID
     
 // ==> 7.3.1 Type Declarations
 // -------------------------------------
@@ -134,19 +134,21 @@ ISignal returns ISignal:
     {ISignal}
     name=ID (   
           ":" 
-          (      type=Esterel_ValueType
+          (       type=Esterel_ValueType
                 | typeID=ID
                 | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
           )
         | ("(" 
-              type=Esterel_ValueType
-            | typeID=ID
-            | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
-           ")")
-        | (":=" expression=Expression ":" 
-                  type=Esterel_ValueType
+            (     type=Esterel_ValueType
                 | typeID=ID
                 | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+            )
+           ")")
+        | (":=" expression=Expression ":" 
+                (     type=Esterel_ValueType
+                    | typeID=ID
+                    | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+                )
           ) 
     )?;
 
@@ -447,15 +449,17 @@ TrapSignal returns ISignal:
                 | typeID=ID
                 | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) 
           )
-        | ("(" 
-              type=Esterel_ValueType
-            | typeID=ID
-            | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
-           ")")
-        | (":=" expression=Expression ":" 
-                  type=Esterel_ValueType
+        | ("("
+            (     type=Esterel_ValueType
                 | typeID=ID
                 | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+            )
+           ")")
+        | (":=" expression=Expression ":" 
+            (     type=Esterel_ValueType
+                | typeID=ID
+                | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+            )
           ) 
      )?;
 
@@ -565,7 +569,7 @@ TaskRenaming:
     newName=[Task|ID] "/" oldName=[Task|ID];
 
 SignalRenaming:
-    (newName=[ISignal|ID] | "tick") "/" oldName=[ISignal|ID];
+    newName=[ISignal|ID] "/" oldName=[ISignal|ID];
 
 // renaming can also rename build in types and functions
 BuildInFunction:

@@ -66,6 +66,10 @@ import de.cau.cs.kieler.esterel.esterel.Do
 import de.cau.cs.kieler.esterel.esterel.DelayExpr
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import java.util.HashMap
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.esterel.esterel.PresentCase
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -353,7 +357,7 @@ class SCEstExtension {
      */
     def ValuedObject createSignalVariable(Expression expr, CombineOperator op, String name) {
         createValuedObject(createNewUniqueSignalName(name)) => [
-            it.initialValue = expr 
+            it.initialValue = EcoreUtil.copy(expr)
             it.combineOperator = op
         ]
     }
@@ -1221,7 +1225,7 @@ class SCEstExtension {
     def createAssignment(ValuedObject objectToAssign, Expression expression) {
         SclFactory::eINSTANCE.createAssignment => [
             it.valuedObject = objectToAssign
-            it.expression = expression
+            it.expression = EcoreUtil.copy(expression)
         ]
     }
     
@@ -1236,8 +1240,8 @@ class SCEstExtension {
     def createOperatorExpression(Expression expr1, Expression expr2, OperatorType oType) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = oType
-            subExpressions.add(expr1)
-            subExpressions.add(expr2)
+            subExpressions.add(EcoreUtil.copy(expr1))
+            subExpressions.add(EcoreUtil.copy(expr2))
         ]
     }
 
@@ -1837,6 +1841,79 @@ class SCEstExtension {
             default : {
                 throw new UnsupportedOperationException(
                         "No neutral Element for: " + op.toString)
+            }
+        }
+    }
+    
+    /**
+     * Decide if the Valued Object Reference is a reference to a signal in a pre() expression.
+     * 
+     * @param ref The Valued Object Reference which might be in a pre() expression in a Signal Expression
+     */
+    def isSignalPreExpression(ValuedObjectReference ref) {
+        var parent = ref.eContainer
+        if (parent instanceof OperatorExpression) {
+            if( (parent as OperatorExpression).operator == OperatorType.PRE) {
+                var EObject nextParent = parent
+                while (nextParent instanceof Expression) {
+                    parent = nextParent
+                    nextParent = nextParent.eContainer
+                }
+                if (nextParent instanceof Present) {
+                    return true
+                }
+                else if (nextParent instanceof PresentCase) {
+                    return true
+                }
+                else if (nextParent instanceof DelayExpr) {
+                    if ( (nextParent as DelayExpr).signalExpr == parent) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    /**
+     * Transform all references to ISignals in the scope of the given statement.
+     * 
+     * @param statement The statement which sets the scope
+     */
+    def transformReferences(Statement statement) {
+        // iterate over all valued object references contained in the scope
+        // if a reference references a transformed signal then set the reference to the new signal
+        var references = statement.eAllContents.filter(ValuedObjectReference)
+        while (references.hasNext) {
+            var ref = references.next
+            if (ref.valuedObject instanceof ISignal) {
+                var signal = ref.valuedObject as ISignal
+                // if the valued object reference references a transformed signal
+                if (newSignals.containsKey(signal)) {
+                    var parent = ref.eContainer
+                    if (parent instanceof OperatorExpression) {
+                        if ( (parent as OperatorExpression).operator == OperatorType.VAL) {
+                            if (newSignals.get(signal).s_val == null) {
+                                throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
+                            }
+                            ref.valuedObject = newSignals.get(signal).s_val
+                        }
+                        else if ( (parent as OperatorExpression).operator == OperatorType.PRE) { 
+                            if (ref.isSignalPreExpression){
+                                ref.valuedObject = newSignals.get(signal).s
+                            }
+                            else {
+                                if (newSignals.get(signal).s_val == null) {
+                                    throw new UnsupportedOperationException("The 'pre()' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
+                                }
+                                ref.valuedObject = newSignals.get(signal).s_val 
+                            }
+                        }
+                    }
+                    else {
+                        ref.valuedObject = newSignals.get(signal).s
+                    }
+                }
             }
         }
     }
