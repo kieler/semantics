@@ -44,17 +44,11 @@ import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Iterators;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValueType;
-<<<<<<< HEAD
-=======
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
-import de.cau.cs.kieler.core.krendering.KRectangle;
-import de.cau.cs.kieler.core.krendering.KRenderingFactory;
-import de.cau.cs.kieler.core.krendering.KText;
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
->>>>>>> ssm/dataflow
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -559,11 +553,10 @@ public class TimingAnalysis extends Job {
         // Note that at the moment we will generate globalvar assumptions
         // automatically only from boolean inputs, as the kta tool treats all GlobalVar assumptions
         // as Input
-        EList<Declaration> declarationList = scchart.getDeclarations();
-        Iterator<Declaration> declarationListIterator = declarationList.iterator();
+        Iterator<VariableDeclaration> declarationListIterator = Iterators.filter(scchart.getDeclarations().iterator(), VariableDeclaration.class);
         HashSet<String> inputOutputNameSet = new HashSet<String>();
         while (declarationListIterator.hasNext()) {
-            Declaration currentDeclaration = declarationListIterator.next();
+            VariableDeclaration currentDeclaration = declarationListIterator.next();
             String name = currentDeclaration.getValuedObjects().get(0)
                     .getName();
             if (currentDeclaration.isInput()) {
@@ -609,31 +602,7 @@ public class TimingAnalysis extends Job {
 			    }
 			}
 		}
-<<<<<<< HEAD
 		
-=======
-		// Get the inputs for which we want to have globalvar assumptions
-		// Note that at the moment we will generate globalvar assumptions
-		// automatically only form boolean inputs, others have to be specified in the .asu file
-		// First, add an assumption line for _GO, which will always be there,we treat it
-		// analogously to environment inputs (as opposed to states)
-		EList<Declaration> declarationList = scchart.getDeclarations();
-		Iterator<Declaration> declarationListIterator = declarationList.iterator();
-		while (declarationListIterator.hasNext()) {
-			Declaration currentDeclaration = declarationListIterator.next();
-			if (currentDeclaration instanceof VariableDeclaration) {
-			    VariableDeclaration varDeclaration = (VariableDeclaration) currentDeclaration;
-        		if (varDeclaration.isInput()) {
-        			ValueType type = varDeclaration.getType();
-        			if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-        				stringBuilder
-        						.append("\nGlobalVar " + varDeclaration.getValuedObjects().get(0)
-        								.getName() + " 0..1");
-        			}
-        		}
-			}
-		}
->>>>>>> ssm/dataflow
 		// read (optional) additional assumptions and timing assumptions for called functions into
 		// the assumptions file
 		String assumptionFile = uriString.replace(".sct", ".asu");

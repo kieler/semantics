@@ -16,7 +16,7 @@ import de.cau.cs.kieler.kico.KiCoPlugin
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
@@ -78,7 +78,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
                                     "SURFACEDEPTH")
     
     /** Sct Parser Injector */
-    static val resourceSetInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration
+    static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     
     //-----------------------------------------------------------------------------------------------------------------
     

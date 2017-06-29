@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.core.kexpressions.text.test
+package de.cau.cs.kieler.kexpressions.text.test
 
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
@@ -14,36 +14,33 @@ package de.cau.cs.kieler.core.kexpressions.text.test
  * See the file epl-v10.html for the license text.
  */
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.xtext.resource.XtextResourceSet;
-import org.junit.Assert;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-
-import com.google.inject.Guice;
-
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.annotations.AnnotationsFactory;
-import de.cau.cs.kieler.annotations.StringAnnotation;
-import de.cau.cs.kieler.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.kexpressions.keffects.Assignment;
-import de.cau.cs.kieler.kexpressions.keffects.Effect;
-import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtSerializeExtensions;
-import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
-import de.cau.cs.kieler.kexpressions.kext.TestEntity;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath;
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup
+import de.cau.cs.kieler.kexpressions.kext.TestEntity
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtSerializeExtensions
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.BundleId
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.ModelFilter
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.ModelPath
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.junit.Assert
+import org.junit.FixMethodOrder
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters
 
 /**
  * JUnit Test Case for the KEXT
@@ -54,14 +51,13 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
  * 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(typeof(KEXTTestRunner))
-@BundleId("de.cau.cs.kieler.core.kexpressions.text.test")
+@RunWith(typeof(KExtTestRunner))
+@BundleId("de.cau.cs.kieler.kexpressions.text.test")
 @ModelPath("tests/")
 @ModelFilter("*.kext")
-public class KEXTTestsXtend {
+public class KExtTestsXtend {
 	
-	@Inject
-	extension AnnotationsExtensions
+	extension AnnotationsExtensions = AE
     
     public static val String KEXT_HUMANREADABLE_ANNOTATION = "readable"  
     public static val String KEXT_STRICT_ANNOTATION = "strict"
@@ -119,7 +115,7 @@ public class KEXTTestsXtend {
         }
         
         if (!serialized.equals(expected)) {
-            val StringAnnotation checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+            val StringAnnotation checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
         	failedAssertion("Serialization of " + checkAnnotation.getValues().get(0) + 
                     " was \"" + serialized + 
                     "\" but does not match expected output \"" + 
@@ -129,13 +125,13 @@ public class KEXTTestsXtend {
     }
     
     @Test
-    @KEXTTestRunner.RequiredAnnotation("aliasCheck")
+    @KExtTestRunner.RequiredAnnotation("aliasCheck")
     public def void scoping(EObject eObject, String expectedLine) {
         val entity = eObject as TestEntity
         val annotations = entity.getAnnotations.filter(StringAnnotation)
 		for(aliasCheckAnnotation : annotations.filter[name.equals(KEXT_CHECKALIAS_ANNOTATION)]) {
 			if (aliasCheckAnnotation.values.size<2) {
-				val checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+				val checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
         		failedAssertion("Check " + checkAnnotation.values.head + 
                     " is marked with an alias check, but does not has enough parameter!")
 			} else {
@@ -161,7 +157,7 @@ public class KEXTTestsXtend {
         }
         
         if (!serialized.equals(expected)) {
-                val checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+                val checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
                 failedAssertion("Human readable serialization of " + checkAnnotation.getValues().get(0) + 
                     " was \"" + serialized + 
                     "\" but does not match expected output \"" + 
@@ -209,7 +205,7 @@ public class KEXTTestsXtend {
 			val failedAlias = valuedObject.annotations.filter(StringAnnotation)
 				.filter[ name.equals(KEXT_ALIAS_ANNOTATION) ].filter[ values.empty || !values.head.equals(aliasName) ].head
 			if (failedAlias != null) {
-				val checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+				val checkAnnotation = getAnnotation(entity, KExtTestRunner.KEXT_CHECK_ANNOTATION);
 				failedAssertion("Alias check of check " + checkAnnotation.values.head + 
                     " expected \"" + aliasName + 
                     "\" for valued object \"" + 

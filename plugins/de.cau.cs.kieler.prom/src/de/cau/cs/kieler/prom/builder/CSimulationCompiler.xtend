@@ -65,7 +65,7 @@ class CSimulationCompiler extends SimulationCompiler {
             executableFile.delete(true, null)
         
         // Create bin directory
-        PromPlugin.createResource(project.getFolder(executableDirectory), null)
+        PromPlugin.createResource(project.getFolder(executableDirectory))
         
         // Run gcc on simulation code
         // Example command to compile simulation code: "gcc -std=c99 SimulationCode.c -o SimulationCode"

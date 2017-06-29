@@ -75,7 +75,7 @@ class FreeMarkerPlugin implements BundleActivator {
          
         // We want to load templates from files in the directory
         // as well as from simple strings.
-        stringTemplateLoader = new StringTemplateLoader();        
+        stringTemplateLoader = new StringTemplateLoader();
         fileTemplateLoader = new FileTemplateLoader(new File(templateDirectory));
         
         val loaders = #{ stringTemplateLoader, fileTemplateLoader };

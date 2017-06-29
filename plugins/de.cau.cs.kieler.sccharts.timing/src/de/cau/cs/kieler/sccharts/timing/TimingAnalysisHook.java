@@ -79,7 +79,7 @@ public class TimingAnalysisHook extends SynthesisHook {
 			// we use a dummy
 			// region to represent the SCChart in Timing Analysis.
 			State rootState = (State) scope;
-			Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
+			Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createControlflowRegion();
 			scchartDummyRegion.setId("SCChartDummyRegion");
 
 			Resource resource = null;

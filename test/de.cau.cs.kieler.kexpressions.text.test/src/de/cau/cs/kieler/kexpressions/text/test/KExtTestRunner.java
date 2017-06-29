@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.kexpressions.text.test;
+package de.cau.cs.kieler.kexpressions.text.test;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -34,13 +34,15 @@ import org.junit.runners.model.Statement;
 import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Guice;
 
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.StringAnnotation;
-import de.cau.cs.kieler.kexpressions.kext.KEXTScope;
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions;
+import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner;
 
 /**
  * @author ssm
@@ -48,7 +50,7 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
  * @kieler.rating 2015-06-09 yellow proposed
  * 
  */
-public class KEXTTestRunner extends ModelCollectionTestRunner {
+public class KExtTestRunner extends ModelCollectionTestRunner {
 	
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
@@ -59,12 +61,14 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
     public static String KEXT_CHECK_ANNOTATION = "check";
     
     public static String KEXT_EXPECT_ANNOTATION = "expect";
+    
+    static AnnotationsExtensions ANNOTATIONS = Guice.createInjector().getInstance(AnnotationsExtensions.class);
 
     /**
      * @param clazz
      * @throws Throwable
      */
-    public KEXTTestRunner(Class<?> clazz) throws Throwable {
+    public KExtTestRunner(Class<?> clazz) throws Throwable {
         super(clazz);
     }
 
@@ -92,24 +96,24 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
         runTestRunnerForScope(((Kext) object).getScopes().get(0), object, textFile);
     }
     
-    protected void runTestRunnerForScope(KEXTScope scope, Object object, List<String> textFile) throws Throwable {
+    protected void runTestRunnerForScope(KExtScope scope, Object object, List<String> textFile) throws Throwable {
 		for (TestEntity entity : scope.getEntities()) {
 			StringAnnotation checkAnnotation = null;
 			if (entity.getEffect() != null) {
-			    if (entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION) instanceof StringAnnotation) {
-			        checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
+			    if (ANNOTATIONS.getAnnotation(entity.getEffect(), KEXT_CHECK_ANNOTATION) instanceof StringAnnotation) {
+			        checkAnnotation = (StringAnnotation) ANNOTATIONS.getAnnotation(entity.getEffect(), KEXT_CHECK_ANNOTATION);
 			    } else {
 			        throw new Exception("Cannot cast annotation to string annotation: " + 
-			                entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION).toString() + 
+			                ANNOTATIONS.getAnnotation(entity.getEffect(), KEXT_CHECK_ANNOTATION).toString() + 
 			                " of effect " + 
 			                entity.getEffect().toString()); 
 			    }
 			} else {
-                if (entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION) instanceof StringAnnotation) {
-                    checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
+                if (ANNOTATIONS.getAnnotation(entity.getExpression(), KEXT_CHECK_ANNOTATION) instanceof StringAnnotation) {
+                    checkAnnotation = (StringAnnotation) ANNOTATIONS.getAnnotation(entity.getExpression(), KEXT_CHECK_ANNOTATION);
                 } else {
                     throw new Exception("Cannot cast annotation to string annotation: " + 
-                            entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION).toString() + 
+                            ANNOTATIONS.getAnnotation(entity.getExpression(), KEXT_CHECK_ANNOTATION).toString() + 
                             " of expression " + 
                             entity.getExpression().toString()); 
                 }
@@ -118,7 +122,7 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
 				runTestRunnerForObject(entity, checkAnnotation.getValues().get(0), (EObject) object, textFile);
 			}
 		}
-		for (KEXTScope subScope : scope.getScopes()) {
+		for (KExtScope subScope : scope.getScopes()) {
 			runTestRunnerForScope(subScope, object, textFile);
 		}
     }
@@ -138,9 +142,9 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
     		TestEntity entity = (TestEntity) object;
     		StringAnnotation expectAnnotation;
         	if (entity.getEffect() != null) {
-        		expectAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXTTestRunner.KEXT_EXPECT_ANNOTATION);
+        		expectAnnotation = (StringAnnotation) ANNOTATIONS.getAnnotation(entity.getEffect(), KExtTestRunner.KEXT_EXPECT_ANNOTATION);
         	} else {
-        		expectAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXTTestRunner.KEXT_EXPECT_ANNOTATION);
+        		expectAnnotation = (StringAnnotation) ANNOTATIONS.getAnnotation(entity.getExpression(), KExtTestRunner.KEXT_EXPECT_ANNOTATION);
         	}
         	if (expectAnnotation != null) {
         		return expectAnnotation.getValues().get(0);

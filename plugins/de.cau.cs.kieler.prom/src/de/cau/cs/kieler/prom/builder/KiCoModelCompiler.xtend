@@ -144,7 +144,7 @@ class KiCoModelCompiler extends ModelCompiler {
         // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015)
         // TODO: ABORTWTO often makes trouble and is not deterministicly choosen
         // TODO: scg.guards.ft and scg.scheduling.dc are experimental transformations and have issues (KISEMA-1188)
-        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO, !scg.guards.ft, !scg.scheduling.dc"
+        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO, !T_scg.guards.ft, !T_scg.scheduling.dc"
         if(KiCoBuilder.isCompileChain(compileChain)) {
             chain += ", " + compileChain
         } else {
@@ -204,7 +204,7 @@ class KiCoModelCompiler extends ModelCompiler {
      */
     private def void saveEObject(EObject eobject, IFile targetFile) {
         // Create directories
-        PromPlugin.createResource(targetFile.parent, null)
+        PromPlugin.createResource(targetFile.parent)
         
         // Remove old resource
         if(targetFile.exists) {
