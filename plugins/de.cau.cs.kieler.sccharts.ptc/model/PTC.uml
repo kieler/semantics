@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_ojh-gFzvEeeVtdusUFGEXg">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_a7vO8Fz2EeeVtdusUFGEXg">
+    <region xmi:id="_cbQg8Fz2EeeVtdusUFGEXg">
+      <subvertex xmi:type="uml:State" xmi:id="_gJlz4Fz2EeeVtdusUFGEXg"/>
+    </region>
+  </packagedElement>
+</uml:Model>

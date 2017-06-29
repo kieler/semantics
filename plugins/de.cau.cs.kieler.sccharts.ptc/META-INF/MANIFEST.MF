@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PTC Integrity Modeler Import
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ptc;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.sccharts.ptc.SCChartsPTCPlugin
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.sccharts,
+ org.eclipse.emf.ecore.xmi;bundle-version="2.12.0",
+ com.google.inject;bundle-version="3.0.0",
+ de.cau.cs.kieler.core.model,
+ de.cau.cs.kieler.sccharts.text,
+ org.eclipse.uml2;bundle-version="5.2.0",
+ org.eclipse.uml2.common;bundle-version="2.1.0",
+ org.eclipse.uml2.uml;bundle-version="5.2.3",
+ org.eclipse.uml2.uml.ecore.importer;bundle-version="3.1.0",
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.xtext;bundle-version="2.10.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+

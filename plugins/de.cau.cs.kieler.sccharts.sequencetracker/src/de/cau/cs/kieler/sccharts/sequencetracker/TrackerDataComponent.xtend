@@ -54,6 +54,8 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     static final String SIGNAL_PRESENT = "PRESENT";
     static final String SIGNAL_ABSENT = "ABSENT";
 
+    static final String REGION_WITH_NO_ID = "REGION_WITH_NO_ID";
+
     static HashMap<String, Object> valuedObjectValues = new HashMap<String, Object>
     static HashMap<String, Boolean> valuedObjectChanged = new HashMap<String, Boolean>
 
@@ -89,7 +91,7 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
         consoleStream.println("' Use the following link to render the sequence diagram:");
         consoleStream.println("' http://www.plantuml.com/plantuml/uml/");
         consoleStream.println(" ");
-        
+
         consoleStream.println("@startuml");
         consoleStream.println("participant User");
 
@@ -223,16 +225,15 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
             val effectValuedObjects = transition.effectAssignmentValuedObjects
 
             // Optional Note
-            //val transitionNote = transition.sourceState.id + " -> " + transition.targetState.id // + " with " + transitionSerializer.serializeTrigger(transition)  
-            //consolePrintln("note left \n   " + transitionNote + "")
-            //consolePrintln("end note\n")
-            
+            // val transitionNote = transition.sourceState.id + " -> " + transition.targetState.id // + " with " + transitionSerializer.serializeTrigger(transition)  
+            // consolePrintln("note left \n   " + transitionNote + "")
+            // consolePrintln("end note\n")
             // New Note
             val affectedComponent = getRegion(transition);
-            
-            val beforeNote = "note over "+affectedComponent+" \n  " + transition.sourceState.id + "\n end note"
-            val afterNote = "note over "+affectedComponent+" \n  " + transition.targetState.id + "\n end note"
-            
+
+            val beforeNote = "note over " + affectedComponent + " \n  " + transition.sourceState.id + "\n end note"
+            val afterNote = "note over " + affectedComponent + " \n  " + transition.targetState.id + "\n end note"
+
             // Print note before taken the transition : source state                  
             consolePrintln(beforeNote)
 
@@ -364,11 +365,14 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     // Get the component of a taken transition
     def String getRegion(Transition transition) {
         for (region : toplevelRegions) {
-            if (region.eAllContents().filter(typeof(Action)).filter(e | e == transition).toList().size > 0) {
+            if (region.eAllContents().filter(typeof(Action)).filter(e|e == transition).toList().size > 0) {
+                if (region.id == null) {
+                    return REGION_WITH_NO_ID;
+                }
                 return region.id;
             }
         }
-        return "";
+        return REGION_WITH_NO_ID;
     }
 
     // -------------------------------------------------------------------------
@@ -380,13 +384,13 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
             for (action : actions) {
                 if (action.getAllContainedEmissions.filter[e|e.valuedObject == valuedObject].toList.size > 0) {
                     if (region.id == null) {
-                        returnList.add("REGION_WITH_NO_ID")
+                        returnList.add(REGION_WITH_NO_ID)
                     } else {
                         returnList.add(region.id)
                     }
                 } else if (action.allContainedAssignments.filter[e|e.valuedObject == valuedObject].toList.size > 0) {
                     if (region.id == null) {
-                        returnList.add("REGION_WITH_NO_ID")
+                        returnList.add(REGION_WITH_NO_ID)
                     } else {
                         returnList.add(region.id)
                     }

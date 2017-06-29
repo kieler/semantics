@@ -198,6 +198,8 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
      */
     protected void convert(final ExecutionEvent event, final IFile file, final ISelection selection)
             throws ExecutionException {
+        
+        // TODO: Possible preprocessing!
 
         // Create URIs and load the instance with our resource injector
         URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);

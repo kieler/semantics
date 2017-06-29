@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.ptc.PTCModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.commands.PTCImport">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.commands.PTCImport"
+               label="Import SCChart from PTC Model"
+               mnemonic="P"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="uml">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.commands.category"
+            id="de.cau.cs.kieler.sccharts.commands.PTCImport"
+            name="PTCImport">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.uml2.uml.dynamic_package">
+      <profile
+            uri="System_Architecture_Profile">
+      </profile>
+      <profile
+            uri="System_Architecture_Profile:interface_device">
+      </profile>
+      <profile
+            uri="C_plus_plus_Profile">
+      </profile>
+      <profile
+            uri="C_plus_plus_Profile:C_plus_plus_Class">
+      </profile>
+      <profile
+            uri="ACS_Profile">
+      </profile>
+      <profile
+            uri="ACS_Profile:ACSProfile">
+      </profile>
+   </extension>
+
+</plugin>
