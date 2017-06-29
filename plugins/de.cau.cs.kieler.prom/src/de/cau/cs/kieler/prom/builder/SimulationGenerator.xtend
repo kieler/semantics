@@ -86,7 +86,7 @@ class SimulationGenerator {
         val modelName = datas.get(0).modelName
         val generator = new WrapperCodeGenerator(project, snippetDirectory)
         val mappings = newHashMap 
-        mappings.putAll( #{WrapperCodeGenerator.FILE_NAME_VARIABLE -> target.name,
+        mappings.putAll( #{WrapperCodeGenerator.FILE_NAME_VARIABLE -> Files.getNameWithoutExtension(target.name),
                            WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
                            WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName] } )
         mappings.putAll(additionalMappings)

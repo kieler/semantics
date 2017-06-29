@@ -151,7 +151,7 @@ typedef int bool;
 // Note: when joining siblings, one must cover all sibling prioIDs.
 // Eg, if we join just one sibling thread with a fixed priority, we must use join1;
 // if that sibling has 2 possible priority, must use join2, etc.
-#ifdef _idsetSize
+#if WORD_BIT < _SC_ID_MAX
 #define join1(sib1)			\
   _case __LABEL__: if (isEnabled(sib1)) {	\
     PAUSEG_(__LABEL__); }
