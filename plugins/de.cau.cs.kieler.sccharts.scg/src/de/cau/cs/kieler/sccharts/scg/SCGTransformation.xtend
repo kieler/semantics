@@ -134,7 +134,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
 
     private val stateTypeCache = <State, Set<PatternType>>newHashMap
-    private val uniqueNameCache = <String>newArrayList
+    private val uniqueNameCache = <String>newHashSet
 
     private static val String ANNOTATION_REGIONNAME = "regionName"
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"

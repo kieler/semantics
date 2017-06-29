@@ -36,6 +36,7 @@ import java.util.List
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import java.util.HashMap
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts Pre Transformation.
@@ -86,8 +87,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    private val nameCache = <String>newArrayList
-
+    private val nameCache = <String>newHashSet
+    
     //-------------------------------------------------------------------------
     //--                        P R E -  O P E R A T O R                     --
     //-------------------------------------------------------------------------
@@ -115,7 +116,6 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         val hasOutgoingTerminations = outgoingTerminations.length > 0
         val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
 
-
         // The transition with the assignment of the pre variables
         var HashMap<String, Transition> transitions = newHashMap();
         var Transition transInitWait
@@ -124,19 +124,31 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         // (e.g. some 'int _pre__pre__pre_x') to remove its initialization as optimization.
         var List<ValuedObject> lastPreVariablesOfNestedPre = newArrayList()
         // Filter all valuedObjects and retrieve those that are referenced
-        val allActions = state.eAllContents.filter(typeof(Action)).toList;
+        val allActions = state.eAllContents.filter(typeof(Action)).toList
+        var hasPre = allActions.map[ eAllContents ].exists[ filter(OperatorExpression).exists[ operator == OperatorType.PRE ] ]
+//        hasPre = true
+        val allValuedObjects = state.declarations.map[valuedObjects].flatten.toList
         var List<ValuedObject> allPreValuedObjects = null
         // Repeat the next steps until no pre occurs anymore (in case of nested pre)
+        if (hasPre)
         do {
-            allPreValuedObjects = state.valuedObjects.filter(
-                valuedObject|
-                    allActions.filter(
-                        action|
-                            action.getPreExpression(valuedObject).hasNext ||
-                                action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
+//            allPreValuedObjects = allValuedObjects.filter(
+//                valuedObject|
+//                    allActions.filter(
+//                        action|
+//                            action.getPreExpression(valuedObject).hasNext ||
+//                                action.getPreValExpression(valuedObject).hasNext).size > 0).toList
+
+            // This is a performance workaround.
+            // You should really restructure the whole transformation and get rid of all the lists and eAllContent calls.
+            // However, even this hot fix is twice as fast.
+            allPreValuedObjects = allValuedObjects.filter[ vo |
+                allActions.map[ eAllContents ].exists[ filter(OperatorExpression).filter[ operator == OperatorType.PRE ].
+                map[ eAllContents ].exists[ filter(ValuedObjectReference).exists[ valuedObject == vo ] ] ]
+            ].toList
     
             // Remove pre statement
-    		for (preValuedObject : allPreValuedObjects.immutableCopy) {
+    		for (preValuedObject : allPreValuedObjects) {
     		    // Is the valued object a variable that was introduced by the pre trafo itself?
     		    val name = preValuedObject.name
                 val isValuedObjectOfNestedPre = name.startsWith(GENERATED_PREFIX + "pre")

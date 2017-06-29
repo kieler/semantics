@@ -64,6 +64,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import java.util.Set
 
 /**
  * SCCharts Extensions.
@@ -384,7 +385,7 @@ class SCChartsExtension {
         return newName
     }
 
-    def private String uniqueNameHelperCached(EObject eObject, String originalId, List<String> uniqueNameCache) {
+    def private String uniqueNameHelperCached(EObject eObject, String originalId, Set<String> uniqueNameCache) {
         var String newName = null
         var c = 1
         if (!uniqueNameCache.contains(originalId)) {
@@ -412,7 +413,7 @@ class SCChartsExtension {
         state
     }
 
-    def State uniqueNameCached(State state, List<String> uniqueNameCache) {
+    def State uniqueNameCached(State state, Set<String> uniqueNameCache) {
         val originalId = state.id
         var String newName = state.uniqueNameHelperCached(originalId, uniqueNameCache)
         if (newName != originalId) {
@@ -432,7 +433,7 @@ class SCChartsExtension {
         region
     }
 
-    def ControlflowRegion uniqueNameCached(ControlflowRegion region, List<String> uniquieNameCache) {
+    def ControlflowRegion uniqueNameCached(ControlflowRegion region, Set<String> uniquieNameCache) {
         val originalId = region.id
         var String newName = region.uniqueNameHelperCached(originalId, uniquieNameCache)
         if (originalId != newName) {
@@ -454,7 +455,7 @@ class SCChartsExtension {
         valuedObject
     }
 
-    def ValuedObject uniqueNameCached(ValuedObject valuedObject, List<String> uniqueNameCache) {
+    def ValuedObject uniqueNameCached(ValuedObject valuedObject, Set<String> uniqueNameCache) {
         val originalId = valuedObject.name
         var String newName = valuedObject.uniqueNameHelperCached(originalId, uniqueNameCache)
         if (newName != originalId) {
@@ -1196,7 +1197,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
     def State fixDeadCode(State rootState) {
-        for (nonReachabledState : rootState.allContainedStates.filter[!isStateReachable].immutableCopy) {
+        for (nonReachabledState : rootState.allContainedStates.filter[!isStateReachable].toList) {
             val parentRegion = (nonReachabledState.eContainer as ControlflowRegion)
             parentRegion.states.remove(nonReachabledState)
         }
@@ -1275,7 +1276,7 @@ class SCChartsExtension {
 
     }
 
-    def void transformLocalValuedObjectCached(List<Scope> scopeList, Scope targetScope, List<String> uniqueNameCache) {
+    def void transformLocalValuedObjectCached(List<Scope> scopeList, Scope targetScope, Set<String> uniqueNameCache) {
 
         // Traverse all states
         for (scope : scopeList) {
@@ -1285,7 +1286,7 @@ class SCChartsExtension {
 
     // Traverse all states and transform possible local valuedObjects.
     def void transformExposeLocalValuedObjectCached(Scope scope, Scope targetScope, boolean expose,
-        List<String> uniqueNameCache) {
+        Set<String> uniqueNameCache) {
 
         // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
         // and wherever the local valuedObject is emitted, also emit the new global 

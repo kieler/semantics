@@ -13,16 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.features
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.Iterator
 
 /**
@@ -46,29 +43,11 @@ class Pre extends Feature {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        for (state : model.allStates.toIterable) {
-            val allActions = state.eAllContents.filter(typeof(Action)).toList
-            val allPreValuedObjects = state.valuedObjects.filter(
-                valuedObject|
-                    allActions.filter(
-                        action|
-                            action.getPreExpression(valuedObject).hasNext ||
-                                action.getPreValExpression(valuedObject).hasNext).size > 0)
-
-            if (allPreValuedObjects.size > 0) {
-                return true
-            }
-        }
-        return false
-    }
+        model.eAllContents.filter(OperatorExpression).exists[ operator == OperatorType::PRE ]
+    }    
 
     //-------------------------------------------------------------------------
     // Return a list of Pre Expressions for an action that references the valuedObject

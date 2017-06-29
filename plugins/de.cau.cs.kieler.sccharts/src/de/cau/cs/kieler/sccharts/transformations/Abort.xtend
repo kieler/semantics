@@ -101,7 +101,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    private val nameCache = <String>newArrayList("_term")
+    private val nameCache = <String>newHashSet("_term")
 
     // FIXME: Delayed weak aborts need to be treated with a watcher region and a
     // delaying auxiliary signal there.
