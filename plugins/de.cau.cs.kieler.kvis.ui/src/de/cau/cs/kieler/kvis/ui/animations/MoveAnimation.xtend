@@ -34,7 +34,7 @@ class MoveAnimation extends AnimationHandler {
     }
     
     override doApply(DataPool pool) {
-        val elem = findElement()
+        val elem = findElement(true)
         // Get mapped value
         val newX = getAttribute("x").floatValue
         val newY = getAttribute("y").floatValue
