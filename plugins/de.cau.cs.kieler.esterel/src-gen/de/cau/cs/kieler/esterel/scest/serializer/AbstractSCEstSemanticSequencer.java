@@ -457,6 +457,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					return; 
 				}
 				else if (rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getExpressionRule()
 						|| rule == grammarAccess.getBooleanExpressionRule()
 						|| rule == grammarAccess.getOrExpressionRule()
@@ -479,7 +480,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getRootRule()
 						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
@@ -529,6 +529,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					return; 
 				}
 				else if (rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getExpressionRule()
 						|| rule == grammarAccess.getBooleanExpressionRule()
 						|| rule == grammarAccess.getOrExpressionRule()
@@ -551,7 +552,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
 						|| rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getBoolExpressionRule()

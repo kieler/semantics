@@ -3721,6 +3721,121 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
+
+	public class AtomicExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.AtomicExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cFunctionExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cTrapExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBoolValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cValuedObjectTestExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final RuleCall cBooleanExpressionParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final RuleCall cConstantExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cFunctionCallParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		
+		//// Esterel is a bit richer than what is provided by kexpressions. 
+		//// These rules are introduced here.
+		//// Care about order of the rules! 
+		//AtomicExpression kexpressions::Expression:
+		//	FunctionExpression
+		//	| TrapExpression
+		//	| BoolValue
+		//	| ValuedObjectTestExpression
+		//	| TextExpression
+		//	| '(' BooleanExpression ')'
+		//	| ConstantExpression
+		//	| FunctionCall
+		@Override public ParserRule getRule() { return rule; }
+
+		//FunctionExpression | TrapExpression | BoolValue | ValuedObjectTestExpression | TextExpression | '(' BooleanExpression
+		//')' | ConstantExpression | FunctionCall
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//FunctionExpression
+		public RuleCall getFunctionExpressionParserRuleCall_0() { return cFunctionExpressionParserRuleCall_0; }
+
+		//TrapExpression
+		public RuleCall getTrapExpressionParserRuleCall_1() { return cTrapExpressionParserRuleCall_1; }
+
+		//BoolValue
+		public RuleCall getBoolValueParserRuleCall_2() { return cBoolValueParserRuleCall_2; }
+
+		//ValuedObjectTestExpression
+		public RuleCall getValuedObjectTestExpressionParserRuleCall_3() { return cValuedObjectTestExpressionParserRuleCall_3; }
+
+		//TextExpression
+		public RuleCall getTextExpressionParserRuleCall_4() { return cTextExpressionParserRuleCall_4; }
+
+		//'(' BooleanExpression ')'
+		public Group getGroup_5() { return cGroup_5; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
+
+		//BooleanExpression
+		public RuleCall getBooleanExpressionParserRuleCall_5_1() { return cBooleanExpressionParserRuleCall_5_1; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
+
+		//ConstantExpression
+		public RuleCall getConstantExpressionParserRuleCall_6() { return cConstantExpressionParserRuleCall_6; }
+
+		//FunctionCall
+		public RuleCall getFunctionCallParserRuleCall_7() { return cFunctionCallParserRuleCall_7; }
+	}
+
+	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.AtomicValuedExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final RuleCall cAtomicExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cStringValueParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		
+		//AtomicValuedExpression kexpressions::Expression:
+		//	IntValue
+		//	| FloatValue
+		//	| '(' ValuedExpression ')'
+		//	| AtomicExpression
+		//	| StringValue
+		@Override public ParserRule getRule() { return rule; }
+
+		//IntValue | FloatValue | '(' ValuedExpression ')' | AtomicExpression | StringValue
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//IntValue
+		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
+
+		//FloatValue
+		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
+
+		//'(' ValuedExpression ')'
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
+		//ValuedExpression
+		public RuleCall getValuedExpressionParserRuleCall_2_1() { return cValuedExpressionParserRuleCall_2_1; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+
+		//AtomicExpression
+		public RuleCall getAtomicExpressionParserRuleCall_3() { return cAtomicExpressionParserRuleCall_3; }
+
+		//StringValue
+		public RuleCall getStringValueParserRuleCall_4() { return cStringValueParserRuleCall_4; }
+	}
 	
 	
 	private final SCEstProgramElements pSCEstProgram;
@@ -3759,6 +3874,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	private final ScopeStatementElements pScopeStatement;
 	private final TerminalRule tML_COMMENT;
 	private final TerminalRule tSL_COMMENT;
+	private final AtomicExpressionElements pAtomicExpression;
+	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	
 	private final Grammar grammar;
 
@@ -3829,6 +3946,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		this.pScopeStatement = new ScopeStatementElements();
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.ML_COMMENT");
 		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.SL_COMMENT");
+		this.pAtomicExpression = new AtomicExpressionElements();
+		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -4412,6 +4531,40 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
 	} 
+
+	//// Esterel is a bit richer than what is provided by kexpressions. 
+	//// These rules are introduced here.
+	//// Care about order of the rules! 
+	//AtomicExpression kexpressions::Expression:
+	//	FunctionExpression
+	//	| TrapExpression
+	//	| BoolValue
+	//	| ValuedObjectTestExpression
+	//	| TextExpression
+	//	| '(' BooleanExpression ')'
+	//	| ConstantExpression
+	//	| FunctionCall
+	public AtomicExpressionElements getAtomicExpressionAccess() {
+		return pAtomicExpression;
+	}
+	
+	public ParserRule getAtomicExpressionRule() {
+		return getAtomicExpressionAccess().getRule();
+	}
+
+	//AtomicValuedExpression kexpressions::Expression:
+	//	IntValue
+	//	| FloatValue
+	//	| '(' ValuedExpression ')'
+	//	| AtomicExpression
+	//	| StringValue
+	public AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
+		return pAtomicValuedExpression;
+	}
+	
+	public ParserRule getAtomicValuedExpressionRule() {
+		return getAtomicValuedExpressionAccess().getRule();
+	}
 
 	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.esterel.scest.SCEst'.rules[35]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.esterel.Esterel'.rules[0]->ParserRule'Program'
@@ -5149,28 +5302,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return gaEsterel.getHOSTCODERule();
 	} 
 
-	/// * ###################################################
-	// * ###               Expressions                   ###
-	// * ###################################################
-	// * / // Esterel is a bit richer than what is provided by kexpressions. 
-	//// These rules are introduced here.
-	//// Care about order of the rules! 
-	//AtomicExpression kexpressions::Expression:
-	//	FunctionExpression
-	//	| TrapExpression
-	//	| BoolValue
-	//	| ValuedObjectTestExpression
-	//	| TextExpression
-	//	| '(' BooleanExpression ')'
-	//	| ConstantExpression
-	public EsterelGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
-		return gaEsterel.getAtomicExpressionAccess();
-	}
-	
-	public ParserRule getAtomicExpressionRule() {
-		return getAtomicExpressionAccess().getRule();
-	}
-
 	//TrapExpression kexpressions::Expression:
 	//	{TrapExpression} "??" trap=[ISignal]
 	public EsterelGrammarAccess.TrapExpressionElements getTrapExpressionAccess() {
@@ -5403,7 +5534,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// at the latter we need the parans to indicate the right binding
 	//NotExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator
-	//	subExpressions+=NotExpression | AtomicExpression
+	//	subExpressions+=NotExpression | super::AtomicExpression
 	public EsterelGrammarAccess.NotExpressionElements getNotExpressionAccess() {
 		return gaEsterel.getNotExpressionAccess();
 	}
@@ -5478,7 +5609,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: varA mod ?B
 	//ModExpression kexpressions::Expression:
 	//	NegExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=Esterel_ModOperator
-	//	subExpressions+=AtomicValuedExpression)?
+	//	subExpressions+=super::AtomicValuedExpression)?
 	public EsterelGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaEsterel.getModExpressionAccess();
 	}
@@ -5491,28 +5622,13 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// at the latter we need the parans to indicate the right binding
 	//NegExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} operator=Esterel_SubOperator
-	//	subExpressions+=NegExpression | AtomicValuedExpression
+	//	subExpressions+=NegExpression | super::AtomicValuedExpression
 	public EsterelGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaEsterel.getNegExpressionAccess();
 	}
 	
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
-	}
-
-	//AtomicValuedExpression kexpressions::Expression:
-	//	IntValue
-	//	| FloatValue
-	//	//    | '(' DivExpression ')'
-	//	//    | => '(' ValuedExpression ')'  // old
-	//	| '(' ValuedExpression ')'
-	//	| AtomicExpression
-	public EsterelGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
-		return gaEsterel.getAtomicValuedExpressionAccess();
-	}
-	
-	public ParserRule getAtomicValuedExpressionRule() {
-		return getAtomicValuedExpressionAccess().getRule();
 	}
 
 	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX

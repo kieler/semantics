@@ -5412,6 +5412,231 @@ ruleScopeStatement returns [EObject current=null]
 
 
 
+// Entry rule entryRuleAtomicExpression
+entryRuleAtomicExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getAtomicExpressionRule()); }
+	 iv_ruleAtomicExpression=ruleAtomicExpression 
+	 { $current=$iv_ruleAtomicExpression.current; } 
+	 EOF 
+;
+
+// Rule AtomicExpression
+ruleAtomicExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getFunctionExpressionParserRuleCall_0()); 
+    }
+    this_FunctionExpression_0=ruleFunctionExpression
+    { 
+        $current = $this_FunctionExpression_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTrapExpressionParserRuleCall_1()); 
+    }
+    this_TrapExpression_1=ruleTrapExpression
+    { 
+        $current = $this_TrapExpression_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_2()); 
+    }
+    this_BoolValue_2=ruleBoolValue
+    { 
+        $current = $this_BoolValue_2.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_3()); 
+    }
+    this_ValuedObjectTestExpression_3=ruleValuedObjectTestExpression
+    { 
+        $current = $this_ValuedObjectTestExpression_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_4()); 
+    }
+    this_TextExpression_4=ruleTextExpression
+    { 
+        $current = $this_TextExpression_4.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |(	otherlv_5='(' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0());
+    }
+
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBooleanExpressionParserRuleCall_5_1()); 
+    }
+    this_BooleanExpression_6=ruleBooleanExpression
+    { 
+        $current = $this_BooleanExpression_6.current; 
+        afterParserOrEnumRuleCall();
+    }
+	otherlv_7=')' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_5_2());
+    }
+)
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getConstantExpressionParserRuleCall_6()); 
+    }
+    this_ConstantExpression_8=ruleConstantExpression
+    { 
+        $current = $this_ConstantExpression_8.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getFunctionCallParserRuleCall_7()); 
+    }
+    this_FunctionCall_9=ruleFunctionCall
+    { 
+        $current = $this_FunctionCall_9.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleAtomicValuedExpression
+entryRuleAtomicValuedExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getAtomicValuedExpressionRule()); }
+	 iv_ruleAtomicValuedExpression=ruleAtomicValuedExpression 
+	 { $current=$iv_ruleAtomicValuedExpression.current; } 
+	 EOF 
+;
+
+// Rule AtomicValuedExpression
+ruleAtomicValuedExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getIntValueParserRuleCall_0()); 
+    }
+    this_IntValue_0=ruleIntValue
+    { 
+        $current = $this_IntValue_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getFloatValueParserRuleCall_1()); 
+    }
+    this_FloatValue_1=ruleFloatValue
+    { 
+        $current = $this_FloatValue_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |(	otherlv_2='(' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
+    }
+
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getValuedExpressionParserRuleCall_2_1()); 
+    }
+    this_ValuedExpression_3=ruleValuedExpression
+    { 
+        $current = $this_ValuedExpression_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+	otherlv_4=')' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getAtomicValuedExpressionAccess().getRightParenthesisKeyword_2_2());
+    }
+)
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getAtomicExpressionParserRuleCall_3()); 
+    }
+    this_AtomicExpression_5=ruleAtomicExpression
+    { 
+        $current = $this_AtomicExpression_5.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getStringValueParserRuleCall_4()); 
+    }
+    this_StringValue_6=ruleStringValue
+    { 
+        $current = $this_StringValue_6.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
 
 
 // Entry rule entryRuleModule
@@ -10776,125 +11001,6 @@ ruleBuildInFunction returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRul
 
 
 
-// Entry rule entryRuleAtomicExpression
-entryRuleAtomicExpression returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getAtomicExpressionRule()); }
-	 iv_ruleAtomicExpression=ruleAtomicExpression 
-	 { $current=$iv_ruleAtomicExpression.current; } 
-	 EOF 
-;
-
-// Rule AtomicExpression
-ruleAtomicExpression returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getFunctionExpressionParserRuleCall_0()); 
-    }
-    this_FunctionExpression_0=ruleFunctionExpression
-    { 
-        $current = $this_FunctionExpression_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTrapExpressionParserRuleCall_1()); 
-    }
-    this_TrapExpression_1=ruleTrapExpression
-    { 
-        $current = $this_TrapExpression_1.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_2()); 
-    }
-    this_BoolValue_2=ruleBoolValue
-    { 
-        $current = $this_BoolValue_2.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_3()); 
-    }
-    this_ValuedObjectTestExpression_3=ruleValuedObjectTestExpression
-    { 
-        $current = $this_ValuedObjectTestExpression_3.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_4()); 
-    }
-    this_TextExpression_4=ruleTextExpression
-    { 
-        $current = $this_TextExpression_4.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |(	otherlv_5='(' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_5_0());
-    }
-
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBooleanExpressionParserRuleCall_5_1()); 
-    }
-    this_BooleanExpression_6=ruleBooleanExpression
-    { 
-        $current = $this_BooleanExpression_6.current; 
-        afterParserOrEnumRuleCall();
-    }
-	otherlv_7=')' 
-    {
-    	newLeafNode(otherlv_7, grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_5_2());
-    }
-)
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicExpressionAccess().getConstantExpressionParserRuleCall_6()); 
-    }
-    this_ConstantExpression_8=ruleConstantExpression
-    { 
-        $current = $this_ConstantExpression_8.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
-;
-
-
-
-
-
 // Entry rule entryRuleTrapExpression
 entryRuleTrapExpression returns [EObject current=null] 
 	:
@@ -12558,7 +12664,7 @@ ruleModExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.AtomicValuedExpression");
+        		"de.cau.cs.kieler.esterel.scest.SCEst.AtomicValuedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -12640,86 +12746,6 @@ ruleNegExpression returns [EObject current=null]
     this_AtomicValuedExpression_3=ruleAtomicValuedExpression
     { 
         $current = $this_AtomicValuedExpression_3.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleAtomicValuedExpression
-entryRuleAtomicValuedExpression returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getAtomicValuedExpressionRule()); }
-	 iv_ruleAtomicValuedExpression=ruleAtomicValuedExpression 
-	 { $current=$iv_ruleAtomicValuedExpression.current; } 
-	 EOF 
-;
-
-// Rule AtomicValuedExpression
-ruleAtomicValuedExpression returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getIntValueParserRuleCall_0()); 
-    }
-    this_IntValue_0=ruleIntValue
-    { 
-        $current = $this_IntValue_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getFloatValueParserRuleCall_1()); 
-    }
-    this_FloatValue_1=ruleFloatValue
-    { 
-        $current = $this_FloatValue_1.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |(	otherlv_2='(' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
-    }
-
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getValuedExpressionParserRuleCall_2_1()); 
-    }
-    this_ValuedExpression_3=ruleValuedExpression
-    { 
-        $current = $this_ValuedExpression_3.current; 
-        afterParserOrEnumRuleCall();
-    }
-	otherlv_4=')' 
-    {
-    	newLeafNode(otherlv_4, grammarAccess.getAtomicValuedExpressionAccess().getRightParenthesisKeyword_2_2());
-    }
-)
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getAtomicValuedExpressionAccess().getAtomicExpressionParserRuleCall_3()); 
-    }
-    this_AtomicExpression_5=ruleAtomicExpression
-    { 
-        $current = $this_AtomicExpression_5.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -14522,6 +14548,104 @@ ruleValuedObjectReference returns [EObject current=null]
 ;
 
 
+
+
+
+// Entry rule entryRuleFunctionCall
+entryRuleFunctionCall returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getFunctionCallRule()); }
+	 iv_ruleFunctionCall=ruleFunctionCall 
+	 { $current=$iv_ruleFunctionCall.current; } 
+	 EOF 
+;
+
+// Rule FunctionCall
+ruleFunctionCall returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='<' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getFunctionCallAccess().getLessThanSignKeyword_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getFunctionCallAccess().getFunctionNameExtendedIDParserRuleCall_1_0()); 
+	    }
+		lv_functionName_1_0=ruleExtendedID		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getFunctionCallRule());
+	        }
+       		set(
+       			$current, 
+       			"functionName",
+        		lv_functionName_1_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)((	otherlv_2='(' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getFunctionCallAccess().getLeftParenthesisKeyword_2_0_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_2_0_1_0()); 
+	    }
+		lv_parameters_3_0=ruleParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getFunctionCallRule());
+	        }
+       		add(
+       			$current, 
+       			"parameters",
+        		lv_parameters_3_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_4=',' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getFunctionCallAccess().getCommaKeyword_2_0_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_2_0_2_1_0()); 
+	    }
+		lv_parameters_5_0=ruleParameter		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getFunctionCallRule());
+	        }
+       		add(
+       			$current, 
+       			"parameters",
+        		lv_parameters_5_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*	otherlv_6=')' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getFunctionCallAccess().getRightParenthesisKeyword_2_0_3());
+    }
+)
+    |	otherlv_7='()' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
+    }
+)?	otherlv_8='>' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getFunctionCallAccess().getGreaterThanSignKeyword_3());
+    }
+)
+;
 
 
 

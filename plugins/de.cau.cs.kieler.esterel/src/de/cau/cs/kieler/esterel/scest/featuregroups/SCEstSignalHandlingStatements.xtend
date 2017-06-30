@@ -44,7 +44,9 @@ class SCEstSignalHandlingStatements extends FeatureGroup {
              SCEstFeature::SET_ID,
              SCEstFeature::IFTEST_ID,
              SCEstFeature::SUSTAIN_ID,
-             SCEstFeature::SET_ID
+             SCEstFeature::SET_ID,
+             SCEstFeature::SENSOR_ID,
+             SCEstFeature::CONSTANT_ID
         )
     }
 }

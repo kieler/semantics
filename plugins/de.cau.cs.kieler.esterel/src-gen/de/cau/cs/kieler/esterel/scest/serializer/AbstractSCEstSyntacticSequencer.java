@@ -303,6 +303,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '<' functionName=ExtendedID
 	 *     (rule start) (ambiguity) '??' trap=[ISignal|ID]
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
 	 *     (rule start) (ambiguity) function=[Function|ID]
@@ -314,6 +315,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     (rule start) (ambiguity) value=ConstantValue
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
+	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
@@ -338,6 +340,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     ('(' '('*)*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '<' functionName=ExtendedID
 	 *     (rule start) (ambiguity) '??' trap=[ISignal|ID]
 	 *     (rule start) (ambiguity) constant=[Constant|ID]
 	 *     (rule start) (ambiguity) function=[Function|ID]
@@ -360,6 +363,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     (rule start) (ambiguity) operator=Esterel_SubOperator
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
+	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_5_0_LeftParenthesisKeyword_2_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

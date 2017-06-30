@@ -87,6 +87,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getThreadAccess().getAlternatives_1_0_3_0(), "rule__Thread__Alternatives_1_0_3_0");
 					put(grammarAccess.getThreadAccess().getAlternatives_1_1_0(), "rule__Thread__Alternatives_1_1_0");
 					put(grammarAccess.getScopeStatementAccess().getAlternatives_4_0(), "rule__ScopeStatement__Alternatives_4_0");
+					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
+					put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 					put(grammarAccess.getModuleAccess().getAlternatives_4(), "rule__Module__Alternatives_4");
 					put(grammarAccess.getModuleAccess().getAlternatives_6(), "rule__Module__Alternatives_6");
 					put(grammarAccess.getTypeIdentifierAccess().getAlternatives(), "rule__TypeIdentifier__Alternatives");
@@ -124,7 +126,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConstantRenamingAccess().getAlternatives_0(), "rule__ConstantRenaming__Alternatives_0");
 					put(grammarAccess.getFunctionRenamingAccess().getAlternatives_0(), "rule__FunctionRenaming__Alternatives_0");
 					put(grammarAccess.getBuildInFunctionAccess().getAlternatives(), "rule__BuildInFunction__Alternatives");
-					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 					put(grammarAccess.getConstantExpressionAccess().getAlternatives_1(), "rule__ConstantExpression__Alternatives_1");
 					put(grammarAccess.getSignalNotExpressionAccess().getAlternatives(), "rule__SignalNotExpression__Alternatives");
 					put(grammarAccess.getSignalAtomicExpressionAccess().getAlternatives(), "rule__SignalAtomicExpression__Alternatives");
@@ -134,7 +135,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 					put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
-					put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 					put(grammarAccess.getEsterel_ValuedObjectAccess().getAlternatives(), "rule__Esterel_ValuedObject__Alternatives");
 					put(grammarAccess.getSCLProgramAccess().getAlternatives_5(), "rule__SCLProgram__Alternatives_5");
@@ -301,6 +301,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScopeStatementAccess().getGroup(), "rule__ScopeStatement__Group__0");
 					put(grammarAccess.getScopeStatementAccess().getGroup_4(), "rule__ScopeStatement__Group_4__0");
 					put(grammarAccess.getScopeStatementAccess().getGroup_4_0_0(), "rule__ScopeStatement__Group_4_0_0__0");
+					put(grammarAccess.getAtomicExpressionAccess().getGroup_5(), "rule__AtomicExpression__Group_5__0");
+					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_2(), "rule__AtomicValuedExpression__Group_2__0");
 					put(grammarAccess.getModuleAccess().getGroup(), "rule__Module__Group__0");
 					put(grammarAccess.getModuleAccess().getGroup_5(), "rule__Module__Group_5__0");
 					put(grammarAccess.getModuleAccess().getGroup_5_0(), "rule__Module__Group_5_0__0");
@@ -411,7 +413,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProcedureRenamingAccess().getGroup(), "rule__ProcedureRenaming__Group__0");
 					put(grammarAccess.getTaskRenamingAccess().getGroup(), "rule__TaskRenaming__Group__0");
 					put(grammarAccess.getSignalRenamingAccess().getGroup(), "rule__SignalRenaming__Group__0");
-					put(grammarAccess.getAtomicExpressionAccess().getGroup_5(), "rule__AtomicExpression__Group_5__0");
 					put(grammarAccess.getTrapExpressionAccess().getGroup(), "rule__TrapExpression__Group__0");
 					put(grammarAccess.getFunctionExpressionAccess().getGroup(), "rule__FunctionExpression__Group__0");
 					put(grammarAccess.getFunctionExpressionAccess().getGroup_3(), "rule__FunctionExpression__Group_3__0");
@@ -452,7 +453,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getGroup(), "rule__ModExpression__Group__0");
 					put(grammarAccess.getModExpressionAccess().getGroup_1(), "rule__ModExpression__Group_1__0");
 					put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
-					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_2(), "rule__AtomicValuedExpression__Group_2__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_1(), "rule__ValuedObjectTestExpression__Group_1__0");
 					put(grammarAccess.getSCLProgramAccess().getGroup(), "rule__SCLProgram__Group__0");
