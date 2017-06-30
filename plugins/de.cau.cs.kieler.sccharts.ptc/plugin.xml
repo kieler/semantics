@@ -26,7 +26,7 @@
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.core.resources.extension"
-                           value="uml">
+                           value="xmi">
                      </test>
                   </adapt>
                </iterate>
