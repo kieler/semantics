@@ -41,6 +41,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
 import de.cau.cs.kieler.scl.scl.Assignment
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
@@ -176,7 +177,7 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
                 scope.declarations.add(declaration)
                 // go through all variables in the current declaration
                 for (variable : decl.variables) {
-                    var v = createNewUniqueVariable(variable.expression)
+                    var v = createNewUniqueVariable(EcoreUtil.copy(variable.expression))
                     v.combineOperator = variable.combineOperator
                     declaration.valuedObjects.add(v)
                     newVariables.put(variable, v)
@@ -188,7 +189,10 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             }
                 
         }
-        statements.set(pos, scope)
+        // the esterel IVariables are not deleted yet
+        variables.statements.add(scope)
+//        // IVariables are gone
+//        statements.set(pos, scope)
         transformReferences(scope, newVariables)
         transformAssignments(scope, newVariables)
         
@@ -219,7 +223,7 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             if (newVariables.containsKey(a.getVar())) {
                 var statements = a.getContainingList
                 var pos = statements.indexOf(a)
-                var assignment = createAssignment(newVariables.get(a.getVar()), a.expr)
+                var assignment = createAssignment(newVariables.get(a.getVar()), EcoreUtil.copy(a.expr))
                 statements.set(pos, assignment)
             }
         }

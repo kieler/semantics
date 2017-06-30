@@ -70,6 +70,14 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.esterel.PresentCase
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.esterel.esterel.Emit
+import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
+import de.cau.cs.kieler.esterel.esterel.ElsIf
+import de.cau.cs.kieler.esterel.esterel.Repeat
+import de.cau.cs.kieler.esterel.esterel.TrapSignal
+import de.cau.cs.kieler.esterel.esterel.Exit
+import de.cau.cs.kieler.esterel.esterel.IVariable
+import de.cau.cs.kieler.esterel.scest.scest.Set
 
 /**
  * @author mrb
@@ -1917,7 +1925,85 @@ class SCEstExtension {
             }
         }
     }
- 
+    
+    /**
+     * Return a KExpression Function
+     * 
+     * @param name The name of the new function
+     * @return The created function
+     */
+    def createFunction(String name) {
+        KExpressionsFactory::eINSTANCE.createFunctionCall => [
+            it.functionName = name
+        ]
+    }
+    
+    /**
+     * Return a KExpression Parameter
+     * 
+     * @param expr The expression of the new parameter
+     * @param reference Is the parameter a call by reference?
+     * @return The created parameter
+     */
+    def createParameter(Expression expr, boolean reference) {
+        KExpressionsFactory::eINSTANCE.createParameter => [
+            it.callByReference = reference
+            it.expression = expr
+        ]
+    }
+    
+    /**
+     * Set the given expression where it belongs in the given obj.
+     * If 'o' instanceof ISignal => signal.expression = expr
+     * 
+     * @param expr The expression which needs to be placed somewhere
+     * @param o The object which should be able to hold an expression
+     */
+    def setExpression(Expression expr, EObject o) {
+        if (o instanceof ISignal) {
+            (o as ISignal).expression = expr
+        }
+        else if (o instanceof Emit) {
+            (o as Emit).expr = expr
+        }
+        else if (o instanceof Sustain) {
+            (o as Sustain).expression = expr
+        }
+        else if (o instanceof EsterelAssignment) {
+            (o as EsterelAssignment).expr = expr
+        }
+        else if (o instanceof IfTest) {
+            (o as IfTest).expr = expr
+        }
+        else if (o instanceof ElsIf) {
+            (o as ElsIf).expr = expr
+        }
+        else if (o instanceof Repeat) {
+            (o as Repeat).expression = expr
+        }
+        else if (o instanceof Exit) {
+            (o as Exit).expression = expr
+        }
+        else if (o instanceof IVariable) {
+            (o as IVariable).expression = expr
+        }
+        else if (o instanceof DelayExpr) {
+            (o as DelayExpr).expr = expr
+        }
+        else if (o instanceof Conditional) {
+            (o as Conditional).expression = expr
+        }
+        else if (o instanceof Assignment) {
+            (o as Assignment).expression = expr
+        }
+        else if (o instanceof Set) {
+            (o as Set).expr = expr
+        }
+        else {
+            throw new UnsupportedOperationException("The following expression will be homeless! " + expr.toString)
+        }
+        
+    }
  
  
 }

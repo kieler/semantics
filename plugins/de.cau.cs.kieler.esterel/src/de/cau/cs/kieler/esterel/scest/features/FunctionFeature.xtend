@@ -10,35 +10,30 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest.featuregroups
+package de.cau.cs.kieler.esterel.scest.features
 
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.kico.features.FeatureGroup
-import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 
 /**
  * @author mrb
  *
  */
-class SCEstDataHandlingStatements extends FeatureGroup {
-
+class FunctionFeature extends Feature {
+    
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCEstFeatureGroup::SCESTDATAHANDLINGSTATEMENTS_ID
+        return SCEstFeature::FUNCTION_ID
     }
-
+    
     override getName() {
-        return SCEstFeatureGroup::SCESTDATAHANDLINGSTATEMENTS_NAME
+        return SCEstFeature::FUNCTION_NAME
     }
-
-    override getFeatureIds() {
-        Sets.newHashSet(
-             SCEstFeature::EXEC_ID,
-             SCEstFeature::PROCCALL_ID,
-             SCEstFeature::FUNCTION_ID,
-             SCEstFeature::RUN_ID
-        )
+    
+    def isContained(SCEstProgram program) {
+        !program.eAllContents.filter(de.cau.cs.kieler.esterel.esterel.FunctionExpression).empty
     }
+    
 }

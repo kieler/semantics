@@ -45,6 +45,9 @@ public class SCEstTransformation {
     public final static String PROCCALL_ID = "esterel.proccall";
     public final static String PROCCALL_NAME = "Procedure";
     
+    public final static String FUNCTION_ID = "esterel.function";
+    public final static String FUNCTION_NAME = "Function";
+    
     public final static String PRESENT_ID = "esterel.present";
     public final static String PRESENT_NAME = "Present";
     

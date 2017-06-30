@@ -73,7 +73,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
             SCEstTransformation::ABORT_ID, SCEstTransformation::SUSPEND_ID,
             SCEstTransformation::LOOP_ID, SCEstTransformation::DO_ID,
             SCEstTransformation::AWAIT_ID, SCEstTransformation::EVERYDO_ID,
-            SCEstTransformation::PRESENT_ID
+            SCEstTransformation::PRESENT_ID, SCEstTransformation::PROCCALL_ID
         )
     }
 

@@ -137,6 +137,9 @@
      <featureGroupClass
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstOptimization">
      </featureGroupClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.FunctionFeature">
+     </featureClass>
   </extension>
   <extension
         point="de.cau.cs.kieler.kico.transformation">
@@ -217,6 +220,9 @@
      </expansionTransformationClass>
      <expansionTransformationClass
            class="de.cau.cs.kieler.esterel.scest.transformations.SignalTransformation">
+     </expansionTransformationClass>
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.scest.transformations.FunctionTransformation">
      </expansionTransformationClass>
   </extension>
   <!--extension
