@@ -323,6 +323,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypesTypeParserRuleCall_3_1_0 = (RuleCall)cTypesAssignment_3_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
+		//// doesn't work, should be before typeID=ID
 		//// ==> 7.3.1 Type Declarations
 		//// -------------------------------------
 		//TypeDecl:
@@ -1207,97 +1208,94 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Alternatives cAlternatives_2_0 = (Alternatives)cAlternatives_2.eContents().get(0);
-		private final Group cGroup_2_0_0 = (Group)cAlternatives_2_0.eContents().get(0);
-		private final Keyword cColonKeyword_2_0_0_0 = (Keyword)cGroup_2_0_0.eContents().get(0);
-		private final Assignment cTypeAssignment_2_0_0_1 = (Assignment)cGroup_2_0_0.eContents().get(1);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0 = (RuleCall)cTypeAssignment_2_0_0_1.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_0_1 = (Assignment)cAlternatives_2_0.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_1_0 = (RuleCall)cTypeIDAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_0_2 = (Group)cAlternatives_2_0.eContents().get(2);
-		private final Keyword cCombineKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
-		private final Alternatives cAlternatives_2_0_2_1 = (Alternatives)cGroup_2_0_2.eContents().get(1);
-		private final Assignment cTypeAssignment_2_0_2_1_0 = (Assignment)cAlternatives_2_0_2_1.eContents().get(0);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0 = (RuleCall)cTypeAssignment_2_0_2_1_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_0_2_1_1 = (Assignment)cAlternatives_2_0_2_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_0_2_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_0_2_2 = (Keyword)cGroup_2_0_2.eContents().get(2);
-		private final Alternatives cAlternatives_2_0_2_3 = (Alternatives)cGroup_2_0_2.eContents().get(3);
-		private final Assignment cFuncAssignment_2_0_2_3_0 = (Assignment)cAlternatives_2_0_2_3.eContents().get(0);
-		private final CrossReference cFuncFunctionCrossReference_2_0_2_3_0_0 = (CrossReference)cFuncAssignment_2_0_2_3_0.eContents().get(0);
-		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_0_2_3_0_0.eContents().get(1);
-		private final Assignment cCombineOperatorAssignment_2_0_2_3_1 = (Assignment)cAlternatives_2_0_2_3.eContents().get(1);
-		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_0_2_3_1.eContents().get(0);
-		private final Alternatives cAlternatives_2_1 = (Alternatives)cAlternatives_2.eContents().get(1);
-		private final Group cGroup_2_1_0 = (Group)cAlternatives_2_1.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2_1_0_0 = (Keyword)cGroup_2_1_0.eContents().get(0);
-		private final Assignment cTypeAssignment_2_1_0_1 = (Assignment)cGroup_2_1_0.eContents().get(1);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0 = (RuleCall)cTypeAssignment_2_1_0_1.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_1_1 = (Assignment)cAlternatives_2_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_1.eContents().get(0);
-		private final Group cGroup_2_1_2 = (Group)cAlternatives_2_1.eContents().get(2);
-		private final Group cGroup_2_1_2_0 = (Group)cGroup_2_1_2.eContents().get(0);
-		private final Keyword cCombineKeyword_2_1_2_0_0 = (Keyword)cGroup_2_1_2_0.eContents().get(0);
-		private final Alternatives cAlternatives_2_1_2_0_1 = (Alternatives)cGroup_2_1_2_0.eContents().get(1);
-		private final Assignment cTypeAssignment_2_1_2_0_1_0 = (Assignment)cAlternatives_2_1_2_0_1.eContents().get(0);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0 = (RuleCall)cTypeAssignment_2_1_2_0_1_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_1_2_0_1_1 = (Assignment)cAlternatives_2_1_2_0_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_2_0_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_1_2_0_2 = (Keyword)cGroup_2_1_2_0.eContents().get(2);
-		private final Alternatives cAlternatives_2_1_2_0_3 = (Alternatives)cGroup_2_1_2_0.eContents().get(3);
-		private final Assignment cFuncAssignment_2_1_2_0_3_0 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(0);
-		private final CrossReference cFuncFunctionCrossReference_2_1_2_0_3_0_0 = (CrossReference)cFuncAssignment_2_1_2_0_3_0.eContents().get(0);
-		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_1_2_0_3_0_0.eContents().get(1);
-		private final Assignment cCombineOperatorAssignment_2_1_2_0_3_1 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(1);
-		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_1_2_0_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_1_2_1 = (Keyword)cGroup_2_1_2.eContents().get(1);
-		private final Alternatives cAlternatives_2_2 = (Alternatives)cAlternatives_2.eContents().get(2);
-		private final Group cGroup_2_2_0 = (Group)cAlternatives_2_2.eContents().get(0);
-		private final Keyword cColonEqualsSignKeyword_2_2_0_0 = (Keyword)cGroup_2_2_0.eContents().get(0);
-		private final Assignment cExpressionAssignment_2_2_0_1 = (Assignment)cGroup_2_2_0.eContents().get(1);
-		private final RuleCall cExpressionExpressionParserRuleCall_2_2_0_1_0 = (RuleCall)cExpressionAssignment_2_2_0_1.eContents().get(0);
-		private final Keyword cColonKeyword_2_2_0_2 = (Keyword)cGroup_2_2_0.eContents().get(2);
-		private final Assignment cTypeAssignment_2_2_0_3 = (Assignment)cGroup_2_2_0.eContents().get(3);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0 = (RuleCall)cTypeAssignment_2_2_0_3.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_2_1 = (Assignment)cAlternatives_2_2.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_1_0 = (RuleCall)cTypeIDAssignment_2_2_1.eContents().get(0);
-		private final Group cGroup_2_2_2 = (Group)cAlternatives_2_2.eContents().get(2);
-		private final Keyword cCombineKeyword_2_2_2_0 = (Keyword)cGroup_2_2_2.eContents().get(0);
-		private final Alternatives cAlternatives_2_2_2_1 = (Alternatives)cGroup_2_2_2.eContents().get(1);
-		private final Assignment cTypeAssignment_2_2_2_1_0 = (Assignment)cAlternatives_2_2_2_1.eContents().get(0);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0 = (RuleCall)cTypeAssignment_2_2_2_1_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_2_2_1_1 = (Assignment)cAlternatives_2_2_2_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_2_2_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_2_2_2 = (Keyword)cGroup_2_2_2.eContents().get(2);
-		private final Alternatives cAlternatives_2_2_2_3 = (Alternatives)cGroup_2_2_2.eContents().get(3);
-		private final Assignment cFuncAssignment_2_2_2_3_0 = (Assignment)cAlternatives_2_2_2_3.eContents().get(0);
-		private final CrossReference cFuncFunctionCrossReference_2_2_2_3_0_0 = (CrossReference)cFuncAssignment_2_2_2_3_0.eContents().get(0);
-		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_2_2_3_0_0.eContents().get(1);
-		private final Assignment cCombineOperatorAssignment_2_2_2_3_1 = (Assignment)cAlternatives_2_2_2_3.eContents().get(1);
-		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_2_2_3_1.eContents().get(0);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cColonKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Alternatives cAlternatives_2_0_1 = (Alternatives)cGroup_2_0.eContents().get(1);
+		private final Assignment cTypeAssignment_2_0_1_0 = (Assignment)cAlternatives_2_0_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0 = (RuleCall)cTypeAssignment_2_0_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_0_1_1 = (Assignment)cAlternatives_2_0_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_1_1_0 = (RuleCall)cTypeIDAssignment_2_0_1_1.eContents().get(0);
+		private final Group cGroup_2_0_1_2 = (Group)cAlternatives_2_0_1.eContents().get(2);
+		private final Keyword cCombineKeyword_2_0_1_2_0 = (Keyword)cGroup_2_0_1_2.eContents().get(0);
+		private final Alternatives cAlternatives_2_0_1_2_1 = (Alternatives)cGroup_2_0_1_2.eContents().get(1);
+		private final Assignment cTypeAssignment_2_0_1_2_1_0 = (Assignment)cAlternatives_2_0_1_2_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0 = (RuleCall)cTypeAssignment_2_0_1_2_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_0_1_2_1_1 = (Assignment)cAlternatives_2_0_1_2_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_0_1_2_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_0_1_2_2 = (Keyword)cGroup_2_0_1_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_0_1_2_3 = (Alternatives)cGroup_2_0_1_2.eContents().get(3);
+		private final Assignment cFuncAssignment_2_0_1_2_3_0 = (Assignment)cAlternatives_2_0_1_2_3.eContents().get(0);
+		private final CrossReference cFuncFunctionCrossReference_2_0_1_2_3_0_0 = (CrossReference)cFuncAssignment_2_0_1_2_3_0.eContents().get(0);
+		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_0_1_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_0_1_2_3_0_0.eContents().get(1);
+		private final Assignment cCombineOperatorAssignment_2_0_1_2_3_1 = (Assignment)cAlternatives_2_0_1_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_0_1_2_3_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_1_1 = (Alternatives)cGroup_2_1.eContents().get(1);
+		private final Assignment cTypeAssignment_2_1_1_0 = (Assignment)cAlternatives_2_1_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0 = (RuleCall)cTypeAssignment_2_1_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_1_1_1 = (Assignment)cAlternatives_2_1_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_1_1.eContents().get(0);
+		private final Group cGroup_2_1_1_2 = (Group)cAlternatives_2_1_1.eContents().get(2);
+		private final Keyword cCombineKeyword_2_1_1_2_0 = (Keyword)cGroup_2_1_1_2.eContents().get(0);
+		private final Alternatives cAlternatives_2_1_1_2_1 = (Alternatives)cGroup_2_1_1_2.eContents().get(1);
+		private final Assignment cTypeAssignment_2_1_1_2_1_0 = (Assignment)cAlternatives_2_1_1_2_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0 = (RuleCall)cTypeAssignment_2_1_1_2_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_1_1_2_1_1 = (Assignment)cAlternatives_2_1_1_2_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_1_2_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_1_1_2_2 = (Keyword)cGroup_2_1_1_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_1_1_2_3 = (Alternatives)cGroup_2_1_1_2.eContents().get(3);
+		private final Assignment cFuncAssignment_2_1_1_2_3_0 = (Assignment)cAlternatives_2_1_1_2_3.eContents().get(0);
+		private final CrossReference cFuncFunctionCrossReference_2_1_1_2_3_0_0 = (CrossReference)cFuncAssignment_2_1_1_2_3_0.eContents().get(0);
+		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_1_1_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_1_1_2_3_0_0.eContents().get(1);
+		private final Assignment cCombineOperatorAssignment_2_1_1_2_3_1 = (Assignment)cAlternatives_2_1_1_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_1_1_2_3_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
+		private final Group cGroup_2_2 = (Group)cAlternatives_2.eContents().get(2);
+		private final Keyword cColonEqualsSignKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cExpressionAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_2_1_0 = (RuleCall)cExpressionAssignment_2_2_1.eContents().get(0);
+		private final Keyword cColonKeyword_2_2_2 = (Keyword)cGroup_2_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_2_3 = (Alternatives)cGroup_2_2.eContents().get(3);
+		private final Assignment cTypeAssignment_2_2_3_0 = (Assignment)cAlternatives_2_2_3.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0 = (RuleCall)cTypeAssignment_2_2_3_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_2_3_1 = (Assignment)cAlternatives_2_2_3.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_3_1_0 = (RuleCall)cTypeIDAssignment_2_2_3_1.eContents().get(0);
+		private final Group cGroup_2_2_3_2 = (Group)cAlternatives_2_2_3.eContents().get(2);
+		private final Keyword cCombineKeyword_2_2_3_2_0 = (Keyword)cGroup_2_2_3_2.eContents().get(0);
+		private final Alternatives cAlternatives_2_2_3_2_1 = (Alternatives)cGroup_2_2_3_2.eContents().get(1);
+		private final Assignment cTypeAssignment_2_2_3_2_1_0 = (Assignment)cAlternatives_2_2_3_2_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0 = (RuleCall)cTypeAssignment_2_2_3_2_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_2_3_2_1_1 = (Assignment)cAlternatives_2_2_3_2_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_2_3_2_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_2_3_2_2 = (Keyword)cGroup_2_2_3_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_2_3_2_3 = (Alternatives)cGroup_2_2_3_2.eContents().get(3);
+		private final Assignment cFuncAssignment_2_2_3_2_3_0 = (Assignment)cAlternatives_2_2_3_2_3.eContents().get(0);
+		private final CrossReference cFuncFunctionCrossReference_2_2_3_2_3_0_0 = (CrossReference)cFuncAssignment_2_2_3_2_3_0.eContents().get(0);
+		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_2_3_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_2_3_2_3_0_0.eContents().get(1);
+		private final Assignment cCombineOperatorAssignment_2_2_3_2_3_1 = (Assignment)cAlternatives_2_2_3_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_2_3_2_3_1.eContents().get(0);
 		
 		//// example 1:   A : combine boolean with or
 		//// example 2:   A (combine boolean with or)
 		//// example 3:   A := 0 : combine integer with '+'
 		//ISignal:
-		//	{ISignal} name=ID ((":" type=Esterel_ValueType
+		//	{ISignal} name=ID (":" (type=Esterel_ValueType
 		//	| typeID=ID
 		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
-		//	("("
-		//	type=Esterel_ValueType
+		//	"(" (type=Esterel_ValueType
 		//	| typeID=ID
-		//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-		//	")") | (":=" expression=Expression ":"
-		//	type=Esterel_ValueType
+		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+		//	")" | ":=" expression=Expression ":" (type=Esterel_ValueType
 		//	| typeID=ID
 		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
 		//	combineOperator=Esterel_CombineOperator)))?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{ISignal} name=ID ((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
-		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
-		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
+		//{ISignal} name=ID (":" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)) | "(" (type=Esterel_ValueType | typeID=ID | "combine"
+		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")" | ":="
+		//expression=Expression ":" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
 		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		public Group getGroup() { return cGroup; }
 
@@ -1310,219 +1308,219 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
-		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
-		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
+		//(":" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator)) | "(" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType
+		//| typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")" | ":=" expression=Expression ":"
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator)))?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//(":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//":" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
 		//combineOperator=Esterel_CombineOperator))
-		public Alternatives getAlternatives_2_0() { return cAlternatives_2_0; }
-
-		//":" type=Esterel_ValueType
-		public Group getGroup_2_0_0() { return cGroup_2_0_0; }
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//":"
-		public Keyword getColonKeyword_2_0_0_0() { return cColonKeyword_2_0_0_0; }
+		public Keyword getColonKeyword_2_0_0() { return cColonKeyword_2_0_0; }
+
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator))
+		public Alternatives getAlternatives_2_0_1() { return cAlternatives_2_0_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_0_0_1() { return cTypeAssignment_2_0_0_1; }
+		public Assignment getTypeAssignment_2_0_1_0() { return cTypeAssignment_2_0_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_0_1() { return cTypeIDAssignment_2_0_1; }
+		public Assignment getTypeIDAssignment_2_0_1_1() { return cTypeIDAssignment_2_0_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_1_0; }
 
 		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		public Group getGroup_2_0_1_2() { return cGroup_2_0_1_2; }
 
 		//"combine"
-		public Keyword getCombineKeyword_2_0_2_0() { return cCombineKeyword_2_0_2_0; }
+		public Keyword getCombineKeyword_2_0_1_2_0() { return cCombineKeyword_2_0_1_2_0; }
 
 		//(type=Esterel_ValueType | typeID=ID)
-		public Alternatives getAlternatives_2_0_2_1() { return cAlternatives_2_0_2_1; }
+		public Alternatives getAlternatives_2_0_1_2_1() { return cAlternatives_2_0_1_2_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_0_2_1_0() { return cTypeAssignment_2_0_2_1_0; }
+		public Assignment getTypeAssignment_2_0_1_2_1_0() { return cTypeAssignment_2_0_1_2_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_0_2_1_1() { return cTypeIDAssignment_2_0_2_1_1; }
+		public Assignment getTypeIDAssignment_2_0_1_2_1_1() { return cTypeIDAssignment_2_0_1_2_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_0_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_0_2_1_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_2_0_2_2() { return cWithKeyword_2_0_2_2; }
+		public Keyword getWithKeyword_2_0_1_2_2() { return cWithKeyword_2_0_1_2_2; }
 
 		//(func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Alternatives getAlternatives_2_0_2_3() { return cAlternatives_2_0_2_3; }
+		public Alternatives getAlternatives_2_0_1_2_3() { return cAlternatives_2_0_1_2_3; }
 
 		//func=[Function]
-		public Assignment getFuncAssignment_2_0_2_3_0() { return cFuncAssignment_2_0_2_3_0; }
+		public Assignment getFuncAssignment_2_0_1_2_3_0() { return cFuncAssignment_2_0_1_2_3_0; }
 
 		//[Function]
-		public CrossReference getFuncFunctionCrossReference_2_0_2_3_0_0() { return cFuncFunctionCrossReference_2_0_2_3_0_0; }
+		public CrossReference getFuncFunctionCrossReference_2_0_1_2_3_0_0() { return cFuncFunctionCrossReference_2_0_1_2_3_0_0; }
 
 		//ID
-		public RuleCall getFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1; }
+		public RuleCall getFuncFunctionIDTerminalRuleCall_2_0_1_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_0_1_2_3_0_0_1; }
 
 		//combineOperator=Esterel_CombineOperator
-		public Assignment getCombineOperatorAssignment_2_0_2_3_1() { return cCombineOperatorAssignment_2_0_2_3_1; }
+		public Assignment getCombineOperatorAssignment_2_0_1_2_3_1() { return cCombineOperatorAssignment_2_0_1_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0; }
 
-		//("(" type=Esterel_ValueType | typeID=ID | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//combineOperator=Esterel_CombineOperator)) ")")
-		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
-
-		//"(" type=Esterel_ValueType
-		public Group getGroup_2_1_0() { return cGroup_2_1_0; }
+		//"(" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator)) ")"
+		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_2_1_0_0() { return cLeftParenthesisKeyword_2_1_0_0; }
+		public Keyword getLeftParenthesisKeyword_2_1_0() { return cLeftParenthesisKeyword_2_1_0; }
+
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator))
+		public Alternatives getAlternatives_2_1_1() { return cAlternatives_2_1_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_1_0_1() { return cTypeAssignment_2_1_0_1; }
+		public Assignment getTypeAssignment_2_1_1_0() { return cTypeAssignment_2_1_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_1_1() { return cTypeIDAssignment_2_1_1; }
+		public Assignment getTypeIDAssignment_2_1_1_1() { return cTypeIDAssignment_2_1_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_0; }
-
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")"
-		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
-
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-		public Group getGroup_2_1_2_0() { return cGroup_2_1_2_0; }
-
-		//"combine"
-		public Keyword getCombineKeyword_2_1_2_0_0() { return cCombineKeyword_2_1_2_0_0; }
-
-		//(type=Esterel_ValueType | typeID=ID)
-		public Alternatives getAlternatives_2_1_2_0_1() { return cAlternatives_2_1_2_0_1; }
-
-		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_1_2_0_1_0() { return cTypeAssignment_2_1_2_0_1_0; }
-
-		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0; }
-
-		//typeID=ID
-		public Assignment getTypeIDAssignment_2_1_2_0_1_1() { return cTypeIDAssignment_2_1_2_0_1_1; }
-
-		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0; }
-
-		//"with"
-		public Keyword getWithKeyword_2_1_2_0_2() { return cWithKeyword_2_1_2_0_2; }
-
-		//(func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Alternatives getAlternatives_2_1_2_0_3() { return cAlternatives_2_1_2_0_3; }
-
-		//func=[Function]
-		public Assignment getFuncAssignment_2_1_2_0_3_0() { return cFuncAssignment_2_1_2_0_3_0; }
-
-		//[Function]
-		public CrossReference getFuncFunctionCrossReference_2_1_2_0_3_0_0() { return cFuncFunctionCrossReference_2_1_2_0_3_0_0; }
-
-		//ID
-		public RuleCall getFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1; }
-
-		//combineOperator=Esterel_CombineOperator
-		public Assignment getCombineOperatorAssignment_2_1_2_0_3_1() { return cCombineOperatorAssignment_2_1_2_0_3_1; }
-
-		//Esterel_CombineOperator
-		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_2_1_2_1() { return cRightParenthesisKeyword_2_1_2_1; }
-
-		//(":=" expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID)
-		//"with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-		public Alternatives getAlternatives_2_2() { return cAlternatives_2_2; }
-
-		//":=" expression=Expression ":" type=Esterel_ValueType
-		public Group getGroup_2_2_0() { return cGroup_2_2_0; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_2_2_0_0() { return cColonEqualsSignKeyword_2_2_0_0; }
-
-		//expression=Expression
-		public Assignment getExpressionAssignment_2_2_0_1() { return cExpressionAssignment_2_2_0_1; }
-
-		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_2_2_0_1_0() { return cExpressionExpressionParserRuleCall_2_2_0_1_0; }
-
-		//":"
-		public Keyword getColonKeyword_2_2_0_2() { return cColonKeyword_2_2_0_2; }
-
-		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_2_0_3() { return cTypeAssignment_2_2_0_3; }
-
-		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0; }
-
-		//typeID=ID
-		public Assignment getTypeIDAssignment_2_2_1() { return cTypeIDAssignment_2_2_1; }
-
-		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_2_1_0() { return cTypeIDIDTerminalRuleCall_2_2_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_1_0; }
 
 		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Group getGroup_2_2_2() { return cGroup_2_2_2; }
+		public Group getGroup_2_1_1_2() { return cGroup_2_1_1_2; }
 
 		//"combine"
-		public Keyword getCombineKeyword_2_2_2_0() { return cCombineKeyword_2_2_2_0; }
+		public Keyword getCombineKeyword_2_1_1_2_0() { return cCombineKeyword_2_1_1_2_0; }
 
 		//(type=Esterel_ValueType | typeID=ID)
-		public Alternatives getAlternatives_2_2_2_1() { return cAlternatives_2_2_2_1; }
+		public Alternatives getAlternatives_2_1_1_2_1() { return cAlternatives_2_1_1_2_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_2_2_1_0() { return cTypeAssignment_2_2_2_1_0; }
+		public Assignment getTypeAssignment_2_1_1_2_1_0() { return cTypeAssignment_2_1_1_2_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_2_2_1_1() { return cTypeIDAssignment_2_2_2_1_1; }
+		public Assignment getTypeIDAssignment_2_1_1_2_1_1() { return cTypeIDAssignment_2_1_1_2_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_2_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_2_2_1_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_2_2_2_2() { return cWithKeyword_2_2_2_2; }
+		public Keyword getWithKeyword_2_1_1_2_2() { return cWithKeyword_2_1_1_2_2; }
 
 		//(func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Alternatives getAlternatives_2_2_2_3() { return cAlternatives_2_2_2_3; }
+		public Alternatives getAlternatives_2_1_1_2_3() { return cAlternatives_2_1_1_2_3; }
 
 		//func=[Function]
-		public Assignment getFuncAssignment_2_2_2_3_0() { return cFuncAssignment_2_2_2_3_0; }
+		public Assignment getFuncAssignment_2_1_1_2_3_0() { return cFuncAssignment_2_1_1_2_3_0; }
 
 		//[Function]
-		public CrossReference getFuncFunctionCrossReference_2_2_2_3_0_0() { return cFuncFunctionCrossReference_2_2_2_3_0_0; }
+		public CrossReference getFuncFunctionCrossReference_2_1_1_2_3_0_0() { return cFuncFunctionCrossReference_2_1_1_2_3_0_0; }
 
 		//ID
-		public RuleCall getFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1; }
+		public RuleCall getFuncFunctionIDTerminalRuleCall_2_1_1_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_1_1_2_3_0_0_1; }
 
 		//combineOperator=Esterel_CombineOperator
-		public Assignment getCombineOperatorAssignment_2_2_2_3_1() { return cCombineOperatorAssignment_2_2_2_3_1; }
+		public Assignment getCombineOperatorAssignment_2_1_1_2_3_1() { return cCombineOperatorAssignment_2_1_1_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_1_2() { return cRightParenthesisKeyword_2_1_2; }
+
+		//":=" expression=Expression ":" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID)
+		//"with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_2_2_0() { return cColonEqualsSignKeyword_2_2_0; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_2_2_1() { return cExpressionAssignment_2_2_1; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_2_1_0() { return cExpressionExpressionParserRuleCall_2_2_1_0; }
+
+		//":"
+		public Keyword getColonKeyword_2_2_2() { return cColonKeyword_2_2_2; }
+
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator))
+		public Alternatives getAlternatives_2_2_3() { return cAlternatives_2_2_3; }
+
+		//type=Esterel_ValueType
+		public Assignment getTypeAssignment_2_2_3_0() { return cTypeAssignment_2_2_3_0; }
+
+		//Esterel_ValueType
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0; }
+
+		//typeID=ID
+		public Assignment getTypeIDAssignment_2_2_3_1() { return cTypeIDAssignment_2_2_3_1; }
+
+		//ID
+		public RuleCall getTypeIDIDTerminalRuleCall_2_2_3_1_0() { return cTypeIDIDTerminalRuleCall_2_2_3_1_0; }
+
+		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
+		public Group getGroup_2_2_3_2() { return cGroup_2_2_3_2; }
+
+		//"combine"
+		public Keyword getCombineKeyword_2_2_3_2_0() { return cCombineKeyword_2_2_3_2_0; }
+
+		//(type=Esterel_ValueType | typeID=ID)
+		public Alternatives getAlternatives_2_2_3_2_1() { return cAlternatives_2_2_3_2_1; }
+
+		//type=Esterel_ValueType
+		public Assignment getTypeAssignment_2_2_3_2_1_0() { return cTypeAssignment_2_2_3_2_1_0; }
+
+		//Esterel_ValueType
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0; }
+
+		//typeID=ID
+		public Assignment getTypeIDAssignment_2_2_3_2_1_1() { return cTypeIDAssignment_2_2_3_2_1_1; }
+
+		//ID
+		public RuleCall getTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0; }
+
+		//"with"
+		public Keyword getWithKeyword_2_2_3_2_2() { return cWithKeyword_2_2_3_2_2; }
+
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
+		public Alternatives getAlternatives_2_2_3_2_3() { return cAlternatives_2_2_3_2_3; }
+
+		//func=[Function]
+		public Assignment getFuncAssignment_2_2_3_2_3_0() { return cFuncAssignment_2_2_3_2_3_0; }
+
+		//[Function]
+		public CrossReference getFuncFunctionCrossReference_2_2_3_2_3_0_0() { return cFuncFunctionCrossReference_2_2_3_2_3_0_0; }
+
+		//ID
+		public RuleCall getFuncFunctionIDTerminalRuleCall_2_2_3_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_2_3_2_3_0_0_1; }
+
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_2_3_2_3_1() { return cCombineOperatorAssignment_2_2_3_2_3_1; }
+
+		//Esterel_CombineOperator
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0; }
 	}
 
 	public class SensorDeclElements extends AbstractParserRuleElementFinder {
@@ -3909,93 +3907,90 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Alternatives cAlternatives_2_0 = (Alternatives)cAlternatives_2.eContents().get(0);
-		private final Group cGroup_2_0_0 = (Group)cAlternatives_2_0.eContents().get(0);
-		private final Keyword cColonKeyword_2_0_0_0 = (Keyword)cGroup_2_0_0.eContents().get(0);
-		private final Assignment cTypeAssignment_2_0_0_1 = (Assignment)cGroup_2_0_0.eContents().get(1);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0 = (RuleCall)cTypeAssignment_2_0_0_1.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_0_1 = (Assignment)cAlternatives_2_0.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_1_0 = (RuleCall)cTypeIDAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_0_2 = (Group)cAlternatives_2_0.eContents().get(2);
-		private final Keyword cCombineKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
-		private final Alternatives cAlternatives_2_0_2_1 = (Alternatives)cGroup_2_0_2.eContents().get(1);
-		private final Assignment cTypeAssignment_2_0_2_1_0 = (Assignment)cAlternatives_2_0_2_1.eContents().get(0);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0 = (RuleCall)cTypeAssignment_2_0_2_1_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_0_2_1_1 = (Assignment)cAlternatives_2_0_2_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_0_2_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_0_2_2 = (Keyword)cGroup_2_0_2.eContents().get(2);
-		private final Alternatives cAlternatives_2_0_2_3 = (Alternatives)cGroup_2_0_2.eContents().get(3);
-		private final Assignment cFuncAssignment_2_0_2_3_0 = (Assignment)cAlternatives_2_0_2_3.eContents().get(0);
-		private final CrossReference cFuncFunctionCrossReference_2_0_2_3_0_0 = (CrossReference)cFuncAssignment_2_0_2_3_0.eContents().get(0);
-		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_0_2_3_0_0.eContents().get(1);
-		private final Assignment cCombineOperatorAssignment_2_0_2_3_1 = (Assignment)cAlternatives_2_0_2_3.eContents().get(1);
-		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_0_2_3_1.eContents().get(0);
-		private final Alternatives cAlternatives_2_1 = (Alternatives)cAlternatives_2.eContents().get(1);
-		private final Group cGroup_2_1_0 = (Group)cAlternatives_2_1.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2_1_0_0 = (Keyword)cGroup_2_1_0.eContents().get(0);
-		private final Assignment cTypeAssignment_2_1_0_1 = (Assignment)cGroup_2_1_0.eContents().get(1);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0 = (RuleCall)cTypeAssignment_2_1_0_1.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_1_1 = (Assignment)cAlternatives_2_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_1.eContents().get(0);
-		private final Group cGroup_2_1_2 = (Group)cAlternatives_2_1.eContents().get(2);
-		private final Group cGroup_2_1_2_0 = (Group)cGroup_2_1_2.eContents().get(0);
-		private final Keyword cCombineKeyword_2_1_2_0_0 = (Keyword)cGroup_2_1_2_0.eContents().get(0);
-		private final Alternatives cAlternatives_2_1_2_0_1 = (Alternatives)cGroup_2_1_2_0.eContents().get(1);
-		private final Assignment cTypeAssignment_2_1_2_0_1_0 = (Assignment)cAlternatives_2_1_2_0_1.eContents().get(0);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0 = (RuleCall)cTypeAssignment_2_1_2_0_1_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_1_2_0_1_1 = (Assignment)cAlternatives_2_1_2_0_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_2_0_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_1_2_0_2 = (Keyword)cGroup_2_1_2_0.eContents().get(2);
-		private final Alternatives cAlternatives_2_1_2_0_3 = (Alternatives)cGroup_2_1_2_0.eContents().get(3);
-		private final Assignment cFuncAssignment_2_1_2_0_3_0 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(0);
-		private final CrossReference cFuncFunctionCrossReference_2_1_2_0_3_0_0 = (CrossReference)cFuncAssignment_2_1_2_0_3_0.eContents().get(0);
-		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_1_2_0_3_0_0.eContents().get(1);
-		private final Assignment cCombineOperatorAssignment_2_1_2_0_3_1 = (Assignment)cAlternatives_2_1_2_0_3.eContents().get(1);
-		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_1_2_0_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_1_2_1 = (Keyword)cGroup_2_1_2.eContents().get(1);
-		private final Alternatives cAlternatives_2_2 = (Alternatives)cAlternatives_2.eContents().get(2);
-		private final Group cGroup_2_2_0 = (Group)cAlternatives_2_2.eContents().get(0);
-		private final Keyword cColonEqualsSignKeyword_2_2_0_0 = (Keyword)cGroup_2_2_0.eContents().get(0);
-		private final Assignment cExpressionAssignment_2_2_0_1 = (Assignment)cGroup_2_2_0.eContents().get(1);
-		private final RuleCall cExpressionExpressionParserRuleCall_2_2_0_1_0 = (RuleCall)cExpressionAssignment_2_2_0_1.eContents().get(0);
-		private final Keyword cColonKeyword_2_2_0_2 = (Keyword)cGroup_2_2_0.eContents().get(2);
-		private final Assignment cTypeAssignment_2_2_0_3 = (Assignment)cGroup_2_2_0.eContents().get(3);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0 = (RuleCall)cTypeAssignment_2_2_0_3.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_2_1 = (Assignment)cAlternatives_2_2.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_1_0 = (RuleCall)cTypeIDAssignment_2_2_1.eContents().get(0);
-		private final Group cGroup_2_2_2 = (Group)cAlternatives_2_2.eContents().get(2);
-		private final Keyword cCombineKeyword_2_2_2_0 = (Keyword)cGroup_2_2_2.eContents().get(0);
-		private final Alternatives cAlternatives_2_2_2_1 = (Alternatives)cGroup_2_2_2.eContents().get(1);
-		private final Assignment cTypeAssignment_2_2_2_1_0 = (Assignment)cAlternatives_2_2_2_1.eContents().get(0);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0 = (RuleCall)cTypeAssignment_2_2_2_1_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_2_2_1_1 = (Assignment)cAlternatives_2_2_2_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_2_2_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_2_2_2 = (Keyword)cGroup_2_2_2.eContents().get(2);
-		private final Alternatives cAlternatives_2_2_2_3 = (Alternatives)cGroup_2_2_2.eContents().get(3);
-		private final Assignment cFuncAssignment_2_2_2_3_0 = (Assignment)cAlternatives_2_2_2_3.eContents().get(0);
-		private final CrossReference cFuncFunctionCrossReference_2_2_2_3_0_0 = (CrossReference)cFuncAssignment_2_2_2_3_0.eContents().get(0);
-		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_2_2_3_0_0.eContents().get(1);
-		private final Assignment cCombineOperatorAssignment_2_2_2_3_1 = (Assignment)cAlternatives_2_2_2_3.eContents().get(1);
-		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_2_2_3_1.eContents().get(0);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cColonKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Alternatives cAlternatives_2_0_1 = (Alternatives)cGroup_2_0.eContents().get(1);
+		private final Assignment cTypeAssignment_2_0_1_0 = (Assignment)cAlternatives_2_0_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0 = (RuleCall)cTypeAssignment_2_0_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_0_1_1 = (Assignment)cAlternatives_2_0_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_1_1_0 = (RuleCall)cTypeIDAssignment_2_0_1_1.eContents().get(0);
+		private final Group cGroup_2_0_1_2 = (Group)cAlternatives_2_0_1.eContents().get(2);
+		private final Keyword cCombineKeyword_2_0_1_2_0 = (Keyword)cGroup_2_0_1_2.eContents().get(0);
+		private final Alternatives cAlternatives_2_0_1_2_1 = (Alternatives)cGroup_2_0_1_2.eContents().get(1);
+		private final Assignment cTypeAssignment_2_0_1_2_1_0 = (Assignment)cAlternatives_2_0_1_2_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0 = (RuleCall)cTypeAssignment_2_0_1_2_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_0_1_2_1_1 = (Assignment)cAlternatives_2_0_1_2_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_0_1_2_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_0_1_2_2 = (Keyword)cGroup_2_0_1_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_0_1_2_3 = (Alternatives)cGroup_2_0_1_2.eContents().get(3);
+		private final Assignment cFuncAssignment_2_0_1_2_3_0 = (Assignment)cAlternatives_2_0_1_2_3.eContents().get(0);
+		private final CrossReference cFuncFunctionCrossReference_2_0_1_2_3_0_0 = (CrossReference)cFuncAssignment_2_0_1_2_3_0.eContents().get(0);
+		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_0_1_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_0_1_2_3_0_0.eContents().get(1);
+		private final Assignment cCombineOperatorAssignment_2_0_1_2_3_1 = (Assignment)cAlternatives_2_0_1_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_0_1_2_3_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_2_1_1 = (Alternatives)cGroup_2_1.eContents().get(1);
+		private final Assignment cTypeAssignment_2_1_1_0 = (Assignment)cAlternatives_2_1_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0 = (RuleCall)cTypeAssignment_2_1_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_1_1_1 = (Assignment)cAlternatives_2_1_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_1_1.eContents().get(0);
+		private final Group cGroup_2_1_1_2 = (Group)cAlternatives_2_1_1.eContents().get(2);
+		private final Keyword cCombineKeyword_2_1_1_2_0 = (Keyword)cGroup_2_1_1_2.eContents().get(0);
+		private final Alternatives cAlternatives_2_1_1_2_1 = (Alternatives)cGroup_2_1_1_2.eContents().get(1);
+		private final Assignment cTypeAssignment_2_1_1_2_1_0 = (Assignment)cAlternatives_2_1_1_2_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0 = (RuleCall)cTypeAssignment_2_1_1_2_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_1_1_2_1_1 = (Assignment)cAlternatives_2_1_1_2_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_1_2_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_1_1_2_2 = (Keyword)cGroup_2_1_1_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_1_1_2_3 = (Alternatives)cGroup_2_1_1_2.eContents().get(3);
+		private final Assignment cFuncAssignment_2_1_1_2_3_0 = (Assignment)cAlternatives_2_1_1_2_3.eContents().get(0);
+		private final CrossReference cFuncFunctionCrossReference_2_1_1_2_3_0_0 = (CrossReference)cFuncAssignment_2_1_1_2_3_0.eContents().get(0);
+		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_1_1_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_1_1_2_3_0_0.eContents().get(1);
+		private final Assignment cCombineOperatorAssignment_2_1_1_2_3_1 = (Assignment)cAlternatives_2_1_1_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_1_1_2_3_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
+		private final Group cGroup_2_2 = (Group)cAlternatives_2.eContents().get(2);
+		private final Keyword cColonEqualsSignKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cExpressionAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_2_1_0 = (RuleCall)cExpressionAssignment_2_2_1.eContents().get(0);
+		private final Keyword cColonKeyword_2_2_2 = (Keyword)cGroup_2_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_2_3 = (Alternatives)cGroup_2_2.eContents().get(3);
+		private final Assignment cTypeAssignment_2_2_3_0 = (Assignment)cAlternatives_2_2_3.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0 = (RuleCall)cTypeAssignment_2_2_3_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_2_3_1 = (Assignment)cAlternatives_2_2_3.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_3_1_0 = (RuleCall)cTypeIDAssignment_2_2_3_1.eContents().get(0);
+		private final Group cGroup_2_2_3_2 = (Group)cAlternatives_2_2_3.eContents().get(2);
+		private final Keyword cCombineKeyword_2_2_3_2_0 = (Keyword)cGroup_2_2_3_2.eContents().get(0);
+		private final Alternatives cAlternatives_2_2_3_2_1 = (Alternatives)cGroup_2_2_3_2.eContents().get(1);
+		private final Assignment cTypeAssignment_2_2_3_2_1_0 = (Assignment)cAlternatives_2_2_3_2_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0 = (RuleCall)cTypeAssignment_2_2_3_2_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_2_2_3_2_1_1 = (Assignment)cAlternatives_2_2_3_2_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_2_3_2_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_2_2_3_2_2 = (Keyword)cGroup_2_2_3_2.eContents().get(2);
+		private final Alternatives cAlternatives_2_2_3_2_3 = (Alternatives)cGroup_2_2_3_2.eContents().get(3);
+		private final Assignment cFuncAssignment_2_2_3_2_3_0 = (Assignment)cAlternatives_2_2_3_2_3.eContents().get(0);
+		private final CrossReference cFuncFunctionCrossReference_2_2_3_2_3_0_0 = (CrossReference)cFuncAssignment_2_2_3_2_3_0.eContents().get(0);
+		private final RuleCall cFuncFunctionIDTerminalRuleCall_2_2_3_2_3_0_0_1 = (RuleCall)cFuncFunctionCrossReference_2_2_3_2_3_0_0.eContents().get(1);
+		private final Assignment cCombineOperatorAssignment_2_2_3_2_3_1 = (Assignment)cAlternatives_2_2_3_2_3.eContents().get(1);
+		private final RuleCall cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0 = (RuleCall)cCombineOperatorAssignment_2_2_3_2_3_1.eContents().get(0);
 		
 		//TrapSignal ISignal:
-		//	{TrapSignal} name=ID ((":" type=Esterel_ValueType
+		//	{TrapSignal} name=ID (":"? (type=Esterel_ValueType
 		//	| typeID=ID
 		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
-		//	("("
-		//	type=Esterel_ValueType
+		//	"(" (type=Esterel_ValueType
 		//	| typeID=ID
-		//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-		//	")") | (":=" expression=Expression ":"
-		//	type=Esterel_ValueType
+		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+		//	")" | ":=" expression=Expression ":" (type=Esterel_ValueType
 		//	| typeID=ID
 		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{TrapSignal} name=ID ((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
-		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
-		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
+		//{TrapSignal} name=ID (":"? (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)) | "(" (type=Esterel_ValueType | typeID=ID | "combine"
+		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")" | ":="
+		//expression=Expression ":" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
 		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
 		public Group getGroup() { return cGroup; }
 
@@ -4008,219 +4003,219 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//((":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//combineOperator=Esterel_CombineOperator)) | ("(" type=Esterel_ValueType | typeID=ID | ("combine"
-		//(type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")") | (":="
-		//expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//(func=[Function] | combineOperator=Esterel_CombineOperator)))?
+		//(":"? (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator)) | "(" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType
+		//| typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")" | ":=" expression=Expression ":"
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator)))?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//(":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//":"? (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
 		//combineOperator=Esterel_CombineOperator))
-		public Alternatives getAlternatives_2_0() { return cAlternatives_2_0; }
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
-		//":" type=Esterel_ValueType
-		public Group getGroup_2_0_0() { return cGroup_2_0_0; }
+		//":"?
+		public Keyword getColonKeyword_2_0_0() { return cColonKeyword_2_0_0; }
 
-		//":"
-		public Keyword getColonKeyword_2_0_0_0() { return cColonKeyword_2_0_0_0; }
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator))
+		public Alternatives getAlternatives_2_0_1() { return cAlternatives_2_0_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_0_0_1() { return cTypeAssignment_2_0_0_1; }
+		public Assignment getTypeAssignment_2_0_1_0() { return cTypeAssignment_2_0_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_0_1() { return cTypeIDAssignment_2_0_1; }
+		public Assignment getTypeIDAssignment_2_0_1_1() { return cTypeIDAssignment_2_0_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_1_0; }
 
 		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		public Group getGroup_2_0_1_2() { return cGroup_2_0_1_2; }
 
 		//"combine"
-		public Keyword getCombineKeyword_2_0_2_0() { return cCombineKeyword_2_0_2_0; }
+		public Keyword getCombineKeyword_2_0_1_2_0() { return cCombineKeyword_2_0_1_2_0; }
 
 		//(type=Esterel_ValueType | typeID=ID)
-		public Alternatives getAlternatives_2_0_2_1() { return cAlternatives_2_0_2_1; }
+		public Alternatives getAlternatives_2_0_1_2_1() { return cAlternatives_2_0_1_2_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_0_2_1_0() { return cTypeAssignment_2_0_2_1_0; }
+		public Assignment getTypeAssignment_2_0_1_2_1_0() { return cTypeAssignment_2_0_1_2_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_0_2_1_1() { return cTypeIDAssignment_2_0_2_1_1; }
+		public Assignment getTypeIDAssignment_2_0_1_2_1_1() { return cTypeIDAssignment_2_0_1_2_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_0_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_0_2_1_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_2_0_2_2() { return cWithKeyword_2_0_2_2; }
+		public Keyword getWithKeyword_2_0_1_2_2() { return cWithKeyword_2_0_1_2_2; }
 
 		//(func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Alternatives getAlternatives_2_0_2_3() { return cAlternatives_2_0_2_3; }
+		public Alternatives getAlternatives_2_0_1_2_3() { return cAlternatives_2_0_1_2_3; }
 
 		//func=[Function]
-		public Assignment getFuncAssignment_2_0_2_3_0() { return cFuncAssignment_2_0_2_3_0; }
+		public Assignment getFuncAssignment_2_0_1_2_3_0() { return cFuncAssignment_2_0_1_2_3_0; }
 
 		//[Function]
-		public CrossReference getFuncFunctionCrossReference_2_0_2_3_0_0() { return cFuncFunctionCrossReference_2_0_2_3_0_0; }
+		public CrossReference getFuncFunctionCrossReference_2_0_1_2_3_0_0() { return cFuncFunctionCrossReference_2_0_1_2_3_0_0; }
 
 		//ID
-		public RuleCall getFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_0_2_3_0_0_1; }
+		public RuleCall getFuncFunctionIDTerminalRuleCall_2_0_1_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_0_1_2_3_0_0_1; }
 
 		//combineOperator=Esterel_CombineOperator
-		public Assignment getCombineOperatorAssignment_2_0_2_3_1() { return cCombineOperatorAssignment_2_0_2_3_1; }
+		public Assignment getCombineOperatorAssignment_2_0_1_2_3_1() { return cCombineOperatorAssignment_2_0_1_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0; }
 
-		//("(" type=Esterel_ValueType | typeID=ID | ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
-		//combineOperator=Esterel_CombineOperator)) ")")
-		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
-
-		//"(" type=Esterel_ValueType
-		public Group getGroup_2_1_0() { return cGroup_2_1_0; }
+		//"(" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator)) ")"
+		public Group getGroup_2_1() { return cGroup_2_1; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_2_1_0_0() { return cLeftParenthesisKeyword_2_1_0_0; }
+		public Keyword getLeftParenthesisKeyword_2_1_0() { return cLeftParenthesisKeyword_2_1_0; }
+
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator))
+		public Alternatives getAlternatives_2_1_1() { return cAlternatives_2_1_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_1_0_1() { return cTypeAssignment_2_1_0_1; }
+		public Assignment getTypeAssignment_2_1_1_0() { return cTypeAssignment_2_1_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_1_1() { return cTypeIDAssignment_2_1_1; }
+		public Assignment getTypeIDAssignment_2_1_1_1() { return cTypeIDAssignment_2_1_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_0; }
-
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) ")"
-		public Group getGroup_2_1_2() { return cGroup_2_1_2; }
-
-		//("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-		public Group getGroup_2_1_2_0() { return cGroup_2_1_2_0; }
-
-		//"combine"
-		public Keyword getCombineKeyword_2_1_2_0_0() { return cCombineKeyword_2_1_2_0_0; }
-
-		//(type=Esterel_ValueType | typeID=ID)
-		public Alternatives getAlternatives_2_1_2_0_1() { return cAlternatives_2_1_2_0_1; }
-
-		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_1_2_0_1_0() { return cTypeAssignment_2_1_2_0_1_0; }
-
-		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0; }
-
-		//typeID=ID
-		public Assignment getTypeIDAssignment_2_1_2_0_1_1() { return cTypeIDAssignment_2_1_2_0_1_1; }
-
-		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0; }
-
-		//"with"
-		public Keyword getWithKeyword_2_1_2_0_2() { return cWithKeyword_2_1_2_0_2; }
-
-		//(func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Alternatives getAlternatives_2_1_2_0_3() { return cAlternatives_2_1_2_0_3; }
-
-		//func=[Function]
-		public Assignment getFuncAssignment_2_1_2_0_3_0() { return cFuncAssignment_2_1_2_0_3_0; }
-
-		//[Function]
-		public CrossReference getFuncFunctionCrossReference_2_1_2_0_3_0_0() { return cFuncFunctionCrossReference_2_1_2_0_3_0_0; }
-
-		//ID
-		public RuleCall getFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_1_2_0_3_0_0_1; }
-
-		//combineOperator=Esterel_CombineOperator
-		public Assignment getCombineOperatorAssignment_2_1_2_0_3_1() { return cCombineOperatorAssignment_2_1_2_0_3_1; }
-
-		//Esterel_CombineOperator
-		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_2_1_2_1() { return cRightParenthesisKeyword_2_1_2_1; }
-
-		//(":=" expression=Expression ":" type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID)
-		//"with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-		public Alternatives getAlternatives_2_2() { return cAlternatives_2_2; }
-
-		//":=" expression=Expression ":" type=Esterel_ValueType
-		public Group getGroup_2_2_0() { return cGroup_2_2_0; }
-
-		//":="
-		public Keyword getColonEqualsSignKeyword_2_2_0_0() { return cColonEqualsSignKeyword_2_2_0_0; }
-
-		//expression=Expression
-		public Assignment getExpressionAssignment_2_2_0_1() { return cExpressionAssignment_2_2_0_1; }
-
-		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_2_2_0_1_0() { return cExpressionExpressionParserRuleCall_2_2_0_1_0; }
-
-		//":"
-		public Keyword getColonKeyword_2_2_0_2() { return cColonKeyword_2_2_0_2; }
-
-		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_2_0_3() { return cTypeAssignment_2_2_0_3; }
-
-		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0; }
-
-		//typeID=ID
-		public Assignment getTypeIDAssignment_2_2_1() { return cTypeIDAssignment_2_2_1; }
-
-		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_2_1_0() { return cTypeIDIDTerminalRuleCall_2_2_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_1_0; }
 
 		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Group getGroup_2_2_2() { return cGroup_2_2_2; }
+		public Group getGroup_2_1_1_2() { return cGroup_2_1_1_2; }
 
 		//"combine"
-		public Keyword getCombineKeyword_2_2_2_0() { return cCombineKeyword_2_2_2_0; }
+		public Keyword getCombineKeyword_2_1_1_2_0() { return cCombineKeyword_2_1_1_2_0; }
 
 		//(type=Esterel_ValueType | typeID=ID)
-		public Alternatives getAlternatives_2_2_2_1() { return cAlternatives_2_2_2_1; }
+		public Alternatives getAlternatives_2_1_1_2_1() { return cAlternatives_2_1_1_2_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_2_2_1_0() { return cTypeAssignment_2_2_2_1_0; }
+		public Assignment getTypeAssignment_2_1_1_2_1_0() { return cTypeAssignment_2_1_1_2_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_2_2_1_1() { return cTypeIDAssignment_2_2_2_1_1; }
+		public Assignment getTypeIDAssignment_2_1_1_2_1_1() { return cTypeIDAssignment_2_1_1_2_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_2_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_2_2_1_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_2_2_2_2() { return cWithKeyword_2_2_2_2; }
+		public Keyword getWithKeyword_2_1_1_2_2() { return cWithKeyword_2_1_1_2_2; }
 
 		//(func=[Function] | combineOperator=Esterel_CombineOperator)
-		public Alternatives getAlternatives_2_2_2_3() { return cAlternatives_2_2_2_3; }
+		public Alternatives getAlternatives_2_1_1_2_3() { return cAlternatives_2_1_1_2_3; }
 
 		//func=[Function]
-		public Assignment getFuncAssignment_2_2_2_3_0() { return cFuncAssignment_2_2_2_3_0; }
+		public Assignment getFuncAssignment_2_1_1_2_3_0() { return cFuncAssignment_2_1_1_2_3_0; }
 
 		//[Function]
-		public CrossReference getFuncFunctionCrossReference_2_2_2_3_0_0() { return cFuncFunctionCrossReference_2_2_2_3_0_0; }
+		public CrossReference getFuncFunctionCrossReference_2_1_1_2_3_0_0() { return cFuncFunctionCrossReference_2_1_1_2_3_0_0; }
 
 		//ID
-		public RuleCall getFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_2_2_3_0_0_1; }
+		public RuleCall getFuncFunctionIDTerminalRuleCall_2_1_1_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_1_1_2_3_0_0_1; }
 
 		//combineOperator=Esterel_CombineOperator
-		public Assignment getCombineOperatorAssignment_2_2_2_3_1() { return cCombineOperatorAssignment_2_2_2_3_1; }
+		public Assignment getCombineOperatorAssignment_2_1_1_2_3_1() { return cCombineOperatorAssignment_2_1_1_2_3_1; }
 
 		//Esterel_CombineOperator
-		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0; }
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_1_2() { return cRightParenthesisKeyword_2_1_2; }
+
+		//":=" expression=Expression ":" (type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID)
+		//"with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_2_2_0() { return cColonEqualsSignKeyword_2_2_0; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_2_2_1() { return cExpressionAssignment_2_2_1; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_2_1_0() { return cExpressionExpressionParserRuleCall_2_2_1_0; }
+
+		//":"
+		public Keyword getColonKeyword_2_2_2() { return cColonKeyword_2_2_2; }
+
+		//(type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
+		//combineOperator=Esterel_CombineOperator))
+		public Alternatives getAlternatives_2_2_3() { return cAlternatives_2_2_3; }
+
+		//type=Esterel_ValueType
+		public Assignment getTypeAssignment_2_2_3_0() { return cTypeAssignment_2_2_3_0; }
+
+		//Esterel_ValueType
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0; }
+
+		//typeID=ID
+		public Assignment getTypeIDAssignment_2_2_3_1() { return cTypeIDAssignment_2_2_3_1; }
+
+		//ID
+		public RuleCall getTypeIDIDTerminalRuleCall_2_2_3_1_0() { return cTypeIDIDTerminalRuleCall_2_2_3_1_0; }
+
+		//"combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)
+		public Group getGroup_2_2_3_2() { return cGroup_2_2_3_2; }
+
+		//"combine"
+		public Keyword getCombineKeyword_2_2_3_2_0() { return cCombineKeyword_2_2_3_2_0; }
+
+		//(type=Esterel_ValueType | typeID=ID)
+		public Alternatives getAlternatives_2_2_3_2_1() { return cAlternatives_2_2_3_2_1; }
+
+		//type=Esterel_ValueType
+		public Assignment getTypeAssignment_2_2_3_2_1_0() { return cTypeAssignment_2_2_3_2_1_0; }
+
+		//Esterel_ValueType
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0; }
+
+		//typeID=ID
+		public Assignment getTypeIDAssignment_2_2_3_2_1_1() { return cTypeIDAssignment_2_2_3_2_1_1; }
+
+		//ID
+		public RuleCall getTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0; }
+
+		//"with"
+		public Keyword getWithKeyword_2_2_3_2_2() { return cWithKeyword_2_2_3_2_2; }
+
+		//(func=[Function] | combineOperator=Esterel_CombineOperator)
+		public Alternatives getAlternatives_2_2_3_2_3() { return cAlternatives_2_2_3_2_3; }
+
+		//func=[Function]
+		public Assignment getFuncAssignment_2_2_3_2_3_0() { return cFuncAssignment_2_2_3_2_3_0; }
+
+		//[Function]
+		public CrossReference getFuncFunctionCrossReference_2_2_3_2_3_0_0() { return cFuncFunctionCrossReference_2_2_3_2_3_0_0; }
+
+		//ID
+		public RuleCall getFuncFunctionIDTerminalRuleCall_2_2_3_2_3_0_0_1() { return cFuncFunctionIDTerminalRuleCall_2_2_3_2_3_0_0_1; }
+
+		//combineOperator=Esterel_CombineOperator
+		public Assignment getCombineOperatorAssignment_2_2_3_2_3_1() { return cCombineOperatorAssignment_2_2_3_2_3_1; }
+
+		//Esterel_CombineOperator
+		public RuleCall getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0() { return cCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0; }
 	}
 
 	public class TrapHandlerElements extends AbstractParserRuleElementFinder {
@@ -5667,37 +5662,29 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	public class SignalRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.SignalRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Assignment cNewNameAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final CrossReference cNewNameISignalCrossReference_0_0_0 = (CrossReference)cNewNameAssignment_0_0.eContents().get(0);
-		private final RuleCall cNewNameISignalIDTerminalRuleCall_0_0_0_1 = (RuleCall)cNewNameISignalCrossReference_0_0_0.eContents().get(1);
-		private final Keyword cTickKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Assignment cNewNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cNewNameISignalCrossReference_0_0 = (CrossReference)cNewNameAssignment_0.eContents().get(0);
+		private final RuleCall cNewNameISignalIDTerminalRuleCall_0_0_1 = (RuleCall)cNewNameISignalCrossReference_0_0.eContents().get(1);
 		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cOldNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cOldNameISignalCrossReference_2_0 = (CrossReference)cOldNameAssignment_2.eContents().get(0);
 		private final RuleCall cOldNameISignalIDTerminalRuleCall_2_0_1 = (RuleCall)cOldNameISignalCrossReference_2_0.eContents().get(1);
 		
 		//SignalRenaming:
-		//	(newName=[ISignal] | "tick") "/" oldName=[ISignal];
+		//	newName=[ISignal] "/" oldName=[ISignal];
 		@Override public ParserRule getRule() { return rule; }
 
-		//(newName=[ISignal] | "tick") "/" oldName=[ISignal]
+		//newName=[ISignal] "/" oldName=[ISignal]
 		public Group getGroup() { return cGroup; }
 
-		//(newName=[ISignal] | "tick")
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-
 		//newName=[ISignal]
-		public Assignment getNewNameAssignment_0_0() { return cNewNameAssignment_0_0; }
+		public Assignment getNewNameAssignment_0() { return cNewNameAssignment_0; }
 
 		//[ISignal]
-		public CrossReference getNewNameISignalCrossReference_0_0_0() { return cNewNameISignalCrossReference_0_0_0; }
+		public CrossReference getNewNameISignalCrossReference_0_0() { return cNewNameISignalCrossReference_0_0; }
 
 		//ID
-		public RuleCall getNewNameISignalIDTerminalRuleCall_0_0_0_1() { return cNewNameISignalIDTerminalRuleCall_0_0_0_1; }
-
-		//"tick"
-		public Keyword getTickKeyword_0_1() { return cTickKeyword_0_1; }
+		public RuleCall getNewNameISignalIDTerminalRuleCall_0_0_1() { return cNewNameISignalIDTerminalRuleCall_0_0_1; }
 
 		//"/"
 		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
@@ -7953,6 +7940,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeIdentifierAccess().getRule();
 	}
 
+	//// doesn't work, should be before typeID=ID
 	//// ==> 7.3.1 Type Declarations
 	//// -------------------------------------
 	//TypeDecl:
@@ -8121,15 +8109,13 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// example 2:   A (combine boolean with or)
 	//// example 3:   A := 0 : combine integer with '+'
 	//ISignal:
-	//	{ISignal} name=ID ((":" type=Esterel_ValueType
+	//	{ISignal} name=ID (":" (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
-	//	("("
-	//	type=Esterel_ValueType
+	//	"(" (type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-	//	")") | (":=" expression=Expression ":"
-	//	type=Esterel_ValueType
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+	//	")" | ":=" expression=Expression ":" (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
 	//	combineOperator=Esterel_CombineOperator)))?;
@@ -8564,15 +8550,13 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TrapSignal ISignal:
-	//	{TrapSignal} name=ID ((":" type=Esterel_ValueType
+	//	{TrapSignal} name=ID (":"? (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
-	//	("("
-	//	type=Esterel_ValueType
+	//	"(" (type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-	//	")") | (":=" expression=Expression ":"
-	//	type=Esterel_ValueType
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+	//	")" | ":=" expression=Expression ":" (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)))?
 	public TrapSignalElements getTrapSignalAccess() {
@@ -8785,7 +8769,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SignalRenaming:
-	//	(newName=[ISignal] | "tick") "/" oldName=[ISignal];
+	//	newName=[ISignal] "/" oldName=[ISignal];
 	public SignalRenamingElements getSignalRenamingAccess() {
 		return pSignalRenaming;
 	}

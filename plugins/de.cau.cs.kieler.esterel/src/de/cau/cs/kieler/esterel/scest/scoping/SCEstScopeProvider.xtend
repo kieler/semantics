@@ -67,7 +67,7 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
     @Override 
     override  IScope getScope( EObject context,  EReference reference) {
         switch (reference.EReferenceType) {
-            // TODO
+            // TODO scoping needs to be fixed
 //            case KExpressionsPackage.eINSTANCE.valuedObject:
 //                return new SimpleScope(voScope(context))
             case SclPackage.eINSTANCE.label:

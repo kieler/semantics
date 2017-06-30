@@ -7262,14 +7262,14 @@ ruleISignal returns [EObject current=null]
 	    }
 
 )
-)(((	otherlv_2=':' 
+)((	otherlv_2=':' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getISignalAccess().getColonKeyword_2_0_0_0());
+    	newLeafNode(otherlv_2, grammarAccess.getISignalAccess().getColonKeyword_2_0_0());
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0()); 
 	    }
 		lv_type_3_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -7284,12 +7284,12 @@ ruleISignal returns [EObject current=null]
 	    }
 
 )
-))
+)
     |(
 (
 		lv_typeID_4_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_4_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_0_1_0()); 
+			newLeafNode(lv_typeID_4_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_0_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -7306,12 +7306,12 @@ ruleISignal returns [EObject current=null]
 )
     |(	otherlv_5='combine' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getISignalAccess().getCombineKeyword_2_0_2_0());
+    	newLeafNode(otherlv_5, grammarAccess.getISignalAccess().getCombineKeyword_2_0_1_2_0());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0()); 
 	    }
 		lv_type_6_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -7331,7 +7331,7 @@ ruleISignal returns [EObject current=null]
 (
 		lv_typeID_7_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_7_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_0_2_1_1_0()); 
+			newLeafNode(lv_typeID_7_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -7347,7 +7347,7 @@ ruleISignal returns [EObject current=null]
 )
 ))	otherlv_8='with' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getISignalAccess().getWithKeyword_2_0_2_2());
+    	newLeafNode(otherlv_8, grammarAccess.getISignalAccess().getWithKeyword_2_0_1_2_2());
     }
 ((
 (
@@ -7361,7 +7361,7 @@ ruleISignal returns [EObject current=null]
         }
 	otherlv_9=RULE_ID
 	{
-		newLeafNode(otherlv_9, grammarAccess.getISignalAccess().getFuncFunctionCrossReference_2_0_2_3_0_0()); 
+		newLeafNode(otherlv_9, grammarAccess.getISignalAccess().getFuncFunctionCrossReference_2_0_1_2_3_0_0()); 
 	}
 
 )
@@ -7369,7 +7369,7 @@ ruleISignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0()); 
 	    }
 		lv_combineOperator_10_0=ruleEsterel_CombineOperator		{
 	        if ($current==null) {
@@ -7384,15 +7384,15 @@ ruleISignal returns [EObject current=null]
 	    }
 
 )
-))))
-    |((	otherlv_11='(' 
+)))))
+    |(	otherlv_11='(' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getISignalAccess().getLeftParenthesisKeyword_2_1_0_0());
+    	newLeafNode(otherlv_11, grammarAccess.getISignalAccess().getLeftParenthesisKeyword_2_1_0());
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0()); 
 	    }
 		lv_type_12_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -7407,12 +7407,12 @@ ruleISignal returns [EObject current=null]
 	    }
 
 )
-))
+)
     |(
 (
 		lv_typeID_13_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_13_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_1_1_0()); 
+			newLeafNode(lv_typeID_13_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_1_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -7427,14 +7427,14 @@ ruleISignal returns [EObject current=null]
 
 )
 )
-    |((	otherlv_14='combine' 
+    |(	otherlv_14='combine' 
     {
-    	newLeafNode(otherlv_14, grammarAccess.getISignalAccess().getCombineKeyword_2_1_2_0_0());
+    	newLeafNode(otherlv_14, grammarAccess.getISignalAccess().getCombineKeyword_2_1_1_2_0());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0()); 
 	    }
 		lv_type_15_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -7454,7 +7454,7 @@ ruleISignal returns [EObject current=null]
 (
 		lv_typeID_16_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_16_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0()); 
+			newLeafNode(lv_typeID_16_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -7470,7 +7470,7 @@ ruleISignal returns [EObject current=null]
 )
 ))	otherlv_17='with' 
     {
-    	newLeafNode(otherlv_17, grammarAccess.getISignalAccess().getWithKeyword_2_1_2_0_2());
+    	newLeafNode(otherlv_17, grammarAccess.getISignalAccess().getWithKeyword_2_1_1_2_2());
     }
 ((
 (
@@ -7484,7 +7484,7 @@ ruleISignal returns [EObject current=null]
         }
 	otherlv_18=RULE_ID
 	{
-		newLeafNode(otherlv_18, grammarAccess.getISignalAccess().getFuncFunctionCrossReference_2_1_2_0_3_0_0()); 
+		newLeafNode(otherlv_18, grammarAccess.getISignalAccess().getFuncFunctionCrossReference_2_1_1_2_3_0_0()); 
 	}
 
 )
@@ -7492,7 +7492,7 @@ ruleISignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0()); 
 	    }
 		lv_combineOperator_19_0=ruleEsterel_CombineOperator		{
 	        if ($current==null) {
@@ -7507,19 +7507,19 @@ ruleISignal returns [EObject current=null]
 	    }
 
 )
-)))	otherlv_20=')' 
+))))	otherlv_20=')' 
     {
-    	newLeafNode(otherlv_20, grammarAccess.getISignalAccess().getRightParenthesisKeyword_2_1_2_1());
+    	newLeafNode(otherlv_20, grammarAccess.getISignalAccess().getRightParenthesisKeyword_2_1_2());
     }
-))
-    |((	otherlv_21=':=' 
+)
+    |(	otherlv_21=':=' 
     {
-    	newLeafNode(otherlv_21, grammarAccess.getISignalAccess().getColonEqualsSignKeyword_2_2_0_0());
+    	newLeafNode(otherlv_21, grammarAccess.getISignalAccess().getColonEqualsSignKeyword_2_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getExpressionExpressionParserRuleCall_2_2_0_1_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getExpressionExpressionParserRuleCall_2_2_1_0()); 
 	    }
 		lv_expression_22_0=ruleExpression		{
 	        if ($current==null) {
@@ -7536,12 +7536,12 @@ ruleISignal returns [EObject current=null]
 )
 )	otherlv_23=':' 
     {
-    	newLeafNode(otherlv_23, grammarAccess.getISignalAccess().getColonKeyword_2_2_0_2());
+    	newLeafNode(otherlv_23, grammarAccess.getISignalAccess().getColonKeyword_2_2_2());
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0()); 
 	    }
 		lv_type_24_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -7556,12 +7556,12 @@ ruleISignal returns [EObject current=null]
 	    }
 
 )
-))
+)
     |(
 (
 		lv_typeID_25_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_25_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_2_1_0()); 
+			newLeafNode(lv_typeID_25_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_2_3_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -7578,12 +7578,12 @@ ruleISignal returns [EObject current=null]
 )
     |(	otherlv_26='combine' 
     {
-    	newLeafNode(otherlv_26, grammarAccess.getISignalAccess().getCombineKeyword_2_2_2_0());
+    	newLeafNode(otherlv_26, grammarAccess.getISignalAccess().getCombineKeyword_2_2_3_2_0());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0()); 
 	    }
 		lv_type_27_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -7603,7 +7603,7 @@ ruleISignal returns [EObject current=null]
 (
 		lv_typeID_28_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_28_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_2_2_1_1_0()); 
+			newLeafNode(lv_typeID_28_0, grammarAccess.getISignalAccess().getTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -7619,7 +7619,7 @@ ruleISignal returns [EObject current=null]
 )
 ))	otherlv_29='with' 
     {
-    	newLeafNode(otherlv_29, grammarAccess.getISignalAccess().getWithKeyword_2_2_2_2());
+    	newLeafNode(otherlv_29, grammarAccess.getISignalAccess().getWithKeyword_2_2_3_2_2());
     }
 ((
 (
@@ -7633,7 +7633,7 @@ ruleISignal returns [EObject current=null]
         }
 	otherlv_30=RULE_ID
 	{
-		newLeafNode(otherlv_30, grammarAccess.getISignalAccess().getFuncFunctionCrossReference_2_2_2_3_0_0()); 
+		newLeafNode(otherlv_30, grammarAccess.getISignalAccess().getFuncFunctionCrossReference_2_2_3_2_3_0_0()); 
 	}
 
 )
@@ -7641,7 +7641,7 @@ ruleISignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getISignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0()); 
+	        newCompositeNode(grammarAccess.getISignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0()); 
 	    }
 		lv_combineOperator_31_0=ruleEsterel_CombineOperator		{
 	        if ($current==null) {
@@ -7656,7 +7656,7 @@ ruleISignal returns [EObject current=null]
 	    }
 
 )
-)))))?)
+))))))?)
 ;
 
 
@@ -9067,12 +9067,12 @@ ruleTrapSignal returns [EObject current=null]
 )
 )(((	otherlv_2=':' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getTrapSignalAccess().getColonKeyword_2_0_0_0());
+    	newLeafNode(otherlv_2, grammarAccess.getTrapSignalAccess().getColonKeyword_2_0_0());
     }
-(
+)?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_0_1_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_0_0()); 
 	    }
 		lv_type_3_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -9087,12 +9087,12 @@ ruleTrapSignal returns [EObject current=null]
 	    }
 
 )
-))
+)
     |(
 (
 		lv_typeID_4_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_4_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_0_1_0()); 
+			newLeafNode(lv_typeID_4_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_0_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -9109,12 +9109,12 @@ ruleTrapSignal returns [EObject current=null]
 )
     |(	otherlv_5='combine' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getTrapSignalAccess().getCombineKeyword_2_0_2_0());
+    	newLeafNode(otherlv_5, grammarAccess.getTrapSignalAccess().getCombineKeyword_2_0_1_2_0());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_2_1_0_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_0_1_2_1_0_0()); 
 	    }
 		lv_type_6_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -9134,7 +9134,7 @@ ruleTrapSignal returns [EObject current=null]
 (
 		lv_typeID_7_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_7_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_0_2_1_1_0()); 
+			newLeafNode(lv_typeID_7_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_0_1_2_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -9150,7 +9150,7 @@ ruleTrapSignal returns [EObject current=null]
 )
 ))	otherlv_8='with' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getTrapSignalAccess().getWithKeyword_2_0_2_2());
+    	newLeafNode(otherlv_8, grammarAccess.getTrapSignalAccess().getWithKeyword_2_0_1_2_2());
     }
 ((
 (
@@ -9164,7 +9164,7 @@ ruleTrapSignal returns [EObject current=null]
         }
 	otherlv_9=RULE_ID
 	{
-		newLeafNode(otherlv_9, grammarAccess.getTrapSignalAccess().getFuncFunctionCrossReference_2_0_2_3_0_0()); 
+		newLeafNode(otherlv_9, grammarAccess.getTrapSignalAccess().getFuncFunctionCrossReference_2_0_1_2_3_0_0()); 
 	}
 
 )
@@ -9172,7 +9172,7 @@ ruleTrapSignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_2_3_1_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_0_1_2_3_1_0()); 
 	    }
 		lv_combineOperator_10_0=ruleEsterel_CombineOperator		{
 	        if ($current==null) {
@@ -9187,15 +9187,15 @@ ruleTrapSignal returns [EObject current=null]
 	    }
 
 )
-))))
-    |((	otherlv_11='(' 
+)))))
+    |(	otherlv_11='(' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getTrapSignalAccess().getLeftParenthesisKeyword_2_1_0_0());
+    	newLeafNode(otherlv_11, grammarAccess.getTrapSignalAccess().getLeftParenthesisKeyword_2_1_0());
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_0_0()); 
 	    }
 		lv_type_12_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -9210,12 +9210,12 @@ ruleTrapSignal returns [EObject current=null]
 	    }
 
 )
-))
+)
     |(
 (
 		lv_typeID_13_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_13_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_1_1_0()); 
+			newLeafNode(lv_typeID_13_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_1_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -9230,14 +9230,14 @@ ruleTrapSignal returns [EObject current=null]
 
 )
 )
-    |((	otherlv_14='combine' 
+    |(	otherlv_14='combine' 
     {
-    	newLeafNode(otherlv_14, grammarAccess.getTrapSignalAccess().getCombineKeyword_2_1_2_0_0());
+    	newLeafNode(otherlv_14, grammarAccess.getTrapSignalAccess().getCombineKeyword_2_1_1_2_0());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_2_0_1_0_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_1_1_2_1_0_0()); 
 	    }
 		lv_type_15_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -9257,7 +9257,7 @@ ruleTrapSignal returns [EObject current=null]
 (
 		lv_typeID_16_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_16_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_1_2_0_1_1_0()); 
+			newLeafNode(lv_typeID_16_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_1_1_2_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -9273,7 +9273,7 @@ ruleTrapSignal returns [EObject current=null]
 )
 ))	otherlv_17='with' 
     {
-    	newLeafNode(otherlv_17, grammarAccess.getTrapSignalAccess().getWithKeyword_2_1_2_0_2());
+    	newLeafNode(otherlv_17, grammarAccess.getTrapSignalAccess().getWithKeyword_2_1_1_2_2());
     }
 ((
 (
@@ -9287,7 +9287,7 @@ ruleTrapSignal returns [EObject current=null]
         }
 	otherlv_18=RULE_ID
 	{
-		newLeafNode(otherlv_18, grammarAccess.getTrapSignalAccess().getFuncFunctionCrossReference_2_1_2_0_3_0_0()); 
+		newLeafNode(otherlv_18, grammarAccess.getTrapSignalAccess().getFuncFunctionCrossReference_2_1_1_2_3_0_0()); 
 	}
 
 )
@@ -9295,7 +9295,7 @@ ruleTrapSignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_2_0_3_1_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_1_1_2_3_1_0()); 
 	    }
 		lv_combineOperator_19_0=ruleEsterel_CombineOperator		{
 	        if ($current==null) {
@@ -9310,19 +9310,19 @@ ruleTrapSignal returns [EObject current=null]
 	    }
 
 )
-)))	otherlv_20=')' 
+))))	otherlv_20=')' 
     {
-    	newLeafNode(otherlv_20, grammarAccess.getTrapSignalAccess().getRightParenthesisKeyword_2_1_2_1());
+    	newLeafNode(otherlv_20, grammarAccess.getTrapSignalAccess().getRightParenthesisKeyword_2_1_2());
     }
-))
-    |((	otherlv_21=':=' 
+)
+    |(	otherlv_21=':=' 
     {
-    	newLeafNode(otherlv_21, grammarAccess.getTrapSignalAccess().getColonEqualsSignKeyword_2_2_0_0());
+    	newLeafNode(otherlv_21, grammarAccess.getTrapSignalAccess().getColonEqualsSignKeyword_2_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getExpressionExpressionParserRuleCall_2_2_0_1_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getExpressionExpressionParserRuleCall_2_2_1_0()); 
 	    }
 		lv_expression_22_0=ruleExpression		{
 	        if ($current==null) {
@@ -9339,12 +9339,12 @@ ruleTrapSignal returns [EObject current=null]
 )
 )	otherlv_23=':' 
     {
-    	newLeafNode(otherlv_23, grammarAccess.getTrapSignalAccess().getColonKeyword_2_2_0_2());
+    	newLeafNode(otherlv_23, grammarAccess.getTrapSignalAccess().getColonKeyword_2_2_2());
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_0_3_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_0_0()); 
 	    }
 		lv_type_24_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -9359,12 +9359,12 @@ ruleTrapSignal returns [EObject current=null]
 	    }
 
 )
-))
+)
     |(
 (
 		lv_typeID_25_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_25_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_2_1_0()); 
+			newLeafNode(lv_typeID_25_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_2_3_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -9381,12 +9381,12 @@ ruleTrapSignal returns [EObject current=null]
 )
     |(	otherlv_26='combine' 
     {
-    	newLeafNode(otherlv_26, grammarAccess.getTrapSignalAccess().getCombineKeyword_2_2_2_0());
+    	newLeafNode(otherlv_26, grammarAccess.getTrapSignalAccess().getCombineKeyword_2_2_3_2_0());
     }
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_2_1_0_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getTypeEsterel_ValueTypeEnumRuleCall_2_2_3_2_1_0_0()); 
 	    }
 		lv_type_27_0=ruleEsterel_ValueType		{
 	        if ($current==null) {
@@ -9406,7 +9406,7 @@ ruleTrapSignal returns [EObject current=null]
 (
 		lv_typeID_28_0=RULE_ID
 		{
-			newLeafNode(lv_typeID_28_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_2_2_1_1_0()); 
+			newLeafNode(lv_typeID_28_0, grammarAccess.getTrapSignalAccess().getTypeIDIDTerminalRuleCall_2_2_3_2_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -9422,7 +9422,7 @@ ruleTrapSignal returns [EObject current=null]
 )
 ))	otherlv_29='with' 
     {
-    	newLeafNode(otherlv_29, grammarAccess.getTrapSignalAccess().getWithKeyword_2_2_2_2());
+    	newLeafNode(otherlv_29, grammarAccess.getTrapSignalAccess().getWithKeyword_2_2_3_2_2());
     }
 ((
 (
@@ -9436,7 +9436,7 @@ ruleTrapSignal returns [EObject current=null]
         }
 	otherlv_30=RULE_ID
 	{
-		newLeafNode(otherlv_30, grammarAccess.getTrapSignalAccess().getFuncFunctionCrossReference_2_2_2_3_0_0()); 
+		newLeafNode(otherlv_30, grammarAccess.getTrapSignalAccess().getFuncFunctionCrossReference_2_2_3_2_3_0_0()); 
 	}
 
 )
@@ -9444,7 +9444,7 @@ ruleTrapSignal returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTrapSignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_2_3_1_0()); 
+	        newCompositeNode(grammarAccess.getTrapSignalAccess().getCombineOperatorEsterel_CombineOperatorEnumRuleCall_2_2_3_2_3_1_0()); 
 	    }
 		lv_combineOperator_31_0=ruleEsterel_CombineOperator		{
 	        if ($current==null) {
@@ -9459,7 +9459,7 @@ ruleTrapSignal returns [EObject current=null]
 	    }
 
 )
-)))))?)
+))))))?)
 ;
 
 
@@ -10615,7 +10615,7 @@ ruleSignalRenaming returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(((
+((
 (
 		{ 
 		  /* */ 
@@ -10627,18 +10627,13 @@ ruleSignalRenaming returns [EObject current=null]
         }
 	otherlv_0=RULE_ID
 	{
-		newLeafNode(otherlv_0, grammarAccess.getSignalRenamingAccess().getNewNameISignalCrossReference_0_0_0()); 
+		newLeafNode(otherlv_0, grammarAccess.getSignalRenamingAccess().getNewNameISignalCrossReference_0_0()); 
 	}
 
 )
-)
-    |	otherlv_1='tick' 
+)	otherlv_1='/' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getSignalRenamingAccess().getTickKeyword_0_1());
-    }
-)	otherlv_2='/' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getSignalRenamingAccess().getSolidusKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getSignalRenamingAccess().getSolidusKeyword_1());
     }
 (
 (
@@ -10650,9 +10645,9 @@ ruleSignalRenaming returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getSignalRenamingRule());
 	        }
         }
-	otherlv_3=RULE_ID
+	otherlv_2=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getSignalRenamingAccess().getOldNameISignalCrossReference_2_0()); 
+		newLeafNode(otherlv_2, grammarAccess.getSignalRenamingAccess().getOldNameISignalCrossReference_2_0()); 
 	}
 
 )

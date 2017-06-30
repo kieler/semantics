@@ -1226,9 +1226,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             type=Esterel_ValueType | 
 	 *             typeID=ID | 
 	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
-	 *             (expression=Expression type=Esterel_ValueType) | 
-	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+	 *             (
+	 *                 expression=Expression 
+	 *                 (type=Esterel_ValueType | typeID=ID | ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)))
+	 *             )
 	 *         )?
 	 *     )
 	 */
@@ -1766,10 +1767,19 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     SignalRenaming returns SignalRenaming
 	 *
 	 * Constraint:
-	 *     (newName=[ISignal|ID]? oldName=[ISignal|ID])
+	 *     (newName=[ISignal|ID] oldName=[ISignal|ID])
 	 */
 	protected void sequence_SignalRenaming(ISerializationContext context, SignalRenaming semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.SIGNAL_RENAMING__NEW_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.SIGNAL_RENAMING__NEW_NAME));
+			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.SIGNAL_RENAMING__OLD_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.SIGNAL_RENAMING__OLD_NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getNewNameISignalIDTerminalRuleCall_0_0_1(), semanticObject.getNewName());
+		feeder.accept(grammarAccess.getSignalRenamingAccess().getOldNameISignalIDTerminalRuleCall_2_0_1(), semanticObject.getOldName());
+		feeder.finish();
 	}
 	
 	
@@ -1952,9 +1962,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             type=Esterel_ValueType | 
 	 *             typeID=ID | 
 	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)) | 
-	 *             (expression=Expression type=Esterel_ValueType) | 
-	 *             typeID=ID | 
-	 *             ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator))
+	 *             (
+	 *                 expression=Expression 
+	 *                 (type=Esterel_ValueType | typeID=ID | ((type=Esterel_ValueType | typeID=ID) (func=[Function|ID] | combineOperator=Esterel_CombineOperator)))
+	 *             )
 	 *         )?
 	 *     )
 	 */

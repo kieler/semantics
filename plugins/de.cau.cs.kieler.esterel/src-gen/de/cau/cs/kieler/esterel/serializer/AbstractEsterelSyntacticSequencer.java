@@ -63,6 +63,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a;
 	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p;
 	protected AbstractElementAlias match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q;
+	protected AbstractElementAlias match_TrapSignal_ColonKeyword_2_0_0_q;
 	protected AbstractElementAlias match_Trap_TrapKeyword_8_q;
 	
 	@Inject
@@ -109,6 +110,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 		match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a = new TokenAlias(true, true, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
 		match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p = new TokenAlias(true, false, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
 		match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getThreadAccess().getLeftCurlyBracketKeyword_1_0_1()), new TokenAlias(false, false, grammarAccess.getThreadAccess().getRightCurlyBracketKeyword_1_0_5()));
+		match_TrapSignal_ColonKeyword_2_0_0_q = new TokenAlias(false, true, grammarAccess.getTrapSignalAccess().getColonKeyword_2_0_0());
 		match_Trap_TrapKeyword_8_q = new TokenAlias(false, true, grammarAccess.getTrapAccess().getTrapKeyword_8());
 	}
 	
@@ -206,6 +208,8 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 				emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q.equals(syntax))
 				emit_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_TrapSignal_ColonKeyword_2_0_0_q.equals(syntax))
+				emit_TrapSignal_ColonKeyword_2_0_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Trap_TrapKeyword_8_q.equals(syntax))
 				emit_Trap_TrapKeyword_8_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -764,6 +768,20 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) (ambiguity) (rule start)
 	 */
 	protected void emit_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_5__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ':'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) 'combine' type=Esterel_ValueType
+	 *     name=ID (ambiguity) 'combine' typeID=ID
+	 *     name=ID (ambiguity) type=Esterel_ValueType
+	 *     name=ID (ambiguity) typeID=ID
+	 */
+	protected void emit_TrapSignal_ColonKeyword_2_0_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

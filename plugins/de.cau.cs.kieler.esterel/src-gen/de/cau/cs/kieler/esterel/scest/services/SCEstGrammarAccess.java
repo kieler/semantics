@@ -4468,6 +4468,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeIdentifierAccess().getRule();
 	}
 
+	//// doesn't work, should be before typeID=ID
 	//// ==> 7.3.1 Type Declarations
 	//// -------------------------------------
 	//TypeDecl:
@@ -4636,15 +4637,13 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// example 2:   A (combine boolean with or)
 	//// example 3:   A := 0 : combine integer with '+'
 	//ISignal:
-	//	{ISignal} name=ID ((":" type=Esterel_ValueType
+	//	{ISignal} name=ID (":" (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
-	//	("("
-	//	type=Esterel_ValueType
+	//	"(" (type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-	//	")") | (":=" expression=Expression ":"
-	//	type=Esterel_ValueType
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+	//	")" | ":=" expression=Expression ":" (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] |
 	//	combineOperator=Esterel_CombineOperator)))?;
@@ -4844,15 +4843,13 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TrapSignal ISignal:
-	//	{TrapSignal} name=ID ((":" type=Esterel_ValueType
+	//	{TrapSignal} name=ID (":"? (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)) |
-	//	("("
-	//	type=Esterel_ValueType
+	//	"(" (type=Esterel_ValueType
 	//	| typeID=ID
-	//	| ("combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
-	//	")") | (":=" expression=Expression ":"
-	//	type=Esterel_ValueType
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator))
+	//	")" | ":=" expression=Expression ":" (type=Esterel_ValueType
 	//	| typeID=ID
 	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" (func=[Function] | combineOperator=Esterel_CombineOperator)))?
 	public EsterelGrammarAccess.TrapSignalElements getTrapSignalAccess() {
@@ -4987,7 +4984,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SignalRenaming:
-	//	(newName=[ISignal] | "tick") "/" oldName=[ISignal];
+	//	newName=[ISignal] "/" oldName=[ISignal];
 	public EsterelGrammarAccess.SignalRenamingElements getSignalRenamingAccess() {
 		return gaEsterel.getSignalRenamingAccess();
 	}
