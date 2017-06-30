@@ -37,143 +37,173 @@ public class PTC2SCCharts {
         return "EObject:null";
     }
 
-    def String name(AnyType content) {
+    def String attributeByName(AnyType content, String attributeName) {
+        for (attribute : content.) {
+            
+        }
         for (attribute : content.anyAttribute) {
-            if (attribute.EStructuralFeature.getName == "name") {
+            if (attribute.EStructuralFeature.getName == attributeName) {
                 return attribute.value as String
+            } else {
+                println("  ATTRIB '"+attribute.EStructuralFeature.getName+"' ");
             }
         }
         return null;
     }
+    
+    def String name(AnyType content) {
+        return content.attributeByName("name")
+    }
+    def String source(AnyType content) {
+        return content.attributeByName("source")
+    }
+    def String target(AnyType content) {
+        return content.attributeByName("target")
+    }
+    def String guard(AnyType content) {
+        return content.attributeByName("guard")
+    }
+    def String xmiid(AnyType content) {
+        return content.attributeByName("id")
+    }
+    def String body(AnyType content) {
+        return content.attributeByName("body")
+    }
+    def String event(AnyType content) {
+        return content.attributeByName("event")
+    }
 
-    def void transformStateMachine(List<State> targetModel, AnyType content) {
+   
+    
+    
+
+    def void transformStateMachine(List<State> targetModel, AnyType element) {
         src2target.clear
         target2src.clear
         var scchart = SCChartsFactory::eINSTANCE.createState;
         targetModel.add(scchart)
-        scchart.id = content.eClass.name;
-        println("CREATE STATEMACHINE '" + scchart.id + "' for " + content.hashCode )
-        src2target.put(content, scchart);
-        target2src.put(scchart, content);    
-        targetModel.transformGeneral(content)
+        scchart.id = element.eClass.name;
+        println("CREATE STATEMACHINE '" + scchart.id + "' for " + element.hashCode )
+        src2target.put(element, scchart);
+        target2src.put(scchart, element);    
+        targetModel.transformGeneral(element)
    }
 
-    def void transformRegion(List<State> targetModel, AnyType content, EObject srcParent) {
+    def void transformRegion(List<State> targetModel, AnyType element, EObject srcParent) {
         println("CREATE REGION for parent " + srcParent.hashCode)
         val state = src2target.get(srcParent) as State;
         val region = state.createControlflowRegion("Region");
-        src2target.put(content, region);
-        target2src.put(region, content);
-        targetModel.transformGeneral(content)
+        src2target.put(element, region);
+        target2src.put(region, element);
+        targetModel.transformGeneral(element)
     }
 
-    def transformPseudostate(List<State> targetModel, AnyType content, EObject srcParent) {
+    def transformPseudostate(List<State> targetModel, AnyType element, EObject srcParent) {
         //
     }
 
-    def transformFinalState(List<State> targetModel, AnyType content, EObject srcParent) {
+    def transformFinalState(List<State> targetModel, AnyType element, EObject srcParent) {
         //
     }
 
-    def void transformState(List<State> targetModel, AnyType content, EObject srcParent) {
-        println("CREATE STATE '" + content.name + "'")
-        val state = (src2target.get(srcParent) as ControlflowRegion).createState(content.name).uniqueName;
-        src2target.put(content, state);
-        target2src.put(state, content);
-        targetModel.transformGeneral(content)
+    def void transformState(List<State> targetModel, AnyType element, EObject srcParent) {
+        println("CREATE STATE '" + element.name + "' with id " + element.xmiid)
+        val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name).uniqueName;
+        src2target.put(element, state);
+        target2src.put(state, element);
+        targetModel.transformGeneral(element)
     }
 
-    def transformActivity(List<State> targetModel, AnyType content) {
+    def transformActivity(List<State> targetModel, AnyType element) {
         //
     }
 
-    def transformTransition(List<State> targetModel, AnyType content) {
+    def transformTransition(List<State> targetModel, AnyType element) {
+        println(" --> TRANSITION: from " + element.source + " to " + element.target);
+    }
+
+    def transformTrigger(List<State> targetModel, AnyType element) {
         //
     }
 
-    def transformTrigger(List<State> targetModel, AnyType content) {
+    def transformOpaqueBehavior(List<State> targetModel, AnyType element) {
         //
     }
 
-    def transformOpaqueBehavior(List<State> targetModel, AnyType content) {
+    def transformConstraint(List<State> targetModel, AnyType element) {
         //
     }
 
-    def transformConstraint(List<State> targetModel, AnyType content) {
+    def transformOpaqueExpression(List<State> targetModel, AnyType element) {
         //
     }
 
-    def transformOpaqueExpression(List<State> targetModel, AnyType content) {
+    def transformOperation(List<State> targetModel, AnyType element) {
         //
     }
 
-    def transformOperation(List<State> targetModel, AnyType content) {
+    def transformParameter(List<State> targetModel, AnyType element) {
         //
     }
 
-    def transformParameter(List<State> targetModel, AnyType content) {
-        //
+    def void transformClass(List<State> targetModel, AnyType element) {
+        println("ENTERING CLASS '" + element.name + "'")
+        targetModel.transformGeneral(element)
     }
 
-    def void transformClass(List<State> targetModel, AnyType content) {
-        println("ENTERING CLASS '" + content.name + "'")
-        targetModel.transformGeneral(content)
+    def void transformPackage(List<State> targetModel, AnyType element) {
+        println("ENTERING PACKAGE '" + element.name + "'")
+        targetModel.transformGeneral(element)
     }
 
-    def void transformPackage(List<State> targetModel, AnyType content) {
-        println("ENTERING PACKAGE '" + content.name + "'")
-        targetModel.transformGeneral(content)
-    }
+    def transformGeneral(List<State> targetModel, EObject element) {
 
-    def transformGeneral(List<State> targetModel, EObject srcElement) {
 
-        val newSrcParent = srcElement
-
-        for (content : srcElement.eContents.toList) {
-            if (content.eClass.name == "StateMachine") {
-                targetModel.transformStateMachine(content as AnyType)
+        for (childElement : element.eContents.toList) {
+            if (childElement.eClass.name == "StateMachine") {
+                targetModel.transformStateMachine(childElement as AnyType)
             }
-            if (content.eClass.name == "Region") {
-                targetModel.transformRegion(content as AnyType, newSrcParent)
+            if (childElement.eClass.name == "Region") {
+                targetModel.transformRegion(childElement as AnyType, element)
             }
-            if (content.eClass.name == "Pseudostate") {
-                targetModel.transformPseudostate(content as AnyType, newSrcParent)
+            if (childElement.eClass.name == "Pseudostate") {
+                targetModel.transformPseudostate(childElement as AnyType, element)
             }
-            if (content.eClass.name == "FinalState") {
-                targetModel.transformFinalState(content as AnyType, newSrcParent)
+            if (childElement.eClass.name == "FinalState") {
+                targetModel.transformFinalState(childElement as AnyType, element)
             }
-            if (content.eClass.name == "State") {
-                targetModel.transformState(content as AnyType, newSrcParent)
+            if (childElement.eClass.name == "State") {
+                targetModel.transformState(childElement as AnyType, element)
             }
-            if (content.eClass.name == "Activity") {
-                targetModel.transformActivity(content as AnyType)
+            if (childElement.eClass.name == "Activity") {
+                targetModel.transformActivity(childElement as AnyType)
             }
-            if (content.eClass.name == "Transition") {
-                targetModel.transformTransition(content as AnyType)
+            if (childElement.eClass.name == "Transition") {
+                targetModel.transformTransition(childElement as AnyType)
             }
-            if (content.eClass.name == "Trigger") {
-                targetModel.transformTrigger(content as AnyType)
+            if (childElement.eClass.name == "Trigger") {
+                targetModel.transformTrigger(childElement as AnyType)
             }
-            if (content.eClass.name == "OpaqueBehavior") {
-                targetModel.transformOpaqueBehavior(content as AnyType)
+            if (childElement.eClass.name == "OpaqueBehavior") {
+                targetModel.transformOpaqueBehavior(childElement as AnyType)
             }
-            if (content.eClass.name == "OpaqueExpression") {
-                targetModel.transformOpaqueExpression(content as AnyType)
+            if (childElement.eClass.name == "OpaqueExpression") {
+                targetModel.transformOpaqueExpression(childElement as AnyType)
             }
-            if (content.eClass.name == "Operation") {
-                targetModel.transformOperation(content as AnyType)
+            if (childElement.eClass.name == "Operation") {
+                targetModel.transformOperation(childElement as AnyType)
             }
-            if (content.eClass.name == "Parameter") {
-                targetModel.transformParameter(content as AnyType)
+            if (childElement.eClass.name == "Parameter") {
+                targetModel.transformParameter(childElement as AnyType)
             }
-            if (content.eClass.name == "Class") {
-                targetModel.transformClass(content as AnyType)
+            if (childElement.eClass.name == "Class") {
+                targetModel.transformClass(childElement as AnyType)
             }
-            if (content.eClass.name == "Package") {
-                targetModel.transformPackage(content as AnyType)
+            if (childElement.eClass.name == "Package") {
+                targetModel.transformPackage(childElement as AnyType)
             }
-            if (content.eClass.name == "OpaqueBehavior") {
-                targetModel.transformOpaqueBehavior(content as AnyType)
+            if (childElement.eClass.name == "OpaqueBehavior") {
+                targetModel.transformOpaqueBehavior(childElement as AnyType)
             }
 
         }
