@@ -85,7 +85,7 @@ public class TimingAnalysis extends Job {
 	/**
 	 * Log the timing analysis tool output.
 	 */
-	public static final boolean TIMING_ANALYSIS_TOOL_OUTPUT_LOG = false;
+	public static final boolean TIMING_ANALYSIS_TOOL_OUTPUT_LOG = true;
 
 	/**
 	 * Switch on/of highlighting.
