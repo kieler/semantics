@@ -39,6 +39,10 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
     }
     
     def dispatch CharSequence serializeHR(Emission emission) {
+        // cmot: Added NPE check
+        if ((emission == null)||(emission.valuedObject == null)||(emission.valuedObject.eContainer == null)) {
+            return "";
+        }
         val objectContainer = emission.valuedObject.eContainer
         if (objectContainer instanceof Declaration) {
             if ((objectContainer as Declaration).type != ValueType::PURE) {
