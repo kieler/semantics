@@ -73,7 +73,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
             SCEstTransformation::ABORT_ID, SCEstTransformation::SUSPEND_ID,
             SCEstTransformation::LOOP_ID, SCEstTransformation::DO_ID,
             SCEstTransformation::AWAIT_ID, SCEstTransformation::EVERYDO_ID,
-            SCEstTransformation::PRESENT_ID, SCEstTransformation::PROCCALL_ID
+            SCEstTransformation::PRESENT_ID
         )
     }
 
@@ -97,9 +97,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     }
     
     def transformSignals(EList<InterfaceSignalDecl> signalDecl, SCEstModule module) {
-        var scope = createScopeStatement
-        scope.statements.add(module.statements)
-        module.statements.add(scope)
+        var ScopeStatement scope = module.getIScope
         for (interfaceSD : signalDecl) {
             for (signal : interfaceSD.signals) {
                 var s = createSignalVariable(createFalse, null, signal.name)

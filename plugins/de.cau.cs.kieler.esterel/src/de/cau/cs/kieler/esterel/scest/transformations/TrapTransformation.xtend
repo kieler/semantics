@@ -45,6 +45,8 @@ import java.util.Map
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.esterel.esterel.TrapExpression
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * @author mrb
@@ -174,14 +176,17 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 scope.statements.add(parallel)
                 // add a thread for each trap handler
                 for( h : trap.trapHandler ) {
-                    var variable = exitVariables.get((h.trapExpr as ValuedObjectReference)?.valuedObject)?.key
-                    var conditional2 = createConditional(createValuedObjectReference(variable))
-                    conditional2.statements.add(h.statements)
-                    var thread = createThread(conditional2)
-                    parallel.threads.add(thread)
+                    if (h.trapExpr instanceof ValuedObjectReference) {
+                        var variable = exitVariables.get((h.trapExpr as ValuedObjectReference).valuedObject)?.key
+                        var conditional2 = createConditional(createValuedObjectReference(variable))
+                        conditional2.statements.add(h.statements)
+                        var thread = createThread(conditional2)
+                        parallel.threads.add(thread)
+                    }
                 }
                 transformReferences(parallel, exitVariables)
             }
+            transformTrapExpressions(scope, exitVariables)
             return scope
         }
         else if (statement instanceof StatementContainer) {
@@ -361,4 +366,26 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             }
         }
     }
+    
+    def transformTrapExpressions(Statement statement, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+        var trapExpressions = statement.eAllContents.filter(TrapExpression)
+        while (trapExpressions.hasNext) {
+            var expr = trapExpressions.next
+            if (expr.trap instanceof ISignal) {
+                var signal = expr.trap as ISignal
+                // if the trap references a transformed trap signal
+                if (exitVariables.containsKey(signal)) {
+                    if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
+                        var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
+                        var pos = list.indexOf(expr)
+                        list.set(pos, createValuedObjectReference(exitVariables.get(signal).value))
+                    }
+                    else {
+                        setExpression(createValuedObjectReference(exitVariables.get(signal).value), expr.eContainer)
+                    }
+                }
+            }
+        }
+    }
+    
 }

@@ -118,6 +118,8 @@ class SCEstExtension {
     
     final private static String generatedAnnotation = "depth"
     
+    final private static String interfaceScope = "IScope"
+    
     // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
     var static HashMap<ISignal, NewSignals> newSignals = new HashMap<ISignal, NewSignals>()
 
@@ -1905,6 +1907,7 @@ class SCEstExtension {
                                 throw new UnsupportedOperationException("The '?' expression is not valid because of a missing 's_val' valued object for the following Signal! " + signal.name)
                             }
                             ref.valuedObject = newSignals.get(signal).s_val
+                            removeValueTestOperator(parent)
                         }
                         else if ( (parent as OperatorExpression).operator == OperatorType.PRE) { 
                             if (ref.isSignalPreExpression){
@@ -2004,6 +2007,87 @@ class SCEstExtension {
         }
         
     }
- 
+    
+    /**
+     * Checks if the given scope has the interfaceScope annotation
+     * 
+     * @param scope The scope in question
+     */
+    def isInterfaceScope(Statement statement) {
+        if (statement instanceof ScopeStatement) {
+            var scope = statement as ScopeStatement
+            for (a : scope.annotations) {
+                if (a.name.equals(interfaceScope)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    /**
+     * Adds the specific interfaceScope annotation to the given scope
+     * 
+     * @param scope The scope which needs an annotation
+     */
+    def markInterfaceScope(ScopeStatement scope) {
+        scope.annotations.add(createScopeAnnotation)
+    }
+    
+    /**
+     * Creates an annotation which has the specific interfaceScope name
+     */
+    def createScopeAnnotation() {
+        AnnotationsFactory::eINSTANCE.createAnnotation => [
+            it.name = interfaceScope
+        ]
+    }
+    
+    /**
+     * Returns a new interface scope or an already existing
+     * 
+     * @param module The module which is searched for the interface scope
+     */
+    def ScopeStatement getIScope(SCEstModule module) {
+        var ScopeStatement scope
+        // check whether there is already a scope for the interface declarations or not
+        if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
+            scope = module.statements.get(0) as ScopeStatement
+        }
+        else {
+            scope = createScopeStatement
+            scope.markInterfaceScope
+            scope.statements.add(module.statements)
+            module.statements.add(scope)
+        }
+        return scope
+    }
+    
+    /**
+     * Removes the value test operator if the given operator expression is of type VAL
+     * 
+     * @param expr The operator expression in question 
+     */
+    def removeValueTestOperator(EObject expr) {
+        if (expr instanceof OperatorExpression) {
+            if (expr.operator == OperatorType.VAL) {
+                if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
+                    var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
+                    var pos = list.indexOf(expr)
+                    list.set(pos, expr.subExpressions.get(0))
+                }
+                else {
+                    setExpression(expr.subExpressions.get(0), expr.eContainer)
+                }
+            }
+        }
+    }
+    
+    /**
+     * Creates a SCLProgam
+     */
+    def createSCLProg() {
+        SclFactory::eINSTANCE.createSCLProgram
+    }
  
 }

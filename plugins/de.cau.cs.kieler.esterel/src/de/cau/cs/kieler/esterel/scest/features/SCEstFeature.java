@@ -106,5 +106,14 @@ public class SCEstFeature {
     
     public final static String SIGNAL_ID = "esterel.signal";
     public final static String SIGNAL_NAME = "Module Signals";
+    
+    public final static String SENSOR_ID = "esterel.sensor";
+    public final static String SENSOR_NAME = "Sensors";
+    
+    public final static String CONSTANT_ID = "esterel.constant";
+    public final static String CONSTANT_NAME = "Constants";
+    
+    public final static String SCL_ID = "scest.esterelTOscl";
+    public final static String SCL_NAME = "SCL";
 
 }

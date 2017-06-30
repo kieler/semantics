@@ -69,7 +69,7 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
             SCEstTransformation::ABORT_ID, SCEstTransformation::SUSPEND_ID,
             SCEstTransformation::LOOP_ID, SCEstTransformation::DO_ID,
             SCEstTransformation::AWAIT_ID, SCEstTransformation::EVERYDO_ID,
-            SCEstTransformation::PRESENT_ID, SCEstTransformation::PROCCALL_ID
+            SCEstTransformation::PRESENT_ID
             
         )
     }

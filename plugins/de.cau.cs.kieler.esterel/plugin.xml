@@ -119,6 +119,12 @@
      <featureClass
            class="de.cau.cs.kieler.esterel.scest.features.SignalFeature">
      </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.FunctionFeature">
+     </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.SCLFeature">
+     </featureClass>
      <featureGroupClass
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstControlFlowStatements">
      </featureGroupClass>
@@ -138,7 +144,10 @@
            class="de.cau.cs.kieler.esterel.scest.featuregroups.SCEstOptimization">
      </featureGroupClass>
      <featureClass
-           class="de.cau.cs.kieler.esterel.scest.features.FunctionFeature">
+           class="de.cau.cs.kieler.esterel.scest.features.SensorFeature">
+     </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.scest.features.ConstantFeature">
      </featureClass>
   </extension>
   <extension
@@ -223,6 +232,15 @@
      </expansionTransformationClass>
      <expansionTransformationClass
            class="de.cau.cs.kieler.esterel.scest.transformations.FunctionTransformation">
+     </expansionTransformationClass>
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.scest.transformations.SensorTransformation">
+     </expansionTransformationClass>
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.scest.transformations.ConstantTransformation">
+     </expansionTransformationClass>
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.scest.transformations.SCLTransformation">
      </expansionTransformationClass>
   </extension>
   <!--extension

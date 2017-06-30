@@ -196,7 +196,7 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
         transformReferences(scope, newVariables)
         transformAssignments(scope, newVariables)
         
-        // TODO PROCEDURE CALL AND EXEC STATEMENT TRANSFORMATION
+        // TODO EXEC STATEMENT TRANSFORMATION
         
     }
     
@@ -210,6 +210,7 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
                 var vObject = ref.valuedObject as IVariable
                 if (newVariables.containsKey(vObject)) {
                     ref.valuedObject = newVariables.get(vObject)
+                    removeValueTestOperator(ref.eContainer)
                 }
             }
         }

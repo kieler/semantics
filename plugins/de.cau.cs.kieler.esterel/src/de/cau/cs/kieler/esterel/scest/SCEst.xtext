@@ -430,3 +430,13 @@ AtomicExpression returns kexpressions::Expression:
     | ConstantExpression
     | FunctionCall;
     
+    
+AtomicValuedExpression returns kexpressions::Expression:
+    IntValue
+    | FloatValue
+    | '(' ValuedExpression ')'
+    | AtomicExpression
+    | StringValue;
+    
+    
+    

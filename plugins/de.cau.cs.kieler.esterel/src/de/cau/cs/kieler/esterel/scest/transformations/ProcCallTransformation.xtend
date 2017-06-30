@@ -132,7 +132,7 @@ class ProcCallTransformation extends AbstractExpansionTransformation implements 
     
     def transformProcCallArguments(Statement statement) {
         var procedure = statement as ProcCall
-        var function = createFunction(procedure.proc.name + "a")
+        var function = createFunction(procedure.proc.name)
         // create Parameter for call by reference parameters of procedure
         for (v : procedure.varList) {
            function.parameters.add(createParameter(createValuedObjectReference(v), true))
