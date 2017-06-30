@@ -14,6 +14,8 @@ package de.cau.cs.kieler.simulation.handlers
 
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DefaultDataHandler
+import de.cau.cs.kieler.simulation.core.NDimensionalArray
+import java.util.Arrays
 
 /**
  * Sets the value of input variables of one model (to)
@@ -25,7 +27,7 @@ import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 class Redirect extends DefaultDataHandler {
     
     /**
-     * The name of the model of which the outputs should be used.
+     * The name of the model of which the outputs should be read.
      */
     public String from
     /**
@@ -48,10 +50,32 @@ class Redirect extends DefaultDataHandler {
         for(o : outputs) {
             val i = inputs.findFirst[it.name == o.name]
             if(i != null) {
+                if(i.value.class.isAssignableFrom(o.value.class)) {
+                    if(i.value instanceof NDimensionalArray && o.value instanceof NDimensionalArray) {
+                        val iIndices = (i.value as NDimensionalArray).indices
+                        val oIndices = (o.value as NDimensionalArray).indices
+                        val boolean arraySizeMatches = Arrays.equals(iIndices, oIndices)
+                        if(!arraySizeMatches) {
+                            throw new Exception("Array size mismatch of redirected variable '" + i.name + "'"
+                                                             + " from '"+from+ "' to '"+to+"'\n"
+                                                             + "(size " + NDimensionalArray.toString(iIndices) + " != size " + NDimensionalArray.toString(oIndices) + ")")
+                        }
+                    }
+                } else {
+                    throw new Exception("Type mismatch of redirected variable '" + i.name + "' from '"+from+ "' to '" + to + "'")
+                }
+                
                 i.value = o.value
             } else {
                 System.err.println("WARNING: No input in " + to + " for redirected output " + o.name + " in "+from)
             }
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override toString() {
+        return "Redirect from '"+from+ "' to '"+to+"'"
     }
 }

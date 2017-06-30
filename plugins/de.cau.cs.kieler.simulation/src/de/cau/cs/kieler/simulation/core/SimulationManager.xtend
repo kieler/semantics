@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.SimulationPlugin
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -235,7 +236,6 @@ class SimulationManager {
         val nextActionIndex = applyMacroTickActions(pool)
         // Save new state
         setNewState(pool, nextActionIndex)
-        
 //        println("Stepped simulation macro tick")
         notifyListeners(SimulationEventType.STEP)
     }

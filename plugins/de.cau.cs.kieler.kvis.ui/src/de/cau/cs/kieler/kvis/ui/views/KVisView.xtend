@@ -29,7 +29,6 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import java.awt.event.MouseMotionListener
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.io.File
@@ -57,9 +56,6 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.awt.event.MouseEvent
-import org.apache.batik.swing.gvt.AbstractImageZoomInteractor
-import java.awt.event.InputEvent
 
 /**
  * @author aas
@@ -90,6 +86,7 @@ class KVisView extends ViewPart {
     private var IFile svgImage
     @Accessors(PUBLIC_GETTER)
     private var DataPool lastPool
+    private var boolean linkWithSimulation = true
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -271,6 +268,8 @@ class KVisView extends ViewPart {
         canvas.svgCanvas.addSVGDocumentLoaderListener(new SVGDocumentLoaderListener() {
             override documentLoadingCancelled(SVGDocumentLoaderEvent event) {
             }
+            override documentLoadingStarted(SVGDocumentLoaderEvent event) {
+            }
             override documentLoadingCompleted(SVGDocumentLoaderEvent event) {
                 // Now that the document is loaded,
                 // we can configure the animation and interactions from the kvis file.
@@ -291,13 +290,18 @@ class KVisView extends ViewPart {
                                      + "(http://wiki.inkscape.org/wiki/index.php/Frequently_asked_questions#What_about_flowed_text.3F)")
                 showError(e)
             }
-            override documentLoadingStarted(SVGDocumentLoaderEvent event) {
-            }
         })
 
         // Add load listener to update immediately in running simulation when changing visualization config.
         canvas.svgCanvas.addGVTTreeRendererListener(new GVTTreeRendererAdapter(){
+            var long time
+            override gvtRenderingStarted(GVTTreeRendererEvent e) {
+                time = System.currentTimeMillis
+//                println("Rendering started")
+            }
+            
             override gvtRenderingCompleted(GVTTreeRendererEvent e) {
+//                println("Rendering took "+(System.currentTimeMillis-time))
                 // Immediately update svg with new data pool after refresh
                 if(updateAfterRendering) {
                     updateAfterRendering = false
@@ -341,25 +345,7 @@ class KVisView extends ViewPart {
 
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(new KVisViewToolbarAction("Show Controls", "help.png") {
-            override run() {
-                val title = "Controls for the Simulation Visualization View"
-                val message = "Shift + Mouse Drag : Move\n"
-                             + "Shift + Right Mouse Button : Zoom\n"
-                             + "Ctrl + Left Mouse Button : Zoom to rectangle\n"
-                             + "Ctrl + Shift + Right Mouse Button : Reset perspective\n"
-                             + "Mouse Wheel : Zoom in / out\n"
-                             + "Arrow Keys : Scroll\n"
-                             + "Shift + Arrow Keys : Fast scroll\n"
-                val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
-                dialog.open
-            }
-        })
-        mgr.add(new KVisViewToolbarAction("Export Image", "saveFile.png") {
-            override run() {
-                saveSVGDocument
-            }
-        })
+        
         mgr.add(new KVisViewToolbarAction("Reload", "refresh.png") {
             override run() {
                 if(kvisFile != null && svgImage != null) {
@@ -385,6 +371,38 @@ class KVisView extends ViewPart {
                 }
             }
         })
+        mgr.add(new KVisViewToolbarAction("Export Image", "saveFile.png") {
+            override run() {
+                saveSVGDocument
+            }
+        })
+        mgr.add(new KVisViewToolbarAction("Link with simulation", "linked.png", linkWithSimulation) {
+            override isChecked() {
+                return linkWithSimulation
+            }
+            
+            override run() {
+                linkWithSimulation = !linkWithSimulation
+                firePropertyChange(CHECKED, Boolean.valueOf(!linkWithSimulation), Boolean.valueOf(linkWithSimulation));
+                if(linkWithSimulation && SimulationManager.instance != null) {
+                    update(SimulationManager.instance.currentPool)    
+                }
+            }
+        })
+        mgr.add(new KVisViewToolbarAction("Show Controls", "help.png") {
+            override run() {
+                val title = "Controls for the Simulation Visualization View"
+                val message = "Shift + Mouse Drag : Move\n"
+                             + "Shift + Right Mouse Button : Zoom\n"
+                             + "Ctrl + Left Mouse Button : Zoom to rectangle\n"
+                             + "Ctrl + Shift + Right Mouse Button : Reset perspective\n"
+                             + "Mouse Wheel : Zoom in / out\n"
+                             + "Arrow Keys : Scroll\n"
+                             + "Shift + Arrow Keys : Fast scroll\n"
+                val dialog = new MessageDialog(canvas.shell, title, null, message, 0, #["OK"], 0)
+                dialog.open
+            }
+        })
     }
 
     /**
@@ -392,7 +410,7 @@ class KVisView extends ViewPart {
      * This method has to be called in the UI thread.
      */
     public def void update(DataPool pool) {
-        if(kvisFile == null && svgImage == null) {
+        if(!linkWithSimulation || kvisFile == null || svgImage == null) {
             return
         }
         
@@ -416,6 +434,7 @@ class KVisView extends ViewPart {
                         // As this is invoked later in another thread,
                         // the pool that should be visualized might already be outdated
                         if(SimulationManager.instance != null && pool == SimulationManager.instance.currentPool) {
+                            val time = System.currentTimeMillis
                             try {
                                 for (animation : animationHandlers) {
                                     animation.apply(pool)
@@ -423,6 +442,7 @@ class KVisView extends ViewPart {
                             } catch (Exception e) {
                                 showError(e)
                             }
+//                            println("KVis update took "+(System.currentTimeMillis-time))
                         }
                     }
                 }

@@ -26,7 +26,7 @@ class NDimensionalArray implements Cloneable{
     private var Integer[] indices;
     
     @Accessors(PUBLIC_GETTER)
-    private var List<NDimensionalArrayElement> elements = newArrayList();
+    private var NDimensionalArrayElement[] elements
     
     new(List<Object> values, Integer... indices) {
         this.indices = indices
@@ -36,9 +36,11 @@ class NDimensionalArray implements Cloneable{
             index.set(i, 0);
         }
         
+        elements = newArrayOfSize(values.size)
+        var i = 0;
         for(v : values) {
             val elem = new NDimensionalArrayElement(v, index)
-            elements += elem
+            elements.set(i, elem)
             
             // Increase index ripple-carry-style
             var d = dimension-1; // "least significant dimension"
@@ -48,6 +50,7 @@ class NDimensionalArray implements Cloneable{
                 d--
                 index.set(d, index.get(d)+1)
             }
+            i++;
         }
     }
     
@@ -135,7 +138,7 @@ class NDimensionalArray implements Cloneable{
      * Returns a string representation for an array.
      * @param arr The array
      */
-    private def <T> String toString(T[] arr) {
+    public static def <T> String toString(T[] arr) {
         return "["+arr.map[it.toString].join(", ")+"]"
     }
 }

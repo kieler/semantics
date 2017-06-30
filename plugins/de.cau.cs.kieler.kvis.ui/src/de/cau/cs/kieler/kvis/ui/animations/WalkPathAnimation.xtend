@@ -127,10 +127,16 @@ class WalkPathAnimation extends AnimationHandler {
         var SVGPoint currentPoint = path.getPointAtLength(scaledValue.floatValue)
         // Compute angle
         val delta = 1
-        if (autoOrientation && lastPoint != null && scaledValue <= (totalPathLength - delta)) {
+        if (autoOrientation && scaledValue <= (totalPathLength - delta)) {
             // Calculate slope ("Steigung" bzw. "Ableitung") on path on current position
             val currentPointPlusDelta = path.getPointAtLength(scaledValue.floatValue + delta)
             angleValue = computeAngle(currentPoint, currentPointPlusDelta);
+            if(angleOffset != 0) {
+                angleValue += angleOffset
+            }
+        } else if(autoOrientation && lastPoint != null){
+            // Calculate rotation based on last position
+            angleValue = computeAngle(currentPoint, lastPoint);
             if(angleOffset != 0) {
                 angleValue += angleOffset
             }
