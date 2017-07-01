@@ -13,10 +13,12 @@
 package de.cau.cs.kieler.kvis.ui.svg
 
 import java.util.List
+import org.apache.batik.dom.svg.SVGOMPoint
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.events.EventTarget
+import org.w3c.dom.svg.SVGPoint
 
 /**
  * @author aas
@@ -61,6 +63,51 @@ class SVGExtensions {
             }
         }
         return null
+    }
+    
+    public def String getAttribute(Node node, String attributeName) {
+        val attributes = node.attributes
+        if(attributes != null) {
+            for(var i = 0; i < attributes.length; i++) {
+                val item = attributes.item(i) 
+                if(item.nodeName == attributeName) {
+                    return item.nodeValue
+                }
+            }
+        }
+        return null
+    }
+    
+    public def SVGPoint getTranslation(Node node) {
+        val transform = getAttribute(node, "transform")
+        if(transform != null) {
+            val translateIndex = transform.indexOf("translate")
+            if(translateIndex >= 0) {
+                val parameterList = transform.substring(translateIndex+"translate".length)
+                val openIndex = parameterList.indexOf("(")
+                val closeIndex = parameterList.indexOf(")")
+                if(openIndex >= 0 && closeIndex >= 0) {
+                    val parameters = parameterList.substring(openIndex+1, closeIndex-1)
+                    val parametersArray = parameters.split("[\\s,]")
+                    if(parametersArray.length >= 2) {
+                        val x = Float.valueOf(parametersArray.get(0))
+                        val y = Float.valueOf(parametersArray.get(1))
+                        return new SVGOMPoint(x, y)
+                    }
+                }
+            }
+        }
+        return new SVGOMPoint(0, 0)
+    }
+    
+    public def SVGPoint getAbsoluteTranslation(Node node) {
+        val pos = node.getTranslation
+        var SVGPoint parentPos
+        if(node.parentNode != null) {
+            parentPos = node.parentNode.absoluteTranslation
+            return new SVGOMPoint(pos.x + parentPos.x, pos.y + parentPos.y)
+        }
+        return new SVGOMPoint(pos.x, pos.y)
     }
     
     /**

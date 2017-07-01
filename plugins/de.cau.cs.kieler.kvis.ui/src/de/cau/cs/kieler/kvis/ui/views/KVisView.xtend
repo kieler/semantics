@@ -56,6 +56,7 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.awt.geom.AffineTransform
 
 /**
  * @author aas
@@ -87,6 +88,7 @@ class KVisView extends ViewPart {
     @Accessors(PUBLIC_GETTER)
     private var DataPool lastPool
     private var boolean linkWithSimulation = true
+    private var AffineTransform lastRenderingTransform
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -121,11 +123,11 @@ class KVisView extends ViewPart {
         // Only load the file if anything has changed
         // or we are forced to load the file no matter what.
         if(!force && isImageUnchanged) {
-            return;                
+            return;
         }
         try {
             if (!file.fileExtension.toLowerCase.equals(KVIS_FILE_EXTENSION)) {
-                throw new Exception("Selection is not a kvis file.")
+                throw new IllegalArgumentException("Selection is not a kvis file.")
             }
             val model = ModelImporter.load(file)
             if (model != null) {
@@ -149,6 +151,8 @@ class KVisView extends ViewPart {
                     // Register resource change listener for the files
                     registerResourceChangeListener(file, svgImage)
                 }
+            } else {
+                throw new IllegalArgumentException("Could not load kvis file. Please check if the file contains errors.")
             }
         } catch(Exception e) {
             showError(e)
@@ -199,6 +203,9 @@ class KVisView extends ViewPart {
 
     public def void reload(boolean force) {
         if (kvisFile != null) {
+            // Remember current perspective on image
+            lastRenderingTransform = canvas.svgCanvas.renderingTransform
+            // Change document
             loadFile(kvisFile, force)
         }
     }
@@ -305,6 +312,11 @@ class KVisView extends ViewPart {
                 // Immediately update svg with new data pool after refresh
                 if(updateAfterRendering) {
                     updateAfterRendering = false
+                    //Reset perspective on image
+                    if(lastRenderingTransform != null) {
+                        canvas.svgCanvas.setRenderingTransform(lastRenderingTransform, true)
+                    }
+                    // Update visualization
                     if(SimulationManager.instance != null
                         && !SimulationManager.instance.isStopped
                         && SimulationManager.instance.currentPool != null
@@ -446,7 +458,7 @@ class KVisView extends ViewPart {
                         }
                     }
                 }
-                canvas?.svgCanvas?.getUpdateManager()?.getUpdateRunnableQueue()?.invokeLater(runnable)
+                canvas?.svgCanvas?.updateManager?.updateRunnableQueue?.invokeLater(runnable)
             }
         }
     }

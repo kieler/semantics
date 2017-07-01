@@ -67,7 +67,7 @@ class Redirect extends DefaultDataHandler {
                 
                 i.value = o.value
             } else {
-                System.err.println("WARNING: No input in " + to + " for redirected output " + o.name + " in "+from)
+//                println("WARNING: No input in " + to + " for redirected output " + o.name + " in "+from)
             }
         }
     }

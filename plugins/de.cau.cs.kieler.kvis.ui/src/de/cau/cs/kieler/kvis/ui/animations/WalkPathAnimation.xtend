@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kvis.ui.animations
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.apache.batik.dom.svg.SVGOMPathElement
+import org.apache.batik.dom.svg.SVGOMPoint
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
 import org.w3c.dom.svg.SVGPoint
@@ -117,20 +118,30 @@ class WalkPathAnimation extends AnimationHandler {
         // Compute position on path
         val totalPathLength = path.getTotalLength
         val value = variableValue.doubleValue
-        // If the value is above the path, bring it back to the range
         var wrappedValue = value
+        // If value is below the path, bring it back to the range
+        while(wrappedValue < pathStart) {
+            // it holds length >= 0, because we check it above and throw an exception if not
+            wrappedValue += length
+        }
+        // If the value is above the path, bring it back to the range
         while(wrappedValue > pathEnd) {
             // it holds length >= 0, because we check it above and throw an exception if not
-            wrappedValue = wrappedValue-length
+            wrappedValue -= length
         }
         val scaledValue = scale(wrappedValue, pathStart, pathEnd, 0, totalPathLength)
-        var SVGPoint currentPoint = path.getPointAtLength(scaledValue.floatValue)
+        var pointOnPath = path.getPointAtLength(scaledValue.floatValue)
+        val pathPos = path.getAbsoluteTranslation
+        val currentPoint = new SVGOMPoint(pointOnPath.x + pathPos.x, pointOnPath.y + pathPos.y)
+        if(currentPoint == null) {
+            throw new IllegalArgumentException(name+" animation could not determine position on path "+path)
+        }
         // Compute angle
         val delta = 1
         if (autoOrientation && scaledValue <= (totalPathLength - delta)) {
             // Calculate slope ("Steigung" bzw. "Ableitung") on path on current position
-            val currentPointPlusDelta = path.getPointAtLength(scaledValue.floatValue + delta)
-            angleValue = computeAngle(currentPoint, currentPointPlusDelta);
+            val pointOnPathPlusDelta = path.getPointAtLength(scaledValue.floatValue + delta)
+            angleValue = computeAngle(pointOnPath, pointOnPathPlusDelta);
             if(angleOffset != 0) {
                 angleValue += angleOffset
             }
@@ -146,28 +157,28 @@ class WalkPathAnimation extends AnimationHandler {
         if(elem instanceof SVGLocatable) {
             if(appendTransform) {
                 if(initialTransform == null) {
-                    initialTransform = elem.getAttribute("transform");
+                    initialTransform = elem.getAttribute("transform")
                 }
             } else {
                 initialTransform = ""    
             }
             // Position and size of the element
-            val SVGLocatable locatable = elem as SVGLocatable
-            val box = locatable.getBBox()
-            val posX = box.x
-            val posY = box.y
+            val locatable = elem as SVGLocatable
+            val box = locatable.BBox
+            val parentTranslation = elem.parentNode.getAbsoluteTranslation
+            val pos = new SVGOMPoint(box.x + parentTranslation.x, box.y + parentTranslation.y)
             val width = box.width
             val height = box.height
             // Anchor position in pixels
             var double pivotX = anchorX * width
             var double pivotY = anchorY * height
-            val xValue = currentPoint.x - posX - pivotX
-            val yValue = currentPoint.y - posY - pivotY
-
+            
+            val xValue = currentPoint.x - pos.x - pivotX
+            val yValue = currentPoint.y - pos.y - pivotY
             var translate = "translate(" + xValue + "," + yValue + ")"
             if (autoOrientation) {
-                translate += "rotate(" + angleValue + "," + (posX + pivotX) + "," + (posY + pivotY) + ")";
-            } 
+                translate += "rotate(" + angleValue + "," + (pos.x + pivotX) + "," + (pos.y + pivotY) + ")";
+            }
             val newTransform = initialTransform + translate
             elem.setAttribute("transform", newTransform)
         } else {
@@ -207,5 +218,12 @@ class WalkPathAnimation extends AnimationHandler {
             alpha += 360
         }
         return alpha;
+    }
+    
+    private def void print(Element elem, String attr) {
+        println(attr+"="+elem.getAttribute(attr))
+        if(elem.parentNode != null && elem.parentNode instanceof Element) {
+            print(elem.parentNode as Element, attr)
+        }
     }
 }
