@@ -25,7 +25,11 @@ import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.kvis.Comparison
 import de.cau.cs.kieler.kvis.kvis.Condition
 import de.cau.cs.kieler.kvis.kvis.Domain
+import de.cau.cs.kieler.kvis.kvis.Literal
 import de.cau.cs.kieler.kvis.kvis.Mapping
+import de.cau.cs.kieler.kvis.kvis.Sign
+import de.cau.cs.kieler.kvis.kvis.SignedFloat
+import de.cau.cs.kieler.kvis.kvis.SignedInt
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation
 import de.cau.cs.kieler.kvis.kvis.VariableReference
 import de.cau.cs.kieler.simulation.core.DataPool
@@ -33,6 +37,7 @@ import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.util.List
 import java.util.Map
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
@@ -93,14 +98,14 @@ class KVisExtensions {
             // Get variable in pool
             val variable = pool.getVariable(modelName, variableName)
             if(variable == null) {
-                throw new IllegalArgumentException("Variable '"+ref.name+"' was not found in the data pool.")
+                throw new Exception("Variable '"+ref.name+"' was not found in the data pool.")
             }
             // Get value of variable
             var Object value
             if(variable.value instanceof NDimensionalArray) {
                 val array = variable.value as NDimensionalArray
                 if(arrayIndex.isNullOrEmpty) {
-                    throw new IllegalArgumentException("Trying to access array "+ref.name+" without index.")
+                    throw new Exception("Trying to access array "+ref.name+" without index.")
                 }
                 value = array.get(ref.indices)
             } else {
@@ -141,7 +146,7 @@ class KVisExtensions {
             val right = cond.right
             var Object rightValue
             
-            if(right instanceof Value) {
+            if((right instanceof EObject) && !(right instanceof VariableReference)) {
                 rightValue = right.primitiveValue
             } else if(right instanceof VariableReference) {
                 rightValue = right.getVariableValue(pool)
@@ -179,15 +184,40 @@ class KVisExtensions {
         return true
     }
     
-    public def Object getPrimitiveValue(Value value) {
-        if(value instanceof StringValue) {
-            return value.value
-        } else if(value instanceof FloatValue) {
-            return value.value
-        } else if(value instanceof IntValue) {
-            return value.value
-        } else if(value instanceof BoolValue) {
-            return value.value
+    public def Object getPrimitiveValue(EObject value) {
+        if(value instanceof Literal) {
+            val literalValue = value.value
+            if(literalValue instanceof SignedFloat) {
+                if(literalValue.sign == Sign.NEGATIVE) {
+                    return -literalValue.value
+                } else {
+                    return literalValue.value
+                }
+            } if(literalValue instanceof SignedInt) {
+                if(literalValue.sign == Sign.NEGATIVE) {
+                    return -literalValue.value
+                } else {
+                    return literalValue.value
+                } 
+            } else if(literalValue instanceof StringValue) {
+                return literalValue.value
+            } else if(literalValue instanceof FloatValue) {
+                return literalValue.value
+            } else if(literalValue instanceof IntValue) {
+                return literalValue.value
+            } else if(literalValue instanceof BoolValue) {
+                return literalValue.value
+            }
+        } else {
+            if(value instanceof StringValue) {
+                return value.value
+            } else if(value instanceof FloatValue) {
+                return value.value
+            } else if(value instanceof IntValue) {
+                return value.value
+            } else if(value instanceof BoolValue) {
+                return value.value
+            }
         }
         return null
     }
@@ -263,7 +293,7 @@ class KVisExtensions {
         }
     }
     
-    public def void performAssignment(VariableReference variableReference, Value value, DataPool pool) {
+    public def void performAssignment(VariableReference variableReference, EObject value, DataPool pool) {
         val primitive = value.primitiveValue
         val modelName = variableReference.model?.name
         val variableName = variableReference.name
@@ -292,8 +322,10 @@ class KVisExtensions {
             doubleValue = value as Integer
         } else if(value instanceof String) {
             doubleValue = Double.valueOf((value as String).removeQuotes)
+        } else if (value != null) {
+            throw new Exception("Can't convert "+value.toString+" to Double")
         } else {
-            throw new IllegalArgumentException("Can't convert "+value.toString+" to Double")
+            throw new NullPointerException("Can't convert null to Double")
         }
         return doubleValue
     }
