@@ -29,6 +29,8 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
+import java.util.List
+import java.util.Map
 import java.util.Set
 import org.eclipse.xtext.validation.Check
 
@@ -49,7 +51,78 @@ class SctValidator extends SctJavaValidator {
     static val String NO_DEFAULT_TRANSITION = "Connector states should have an outgoing transition without trigger."
     static val String NO_OUTGOING_TRANSITION = "Connector states must have an outgoing transition."
     static val String NON_REACHABLE_TRANSITION = "The transition is not reachable."
+    static val String IMMEDIATE_LOOP = "There is an immediate loop. The model is not ASC."
 
+    /**
+     * Check that there are no immediate loops between states in a region.
+     * 
+     * @param region The region 
+     */
+    // Normal validation occurs when the xtext build is triggered. 
+    @Check(NORMAL)
+    public def void checkNoImmediateLoops(ControlflowRegion region) {
+        // Perform depth first search on states,
+        // where edges are the immediate transitions to find potentially immediate loops.
+        val states = region.states
+        // Map to remember which states have been visited already
+        val Map<de.cau.cs.kieler.sccharts.State, Integer> visited = newHashMap
+        for(state : states) {
+            val hasLoop = findImmediateLoop(state, visited)
+            if(hasLoop) {
+                // Loop detected, so add warning marker on all involved states
+                val List<de.cau.cs.kieler.sccharts.State> statesWithLoop = newArrayList
+                for(entry : visited.entrySet) {
+                    if(entry.value == 1) {
+                        statesWithLoop.add(entry.key)
+                    }
+                }
+                val message = IMMEDIATE_LOOP + "\nInvolved states: " + statesWithLoop.map[it.id]
+                for(s : statesWithLoop) {
+                    // Highlight immediate transitions that lead to states, which are part of the loop.
+                    // This is more helpful than highlighting the complete state.
+                    for(t : s.outgoingTransitions) {
+                        if(t.isImmediate2 && statesWithLoop.contains(t.targetState)) {
+                            warning(message, t, null)
+                        }
+                    }
+                }
+                return;
+            }
+        }
+    }
+    
+    /**
+     * Helper method to find immediate loops.
+     * 
+     * @param state The state that is checked for loops
+     * @param visited Data structure with the information whether states have been visited before.
+     * @return true if a loop was detected. In this case the involved states will have a visited value of 1 in the map.
+     */
+    private def boolean findImmediateLoop(de.cau.cs.kieler.sccharts.State state, Map<de.cau.cs.kieler.sccharts.State, Integer> visited) {
+        val visitedCode = visited.getOrDefault(state, 0)
+        if(visitedCode == 2) {
+            // Finished before without cycle
+            return false    
+        } else if(visitedCode == 1) {
+            // Found cycle
+            return true
+        }
+        // Now visited
+        visited.put(state, 1)
+        // Find loops in outgoing immediate transitions.
+        for(t : state.outgoingTransitions) {
+            if(t.isImmediate2) {
+                val target = t.targetState
+                if(findImmediateLoop(target, visited)) {
+                    return true
+                }
+            }
+        }
+        // Now finished without cycle
+        visited.put(state, 2)
+        return false
+    }
+    
     /**
      * Check that there are no transitions that are not reachable, i.e.,
      * no transitions after a transition without guard.
