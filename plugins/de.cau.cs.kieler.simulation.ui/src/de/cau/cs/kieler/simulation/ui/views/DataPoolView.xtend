@@ -52,6 +52,8 @@ class DataPoolView extends ViewPart {
     
     public static val simulationListener = createSimulationListener
     
+    private var DataPoolFilter filter
+    
     var TableViewer viewer
     
     var TableViewerColumn variableColumn
@@ -107,13 +109,19 @@ class DataPoolView extends ViewPart {
         if(pool == null) {
             viewer.input = null
         } else {
+            // Create a sorted list as input for the table viewer
             val List<Object> inputs = newArrayList()
-            for(m : pool.models) {
+            // Sort models by name
+            val List<Model> sortedModels = pool.models.sortBy[it.name]
+            // Add variables of models. The variables are also sorted.
+            for(m : sortedModels) {
                 inputs += m
-                for(v : m.variables) {
+                val sortedVariables = m.variables.sortWith(new VariableComparator)
+                for(v : sortedVariables) {
                     inputs += v
                 }
             }
+            // Set input of viewer
             viewer.input = inputs
         }
     }
@@ -147,8 +155,11 @@ class DataPoolView extends ViewPart {
         
         tickInfo = new TickInfoContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo")
         mgr.add(tickInfo)
+        mgr.add(new Separator())
+        mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
+        mgr.add(new Separator())
         mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.delay"))
-        
+        mgr.add(new Separator())
         mgr.add(new Action("Reset All"){
             override run(){
                 for(i : viewer.input as ArrayList<Object>) {
@@ -157,8 +168,7 @@ class DataPoolView extends ViewPart {
                         variable.userValue = null
                     } 
                 }
-                // Refresh the viewer by applying "new" input
-                viewer.input = viewer.input
+                viewer.refresh
             }
         });
         mgr.add(new Action("Reset Selection"){
@@ -205,6 +215,9 @@ class DataPoolView extends ViewPart {
         val viewer = new TableViewer(table)
         // Support objects that are "equal" yet two different objects in memory.
         viewer.comparer = new IdentityComparer()
+        // Add filter to viewer
+        filter = new DataPoolFilter
+        viewer.addFilter(filter)
         
         // Create columns
         variableColumn = createTableColumn(viewer, "Variable", 120, true)
@@ -311,6 +324,11 @@ class DataPoolView extends ViewPart {
             statusLineManager.setMessage(txt);
             tickInfo?.label?.setText(Strings.nullToEmpty(txt))
         }
+    }
+    
+    public def void setFilterText(String text) {
+        filter.searchString = text
+        viewer.refresh
     }
     
     private static def SimulationListener createSimulationListener() {
