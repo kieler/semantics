@@ -63,6 +63,11 @@ class NDimensionalArray implements Cloneable{
     }
     
     public def Object get(List<Integer> index) {
+        val element = getElement(index)
+        return element.value
+    }
+    
+    public def NDimensionalArrayElement getElement(List<Integer> index) {
         // Check array sizes
         Assert.isTrue(index.size == dimension)
         for(var i = 0; i < index.size; i++) {
@@ -72,7 +77,7 @@ class NDimensionalArray implements Cloneable{
         }
         // Return element at the given index
         val oneDimIndex = getOneDimensionalIndex(index)
-        return elements.get(oneDimIndex).value
+        return elements.get(oneDimIndex)
     }
     
     public def Object set(List<Integer> index, Object value) {

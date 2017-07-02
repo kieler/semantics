@@ -304,11 +304,12 @@ class KVisView extends ViewPart {
             var long time
             override gvtRenderingStarted(GVTTreeRendererEvent e) {
                 time = System.currentTimeMillis
-//                println("Rendering started")
+                setStatusBarMessage("Rendering started")
             }
             
             override gvtRenderingCompleted(GVTTreeRendererEvent e) {
-//                println("Rendering took "+(System.currentTimeMillis-time))
+                val duration = (System.currentTimeMillis-time)
+                setStatusBarMessage("Rendering took " + duration + "ms")
                 // Immediately update svg with new data pool after refresh
                 if(updateAfterRendering) {
                     updateAfterRendering = false
@@ -454,12 +455,21 @@ class KVisView extends ViewPart {
                             } catch (Exception e) {
                                 showError(e)
                             }
-//                            println("KVis update took "+(System.currentTimeMillis-time))
+                            val duration = (System.currentTimeMillis-time)
+                            setStatusBarMessage("Update took " + duration + "ms")
                         }
                     }
                 }
                 canvas?.svgCanvas?.updateManager?.updateRunnableQueue?.invokeLater(runnable)
             }
+        }
+    }
+    
+    private def void setStatusBarMessage(String message) {
+        val bars = getViewSite().getActionBars();
+        if(bars != null) {
+            val statusLineManager = bars.getStatusLineManager()
+            PromPlugin.asyncExecInUI[statusLineManager.setMessage(message)]
         }
     }
     
@@ -476,6 +486,8 @@ class KVisView extends ViewPart {
         }
         val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
         StatusManager.getManager().handle(s, StatusManager.SHOW);
+        
+        statusBarMessage = e.message
     }
     
     private static def SimulationListener createSimulationListener() {

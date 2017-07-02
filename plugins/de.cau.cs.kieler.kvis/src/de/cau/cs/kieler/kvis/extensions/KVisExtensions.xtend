@@ -38,6 +38,7 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 
 /**
  * @author aas
@@ -303,9 +304,12 @@ class KVisExtensions {
         if(variable != null) {
             val currentValue = variable.value
             if(currentValue instanceof NDimensionalArray) {
-                val newValue = currentValue.clone
-                newValue.set(index, primitive)
-                variable.userValue = newValue
+                if(variable.userValue == null) {
+                    variable.userValue = currentValue.clone
+                }
+                val newValue = variable.userValue as NDimensionalArray
+                val arrayElement = newValue.getElement(index)
+                arrayElement.setUserValue(primitive)
             } else {
                 variable.userValue = primitive
             }

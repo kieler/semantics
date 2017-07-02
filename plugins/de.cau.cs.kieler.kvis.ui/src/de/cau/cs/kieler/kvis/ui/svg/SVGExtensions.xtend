@@ -87,7 +87,7 @@ class SVGExtensions {
                 val openIndex = parameterList.indexOf("(")
                 val closeIndex = parameterList.indexOf(")")
                 if(openIndex >= 0 && closeIndex >= 0) {
-                    val parameters = parameterList.substring(openIndex+1, closeIndex-1)
+                    val parameters = parameterList.substring(openIndex+1, closeIndex)
                     val parametersArray = parameters.split("[\\s,]")
                     if(parametersArray.length >= 2) {
                         val x = Float.valueOf(parametersArray.get(0))

@@ -38,10 +38,6 @@ class SimulationToolbarButton extends AbstractHandler {
         }
         return null
     }
-    
-    override isEnabled() {
-        return true
-    }
 
     public def SimulationManager getSimulation() {
         return SimulationManager.instance

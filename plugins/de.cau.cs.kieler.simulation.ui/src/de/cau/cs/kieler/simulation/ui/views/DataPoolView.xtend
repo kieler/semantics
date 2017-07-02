@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -61,6 +62,9 @@ class DataPoolView extends ViewPart {
     var TableViewerColumn outputColumn
     
     var TickInfoContribution tickInfo
+    
+    @Accessors(PUBLIC_GETTER)
+    var boolean subTicksEnabled
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -122,6 +126,17 @@ class DataPoolView extends ViewPart {
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
         mgr.add(new ToggleColumnVisibleAction(inputColumn));
         mgr.add(new ToggleColumnVisibleAction(outputColumn));
+        mgr.add(new Action("Enable Sub Ticks") {
+            override run() {
+                subTicksEnabled = !subTicksEnabled
+                // TODO: Somehow set sub tick button visiblity based on this variable
+                if(subTicksEnabled) {
+                    setText("Disable Sub Ticks")
+                } else {
+                    setText("Enable Sub Ticks")
+                }
+            }
+        });
     }
     
     /**
