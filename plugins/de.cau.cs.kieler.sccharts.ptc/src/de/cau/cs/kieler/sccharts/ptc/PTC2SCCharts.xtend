@@ -11,6 +11,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.xml.type.AnyType
 import com.google.inject.Inject
+import org.eclipse.emf.edit.tree.TreeNode
+import org.eclipse.emf.ecore.EReference
 
 /**
  * Import SCCharts from PTC
@@ -29,6 +31,9 @@ public class PTC2SCCharts {
     HashMap<EObject, EObject> src2target = new HashMap();
     HashMap<EObject, EObject> target2src = new HashMap();
 
+    HashMap<String, EObject> id2src = new HashMap();
+    HashMap<EObject, String> src2id = new HashMap();
+
     /** Create an injector to load the transformation via guice. */
     private static Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
 
@@ -38,18 +43,28 @@ public class PTC2SCCharts {
     }
 
     def String attributeByName(AnyType content, String attributeName) {
-        for (attribute : content.) {
-            
-        }
         for (attribute : content.anyAttribute) {
             if (attribute.EStructuralFeature.getName == attributeName) {
                 return attribute.value as String
             } else {
-                println("  ATTRIB '"+attribute.EStructuralFeature.getName+"' ");
+//                println("  ATTRIB '"+attribute.EStructuralFeature.getName+"' = '" + attribute.value + "'" );
             }
         }
         return null;
     }
+    
+//    def TreeNode attributeReferenceByName(AnyType content, String attributeName) {
+//        for (attribute : content.getMixed) {
+//            println("  MIXED '"+attribute.EStructuralFeature.getName+"' = '" + attribute.value + "'" );
+//            if (attribute.EStructuralFeature.getName == attributeName) {
+//                if (attribute instanceof EReference) {
+//                    return attribute.value as TreeNode
+//                }
+//            }
+//        }
+//        println("");
+//        return null;
+//    }    
     
     def String name(AnyType content) {
         return content.attributeByName("name")
@@ -63,29 +78,59 @@ public class PTC2SCCharts {
     def String guard(AnyType content) {
         return content.attributeByName("guard")
     }
-    def String xmiid(AnyType content) {
-        return content.attributeByName("id")
-    }
     def String body(AnyType content) {
         return content.attributeByName("body")
     }
-    def String event(AnyType content) {
-        return content.attributeByName("event")
+    def String kind(AnyType content) {
+        return content.attributeByName("kind")
+    }
+    
+
+//    def TreeNode source(AnyType content) {
+//        return content.attributeReferenceByName("source")
+//    }
+//    def TreeNode target(AnyType content) {
+//        return content.attributeReferenceByName("target")
+//    }
+   
+    def String getId(AnyType content) {
+        return (content as EObject).eResource.getURIFragment(content);        
+    }
+    
+    def void map(AnyType element, EObject target) {
+        src2target.put(element, target);
+        target2src.put(target, element);    
+        
+        id2src.put(element.id, element);
+        src2id.put(element, element.id);
     }
 
-   
+    def EObject src2target(EObject src) {
+        return src2target.get(src)
+    }
+    def EObject target2src(EObject target) {
+        return target2src.get(target)
+    }
     
+    def EObject id2src(String id) {
+        return id2src.get(id)
+    }
+    def String src2id(EObject src) {
+        return src2id.get(src)
+    }
     
+
 
     def void transformStateMachine(List<State> targetModel, AnyType element) {
         src2target.clear
         target2src.clear
+        id2src.clear
+        src2id.clear
         var scchart = SCChartsFactory::eINSTANCE.createState;
         targetModel.add(scchart)
         scchart.id = element.eClass.name;
         println("CREATE STATEMACHINE '" + scchart.id + "' for " + element.hashCode )
-        src2target.put(element, scchart);
-        target2src.put(scchart, element);    
+        element.map(scchart)
         targetModel.transformGeneral(element)
    }
 
@@ -93,24 +138,36 @@ public class PTC2SCCharts {
         println("CREATE REGION for parent " + srcParent.hashCode)
         val state = src2target.get(srcParent) as State;
         val region = state.createControlflowRegion("Region");
-        src2target.put(element, region);
-        target2src.put(region, element);
+        element.map(region)
         targetModel.transformGeneral(element)
     }
 
-    def transformPseudostate(List<State> targetModel, AnyType element, EObject srcParent) {
-        //
+    def void transformPseudostate(List<State> targetModel, AnyType element, EObject srcParent) {
+        println("CREATE INIT STATE '" + element.name + "' with id " + element.id)
+        //if (element.name.startsWith("Initial")) {
+        if (element.kind != "junction") {
+            val state = (src2target.get(srcParent) as ControlflowRegion).createInitialState(element.name).uniqueName;
+            element.map(state)
+            targetModel.transformGeneral(element)
+        } else {
+            val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name).uniqueName;
+            state.setTypeConnector
+            element.map(state)
+            targetModel.transformGeneral(element)
+        }
     }
 
-    def transformFinalState(List<State> targetModel, AnyType element, EObject srcParent) {
-        //
+    def void transformFinalState(List<State> targetModel, AnyType element, EObject srcParent) {
+        println("CREATE FINAL STATE '" + element.name + "' with id " + element.id)
+        val state = (src2target.get(srcParent) as ControlflowRegion).createFinalState(element.name).uniqueName;
+        element.map(state)
+        targetModel.transformGeneral(element)
     }
 
     def void transformState(List<State> targetModel, AnyType element, EObject srcParent) {
-        println("CREATE STATE '" + element.name + "' with id " + element.xmiid)
+        println("CREATE STATE '" + element.name + "' with id " + element.id)
         val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name).uniqueName;
-        src2target.put(element, state);
-        target2src.put(state, element);
+        element.map(state)
         targetModel.transformGeneral(element)
     }
 
@@ -118,8 +175,27 @@ public class PTC2SCCharts {
         //
     }
 
+
     def transformTransition(List<State> targetModel, AnyType element) {
+        
         println(" --> TRANSITION: from " + element.source + " to " + element.target);
+        
+        val src = element.source.id2src.src2target
+        val dst = element.target.id2src.src2target
+        
+        if ((src instanceof State) && (dst instanceof State)) {
+              val transition = (src as State).createTransitionTo(dst as State)
+              if ((src as State).isInitial) {
+                  transition.immediate = true
+              }
+//            if (done < 5) {
+//                if (done >= 3) {
+//                } else {
+//                   println(" ====> TRANSITION: from " + element.source + " to " + element.target);
+//                }
+//                done++
+//            }
+        }
     }
 
     def transformTrigger(List<State> targetModel, AnyType element) {
@@ -219,8 +295,9 @@ public class PTC2SCCharts {
 
 
         sccharts.transformGeneral(model)
+        
 
-        return sccharts.get(0)
+        return sccharts.get(0).fixAllPriorities.fixAllTextualOrdersByPriorities
 
 //        for (content : model.eAllContents.toList) {
 //             println("---XXXXXX: " + content.eClass.name + ":" + content.eContents.length);
