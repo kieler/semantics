@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
-import de.cau.cs.kieler.kexpressions.Value;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -34,12 +32,12 @@ public interface Domain extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(Value)
+   * @see #setValue(Literal)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getDomain_Value()
    * @model containment="true"
    * @generated
    */
-  Value getValue();
+  Literal getValue();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Domain#getValue <em>Value</em>}' containment reference.
@@ -49,7 +47,7 @@ public interface Domain extends EObject
    * @see #getValue()
    * @generated
    */
-  void setValue(Value value);
+  void setValue(Literal value);
 
   /**
    * Returns the value of the '<em><b>Range</b></em>' containment reference.

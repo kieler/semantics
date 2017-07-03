@@ -48,6 +48,7 @@ import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 import org.eclipse.ui.statushandlers.StatusAdapter
+import org.eclipse.swt.widgets.Display
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -659,4 +660,15 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             }
         }
     }
+    
+    /**
+     * Executes a procedure (i.e. a method/function that returns nothing) in the UI thread.
+     */ 
+    public static def void asyncExecInUI( ()=>void procedure ) {
+        Display.getDefault().asyncExec(new Runnable() {
+            override void run() {
+                procedure.apply
+            }
+        });
+    } 
 }

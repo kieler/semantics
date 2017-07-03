@@ -25,34 +25,111 @@ import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.kvis.Comparison
 import de.cau.cs.kieler.kvis.kvis.Condition
 import de.cau.cs.kieler.kvis.kvis.Domain
+import de.cau.cs.kieler.kvis.kvis.Literal
 import de.cau.cs.kieler.kvis.kvis.Mapping
+import de.cau.cs.kieler.kvis.kvis.Sign
+import de.cau.cs.kieler.kvis.kvis.SignedFloat
+import de.cau.cs.kieler.kvis.kvis.SignedInt
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation
 import de.cau.cs.kieler.kvis.kvis.VariableReference
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import java.util.List
+import java.util.Map
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 
 /**
  * @author aas
  *
  */
 class KVisExtensions {
+    /**
+     * The data pool for which the variables have been cached
+     */
+    private static var DataPool cachedPool
+    /**
+     * Cach for variable values in a data pool.
+     * The key of the map is the fully qualified name of the variable
+     * potentially appended with the index of an array element.
+     */
+    private static var Map<String, Object> variableValueCache = newHashMap
+    
+    /**
+     * Returns the fully qualified name of a variable in the simulation.
+     */
+    private def String getFullyQualifiedVariableName(String modelName, String variableName) {
+        if(modelName.isNullOrEmpty)
+            return variableName
+        else
+            return modelName+"."+variableName
+    }
+    
+    /**
+     * Returns the fully qualified name of a variable in the simulation.
+     */
+    private def String getFullyQualifiedVariableName(String modelName, String variableName, List<Integer> indices) {
+        val nameWithoutIndex = getFullyQualifiedVariableName(modelName, variableName)
+        if(indices.isNullOrEmpty) {
+            return nameWithoutIndex
+        } else {
+            nameWithoutIndex + indices.join("[", ",", "]", [it.toString]) 
+        }
+    }
+    
+    /**
+     * Returns the value of a variable in the data pool.
+     */
     public def Object getVariableValue(VariableReference ref, DataPool pool) {
-        val modelName = ref?.model?.name
-        val variableName = ref?.name
-        if(variableName != null) {
-            val variable = pool.getVariable(modelName, variableName);
+        if(ref == null) {
+            return null
+        }
+        // Create a new variable cache if necessary
+        updateCache(pool)
+        val modelName = ref.model?.name
+        val variableName = ref.name
+        val arrayIndex = ref.indices
+        val fullyQualifiedName = getFullyQualifiedVariableName(modelName, variableName, arrayIndex)
+        val cachedValue = variableValueCache.getOrDefault(fullyQualifiedName, null)
+        if(cachedValue != null) {
+//            println("cached value of "+fullyQualifiedName)
+            return cachedValue
+        } else {
+            // Get variable in pool
+            val variable = pool.getVariable(modelName, variableName)
             if(variable == null) {
-                throw new IllegalArgumentException("Variable '"+variableName+"' was not found in the data pool.")
+                throw new Exception("Variable '"+ref.name+"' was not found in the data pool.")
             }
+            // Get value of variable
+            var Object value
             if(variable.value instanceof NDimensionalArray) {
                 val array = variable.value as NDimensionalArray
-                return array.get(ref.indices)
+                if(arrayIndex.isNullOrEmpty) {
+                    throw new Exception("Trying to access array "+ref.name+" without index.")
+                }
+                value = array.get(ref.indices)
             } else {
-                return variable.value
+                value = variable.value
             }
+            
+            if(value != null) {
+//                println("now cached value of "+fullyQualifiedName)
+                variableValueCache.put(fullyQualifiedName, value)
+            }
+            return value
         }
-        return null
+    }
+    
+    /** 
+     * Creates a new cache if the pool changes that is processed for the current animation.
+     * 
+     */
+    private def void updateCache(DataPool pool) {
+        if(cachedPool != pool) {
+            cachedPool = pool
+            variableValueCache = newHashMap
+        }
     }
     
     public def boolean eval(Condition cond, DataPool pool) {
@@ -70,7 +147,7 @@ class KVisExtensions {
             val right = cond.right
             var Object rightValue
             
-            if(right instanceof Value) {
+            if((right instanceof EObject) && !(right instanceof VariableReference)) {
                 rightValue = right.primitiveValue
             } else if(right instanceof VariableReference) {
                 rightValue = right.getVariableValue(pool)
@@ -108,15 +185,40 @@ class KVisExtensions {
         return true
     }
     
-    public def Object getPrimitiveValue(Value value) {
-        if(value instanceof StringValue) {
-            return value.value
-        } else if(value instanceof FloatValue) {
-            return value.value
-        } else if(value instanceof IntValue) {
-            return value.value
-        } else if(value instanceof BoolValue) {
-            return value.value
+    public def Object getPrimitiveValue(EObject value) {
+        if(value instanceof Literal) {
+            val literalValue = value.value
+            if(literalValue instanceof SignedFloat) {
+                if(literalValue.sign == Sign.NEGATIVE) {
+                    return -literalValue.value
+                } else {
+                    return literalValue.value
+                }
+            } if(literalValue instanceof SignedInt) {
+                if(literalValue.sign == Sign.NEGATIVE) {
+                    return -literalValue.value
+                } else {
+                    return literalValue.value
+                } 
+            } else if(literalValue instanceof StringValue) {
+                return literalValue.value
+            } else if(literalValue instanceof FloatValue) {
+                return literalValue.value
+            } else if(literalValue instanceof IntValue) {
+                return literalValue.value
+            } else if(literalValue instanceof BoolValue) {
+                return literalValue.value
+            }
+        } else {
+            if(value instanceof StringValue) {
+                return value.value
+            } else if(value instanceof FloatValue) {
+                return value.value
+            } else if(value instanceof IntValue) {
+                return value.value
+            } else if(value instanceof BoolValue) {
+                return value.value
+            }
         }
         return null
     }
@@ -168,13 +270,11 @@ class KVisExtensions {
         if(action.variable != null && action.value != null) {
             action.variable.performAssignment(action.value, pool)
         } else if(action.operation != null) {
-            println(">>>>ACTION:"+action.operation+":"+action.operation.getName)
             perform(action.operation)
         }
     }
     
     public def void perform(SimulationOperation operation) {
-        println("Performing simulation "+operation.getName)
         val simulation = SimulationManager.instance
         if(simulation != null && !simulation.isStopped) {
             switch(operation) {
@@ -194,21 +294,22 @@ class KVisExtensions {
         }
     }
     
-    public def void performAssignment(VariableReference variableReference, Value value, DataPool pool) {
+    public def void performAssignment(VariableReference variableReference, EObject value, DataPool pool) {
         val primitive = value.primitiveValue
         val modelName = variableReference.model?.name
         val variableName = variableReference.name
         val index = variableReference.indices
-        val indexText = if(index.isNullOrEmpty) "" else index.toString
-        println("Performing "+variableName+indexText+" = "+primitive)
         
         val variable = pool.getVariable(modelName, variableName)
         if(variable != null) {
             val currentValue = variable.value
             if(currentValue instanceof NDimensionalArray) {
-                val newValue = currentValue.clone
-                newValue.set(index, primitive)
-                variable.userValue = newValue
+                if(variable.userValue == null) {
+                    variable.userValue = currentValue.clone
+                }
+                val newValue = variable.userValue as NDimensionalArray
+                val arrayElement = newValue.getElement(index)
+                arrayElement.setUserValue(primitive)
             } else {
                 variable.userValue = primitive
             }
@@ -225,8 +326,10 @@ class KVisExtensions {
             doubleValue = value as Integer
         } else if(value instanceof String) {
             doubleValue = Double.valueOf((value as String).removeQuotes)
+        } else if (value != null) {
+            throw new Exception("Can't convert "+value.toString+" to Double")
         } else {
-            throw new IllegalArgumentException("Can't convert "+value.toString+" to Double")
+            throw new NullPointerException("Can't convert null to Double")
         }
         return doubleValue
     }

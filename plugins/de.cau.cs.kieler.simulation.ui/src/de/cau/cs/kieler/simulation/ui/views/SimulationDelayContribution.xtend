@@ -37,8 +37,8 @@ class SimulationDelayContribution extends ControlContribution {
         spinner.toolTipText = "Simulation delay in play mode (milliseconds)"
         spinner.minimum = SimulationManager.MIN_DELAY
         spinner.maximum = SimulationManager.MAX_DELAY
-        spinner.increment = 100
-        spinner.pageIncrement = 100
+        spinner.increment = 50
+        spinner.pageIncrement = 50
         spinner.selection = SimulationManager.playDelay
         
         spinner.addSelectionListener(new SelectionAdapter() {

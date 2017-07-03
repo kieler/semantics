@@ -2,10 +2,9 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
-import de.cau.cs.kieler.kexpressions.Value;
-
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
+import de.cau.cs.kieler.kvis.kvis.Literal;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
 
 import java.util.Collection;
@@ -69,7 +68,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * @generated
    * @ordered
    */
-  protected Value literal;
+  protected Literal literal;
 
   /**
    * The cached value of the '{@link #getMappings() <em>Mappings</em>}' containment reference list.
@@ -130,7 +129,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public Value getLiteral()
+  public Literal getLiteral()
   {
     return literal;
   }
@@ -140,9 +139,9 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetLiteral(Value newLiteral, NotificationChain msgs)
+  public NotificationChain basicSetLiteral(Literal newLiteral, NotificationChain msgs)
   {
-    Value oldLiteral = literal;
+    Literal oldLiteral = literal;
     literal = newLiteral;
     if (eNotificationRequired())
     {
@@ -157,7 +156,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLiteral(Value newLiteral)
+  public void setLiteral(Literal newLiteral)
   {
     if (newLiteral != literal)
     {
@@ -240,7 +239,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
         setAttribute((String)newValue);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__LITERAL:
-        setLiteral((Value)newValue);
+        setLiteral((Literal)newValue);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__MAPPINGS:
         getMappings().clear();
@@ -264,7 +263,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
         setAttribute(ATTRIBUTE_EDEFAULT);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__LITERAL:
-        setLiteral((Value)null);
+        setLiteral((Literal)null);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__MAPPINGS:
         getMappings().clear();

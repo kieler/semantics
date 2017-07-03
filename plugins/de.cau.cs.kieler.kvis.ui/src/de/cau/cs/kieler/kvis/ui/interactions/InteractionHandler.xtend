@@ -113,7 +113,6 @@ class InteractionHandler {
         if(eventListener == null) {
             eventListener = new EventListener() {
                 override handleEvent(Event evt) {
-                    println("Event '"+evt.type+"' on '"+interaction.event.element+"'")
                     performActions
                 }
             }

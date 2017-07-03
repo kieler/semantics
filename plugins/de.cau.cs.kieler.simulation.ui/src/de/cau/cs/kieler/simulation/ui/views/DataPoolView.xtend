@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.base.Strings
+import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.ui.console.PromConsole
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
@@ -34,10 +35,10 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -51,6 +52,8 @@ class DataPoolView extends ViewPart {
     
     public static val simulationListener = createSimulationListener
     
+    private var DataPoolFilter filter
+    
     var TableViewer viewer
     
     var TableViewerColumn variableColumn
@@ -61,6 +64,9 @@ class DataPoolView extends ViewPart {
     var TableViewerColumn outputColumn
     
     var TickInfoContribution tickInfo
+    
+    @Accessors(PUBLIC_GETTER)
+    var boolean subTicksEnabled
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -103,13 +109,19 @@ class DataPoolView extends ViewPart {
         if(pool == null) {
             viewer.input = null
         } else {
+            // Create a sorted list as input for the table viewer
             val List<Object> inputs = newArrayList()
-            for(m : pool.models) {
+            // Sort models by name
+            val List<Model> sortedModels = pool.models.sortBy[it.name]
+            // Add variables of models. The variables are also sorted.
+            for(m : sortedModels) {
                 inputs += m
-                for(v : m.variables) {
+                val sortedVariables = m.variables.sortWith(new VariableComparator)
+                for(v : sortedVariables) {
                     inputs += v
                 }
             }
+            // Set input of viewer
             viewer.input = inputs
         }
     }
@@ -122,6 +134,17 @@ class DataPoolView extends ViewPart {
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
         mgr.add(new ToggleColumnVisibleAction(inputColumn));
         mgr.add(new ToggleColumnVisibleAction(outputColumn));
+        mgr.add(new Action("Enable Sub Ticks") {
+            override run() {
+                subTicksEnabled = !subTicksEnabled
+                // TODO: Somehow set sub tick button visiblity based on this variable
+                if(subTicksEnabled) {
+                    setText("Disable Sub Ticks")
+                } else {
+                    setText("Enable Sub Ticks")
+                }
+            }
+        });
     }
     
     /**
@@ -132,8 +155,11 @@ class DataPoolView extends ViewPart {
         
         tickInfo = new TickInfoContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo")
         mgr.add(tickInfo)
+        mgr.add(new Separator())
+        mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
+        mgr.add(new Separator())
         mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.delay"))
-        
+        mgr.add(new Separator())
         mgr.add(new Action("Reset All"){
             override run(){
                 for(i : viewer.input as ArrayList<Object>) {
@@ -142,8 +168,7 @@ class DataPoolView extends ViewPart {
                         variable.userValue = null
                     } 
                 }
-                // Refresh the viewer by applying "new" input
-                viewer.input = viewer.input
+                viewer.refresh
             }
         });
         mgr.add(new Action("Reset Selection"){
@@ -190,6 +215,9 @@ class DataPoolView extends ViewPart {
         val viewer = new TableViewer(table)
         // Support objects that are "equal" yet two different objects in memory.
         viewer.comparer = new IdentityComparer()
+        // Add filter to viewer
+        filter = new DataPoolFilter
+        viewer.addFilter(filter)
         
         // Create columns
         variableColumn = createTableColumn(viewer, "Variable", 120, true)
@@ -298,18 +326,21 @@ class DataPoolView extends ViewPart {
         }
     }
     
+    public def void setFilterText(String text) {
+        filter.searchString = text
+        viewer.refresh
+    }
+    
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
                 // Execute in UI thread
-                Display.getDefault().asyncExec(new Runnable() {
-                    override void run() {
+                PromPlugin.asyncExecInUI[
                         // Update status line
                         DataPoolView.instance?.updateStatusBar(e)
                         // Set pool data
                         DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
-                    }
-                });
+                    ]
             }
         }
         return listener
