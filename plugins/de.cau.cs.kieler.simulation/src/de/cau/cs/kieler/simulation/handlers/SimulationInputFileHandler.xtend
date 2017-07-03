@@ -69,4 +69,8 @@ class SimulationInputFileHandler extends DefaultDataHandler implements Simulator
         pool.addModel(newModel) 
     }
     
+    override toString() {
+        return "InputFileHandler '"+fileLocation+"'"
+    }
+    
 }

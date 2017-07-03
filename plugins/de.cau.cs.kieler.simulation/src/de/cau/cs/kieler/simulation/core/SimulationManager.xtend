@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.simulation.SimulationPlugin
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -150,7 +149,7 @@ class SimulationManager {
     /**
      * Adds a data handler
      */
-    public def void addHandler(DataHandler handler) {
+    private def void addHandler(DataHandler handler) {
         if(!dataHandlers.contains(handler))
             dataHandlers.add(handler)
     }

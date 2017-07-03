@@ -20,6 +20,7 @@ import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.Redirect
 import de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler
+import de.cau.cs.kieler.simulation.handlers.SimulationOutputFileHandler
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.util.List
@@ -82,8 +83,6 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
                     this.files = structuredSelection.toList
                     this.project = file.project
                     this.mode = mode
-                    
-                    
                     try {
                         launch()
                     } catch (Exception e){
@@ -123,12 +122,21 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
                 val inputFileHandler = new SimulationInputFileHandler
                 simulator = inputFileHandler
                 inputFileHandler.fileLocation = file.location.toOSString
+            } if(file.fileExtension == "simout") {
+                val outputFileHandler = new SimulationOutputFileHandler
+                outputFileHandler.fileLocation = file.location.toOSString
+                val simMan = SimulationManager.instance
+                if(simMan != null && !simMan.isStopped) {
+                    simMan.addAction(StepAction.Method.WRITE, outputFileHandler)
+                }
             } else {
                 val exeSimulator = new ExecutableSimulator
                 simulator = exeSimulator
                 exeSimulator.executable = files.get(0)
             }
-            addSimulatorToSimulation(simulator)
+            if(simulator != null) {
+                addSimulatorToSimulation(simulator)
+            }
         } else if(files.size == 2) {
             val simMan = new SimulationManager()
             
