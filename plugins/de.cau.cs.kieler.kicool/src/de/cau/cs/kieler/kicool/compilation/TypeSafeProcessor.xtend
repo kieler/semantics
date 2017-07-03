@@ -21,13 +21,13 @@ import de.cau.cs.kieler.kicool.compilation.Processor
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-abstract class TypeSafeProcessor<T> extends Processor {
+abstract class TypeSafeProcessor<T, S> extends Processor {
     
     protected def T getModel() {
         environment.model as T
     }
     
-    protected def T setModel(T model) {
+    protected def S setModel(S model) {
         environment.model = model
         model
     }

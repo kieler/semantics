@@ -15,8 +15,10 @@ package de.cau.cs.kieler.sccharts.processors
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * @author ssm
@@ -25,7 +27,9 @@ import de.cau.cs.kieler.sccharts.SCChartsFactory
  */
 class Snapshot extends SCChartsProcessor {
     
-    @Inject extension SCChartsExtension
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.snapshot"
@@ -42,7 +46,7 @@ class Snapshot extends SCChartsProcessor {
     override process() {
         val scc = SCChartsFactory::eINSTANCE.createSCCharts
         
-        val root = createSCChart => [
+        val root = createState => [
             id = "Snapshots"
             scc.rootStates += it
         ]
