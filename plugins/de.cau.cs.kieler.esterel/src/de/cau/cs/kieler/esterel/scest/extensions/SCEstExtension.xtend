@@ -495,13 +495,13 @@ class SCEstExtension {
     }
     
     /**
-     * Returns an unused trap name. String: ( "T" + counter + "_" + name)
+     * Returns an unused trap name. String: ( name + "_" + "T" + counter )
      * @param name The name of the previous trap signal
-     * @return Returns an unused trap name. String: ( "T" + counter + "_" + name)
+     * @return Returns an unused trap name. String: ( name + "_" + "T" + counter )
      */
     def createNewUniqueTrapName(String name) {
         trapSuffix++
-        "T" + trapSuffix + "_" + name
+        name + "_" + "T" + trapSuffix 
     }
     
     /**
@@ -2089,5 +2089,23 @@ class SCEstExtension {
     def createSCLProg() {
         SclFactory::eINSTANCE.createSCLProgram
     }
+    
+    /**
+     * Renames an interface scope to the module name
+     * 
+     * @param scope The scope which should be renamed
+     * @param name The name of the module 
+     */
+    def renameIScope(ScopeStatement scope, String name) {
+//        for (a : scope.annotations) {
+//            if (a.name.equals(interfaceScope)) {
+//                scope.annotations.remove(a)
+//            }
+//        }
+        scope.annotations.add( 
+            AnnotationsFactory::eINSTANCE.createAnnotation => [
+                it.name = name
+            ])
+    } 
  
 }

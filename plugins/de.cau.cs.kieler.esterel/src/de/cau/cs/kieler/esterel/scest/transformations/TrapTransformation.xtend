@@ -36,7 +36,6 @@ import java.util.HashMap
 import de.cau.cs.kieler.esterel.esterel.ISignal
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.LinkedList
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.esterel.Exit
@@ -87,15 +86,12 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
     
     def EList<Statement> transformStatements(EList<Statement> statements) {
         for (var i=0; i<statements?.length; i++) {
-            var statement = statements.get(i).transformStatement
-            if (statement instanceof Statement) {
-                statements.set(i, statement)
-            }
+            statements.get(i).transformStatement
         }
         return statements
     }
     
-    def Statement transformStatement(Statement statement) {
+    def void transformStatement(Statement statement) {
         if (statement instanceof Trap) {
             var trap = statement as Trap
             var statements = statement.getContainingList
@@ -114,30 +110,10 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 signalDecl.valuedObjects.add(signal)
                 signals.add(signal)
                 // if a trap signal is a valued signal, create a second variable for the value
-                if ( (t.type != ValueType.PURE) && (t.type != null || t.typeID != null) ) {
+                if ( t.type != ValueType.PURE ) {
+                    var tempType = if (t.type == ValueType.DOUBLE) ValueType.FLOAT else t.type
                     var signalValue = createTrapVariable(t) 
-                    var Declaration decl
-                    if (t.type == ValueType.INT) {
-                        decl = createDeclaration(ValueType.INT, signalValue)
-                    }
-                    else if (t.type == ValueType.BOOL) {
-                        decl = createDeclaration(ValueType.BOOL, signalValue)
-                    }
-                    else if (t.type == ValueType.FLOAT || t.type == ValueType.DOUBLE) {
-                        decl = createDeclaration(ValueType.FLOAT, signalValue)
-                    }
-                    else if (t.type == ValueType.STRING) {
-                        decl = createDeclaration(ValueType.STRING, signalValue)
-                    }
-                    else if (t.type == ValueType.HOST) {
-                        decl = createDeclaration(ValueType.HOST, signalValue)
-                    }
-                    else if (t.type == ValueType.UNSIGNED) {
-                        decl = createDeclaration(ValueType.UNSIGNED, signalValue)
-                    }
-                    else if (t.type == ValueType.PURE) {
-                        decl = createDeclaration(ValueType.PURE, signalValue)
-                    }
+                    var decl = createDeclaration(tempType, signalValue)
                     scope.declarations.add(decl)
                     exitVariables.put(t, new Pair(signal, signalValue))
                 }
@@ -166,7 +142,6 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             trap.statements.transformStatements
             scope.statements.add(trap.statements)
             scope.statements.add(label)
-            statements.set(pos, scope)
             scope.statements.transformPausesJoins(conditional, label, exitVariables)
             scope.statements.checkGotos
             
@@ -187,7 +162,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 transformReferences(parallel, exitVariables)
             }
             transformTrapExpressions(scope, exitVariables)
-            return scope
+            statements.set(pos, scope)
         }
         else if (statement instanceof StatementContainer) {
             
@@ -227,7 +202,6 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 transformStatements(t.statements)
             ]
         }
-        return statement
     }
     
     def EList<Statement> transformPausesJoins(EList<Statement> statements, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {

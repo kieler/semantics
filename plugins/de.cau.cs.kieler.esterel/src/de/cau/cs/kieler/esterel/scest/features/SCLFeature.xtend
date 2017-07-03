@@ -29,7 +29,7 @@ class  SCLFeature extends Feature {
     }
     
     override getName() {
-        return SCEstFeature::SCL_ID
+        return SCEstFeature::SCL_NAME
     }
     
     def isContained(SCEstProgram program) {

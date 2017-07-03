@@ -93,7 +93,7 @@ class SensorTransformation extends AbstractExpansionTransformation implements Tr
                 }
             }
         }
-        scope.transformReferences
+        transformReferences(scope, newVariables)
         module.intSensorDecls.clear
     }
     

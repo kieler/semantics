@@ -22,6 +22,8 @@ import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.esterel.LocalVariable
+import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 
 /**
  * @author mrb
@@ -43,11 +45,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
     override getExpandsFeatureId() {
         return SCEstFeature::SCL_ID
     }
-        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::)
-//    }
-//
+
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(
               SCEstTransformation::ABORT_ID, SCEstTransformation::ESTERELPARALLEL_ID
@@ -64,7 +62,8 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
             , SCEstTransformation::UNEMIT_ID, SCEstTransformation::SET_ID
             , SCEstTransformation::SIGNAL_ID, SCEstTransformation::CONSTANT_ID
             , SCEstTransformation::SENSOR_ID, SCEstTransformation::FUNCTION_ID
-            , SCEstTransformation::LABELRENAMING_ID
+            , SCEstTransformation::LABELRENAMING_ID, SCEstTransformation::RUN_ID
+            , SCEstTransformation::EXEC_ID
         )
     }
 
@@ -73,7 +72,9 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
 
     def SCLProgram transform(SCEstProgram prog) {
         var sclProg = createSCLProg
+        sclProg.name = "SCEst_To_SCL"
         for (m : prog.modules) {
+            m.removeLocalSignalsAndVariables
             transformModule(m, sclProg)
         }
         return sclProg
@@ -81,9 +82,41 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
     
     def transformModule(SCEstModule module, SCLProgram prog) {
         if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
-            var scope = module.statements.get(0) as ScopeStatement
-            prog.declarations.addAll(scope.declarations)
-            prog.statements.add(scope.statements)
+            (module.statements.get(0) as ScopeStatement).renameIScope(module.name)
+            prog.statements.add( module.statements.get(0) )
+        }
+        else {
+            throw new UnsupportedOperationException(
+                        "The following module is not ready to be transformed into a SCL metamodel! " + module.name)
+        }
+    }
+    
+    def removeLocalSignalsAndVariables(SCEstModule module) {
+        var localVariables = module.eAllContents.toList.filter(LocalVariable)
+        var localSignals = module.eAllContents.toList.filter(LocalSignalDecl)
+        // remove original local IVariables
+        for (v : localVariables) {
+            if (v.statements.size == 1 && (v.statements.get(0) instanceof ScopeStatement)) {
+                var statements = v.getContainingList
+                var pos = statements.indexOf(v)
+                statements.set(pos, v.statements.get(0))
+            }
+            else {
+                throw new UnsupportedOperationException(
+                        "There should be just one statement (a scope) in the statements list of the following local variable declaration! " + v)
+            }
+        }
+        // remove original local ISignals
+        for (s : localSignals) {
+            if (s.statements.size == 1 && (s.statements.get(0) instanceof ScopeStatement)) {
+                var statements = s.getContainingList
+                var pos = statements.indexOf(s)
+                statements.set(pos, s.statements.get(0))
+            }
+            else {
+                throw new UnsupportedOperationException(
+                        "There should be just one statement (a scope) in the statements list of the following local signal declaration! " + s)
+            }
         }
     }
     
