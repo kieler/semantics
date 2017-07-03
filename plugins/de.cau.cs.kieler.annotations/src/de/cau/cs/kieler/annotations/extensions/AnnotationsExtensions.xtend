@@ -118,4 +118,11 @@ class AnnotationsExtensions {
     def asStringAnnotation(Annotation annotation) {
         annotation as StringAnnotation
     }
+    
+    def addStringAnnotation(Annotatable annotatable, String name, String text) {
+        annotatable.annotations += AnnotationsFactory.eINSTANCE.createStringAnnotation => [
+            it.name = name
+            values += text
+        ]
+    }
 }

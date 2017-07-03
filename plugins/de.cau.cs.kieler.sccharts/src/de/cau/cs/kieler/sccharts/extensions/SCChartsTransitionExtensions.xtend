@@ -127,7 +127,7 @@ class SCChartsTransitionExtensions {
         transition
     }
     
-    def isImmediate(Transition transition) {
+    def isImplicitlyImmediate(Transition transition) {
         (transition.delay == DelayType.IMMEDIATE) || (transition.sourceState.isConnector) || 
         (transition.preemption == PreemptionType::TERMINATION && transition.trigger == null)
     }    

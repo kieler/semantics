@@ -28,13 +28,13 @@ import java.util.LinkedHashSet
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -48,7 +48,7 @@ class ScopeSynthesis extends AbstractSCChartsSynthesis<Scope> {
 
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
-    @Inject extension SCChartsExtension 
+    @Inject extension SCChartsScopeExtensions 
     @Inject extension SCChartsSerializeHRExtension
     @Inject extension AnnotationsExtensions
     @Inject StateSynthesis stateSynthesis

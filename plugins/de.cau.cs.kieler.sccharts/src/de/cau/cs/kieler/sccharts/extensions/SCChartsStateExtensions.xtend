@@ -33,6 +33,10 @@ class SCChartsStateExtensions {
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsScopeExtensions
     
+    def State createState() {
+        SCChartsFactory::eINSTANCE.createState
+    }    
+    
     def State createState(String id) {
         SCChartsFactory::eINSTANCE.createState => [
             setId(id)

@@ -8,14 +8,13 @@ import org.eclipse.emf.ecore.EReference
 import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.xtext.scoping.IScope
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * This class contains custom scoping description.
@@ -26,7 +25,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
  */
 class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider {
     
-    @Inject extension SCChartsExtension
+    @Inject extension SCChartsCoreExtensions
     @Inject extension AnnotationsExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider

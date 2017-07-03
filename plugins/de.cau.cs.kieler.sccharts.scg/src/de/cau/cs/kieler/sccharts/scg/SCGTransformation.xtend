@@ -43,11 +43,8 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -73,6 +70,14 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider
+import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -109,32 +114,22 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     public static val IProperty<Boolean> ENABLE_SFR = new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsFixExtensions
+    @Inject extension SCGThreadExtensions
 
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension KEffectsExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCGThreadExtensions
-
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    private static val Injector i = SCTXStandaloneSetup::doSetup();
+    private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
 
     private val stateTypeCache = <State, Set<PatternType>>newHashMap
-    private val uniqueNameCache = <String>newHashSet
+    private val uniqueNameCache = new UniqueNameCache
 
     private static val String ANNOTATION_REGIONNAME = "regionName"
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
@@ -218,27 +213,30 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------
     // --             T R A N S F O R M      T O    S C G                     --
     // -------------------------------------------------------------------------
-    // override transform(EObject eObject, KielerCompilerContext context) {
-    // if (eObject instanceof SCGraph) {
-    // return (eObject as SCGraph).processSCG
-    // } else {
-    // return (eObject as State).transformSCG
-    // }
-    // }
-    // def SCGraph processSCG(SCGraph scg) {
-    // val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(typeof(SuperfluousForkRemover))
-    // val newSCG = superfluousForkRemover.optimize(scg)
-    //
-    // // SCG thread path types
-    // val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
-    // for(entry:threadPathTypes.keySet) {
-    // if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
-    // entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
-    // }
-    // }
-    // newSCG
-    // }
-    def SCGraph transform(State rootState, KielerCompilerContext context) {
+    override transform(EObject eObject, KielerCompilerContext context) {
+        if (eObject instanceof SCGraph) {
+            return (eObject as SCGraph).processSCG(context)
+        } else {
+            return (eObject as State).transformSCG(context)
+        }
+    }
+
+    def SCGraph processSCG(SCGraph scg, KielerCompilerContext coontext) {
+        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
+            typeof(SuperfluousForkRemover))
+        val newSCG = superfluousForkRemover.optimize(scg)
+
+        // SCG thread path types
+        val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
+        for (entry : threadPathTypes.keySet) {
+            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+                entry.addStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+            }
+        }
+        newSCG
+    }
+    
+    def SCGraph transformSCG(State rootState, KielerCompilerContext context) {
 
         SCChartsSCGPlugin.log("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
@@ -380,7 +378,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------   
     def boolean isPause(State state) {
         ((state.outgoingTransitions.filter [e|
-            !e.isImmediate && e.trigger == null && e.effects.nullOrEmpty && e.type != TransitionType::TERMINATION
+            !e.isImplicitlyImmediate && e.trigger == null && e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
@@ -389,18 +387,18 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 //           (state.outgoingTransitions.filter[e|e.isImmediate && 
 //                                            e.trigger != null && 
 //                                            e.effects.nullOrEmpty].size == 1) &&
-        (state.outgoingTransitions.filter[e|e.isImmediate && e.effects.nullOrEmpty].size == 2) &&
+        (state.outgoingTransitions.filter[e|e.isImplicitlyImmediate && e.effects.nullOrEmpty].size == 2) &&
             (state.outgoingTransitions.size == 2))
     }
 
     def boolean isAssignment(State state) {
         ((state.outgoingTransitions.filter [e|
-            e.isImmediate && e.trigger == null && !e.effects.nullOrEmpty && e.type != TransitionType::TERMINATION
+            e.isImplicitlyImmediate && e.trigger == null && !e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
     def boolean isFork(State state) {
-        (!state.regions.nullOrEmpty && state.controlflowRegionsNotEmpty)
+        (!state.regions.nullOrEmpty && state.controlflowRegionsContainStates)
     }
 
     def boolean isEntry(State state) {
@@ -575,7 +573,6 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             val transition = state.outgoingTransitions.get(0)
             assignment.trace(state, transition)
             transition.setDefaultTrace
-            scopeProvider.parent = transition.sourceState
 
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
@@ -605,10 +602,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
             state.map(conditional)
-            scopeProvider.parent = state
             val transition = state.outgoingTransitions.get(0)
             conditional.trace(state, transition)
-            scopeProvider.parent = transition.sourceState
 
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))
@@ -828,11 +823,6 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             callByReference = parameter.callByReference
             expression = parameter.expression.convertToSCGExpression
         ]
-    }
-
-    // Apply conversion to the default case
-    def dispatch Expression convertToSCGExpression(Expression expression) {
-        createExpression.trace(expression)
     }
 
 // -------------------------------------------------------------------------   

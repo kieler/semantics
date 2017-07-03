@@ -26,13 +26,18 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.emf.ecore.EObject
 import com.google.inject.Singleton
 import static de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 
 /**
  * The Model Generator class
@@ -50,7 +55,12 @@ class ModelGenerator {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension SCChartsExtension
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
     @Inject extension SCTGenerator
 
     /* Private members */
@@ -101,7 +111,7 @@ class ModelGenerator {
         val int outputs = NUMBER_OF_INPUTS.random
 
         // Create a basic SCCharts, set the id, label, and input and output declarations.
-        val rootState = createSCChart => [
+        val rootState = createState => [
             it.id = id
             it.label = id
             it.declarations += createVariableDeclaration(ValueType.BOOL) => [ decl | 
@@ -175,7 +185,7 @@ class ModelGenerator {
                         if (CHANCE_FOR_IMMEDIATE.random != 0) {
                             if ((it.eContainer.asState != it.targetState) &&
                                 !((it.eContainer.asState.incomingTransitions.filter[immediate].size > 0) &&
-                                    (it.targetState.outgoingTransitions.filter[immediate].size > 0))) {
+                                    (it.targetState.outgoingTransitions.filter[ isImplicitlyImmediate ].size > 0))) {
                                 it.immediate = true
                             }
                         }
