@@ -23,6 +23,10 @@ import de.cau.cs.kieler.railSL.SetPointStatement
 import de.cau.cs.kieler.railSL.LightStatement
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
+import org.eclipse.ui.PlatformUI
+
+// TODO this import doesn't work as the view is not exported
+// import de.cau.cs.kieler.kvis.ui.views.KVisView
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -36,11 +40,24 @@ class Visualizer {
     
     private val pool = new DataPool()
     
+    public def Visualizer() {
+        // TODO initialize pool in a meaningful way
+    }
+    
     public def DataPool getDataPool() {
         return pool
     } 
     
-    def void assembleModel(Program program) {
+    public def void updateView() {
+        val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        // val view = page.findView(KVisView.ID);
+        
+        val view = page.findView("de.cau.cs.kieler.simulation.ui.dataPoolView") //as KVisView
+        
+        // view.update(pool)
+    } 
+    
+    public def void assembleModel(Program program) {
         
         for (block : program.blocks) {
             pool.addModel(assembleBlock(block))

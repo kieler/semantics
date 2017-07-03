@@ -9,6 +9,8 @@ import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 
 import org.eclipse.xtext.generator.IFileSystemAccess
+import de.cau.cs.kieler.railsl.Visualizer
+import de.cau.cs.kieler.railSL.Program
 
 /**
  * Main class for code generation of RailSL.
@@ -19,9 +21,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess
  */
 class RailSLGenerator extends AbstractGenerator {
 
-    /*************************************************************************
-     * S T A T I C   C O D E   G E N E R A T I O N ***************************
-     *************************************************************************/
+    private static final val visualizer = new Visualizer() 
 
     /**
      * Generates static code required by PROM.
@@ -31,9 +31,13 @@ class RailSLGenerator extends AbstractGenerator {
         generateHeaders(fsa)
         generateSnippets(fsa)
         
-        // TODO this will not stay here.
-        // Insert methods here to get the KVIZ view and pass it the generated model.
+        visualizer.assembleModel(resource.contents.filter(Program).head)
+        visualizer.updateView()
     }
+
+    /*************************************************************************
+     * S T A T I C   C O D E   G E N E R A T I O N ***************************
+     *************************************************************************/
 
     /**
      * Generates all snippets required for a compilation via PROM.
@@ -490,7 +494,6 @@ ${outputs}
 </#macro>'
    }
 
-
     /**
      * Generate a static PROM code snippet as wrapper for the @code{points} variable.
      */
@@ -505,7 +508,6 @@ ${outputs}
     </@>
 </#macro>'
     }
-
 
     /**
      * Generate a static PROM code snippet as wrapper for the @code{lights} variable.
@@ -541,6 +543,9 @@ ${outputs}
 </#macro>'
     }
 
+    /**
+     * Generate a static PROM code snippet as wrapper for the @code{second} variable.
+     */
     def String generateSecondSnippet()  {
 '<#-- S E C O N D -->
 <#macro second>
@@ -557,6 +562,9 @@ ${outputs}
 </#macro>'   
     }
 
+    /**
+     * Generate a static PROM code snippet as wrapper for the @code{crossing} variable.
+     */
     def String generateCrossingSnippet() {
 '<#-- C R O S S I N G -->
 <#macro crossing>
