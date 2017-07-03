@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.Iterators
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
@@ -27,18 +28,23 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.IterateAction
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.ArrayList
 import java.util.Iterator
 import java.util.List
@@ -51,13 +57,14 @@ import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 
+//import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.kexpressions.Parameter
-import de.cau.cs.kieler.sccharts.DelayType
+import java.util.Set
 
 /**
  * SCCharts Extensions.
@@ -76,9 +83,6 @@ class SCChartsExtension {
 
     @Inject
     extension KExpressionsReplacementExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions       
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -125,22 +129,12 @@ class SCChartsExtension {
             return null;
         }
     }
-    
-    
-    def SCCharts getSCCharts(Scope scope) {
-        if (scope.eContainer != null) {
-            return (scope.eContainer as Scope).getSCCharts as SCCharts
-        } else {
-            return scope as SCCharts
-        }
-    }    
-    
 
     //====== GENERAL MODEL ELEMENTS =====
     // Get the single normal termination Transition. Return null if there is 
     // no outgoing normal termination Transition.
     def Transition getTerminationTransitions(State state) {
-        val allTerminationTransitions = state.outgoingTransitions.filter[ preemption == PreemptionType::TERMINATION ]
+        val allTerminationTransitions = state.outgoingTransitions.filter[ type == TransitionType::TERMINATION ]
         if (allTerminationTransitions.empty) {
             return null;
         }
@@ -220,17 +214,17 @@ class SCChartsExtension {
 
     // Return the list of pure signals of a state.
     def List<ValuedObject> getPureSignals(State state) {
-        state.valuedObjectsFromEObject.filter[e|e.isSignal && e.type == ValueType::PURE].toList
+        state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
     }
 
     // Return the list of valued signals of a state.
     def List<ValuedObject> getValuedSignals(State state) {
-        state.valuedObjectsFromEObject.filter[e|e.isSignal && e.type != ValueType::PURE].toList
+        state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
     }
 
     // Return the list of all signals of a state.
     def List<ValuedObject> getSignals(State state) {
-        state.valuedObjectsFromEObject.filter[e|e.isSignal].toList
+        state.valuedObjects.filter[e|e.isSignal].toList
     }
 
     // Return true if the valued Object is a pure signal
@@ -244,7 +238,7 @@ class SCChartsExtension {
     // If necessary, these function should be re-implemented.
     // Checks if all regions have at least one final state. Note that the final
     // state may not be reachable and this method conservatively still returns
-    // true. It only returns false iff there is at least one region without
+    // true. It only returns fals iff there is at least one region without
     // a final state.
     def boolean regionsMayTerminate(State state) {
         for (region : state.regions.filter(ControlflowRegion)) {
@@ -256,7 +250,7 @@ class SCChartsExtension {
     }
 
     def boolean isRootState(State state) {
-        state.parentRegion == null 
+        state.parentRegion == null
     }
 
     def dispatch State getRootState(State state) {
@@ -269,12 +263,6 @@ class SCChartsExtension {
 
         // There should exactly be one state in the root region
         region.parentState.getRootState
-    }
-    
-    
-    def EObject getRoot(EObject eObject) {
-        if (eObject.eContainer == null) return eObject 
-            else eObject.eContainer.root
     }
 
     // Returns true iff the state contains regions.
@@ -295,30 +283,30 @@ class SCChartsExtension {
 
     //========== TRANSITIONS ===========
     def Transition setTypeTermination(Transition transition) {
-        transition.preemption = PreemptionType::TERMINATION
+        transition.setType(TransitionType::TERMINATION)
         transition
     }
 
     def Transition setTypeStrongAbort(Transition transition) {
-        transition.preemption = PreemptionType::STRONGABORT
+        transition.setType(TransitionType::STRONGABORT)
         transition
     }
 
     def Transition setTypeWeakAbort(Transition transition) {
-        transition.preemption = PreemptionType::WEAKABORT
+        transition.setType(TransitionType::WEAKABORT)
         transition
     }
 
     def boolean isTypeTermination(Transition transition) {
-        return transition.preemption == PreemptionType::TERMINATION
+        return transition.type == TransitionType::TERMINATION
     }
 
     def boolean isTypeStrongAbort(Transition transition) {
-        return transition.preemption == PreemptionType::STRONGABORT
+        return transition.type == TransitionType::STRONGABORT
     }
 
     def boolean isTypeWeakAbort(Transition transition) {
-        return transition.preemption == PreemptionType::WEAKABORT
+        return transition.type == TransitionType::WEAKABORT
     }
 
     //========== STATES ===========
@@ -357,7 +345,7 @@ class SCChartsExtension {
             return true
         }
         
-        val notFoundOtherValuedObjectInState = state.valuedObjectsFromEObject.filter[it != valuedObject && name == newName].empty
+        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].empty
         return notFoundOtherValuedObjectInState
     }
 
@@ -397,7 +385,7 @@ class SCChartsExtension {
         return newName
     }
 
-    def private String uniqueNameHelperCached(EObject eObject, String originalId, List<String> uniqueNameCache) {
+    def private String uniqueNameHelperCached(EObject eObject, String originalId, Set<String> uniqueNameCache) {
         var String newName = null
         var c = 1
         if (!uniqueNameCache.contains(originalId)) {
@@ -425,7 +413,7 @@ class SCChartsExtension {
         state
     }
 
-    def State uniqueNameCached(State state, List<String> uniqueNameCache) {
+    def State uniqueNameCached(State state, Set<String> uniqueNameCache) {
         val originalId = state.id
         var String newName = state.uniqueNameHelperCached(originalId, uniqueNameCache)
         if (newName != originalId) {
@@ -445,7 +433,7 @@ class SCChartsExtension {
         region
     }
 
-    def ControlflowRegion uniqueNameCached(ControlflowRegion region, List<String> uniquieNameCache) {
+    def ControlflowRegion uniqueNameCached(ControlflowRegion region, Set<String> uniquieNameCache) {
         val originalId = region.id
         var String newName = region.uniqueNameHelperCached(originalId, uniquieNameCache)
         if (originalId != newName) {
@@ -467,7 +455,7 @@ class SCChartsExtension {
         valuedObject
     }
 
-    def ValuedObject uniqueNameCached(ValuedObject valuedObject, List<String> uniqueNameCache) {
+    def ValuedObject uniqueNameCached(ValuedObject valuedObject, Set<String> uniqueNameCache) {
         val originalId = valuedObject.name
         var String newName = valuedObject.uniqueNameHelperCached(originalId, uniqueNameCache)
         if (newName != originalId) {
@@ -558,18 +546,28 @@ class SCChartsExtension {
     }
 
     def State setTypeConnector(State state) {
-        state.connector = true
+        state.setType(StateType::CONNECTOR);
         state
     }
 
     def State setTypeNormal(State state) {
-        state.connector = false
+        state.setType(StateType::NORMAL);
+        state
+    }
+
+    def State setTypeReference(State state) {
+        state.setType(StateType::REFERENCE);
+        state
+    }
+
+    def State setTypeTextual(State state) {
+        state.setType(StateType::TEXTUAL);
         state
     }
 
     // REF
     def boolean isReferencedState(State state) {
-        state.reference != null
+        state.referencedScope != null
     }
 
     //========== REGIONS ===========
@@ -651,39 +649,53 @@ class SCChartsExtension {
     }
 
     def Transition createTransition() {
-        SCChartsFactory::eINSTANCE.createTransition()
+        val transition = SCChartsFactory::eINSTANCE.createTransition()
+        transition.setPriority2(1)
     }
 
     def Transition createImmediateTransition() {
-        createTransition.setImmediate as Transition
+        createTransition.setImmediate
     }
 
     def Transition createTransitionTo(State sourceState, State targetState) {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(transition)
-        transition
+
+        //        targetState.incomingTransitions.add(transition)
+        //val dummyTransition = createTransition()
+        //sourceState.outgoingTransitions.add(dummyTransition)
+        //sourceState.outgoingTransitions.remove(dummyTransition)
+        transition.trimPriorities
     }
 
     def Transition createTransitionTo(State sourceState, State targetState, int index) {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(index, transition)
-        transition
+
+        //        targetState.incomingTransitions.add(transition)
+        transition.trimPriorities
     }
 
     def Transition setTargetState2(Transition transition, State targetState) {
+
+        //        transition.targetState.incomingTransitions.remove(transition)
         transition.setTargetState(targetState)
+
+        //        targetState.incomingTransitions.add(transition)
         transition
     }
 
     def Transition setSourceState(Transition transition, State sourceState) {
+
+        //        transition.sourceState.outgoingTransitions.remove(transition)
         sourceState.outgoingTransitions.add(transition)
-        transition
+        transition.trimPriorities
     }
 
     def Transition createImmediateTransitionTo(State sourceState, State targetState) {
-        sourceState.createTransitionTo(targetState).setImmediate as Transition
+        sourceState.createTransitionTo(targetState).setImmediate
     }
 
     def Transition setTrigger2(Transition transition, Expression expression) {
@@ -706,46 +718,93 @@ class SCChartsExtension {
         transition
     }
 
-    def Transition setLowestPriority(Transition transition) {
-        val state = transition.sourceState
-        state.outgoingTransitions.remove(transition)
-        state.outgoingTransitions.add(transition)
+    def Transition setPriority2(Transition transition, int priority) {
+        transition.setPriority(priority)
         transition
+    }
+
+    def Transition setLowestPriority(Transition transition) {
+        val maxPriority = transition.sourceState.outgoingTransitions.length + 1
+        transition.setPriority2(maxPriority).trimPriorities
     }
 
     def Transition setHighestPriority(Transition transition) {
-        val state = transition.sourceState
-        state.outgoingTransitions.remove(transition)
-        state.outgoingTransitions.add(0, transition)
+        transition.setPriority2(0).trimPriorities
+    }
+
+    def State fixAllPriorities(State state) {
+        for (containedState : state.allContainedStates.toIterable) {
+            var prio = 1
+            for (transition : containedState.outgoingTransitions) {
+                transition.setPriority(prio)
+                prio = prio + 1
+            }
+        }
+        state
+    }
+
+    //    def State fixAllEmptyRegions(State rootState) {
+    //        val regions = rootState.allContainedRegions.filter(e | e.allContainedStates == 0).immutableCopy
+    //        for (region : regions) {
+    //            val parent = region.parentState
+    //            parent.regions.remove(region)
+    //        }
+    //        rootState
+    //    }
+    def State fixAllTextualOrdersByPriorities(State state) {
+        for (containedState : state.allContainedStatesList) {
+
+            //Old implementation unnecessarily touching every element every causing decresing tracing performance
+            val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
+            for (transition : transitions) {
+
+                //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
+                containedState.outgoingTransitions.remove(transition)
+                containedState.outgoingTransitions.add(transition)
+                transition.setPriority(0)
+            }
+
+        //als: New implementation avoids calls of remove and add
+        // This throws an exception because EList seems not sortable
+        //java.lang.IllegalArgumentException: The 'no duplicates' constraint is violated
+        //    at org.eclipse.emf.common.util.AbstractEList.set(AbstractEList.java:264)
+        //    at org.eclipse.emf.common.util.AbstractEList$EListIterator.doSet(AbstractEList.java:959)
+        //    at org.eclipse.emf.common.util.AbstractEList$EListIterator.set(AbstractEList.java:937)
+        //    at java.util.Collections.sort(Collections.java:221)
+        //containedState.outgoingTransitions.sort([first, second | first.priority - second.priority ]);
+        }
+        state
+    }
+
+    def Transition trimPriorities(Transition transition) {
+        var prio = 1
+        val transitions = transition.sourceState.outgoingTransitions.toList.sortBy[priority]
+        for (outgoingTransition : transitions) {
+            outgoingTransition.setPriority(prio)
+            prio = prio + 1
+        }
         transition
     }
 
-    def Action setImmediate(Action action) {
-        action.delay = DelayType.IMMEDIATE
-        action
+    def Transition setImmediate(Transition transition) {
+        transition.setImmediate(true)
+        transition
     }
 
-    def Action setImmediate(Action action, boolean immediate) {        
-        action.delay = if (immediate) DelayType.IMMEDIATE else DelayType.UNDEFINED
-        action
+    def Transition setNotImmediate(Transition transition) {
+        transition.setImmediate(false)
+        transition
     }
 
-    def Action setNotImmediate(Action action) {
-        action.delay = DelayType.UNDEFINED
-        action    
-    }
-    
-    def boolean isImmediate(Action action) {
-        action.delay == DelayType.IMMEDIATE
-    }
-
+    //========== STATE ACTIONS ===========
     // Return wether a transition is immediate. This should return the
     // immediate flag of a transition unless
     // 1. the source state is a connector node, then the transition is always (implicityly) immediate OR
     // 2. the transition is a normal termination and has NOT trigger, then it is also (implicityly) immediate.
     def Boolean isImmediate2(Transition transition) {
-        (transition.delay == DelayType.IMMEDIATE) || (transition.sourceState.isConnector) || 
-        (transition.preemption == PreemptionType::TERMINATION && transition.trigger == null)
+        (transition.immediate) || (transition.sourceState.type == StateType::CONNECTOR) || (transition.type ==
+            TransitionType::TERMINATION && transition.trigger == null
+        )
     }
 
     // Apply attributes from one local action to another
@@ -764,7 +823,7 @@ class SCChartsExtension {
     // Create a during action for a state.
     def DuringAction createDuringAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createDuringAction
-        state.actions.add(action)
+        state.localActions.add(action);
         action
     }
 
@@ -782,84 +841,98 @@ class SCChartsExtension {
     // Create an immediate during action for a state.
     def DuringAction createImmediateDuringAction(State state) {
         val action = state.createDuringAction
-        action.setImmediate(true)
+        action.setImmediate(true);
         action
     }
 
     // Create a entry action for a state.
     def EntryAction createEntryAction(State state) { 
         val action = SCChartsFactory::eINSTANCE.createEntryAction
-        state.actions.add(action)
+        state.localActions.add(action);
         action
     }
     
     // Create a entry action for a state at a certain index.
     def EntryAction createEntryAction(State state, int index) {
         val action = SCChartsFactory::eINSTANCE.createEntryAction
-        state.actions.add(index, action)
+        state.localActions.add(index, action);
         action
     }    
 
     // Create an immediate entry action for a state.
     def EntryAction createImmediateEntryAction(State state) {
         val action = state.createEntryAction
-        action.setImmediate(true)
+        action.setImmediate(true);
         action
     }
     
     // Create an immediate entry action for a state at a certain index.
     def EntryAction createImmediateEntryAction(State state, int index) {
         val action = state.createEntryAction(index)
-        action.setImmediate(true)
+        action.setImmediate(true);
         action
     }    
 
     // Create a exit action for a state.
     def ExitAction createExitAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createExitAction
-        state.actions.add(action)
+        state.localActions.add(action);
         action
     }
 
     // Create an immediate exit action for a state.
     def ExitAction createImmediateExitAction(State state) {
         val action = state.createExitAction
-        action.setImmediate(true)
+        action.setImmediate(true);
         action
     }
 
     // Create a suspend action for a state.
     def SuspendAction createSuspendAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createSuspendAction
-        state.actions.add(action)
+        state.localActions.add(action);
         action
     }
 
     // Create an immediate suspend action for a state.
     def SuspendAction createImmediateSuspendAction(State state) {
         val action = state.createSuspendAction
-        action.setImmediate(true)
+        action.setImmediate(true);
+        action
+    }
+
+    // Create an iterate action for a state.
+    def IterateAction createIterateAction(State state) {
+        val action = SCChartsFactory::eINSTANCE.createIterateAction
+        state.localActions.add(action);
+        action
+    }
+
+    // Create an immediate iterate action for a state.
+    def IterateAction createImmediateIterateAction(State state) {
+        val action = state.createIterateAction
+        action.setImmediate(true);
         action
     }
 
     // Return all EntryAction actions of a state.
     def List<EntryAction> getEntryActions(State state) {
-        state.actions.filter(typeof(EntryAction)).toList
+        state.localActions.filter(typeof(EntryAction)).toList
     }
 
     // Return all DuringAction actions of a state.
     def List<DuringAction> getDuringActions(State state) {
-        state.actions.filter(typeof(DuringAction)).toList
+        state.localActions.filter(typeof(DuringAction)).toList
     }
 
     // Return all ExitAction actions of a state.
     def List<ExitAction> getExitActions(State state) {
-        state.actions.filter(typeof(ExitAction)).toList
+        state.localActions.filter(typeof(ExitAction)).toList
     }
 
     // Return all SuspendAction actions of a state.
     def List<SuspendAction> getSuspendActions(State state) {
-        state.actions.filter(typeof(SuspendAction)).toList
+        state.localActions.filter(typeof(SuspendAction)).toList
     }
 
     //========== ASSIGNMENTS ============
@@ -1087,7 +1160,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
     def State fixTerminationWithEffects(State rootState, List<Transition> transitionList) {
-        val terminationTransitions = transitionList.filter[preemption == PreemptionType::TERMINATION].filter[
+        val terminationTransitions = transitionList.filter[type == TransitionType::TERMINATION].filter[
             !effects.nullOrEmpty].toList
 
         for (terminationTransition : terminationTransitions) {
@@ -1124,7 +1197,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
     def State fixDeadCode(State rootState) {
-        for (nonReachabledState : rootState.allContainedStates.filter[!isStateReachable].immutableCopy) {
+        for (nonReachabledState : rootState.allContainedStates.filter[!isStateReachable].toList) {
             val parentRegion = (nonReachabledState.eContainer as ControlflowRegion)
             parentRegion.states.remove(nonReachabledState)
         }
@@ -1181,13 +1254,13 @@ class SCChartsExtension {
         // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
         // Exclude the top level state
         if (state == targetRootState) {
-            for(valuedObject : state.valuedObjectsFromEObject.filter[!isInput && !isOutput].toList.immutableCopy) {
-                valuedObject.variableDeclaration.output = true
+            for(valuedObject : state.valuedObjects.filter[!isInput && !isOutput].toList.immutableCopy) {
+                valuedObject.declaration.output = true
             }
             return;
         }
         
-        val declarations = state.variableDeclarations
+        val declarations = state.declarations.toList
         val hierarchicalStateName = state.getHierarchicalName("LOCAL");
         for(declaration : declarations.immutableCopy) {
             targetRootState.declarations += declaration
@@ -1203,7 +1276,7 @@ class SCChartsExtension {
 
     }
 
-    def void transformLocalValuedObjectCached(List<Scope> scopeList, Scope targetScope, List<String> uniqueNameCache) {
+    def void transformLocalValuedObjectCached(List<Scope> scopeList, Scope targetScope, Set<String> uniqueNameCache) {
 
         // Traverse all states
         for (scope : scopeList) {
@@ -1213,7 +1286,7 @@ class SCChartsExtension {
 
     // Traverse all states and transform possible local valuedObjects.
     def void transformExposeLocalValuedObjectCached(Scope scope, Scope targetScope, boolean expose,
-        List<String> uniqueNameCache) {
+        Set<String> uniqueNameCache) {
 
         // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
         // and wherever the local valuedObject is emitted, also emit the new global 
@@ -1225,7 +1298,7 @@ class SCChartsExtension {
         }
 
         var hierarchicalScopeName = targetScope.getHierarchicalName("local")
-        val declarations = scope.variableDeclarations
+        val declarations = scope.declarations.iterator.toList
         for(declaration : declarations) {
             targetScope.declarations.add(declaration)
             if (expose) declaration.output = true
@@ -1257,7 +1330,7 @@ class SCChartsExtension {
         val relevantObjects = scope.eAllContents.filter(
             e|
                 e instanceof ValuedObjectReference || e instanceof Assignment ||
-                    e instanceof Emission || e instanceof Parameter || e instanceof Assignment
+                    e instanceof Emission || e instanceof Binding || e instanceof Equation
         ).immutableCopy;
         for (obj : relevantObjects) {
             if (obj instanceof ValuedObjectReference && (obj as ValuedObjectReference).valuedObject == valuedObject) {
@@ -1279,12 +1352,11 @@ class SCChartsExtension {
                 }
             } else if (obj instanceof Emission && (obj as Emission).valuedObject == valuedObject) {
                 (obj as Emission).valuedObject = replacement;
-            } else if (obj instanceof Parameter) {
-// TODO: adapt to new referenced states (Parameter)
-//                if((obj as Binding).formal == valuedObject) (obj as Binding).formal = replacement
-//                if((obj as Binding).actual == valuedObject) (obj as Binding).actual = replacement
-            } else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject) {
-                (obj as Assignment).valuedObject = replacement;
+            } else if (obj instanceof Binding) {
+                if((obj as Binding).formal == valuedObject) (obj as Binding).formal = replacement
+                if((obj as Binding).actual == valuedObject) (obj as Binding).actual = replacement
+            } else if (obj instanceof Equation && (obj as Equation).valuedObject == valuedObject) {
+                (obj as Equation).valuedObject = replacement;
             }      
 
         }
@@ -1319,7 +1391,7 @@ class SCChartsExtension {
         val newState = state.nontracingCopy
 
         // Fix valued object references
-        state.valuedObjectsFromEObject.forEach [
+        state.valuedObjects.forEach [
             val newValuedObject = newState.findValuedObjectByName(it.name)
             if (newValuedObject != null) {
                 newState.replaceAllOccurrences(it, newValuedObject)
@@ -1327,26 +1399,5 @@ class SCChartsExtension {
         ]
         newState
     }
-    
-    
-    
-    def asSCCharts(EObject eObject) {
-        eObject as SCCharts
-    }
-    
-    def asState(EObject eObject) {
-        eObject as State
-    }
 
-    def asControlflowRegion(EObject eObject) {
-        eObject as ControlflowRegion
-    }
-    
-    def asDataflowRegion(EObject eObject) {
-        eObject as DataflowRegion
-    }
-    
-    def asTransition(EObject eObject) {
-        eObject as Transition
-    }
 }

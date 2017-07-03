@@ -89,6 +89,15 @@ abstract class AnimationHandler {
         return SVGDocument.getElementById(svgElementId)
     }
     
+    protected def Element findElement(boolean mustExist) {
+        val elem = findElement
+        if(elem != null) {
+            return elem
+        } else {
+            throw new IllegalArgumentException("SVG element '"+svgElementId+"' does not exist")
+        }
+    }
+    
     protected def Object getVariableValue(DataPool pool) {
         return getVariableValue(animation.variable, pool)
     }

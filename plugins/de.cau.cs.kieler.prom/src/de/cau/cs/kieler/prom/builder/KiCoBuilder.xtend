@@ -226,14 +226,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                     val res = delta.getResource()
                     if(res.type == IResource.FILE && res.fileExtension != null && res.exists) {
                         val file = res as IFile
-                        println(file.name)
                         // Only take care of files with the following extensions
                         switch(file.fileExtension.toLowerCase) {
                             case "sct",
                             case "strl": modelsToBeBuilt.add(file)
                             case "ftl": {
                                 // TODO: Hard coded stuff. Make this configurable
-                                if(file.name.startsWith("Process")) {
+                                if(file.name.startsWith("TemplateFor")) {
                                     templatesToBeProcessed.add(file)
                                 }
                             }
@@ -253,7 +252,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
 
         // Process templates
         processTemplates(templatesToBeProcessed)
-        println(templatesToBeProcessed)
 
         // Build the changed models
         monitor.subTask("Building files")
@@ -429,7 +427,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
         val allTemplates = PromPlugin.findFiles(membersWithoutBinDirectory, #["ftl"])
         // TODO: Make this configurable
-        return allTemplates.filter[it.name.startsWith("Process")].toList
+        return allTemplates.filter[it.name.startsWith("TemplateFor")].toList
     }
     
     /**
@@ -494,7 +492,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             if(!generatedCode.isNullOrEmpty) {
                 val folder = file.parent as IContainer
                 // TODO: Hard coded stuff. Make this configurable
-                val outputName = file.name.replace("Process","").replace(".ftl", "")
+                val outputName = file.name.replace("TemplateFor","").replace(".ftl", "")
                 val outputFile = folder.getFile(new Path(outputName))
                 PromPlugin.createResource(outputFile, generatedCode, true)
             }

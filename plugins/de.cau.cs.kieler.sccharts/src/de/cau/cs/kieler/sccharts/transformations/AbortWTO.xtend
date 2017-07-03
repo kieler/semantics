@@ -90,7 +90,7 @@ class AbortWTO extends AbstractExpansionTransformation {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    private val nameCache = <String>newArrayList("_term")
+    private val nameCache = <String>newHashSet("_term")
 
     //-------------------------------------------------------------------------
     //--   A B O R T   A L T E R N A T I V E  T R A N S F O R M A T I O N    --

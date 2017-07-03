@@ -211,14 +211,12 @@ public class KielerCompiler {
         }
 
         context.setProperty(KiCoProperties.RAW_INPUT_MODEL, transformationEObject);
-        // If not inplace then produce a copy of the input EObject
-        if (!context.isInplace()) {
-            EObject copiedObject = copy(transformationEObject, context);
-            // replace (first) intermediate object
-            context.getCompilationResult().clear(copiedObject);
-            // make the new copy the transformedObject
-            transformationEObject = copiedObject;
-        }
+        // ALWAYS make a copy of the input model to prevent overriding of editor content
+        EObject copiedObject = copy(transformationEObject, context);
+        // replace (first) intermediate object
+        context.getCompilationResult().clear(copiedObject);
+        // make the new copy the transformedObject
+        transformationEObject = copiedObject;
 
         // Compute and retrieve the compilation chain. This method hides all the tough work figuring
         // out the right transformations based on the selection.

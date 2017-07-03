@@ -31,7 +31,7 @@ class ColorAnimation extends AnimationHandler {
     }
     
     override doApply(DataPool pool) {
-        val elem = findElement
+        val elem = findElement(true)
         for(attr : attributes) {
             if(attr.value != null) {
                 switch(attr.name) {
