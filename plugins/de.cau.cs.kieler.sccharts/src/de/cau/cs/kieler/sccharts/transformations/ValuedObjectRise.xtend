@@ -13,29 +13,14 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.DuringActionimport de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.CombineOperator
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * SCCharts ValuedObject Transformation. Rises valued objects declared in regions to its
@@ -49,16 +34,8 @@ class ValuedObjectRise {
 
 
     // -------------------------------------------------------------------------
-//    @Inject
-//    extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsTransformationExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsTransformationExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"

@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
@@ -29,6 +28,11 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts Suspend Transformation.
@@ -63,23 +67,18 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     // -------------------------------------------------------------------------
     // --                          S U S P E N D                              --
@@ -97,13 +96,12 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
     // (within the disabledExpression) 
     // Transforming Suspends.
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
-            targetState.transformSuspend(targetRootState);
+        rootState.getAllStates.forEach [ targetState |
+            targetState.transformSuspend(rootState)
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     def void transformSuspend(State state, State targetRootState) {
@@ -116,7 +114,7 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
         }
 
         // One unique suspend flag
-        val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName
+        val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName(nameCache)
 
         // Do not consider other suspends as actions
         val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction))

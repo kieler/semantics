@@ -19,20 +19,24 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * SCCharts Termination Transformation.
@@ -74,26 +78,20 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension SCChartsTransformationExtension
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension AnnotationsExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension SCChartsTransformationExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
+    @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     // -------------------------------------------------------------------------
     // --                       T E R M I N A T I O N                         --
@@ -117,13 +115,12 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
     // of other outgoing transitions.
     // Transforming Normal Termination. 
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all states
-        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
-            targetState.transformTermination(targetRootState);
+        rootState.getAllStates.toList.forEach [ targetState |
+            targetState.transformTermination(rootState)
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
@@ -137,9 +134,9 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         // Explicitly negate triggers of other outgoing transitions (see test147)
         // This is the special case where we must taken care of a normal termination 
         //  val terminationTransition = state.getTerminationTransitions;
-        val terminationTransitions = state.outgoingTransitions.filter(e|e.type == TransitionType::TERMINATION);
+        val terminationTransitions = state.outgoingTransitions.filter(e|e.preemption == PreemptionType::TERMINATION);
         
-        val hasConditionalTerminations = state.outgoingTransitions.filter(e|e.type == TransitionType::TERMINATION && e.trigger != null).size > 0
+        val hasConditionalTerminations = state.outgoingTransitions.filter(e|e.preemption == PreemptionType::TERMINATION && e.trigger != null).size > 0
 
         if (terminationTransitions.size == 0) {
             return
@@ -155,9 +152,9 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             // Setup the auxiliary termination valuedObject indicating that a normal termination
             // should be taken.
             val finishedValuedObject = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
-                setTypeBool.uniqueName;
+                setTypeBool.uniqueName(nameCache)
             val resetFinished = state.createEntryAction
-            resetFinished.effects.add(finishedValuedObject.assign(FALSE))
+            resetFinished.effects.add(finishedValuedObject.createAssignment(FALSE))
 
             val finalStates = region.states.filter(e|e.isFinal == true);
             
@@ -165,7 +162,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             var termTriggerDelayed = true;
 
             // For all final states add immeditae transition to Final
-            for (finalState : finalStates.toList.immutableCopy) {
+            for (finalState : finalStates.toList) {
                 
                 // Optimization: Remember that we can reach at least ONE final state immediately
                 // => Term-Transition in watcher region MUST be immediate, otherwise (optimized) it 
@@ -179,7 +176,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                 
                 if (!connectorCase) {
                     for (transition : finalState.incomingTransitions) {
-                        transition.effects.add(finishedValuedObject.assign(TRUE))
+                        transition.effects.add(finishedValuedObject.createAssignment(TRUE))
                     }
                 } else {
                     //Optimization-case:
@@ -191,7 +188,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                         transition.setTargetState(connector)
                     }
                     val connectorTransition = connector.createTransitionTo(finalState).setImmediate
-                    connectorTransition.effects.add(finishedValuedObject.assign(TRUE))
+                    connectorTransition.effects.add(finishedValuedObject.createAssignment(TRUE))
                     
                 }
                 //val T2 = finalState.createImmediateTransitionTo(Final)
@@ -211,7 +208,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             if (termTriggerDelayed && !finishedValuedObject.name.endsWith("D")) {
                  finishedValuedObject.name = finishedValuedObject.name + "D"
             }
-            finishedValuedObject.uniqueName
+            finishedValuedObject.uniqueName(nameCache)
             
             if (triggerExpression == null) {
                 triggerExpression = finishedValuedObject.reference;
@@ -225,7 +222,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             
             val isConditionalTermination = terminationTransition.trigger != null
             
-            terminationTransition.setType(TransitionType::WEAKABORT);
+            terminationTransition.preemption = PreemptionType::WEAKABORT
             // TODO: check if optimization is correct in all cases!
             // We should NOT do this for conditional terminations!
             if (!isConditionalTermination) {
@@ -235,13 +232,13 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         }
 
         for (terminationTransition : terminationTransitions) {
-            terminationTransition.setType(TransitionType::WEAKABORT);
+            terminationTransition.preemption = PreemptionType::WEAKABORT
             // TODO: check if optimization is correct in all cases!
             terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
 
             // A normal termination should immediately be trigger-able! (test 145) 
             // if not a delayed-conditional termination!
-            terminationTransition.setImmediate(terminationTransition.isImmediate2);
+            terminationTransition.setImmediate(terminationTransition.implicitlyImmediate)
 
 
             // if there is just one valuedObject, we do not need an AND!

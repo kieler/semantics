@@ -18,10 +18,11 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeatureimport de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 
 /**
  * SCCharts Connector Transformation.
@@ -56,8 +57,9 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -68,13 +70,11 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
     // Turn every connector into a simple state and turn all outgoing 
     // transitions into immediate transitions.
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
         // Traverse all states
-        targetRootState.allStates.forEach [ targetTransition |
-            targetTransition.transformConnector(targetRootState);
+        rootState.allStates.forEach [ targetTransition |
+            targetTransition.transformConnector(rootState)
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     def void transformConnector(State state, State targetRootState) {

@@ -101,18 +101,6 @@ class SCChartsTransitionExtensions {
         sourceState.createTransitionTo(targetState).setImmediate as Transition
     }
 
-    def addEffect(Transition transition, Effect effect) {
-        transition => [ effects += effect ]
-    }
-
-    def addEffectBefore(Transition transition, Effect effect) {
-        transition => [ effects.add(0, effect) ]
-    }
-    
-    def clearEffects(Transition transition) {
-        transition => [ effects.clear ]
-    }
-
     def Transition setLowestPriority(Transition transition) {
         val state = transition.sourceState
         state.outgoingTransitions.remove(transition)
@@ -126,10 +114,29 @@ class SCChartsTransitionExtensions {
         state.outgoingTransitions.add(0, transition)
         transition
     }
+
+    def Transition setSpecificPriority(Transition transition, int priority) {
+        val state = transition.sourceState
+        state.outgoingTransitions.remove(transition)
+        state.outgoingTransitions.add(priority, transition)
+        transition
+    }
     
     def isImplicitlyImmediate(Transition transition) {
         (transition.delay == DelayType.IMMEDIATE) || (transition.sourceState.isConnector) || 
         (transition.preemption == PreemptionType::TERMINATION && transition.trigger == null)
     }    
     
+    def getPriority(Transition transition) {
+        val state = transition.eContainer
+        if (state == null) return 0
+        if (state instanceof State) {
+            var p = 1
+            for(t : state.outgoingTransitions) {
+                if (t.equals(transition)) return p
+                p++
+            }
+        } 
+        return 0
+    }
 }

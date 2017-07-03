@@ -69,7 +69,15 @@ class SCChartsActionExtensions {
 
     def addEffect(Action action, Effect effect) {
         effect => [ action.effects += it ]
-    }    
+    }  
+    
+    def addEffectBefore(Action action, Effect effect) {
+        action => [ effects.add(0, effect) ]
+    }
+    
+    def clearEffects(Action action) {
+        action => [ effects.clear ]
+    }
 
     // superfluous, just for transformation code naming reasons
     def addEmission(Action action, Emission emission) {
@@ -163,6 +171,10 @@ class SCChartsActionExtensions {
     
     def createAssignment(Action action, ValuedObject valuedObject) {
         valuedObject.createAssignment => [ action.addAssignment(it) ]
+    }  
+
+    def createAssignment(ValuedObject valuedObject, Expression expression) {
+        valuedObject.createAssignment => [ it.expression = expression ]
     }  
     
     def createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {

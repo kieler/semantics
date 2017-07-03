@@ -17,11 +17,10 @@ import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * SCCharts Map Transformation.
@@ -56,8 +55,7 @@ class Map extends AbstractExpansionTransformation {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -67,13 +65,11 @@ class Map extends AbstractExpansionTransformation {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-
         // Traverse all states
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
-            targetTransition.transformMap(targetRootState);
+        for (targetTransition : rootState.getAllContainedStates.toList) {
+            targetTransition.transformMap(rootState)
         }
-        targetRootState;
+        rootState;
     }
 
     def void transformMap(State state, State targetRootState) {

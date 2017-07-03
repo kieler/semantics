@@ -20,6 +20,8 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.common.util.EList
 
+import static extension org.eclipse.xtext.EcoreUtil2.*
+
 /**
  * @author ssm
  * @kieler.design 2017-06-28 proposed 
@@ -76,5 +78,5 @@ class KExtDeclarationExtensions {
         }
         null
     }    
-
+    
 }

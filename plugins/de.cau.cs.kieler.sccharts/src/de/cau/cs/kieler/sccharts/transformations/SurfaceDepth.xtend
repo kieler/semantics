@@ -18,7 +18,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
@@ -26,6 +25,14 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts SurfaceDepth Transformation.
@@ -60,17 +67,20 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCompareExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsOptimization
+    @Inject extension KExpressionsCompareExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsFixExtensions
+    @Inject extension SCChartsOptimization
+    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     // -------------------------------------------------------------------------
     // --                S U R F A C E  &   D E P T H                         --
@@ -95,18 +105,14 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
     // the above transformation.
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
+        
         // Traverse all states
-        targetRootState.allStates.immutableCopy.forEach [ targetState |
-            targetState.transformSurfaceDepth(targetRootState);
+        rootState.allStates.toList.forEach [ targetState |
+            targetState.transformSurfaceDepth(rootState)
         ]
 
-//        targetRootState.fixAllTextualOrdersByPriorities
-//            .optimizeSuperflousConditionalStates
-//            .optimizeSuperflousImmediateTransitions
-//            .fixDeadCode
-        targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
+        rootState.optimizeSuperflousConditionalStates.
             optimizeSuperflousImmediateTransitions.fixDeadCode
     }
 
@@ -114,7 +120,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         state.setDefaultTrace
         val numTransition = state.outgoingTransitions.size
         // root or final state
-        if (state.rootState || (numTransition == 0 && state.final)) {
+        if (state.isRootState || (numTransition == 0 && state.final)) {
             return
         }
         if (numTransition == 0 && state.isHierarchical) {
@@ -142,10 +148,10 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         }
         if (numTransition > 0) {
             // termination
-            if (numTransition == 1 && state.outgoingTransitions.get(0).typeTermination) {
+            if (numTransition == 1 && state.outgoingTransitions.get(0).isTermination) {
                 return
             }
-            val immediate0 = state.outgoingTransitions.get(0).immediate2
+            val immediate0 = state.outgoingTransitions.get(0).implicitlyImmediate
             val noTrigger0 = state.outgoingTransitions.get(0).trigger == null
             val noEffects0 = state.outgoingTransitions.get(0).effects.nullOrEmpty
             if (numTransition == 1 && noTrigger0) {
@@ -159,7 +165,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 }
             }
             if (numTransition > 1) {
-                val immediate1 = state.outgoingTransitions.get(1).immediate2
+                val immediate1 = state.outgoingTransitions.get(1).implicitlyImmediate
                 val noTrigger1 = state.outgoingTransitions.get(1).trigger == null
                 val noEffects1 = state.outgoingTransitions.get(1).effects.nullOrEmpty
                 // conditional
@@ -191,7 +197,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         val parentRegion = state.parentRegion;
 
         // Duplicate immediate transitions
-        val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList;
+        val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList
         for (transition : immediateTransitions) {
             val transitionCopy = transition.copy
             transitionCopy.setSourceState(transition.sourceState)
@@ -203,7 +209,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         // Modify surfaceState (the original state)
         val surfaceState = state
         var depthState = state
-        surfaceState.uniqueName
+        surfaceState.uniqueName(nameCache)
 
         // For every state create a number of surface nodes
         val orderedTransitionList = state.outgoingTransitions.sortBy[priority];
@@ -213,8 +219,6 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         var State previousState = surfaceState
         var State currentState = surfaceState
         
-        var i = 0;
-
         surfaceState.setDefaultTrace // All following states etc. will be traced to surfaceState if not traced to transition
         for (transition : orderedTransitionList) {
 
@@ -225,10 +229,10 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 // Make sure the next transition is delayed 
                 pauseInserted = true
 
-                depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
+                depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName(nameCache)
                 previousState.createImmediateTransitionTo(depthState).trace(transition)
                 // System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
-                val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName
+                val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName(nameCache)
                 depthState.createTransitionTo(pauseState).trace(transition)
 
                 // Imitate next cycle
@@ -240,7 +244,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
             if (currentState == null) {
                 // Create a new state
-                currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
+                currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName(nameCache)
                 // System.out.println("New currentState := " + currentState.id)
                 // Move transition to this state
                 // System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)
@@ -255,7 +259,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             transition.setImmediate(true)
 
             // We can now set the transition priority to 1 (it is reflected implicitly by the sequential order now)
-            transition.setPriority(1)
+            transition.setSpecificPriority(1)
 
             // Next cycle
             // System.out.println("Set previousState := " + currentState.id)

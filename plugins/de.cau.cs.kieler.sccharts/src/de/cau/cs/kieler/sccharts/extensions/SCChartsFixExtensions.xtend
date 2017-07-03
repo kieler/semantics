@@ -45,6 +45,7 @@ class SCChartsFixExtensions {
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsActionExtensions
     
     private def uniqueName(State scope, UniqueNameCache nameCache) { scope }
 

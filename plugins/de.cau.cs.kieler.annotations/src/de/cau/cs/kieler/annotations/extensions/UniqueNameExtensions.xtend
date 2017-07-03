@@ -27,7 +27,7 @@ class UniqueNameExtensions {
         new UniqueNameCache
     }   
     
-    def NamedObject uniqueName(NamedObject namedObject, UniqueNameCache nameCache) {
+    def <T extends NamedObject> T uniqueName(T namedObject, UniqueNameCache nameCache) {
         if (nameCache.contains(namedObject.name)) {
             val p = Pattern.compile("[0-9]+$");
             val m = p.matcher(namedObject.name);
@@ -44,7 +44,7 @@ class UniqueNameExtensions {
         namedObject
     }
     
-    def isUnique(NamedObject namedObject, UniqueNameCache nameCache) {
+    def <T extends NamedObject> isUnique(T namedObject, UniqueNameCache nameCache) {
         !nameCache.contains(namedObject.name)
     }
     
