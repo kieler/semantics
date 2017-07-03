@@ -127,10 +127,16 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         var newStateIterator = newState.eAllContents
         while (newStateIterator.hasNext) {
             val eObject = newStateIterator.next
-            if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference ||
+            if (eObject instanceof Emission || eObject instanceof Assignment || eObject instanceof ValuedObjectReference ||
                 eObject instanceof TextExpression || eObject instanceof Binding) {
                 for (binding : state.bindings) {
-                    if (eObject instanceof Assignment) {
+                    if (eObject instanceof Emission) {
+                        val emission = (eObject as Emission);
+                        val emissionCopy = emission.nontracingCopy;
+                        if (emission.valuedObject.name == binding.formal.name) {
+                            emission.valuedObject = binding.actual
+                        }
+                    } else if (eObject instanceof Assignment) {
                         val assignment = (eObject as Assignment);
                         val assignmentCopy = assignment.nontracingCopy;
                         if ((assignment.valuedObject.declaration.input ||
