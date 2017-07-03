@@ -29,11 +29,13 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.Set
 
 //import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * SCCharts Enforcer Transformation.
@@ -50,7 +52,9 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
-    @Inject extension SCChartsExtension
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
     
     //--                 K I C O      C O N F I G U R A T I O N              --
     override getId() {

@@ -37,7 +37,7 @@ class SCChartsSimulation {
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension SCChartsExtension
+    @Inject extension SCChartsActionExtensions
         
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --

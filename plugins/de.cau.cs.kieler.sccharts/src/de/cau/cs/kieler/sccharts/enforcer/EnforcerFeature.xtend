@@ -16,8 +16,8 @@ package de.cau.cs.kieler.sccharts.enforcer
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * SCCharts Entry Action Feature.
@@ -43,8 +43,7 @@ class EnforcerFeature extends Feature {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
