@@ -76,8 +76,8 @@ class KVisView extends ViewPart {
     @Accessors(PUBLIC_GETTER)
     private KVisCanvas canvas
 
-    private val List<AnimationHandler> animationHandlers = newArrayList()
-    private val List<InteractionHandler> interactionHandlers = newArrayList()
+    private var List<AnimationHandler> animationHandlers = newArrayList()
+    private var List<InteractionHandler> interactionHandlers = newArrayList()
 
     private var IResourceChangeListener resourceChangeListener
     private var boolean updateAfterRendering
@@ -160,7 +160,7 @@ class KVisView extends ViewPart {
     }
     
     private def void createInteractionHandlers(Visualization model) {
-        interactionHandlers.clear
+        interactionHandlers = newArrayList
         for(interaction : model.interactions) {
             val interactionHandler = new InteractionHandler(interaction)
             interactionHandlers.add(interactionHandler)
@@ -168,7 +168,7 @@ class KVisView extends ViewPart {
     }
     
     private def void createAnimationHandlers(Visualization model) {
-        animationHandlers.clear
+        animationHandlers = newArrayList
         for (element : model.elements) {
             for (animation : element.animations) {
                 var AnimationHandler handler
@@ -449,7 +449,9 @@ class KVisView extends ViewPart {
                         if(SimulationManager.instance != null && pool == SimulationManager.instance.currentPool) {
                             val time = System.currentTimeMillis
                             try {
-                                for (animation : animationHandlers) {
+                                // Safe reference to animation handlers in case the reference changes concurrently
+                                val handlers = animationHandlers
+                                for (animation : handlers) {
                                     animation.apply(pool)
                                 }    
                             } catch (Exception e) {
