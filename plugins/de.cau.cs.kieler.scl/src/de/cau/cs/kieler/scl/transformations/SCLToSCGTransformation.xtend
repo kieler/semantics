@@ -107,7 +107,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
      * {@inheritDoc}
      */
     override Set<String> getRequiredFeatureIds() {
-        return Sets.newHashSet(SCLFeatures.BASIC_ID)
+        return Sets.newHashSet("scest.scl")
     }
     
     
