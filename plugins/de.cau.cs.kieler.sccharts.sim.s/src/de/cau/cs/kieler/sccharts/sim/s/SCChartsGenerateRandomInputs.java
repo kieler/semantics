@@ -46,7 +46,6 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 
 /**
  * SCCharts random input generation, generates an ESO file with random inputs for the SyncChart
@@ -73,8 +72,8 @@ public class SCChartsGenerateRandomInputs implements IHandler {
     private Random randomGenerator;
     
     /** The single s / kexpression extension. */
-    private static SCChartsExtension sCChartExtension = new SCChartsExtension();
-    private static KExpressionsValuedObjectExtensions kExpressionsExtension = new KExpressionsValuedObjectExtensions();        
+    private static KExpressionsValuedObjectExtensions kExpressionsExtension = 
+            new KExpressionsValuedObjectExtensions();        
 
     // -------------------------------------------------------------------------
 

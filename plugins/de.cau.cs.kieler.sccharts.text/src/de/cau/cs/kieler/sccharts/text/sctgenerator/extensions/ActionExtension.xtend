@@ -21,7 +21,6 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.text.sctgenerator.ChanceMax
 import de.cau.cs.kieler.sccharts.text.sctgenerator.ISCTGeneratorExtension
 import de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerator
@@ -31,6 +30,7 @@ import static extension de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerat
 import org.eclipse.core.resources.IProject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * @author ssm
@@ -38,7 +38,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
  */
 class ActionExtension implements ISCTGeneratorExtension {
     
-    @Inject extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
     @Inject extension SCTGenerator
     @Inject extension ModelGenerator
     

@@ -18,18 +18,17 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import java.util.ArrayList
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.EdgeRouting
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -42,20 +41,11 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 @ViewSynthesisShared
 class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsSerializeHRExtension
-
-    @Inject
-    extension TransitionStyles
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsSerializeHRExtension
+    @Inject extension TransitionStyles
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
@@ -75,7 +65,7 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
         edge.addTransitionSpline();
 
         // Modifiers
-        if (transition.isImmediate2) {
+        if (transition.isImplicitlyImmediate) {
             edge.setImmediateStyle
         }
         

@@ -23,7 +23,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
@@ -35,6 +34,9 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import java.util.List
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -47,26 +49,15 @@ import java.util.List
 @ViewSynthesisShared
 class StateSynthesis extends SubSynthesis<State, KNode> {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension SCChartsExtension
-    
-    @Inject
-    extension SCChartsSerializeHRExtension
-
-    @Inject
-    extension TransitionSynthesis
-
-    @Inject
-    extension ControlflowRegionSynthesis
-
-    @Inject
-    extension DataflowRegionSynthesis
-
-    @Inject
-    extension StateStyles
+    @Inject extension KNodeExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
+    @Inject extension SCChartsSerializeHRExtension
+    @Inject extension TransitionSynthesis
+    @Inject extension ControlflowRegionSynthesis
+    @Inject extension DataflowRegionSynthesis
+    @Inject extension StateStyles
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state);
@@ -155,7 +146,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
 
             // Add child area for regions
-            if (state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || state.isReferencedState) {
+            if (state.controlflowRegionsContainStates || state.hasDataflowRegions || state.isReferencedState) {
                 node.addRegionsArea;
             }
         }
@@ -191,7 +182,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
-        return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.actions.empty ||
+        return state.controlflowRegionsContainStates || state.hasDataflowRegions || !state.actions.empty ||
             !state.declarations.empty || state.isReferencedState;
     }
     

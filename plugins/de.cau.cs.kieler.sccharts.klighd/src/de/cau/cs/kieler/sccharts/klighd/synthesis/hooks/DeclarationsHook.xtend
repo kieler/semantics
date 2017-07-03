@@ -24,7 +24,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
@@ -35,6 +34,8 @@ import org.eclipse.elk.graph.properties.Property
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
 import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 
 /**
  * Shows or hides state declarations.
@@ -47,14 +48,10 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 @ViewSynthesisShared
 class DeclarationsHook extends SynthesisActionHook {
 
-    @Inject
-    extension StateStyles
-
-    @Inject
-    extension ControlflowRegionStyles
-    
-    @Inject
-    extension SCChartsExtension
+    @Inject extension StateStyles
+    @Inject extension ControlflowRegionStyles
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsDataflowRegionExtensions
 
     @Inject
     extension KRenderingExtensions
@@ -118,7 +115,7 @@ class DeclarationsHook extends SynthesisActionHook {
                         declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER)
                     } else if (scope instanceof State) {
                         val state = scope as State;
-                        innerContent = state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions;
+                        innerContent = state.controlflowRegionsContainStates || state.hasDataflowRegions;
                         container = node.contentContainer;
                         declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
                     }

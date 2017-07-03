@@ -20,7 +20,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
@@ -29,6 +28,7 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -41,17 +41,10 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsSerializeHRExtension
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsSerializeHRExtension
 
     @Inject
     extension TransitionStyles
@@ -73,7 +66,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         edge.addTransitionSpline();
 
         // Modifiers
-        if (transition.isImmediate2) {
+        if (transition.isImplicitlyImmediate) {
             edge.setImmediateStyle
         }
 

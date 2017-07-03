@@ -18,26 +18,20 @@ import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.core.model.PluginLog
-import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -51,7 +45,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
 
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
-    @Inject extension SCChartsExtension 
+    @Inject extension SCChartsCoreExtensions 
     @Inject extension SCChartsSerializeHRExtension
     @Inject extension AnnotationsExtensions
     @Inject StateSynthesis stateSynthesis
