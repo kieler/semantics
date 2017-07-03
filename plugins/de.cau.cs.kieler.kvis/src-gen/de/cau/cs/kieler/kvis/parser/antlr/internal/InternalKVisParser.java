@@ -2700,23 +2700,90 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
             // InternalKVis.g:1000:1: ( ( (lv_value_0_0= ruleLiteral ) ) | ( (lv_range_1_0= ruleInterval ) ) )
             int alt14=2;
             switch ( input.LA(1) ) {
-            case RULE_STRING:
-            case RULE_BOOLEAN:
-            case 35:
             case 40:
                 {
-                alt14=1;
+                int LA14_1 = input.LA(2);
+
+                if ( (LA14_1==RULE_INT) ) {
+                    int LA14_6 = input.LA(3);
+
+                    if ( (LA14_6==EOF||LA14_6==RULE_ID||LA14_6==20||(LA14_6>=29 && LA14_6<=30)) ) {
+                        alt14=1;
+                    }
+                    else if ( (LA14_6==35) ) {
+                        alt14=2;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 14, 6, input);
+
+                        throw nvae;
+                    }
+                }
+                else if ( (LA14_1==RULE_FLOAT) ) {
+                    int LA14_7 = input.LA(3);
+
+                    if ( (LA14_7==EOF||LA14_7==RULE_ID||LA14_7==20||(LA14_7>=29 && LA14_7<=30)) ) {
+                        alt14=1;
+                    }
+                    else if ( (LA14_7==35) ) {
+                        alt14=2;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 14, 7, input);
+
+                        throw nvae;
+                    }
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 14, 1, input);
+
+                    throw nvae;
+                }
                 }
                 break;
-            case RULE_INT:
+            case 35:
                 {
                 int LA14_2 = input.LA(2);
 
-                if ( (LA14_2==EOF||LA14_2==RULE_ID||LA14_2==20||(LA14_2>=29 && LA14_2<=30)) ) {
-                    alt14=1;
+                if ( (LA14_2==RULE_INT) ) {
+                    int LA14_6 = input.LA(3);
+
+                    if ( (LA14_6==EOF||LA14_6==RULE_ID||LA14_6==20||(LA14_6>=29 && LA14_6<=30)) ) {
+                        alt14=1;
+                    }
+                    else if ( (LA14_6==35) ) {
+                        alt14=2;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 14, 6, input);
+
+                        throw nvae;
+                    }
                 }
-                else if ( (LA14_2==35) ) {
-                    alt14=2;
+                else if ( (LA14_2==RULE_FLOAT) ) {
+                    int LA14_7 = input.LA(3);
+
+                    if ( (LA14_7==EOF||LA14_7==RULE_ID||LA14_7==20||(LA14_7>=29 && LA14_7<=30)) ) {
+                        alt14=1;
+                    }
+                    else if ( (LA14_7==35) ) {
+                        alt14=2;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return current;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 14, 7, input);
+
+                        throw nvae;
+                    }
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -2727,7 +2794,7 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case RULE_FLOAT:
+            case RULE_INT:
                 {
                 int LA14_3 = input.LA(2);
 
@@ -2744,6 +2811,31 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
 
                     throw nvae;
                 }
+                }
+                break;
+            case RULE_FLOAT:
+                {
+                int LA14_4 = input.LA(2);
+
+                if ( (LA14_4==EOF||LA14_4==RULE_ID||LA14_4==20||(LA14_4>=29 && LA14_4<=30)) ) {
+                    alt14=1;
+                }
+                else if ( (LA14_4==35) ) {
+                    alt14=2;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 14, 4, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_STRING:
+            case RULE_BOOLEAN:
+                {
+                alt14=1;
                 }
                 break;
             default:
@@ -2900,7 +2992,7 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInterval"
-    // InternalKVis.g:1054:1: ruleInterval returns [EObject current=null] : ( ( ( (lv_from_0_0= ruleIntValue ) ) | ( (lv_from_1_0= ruleFloatValue ) ) ) ruleRange ( ( (lv_to_3_0= ruleIntValue ) ) | ( (lv_to_4_0= ruleFloatValue ) ) ) ) ;
+    // InternalKVis.g:1054:1: ruleInterval returns [EObject current=null] : ( ( ( (lv_from_0_0= ruleSignedInt ) ) | ( (lv_from_1_0= ruleSignedFloat ) ) ) ruleRange ( ( (lv_to_3_0= ruleSignedInt ) ) | ( (lv_to_4_0= ruleSignedFloat ) ) ) ) ;
     public final EObject ruleInterval() throws RecognitionException {
         EObject current = null;
 
@@ -2916,46 +3008,88 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKVis.g:1057:28: ( ( ( ( (lv_from_0_0= ruleIntValue ) ) | ( (lv_from_1_0= ruleFloatValue ) ) ) ruleRange ( ( (lv_to_3_0= ruleIntValue ) ) | ( (lv_to_4_0= ruleFloatValue ) ) ) ) )
-            // InternalKVis.g:1058:1: ( ( ( (lv_from_0_0= ruleIntValue ) ) | ( (lv_from_1_0= ruleFloatValue ) ) ) ruleRange ( ( (lv_to_3_0= ruleIntValue ) ) | ( (lv_to_4_0= ruleFloatValue ) ) ) )
+            // InternalKVis.g:1057:28: ( ( ( ( (lv_from_0_0= ruleSignedInt ) ) | ( (lv_from_1_0= ruleSignedFloat ) ) ) ruleRange ( ( (lv_to_3_0= ruleSignedInt ) ) | ( (lv_to_4_0= ruleSignedFloat ) ) ) ) )
+            // InternalKVis.g:1058:1: ( ( ( (lv_from_0_0= ruleSignedInt ) ) | ( (lv_from_1_0= ruleSignedFloat ) ) ) ruleRange ( ( (lv_to_3_0= ruleSignedInt ) ) | ( (lv_to_4_0= ruleSignedFloat ) ) ) )
             {
-            // InternalKVis.g:1058:1: ( ( ( (lv_from_0_0= ruleIntValue ) ) | ( (lv_from_1_0= ruleFloatValue ) ) ) ruleRange ( ( (lv_to_3_0= ruleIntValue ) ) | ( (lv_to_4_0= ruleFloatValue ) ) ) )
-            // InternalKVis.g:1058:2: ( ( (lv_from_0_0= ruleIntValue ) ) | ( (lv_from_1_0= ruleFloatValue ) ) ) ruleRange ( ( (lv_to_3_0= ruleIntValue ) ) | ( (lv_to_4_0= ruleFloatValue ) ) )
+            // InternalKVis.g:1058:1: ( ( ( (lv_from_0_0= ruleSignedInt ) ) | ( (lv_from_1_0= ruleSignedFloat ) ) ) ruleRange ( ( (lv_to_3_0= ruleSignedInt ) ) | ( (lv_to_4_0= ruleSignedFloat ) ) ) )
+            // InternalKVis.g:1058:2: ( ( (lv_from_0_0= ruleSignedInt ) ) | ( (lv_from_1_0= ruleSignedFloat ) ) ) ruleRange ( ( (lv_to_3_0= ruleSignedInt ) ) | ( (lv_to_4_0= ruleSignedFloat ) ) )
             {
-            // InternalKVis.g:1058:2: ( ( (lv_from_0_0= ruleIntValue ) ) | ( (lv_from_1_0= ruleFloatValue ) ) )
+            // InternalKVis.g:1058:2: ( ( (lv_from_0_0= ruleSignedInt ) ) | ( (lv_from_1_0= ruleSignedFloat ) ) )
             int alt15=2;
-            int LA15_0 = input.LA(1);
+            switch ( input.LA(1) ) {
+            case 40:
+                {
+                int LA15_1 = input.LA(2);
 
-            if ( (LA15_0==RULE_INT) ) {
+                if ( (LA15_1==RULE_INT) ) {
+                    alt15=1;
+                }
+                else if ( (LA15_1==RULE_FLOAT) ) {
+                    alt15=2;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 15, 1, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case 35:
+                {
+                int LA15_2 = input.LA(2);
+
+                if ( (LA15_2==RULE_FLOAT) ) {
+                    alt15=2;
+                }
+                else if ( (LA15_2==RULE_INT) ) {
+                    alt15=1;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 15, 2, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_INT:
+                {
                 alt15=1;
-            }
-            else if ( (LA15_0==RULE_FLOAT) ) {
+                }
+                break;
+            case RULE_FLOAT:
+                {
                 alt15=2;
-            }
-            else {
+                }
+                break;
+            default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 15, 0, input);
 
                 throw nvae;
             }
+
             switch (alt15) {
                 case 1 :
-                    // InternalKVis.g:1058:3: ( (lv_from_0_0= ruleIntValue ) )
+                    // InternalKVis.g:1058:3: ( (lv_from_0_0= ruleSignedInt ) )
                     {
-                    // InternalKVis.g:1058:3: ( (lv_from_0_0= ruleIntValue ) )
-                    // InternalKVis.g:1059:1: (lv_from_0_0= ruleIntValue )
+                    // InternalKVis.g:1058:3: ( (lv_from_0_0= ruleSignedInt ) )
+                    // InternalKVis.g:1059:1: (lv_from_0_0= ruleSignedInt )
                     {
-                    // InternalKVis.g:1059:1: (lv_from_0_0= ruleIntValue )
-                    // InternalKVis.g:1060:3: lv_from_0_0= ruleIntValue
+                    // InternalKVis.g:1059:1: (lv_from_0_0= ruleSignedInt )
+                    // InternalKVis.g:1060:3: lv_from_0_0= ruleSignedInt
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getIntervalAccess().getFromIntValueParserRuleCall_0_0_0()); 
+                      	        newCompositeNode(grammarAccess.getIntervalAccess().getFromSignedIntParserRuleCall_0_0_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_25);
-                    lv_from_0_0=ruleIntValue();
+                    lv_from_0_0=ruleSignedInt();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -2968,7 +3102,7 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"from",
                               		lv_from_0_0, 
-                              		"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+                              		"de.cau.cs.kieler.kvis.KVis.SignedInt");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -2982,21 +3116,21 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKVis.g:1077:6: ( (lv_from_1_0= ruleFloatValue ) )
+                    // InternalKVis.g:1077:6: ( (lv_from_1_0= ruleSignedFloat ) )
                     {
-                    // InternalKVis.g:1077:6: ( (lv_from_1_0= ruleFloatValue ) )
-                    // InternalKVis.g:1078:1: (lv_from_1_0= ruleFloatValue )
+                    // InternalKVis.g:1077:6: ( (lv_from_1_0= ruleSignedFloat ) )
+                    // InternalKVis.g:1078:1: (lv_from_1_0= ruleSignedFloat )
                     {
-                    // InternalKVis.g:1078:1: (lv_from_1_0= ruleFloatValue )
-                    // InternalKVis.g:1079:3: lv_from_1_0= ruleFloatValue
+                    // InternalKVis.g:1078:1: (lv_from_1_0= ruleSignedFloat )
+                    // InternalKVis.g:1079:3: lv_from_1_0= ruleSignedFloat
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getIntervalAccess().getFromFloatValueParserRuleCall_0_1_0()); 
+                      	        newCompositeNode(grammarAccess.getIntervalAccess().getFromSignedFloatParserRuleCall_0_1_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_25);
-                    lv_from_1_0=ruleFloatValue();
+                    lv_from_1_0=ruleSignedFloat();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -3009,7 +3143,7 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"from",
                               		lv_from_1_0, 
-                              		"de.cau.cs.kieler.kexpressions.KExpressions.FloatValue");
+                              		"de.cau.cs.kieler.kvis.KVis.SignedFloat");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -3045,40 +3179,82 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // InternalKVis.g:1106:1: ( ( (lv_to_3_0= ruleIntValue ) ) | ( (lv_to_4_0= ruleFloatValue ) ) )
+            // InternalKVis.g:1106:1: ( ( (lv_to_3_0= ruleSignedInt ) ) | ( (lv_to_4_0= ruleSignedFloat ) ) )
             int alt16=2;
-            int LA16_0 = input.LA(1);
+            switch ( input.LA(1) ) {
+            case 40:
+                {
+                int LA16_1 = input.LA(2);
 
-            if ( (LA16_0==RULE_INT) ) {
+                if ( (LA16_1==RULE_INT) ) {
+                    alt16=1;
+                }
+                else if ( (LA16_1==RULE_FLOAT) ) {
+                    alt16=2;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 16, 1, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case 35:
+                {
+                int LA16_2 = input.LA(2);
+
+                if ( (LA16_2==RULE_FLOAT) ) {
+                    alt16=2;
+                }
+                else if ( (LA16_2==RULE_INT) ) {
+                    alt16=1;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return current;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 16, 2, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_INT:
+                {
                 alt16=1;
-            }
-            else if ( (LA16_0==RULE_FLOAT) ) {
+                }
+                break;
+            case RULE_FLOAT:
+                {
                 alt16=2;
-            }
-            else {
+                }
+                break;
+            default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 16, 0, input);
 
                 throw nvae;
             }
+
             switch (alt16) {
                 case 1 :
-                    // InternalKVis.g:1106:2: ( (lv_to_3_0= ruleIntValue ) )
+                    // InternalKVis.g:1106:2: ( (lv_to_3_0= ruleSignedInt ) )
                     {
-                    // InternalKVis.g:1106:2: ( (lv_to_3_0= ruleIntValue ) )
-                    // InternalKVis.g:1107:1: (lv_to_3_0= ruleIntValue )
+                    // InternalKVis.g:1106:2: ( (lv_to_3_0= ruleSignedInt ) )
+                    // InternalKVis.g:1107:1: (lv_to_3_0= ruleSignedInt )
                     {
-                    // InternalKVis.g:1107:1: (lv_to_3_0= ruleIntValue )
-                    // InternalKVis.g:1108:3: lv_to_3_0= ruleIntValue
+                    // InternalKVis.g:1107:1: (lv_to_3_0= ruleSignedInt )
+                    // InternalKVis.g:1108:3: lv_to_3_0= ruleSignedInt
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getIntervalAccess().getToIntValueParserRuleCall_2_0_0()); 
+                      	        newCompositeNode(grammarAccess.getIntervalAccess().getToSignedIntParserRuleCall_2_0_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    lv_to_3_0=ruleIntValue();
+                    lv_to_3_0=ruleSignedInt();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -3091,7 +3267,7 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"to",
                               		lv_to_3_0, 
-                              		"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+                              		"de.cau.cs.kieler.kvis.KVis.SignedInt");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -3105,21 +3281,21 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKVis.g:1125:6: ( (lv_to_4_0= ruleFloatValue ) )
+                    // InternalKVis.g:1125:6: ( (lv_to_4_0= ruleSignedFloat ) )
                     {
-                    // InternalKVis.g:1125:6: ( (lv_to_4_0= ruleFloatValue ) )
-                    // InternalKVis.g:1126:1: (lv_to_4_0= ruleFloatValue )
+                    // InternalKVis.g:1125:6: ( (lv_to_4_0= ruleSignedFloat ) )
+                    // InternalKVis.g:1126:1: (lv_to_4_0= ruleSignedFloat )
                     {
-                    // InternalKVis.g:1126:1: (lv_to_4_0= ruleFloatValue )
-                    // InternalKVis.g:1127:3: lv_to_4_0= ruleFloatValue
+                    // InternalKVis.g:1126:1: (lv_to_4_0= ruleSignedFloat )
+                    // InternalKVis.g:1127:3: lv_to_4_0= ruleSignedFloat
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getIntervalAccess().getToFloatValueParserRuleCall_2_1_0()); 
+                      	        newCompositeNode(grammarAccess.getIntervalAccess().getToSignedFloatParserRuleCall_2_1_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    lv_to_4_0=ruleFloatValue();
+                    lv_to_4_0=ruleSignedFloat();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -3132,7 +3308,7 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"to",
                               		lv_to_4_0, 
-                              		"de.cau.cs.kieler.kexpressions.KExpressions.FloatValue");
+                              		"de.cau.cs.kieler.kvis.KVis.SignedFloat");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -13885,19 +14061,19 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
     static final String dfa_1s = "\13\uffff";
     static final String dfa_2s = "\3\uffff\6\12\2\uffff";
     static final String dfa_3s = "\1\4\2\6\6\5\2\uffff";
-    static final String dfa_4s = "\1\50\2\7\2\43\4\36\2\uffff";
+    static final String dfa_4s = "\1\50\2\7\2\43\2\36\2\43\2\uffff";
     static final String dfa_5s = "\11\uffff\1\2\1\1";
     static final String dfa_6s = "\13\uffff}>";
     static final String[] dfa_7s = {
             "\1\6\1\uffff\1\3\1\4\1\uffff\1\5\31\uffff\1\2\4\uffff\1\1",
-            "\1\7\1\10",
-            "\1\7\1\10",
+            "\1\10\1\7",
+            "\1\10\1\7",
             "\1\12\16\uffff\1\12\11\uffff\1\11\4\uffff\1\11",
             "\1\12\16\uffff\1\12\11\uffff\1\11\4\uffff\1\11",
             "\1\12\16\uffff\1\12\11\uffff\1\11",
             "\1\12\16\uffff\1\12\11\uffff\1\11",
-            "\1\12\16\uffff\1\12\11\uffff\1\11",
-            "\1\12\16\uffff\1\12\11\uffff\1\11",
+            "\1\12\16\uffff\1\12\11\uffff\1\11\4\uffff\1\11",
+            "\1\12\16\uffff\1\12\11\uffff\1\11\4\uffff\1\11",
             "",
             ""
     };
@@ -14409,7 +14585,7 @@ public class InternalKVisParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0xF001400000000000L});
         public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x00000108000002F0L});
         public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000800000000L});
-        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00000000000000C0L});
+        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00000108000000C0L});
         public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000100000002L});
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000000040L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000200000000L});

@@ -375,7 +375,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     Interval returns Interval
 	 *
 	 * Constraint:
-	 *     ((from=IntValue | from=FloatValue) (to=IntValue | to=FloatValue))
+	 *     ((from=SignedInt | from=SignedFloat) (to=SignedInt | to=SignedFloat))
 	 */
 	protected void sequence_Interval(ISerializationContext context, Interval semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

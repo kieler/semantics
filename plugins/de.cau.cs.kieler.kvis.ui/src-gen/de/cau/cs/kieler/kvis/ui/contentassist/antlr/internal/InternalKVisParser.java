@@ -6605,23 +6605,90 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
             // InternalKVis.g:2257:1: ( ( ( rule__VariableDomain__ValueAssignment_0 ) ) | ( ( rule__VariableDomain__RangeAssignment_1 ) ) )
             int alt5=2;
             switch ( input.LA(1) ) {
-            case RULE_STRING:
-            case RULE_BOOLEAN:
-            case 16:
             case 21:
                 {
-                alt5=1;
+                int LA5_1 = input.LA(2);
+
+                if ( (LA5_1==RULE_INT) ) {
+                    int LA5_6 = input.LA(3);
+
+                    if ( (LA5_6==16) ) {
+                        alt5=2;
+                    }
+                    else if ( (LA5_6==EOF||LA5_6==RULE_ID||LA5_6==47||(LA5_6>=56 && LA5_6<=57)) ) {
+                        alt5=1;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 5, 6, input);
+
+                        throw nvae;
+                    }
+                }
+                else if ( (LA5_1==RULE_FLOAT) ) {
+                    int LA5_7 = input.LA(3);
+
+                    if ( (LA5_7==EOF||LA5_7==RULE_ID||LA5_7==47||(LA5_7>=56 && LA5_7<=57)) ) {
+                        alt5=1;
+                    }
+                    else if ( (LA5_7==16) ) {
+                        alt5=2;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 5, 7, input);
+
+                        throw nvae;
+                    }
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return ;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 5, 1, input);
+
+                    throw nvae;
+                }
                 }
                 break;
-            case RULE_INT:
+            case 16:
                 {
                 int LA5_2 = input.LA(2);
 
-                if ( (LA5_2==EOF||LA5_2==RULE_ID||LA5_2==47||(LA5_2>=56 && LA5_2<=57)) ) {
-                    alt5=1;
+                if ( (LA5_2==RULE_INT) ) {
+                    int LA5_6 = input.LA(3);
+
+                    if ( (LA5_6==16) ) {
+                        alt5=2;
+                    }
+                    else if ( (LA5_6==EOF||LA5_6==RULE_ID||LA5_6==47||(LA5_6>=56 && LA5_6<=57)) ) {
+                        alt5=1;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 5, 6, input);
+
+                        throw nvae;
+                    }
                 }
-                else if ( (LA5_2==16) ) {
-                    alt5=2;
+                else if ( (LA5_2==RULE_FLOAT) ) {
+                    int LA5_7 = input.LA(3);
+
+                    if ( (LA5_7==EOF||LA5_7==RULE_ID||LA5_7==47||(LA5_7>=56 && LA5_7<=57)) ) {
+                        alt5=1;
+                    }
+                    else if ( (LA5_7==16) ) {
+                        alt5=2;
+                    }
+                    else {
+                        if (state.backtracking>0) {state.failed=true; return ;}
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 5, 7, input);
+
+                        throw nvae;
+                    }
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -6632,7 +6699,7 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
                 }
                 }
                 break;
-            case RULE_FLOAT:
+            case RULE_INT:
                 {
                 int LA5_3 = input.LA(2);
 
@@ -6649,6 +6716,31 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
 
                     throw nvae;
                 }
+                }
+                break;
+            case RULE_FLOAT:
+                {
+                int LA5_4 = input.LA(2);
+
+                if ( (LA5_4==EOF||LA5_4==RULE_ID||LA5_4==47||(LA5_4>=56 && LA5_4<=57)) ) {
+                    alt5=1;
+                }
+                else if ( (LA5_4==16) ) {
+                    alt5=2;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return ;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 5, 4, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_STRING:
+            case RULE_BOOLEAN:
+                {
+                alt5=1;
                 }
                 break;
             default:
@@ -6744,21 +6836,63 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
         try {
             // InternalKVis.g:2279:1: ( ( ( rule__Interval__FromAssignment_0_0 ) ) | ( ( rule__Interval__FromAssignment_0_1 ) ) )
             int alt6=2;
-            int LA6_0 = input.LA(1);
+            switch ( input.LA(1) ) {
+            case 21:
+                {
+                int LA6_1 = input.LA(2);
 
-            if ( (LA6_0==RULE_INT) ) {
+                if ( (LA6_1==RULE_FLOAT) ) {
+                    alt6=2;
+                }
+                else if ( (LA6_1==RULE_INT) ) {
+                    alt6=1;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return ;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 6, 1, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case 16:
+                {
+                int LA6_2 = input.LA(2);
+
+                if ( (LA6_2==RULE_INT) ) {
+                    alt6=1;
+                }
+                else if ( (LA6_2==RULE_FLOAT) ) {
+                    alt6=2;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return ;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 6, 2, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_INT:
+                {
                 alt6=1;
-            }
-            else if ( (LA6_0==RULE_FLOAT) ) {
+                }
+                break;
+            case RULE_FLOAT:
+                {
                 alt6=2;
-            }
-            else {
+                }
+                break;
+            default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 6, 0, input);
 
                 throw nvae;
             }
+
             switch (alt6) {
                 case 1 :
                     // InternalKVis.g:2280:1: ( ( rule__Interval__FromAssignment_0_0 ) )
@@ -6844,21 +6978,63 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
         try {
             // InternalKVis.g:2301:1: ( ( ( rule__Interval__ToAssignment_2_0 ) ) | ( ( rule__Interval__ToAssignment_2_1 ) ) )
             int alt7=2;
-            int LA7_0 = input.LA(1);
+            switch ( input.LA(1) ) {
+            case 21:
+                {
+                int LA7_1 = input.LA(2);
 
-            if ( (LA7_0==RULE_INT) ) {
+                if ( (LA7_1==RULE_INT) ) {
+                    alt7=1;
+                }
+                else if ( (LA7_1==RULE_FLOAT) ) {
+                    alt7=2;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return ;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 7, 1, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case 16:
+                {
+                int LA7_2 = input.LA(2);
+
+                if ( (LA7_2==RULE_FLOAT) ) {
+                    alt7=2;
+                }
+                else if ( (LA7_2==RULE_INT) ) {
+                    alt7=1;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return ;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 7, 2, input);
+
+                    throw nvae;
+                }
+                }
+                break;
+            case RULE_INT:
+                {
                 alt7=1;
-            }
-            else if ( (LA7_0==RULE_FLOAT) ) {
+                }
+                break;
+            case RULE_FLOAT:
+                {
                 alt7=2;
-            }
-            else {
+                }
+                break;
+            default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
                     new NoViableAltException("", 7, 0, input);
 
                 throw nvae;
             }
+
             switch (alt7) {
                 case 1 :
                     // InternalKVis.g:2302:1: ( ( rule__Interval__ToAssignment_2_0 ) )
@@ -31727,28 +31903,28 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Interval__FromAssignment_0_0"
-    // InternalKVis.g:11035:1: rule__Interval__FromAssignment_0_0 : ( ruleIntValue ) ;
+    // InternalKVis.g:11035:1: rule__Interval__FromAssignment_0_0 : ( ruleSignedInt ) ;
     public final void rule__Interval__FromAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKVis.g:11039:1: ( ( ruleIntValue ) )
-            // InternalKVis.g:11040:1: ( ruleIntValue )
+            // InternalKVis.g:11039:1: ( ( ruleSignedInt ) )
+            // InternalKVis.g:11040:1: ( ruleSignedInt )
             {
-            // InternalKVis.g:11040:1: ( ruleIntValue )
-            // InternalKVis.g:11041:1: ruleIntValue
+            // InternalKVis.g:11040:1: ( ruleSignedInt )
+            // InternalKVis.g:11041:1: ruleSignedInt
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIntervalAccess().getFromIntValueParserRuleCall_0_0_0()); 
+               before(grammarAccess.getIntervalAccess().getFromSignedIntParserRuleCall_0_0_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleIntValue();
+            ruleSignedInt();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIntervalAccess().getFromIntValueParserRuleCall_0_0_0()); 
+               after(grammarAccess.getIntervalAccess().getFromSignedIntParserRuleCall_0_0_0()); 
             }
 
             }
@@ -31772,28 +31948,28 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Interval__FromAssignment_0_1"
-    // InternalKVis.g:11050:1: rule__Interval__FromAssignment_0_1 : ( ruleFloatValue ) ;
+    // InternalKVis.g:11050:1: rule__Interval__FromAssignment_0_1 : ( ruleSignedFloat ) ;
     public final void rule__Interval__FromAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKVis.g:11054:1: ( ( ruleFloatValue ) )
-            // InternalKVis.g:11055:1: ( ruleFloatValue )
+            // InternalKVis.g:11054:1: ( ( ruleSignedFloat ) )
+            // InternalKVis.g:11055:1: ( ruleSignedFloat )
             {
-            // InternalKVis.g:11055:1: ( ruleFloatValue )
-            // InternalKVis.g:11056:1: ruleFloatValue
+            // InternalKVis.g:11055:1: ( ruleSignedFloat )
+            // InternalKVis.g:11056:1: ruleSignedFloat
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIntervalAccess().getFromFloatValueParserRuleCall_0_1_0()); 
+               before(grammarAccess.getIntervalAccess().getFromSignedFloatParserRuleCall_0_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleFloatValue();
+            ruleSignedFloat();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIntervalAccess().getFromFloatValueParserRuleCall_0_1_0()); 
+               after(grammarAccess.getIntervalAccess().getFromSignedFloatParserRuleCall_0_1_0()); 
             }
 
             }
@@ -31817,28 +31993,28 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Interval__ToAssignment_2_0"
-    // InternalKVis.g:11065:1: rule__Interval__ToAssignment_2_0 : ( ruleIntValue ) ;
+    // InternalKVis.g:11065:1: rule__Interval__ToAssignment_2_0 : ( ruleSignedInt ) ;
     public final void rule__Interval__ToAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKVis.g:11069:1: ( ( ruleIntValue ) )
-            // InternalKVis.g:11070:1: ( ruleIntValue )
+            // InternalKVis.g:11069:1: ( ( ruleSignedInt ) )
+            // InternalKVis.g:11070:1: ( ruleSignedInt )
             {
-            // InternalKVis.g:11070:1: ( ruleIntValue )
-            // InternalKVis.g:11071:1: ruleIntValue
+            // InternalKVis.g:11070:1: ( ruleSignedInt )
+            // InternalKVis.g:11071:1: ruleSignedInt
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIntervalAccess().getToIntValueParserRuleCall_2_0_0()); 
+               before(grammarAccess.getIntervalAccess().getToSignedIntParserRuleCall_2_0_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleIntValue();
+            ruleSignedInt();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIntervalAccess().getToIntValueParserRuleCall_2_0_0()); 
+               after(grammarAccess.getIntervalAccess().getToSignedIntParserRuleCall_2_0_0()); 
             }
 
             }
@@ -31862,28 +32038,28 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Interval__ToAssignment_2_1"
-    // InternalKVis.g:11080:1: rule__Interval__ToAssignment_2_1 : ( ruleFloatValue ) ;
+    // InternalKVis.g:11080:1: rule__Interval__ToAssignment_2_1 : ( ruleSignedFloat ) ;
     public final void rule__Interval__ToAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKVis.g:11084:1: ( ( ruleFloatValue ) )
-            // InternalKVis.g:11085:1: ( ruleFloatValue )
+            // InternalKVis.g:11084:1: ( ( ruleSignedFloat ) )
+            // InternalKVis.g:11085:1: ( ruleSignedFloat )
             {
-            // InternalKVis.g:11085:1: ( ruleFloatValue )
-            // InternalKVis.g:11086:1: ruleFloatValue
+            // InternalKVis.g:11085:1: ( ruleSignedFloat )
+            // InternalKVis.g:11086:1: ruleSignedFloat
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIntervalAccess().getToFloatValueParserRuleCall_2_1_0()); 
+               before(grammarAccess.getIntervalAccess().getToSignedFloatParserRuleCall_2_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleFloatValue();
+            ruleSignedFloat();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIntervalAccess().getToFloatValueParserRuleCall_2_1_0()); 
+               after(grammarAccess.getIntervalAccess().getToSignedFloatParserRuleCall_2_1_0()); 
             }
 
             }
@@ -35746,8 +35922,8 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
             "\1\11\11\uffff\1\12\36\uffff\1\11\11\uffff\1\12",
             "\1\11\50\uffff\1\11\11\uffff\1\12",
             "\1\11\50\uffff\1\11\11\uffff\1\12",
-            "\1\11\50\uffff\1\11\11\uffff\1\12",
-            "\1\11\50\uffff\1\11\11\uffff\1\12",
+            "\1\11\11\uffff\1\12\36\uffff\1\11\11\uffff\1\12",
+            "\1\11\11\uffff\1\12\36\uffff\1\11\11\uffff\1\12",
             "",
             ""
     };
@@ -36265,7 +36441,7 @@ public class InternalKVisParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x000007E000000000L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x00000000002101F0L});
         public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000000010000L});
-        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000000180L});
+        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000210180L});
         public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0400000000000000L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0400000000000002L});
         public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000000000080L});

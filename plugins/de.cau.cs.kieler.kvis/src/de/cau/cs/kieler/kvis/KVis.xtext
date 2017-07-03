@@ -70,9 +70,9 @@ VariableDomain returns Domain:
 ;
 
 Interval:
-    (from=IntValue | from=FloatValue)
+    (from=SignedInt | from=SignedFloat)
     Range
-    (to=IntValue | to=FloatValue)
+    (to=SignedInt | to=SignedFloat)
 ;
 
 AttributeDomain returns Domain:

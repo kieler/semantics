@@ -11038,8 +11038,8 @@ rule__Interval__FromAssignment_0_0
     }
 :
 (
-{ before(grammarAccess.getIntervalAccess().getFromIntValueParserRuleCall_0_0_0()); }
-	ruleIntValue{ after(grammarAccess.getIntervalAccess().getFromIntValueParserRuleCall_0_0_0()); }
+{ before(grammarAccess.getIntervalAccess().getFromSignedIntParserRuleCall_0_0_0()); }
+	ruleSignedInt{ after(grammarAccess.getIntervalAccess().getFromSignedIntParserRuleCall_0_0_0()); }
 )
 
 ;
@@ -11053,8 +11053,8 @@ rule__Interval__FromAssignment_0_1
     }
 :
 (
-{ before(grammarAccess.getIntervalAccess().getFromFloatValueParserRuleCall_0_1_0()); }
-	ruleFloatValue{ after(grammarAccess.getIntervalAccess().getFromFloatValueParserRuleCall_0_1_0()); }
+{ before(grammarAccess.getIntervalAccess().getFromSignedFloatParserRuleCall_0_1_0()); }
+	ruleSignedFloat{ after(grammarAccess.getIntervalAccess().getFromSignedFloatParserRuleCall_0_1_0()); }
 )
 
 ;
@@ -11068,8 +11068,8 @@ rule__Interval__ToAssignment_2_0
     }
 :
 (
-{ before(grammarAccess.getIntervalAccess().getToIntValueParserRuleCall_2_0_0()); }
-	ruleIntValue{ after(grammarAccess.getIntervalAccess().getToIntValueParserRuleCall_2_0_0()); }
+{ before(grammarAccess.getIntervalAccess().getToSignedIntParserRuleCall_2_0_0()); }
+	ruleSignedInt{ after(grammarAccess.getIntervalAccess().getToSignedIntParserRuleCall_2_0_0()); }
 )
 
 ;
@@ -11083,8 +11083,8 @@ rule__Interval__ToAssignment_2_1
     }
 :
 (
-{ before(grammarAccess.getIntervalAccess().getToFloatValueParserRuleCall_2_1_0()); }
-	ruleFloatValue{ after(grammarAccess.getIntervalAccess().getToFloatValueParserRuleCall_2_1_0()); }
+{ before(grammarAccess.getIntervalAccess().getToSignedFloatParserRuleCall_2_1_0()); }
+	ruleSignedFloat{ after(grammarAccess.getIntervalAccess().getToSignedFloatParserRuleCall_2_1_0()); }
 )
 
 ;

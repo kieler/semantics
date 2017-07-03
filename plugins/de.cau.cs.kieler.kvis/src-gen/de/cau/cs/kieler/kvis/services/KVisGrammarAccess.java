@@ -587,55 +587,55 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Assignment cFromAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final RuleCall cFromIntValueParserRuleCall_0_0_0 = (RuleCall)cFromAssignment_0_0.eContents().get(0);
+		private final RuleCall cFromSignedIntParserRuleCall_0_0_0 = (RuleCall)cFromAssignment_0_0.eContents().get(0);
 		private final Assignment cFromAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final RuleCall cFromFloatValueParserRuleCall_0_1_0 = (RuleCall)cFromAssignment_0_1.eContents().get(0);
+		private final RuleCall cFromSignedFloatParserRuleCall_0_1_0 = (RuleCall)cFromAssignment_0_1.eContents().get(0);
 		private final RuleCall cRangeParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Assignment cToAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cToIntValueParserRuleCall_2_0_0 = (RuleCall)cToAssignment_2_0.eContents().get(0);
+		private final RuleCall cToSignedIntParserRuleCall_2_0_0 = (RuleCall)cToAssignment_2_0.eContents().get(0);
 		private final Assignment cToAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
-		private final RuleCall cToFloatValueParserRuleCall_2_1_0 = (RuleCall)cToAssignment_2_1.eContents().get(0);
+		private final RuleCall cToSignedFloatParserRuleCall_2_1_0 = (RuleCall)cToAssignment_2_1.eContents().get(0);
 		
 		//Interval:
-		//	(from=IntValue | from=FloatValue) Range (to=IntValue | to=FloatValue);
+		//	(from=SignedInt | from=SignedFloat) Range (to=SignedInt | to=SignedFloat);
 		@Override public ParserRule getRule() { return rule; }
 
-		//(from=IntValue | from=FloatValue) Range (to=IntValue | to=FloatValue)
+		//(from=SignedInt | from=SignedFloat) Range (to=SignedInt | to=SignedFloat)
 		public Group getGroup() { return cGroup; }
 
-		//(from=IntValue | from=FloatValue)
+		//(from=SignedInt | from=SignedFloat)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//from=IntValue
+		//from=SignedInt
 		public Assignment getFromAssignment_0_0() { return cFromAssignment_0_0; }
 
-		//IntValue
-		public RuleCall getFromIntValueParserRuleCall_0_0_0() { return cFromIntValueParserRuleCall_0_0_0; }
+		//SignedInt
+		public RuleCall getFromSignedIntParserRuleCall_0_0_0() { return cFromSignedIntParserRuleCall_0_0_0; }
 
-		//from=FloatValue
+		//from=SignedFloat
 		public Assignment getFromAssignment_0_1() { return cFromAssignment_0_1; }
 
-		//FloatValue
-		public RuleCall getFromFloatValueParserRuleCall_0_1_0() { return cFromFloatValueParserRuleCall_0_1_0; }
+		//SignedFloat
+		public RuleCall getFromSignedFloatParserRuleCall_0_1_0() { return cFromSignedFloatParserRuleCall_0_1_0; }
 
 		//Range
 		public RuleCall getRangeParserRuleCall_1() { return cRangeParserRuleCall_1; }
 
-		//(to=IntValue | to=FloatValue)
+		//(to=SignedInt | to=SignedFloat)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//to=IntValue
+		//to=SignedInt
 		public Assignment getToAssignment_2_0() { return cToAssignment_2_0; }
 
-		//IntValue
-		public RuleCall getToIntValueParserRuleCall_2_0_0() { return cToIntValueParserRuleCall_2_0_0; }
+		//SignedInt
+		public RuleCall getToSignedIntParserRuleCall_2_0_0() { return cToSignedIntParserRuleCall_2_0_0; }
 
-		//to=FloatValue
+		//to=SignedFloat
 		public Assignment getToAssignment_2_1() { return cToAssignment_2_1; }
 
-		//FloatValue
-		public RuleCall getToFloatValueParserRuleCall_2_1_0() { return cToFloatValueParserRuleCall_2_1_0; }
+		//SignedFloat
+		public RuleCall getToSignedFloatParserRuleCall_2_1_0() { return cToSignedFloatParserRuleCall_2_1_0; }
 	}
 
 	public class AttributeDomainElements extends AbstractParserRuleElementFinder {
@@ -1215,7 +1215,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Interval:
-	//	(from=IntValue | from=FloatValue) Range (to=IntValue | to=FloatValue);
+	//	(from=SignedInt | from=SignedFloat) Range (to=SignedInt | to=SignedFloat);
 	public IntervalElements getIntervalAccess() {
 		return pInterval;
 	}

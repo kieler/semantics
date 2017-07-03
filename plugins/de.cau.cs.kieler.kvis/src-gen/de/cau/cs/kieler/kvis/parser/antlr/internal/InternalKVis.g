@@ -1058,9 +1058,9 @@ ruleInterval returns [EObject current=null]
 (((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIntervalAccess().getFromIntValueParserRuleCall_0_0_0()); 
+	        newCompositeNode(grammarAccess.getIntervalAccess().getFromSignedIntParserRuleCall_0_0_0()); 
 	    }
-		lv_from_0_0=ruleIntValue		{
+		lv_from_0_0=ruleSignedInt		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIntervalRule());
 	        }
@@ -1068,7 +1068,7 @@ ruleInterval returns [EObject current=null]
        			$current, 
        			"from",
         		lv_from_0_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+        		"de.cau.cs.kieler.kvis.KVis.SignedInt");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1077,9 +1077,9 @@ ruleInterval returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIntervalAccess().getFromFloatValueParserRuleCall_0_1_0()); 
+	        newCompositeNode(grammarAccess.getIntervalAccess().getFromSignedFloatParserRuleCall_0_1_0()); 
 	    }
-		lv_from_1_0=ruleFloatValue		{
+		lv_from_1_0=ruleSignedFloat		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIntervalRule());
 	        }
@@ -1087,7 +1087,7 @@ ruleInterval returns [EObject current=null]
        			$current, 
        			"from",
         		lv_from_1_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.FloatValue");
+        		"de.cau.cs.kieler.kvis.KVis.SignedFloat");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1106,9 +1106,9 @@ ruleRange
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIntervalAccess().getToIntValueParserRuleCall_2_0_0()); 
+	        newCompositeNode(grammarAccess.getIntervalAccess().getToSignedIntParserRuleCall_2_0_0()); 
 	    }
-		lv_to_3_0=ruleIntValue		{
+		lv_to_3_0=ruleSignedInt		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIntervalRule());
 	        }
@@ -1116,7 +1116,7 @@ ruleRange
        			$current, 
        			"to",
         		lv_to_3_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.IntValue");
+        		"de.cau.cs.kieler.kvis.KVis.SignedInt");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1125,9 +1125,9 @@ ruleRange
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIntervalAccess().getToFloatValueParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getIntervalAccess().getToSignedFloatParserRuleCall_2_1_0()); 
 	    }
-		lv_to_4_0=ruleFloatValue		{
+		lv_to_4_0=ruleSignedFloat		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIntervalRule());
 	        }
@@ -1135,7 +1135,7 @@ ruleRange
        			$current, 
        			"to",
         		lv_to_4_0, 
-        		"de.cau.cs.kieler.kexpressions.KExpressions.FloatValue");
+        		"de.cau.cs.kieler.kvis.KVis.SignedFloat");
 	        afterParserOrEnumRuleCall();
 	    }
 

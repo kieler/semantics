@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
-import de.cau.cs.kieler.kexpressions.Value;
-
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 
@@ -11,6 +9,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -40,7 +39,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    * @ordered
    */
-  protected Value from;
+  protected EObject from;
 
   /**
    * The cached value of the '{@link #getTo() <em>To</em>}' containment reference.
@@ -50,7 +49,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * @generated
    * @ordered
    */
-  protected Value to;
+  protected EObject to;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,7 +77,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public Value getFrom()
+  public EObject getFrom()
   {
     return from;
   }
@@ -88,9 +87,9 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetFrom(Value newFrom, NotificationChain msgs)
+  public NotificationChain basicSetFrom(EObject newFrom, NotificationChain msgs)
   {
-    Value oldFrom = from;
+    EObject oldFrom = from;
     from = newFrom;
     if (eNotificationRequired())
     {
@@ -105,7 +104,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFrom(Value newFrom)
+  public void setFrom(EObject newFrom)
   {
     if (newFrom != from)
     {
@@ -126,7 +125,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public Value getTo()
+  public EObject getTo()
   {
     return to;
   }
@@ -136,9 +135,9 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTo(Value newTo, NotificationChain msgs)
+  public NotificationChain basicSetTo(EObject newTo, NotificationChain msgs)
   {
-    Value oldTo = to;
+    EObject oldTo = to;
     to = newTo;
     if (eNotificationRequired())
     {
@@ -153,7 +152,7 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTo(Value newTo)
+  public void setTo(EObject newTo)
   {
     if (newTo != to)
     {
@@ -216,10 +215,10 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     switch (featureID)
     {
       case KvisPackage.INTERVAL__FROM:
-        setFrom((Value)newValue);
+        setFrom((EObject)newValue);
         return;
       case KvisPackage.INTERVAL__TO:
-        setTo((Value)newValue);
+        setTo((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,10 +235,10 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
     switch (featureID)
     {
       case KvisPackage.INTERVAL__FROM:
-        setFrom((Value)null);
+        setFrom((EObject)null);
         return;
       case KvisPackage.INTERVAL__TO:
-        setTo((Value)null);
+        setTo((EObject)null);
         return;
     }
     super.eUnset(featureID);

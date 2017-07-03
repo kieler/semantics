@@ -185,40 +185,39 @@ class KVisExtensions {
         return true
     }
     
-    public def Object getPrimitiveValue(EObject value) {
-        if(value instanceof Literal) {
-            val literalValue = value.value
-            if(literalValue instanceof SignedFloat) {
-                if(literalValue.sign == Sign.NEGATIVE) {
-                    return -literalValue.value
-                } else {
-                    return literalValue.value
-                }
-            } if(literalValue instanceof SignedInt) {
-                if(literalValue.sign == Sign.NEGATIVE) {
-                    return -literalValue.value
-                } else {
-                    return literalValue.value
-                } 
-            } else if(literalValue instanceof StringValue) {
-                return literalValue.value
-            } else if(literalValue instanceof FloatValue) {
-                return literalValue.value
-            } else if(literalValue instanceof IntValue) {
-                return literalValue.value
-            } else if(literalValue instanceof BoolValue) {
-                return literalValue.value
-            }
+    public def Object getPrimitiveValue(SignedInt value) {
+        if(value.sign == Sign.NEGATIVE) {
+            return -value.value
         } else {
-            if(value instanceof StringValue) {
-                return value.value
-            } else if(value instanceof FloatValue) {
-                return value.value
-            } else if(value instanceof IntValue) {
-                return value.value
-            } else if(value instanceof BoolValue) {
-                return value.value
-            }
+            return value.value
+        }
+    }
+    
+    public def Object getPrimitiveValue(SignedFloat value) {
+        if(value.sign == Sign.NEGATIVE) {
+            return -value.value
+        } else {
+            return value.value
+        }
+    }
+    
+    public def Object getPrimitiveValue(EObject value) {
+        var EObject valueHolder = value
+        if(value instanceof Literal) {
+            valueHolder = value.value
+        }
+        if(valueHolder instanceof SignedFloat) {
+            return valueHolder.primitiveValue
+        } if(valueHolder instanceof SignedInt) {
+            return valueHolder.primitiveValue
+        } else if(valueHolder instanceof StringValue) {
+            return valueHolder.value
+        } else if(valueHolder instanceof FloatValue) {
+            return valueHolder.value
+        } else if(valueHolder instanceof IntValue) {
+            return valueHolder.value
+        } else if(valueHolder instanceof BoolValue) {
+            return valueHolder.value
         }
         return null
     }
