@@ -30,6 +30,9 @@ class RailSLGenerator extends AbstractGenerator {
     override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
         generateHeaders(fsa)
         generateSnippets(fsa)
+        
+        // TODO this will not stay here.
+        // Insert methods here to get the KVIZ view and pass it the generated model.
     }
 
     /**

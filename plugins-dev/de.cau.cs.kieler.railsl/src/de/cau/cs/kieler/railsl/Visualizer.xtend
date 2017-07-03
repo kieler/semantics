@@ -86,6 +86,7 @@ class Visualizer {
         for (segment : statement.segments) {
             model.addVariable(new Variable(segment, speed))
             model.addVariable(new Variable(segment + "_direction", direction))
+            model.addVariable(new Variable("S0_" + segment, "RED"))
         }
         
     }
