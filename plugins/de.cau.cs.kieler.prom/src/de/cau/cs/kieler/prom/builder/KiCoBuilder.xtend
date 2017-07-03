@@ -483,6 +483,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def void processTemplates(List<IFile> templates) {
         for(file : templates) {
+            monitor.subTask("Processing template '"+file.name+"'")
             val name = Files.getNameWithoutExtension(file.name)
             val generator = new WrapperCodeGenerator(project, null)
             val generatedCode = generator.processTemplate(file.projectRelativePath.toOSString, 
