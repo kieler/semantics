@@ -82,6 +82,13 @@ class DataPool implements Cloneable {
     }
     
     /**
+     * Remove a model from the pool
+     */
+    public def void removeModel(Model m) {
+        models.remove(m)
+    }
+    
+    /**
      * Add a model to the pool
      */
     public def void addModel(Model m) {
@@ -93,6 +100,19 @@ class DataPool implements Cloneable {
         m.pool = this
         if(!models.contains(m)) {
             models.add(m)
+        }
+    }
+    
+    public def String getUniqueModelName(String name, int suffix) {
+        val uniqueName = if(suffix > 0)
+                             name+"_"+suffix
+                         else
+                             name
+        val modelWithThisName = models.findFirst[it.name.equals(uniqueName)]
+        if(modelWithThisName == null) {
+            return uniqueName
+        } else {
+            return getUniqueModelName(name, suffix+1)
         }
     }
     

@@ -69,7 +69,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         // Read json data
         var String line = waitForJSONOutput(processReader)
 
-        modelName = getUniqueModelName(executable.name, pool, 0)
+        modelName = pool.getUniqueModelName(executable.name, 0)
         val model = Model.createFromJson(modelName, line)
         pool.addModel(model)
     }
@@ -91,7 +91,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         // Let the process perform tick and wait for output
         val line = waitForJSONOutput(processReader)
         val newModel = Model.createFromJson(modelName, line)
-        pool.models.remove(model)
+        pool.removeModel(model)
         pool.addModel(newModel)        
     }
     
@@ -140,19 +140,6 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
         
         return line
-    }
-    
-    private def String getUniqueModelName(String name, DataPool pool, int suffix) {
-        val uniqueName = if(suffix > 0)
-                             name+"_"+suffix
-                         else
-                             name
-        val modelWithThisName = pool.models.findFirst[it.name.equals(uniqueName)]
-        if(modelWithThisName == null) {
-            return uniqueName
-        } else {
-            return getUniqueModelName(name, pool, suffix+1)
-        }
     }
     
     /**

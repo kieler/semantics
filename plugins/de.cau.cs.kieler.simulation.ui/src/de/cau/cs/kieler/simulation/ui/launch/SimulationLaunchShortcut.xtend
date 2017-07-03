@@ -15,9 +15,11 @@ package de.cau.cs.kieler.simulation.ui.launch
 import de.cau.cs.kieler.prom.ui.console.PromConsole
 import de.cau.cs.kieler.simulation.SimulationPlugin
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.Simulator
 import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
 import de.cau.cs.kieler.simulation.handlers.Redirect
+import de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.util.List
@@ -115,25 +117,18 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
         
         // TODO: Hard coded stuff
         if(files.size == 1) {
-            val simulator = new ExecutableSimulator()
-            simulator.executable = files.get(0)
-            
-            var simMan = SimulationManager.instance
-            if(simMan == null || simMan.isStopped) {
-                simMan = new SimulationManager()
-                simMan.addAction(StepAction.Method.WRITE, simulator)
-                simMan.initialize()
-                
-                PromConsole.print("\n\nNew simulation")
-                PromConsole.print("Initial pool:"+simMan.currentPool)
+            val file = files.get(0)
+            var Simulator simulator
+            if(file.fileExtension == "simin") {
+                val inputFileHandler = new SimulationInputFileHandler
+                simulator = inputFileHandler
+                inputFileHandler.fileLocation = file.location.toOSString
             } else {
-                simMan.addAction(StepAction.Method.WRITE, simulator)
-                simMan.append(simulator)
-                
-                PromConsole.print("Appended simulator")
-                PromConsole.print("New pool:"+simMan.currentPool)
+                val exeSimulator = new ExecutableSimulator
+                simulator = exeSimulator
+                exeSimulator.executable = files.get(0)
             }
-            
+            addSimulatorToSimulation(simulator)
         } else if(files.size == 2) {
             val simMan = new SimulationManager()
             
@@ -160,6 +155,24 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
             
             PromConsole.print("\n\nNew simulation")
             PromConsole.print("Initial pool:"+simMan.currentPool)
+        }
+    }
+    
+    private def void addSimulatorToSimulation(Simulator simulator) {
+        var simMan = SimulationManager.instance
+        if(simMan == null || simMan.isStopped) {
+            simMan = new SimulationManager()
+            simMan.addAction(StepAction.Method.WRITE, simulator)
+            simMan.initialize()
+            
+            PromConsole.print("\n\nNew simulation")
+            PromConsole.print("Initial pool:"+simMan.currentPool)
+        } else {
+            simMan.addAction(StepAction.Method.WRITE, simulator)
+            simMan.append(simulator)
+            
+            PromConsole.print("Appended simulator")
+            PromConsole.print("New pool:"+simMan.currentPool)
         }
     }
     
