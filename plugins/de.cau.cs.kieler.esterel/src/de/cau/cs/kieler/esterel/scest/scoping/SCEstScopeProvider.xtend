@@ -52,6 +52,9 @@ import java.util.Collections
 import org.eclipse.xtext.naming.QualifiedName
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.esterel.esterel.LocalVariable
+import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
+import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 
 /**
  * This class contains custom scoping description.
@@ -68,11 +71,11 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
     override  IScope getScope( EObject context,  EReference reference) {
         switch (reference.EReferenceType) {
             // TODO scoping needs to be fixed
-//            case KExpressionsPackage.eINSTANCE.valuedObject:
-//                return new SimpleScope(voScope(context))
+//            case KExpressionsPackage.eINSTANCE.valuedObject: 
+//                return new SimpleScope(voScope(context)) 
             case SclPackage.eINSTANCE.label:
                 return new SimpleScope(context.labelScope)
-            default:
+            default :
                 return super.getScope(context, reference)
         }
     }
@@ -82,7 +85,15 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
         val vos = newLinkedList()
         while (parent != null) {
             if (parent instanceof Scope) {
-                vos.addAll((parent as Scope).declarations.map[valuedObjects])
+                vos.addAll(parent.declarations.map[valuedObjects])
+            }
+            else if (parent instanceof LocalVariable) {
+                vos.addAll(parent.varDecls.map[variables])
+            }
+            else if (parent instanceof LocalSignalDecl) {
+            }
+            else if (parent instanceof SCEstModule) {
+                
             }
             parent = parent.eContainer
         }
