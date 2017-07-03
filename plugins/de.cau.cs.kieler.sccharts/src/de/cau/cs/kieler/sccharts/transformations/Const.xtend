@@ -92,7 +92,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
         targetRootState.transformValuedObjectRise
 
         // Traverse all states
-        for (scopes : targetRootState.getAllScopes.immutableCopy) {
+        for (scopes : targetRootState.getAllScopes.toList) {
             scopes.transformConst
         }
         targetRootState;
@@ -107,7 +107,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
             replacement.trace(const.declaration)
             
             // Replace references
-            for (vor : scope.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const].immutableCopy) {
+            for (vor : scope.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const].toIterable) {
                 vor.replace(replacement.copy)
             }
             

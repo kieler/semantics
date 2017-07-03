@@ -111,8 +111,9 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	}
     	
     	// Create schedule dependencies for the generated schedule
-    	for(var i = 0; i < schedule.size-1; i++) {
-    		schedule.get(i).createScheduleDependency(schedule.get(i+1))
+    	val scheduleList = schedule.toList
+    	for(var i = 0; i < scheduleList.size-1; i++) {
+    		scheduleList.get(i).createScheduleDependency(scheduleList.get(i+1))
     	}
     	
     	// ASC schedulability output

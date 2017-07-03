@@ -638,7 +638,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // Connect all entry nodes with the initial state's nodes.
         // Also check the parent container in case the "initial" state is the root state.
-        val initialState = region.states.filter(e|e.isInitial || e.eContainer == null).get(0)
+        val initialState = region.states.filter(e|e.isInitial || e.eContainer == null).head
         val initialNode = initialState.mappedNode
         val controlFlowInitial = initialNode.createControlFlow.trace(initialNode)
         entry.setNext(controlFlowInitial)
@@ -686,8 +686,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             // transition without a trigger outgoing from the current state.
             val conditional = state.mappedConditional
 
-            val transitionThen = state.outgoingTransitions.filter(e|e.trigger != null).get(0)
-            val transitionElse = state.outgoingTransitions.filter(e|e.trigger == null).get(0)
+            val transitionThen = state.outgoingTransitions.filter(e|e.trigger != null).head
+            val transitionElse = state.outgoingTransitions.filter(e|e.trigger == null).head
             val otherNodeThen = transitionThen.targetState.mappedNode
             val otherNodeElse = transitionElse.targetState.mappedNode
             if (otherNodeThen != null) {
