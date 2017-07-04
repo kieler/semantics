@@ -1910,6 +1910,7 @@ class SCEstExtension {
                             removeValueTestOperator(parent)
                         }
                         else if ( (parent as OperatorExpression).operator == OperatorType.PRE) { 
+                            // check if the value operator is used for the signal or the value of the signal
                             if (ref.isSignalPreExpression){
                                 ref.valuedObject = newSignals.get(signal).s
                             }
@@ -1919,6 +1920,9 @@ class SCEstExtension {
                                 }
                                 ref.valuedObject = newSignals.get(signal).s_val 
                             }
+                        }
+                        else {
+                            ref.valuedObject = newSignals.get(signal).s
                         }
                     }
                     else {
@@ -2097,11 +2101,13 @@ class SCEstExtension {
      * @param name The name of the module 
      */
     def renameIScope(ScopeStatement scope, String name) {
-//        for (a : scope.annotations) {
-//            if (a.name.equals(interfaceScope)) {
-//                scope.annotations.remove(a)
-//            }
-//        }
+        var list = newLinkedList
+        for (a : scope.annotations) {
+            if (a.name.equals(interfaceScope)) {
+                list.add(a)
+            }
+        }
+        list.forEach[a | scope.annotations.remove(a)]
         scope.annotations.add( 
             AnnotationsFactory::eINSTANCE.createAnnotation => [
                 it.name = name

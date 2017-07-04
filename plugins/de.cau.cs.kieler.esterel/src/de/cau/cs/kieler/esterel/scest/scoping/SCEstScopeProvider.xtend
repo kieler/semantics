@@ -43,7 +43,6 @@ import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
 import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
 import de.cau.cs.kieler.scl.scl.SclPackage
-import com.google.common.collect.Iterators
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.resource.EObjectDescription
 import de.cau.cs.kieler.scl.scl.Label
@@ -55,6 +54,9 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.esterel.esterel.EsterelPackage
+import de.cau.cs.kieler.esterel.esterel.Trap
 
 /**
  * This class contains custom scoping description.
@@ -71,8 +73,12 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
     override  IScope getScope( EObject context,  EReference reference) {
         switch (reference.EReferenceType) {
             // TODO scoping needs to be fixed
-//            case KExpressionsPackage.eINSTANCE.valuedObject: 
-//                return new SimpleScope(voScope(context)) 
+            case EsterelPackage.eINSTANCE.ISignal,
+            case EsterelPackage.eINSTANCE.IVariable,
+            case EsterelPackage.eINSTANCE.trapSignal:
+                super.getScope(context, reference)
+            case KExpressionsPackage.eINSTANCE.valuedObject: 
+                return new SimpleScope(voScope(context)) 
             case SclPackage.eINSTANCE.label:
                 return new SimpleScope(context.labelScope)
             default :
@@ -85,23 +91,27 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
         val vos = newLinkedList()
         while (parent != null) {
             if (parent instanceof Scope) {
-                vos.addAll(parent.declarations.map[valuedObjects])
+                parent.declarations.forEach[d | vos.addAll(d.valuedObjects)]
             }
             else if (parent instanceof LocalVariable) {
-                vos.addAll(parent.varDecls.map[variables])
+                parent.varDecls.forEach[d | vos.addAll(d.variables)]
             }
             else if (parent instanceof LocalSignalDecl) {
+                vos.addAll(parent.signals)
+            }
+            else if (parent instanceof Trap) {
+                vos.addAll(parent.trapSignals)
             }
             else if (parent instanceof SCEstModule) {
-                
+                parent.intSignalDecls.forEach [d | vos.addAll(d.signals)]
+                parent.intSensorDecls.forEach [d | d.sensors.forEach[s | vos.add(s.sensor)]]
+                parent.intConstantDecls.forEach [d | d.constants.forEach[c | vos.addAll(c.constants)]]
             }
             parent = parent.eContainer
         }
-        return Iterators.concat(vos.map[
-            it.iterator.map[
+        return vos.map[
                 new EObjectDescription(QualifiedName.create(it.name), it, Collections.<String, String>emptyMap()) as IEObjectDescription
-            ]
-        ]).toList
+            ].toList
     }
 
     def labelScope(EObject context) {

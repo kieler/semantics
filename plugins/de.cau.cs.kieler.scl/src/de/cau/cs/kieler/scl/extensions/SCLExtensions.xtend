@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Scope
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.Thread
 import java.util.LinkedList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.util.EcoreUtil
@@ -31,6 +32,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scl.scl.StatementContainer
+import de.cau.cs.kieler.scl.scl.ElseScope
+
 /**
  * @author ssm, krat
  * @kieler.design 2013-10-31 proposed 
@@ -200,71 +204,53 @@ class SCLExtensions {
       * @return     The optimized Scope
       */
     def Scope removeDoubleJumps(Scope scope) {
-//        val replaceBy = <Pair<Label, Label>>newLinkedList
-//        for (label : scope.eAllContents.toList.filter(Label)) {
-//            var EList<Statement> stmList
-//            var parent = label.eContainer as Scope
-//
-//            // Continue if in conditional
-//            var continue = true
-//
-//            // Check whether label is in conditional and in which branch
-//            if ((parent instanceof Conditional) && (parent as Conditional).^else != null && (parent as Conditional).^else.statements.contains(label)) {
-//                stmList = (parent as Conditional).^else.statements
-//            } else {
-//                stmList = parent.statements
-//            }
-//            var index = stmList.indexOf(label) + 1
-//            var Statement curStm = label
-//            while (continue) {
-//                if (stmList.size > index) {
-//                    val nextStatement = stmList.get(index) as Statement
-//                    if (nextStatement instanceof Goto) {
-//                        val goto = (nextStatement as Goto)
-//                        replaceBy += label -> goto.target
-//                    }
-//                    continue = false;
-//
-////                 Check whether at end of conditonal branch or StatementScope and "look outside"
-//                } else if (parent instanceof SCLProgram) {
-//                    continue = false;
-//                } else if (parent.eContainer instanceof SCLProgram) {
-//                    curStm = parent as Statement
-//                    parent = parent.eContainer as Scope
-//                    if ((parent instanceof Conditional) && (parent as Conditional).^else.statements.contains(curStm)) {
-//                        stmList = (parent as Conditional).^else.statements
-//                    } else {
-//                        stmList = parent.statements
-//                    }
-//                    index = stmList.indexOf(curStm) + 1
-//                } else if (parent instanceof Conditional) {
-//                    curStm = parent.eContainer as Statement
-//                    parent = parent.eContainer.eContainer as Scope
-//                    if ((parent instanceof Conditional) && (parent as Conditional).^else.statements.contains(curStm)) {
-//                        stmList = (parent as Conditional).^else.statements
-//                    } else {
-//                        stmList = parent.statements
-//                    }
-//                    index = stmList.indexOf(curStm) + 1
-//                } else if (parent instanceof Scope) {
-//                    curStm = parent.eContainer as Statement
-//                    parent = parent.eContainer.eContainer as Scope
-//                    stmList = parent.statements
-//                    index = stmList.indexOf(curStm) + 1
-//                } else {
-//                    continue = false
-//                }
-//            }
-//
-//            // Replace goto targets
-//            for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
-//                var newLabel = replaceBy.findFirst[key == (goto as Goto).target]
-//                if (newLabel != null) {
-//                    (goto as Goto).target = newLabel.value
-//                }
-//            }
-//            replaceBy.clear
-//        }
+        val replaceBy = <Pair<Label, Label>>newLinkedList
+        for (label : scope.eAllContents.toList.filter(Label)) {
+            var EList<Statement> stmList
+            var parent = label.eContainer as Scope
+
+            // Continue until Thread or SCLProgram
+            var continue = true
+
+            stmList = parent.statements
+            var index = stmList.indexOf(label) + 1
+            var Statement curStm = label
+            while (continue) {
+                if (stmList.size > index) {
+                    val nextStatement = stmList.get(index) as Statement
+                    if (nextStatement instanceof Goto) {
+                        val goto = (nextStatement as Goto)
+                        replaceBy += label -> goto.target
+                    }
+                    continue = false;
+                } else if (parent instanceof Thread) {
+                    continue = false
+                } else if (parent instanceof SCLProgram) {
+                    continue = false
+                } else if (parent instanceof ElseScope) {
+                    curStm = parent.eContainer as Statement
+                    parent = parent.eContainer.eContainer as Scope
+                    stmList = parent.statements
+                    index = stmList.indexOf(curStm) + 1
+                } else if (parent instanceof Scope) {
+                    curStm = parent as Statement
+                    parent = parent.eContainer as Scope
+                    stmList = parent.statements
+                    index = stmList.indexOf(curStm) + 1
+                } else {
+                    continue = false
+                }
+            }
+
+            // Replace goto targets
+            for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
+                var newLabel = replaceBy.findFirst[key == (goto as Goto).target]
+                if (newLabel != null) {
+                    (goto as Goto).target = newLabel.value
+                }
+            }
+            replaceBy.clear
+        }
 
         scope
     }

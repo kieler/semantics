@@ -46,6 +46,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.esterel.esterel.TrapExpression
 import de.cau.cs.kieler.kexpressions.Expression
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mrb
@@ -142,7 +143,13 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             trap.statements.transformStatements
             scope.statements.add(trap.statements)
             scope.statements.add(label)
-            scope.statements.transformPausesJoins(conditional, label, exitVariables)
+            var potInst = scope.statements.checkPotentiallyInstantaneous
+            if (potInst.key) {
+                scope.statements.transformPausesJoins(conditional, label, exitVariables, potInst.value)
+            } 
+            else {
+                scope.statements.transformPausesJoins(conditional, label, exitVariables, false)
+            }
             scope.statements.checkGotos
             
             // trap handler
@@ -151,13 +158,18 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 scope.statements.add(parallel)
                 // add a thread for each trap handler
                 for( h : trap.trapHandler ) {
+                    var Conditional conditional2
                     if (h.trapExpr instanceof ValuedObjectReference) {
                         var variable = exitVariables.get((h.trapExpr as ValuedObjectReference).valuedObject)?.key
-                        var conditional2 = createConditional(createValuedObjectReference(variable))
-                        conditional2.statements.add(h.statements)
-                        var thread = createThread(conditional2)
-                        parallel.threads.add(thread)
+                        conditional2 = createConditional(createValuedObjectReference(variable))
                     }
+                    else {
+                        h.trapExpr.transformReferences(exitVariables)
+                        conditional2 = createConditional(h.trapExpr)
+                    }
+                    conditional2.statements.add(h.statements)
+                    var thread = createThread(conditional2)
+                    parallel.threads.add(thread)
                 }
                 transformReferences(parallel, exitVariables)
             }
@@ -204,72 +216,92 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
         }
     }
     
-    def EList<Statement> transformPausesJoins(EList<Statement> statements, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+    def boolean transformPausesJoins(EList<Statement> statements, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
+        var cryingWolf = criedWolf
         for (var i=0; i<statements?.length; i++) {
-            var offsetI = statements.get(i).transformPauseJoin(conditional, label, exitVariables)
-            i += offsetI
+            var pair = statements.get(i).transformPauseJoin(conditional, label, exitVariables, cryingWolf)
+            cryingWolf = cryingWolf && pair.value
+            i += pair.key
             // the offset is used to prevent the indefinite transformation of one specific pause 
         }
-        return statements
+        return cryingWolf
     }
     
-    def int transformPauseJoin(Statement statement, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+    def Pair<Integer, Boolean> transformPauseJoin(Statement statement, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
+        
+        var cryingWolf = criedWolf
+        
         if (statement instanceof Pause) {
-            transformPause(statement, conditional, label)
-            return 1
+            if (!criedWolf) {
+                transformPause(statement, conditional, label)
+                return new Pair(1, false)
+            }
+            return new Pair(0, false)
         }
         else if (statement instanceof Exit) {
             statement.transformExit(label, exitVariables)
         }
         else if (statement instanceof EsterelParallel) {
-            (statement as EsterelParallel).threads?.forEach [ t |
-                transformPausesJoins(t.statements, conditional, label, exitVariables)
-            ]
+            for (t : statement.threads) {
+                cryingWolf = transformPausesJoins(t.statements, conditional, label, exitVariables, criedWolf) && criedWolf
+            }
             transformJoin(statement, conditional, label)
         }
         else if (statement instanceof Parallel) {
-            (statement as Parallel).threads?.forEach [ t |
-                transformPausesJoins(t.statements, conditional, label, exitVariables)
-            ]
+            for (t : statement.threads) {
+                cryingWolf = transformPausesJoins(t.statements, conditional, label, exitVariables, criedWolf) && criedWolf
+            }
             transformJoin(statement, conditional, label)
         }
         else if (statement instanceof StatementContainer) {
             
-            transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables)
+            cryingWolf = transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            var temp = cryingWolf
             
             if (statement instanceof Trap) {
-                (statement as Trap).trapHandler?.forEach[h | transformPausesJoins(h.statements, conditional, label, exitVariables)]
+                for (h : statement.trapHandler) {
+                    cryingWolf = transformPausesJoins(h.statements, conditional, label, exitVariables, temp) && cryingWolf
+                }
             }
             else if (statement instanceof Abort) {
-                transformPausesJoins((statement as Abort).doStatements, conditional, label, exitVariables)
-                (statement as Abort).cases?.forEach[ c | transformPausesJoins(c.statements, conditional, label, exitVariables)]
+                cryingWolf = transformPausesJoins((statement as Abort).doStatements, conditional, label, exitVariables, cryingWolf) && cryingWolf
+                temp = cryingWolf
+                for (c : statement.cases) {
+                    cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, temp) && cryingWolf
+                }
             }
             else if (statement instanceof Exec) {
-                (statement as Exec).execCaseList?.forEach[ c | transformPausesJoins(c.statements, conditional, label, exitVariables)]
+                for (c : statement.execCaseList) {
+                    cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, temp) && cryingWolf
+                }
             }
             else if (statement instanceof Do) {
-                transformPausesJoins((statement as Do).watchingStatements, conditional, label, exitVariables)
+                cryingWolf = transformPausesJoins((statement as Do).watchingStatements, conditional, label, exitVariables, cryingWolf) && cryingWolf
             }
             else if (statement instanceof Conditional) {
                 // Don't transform the pauses in generated Conditionals.
                 var annotations = (statement as Conditional).annotations
                 if (!isGenerated(annotations)) {
-                    transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables)
-                    transformPausesJoins((statement as Conditional).getElse()?.statements, conditional, label, exitVariables)
+                    cryingWolf = transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+                    cryingWolf = transformPausesJoins((statement as Conditional).getElse()?.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
                 }
             }
         }
         else if (statement instanceof Present) {
-            transformPausesJoins((statement as Present).thenStatements, conditional, label, exitVariables)
-            (statement as Present).cases?.forEach[ c | transformPausesJoins(c.statements, conditional, label, exitVariables)]
-            transformPausesJoins((statement as Present).elseStatements, conditional, label, exitVariables)
+            cryingWolf = transformPausesJoins((statement as Present).thenStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            for (c : statement.cases) {
+                cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            }
+            cryingWolf = transformPausesJoins((statement as Present).elseStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
         }
         else if (statement instanceof IfTest) {
-            transformPausesJoins((statement as IfTest).thenStatements, conditional, label, exitVariables)
-            (statement as IfTest).elseif?.forEach [ elsif | transformPausesJoins(elsif.thenStatements, conditional, label, exitVariables)]
-            transformPausesJoins((statement as IfTest).elseStatements, conditional, label, exitVariables)
+            cryingWolf = transformPausesJoins((statement as IfTest).thenStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            for (elsif : statement.elseif) {
+                cryingWolf = transformPausesJoins(elsif.thenStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            }
+            cryingWolf = transformPausesJoins((statement as IfTest).elseStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
         }
-        return 0
+        return new Pair(0, cryingWolf)
     }
     
     def transformPause(Statement statement, Conditional conditional, Label label) {
@@ -322,7 +354,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
         }
     }
     
-    def transformReferences(Statement statement, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
+    def transformReferences(EObject statement, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables) {
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed signal then set the reference to the new signal
         var references = statement.eAllContents.filter(ValuedObjectReference)
@@ -332,10 +364,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 var signal = ref.valuedObject as ISignal
                 // if the valued object reference references a transformed trap signal
                 if (exitVariables.containsKey(signal)) {
-                    if (exitVariables.get(signal).value == null) {
-                            throw new UnsupportedOperationException("There is no second valued object for the following valued trap! " + signal.name)
-                    }
-                    ref.valuedObject = exitVariables.get(signal).value
+                    ref.valuedObject = exitVariables.get(signal).key
                 }
             }
         }
@@ -349,17 +378,143 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 var signal = expr.trap as ISignal
                 // if the trap references a transformed trap signal
                 if (exitVariables.containsKey(signal)) {
-                    if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
-                        var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
-                        var pos = list.indexOf(expr)
-                        list.set(pos, createValuedObjectReference(exitVariables.get(signal).value))
+                    if (exitVariables.get(signal).value != null) {
+                        if(expr.eContainer.eGet(expr.eContainingFeature) instanceof EList) {
+                            var list = expr.eContainer.eGet(expr.eContainingFeature) as EList<Expression>
+                            var pos = list.indexOf(expr)
+                            list.set(pos, createValuedObjectReference(exitVariables.get(signal).value))
+                        }
+                        else {
+                            setExpression(createValuedObjectReference(exitVariables.get(signal).value), expr.eContainer)
+                        }
                     }
                     else {
-                        setExpression(createValuedObjectReference(exitVariables.get(signal).value), expr.eContainer)
+                        throw new UnsupportedOperationException("The following trap is not a valued trap! " + signal.name)
                     }
                 }
             }
         }
+    }
+    
+    /**
+     * Checks whether the trap statement is potentially instantaneous or if no exit can be reached before a pause.
+     */
+    def Pair<Boolean, Boolean> checkPotentiallyInstantaneous(EList<Statement> statements) {
+        var criedWolf = new Pair(false, true)
+        for (var i=0; i<statements?.length; i++) {
+            criedWolf = checkStatement(statements.get(i))
+            if (criedWolf.key) {
+                i = statements.length
+            }
+        }
+        return criedWolf
+    }
+    
+    def Pair<Boolean, Boolean> checkStatement(Statement statement) {
+        
+        // the key stands for 'found a trap or pause' and the value stands for ' !(is potentially instantaneous) '
+        var criedWolf = new Pair(false, true)
+        
+        if (statement instanceof Pause) {
+           return new Pair(true, true)
+        }
+        if (statement instanceof Exit) {
+            return new Pair(true, false)
+        }
+        else if (statement instanceof StatementContainer) {
+            
+            criedWolf = checkPotentiallyInstantaneous((statement as StatementContainer).statements)
+            
+            if (statement instanceof Trap) {
+                for (h : (statement as Trap).trapHandler) {
+                    var temp = checkPotentiallyInstantaneous(h.statements)
+                    if (temp.key == true) {
+                        criedWolf = new Pair(true, criedWolf.value && temp.value)
+                    }
+                }
+            }
+            else if (statement instanceof Abort) {
+                var temp = checkPotentiallyInstantaneous((statement as Abort).doStatements)
+                if (temp.key) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+                for (c : (statement as Abort).cases) {
+                    temp = checkPotentiallyInstantaneous(c.statements)
+                    if (temp.key == true) {
+                        criedWolf = new Pair(true, criedWolf.value && temp.value)
+                    }
+                }
+            }
+            else if (statement instanceof Exec) {
+                for (c : (statement as Exec).execCaseList) {
+                    var temp = checkPotentiallyInstantaneous(c.statements)
+                    if (temp.key == true) {
+                        criedWolf = new Pair(true, criedWolf.value && temp.value)
+                    }
+                }
+            }
+            else if (statement instanceof Do) {
+                var temp = checkPotentiallyInstantaneous((statement as Do).watchingStatements)
+                if (temp.key) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+            else if (statement instanceof Conditional) {
+                var temp = checkPotentiallyInstantaneous((statement as Conditional).getElse()?.statements)
+                if (temp.key) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+        }
+        else if (statement instanceof Present) {
+            var temp = checkPotentiallyInstantaneous((statement as Present).thenStatements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
+            for (c : (statement as Present).cases) {
+                temp = checkPotentiallyInstantaneous((statement as Present).elseStatements)
+                if (temp.key == true) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+            temp = checkPotentiallyInstantaneous((statement as Present).elseStatements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
+        }
+        else if (statement instanceof IfTest) {
+            var temp = checkPotentiallyInstantaneous((statement as IfTest).thenStatements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
+            for (e : (statement as IfTest).elseif) {
+                temp = checkPotentiallyInstantaneous(e.thenStatements)
+                if (temp.key == true) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+            temp = checkPotentiallyInstantaneous((statement as IfTest).elseStatements)
+            if (temp.key) {
+                criedWolf = new Pair(true, criedWolf.value && temp.value)
+            }
+        }
+        else if (statement instanceof EsterelParallel) {
+            for (t : (statement as EsterelParallel).threads) {
+                var temp = checkPotentiallyInstantaneous(t.statements)
+                if (temp.key == true) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+        }
+        else if (statement instanceof Parallel) {
+            for (t : (statement as Parallel).threads) {
+                var temp = checkPotentiallyInstantaneous(t.statements)
+                if (temp.key == true) {
+                    criedWolf = new Pair(true, criedWolf.value && temp.value)
+                }
+            }
+        }
+        return criedWolf
     }
     
 }

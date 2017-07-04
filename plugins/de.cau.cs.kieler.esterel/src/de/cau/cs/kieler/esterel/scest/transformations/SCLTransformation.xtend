@@ -62,8 +62,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
             , SCEstTransformation::UNEMIT_ID, SCEstTransformation::SET_ID
             , SCEstTransformation::SIGNAL_ID, SCEstTransformation::CONSTANT_ID
             , SCEstTransformation::SENSOR_ID, SCEstTransformation::FUNCTION_ID
-            , SCEstTransformation::LABELRENAMING_ID, SCEstTransformation::RUN_ID
-            , SCEstTransformation::EXEC_ID
+            , SCEstTransformation::LABELRENAMING_ID
         )
     }
 
@@ -72,7 +71,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
 
     def SCLProgram transform(SCEstProgram prog) {
         var sclProg = createSCLProg
-        sclProg.name = "SCEst_To_SCL"
+        sclProg.name = "GENERATED_SCL_MODULE"
         for (m : prog.modules) {
             m.removeLocalSignalsAndVariables
             transformModule(m, sclProg)

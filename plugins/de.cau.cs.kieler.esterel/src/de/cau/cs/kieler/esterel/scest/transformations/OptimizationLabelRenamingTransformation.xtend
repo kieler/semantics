@@ -70,7 +70,6 @@ class OptimizationLabelRenamingTransformation extends AbstractExpansionTransform
             , SCEstTransformation::UNEMIT_ID, SCEstTransformation::SET_ID
             , SCEstTransformation::SIGNAL_ID, SCEstTransformation::CONSTANT_ID
             , SCEstTransformation::SENSOR_ID, SCEstTransformation::FUNCTION_ID
-            , SCEstTransformation::RUN_ID, SCEstTransformation::EXEC_ID
         )
     }
 

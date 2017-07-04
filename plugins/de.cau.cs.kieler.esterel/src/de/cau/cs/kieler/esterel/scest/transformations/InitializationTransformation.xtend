@@ -96,14 +96,12 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
             var parallel = statement as EsterelParallel
             parallel.threads.forEach [ t |
                 transformStatements(t.statements, depth+1)
-//                t.statements.add(createLabel(createNewUniqueLabel))
             ]
             
         }
         else if (statement instanceof Parallel) {
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements, depth+1)
-//                t.statements.add(createLabel(createNewUniqueLabel))
             ]
         }
         else if (statement instanceof StatementContainer) {
