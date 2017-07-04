@@ -11,6 +11,8 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
+package de.cau.cs.kieler.railsl.compilation
+
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import org.eclipse.emf.ecore.EObject
 import java.util.Set
@@ -97,12 +99,12 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     /**
      * The speed value for slow driving
      */
-    final static val SPEED_SLOW = 45;
+    public static val SPEED_SLOW = 45;
     
     /**
      * The speed value for full speed driving
      */
-    final static val SPEED_FULL = 120;
+    public static val SPEED_FULL = 120;
 
     /**
      * Maps variable names in the top-level SCChart to their corresponding @code{ValuedObjects}.
@@ -112,17 +114,17 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     /**
      * The number of segments that exist in the railway installation.
      */
-    final static val NUM_OF_SEGMENTS = 48
+    public static val NUM_OF_SEGMENTS = 48
     
     /**
      * The number of points that exist in the railway installation.
      */
-    final static val NUM_OF_POINTS = 30
+    public static val NUM_OF_POINTS = 30
     
     /**
      * The number of lights that exist in the railway installation.
      */
-    final static val NUM_OF_LIGHTS = 24
+    public static val NUM_OF_LIGHTS = 24
     
     /**
      * Helper variable to count region IDs
