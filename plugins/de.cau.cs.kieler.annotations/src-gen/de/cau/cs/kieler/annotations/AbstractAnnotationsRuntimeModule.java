@@ -123,11 +123,6 @@ public abstract class AbstractAnnotationsRuntimeModule extends org.eclipse.xtext
 		binder.bindConstant().annotatedWith(org.eclipse.xtext.scoping.IgnoreCaseLinking.class).to(false);
 	}
 
-	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
-	public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
-		return de.cau.cs.kieler.annotations.formatting.AnnotationsFormatter.class;
-	}
-
 	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
 	public Class<? extends org.eclipse.xtext.formatting2.IFormatter2> bindIFormatter2() {
 		return de.cau.cs.kieler.annotations.formatting2.AnnotationsFormatter.class;

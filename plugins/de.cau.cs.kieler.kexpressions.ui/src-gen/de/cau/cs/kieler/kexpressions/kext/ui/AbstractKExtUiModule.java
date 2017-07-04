@@ -47,6 +47,11 @@ public abstract class AbstractKExtUiModule extends org.eclipse.xtext.ui.DefaultU
 		return org.eclipse.xtext.ui.refactoring.impl.DefaultDependentElementsCalculator.class;
 	}
 
+	// contributed by org.eclipse.xtext.generator.formatting2.Formatter2Fragment
+	public Class<? extends org.eclipse.xtext.ui.editor.formatting.IContentFormatterFactory> bindIContentFormatterFactory() {
+		return org.eclipse.xtext.ui.editor.formatting2.ContentFormatterFactory.class;
+	}
+
 	// contributed by org.eclipse.xtext.ui.generator.labeling.LabelProviderFragment
 	public Class<? extends org.eclipse.jface.viewers.ILabelProvider> bindILabelProvider() {
 		return de.cau.cs.kieler.kexpressions.kext.ui.labeling.KExtLabelProvider.class;
