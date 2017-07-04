@@ -47,6 +47,7 @@ import com.google.common.collect.HashMultimap;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -556,18 +557,20 @@ public class TimingAnalysis extends Job {
         HashSet<String> inputOutputNameSet = new HashSet<String>();
         while (declarationListIterator.hasNext()) {
             Declaration currentDeclaration = declarationListIterator.next();
-            String name = currentDeclaration.getValuedObjects().get(0)
-                    .getName();
-            if (currentDeclaration.isInput()) {
-                ValueType type = currentDeclaration.getType();
-                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-                    stringBuilder
-                            .append("\nGlobalVar " + name + " 0..1");
-                    inputOutputNameSet.add(name);
-                }
-            } else {
-                if (currentDeclaration.isOutput()) {
-                    inputOutputNameSet.add(name);
+            Iterator<ValuedObject> valuedObjectsListIterator =
+                    currentDeclaration.getValuedObjects().iterator();
+            while (valuedObjectsListIterator.hasNext()) {
+                String name = valuedObjectsListIterator.next().getName();
+                if (currentDeclaration.isInput()) {
+                    ValueType type = currentDeclaration.getType();
+                    if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
+                        stringBuilder.append("\nGlobalVar " + name + " 0..1");
+                        inputOutputNameSet.add(name);
+                    }
+                } else {
+                    if (currentDeclaration.isOutput()) {
+                        inputOutputNameSet.add(name);
+                    }
                 }
             }
         }
