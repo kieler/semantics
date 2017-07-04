@@ -22,16 +22,16 @@ import de.cau.cs.kieler.railSL.CrossingStatement
  *
  */
 class RailSLExtensions {
-       
+   
     /**
      * The speed value for slow driving
      */
-    final static val SPEED_SLOW = 45;
+    public static val SPEED_SLOW = 45;
     
     /**
      * The speed value for full speed driving
      */
-    final static val SPEED_FULL = 120;
+    public static val SPEED_FULL = 120;
     
     
     /*****************************************************************************************

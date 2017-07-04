@@ -23,10 +23,10 @@ import de.cau.cs.kieler.railSL.SetPointStatement
 import de.cau.cs.kieler.railSL.LightStatement
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
+import de.cau.cs.kieler.railsl.compilation.RailSLTransformation
 import org.eclipse.ui.PlatformUI
-
-// TODO this import doesn't work as the view is not exported
-// import de.cau.cs.kieler.kvis.ui.views.KVisView
+import de.cau.cs.kieler.kvis.ui.views.KVisView
+import org.eclipse.swt.widgets.Display
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -36,12 +36,37 @@ import org.eclipse.ui.PlatformUI
  */
 class Visualizer {
     
+    final static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4",
+            "IC_LN_5", "IC_ST_0", "IC_ST_1", "IC_ST_2", "IC_ST_3", "IC_ST_4", "IO_LN_0", "IO_LN_1", "IO_LN_2",
+            "KH_LN_0", "KH_LN_1", "KH_LN_2", "KH_LN_3", "KH_LN_4", "KH_LN_5", "KH_LN_6", "KH_LN_7", "KH_LN_8",
+            "KH_ST_0", "KH_ST_1", "KH_ST_2", "KH_ST_3", "KH_ST_4", "KH_ST_5", "KH_ST_6", "KIO_LN_0", "KIO_LN_1",
+            "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2", "OC_LN_3", "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1",
+            "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1", "OI_LN_2"}
+    
     @Inject extension RailSLExtensions
     
-    private val pool = new DataPool()
+    private var DataPool pool
     
-    public def Visualizer() {
-        // TODO initialize pool in a meaningful way
+   new() {
+        pool = new DataPool()
+        val model = new Model()
+        model.name = "railway"
+        model.pool = pool
+        pool.addModel(model)
+        
+        model.addVariable(new Variable("Backfisch", "1"))
+        
+        // Add tracks at speed 0
+        for (constant : constants) {
+            model.addVariable(new Variable(constant, "0"))
+        }
+        
+        //Add points as straight
+        for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
+            
+        }
+        
+        updateView()
     }
     
     public def DataPool getDataPool() {
@@ -49,24 +74,25 @@ class Visualizer {
     } 
     
     public def void updateView() {
-        val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        // val view = page.findView(KVisView.ID);
         
-        val view = page.findView("de.cau.cs.kieler.simulation.ui.dataPoolView") //as KVisView
-        
-        // view.update(pool)
+        Display.getDefault().asyncExec(new Runnable() {
+                    override void run() {
+                        KVisView.instance?.update(pool)
+                    }
+                });
     } 
     
     public def void assembleModel(Program program) {
         
+        val model = pool.getModel("railway")
+        
         for (block : program.blocks) {
-            pool.addModel(assembleBlock(block))
+            model.assembleBlock(block)
         }
         
     }
     
-    def Model assembleBlock(Block block) {
-        val model = new Model()
+    def Model assembleBlock(Model model, Block block) {
         for (statement : block.statements) {
             model.addValues(statement)
         }

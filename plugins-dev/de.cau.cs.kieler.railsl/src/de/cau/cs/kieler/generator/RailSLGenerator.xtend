@@ -21,7 +21,7 @@ import de.cau.cs.kieler.railSL.Program
  */
 class RailSLGenerator extends AbstractGenerator {
 
-    private static final val visualizer = new Visualizer() 
+    private static Visualizer visualizer  
 
     /**
      * Generates static code required by PROM.
@@ -31,6 +31,9 @@ class RailSLGenerator extends AbstractGenerator {
         generateHeaders(fsa)
         generateSnippets(fsa)
         
+        if (visualizer == null) {
+            visualizer = new Visualizer()
+           }
         visualizer.assembleModel(resource.contents.filter(Program).head)
         visualizer.updateView()
     }
@@ -43,14 +46,14 @@ class RailSLGenerator extends AbstractGenerator {
      * Generates all snippets required for a compilation via PROM.
      */
     def void generateSnippets(IFileSystemAccess fsa) {
-        fsa.generateFile('contacts.ftl', generateContactsSnippet())
-        fsa.generateFile('lights.ftl', generateLightsSnippet())
-        fsa.generateFile('points.ftl', generatePointsSnippet())
-        fsa.generateFile('signals.ftl', generateSignalsSnippet())
-        fsa.generateFile('tracks.ftl', generateTracksSnippet())
-        fsa.generateFile('second.ftl', generateSecondSnippet())
-        fsa.generateFile('crossing.ftl', generateCrossingSnippet())
-        fsa.generateFile('ControllerMain.ftl', generateMainSnippet())
+        fsa.generateFile('../snippets/contacts.ftl', generateContactsSnippet())
+        fsa.generateFile('../snippets/lights.ftl', generateLightsSnippet())
+        fsa.generateFile('../snippets/points.ftl', generatePointsSnippet())
+        fsa.generateFile('../snippets/signals.ftl', generateSignalsSnippet())
+        fsa.generateFile('../snippets/tracks.ftl', generateTracksSnippet())
+        fsa.generateFile('../snippets/second.ftl', generateSecondSnippet())
+        fsa.generateFile('../snippets/crossing.ftl', generateCrossingSnippet())
+        fsa.generateFile('../snippets/ControllerMain.ftl', generateMainSnippet())
     }
 
     /**

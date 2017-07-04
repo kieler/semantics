@@ -22,7 +22,7 @@
  <extension
        point="de.cau.cs.kieler.kicool.processor">
     <Processor
-          class="RailSLWrapper">
+          class="de.cau.cs.kieler.railsl.compilation.RailSLWrapper">
     </Processor>
  </extension>
  <extension
