@@ -8,5 +8,18 @@
             id="de.cau.cs.kieler.cview">
       </diagramSynthesis>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.editor">
+      <editor
+            controllerID="de.cau.cs.kieler.cview.klighd.controller"
+            editorID="org.eclipse.cdt.ui.editor.CEditor">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.controller">
+      <controller
+            class="de.cau.cs.kieler.cview.KLighDController">
+      </controller>
+   </extension>
 
 </plugin>

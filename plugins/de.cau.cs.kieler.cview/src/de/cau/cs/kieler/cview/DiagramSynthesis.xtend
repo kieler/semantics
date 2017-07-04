@@ -23,28 +23,39 @@ import java.lang.Object
 import org.eclipse.ui.texteditor.AbstractMarkerAnnotationModel
 
 /* Package and import statements... */
-class DiagramSynthesis extends AbstractDiagramSynthesis<AbstractMarkerAnnotationModel> {
+class DiagramSynthesis extends AbstractDiagramSynthesis<String> {
 
-	@Inject extension KNodeExtensions
-	@Inject extension KEdgeExtensions
-	@Inject extension KPortExtensions
-	@Inject extension KLabelExtensions
-	@Inject extension KRenderingExtensions
-	@Inject extension KContainerRenderingExtensions
-	@Inject extension KPolylineExtensions
-	@Inject extension KColorExtensions
-	extension KRenderingFactory = KRenderingFactory.eINSTANCE
+    @Inject extension KNodeExtensions
+    @Inject extension KEdgeExtensions
+    @Inject extension KPortExtensions
+    @Inject extension KLabelExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension KPolylineExtensions
+    @Inject extension KColorExtensions
+    extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
-	override KNode transform(AbstractMarkerAnnotationModel model) {
-		
-		// If you get a NPE here, then add "de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:" before the
-		// class name of the synthesis defined in the plugin.xml under "<diagramSynthesis>" 
-		val root = model.createNode().associateWith(model);
+    override KNode transform(String model) {
 
-		// Your dsl element <-> diagram figure mapping goes here!!
-		//model.folders.forEach[ s | root.children += transform(s) ]
-		
-		return root;
-	}
+        // If you get a NPE here, then add "de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:" before the
+        // class name of the synthesis defined in the plugin.xml under "<diagramSynthesis>" 
+        val root = model.createNode().associateWith(model);
+        
+        val node = model.createNode().associateWith(model);
+
+        // Your dsl element <-> diagram figure mapping goes here!!
+        // model.folders.forEach[ s | root.children += transform(s) ]
+        // root.addEllipse.addEllipse.addRoundedRectangle(200, 200)
+        node.addRoundedRectangle(4, 4, 2);
+
+        node.addInsideCenteredNodeLabel(model, KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME);
+
+        node.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+
+        root.children.add(node)
+
+        return root;
+    }
 
 }

@@ -56,6 +56,11 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
             "<xmi:XMI xmlns:xmi = \"http://www.omg.org/spec/XMI/20110701\" xmlns:uml = \"http://www.omg.org/spec/UML/20110701\" >";
         returnText = returnText + content.substring(startIndex, endIndex);
         returnText = returnText + "</uml:Model></xmi:XMI>";
+        
+        
+        returnText = returnText.replace("<entry ", "<entry kind=\"entry\" ")
+        returnText = returnText.replace("<exit ", "<exit kind=\"exit\" ")
+        
         return returnText;
     }
     
