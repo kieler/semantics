@@ -161,5 +161,12 @@ class KExpressionsDeclarationExtensions {
             eObject.eContents.filter(ReferenceDeclaration).forEach[ list += it ]
         ]
     }      
+ 
+    def Declaration checkAndCleanup(Declaration declaration) {
+        if (declaration.valuedObjects.nullOrEmpty) { 
+            declaration.remove
+        }
+        declaration
+    } 
     
 }

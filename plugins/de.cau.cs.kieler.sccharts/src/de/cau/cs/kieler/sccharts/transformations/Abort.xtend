@@ -41,6 +41,7 @@ import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Abort Transformation.
@@ -84,6 +85,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
     @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension Termination
+    @Inject extension KEffectsExtensions
     @Inject extension SCChartsTransformationExtension
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions
@@ -182,12 +184,6 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 mixedDelayedStrongAborts = false
             }
                 
-                
-            // !!!CHANGED: !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE) == no "real" final states but just auxiliary ones which have been transformed to weak aborts! 
-            val finalStates = state.regions.filter(ControlflowRegion).filter [e|
-                e.states.filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size > 0
-            ].size > 0
-
             var aFinalStateInEveryRegion = true;
             for (region : state.regions.filter(ControlflowRegion)) {
                 if (region.states.filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size ==

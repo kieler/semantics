@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Initialization Transformation.
@@ -66,6 +67,7 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
 
     //-------------------------------------------------------------------------
     @Inject extension KExpressionsValuedObjectExtensions    
+    @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions

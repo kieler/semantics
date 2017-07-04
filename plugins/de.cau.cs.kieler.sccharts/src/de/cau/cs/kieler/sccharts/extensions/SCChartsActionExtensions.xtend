@@ -171,11 +171,12 @@ class SCChartsActionExtensions {
     
     def createAssignment(Action action, ValuedObject valuedObject) {
         valuedObject.createAssignment => [ action.addAssignment(it) ]
-    }  
-
-    def createAssignment(ValuedObject valuedObject, Expression expression) {
-        valuedObject.createAssignment => [ it.expression = expression ]
-    }  
+    }
+      
+//  superfluous, see KEffectsExtensions
+//    def createAssignment(ValuedObject valuedObject, Expression expression) {
+//        valuedObject.createAssignment => [ it.expression = expression ]
+//    }  
     
     def createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {
         valuedObject.createAssignment(newValue) => [ action.addAssignment(it) ]

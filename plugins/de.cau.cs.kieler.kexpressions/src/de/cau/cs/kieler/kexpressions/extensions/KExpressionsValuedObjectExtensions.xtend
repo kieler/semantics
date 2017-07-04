@@ -173,14 +173,15 @@ class KExpressionsValuedObjectExtensions {
         ]  
     }    
     
-    def void deleteAndCleanup(ValuedObject valuedObject) {
+    def ValuedObject removeFromContainmentAndCleanup(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
         valuedObject.remove
         if (declaration.valuedObjects.nullOrEmpty) { 
             declaration.remove
         }
+        valuedObject
     }
-
+    
     def Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             valuedObject.eContainer as Declaration

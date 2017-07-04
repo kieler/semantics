@@ -36,6 +36,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Exit Transformation.
@@ -74,6 +75,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions    
+    @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions

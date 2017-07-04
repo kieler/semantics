@@ -124,7 +124,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
                 ]
             }
         }
-        constObjects.forEach[deleteAndCleanup]
+        constObjects.forEach[ removeFromContainmentAndCleanup ]
 
     }
 

@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts For Transformation.
@@ -65,6 +66,7 @@ class For extends AbstractExpansionTransformation {
     }
 
     // -------------------------------------------------------------------------
+    @Inject extension KEffectsExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions

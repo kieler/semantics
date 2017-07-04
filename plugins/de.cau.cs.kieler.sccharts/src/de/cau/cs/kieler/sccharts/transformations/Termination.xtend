@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Termination Transformation.
@@ -80,6 +81,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
     // -------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KEffectsExtensions
     @Inject extension SCChartsTransformationExtension
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsStateExtensions

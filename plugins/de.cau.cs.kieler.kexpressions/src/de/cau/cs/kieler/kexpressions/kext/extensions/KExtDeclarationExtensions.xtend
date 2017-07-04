@@ -63,6 +63,14 @@ class KExtDeclarationExtensions {
         valuedObject
     }
     
+    def ValuedObject addValuedObject(DeclarationScope scope, ValuedObject valuedObject, Declaration declaration) {
+        declaration.valuedObjects += valuedObject
+        if (!scope.declarations.contains(declaration)) {
+            scope.declarations += declaration
+        }
+        valuedObject
+    }    
+    
     def ValuedObject findValuedObjectByName(DeclarationScope scope, String name) {
         var EObject container = scope
         while (container != null) {
@@ -78,5 +86,15 @@ class KExtDeclarationExtensions {
         }
         null
     }    
+    
+    def DeclarationScope getDeclarationScope(Declaration declaration) {
+        if (declaration.eContainer instanceof DeclarationScope) return declaration.eContainer as DeclarationScope
+        return null
+    }
+    
+    def DeclarationScope getDeclarationScope(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof Declaration) return (valuedObject.eContainer as Declaration).declarationScope
+        return null
+    }
     
 }
