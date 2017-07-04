@@ -17,6 +17,7 @@ import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
@@ -24,15 +25,11 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
-import java.util.List
-import java.util.logging.Logger
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.swt.widgets.Display
+import org.eclipse.ui.IViewPart
+import org.eclipse.ui.PlatformUI
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.core.model.PluginLog
-import de.cau.cs.kieler.core.model.Log
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -135,10 +132,13 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         
         hooks.invokeFinish(root, rootNode);
 
-        // Log elapsed time
-        Log.log(
-            "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
-                ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
+        // Log elapsed time to status line of DiagramView
+        val message = "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
+                ((System.currentTimeMillis - startTime) as float / 1000) + "s."
+        val view = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(DiagramView.ID);
+        if(view != null) {
+            view.setStatusBarMessage(message)
+        }
 		
         return rootNode;
     }
@@ -150,4 +150,16 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         return super.usedContext;
     }
     
+    private def void setStatusBarMessage(IViewPart view, String message) {
+        val bars = view.getViewSite().getActionBars();
+        if(bars != null) {
+            val statusLineManager = bars.getStatusLineManager()
+            // Run in UI thread
+            Display.getDefault().asyncExec(new Runnable() {
+                override void run() {
+                    statusLineManager.message = message
+                }
+            });
+        }
+    }
 }
