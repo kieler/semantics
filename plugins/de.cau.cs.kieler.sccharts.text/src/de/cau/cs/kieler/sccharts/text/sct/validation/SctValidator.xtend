@@ -70,7 +70,7 @@ class SctValidator extends SctJavaValidator {
             val hasLoop = findImmediateLoop(state, visited)
             if(hasLoop) {
                 // Loop detected, so add warning marker on all involved states
-                val List<de.cau.cs.kieler.sccharts.State> statesWithLoop = newArrayList
+                val Set<de.cau.cs.kieler.sccharts.State> statesWithLoop = newHashSet
                 for(entry : visited.entrySet) {
                     if(entry.value == 1) {
                         statesWithLoop.add(entry.key)
