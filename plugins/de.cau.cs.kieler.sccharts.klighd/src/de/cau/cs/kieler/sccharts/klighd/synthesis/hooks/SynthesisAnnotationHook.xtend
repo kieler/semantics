@@ -81,7 +81,7 @@ class SynthesisAnnotationHook extends SynthesisHook {
     
     override processRegion(Region region, KNode node) {
         if (node.data.filter(KRendering).size > 1) {
-            for (anno : region.annotations) {
+            for (anno : region.annotations.filter[ name != null ]) {
                 if (anno.name.equalsIgnoreCase(COLLAPSED_ANNOTATION)) {
                     node.setLayoutOption(KlighdProperties::EXPAND, false)
                 } else if (anno.name.equalsIgnoreCase(EXPAND_ANNOTATION)) {

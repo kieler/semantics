@@ -38,6 +38,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -50,23 +51,14 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 @ViewSynthesisShared
 class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KRenderingExtensions
-
-    @Inject
-    extension SCChartsSerializeHRExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions    
-
-    @Inject
-    extension StateSynthesis
-
-    @Inject
-    extension ControlflowRegionStyles
+    @Inject extension KNodeExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension KExpressionsDeclarationExtensions    
+    @Inject extension StateSynthesis
+    @Inject extension ControlflowRegionStyles
+    @Inject extension CommentSynthesis
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
@@ -131,7 +123,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure;
         }
 
-        return <KNode> newArrayList(node)
+        val returnNodes = <KNode> newArrayList(node)
+        
+        region.getCommentAnnotations.forEach[
+            node.children += it.transform                
+        ]                        
+
+        return returnNodes
     }
 
     /**

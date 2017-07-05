@@ -26,7 +26,9 @@ class AnnotationsExtensions {
 	} 
 
     def Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
-        annotatable.annotations.filter[ it.name.equals(name) ]
+        annotatable.annotations?.filter[ 
+            it.name != null && it.name.equals(name)
+        ]
     } 
     
     def Pragma getPragma(Pragmatable pragmatable, String name) {

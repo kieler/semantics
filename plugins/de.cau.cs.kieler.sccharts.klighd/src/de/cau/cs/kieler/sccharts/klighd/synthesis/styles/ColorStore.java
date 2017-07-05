@@ -68,6 +68,11 @@ public class ColorStore {
         REFERENCENODE_BACKGROUND_GRADIENT_2(224, 176, 9),
         REFERENCENODE_FOREGROUND(Colors.GRAY),
         
+        COMMENT_FOREGROND(Colors.ORANGE),
+        COMMENT_BACKGROUND_GRADIENT_1(Colors.YELLOW),
+        COMMENT_BACKGROUND_GRADIENT_2(Colors.YELLOW_1),
+        COMMENT_TEXT(0, 0, 0),
+        COMMENT_EDGE(Colors.LIGHT_GRAY),
         
         KEYWORD(115, 0, 65);
 

@@ -52,6 +52,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
     @Inject ControlflowRegionSynthesis controlflowSynthesis    
     @Inject DataflowRegionSynthesis dataflowSynthesis  
     @Inject TransitionSynthesis transitionSynthesis
+    @Inject CommentSynthesis commentSynthesis
         
     @Inject SynthesisHooks hooks  
 

@@ -82,9 +82,8 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
         
         // highlight the annotation value according to
         //   AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION
-        if (grammarElement == g.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()
-                || grammarElement == g.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()
-                || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()) {
+        if (grammarElement == g.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()) 
+        {
             acceptor.addPosition(node.getOffset(), node.getLength(),
                     AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
         }

@@ -68,7 +68,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="TypedStringAnnotation" eSuperTypes="#//StringAnnotation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CommentAnnotation" eSuperTypes="#//StringAnnotation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CommentAnnotation" eSuperTypes="#//StringAnnotation #//Annotatable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Pragma" eSuperTypes="#//NamedObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="StringPragma" eSuperTypes="#//Pragma">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" unique="false"

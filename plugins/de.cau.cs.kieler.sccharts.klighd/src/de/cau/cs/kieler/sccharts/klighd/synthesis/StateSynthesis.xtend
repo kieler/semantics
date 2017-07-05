@@ -37,6 +37,7 @@ import java.util.List
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -50,6 +51,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject extension KNodeExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -58,6 +60,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
     @Inject extension StateStyles
+    @Inject extension CommentSynthesis
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state);
@@ -176,8 +179,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (state.isReferencedState) {
             node.children += state.createReferenceRegion
         }
+        
+        val returnNodes = <KNode> newArrayList(node)
+        
+        state.getCommentAnnotations.forEach[
+            returnNodes += it.transform                
+        ]                        
 
-        return <KNode> newArrayList(node)
+        return returnNodes
     }
 
     /** Checks if given state should be visualized as macro state */
