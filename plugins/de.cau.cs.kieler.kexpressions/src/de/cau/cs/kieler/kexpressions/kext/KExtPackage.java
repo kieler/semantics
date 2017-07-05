@@ -57,10 +57,10 @@ public interface KExtPackage extends EPackage {
     KExtPackage eINSTANCE = de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.kext.DeclarationScope <em>Declaration Scope</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.DeclarationScopeImpl <em>Declaration Scope</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.DeclarationScopeImpl
      * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getDeclarationScope()
      * @generated
      */
@@ -480,10 +480,10 @@ public interface KExtPackage extends EPackage {
         EReference ANNOTATED_EXPRESSION__EXPRESSION = eINSTANCE.getAnnotatedExpression_Expression();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.kext.DeclarationScope <em>Declaration Scope</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.DeclarationScopeImpl <em>Declaration Scope</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.DeclarationScopeImpl
          * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getDeclarationScope()
          * @generated
          */

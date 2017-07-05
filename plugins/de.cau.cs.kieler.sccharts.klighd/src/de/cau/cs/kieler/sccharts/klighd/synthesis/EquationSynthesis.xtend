@@ -34,7 +34,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.EquationStyles
 import java.util.EnumSet
 import java.util.List
@@ -76,7 +76,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KExpressionsValueExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions
-    @Inject extension SCChartsSerializeHRExtension    
+    @Inject extension SCChartsSerializeHRExtensions
     @Inject extension EquationStyles
     @Inject extension DataflowRegionSynthesis
     @Inject extension SCChartsSynthesis

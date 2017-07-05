@@ -485,165 +485,165 @@ public interface KExpressionsPackage extends EPackage {
     int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
-    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__ANNOTATIONS = DECLARATION__ANNOTATIONS;
 
     /**
-    * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-    * The feature id for the '<em><b>Type</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__TYPE = DECLARATION_FEATURE_COUNT + 0;
 
     /**
-    * The feature id for the '<em><b>Input</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__INPUT = DECLARATION_FEATURE_COUNT + 1;
 
     /**
-    * The feature id for the '<em><b>Output</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Output</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__OUTPUT = DECLARATION_FEATURE_COUNT + 2;
 
     /**
-    * The feature id for the '<em><b>Static</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__STATIC = DECLARATION_FEATURE_COUNT + 3;
 
     /**
-    * The feature id for the '<em><b>Signal</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Signal</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__SIGNAL = DECLARATION_FEATURE_COUNT + 4;
 
     /**
-    * The feature id for the '<em><b>Const</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__CONST = DECLARATION_FEATURE_COUNT + 5;
 
     /**
-    * The feature id for the '<em><b>Extern</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Extern</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 6;
 
     /**
-    * The feature id for the '<em><b>Volatile</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Volatile</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__VOLATILE = DECLARATION_FEATURE_COUNT + 7;
 
     /**
-    * The feature id for the '<em><b>Host Type</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Host Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION__HOST_TYPE = DECLARATION_FEATURE_COUNT + 8;
 
     /**
-    * The number of structural features of the '<em>Variable Declaration</em>' class.
-    * <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Variable Declaration</em>' class.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int VARIABLE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 9;
 
     /**
-    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int REFERENCE_DECLARATION__ANNOTATIONS = DECLARATION__ANNOTATIONS;
 
     /**
-    * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int REFERENCE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-    * The feature id for the '<em><b>Reference</b></em>' reference.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int REFERENCE_DECLARATION__REFERENCE = DECLARATION_FEATURE_COUNT + 0;
 
     /**
-    * The feature id for the '<em><b>Extern</b></em>' attribute.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Extern</b></em>' attribute.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 1;
 
     /**
-    * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
-    * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 2;
 
     /**
-    * The number of structural features of the '<em>Reference Declaration</em>' class.
-    * <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Reference Declaration</em>' class.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
 
     /**
@@ -674,13 +674,31 @@ public interface KExpressionsPackage extends EPackage {
     int PARAMETER__EXPRESSION = 2;
 
     /**
+     * The feature id for the '<em><b>Explicit Binding</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER__EXPLICIT_BINDING = 3;
+
+    /**
+     * The feature id for the '<em><b>Explicit Binding Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER__EXPLICIT_BINDING_INDICES = 4;
+
+    /**
      * The number of structural features of the '<em>Parameter</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PARAMETER_FEATURE_COUNT = 3;
+    int PARAMETER_FEATURE_COUNT = 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Call <em>Call</em>}' class.
@@ -1341,6 +1359,28 @@ public interface KExpressionsPackage extends EPackage {
     EReference getParameter_Expression();
 
     /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.Parameter#getExplicitBinding <em>Explicit Binding</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Explicit Binding</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Parameter#getExplicitBinding()
+     * @see #getParameter()
+     * @generated
+     */
+    EReference getParameter_ExplicitBinding();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.Parameter#getExplicitBindingIndices <em>Explicit Binding Indices</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Explicit Binding Indices</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Parameter#getExplicitBindingIndices()
+     * @see #getParameter()
+     * @generated
+     */
+    EReference getParameter_ExplicitBindingIndices();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.StringValue <em>String Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1843,6 +1883,22 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference PARAMETER__EXPRESSION = eINSTANCE.getParameter_Expression();
+
+        /**
+         * The meta object literal for the '<em><b>Explicit Binding</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PARAMETER__EXPLICIT_BINDING = eINSTANCE.getParameter_ExplicitBinding();
+
+        /**
+         * The meta object literal for the '<em><b>Explicit Binding Indices</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PARAMETER__EXPLICIT_BINDING_INDICES = eINSTANCE.getParameter_ExplicitBindingIndices();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.StringValueImpl <em>String Value</em>}' class.

@@ -24,7 +24,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.DataflowRegionStyles
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
@@ -71,7 +71,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     extension DataflowRegionStyles
     
     @Inject
-    extension SCChartsSerializeHRExtension
+    extension SCChartsSerializeHRExtensions
     
     @Inject
     extension EquationSynthesis 

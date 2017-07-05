@@ -92,9 +92,13 @@ class SCChartsCoreExtensions {
         eObject as SCCharts
     }
     
+    def asScope(EObject eObject) {
+        eObject as Scope
+    }
+    
     def asState(EObject eObject) {
         eObject as State
-    }
+    }    
 
     def asControlflowRegion(EObject eObject) {
         eObject as ControlflowRegion

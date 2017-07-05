@@ -36,6 +36,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import java.util.Map
 
 /**
  * @author ssm
@@ -46,6 +48,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 class SCChartsScopeExtensions {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsStateExtensions
     
     def SCCharts getSCCharts(Scope scope) {
@@ -105,6 +108,33 @@ class SCChartsScopeExtensions {
             Region: scope.parentState.getRootState
         }
     }    
+    
+    
+    
+    def ValuedObject getValuedObjectByName(Scope scope, String name) {
+        for(vo : scope.valuedObjects) {
+            if (vo.name.equals(name)) return vo
+        }
+        if (scope.eContainer != null && scope.eContainer instanceof Scope) 
+            return (scope.eContainer as Scope).getValuedObjectByName(name)
+        return null
+    }
+    
+    def Map<String, ValuedObject> getValuedObjectNameMap(Scope scope) {
+        scope.getValuedObjectNameMap(<String, ValuedObject> newHashMap)
+    }
+    
+    private def Map<String, ValuedObject> getValuedObjectNameMap(Scope scope, Map<String, ValuedObject> map) {
+        for(vo : scope.valuedObjects) {
+            if (!map.containsKey(vo.name)) map.put(vo.name, vo)
+        }
+        if (scope.eContainer != null && scope.eContainer instanceof Scope) 
+            return (scope.eContainer as Scope).getValuedObjectNameMap(map)
+        map
+    }
+    
+    
+    
     
     def void replaceAllReferences(Scope scope, ValuedObject valuedObject, Expression expression) {
         for (obj : scope.eAllContents.filter(ValuedObjectReference).filter[ it.valuedObject == valuedObject ].toList) {

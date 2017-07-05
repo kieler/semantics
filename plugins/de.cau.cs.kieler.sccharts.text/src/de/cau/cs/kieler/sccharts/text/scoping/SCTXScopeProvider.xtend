@@ -15,6 +15,10 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.ScopeCall
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.Parameter
 
 /**
  * This class contains custom scoping description.
@@ -27,13 +31,16 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
     
     @Inject extension SCChartsCoreExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
 
     override getScope(EObject context, EReference reference) {
-//        println(context + "\n  " + reference)
-        if (context instanceof Transition) {
-            return getScopeForTransition(context, reference)
+        println(context + "\n  " + reference)
+        
+        switch(context) {
+            Transition: return getScopeForTransition(context, reference)
+            ScopeCall: return getScopeForScopeCall(context, reference)  
         }
         
         return super.getScope(context, reference);
@@ -49,6 +56,31 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
         ]
         
         return SCTScopes.scopeFor(states)
+    }
+    
+    protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
+        if (reference.name.equals("scope")) {
+            return super.getScope(scopeCall as EObject, reference)
+        }
+        
+        return super.getScope(scopeCall as EObject, reference)
+    }
+        
+    override def IScope getScopeForParameter(Parameter parameter, EReference reference) {        
+        if (reference.name.equals("explicitBinding")) {
+            val voCandidates = <ValuedObject> newArrayList
+            
+            val scopeCall = parameter.eContainer as ScopeCall
+            if (scopeCall != null && scopeCall.scope != null) {
+                for (declaration : scopeCall.scope.variableDeclarations.filter[ input || output]) {
+                    voCandidates += declaration.valuedObjects
+                }
+            }
+            
+            return SCTScopes.scopeFor(voCandidates)
+        }
+        
+        return super.getScopeForParameter(parameter, reference)
     }
     
     override def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {

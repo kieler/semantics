@@ -260,6 +260,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pureOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="explicitBinding" eType="#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="explicitBindingIndices"
+        upperBound="-1" eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Call" abstract="true" interface="true"
       eSuperTypes="#//Expression">

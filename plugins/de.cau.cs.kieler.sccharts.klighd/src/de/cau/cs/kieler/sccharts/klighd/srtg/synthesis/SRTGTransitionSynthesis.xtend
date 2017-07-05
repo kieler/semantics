@@ -18,7 +18,7 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import java.util.ArrayList
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
@@ -44,7 +44,7 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsSerializeHRExtension
+    @Inject extension SCChartsSerializeHRExtensions
     @Inject extension TransitionStyles
 
     override performTranformation(Transition transition) {

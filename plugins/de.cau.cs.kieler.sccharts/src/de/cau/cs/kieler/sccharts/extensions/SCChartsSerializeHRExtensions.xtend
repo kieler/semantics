@@ -28,7 +28,6 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Identifiable
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
@@ -46,8 +45,7 @@ import de.cau.cs.kieler.sccharts.PrecedingAction
  * @kieler.design 2014-09-04 proposed ssm
  * @kieler.rating 2014-09-04 proposed yellow
  */
-@ViewSynthesisShared
-class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
+class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(Transition transition) {
         transition.serialize(false);

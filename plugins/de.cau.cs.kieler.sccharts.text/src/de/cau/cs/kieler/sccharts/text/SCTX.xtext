@@ -51,7 +51,13 @@ State returns sccharts::State:
 	
 ScopeCall returns sccharts::ScopeCall:
     scope = [sccharts::State|ID]
-    ('(' parameters += Parameter (',' parameters += Parameter)* ')')?;
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '(' ')')?;
+    
+Parameter returns kexpressions::Parameter:
+    ((pureOutput ?= '!')? callByReference ?= '&')?
+    expression = Expression
+    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
+    ;    
     
 // ------------------ //
 //  Transition Rules  // 

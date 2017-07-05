@@ -41,19 +41,19 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 	override getScope(EObject context, EReference reference) {
 		// This scope should trigger on every instance of a valued object reference!
-		if (context instanceof ValuedObjectReference) {
-			return getScopeForValuedObjectReference(context, reference)
-		} else if (context instanceof ReferenceDeclaration) {
-			return getScopeForReferenceDeclaration(context, reference)			
-		}  else if (context instanceof Assignment) {
-		    return getScopeForAssignment(context, reference)
+		
+		switch(context) {
+		    ValuedObjectReference: return getScopeForValuedObjectReference(context, reference)
+		    ReferenceDeclaration: return getScopeForReferenceDeclaration(context, reference)  
+		    Assignment: return getScopeForAssignment(context, reference) 
 		}
 		
-		else if (reference == KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) {
+		if (reference == KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) {
 			return getScopeForValuedObject(context, reference)
 		} else if (reference == KEffectsPackage.Literals.EMISSION__VALUED_OBJECT) {
 			return getScopeForValuedObject(context, reference)
 		}
+		
 		return super.getScope(context, reference);
 	}
 	

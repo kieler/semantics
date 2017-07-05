@@ -685,6 +685,24 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getParameter_ExplicitBinding() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getParameter_ExplicitBindingIndices() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getStringValue() {
         return stringValueEClass;
     }
@@ -836,6 +854,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(parameterEClass, PARAMETER__CALL_BY_REFERENCE);
         createEAttribute(parameterEClass, PARAMETER__PURE_OUTPUT);
         createEReference(parameterEClass, PARAMETER__EXPRESSION);
+        createEReference(parameterEClass, PARAMETER__EXPLICIT_BINDING);
+        createEReference(parameterEClass, PARAMETER__EXPLICIT_BINDING_INDICES);
 
         callEClass = createEClass(CALL);
         createEReference(callEClass, CALL__PARAMETERS);
@@ -963,6 +983,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getParameter_CallByReference(), ecorePackage.getEBoolean(), "callByReference", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getParameter_PureOutput(), ecorePackage.getEBoolean(), "pureOutput", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getParameter_Expression(), this.getExpression(), null, "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getParameter_ExplicitBinding(), this.getValuedObject(), null, "explicitBinding", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getParameter_ExplicitBindingIndices(), this.getExpression(), null, "explicitBindingIndices", null, 0, -1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(callEClass, Call.class, "Call", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getCall_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Call.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

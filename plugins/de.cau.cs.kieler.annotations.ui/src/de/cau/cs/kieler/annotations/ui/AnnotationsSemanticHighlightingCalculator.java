@@ -89,6 +89,13 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
                     AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
         }
 
+        if (grammarElement == g.getPragmaAccess().getPragmaTagParserRuleCall_1() ||
+                grammarElement == g.getPragmaAccess().getStringPragmaParserRuleCall_0()) {
+            acceptor.addPosition(node.getOffset(), node.getLength(),
+                    AnnotationsHighlightingConfiguration.PRAGMA_KEY);
+        }
+        
+        
         // CHECKSTYLEON LineLength
     }
 }

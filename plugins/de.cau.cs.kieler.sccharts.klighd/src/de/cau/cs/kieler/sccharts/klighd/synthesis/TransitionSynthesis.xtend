@@ -20,7 +20,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
@@ -44,7 +44,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsSerializeHRExtension
+    @Inject extension SCChartsSerializeHRExtensions
 
     @Inject
     extension TransitionStyles

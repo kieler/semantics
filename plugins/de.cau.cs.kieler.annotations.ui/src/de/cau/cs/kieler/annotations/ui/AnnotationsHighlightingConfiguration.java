@@ -34,6 +34,7 @@ public class AnnotationsHighlightingConfiguration extends DefaultHighlightingCon
     /** The String identifier of the highlighting profile of comment annotations and annotation
      * values. */
     public static final String COMMENT_ANNOTATION = "commentAnnotation";
+    public static final String PRAGMA_KEY = "pragmaKey";
 
     @Override
     public void configure(final IHighlightingConfigurationAcceptor acceptor) {
@@ -42,6 +43,8 @@ public class AnnotationsHighlightingConfiguration extends DefaultHighlightingCon
                 annotationKeyTextStyle());
         acceptor.acceptDefaultHighlighting(COMMENT_ANNOTATION, "CommentAnnotation",
                 commentAnnotationTextStyle());
+        acceptor.acceptDefaultHighlighting(PRAGMA_KEY, "PragmaKey",
+                pragmaStyle());
     }
 
     private TextStyle annotationKeyTextStyle() {
@@ -54,6 +57,12 @@ public class AnnotationsHighlightingConfiguration extends DefaultHighlightingCon
     private TextStyle commentAnnotationTextStyle() {
         TextStyle textStyle = defaultTextStyle().copy();
         textStyle.setColor(new RGB(0x42, 0x60, 0xB8)); // SUPPRESS CHECKSTYLE MagicNumber
+        return textStyle;
+    }
+    
+    private TextStyle pragmaStyle() {
+        TextStyle textStyle = defaultTextStyle().copy();
+        textStyle.setColor(new RGB(0x32, 0xA9, 0x6D)); // SUPPRESS CHECKSTYLE MagicNumber
         return textStyle;
     }
 

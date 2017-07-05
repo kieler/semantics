@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getDeclarationScope()
- * @model interface="true" abstract="true"
+ * @model abstract="true"
  * @generated
  */
 public interface DeclarationScope extends EObject {

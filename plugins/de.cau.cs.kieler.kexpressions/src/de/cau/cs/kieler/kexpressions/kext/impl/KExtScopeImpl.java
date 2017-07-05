@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getEntities <em>Entities</em>}</li>
@@ -48,17 +47,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtScope {
-    /**
-     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDeclarations()
-     * @generated
-     * @ordered
-     */
-    protected EList<Declaration> declarations;
-
+public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
     /**
      * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -133,18 +122,6 @@ public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtS
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Declaration> getDeclarations() {
-        if (declarations == null) {
-            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KExtPackage.KEXT_SCOPE__DECLARATIONS);
-        }
-        return declarations;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExtPackage.KEXT_SCOPE__ANNOTATIONS);
@@ -205,8 +182,6 @@ public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtS
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
-                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
             case KExtPackage.KEXT_SCOPE__ENTITIES:
@@ -225,8 +200,6 @@ public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtS
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
-                return getDeclarations();
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return getAnnotations();
             case KExtPackage.KEXT_SCOPE__ID:
@@ -248,10 +221,6 @@ public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtS
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
-                getDeclarations().clear();
-                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
-                return;
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 getAnnotations().clear();
                 getAnnotations().addAll((Collection<? extends Annotation>)newValue);
@@ -279,9 +248,6 @@ public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtS
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
-                getDeclarations().clear();
-                return;
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 getAnnotations().clear();
                 return;
@@ -306,8 +272,6 @@ public class KExtScopeImpl extends MinimalEObjectImpl.Container implements KExtS
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExtPackage.KEXT_SCOPE__DECLARATIONS:
-                return declarations != null && !declarations.isEmpty();
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return annotations != null && !annotations.isEmpty();
             case KExtPackage.KEXT_SCOPE__ID:

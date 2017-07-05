@@ -28,7 +28,7 @@ import java.util.LinkedHashSet
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.krendering.KText
@@ -49,7 +49,7 @@ class ScopeSynthesis extends AbstractSCChartsSynthesis<Scope> {
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsScopeExtensions 
-    @Inject extension SCChartsSerializeHRExtension
+    @Inject extension SCChartsSerializeHRExtensions
     @Inject extension AnnotationsExtensions
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    

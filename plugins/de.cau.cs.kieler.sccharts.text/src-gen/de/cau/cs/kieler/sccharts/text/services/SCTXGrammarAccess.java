@@ -333,21 +333,25 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScopeAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cScopeStateCrossReference_0_0 = (CrossReference)cScopeAssignment_0.eContents().get(0);
 		private final RuleCall cScopeStateIDTerminalRuleCall_0_0_1 = (RuleCall)cScopeStateCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cParametersAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_1_1_0 = (RuleCall)cParametersAssignment_1_1.eContents().get(0);
-		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
-		private final Keyword cCommaKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
-		private final Assignment cParametersAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_1_2_1_0 = (RuleCall)cParametersAssignment_1_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cParametersAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_1_0_1_0 = (RuleCall)cParametersAssignment_1_0_1.eContents().get(0);
+		private final Group cGroup_1_0_2 = (Group)cGroup_1_0.eContents().get(2);
+		private final Keyword cCommaKeyword_1_0_2_0 = (Keyword)cGroup_1_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_1_0_2_1 = (Assignment)cGroup_1_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_1_0_2_1_0 = (RuleCall)cParametersAssignment_1_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_0_3 = (Keyword)cGroup_1_0.eContents().get(3);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_1_1 = (Keyword)cGroup_1_1.eContents().get(1);
 		
 		//ScopeCall sccharts::ScopeCall:
-		//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?
 		@Override public ParserRule getRule() { return rule; }
 
-		//scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		//scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?
 		public Group getGroup() { return cGroup; }
 
 		//scope=[sccharts::State]
@@ -359,32 +363,127 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getScopeStateIDTerminalRuleCall_0_0_1() { return cScopeStateIDTerminalRuleCall_0_0_1; }
 
-		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
-		public Group getGroup_1() { return cGroup_1; }
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//'('
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_1_1() { return cParametersAssignment_1_1; }
+		public Assignment getParametersAssignment_1_0_1() { return cParametersAssignment_1_0_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_1_1_0() { return cParametersParameterParserRuleCall_1_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_1_0_1_0() { return cParametersParameterParserRuleCall_1_0_1_0; }
 
 		//(',' parameters+=Parameter)*
-		public Group getGroup_1_2() { return cGroup_1_2; }
+		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 
 		//','
-		public Keyword getCommaKeyword_1_2_0() { return cCommaKeyword_1_2_0; }
+		public Keyword getCommaKeyword_1_0_2_0() { return cCommaKeyword_1_0_2_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_1_2_1() { return cParametersAssignment_1_2_1; }
+		public Assignment getParametersAssignment_1_0_2_1() { return cParametersAssignment_1_0_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_1_2_1_0() { return cParametersParameterParserRuleCall_1_2_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_1_0_2_1_0() { return cParametersParameterParserRuleCall_1_0_2_1_0; }
 
 		//')'
-		public Keyword getRightParenthesisKeyword_1_3() { return cRightParenthesisKeyword_1_3; }
+		public Keyword getRightParenthesisKeyword_1_0_3() { return cRightParenthesisKeyword_1_0_3; }
+
+		//'(' ')'
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_1_0() { return cLeftParenthesisKeyword_1_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_1_1_1() { return cRightParenthesisKeyword_1_1_1; }
+	}
+
+	public class ParameterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.Parameter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Assignment cPureOutputAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final Keyword cPureOutputExclamationMarkKeyword_0_0_0 = (Keyword)cPureOutputAssignment_0_0.eContents().get(0);
+		private final Assignment cCallByReferenceAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final Keyword cCallByReferenceAmpersandKeyword_0_1_0 = (Keyword)cCallByReferenceAssignment_0_1.eContents().get(0);
+		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cExpressionExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cToKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cExplicitBindingAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cExplicitBindingValuedObjectCrossReference_2_1_0 = (CrossReference)cExplicitBindingAssignment_2_1.eContents().get(0);
+		private final RuleCall cExplicitBindingValuedObjectIDTerminalRuleCall_2_1_0_1 = (RuleCall)cExplicitBindingValuedObjectCrossReference_2_1_0.eContents().get(1);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cExplicitBindingIndicesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cExplicitBindingIndicesExpressionParserRuleCall_2_2_1_0 = (RuleCall)cExplicitBindingIndicesAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_2_2 = (Keyword)cGroup_2_2.eContents().get(2);
+		
+		//Parameter kexpressions::Parameter:
+		//	(pureOutput?='!'? callByReference?='&')?
+		//	expression=Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression
+		//	']')*)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//(pureOutput?='!'? callByReference?='&')? expression=Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('['
+		//explicitBindingIndices+=Expression ']')*)?
+		public Group getGroup() { return cGroup; }
+
+		//(pureOutput?='!'? callByReference?='&')?
+		public Group getGroup_0() { return cGroup_0; }
+
+		//pureOutput?='!'?
+		public Assignment getPureOutputAssignment_0_0() { return cPureOutputAssignment_0_0; }
+
+		//'!'
+		public Keyword getPureOutputExclamationMarkKeyword_0_0_0() { return cPureOutputExclamationMarkKeyword_0_0_0; }
+
+		//callByReference?='&'
+		public Assignment getCallByReferenceAssignment_0_1() { return cCallByReferenceAssignment_0_1; }
+
+		//'&'
+		public Keyword getCallByReferenceAmpersandKeyword_0_1_0() { return cCallByReferenceAmpersandKeyword_0_1_0; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_1_0() { return cExpressionExpressionParserRuleCall_1_0; }
+
+		//('to' explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression ']')*)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'to'
+		public Keyword getToKeyword_2_0() { return cToKeyword_2_0; }
+
+		//explicitBinding=[kexpressions::ValuedObject]
+		public Assignment getExplicitBindingAssignment_2_1() { return cExplicitBindingAssignment_2_1; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getExplicitBindingValuedObjectCrossReference_2_1_0() { return cExplicitBindingValuedObjectCrossReference_2_1_0; }
+
+		//ID
+		public RuleCall getExplicitBindingValuedObjectIDTerminalRuleCall_2_1_0_1() { return cExplicitBindingValuedObjectIDTerminalRuleCall_2_1_0_1; }
+
+		//('[' explicitBindingIndices+=Expression ']')*
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//'['
+		public Keyword getLeftSquareBracketKeyword_2_2_0() { return cLeftSquareBracketKeyword_2_2_0; }
+
+		//explicitBindingIndices+=Expression
+		public Assignment getExplicitBindingIndicesAssignment_2_2_1() { return cExplicitBindingIndicesAssignment_2_2_1; }
+
+		//Expression
+		public RuleCall getExplicitBindingIndicesExpressionParserRuleCall_2_2_1_0() { return cExplicitBindingIndicesExpressionParserRuleCall_2_2_1_0; }
+
+		//']'
+		public Keyword getRightSquareBracketKeyword_2_2_2() { return cRightSquareBracketKeyword_2_2_2; }
 	}
 
 	public class TransitionElements extends AbstractParserRuleElementFinder {
@@ -1443,6 +1542,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final RootStateElements pRootState;
 	private final StateElements pState;
 	private final ScopeCallElements pScopeCall;
+	private final ParameterElements pParameter;
 	private final TransitionElements pTransition;
 	private final LocalActionElements pLocalAction;
 	private final EntryActionElements pEntryAction;
@@ -1492,6 +1592,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pRootState = new RootStateElements();
 		this.pState = new StateElements();
 		this.pScopeCall = new ScopeCallElements();
+		this.pParameter = new ParameterElements();
 		this.pTransition = new TransitionElements();
 		this.pLocalAction = new LocalActionElements();
 		this.pEntryAction = new EntryActionElements();
@@ -1610,13 +1711,25 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScopeCall sccharts::ScopeCall:
-	//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+	//	scope=[sccharts::State] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '(' ')')?
 	public ScopeCallElements getScopeCallAccess() {
 		return pScopeCall;
 	}
 	
 	public ParserRule getScopeCallRule() {
 		return getScopeCallAccess().getRule();
+	}
+
+	//Parameter kexpressions::Parameter:
+	//	(pureOutput?='!'? callByReference?='&')?
+	//	expression=Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression
+	//	']')*)?
+	public ParameterElements getParameterAccess() {
+		return pParameter;
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 
 	//// ------------------ //
@@ -2144,7 +2257,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=super::Parameter (','
+	//	parameters+=super::Parameter)* ')' | '()')
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -2157,8 +2271,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
 	//FunctionCallEffect keffects::FunctionCallEffect:
-	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()')) | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=super::Parameter (','
+	//	parameters+=super::Parameter)* ')'
+	//	| '()')) | '<' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
 	//	| '()')
 	//	'>'
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
@@ -2545,7 +2660,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -2559,8 +2674,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//// Deprecated?
 	//FunctionCall:
-	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-	//	| '()') | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	'extern' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	| '()') | '<' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
 	//	| '()')
 	//	'>';
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
@@ -2569,21 +2684,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
-	}
-
-	//// Parameter Rule
-	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
-	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
-	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
-	//Parameter:
-	//	(pureOutput?='!'? callByReference?='&')?
-	//	expression=Expression;
-	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
-		return gaKExpressions.getParameterAccess();
-	}
-	
-	public ParserRule getParameterRule() {
-		return getParameterAccess().getRule();
 	}
 
 	//// Text Expression Rule
