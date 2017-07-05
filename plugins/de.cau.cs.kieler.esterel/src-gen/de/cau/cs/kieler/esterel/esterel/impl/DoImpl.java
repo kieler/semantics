@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getEndingAnnotations <em>Ending Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getWatchingStatements <em>Watching Statements</em>}</li>
  * </ul>
@@ -56,14 +56,14 @@ public class DoImpl extends StatementContainerImpl implements Do
   protected EList<Annotation> endingAnnotations;
 
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected DelayExpr expr;
+  protected DelayExpr expression;
 
   /**
    * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
@@ -125,9 +125,9 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public DelayExpr getExpr()
+  public DelayExpr getExpression()
   {
-    return expr;
+    return expression;
   }
 
   /**
@@ -135,13 +135,13 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(DelayExpr newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(DelayExpr newExpression, NotificationChain msgs)
   {
-    DelayExpr oldExpr = expr;
-    expr = newExpr;
+    DelayExpr oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__EXPR, oldExpr, newExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -152,20 +152,20 @@ public class DoImpl extends StatementContainerImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(DelayExpr newExpr)
+  public void setExpression(DelayExpr newExpression)
   {
-    if (newExpr != expr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__EXPR, newExpr, newExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -242,8 +242,8 @@ public class DoImpl extends StatementContainerImpl implements Do
     {
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         return ((InternalEList<?>)getEndingAnnotations()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.DO__EXPR:
-        return basicSetExpr(null, msgs);
+      case EsterelPackage.DO__EXPRESSION:
+        return basicSetExpression(null, msgs);
       case EsterelPackage.DO__DELAY:
         return basicSetDelay(null, msgs);
       case EsterelPackage.DO__WATCHING_STATEMENTS:
@@ -264,8 +264,8 @@ public class DoImpl extends StatementContainerImpl implements Do
     {
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         return getEndingAnnotations();
-      case EsterelPackage.DO__EXPR:
-        return getExpr();
+      case EsterelPackage.DO__EXPRESSION:
+        return getExpression();
       case EsterelPackage.DO__DELAY:
         return getDelay();
       case EsterelPackage.DO__WATCHING_STATEMENTS:
@@ -289,8 +289,8 @@ public class DoImpl extends StatementContainerImpl implements Do
         getEndingAnnotations().clear();
         getEndingAnnotations().addAll((Collection<? extends Annotation>)newValue);
         return;
-      case EsterelPackage.DO__EXPR:
-        setExpr((DelayExpr)newValue);
+      case EsterelPackage.DO__EXPRESSION:
+        setExpression((DelayExpr)newValue);
         return;
       case EsterelPackage.DO__DELAY:
         setDelay((DelayExpr)newValue);
@@ -316,8 +316,8 @@ public class DoImpl extends StatementContainerImpl implements Do
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         getEndingAnnotations().clear();
         return;
-      case EsterelPackage.DO__EXPR:
-        setExpr((DelayExpr)null);
+      case EsterelPackage.DO__EXPRESSION:
+        setExpression((DelayExpr)null);
         return;
       case EsterelPackage.DO__DELAY:
         setDelay((DelayExpr)null);
@@ -341,8 +341,8 @@ public class DoImpl extends StatementContainerImpl implements Do
     {
       case EsterelPackage.DO__ENDING_ANNOTATIONS:
         return endingAnnotations != null && !endingAnnotations.isEmpty();
-      case EsterelPackage.DO__EXPR:
-        return expr != null;
+      case EsterelPackage.DO__EXPRESSION:
+        return expression != null;
       case EsterelPackage.DO__DELAY:
         return delay != null;
       case EsterelPackage.DO__WATCHING_STATEMENTS:

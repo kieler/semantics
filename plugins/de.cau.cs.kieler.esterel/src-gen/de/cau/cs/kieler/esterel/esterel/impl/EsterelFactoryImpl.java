@@ -136,6 +136,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TRAP_EXPRESSION: return createTrapExpression();
       case EsterelPackage.FUNCTION_EXPRESSION: return createFunctionExpression();
       case EsterelPackage.CONSTANT_EXPRESSION: return createConstantExpression();
+      case EsterelPackage.SIGNAL_REFERENCE_EXPR: return createSignalReferenceExpr();
       case EsterelPackage.TRAP_REFERENCE_EXPR: return createTrapReferenceExpr();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -932,6 +933,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     ConstantExpressionImpl constantExpression = new ConstantExpressionImpl();
     return constantExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SignalReferenceExpr createSignalReferenceExpr()
+  {
+    SignalReferenceExprImpl signalReferenceExpr = new SignalReferenceExprImpl();
+    return signalReferenceExpr;
   }
 
   /**

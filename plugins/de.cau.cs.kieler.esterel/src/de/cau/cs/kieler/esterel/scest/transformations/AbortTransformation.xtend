@@ -38,6 +38,7 @@ import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.LinkedList
 import java.util.List
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -65,7 +66,10 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
 //    }
 //
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID,
+            SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID,
+            SCEstTransformation::AWAIT_ID, SCEstTransformation::SUSTAIN_ID,
+            SCEstTransformation::DO_ID)
     }
 
     @Inject
@@ -105,7 +109,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             // check if its just a single abort delay or if this abort includes cases
             if (abort.delay != null) {
                 // abort with expression before signal expression. e.g. "abort when 3 A" or "weak abort when 3 A"
-                if (abort.delay.expr != null) {
+                if (abort.delay.expression != null) {
                     var abortFlag = createNewUniqueAbortFlag(createBoolValue(false))
                     var decl = createDeclaration(ValueType.BOOL, abortFlag)
                     var label = createLabel
@@ -248,7 +252,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 scope.statements.add(label)
                 for ( c : abort.cases ) {
                     // creating counting variables for cases with an expression before the signal expression
-                    if (c.delay.expr != null) {
+                    if (c.delay.expression != null) {
                         var variable = createNewUniqueVariable(createIntValue(0))
                         var decl2 = createDeclaration(ValueType.INT, variable)
                         countingVariables.add(variable)
@@ -279,12 +283,12 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     if (c.delay.isIsImmediate) {
                         conditional2 = newIfThenGoto(EcoreUtil.copy(c.delay.signalExpr), label2, false)
                     }
-                    else if (c.delay.expr == null) {
+                    else if (c.delay.expression == null) {
                         conditional2 = newIfThenGoto(createAnd(EcoreUtil.copy(c.delay.signalExpr), createValuedObjectReference(depthFlag)), label2, false)
                     }
                     else {
                         countingVariables.get(i)
-                        conditional2 = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), EcoreUtil.copy(c.delay.expr)), label2, false)
+                        conditional2 = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), EcoreUtil.copy(c.delay.expression)), label2, false)
                         i++
                     }
                     conditional2.statements.add(0, c.statements)
@@ -307,6 +311,9 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
@@ -377,7 +384,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 }
                 else {
                     // e.g. "weak abort when A"
-                    if (abort.delay.expr == null && label2 != null) {
+                    if (abort.delay.expression == null && label2 != null) {
                         var expr = createAnd(EcoreUtil.copy(abort.delay.signalExpr), createValuedObjectReference(depthFlag))
                         var conditional = newIfThenGoto(expr, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
@@ -389,7 +396,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     // e.g. "weak abort when 3 A"
                     else {
                         if (label2 != null) {
-                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), EcoreUtil.copy(abort.delay.expr))
+                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), EcoreUtil.copy(abort.delay.expression))
                             var conditional = newIfThenGoto(GEQExpr, label2, false)
                             conditional.annotations.add(createAnnotation(depth))
                             conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
@@ -411,7 +418,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 }
                 else {
                     // e.g. "abort when A"
-                    if (abort.delay.expr == null && label2 != null) {
+                    if (abort.delay.expression == null && label2 != null) {
                         var conditional = newIfThenGoto(abort.delay.signalExpr, label2, false)
                         conditional.annotations.add(createAnnotation(depth))
                         conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
@@ -420,7 +427,7 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                     // e.g. "abort when 3 A"
                     else {
                         if (label2 != null) {
-                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), EcoreUtil.copy(abort.delay.expr))
+                            var GEQExpr = createGEQ(createValuedObjectReference(countingVariables.get(0)), EcoreUtil.copy(abort.delay.expression))
                             var conditional = newIfThenGoto(GEQExpr, label2, false)
                             conditional.annotations.add(createAnnotation(depth))
                             conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
@@ -458,6 +465,9 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             else if (statement instanceof Abort) {
                 transformPauses((statement as Abort).doStatements, abort, label, abortFlag, depthFlag, countingVariables)
                 (statement as Abort).cases?.forEach[ c | transformPauses(c.statements, abort, label, abortFlag, depthFlag, countingVariables)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformPauses(c.statements, abort, label, abortFlag, depthFlag, countingVariables)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformPauses(c.statements, abort, label, abortFlag, depthFlag, countingVariables)]
@@ -508,8 +518,8 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
         var i = 0
         for (c : abort.cases) {
             // e.g. "case 3 A"
-            if (c.delay.expr != null) {
-                var conditional = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), EcoreUtil.copy(c.delay.expr)), label, false)
+            if (c.delay.expression != null) {
+                var conditional = newIfThenGoto(createGEQ(createValuedObjectReference(countingVariables.get(i)), EcoreUtil.copy(c.delay.expression)), label, false)
                 conditional.statements.add(0, createAssignment(abortFlag, createBoolValue(true)))
                 conditional.annotations.add(createAnnotation(getDepth(abort)))
                 if (abort.weak) {

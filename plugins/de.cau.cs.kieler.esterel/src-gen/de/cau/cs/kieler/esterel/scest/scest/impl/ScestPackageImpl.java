@@ -299,7 +299,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSet_Expr()
+  public EReference getSet_Expression()
   {
     return (EReference)setEClass.getEStructuralFeatures().get(1);
   }
@@ -354,7 +354,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
 
     setEClass = createEClass(SET);
     createEReference(setEClass, SET__SIGNAL);
-    createEReference(setEClass, SET__EXPR);
+    createEReference(setEClass, SET__EXPRESSION);
   }
 
   /**
@@ -416,7 +416,7 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
 
     initEClass(setEClass, Set.class, "Set", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSet_Signal(), theEsterelPackage.getISignal(), null, "signal", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSet_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSet_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Set.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

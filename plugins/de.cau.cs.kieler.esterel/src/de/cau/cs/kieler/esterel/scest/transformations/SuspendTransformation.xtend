@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scl.scl.Pause
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -64,7 +65,10 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::AWAIT_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID,
+            SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID,
+            SCEstTransformation::AWAIT_ID, SCEstTransformation::SUSTAIN_ID,
+            SCEstTransformation::DO_ID)
     }
 
     @Inject
@@ -99,7 +103,7 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             if (!suspend.statements.empty) {
                 suspend.statements.get(0).transformStatement
             }
-            if (suspend.delay.expr != null) {
+            if (suspend.delay.expression != null) {
                 // create a scope because a declaration (variable for counting) is needed
                 var variable = createNewUniqueVariable(createIntValue(0))
                 var scope = createScopeStatement(createDeclaration(ValueType.INT, variable))
@@ -116,7 +120,7 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
                 var conditional = newIfThenGoto(createValuedObjectReference(termFlag), label2, false)
                 conditional.annotations.add(createAnnotation(depth))
                 var conditional2  = createConditional(EcoreUtil.copy(suspend.delay.signalExpr))
-                var conditional3 = createConditional(createEquals(createValuedObjectReference(variable), EcoreUtil.copy(suspend.delay.expr)))
+                var conditional3 = createConditional(createEquals(createValuedObjectReference(variable), EcoreUtil.copy(suspend.delay.expression)))
                 conditional3.statements.add(createAssignment(variable, createIntValue(0)))
                 conditional2.statements.add(conditional3)
                 conditional2.statements.add(incrementInt(variable))
@@ -159,6 +163,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
@@ -213,8 +220,8 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             var pos = statements.indexOf(statement)
             var label = createLabel
             var Conditional conditional
-            if (delay.expr != null && variable != null) {
-                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), EcoreUtil.copy(delay.expr)), label, false)
+            if (delay.expression != null && variable != null) {
+                conditional =  newIfThenGoto(createGEQ(createValuedObjectReference(variable), EcoreUtil.copy(delay.expression)), label, false)
             }
             else {
                 conditional = newIfThenGoto(EcoreUtil.copy(delay.signalExpr), label, false)

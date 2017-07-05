@@ -18,7 +18,7 @@ import de.cau.cs.kieler.scl.scl.Statement;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.Set#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.scest.scest.ScestPackage#getSet()
@@ -54,29 +54,29 @@ public interface Set extends Statement
   void setSignal(ISignal value);
 
   /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(Expression)
-   * @see de.cau.cs.kieler.esterel.scest.scest.ScestPackage#getSet_Expr()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.esterel.scest.scest.ScestPackage#getSet_Expression()
    * @model containment="true"
    * @generated
    */
-  Expression getExpr();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpr <em>Expr</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expr</em>' containment reference.
-   * @see #getExpr()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setExpr(Expression value);
+  void setExpression(Expression value);
 
 } // Set

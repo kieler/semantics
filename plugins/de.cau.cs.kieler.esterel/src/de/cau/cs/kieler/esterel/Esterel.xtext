@@ -251,7 +251,7 @@ Emit:
     (annotations += Annotation)*
     "emit" 
     signal=[ISignal|ID]       
-    ("("expr=Expression")")?;
+    ("("expression=Expression")")?;
     
 // emit a signal indefinitely
 Sustain:
@@ -263,7 +263,7 @@ Sustain:
 // ==> 7.5.2 Assignment and Procedure Call
 // -------------------------------------
 EsterelAssignment:
-    var=[IVariable|ID] ":=" expr=Expression;
+    var=[IVariable|ID] ":=" expression=Expression;
     
 ProcCall:
     (annotations += Annotation)*
@@ -316,7 +316,7 @@ PresentCase:
 IfTest:
     (annotations += Annotation)*
     "if" 
-    expr=Expression 
+    expression=Expression 
     (
         (thenAnnotations += Annotation)*
         "then" 
@@ -333,7 +333,7 @@ IfTest:
 ElsIf:
     (annotations += Annotation)*
     "elsif" 
-    expr=Expression 
+    expression=Expression 
     (
         "then" 
         ( (thenStatements+=EsterelStatement ";")* thenStatements+=EsterelStatement? )
@@ -588,7 +588,7 @@ Do:
     ( 
         (endingAnnotations += Annotation)* 
         "upto" 
-        expr=DelayExpr
+        expression=DelayExpr
         | 
         (endingAnnotations += Annotation)* 
         "watching" 
@@ -736,7 +736,7 @@ SignalAtomicExpression returns kexpressions::Expression:
     | TrapReferenceExpr;
 
 SignalReferenceExpr returns kexpressions::ValuedObjectReference:
-    valuedObject=[ISignal|ID];
+    {SignalReferenceExpr} valuedObject=[ISignal|ID];
 
 SignalPreExpr returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
@@ -749,7 +749,7 @@ TrapReferenceExpr returns kexpressions::ValuedObjectReference:
 // --> B.3.4 Delay Expressions <--
 // -------------------------------------
 DelayExpr:
-    ( expr=Expression | isImmediate?="immediate" )?
+    ( expression=Expression | isImmediate?="immediate" )?
     (     signalExpr=SignalReferenceExpr 
         | "[" signalExpr=SignalExpression "]"
     );   

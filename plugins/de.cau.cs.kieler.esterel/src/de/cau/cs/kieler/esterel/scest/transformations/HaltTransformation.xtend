@@ -32,6 +32,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.Halt
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -103,6 +104,9 @@ class HaltTransformation extends AbstractExpansionTransformation implements Trac
                 if ((statement as Abort).cases != null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
                 }
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList != null) {

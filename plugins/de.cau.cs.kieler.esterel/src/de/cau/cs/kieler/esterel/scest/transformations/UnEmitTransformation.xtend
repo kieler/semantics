@@ -32,6 +32,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.scest.scest.UnEmit
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -94,6 +95,9 @@ class UnEmitTransformation extends AbstractExpansionTransformation implements Tr
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]

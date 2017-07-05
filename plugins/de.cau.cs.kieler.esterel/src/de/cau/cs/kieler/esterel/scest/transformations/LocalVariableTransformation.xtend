@@ -42,6 +42,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
 import de.cau.cs.kieler.scl.scl.Assignment
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -104,6 +105,9 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
@@ -224,7 +228,7 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             if (newVariables.containsKey(a.getVar())) {
                 var statements = a.getContainingList
                 var pos = statements.indexOf(a)
-                var assignment = createAssignment(newVariables.get(a.getVar()), EcoreUtil.copy(a.expr))
+                var assignment = createAssignment(newVariables.get(a.getVar()), EcoreUtil.copy(a.expression))
                 statements.set(pos, assignment)
             }
         }

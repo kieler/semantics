@@ -72,7 +72,7 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
     @Override 
     override  IScope getScope( EObject context,  EReference reference) {
         switch (reference.EReferenceType) {
-            // TODO scoping needs to be fixed
+            // TODO scoping needs to be fixed 
             case EsterelPackage.eINSTANCE.ISignal,
             case EsterelPackage.eINSTANCE.IVariable,
             case EsterelPackage.eINSTANCE.trapSignal:

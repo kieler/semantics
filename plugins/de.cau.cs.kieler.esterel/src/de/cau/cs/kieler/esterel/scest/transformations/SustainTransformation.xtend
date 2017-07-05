@@ -32,6 +32,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Sustain
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -108,6 +109,9 @@ class SustainTransformation extends AbstractExpansionTransformation implements T
                 if ((statement as Abort).cases != null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
                 }
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList != null) {

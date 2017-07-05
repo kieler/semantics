@@ -471,7 +471,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     'then'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     expr=Expression (ambiguity) (rule end)
+	 *     expression=Expression (ambiguity) (rule end)
 	 */
 	protected void emit_ElsIf_ThenKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -556,7 +556,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     elseif+=ElsIf (ambiguity) 'end' 'if'? (rule end)
-	 *     expr=Expression 'then'? (ambiguity) 'end' 'if'? (rule end)
+	 *     expression=Expression 'then'? (ambiguity) 'end' 'if'? (rule end)
 	 *     thenAnnotations+=Annotation 'then' (ambiguity) 'end' 'if'? (rule end)
 	 *     thenStatements+=MetaStatement (ambiguity) 'end' 'if'? (rule end)
 	 *     thenStatements+=SCEstStatement ';' (ambiguity) 'end' 'if'? (rule end)
@@ -576,7 +576,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     elseStatements+=SCEstStatement ';' 'end' (ambiguity) (rule end)
 	 *     elseStatements+=SCEstStatement 'end' (ambiguity) (rule end)
 	 *     elseif+=ElsIf 'else'? 'end' (ambiguity) (rule end)
-	 *     expr=Expression 'then'? 'else'? 'end' (ambiguity) (rule end)
+	 *     expression=Expression 'then'? 'else'? 'end' (ambiguity) (rule end)
 	 *     thenAnnotations+=Annotation 'then' 'else'? 'end' (ambiguity) (rule end)
 	 *     thenStatements+=MetaStatement 'else'? 'end' (ambiguity) (rule end)
 	 *     thenStatements+=SCEstStatement ';' 'else'? 'end' (ambiguity) (rule end)
@@ -591,11 +591,11 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     'then'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     expr=Expression (ambiguity) 'else' elseStatements+=MetaStatement
-	 *     expr=Expression (ambiguity) 'else' elseStatements+=SCEstStatement
-	 *     expr=Expression (ambiguity) 'else'? 'end' 'if'? (rule end)
-	 *     expr=Expression (ambiguity) elseAnnotations+=Annotation
-	 *     expr=Expression (ambiguity) elseif+=ElsIf
+	 *     expression=Expression (ambiguity) 'else' elseStatements+=MetaStatement
+	 *     expression=Expression (ambiguity) 'else' elseStatements+=SCEstStatement
+	 *     expression=Expression (ambiguity) 'else'? 'end' 'if'? (rule end)
+	 *     expression=Expression (ambiguity) elseAnnotations+=Annotation
+	 *     expression=Expression (ambiguity) elseif+=ElsIf
 	 */
 	protected void emit_IfTest_ThenKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

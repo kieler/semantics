@@ -19,7 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenAnnotations <em>Then Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenStatements <em>Then Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseif <em>Elseif</em>}</li>
@@ -34,30 +34,30 @@ import org.eclipse.emf.common.util.EList;
 public interface IfTest extends Statement
 {
   /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(Expression)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Expr()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Expression()
    * @model containment="true"
    * @generated
    */
-  Expression getExpr();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expr</em>' containment reference.
-   * @see #getExpr()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setExpr(Expression value);
+  void setExpression(Expression value);
 
   /**
    * Returns the value of the '<em><b>Then Annotations</b></em>' containment reference list.

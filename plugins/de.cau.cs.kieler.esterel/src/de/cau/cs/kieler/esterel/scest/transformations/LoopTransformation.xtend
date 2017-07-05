@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.Loop
 import com.google.common.collect.Sets
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -124,6 +125,9 @@ class LoopTransformation extends AbstractExpansionTransformation implements Trac
                 if ((statement as Abort).cases != null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
                 }
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList != null) {

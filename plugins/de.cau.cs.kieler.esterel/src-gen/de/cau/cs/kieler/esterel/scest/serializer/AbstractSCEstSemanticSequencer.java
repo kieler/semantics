@@ -67,6 +67,7 @@ import de.cau.cs.kieler.esterel.esterel.Return;
 import de.cau.cs.kieler.esterel.esterel.Run;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
+import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr;
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
 import de.cau.cs.kieler.esterel.esterel.Suspend;
 import de.cau.cs.kieler.esterel.esterel.Sustain;
@@ -354,6 +355,9 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case EsterelPackage.SENSOR_WITH_TYPE:
 				sequence_SensorWithType(context, (SensorWithType) semanticObject); 
 				return; 
+			case EsterelPackage.SIGNAL_REFERENCE_EXPR:
+				sequence_SignalReferenceExpr(context, (SignalReferenceExpr) semanticObject); 
+				return; 
 			case EsterelPackage.SIGNAL_RENAMING:
 				sequence_SignalRenaming(context, (SignalRenaming) semanticObject); 
 				return; 
@@ -517,57 +521,8 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
-				if (rule == grammarAccess.getTrapExprRule()
-						|| rule == grammarAccess.getSignalExpressionRule()
-						|| action == grammarAccess.getSignalExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSignalAndExpressionRule()
-						|| action == grammarAccess.getSignalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSignalNotExpressionRule()
-						|| rule == grammarAccess.getSignalAtomicExpressionRule()
-						|| rule == grammarAccess.getSignalReferenceExprRule()) {
-					sequence_SignalReferenceExpr(context, (ValuedObjectReference) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getBooleanExpressionRule()
-						|| rule == grammarAccess.getOrExpressionRule()
-						|| action == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAndExpressionRule()
-						|| action == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getCompareOperationRule()
-						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getNotOrValuedExpressionRule()
-						|| rule == grammarAccess.getNotExpressionRule()
-						|| rule == grammarAccess.getValuedExpressionRule()
-						|| rule == grammarAccess.getAddExpressionRule()
-						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSubExpressionRule()
-						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getMultExpressionRule()
-						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getDivExpressionRule()
-						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getModExpressionRule()
-						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getNegExpressionRule()
-						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
-						|| rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getBoolExpressionRule()
-						|| rule == grammarAccess.getLogicalOrExpressionRule()
-						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getLogicalAndExpressionRule()
-						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseOrExpressionRule()
-						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseAndExpressionRule()
-						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
-					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+				return; 
 			}
 		else if (epackage == KExtPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
@@ -740,7 +695,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (statements+=SCEstStatement | statements+=MetaStatement)* 
 	 *         statements+=SCEstStatement? 
 	 *         (
-	 *             (endingAnnotations+=Annotation* expr=DelayExpr) | 
+	 *             (endingAnnotations+=Annotation* expression=DelayExpr) | 
 	 *             (
 	 *                 endingAnnotations+=Annotation* 
 	 *                 delay=DelayExpr 
@@ -760,7 +715,12 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     ElsIf returns ElsIf
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* expr=Expression (thenStatements+=SCEstStatement | thenStatements+=MetaStatement)* thenStatements+=SCEstStatement?)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         expression=Expression 
+	 *         (thenStatements+=SCEstStatement | thenStatements+=MetaStatement)* 
+	 *         thenStatements+=SCEstStatement?
+	 *     )
 	 */
 	protected void sequence_ElsIf(ISerializationContext context, ElsIf semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -882,7 +842,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         expr=Expression 
+	 *         expression=Expression 
 	 *         thenAnnotations+=Annotation* 
 	 *         (thenStatements+=SCEstStatement | thenStatements+=MetaStatement)* 
 	 *         thenStatements+=SCEstStatement? 
@@ -1114,7 +1074,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *     Set returns Set
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* signal=[ISignal|ID] expr=Expression)
+	 *     (annotations+=Annotation* signal=[ISignal|ID] expression=Expression)
 	 */
 	protected void sequence_Set(ISerializationContext context, de.cau.cs.kieler.esterel.scest.scest.Set semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

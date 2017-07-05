@@ -1177,13 +1177,13 @@ public interface EsterelPackage extends EPackage
   int EMIT__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EMIT__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int EMIT__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Emit</em>' class.
@@ -1269,13 +1269,13 @@ public interface EsterelPackage extends EPackage
   int ESTEREL_ASSIGNMENT__VAR = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ESTEREL_ASSIGNMENT__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int ESTEREL_ASSIGNMENT__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Assignment</em>' class.
@@ -1489,13 +1489,13 @@ public interface EsterelPackage extends EPackage
   int IF_TEST__ANNOTATIONS = SclPackage.STATEMENT__ANNOTATIONS;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IF_TEST__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 0;
+  int IF_TEST__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Then Annotations</b></em>' containment reference list.
@@ -1571,13 +1571,13 @@ public interface EsterelPackage extends EPackage
   int ELS_IF__ANNOTATIONS = 0;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ELS_IF__EXPR = 1;
+  int ELS_IF__EXPRESSION = 1;
 
   /**
    * The feature id for the '<em><b>Then Statements</b></em>' containment reference list.
@@ -2884,13 +2884,13 @@ public interface EsterelPackage extends EPackage
   int DO__ENDING_ANNOTATIONS = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DO__EXPR = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
+  int DO__EXPRESSION = SclPackage.STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -2930,13 +2930,13 @@ public interface EsterelPackage extends EPackage
   int DELAY_EXPR = 60;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DELAY_EXPR__EXPR = 0;
+  int DELAY_EXPR__EXPRESSION = 0;
 
   /**
    * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
@@ -3481,6 +3481,43 @@ public interface EsterelPackage extends EPackage
   int CONSTANT_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl <em>Signal Reference Expr</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl
+   * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignalReferenceExpr()
+   * @generated
+   */
+  int SIGNAL_REFERENCE_EXPR = 72;
+
+  /**
+   * The feature id for the '<em><b>Valued Object</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR__VALUED_OBJECT = KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR__INDICES = KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES;
+
+  /**
+   * The number of structural features of the '<em>Signal Reference Expr</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TrapReferenceExprImpl <em>Trap Reference Expr</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3488,7 +3525,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getTrapReferenceExpr()
    * @generated
    */
-  int TRAP_REFERENCE_EXPR = 72;
+  int TRAP_REFERENCE_EXPR = 73;
 
   /**
    * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -4350,15 +4387,15 @@ public interface EsterelPackage extends EPackage
   EReference getEmit_Signal();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Emit#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Emit#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Emit#getExpr()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.Emit#getExpression()
    * @see #getEmit()
    * @generated
    */
-  EReference getEmit_Expr();
+  EReference getEmit_Expression();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.Sustain <em>Sustain</em>}'.
@@ -4414,15 +4451,15 @@ public interface EsterelPackage extends EPackage
   EReference getEsterelAssignment_Var();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.EsterelAssignment#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.EsterelAssignment#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelAssignment#getExpr()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelAssignment#getExpression()
    * @see #getEsterelAssignment()
    * @generated
    */
-  EReference getEsterelAssignment_Expr();
+  EReference getEsterelAssignment_Expression();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.ProcCall <em>Proc Call</em>}'.
@@ -4575,15 +4612,15 @@ public interface EsterelPackage extends EPackage
   EClass getIfTest();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.IfTest#getExpr()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.IfTest#getExpression()
    * @see #getIfTest()
    * @generated
    */
-  EReference getIfTest_Expr();
+  EReference getIfTest_Expression();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenAnnotations <em>Then Annotations</em>}'.
@@ -4662,15 +4699,15 @@ public interface EsterelPackage extends EPackage
   EReference getElsIf_Annotations();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.ElsIf#getExpr()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.ElsIf#getExpression()
    * @see #getElsIf()
    * @generated
    */
-  EReference getElsIf_Expr();
+  EReference getElsIf_Expression();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenStatements <em>Then Statements</em>}'.
@@ -5538,15 +5575,15 @@ public interface EsterelPackage extends EPackage
   EReference getDo_EndingAnnotations();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Do#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Do#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Do#getExpr()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.Do#getExpression()
    * @see #getDo()
    * @generated
    */
-  EReference getDo_Expr();
+  EReference getDo_Expression();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Do#getDelay <em>Delay</em>}'.
@@ -5581,15 +5618,15 @@ public interface EsterelPackage extends EPackage
   EClass getDelayExpr();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpression()
    * @see #getDelayExpr()
    * @generated
    */
-  EReference getDelayExpr_Expr();
+  EReference getDelayExpr_Expression();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}'.
@@ -5821,6 +5858,16 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EAttribute getConstantExpression_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr <em>Signal Reference Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Signal Reference Expr</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
+   * @generated
+   */
+  EClass getSignalReferenceExpr();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr <em>Trap Reference Expr</em>}'.
@@ -6534,12 +6581,12 @@ public interface EsterelPackage extends EPackage
     EReference EMIT__SIGNAL = eINSTANCE.getEmit_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference EMIT__EXPR = eINSTANCE.getEmit_Expr();
+    EReference EMIT__EXPRESSION = eINSTANCE.getEmit_Expression();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl <em>Sustain</em>}' class.
@@ -6586,12 +6633,12 @@ public interface EsterelPackage extends EPackage
     EReference ESTEREL_ASSIGNMENT__VAR = eINSTANCE.getEsterelAssignment_Var();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ESTEREL_ASSIGNMENT__EXPR = eINSTANCE.getEsterelAssignment_Expr();
+    EReference ESTEREL_ASSIGNMENT__EXPRESSION = eINSTANCE.getEsterelAssignment_Expression();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl <em>Proc Call</em>}' class.
@@ -6714,12 +6761,12 @@ public interface EsterelPackage extends EPackage
     EClass IF_TEST = eINSTANCE.getIfTest();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference IF_TEST__EXPR = eINSTANCE.getIfTest_Expr();
+    EReference IF_TEST__EXPRESSION = eINSTANCE.getIfTest_Expression();
 
     /**
      * The meta object literal for the '<em><b>Then Annotations</b></em>' containment reference list feature.
@@ -6780,12 +6827,12 @@ public interface EsterelPackage extends EPackage
     EReference ELS_IF__ANNOTATIONS = eINSTANCE.getElsIf_Annotations();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ELS_IF__EXPR = eINSTANCE.getElsIf_Expr();
+    EReference ELS_IF__EXPRESSION = eINSTANCE.getElsIf_Expression();
 
     /**
      * The meta object literal for the '<em><b>Then Statements</b></em>' containment reference list feature.
@@ -7488,12 +7535,12 @@ public interface EsterelPackage extends EPackage
     EReference DO__ENDING_ANNOTATIONS = eINSTANCE.getDo_EndingAnnotations();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DO__EXPR = eINSTANCE.getDo_Expr();
+    EReference DO__EXPRESSION = eINSTANCE.getDo_Expression();
 
     /**
      * The meta object literal for the '<em><b>Delay</b></em>' containment reference feature.
@@ -7522,12 +7569,12 @@ public interface EsterelPackage extends EPackage
     EClass DELAY_EXPR = eINSTANCE.getDelayExpr();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DELAY_EXPR__EXPR = eINSTANCE.getDelayExpr_Expr();
+    EReference DELAY_EXPR__EXPRESSION = eINSTANCE.getDelayExpr_Expression();
 
     /**
      * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
@@ -7726,6 +7773,16 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EAttribute CONSTANT_EXPRESSION__VALUE = eINSTANCE.getConstantExpression_Value();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl <em>Signal Reference Expr</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl
+     * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignalReferenceExpr()
+     * @generated
+     */
+    EClass SIGNAL_REFERENCE_EXPR = eINSTANCE.getSignalReferenceExpr();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TrapReferenceExprImpl <em>Trap Reference Expr</em>}' class.

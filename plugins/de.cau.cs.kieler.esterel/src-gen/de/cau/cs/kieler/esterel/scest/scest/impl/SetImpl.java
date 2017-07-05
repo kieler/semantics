@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.scest.scest.impl.SetImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,14 +46,14 @@ public class SetImpl extends StatementImpl implements Set
   protected ISignal signal;
 
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression expr;
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -124,9 +124,9 @@ public class SetImpl extends StatementImpl implements Set
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpr()
+  public Expression getExpression()
   {
-    return expr;
+    return expression;
   }
 
   /**
@@ -134,13 +134,13 @@ public class SetImpl extends StatementImpl implements Set
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldExpr = expr;
-    expr = newExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScestPackage.SET__EXPR, oldExpr, newExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScestPackage.SET__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -151,20 +151,20 @@ public class SetImpl extends StatementImpl implements Set
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(Expression newExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newExpr != expr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScestPackage.SET__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScestPackage.SET__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScestPackage.SET__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScestPackage.SET__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScestPackage.SET__EXPR, newExpr, newExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, ScestPackage.SET__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -177,8 +177,8 @@ public class SetImpl extends StatementImpl implements Set
   {
     switch (featureID)
     {
-      case ScestPackage.SET__EXPR:
-        return basicSetExpr(null, msgs);
+      case ScestPackage.SET__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -196,8 +196,8 @@ public class SetImpl extends StatementImpl implements Set
       case ScestPackage.SET__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
-      case ScestPackage.SET__EXPR:
-        return getExpr();
+      case ScestPackage.SET__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -215,8 +215,8 @@ public class SetImpl extends StatementImpl implements Set
       case ScestPackage.SET__SIGNAL:
         setSignal((ISignal)newValue);
         return;
-      case ScestPackage.SET__EXPR:
-        setExpr((Expression)newValue);
+      case ScestPackage.SET__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,8 +235,8 @@ public class SetImpl extends StatementImpl implements Set
       case ScestPackage.SET__SIGNAL:
         setSignal((ISignal)null);
         return;
-      case ScestPackage.SET__EXPR:
-        setExpr((Expression)null);
+      case ScestPackage.SET__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -254,8 +254,8 @@ public class SetImpl extends StatementImpl implements Set
     {
       case ScestPackage.SET__SIGNAL:
         return signal != null;
-      case ScestPackage.SET__EXPR:
-        return expr != null;
+      case ScestPackage.SET__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }

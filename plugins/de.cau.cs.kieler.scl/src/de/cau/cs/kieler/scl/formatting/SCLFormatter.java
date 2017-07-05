@@ -49,6 +49,14 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             c.setLinewrap().after(semicolon);
         }
         
+        // Annotation
+        c.setLinewrap().before(f.getAnnotationAccess().getRule());
+        c.setLinewrap().after(f.getAnnotationAccess().getRule());
+        // have no space between '@' and the annotation name
+        for (Keyword at : f.findKeywords("@")) {
+            c.setNoSpace().after(at);
+        }
+        
         c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
         c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
         c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());

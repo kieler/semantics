@@ -279,13 +279,13 @@ public interface ScestPackage extends EPackage
   int SET__SIGNAL = SclPackage.STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SET__EXPR = SclPackage.STATEMENT_FEATURE_COUNT + 1;
+  int SET__EXPRESSION = SclPackage.STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Set</em>' class.
@@ -481,15 +481,15 @@ public interface ScestPackage extends EPackage
   EReference getSet_Signal();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpr <em>Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.scest.scest.Set#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.Set#getExpr()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.esterel.scest.scest.Set#getExpression()
    * @see #getSet()
    * @generated
    */
-  EReference getSet_Expr();
+  EReference getSet_Expression();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -659,12 +659,12 @@ public interface ScestPackage extends EPackage
     EReference SET__SIGNAL = eINSTANCE.getSet_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SET__EXPR = eINSTANCE.getSet_Expr();
+    EReference SET__EXPRESSION = eINSTANCE.getSet_Expression();
 
   }
 

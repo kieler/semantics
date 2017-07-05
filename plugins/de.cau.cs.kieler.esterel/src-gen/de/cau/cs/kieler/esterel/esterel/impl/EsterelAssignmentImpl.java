@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelAssignmentImpl#getVar <em>Var</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelAssignmentImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelAssignmentImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
@@ -45,14 +45,14 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
   protected IVariable var;
 
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression expr;
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -123,9 +123,9 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpr()
+  public Expression getExpression()
   {
-    return expr;
+    return expression;
   }
 
   /**
@@ -133,13 +133,13 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldExpr = expr;
-    expr = newExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_ASSIGNMENT__EXPR, oldExpr, newExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -150,20 +150,20 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(Expression newExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newExpr != expr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ESTEREL_ASSIGNMENT__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ESTEREL_ASSIGNMENT__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_ASSIGNMENT__EXPR, newExpr, newExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -176,8 +176,8 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
   {
     switch (featureID)
     {
-      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPR:
-        return basicSetExpr(null, msgs);
+      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -195,8 +195,8 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
       case EsterelPackage.ESTEREL_ASSIGNMENT__VAR:
         if (resolve) return getVar();
         return basicGetVar();
-      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPR:
-        return getExpr();
+      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -214,8 +214,8 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
       case EsterelPackage.ESTEREL_ASSIGNMENT__VAR:
         setVar((IVariable)newValue);
         return;
-      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPR:
-        setExpr((Expression)newValue);
+      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -234,8 +234,8 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
       case EsterelPackage.ESTEREL_ASSIGNMENT__VAR:
         setVar((IVariable)null);
         return;
-      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPR:
-        setExpr((Expression)null);
+      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -253,8 +253,8 @@ public class EsterelAssignmentImpl extends StatementImpl implements EsterelAssig
     {
       case EsterelPackage.ESTEREL_ASSIGNMENT__VAR:
         return var != null;
-      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPR:
-        return expr != null;
+      case EsterelPackage.ESTEREL_ASSIGNMENT__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }

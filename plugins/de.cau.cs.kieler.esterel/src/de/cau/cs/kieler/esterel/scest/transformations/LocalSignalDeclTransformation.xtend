@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import java.util.HashMap
 import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -65,11 +66,7 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
 //    }
 //
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID,
-            SCEstTransformation::ABORT_ID, SCEstTransformation::SUSPEND_ID,
-            SCEstTransformation::LOOP_ID, SCEstTransformation::DO_ID,
-            SCEstTransformation::AWAIT_ID, SCEstTransformation::EVERYDO_ID,
-            SCEstTransformation::PRESENT_ID
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID
             
         )
     }
@@ -77,6 +74,11 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
     @Inject
     extension SCEstExtension
     
+    /*
+     * This transformation has to be scheduled after the signal transformation because the signal transformation
+     * iterates over "newSignals" in SCEstExtension.
+     * Therefore the signal transformation would have problems when "createParallelForSignals" is called.
+     */
     
     def SCEstProgram transform(SCEstProgram prog) {
         for (m : prog.modules) { 
@@ -106,6 +108,9 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
@@ -186,58 +191,51 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
     }
     
     def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {
-        var necessary = false
-        var it = signalsMap.keySet.iterator
-        while (!necessary && it.hasNext) {
-            var ISignal signal = it.next
-            necessary = necessary || (signal.type != ValueType.PURE) 
-        }
-        if (necessary) {
-            var term = createNewUniqueTermFlag(createFalse)
-            var decl = createDeclaration(ValueType.BOOL, term)
-            var parallel = createParallel
-            var thread1 = createThread
-            var thread2 = createThread
-            parallel.threads.add(thread1)
-            parallel.threads.add(thread2)
-            thread2.statements.add(scope.statements)
-            thread2.statements.add(createAssignment(term, createTrue))
-            scope.statements.add(parallel)
-            scope.declarations.add(decl)
-            
-            // thread1 statements: the initializations of the output signals
-            var label = createLabel
-            thread1.statements.add(label)
-            it = signalsMap.keySet.iterator
-            while (it.hasNext) {
-                var signal = it.next
-                var keyValue = signalsMap.get(signal)
-                var s = keyValue.s
-                if (signal.type != ValueType.PURE) {
-                    var s_set = keyValue.s_set
-                    var s_cur = keyValue.s_cur
-                    var s_val = keyValue.s_val
-                    var assign1 = createAssignment(s, createFalse)
-                    thread1.statements.add(assign1)
-                    var assign2 = createAssignment(s_set, createFalse)
-                    thread1.statements.add(assign2)
-                    var conditional1 = createConditional(createNot(createValuedObjectReference(s_set)))
-                    var assign3 = createAssignment(s_cur, getNeutral(s_cur.combineOperator))
-                    conditional1.statements.add(assign3)
-                    thread1.statements.add(conditional1)
-                    var conditional2 = createConditional(createValuedObjectReference(s))
-                    var assign4 = createAssignment(s_val, createValuedObjectReference(s_cur))
-                    conditional2.statements.add(assign4)
-                    thread1.statements.add(conditional2)
-                }
-                else {
-                    var assign1 = createAssignment(s, createFalse)
-                    thread1.statements.add(assign1)
-                }
+        var iterator = signalsMap.keySet.iterator
+        var term = createNewUniqueTermFlag(createFalse)
+        var decl = createDeclaration(ValueType.BOOL, term)
+        var parallel = createParallel
+        var thread1 = createThread
+        var thread2 = createThread
+        parallel.threads.add(thread1)
+        parallel.threads.add(thread2)
+        thread2.statements.add(scope.statements)
+        thread2.statements.add(createAssignment(term, createTrue))
+        scope.statements.add(parallel)
+        scope.declarations.add(decl)
+        
+        // thread1 statements: the initializations of the signals
+        var label = createLabel
+        thread1.statements.add(label)
+        iterator = signalsMap.keySet.iterator
+        while (iterator.hasNext) {
+            var signal = iterator.next
+            var keyValue = signalsMap.get(signal)
+            var s = keyValue.s
+            if (signal.type != ValueType.PURE) {
+                var s_set = keyValue.s_set
+                var s_cur = keyValue.s_cur
+                var s_val = keyValue.s_val
+                var assign1 = createAssignment(s, createFalse)
+                thread1.statements.add(assign1)
+                var assign2 = createAssignment(s_set, createFalse)
+                thread1.statements.add(assign2)
+                var conditional1 = createConditional(createNot(createValuedObjectReference(s_set)))
+                var assign3 = createAssignment(s_cur, getNeutral(s_cur.combineOperator))
+                conditional1.statements.add(assign3)
+                thread1.statements.add(conditional1)
+                var conditional2 = createConditional(createValuedObjectReference(s))
+                var assign4 = createAssignment(s_val, createValuedObjectReference(s_cur))
+                conditional2.statements.add(assign4)
+                thread1.statements.add(conditional2)
             }
-            var conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), label, true)
-            thread1.statements.add(conditional)
+            else {
+                var assign1 = createAssignment(s, createFalse)
+                thread1.statements.add(assign1)
+            }
         }
+        var conditional = newIfThenGoto(createNot(createValuedObjectReference(term)), label, true)
+        thread1.statements.add(conditional)
     }
     
 }

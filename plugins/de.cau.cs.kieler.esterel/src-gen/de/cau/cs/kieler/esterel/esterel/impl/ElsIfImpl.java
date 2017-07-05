@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getAnnotations <em>Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenStatements <em>Then Statements</em>}</li>
  * </ul>
  *
@@ -55,14 +55,14 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   protected EList<Annotation> annotations;
 
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression expr;
+  protected Expression expression;
 
   /**
    * The cached value of the '{@link #getThenStatements() <em>Then Statements</em>}' containment reference list.
@@ -114,9 +114,9 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpr()
+  public Expression getExpression()
   {
-    return expr;
+    return expression;
   }
 
   /**
@@ -124,13 +124,13 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldExpr = expr;
-    expr = newExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__EXPR, oldExpr, newExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -141,20 +141,20 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(Expression newExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newExpr != expr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__EXPR, newExpr, newExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -183,8 +183,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     {
       case EsterelPackage.ELS_IF__ANNOTATIONS:
         return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.ELS_IF__EXPR:
-        return basicSetExpr(null, msgs);
+      case EsterelPackage.ELS_IF__EXPRESSION:
+        return basicSetExpression(null, msgs);
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         return ((InternalEList<?>)getThenStatements()).basicRemove(otherEnd, msgs);
     }
@@ -203,8 +203,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     {
       case EsterelPackage.ELS_IF__ANNOTATIONS:
         return getAnnotations();
-      case EsterelPackage.ELS_IF__EXPR:
-        return getExpr();
+      case EsterelPackage.ELS_IF__EXPRESSION:
+        return getExpression();
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         return getThenStatements();
     }
@@ -226,8 +226,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
         getAnnotations().clear();
         getAnnotations().addAll((Collection<? extends Annotation>)newValue);
         return;
-      case EsterelPackage.ELS_IF__EXPR:
-        setExpr((Expression)newValue);
+      case EsterelPackage.ELS_IF__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         getThenStatements().clear();
@@ -250,8 +250,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
       case EsterelPackage.ELS_IF__ANNOTATIONS:
         getAnnotations().clear();
         return;
-      case EsterelPackage.ELS_IF__EXPR:
-        setExpr((Expression)null);
+      case EsterelPackage.ELS_IF__EXPRESSION:
+        setExpression((Expression)null);
         return;
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         getThenStatements().clear();
@@ -272,8 +272,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     {
       case EsterelPackage.ELS_IF__ANNOTATIONS:
         return annotations != null && !annotations.isEmpty();
-      case EsterelPackage.ELS_IF__EXPR:
-        return expr != null;
+      case EsterelPackage.ELS_IF__EXPRESSION:
+        return expression != null;
       case EsterelPackage.ELS_IF__THEN_STATEMENTS:
         return thenStatements != null && !thenStatements.isEmpty();
     }

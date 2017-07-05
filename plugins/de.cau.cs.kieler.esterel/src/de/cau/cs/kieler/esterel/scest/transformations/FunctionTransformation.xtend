@@ -92,7 +92,7 @@ class FunctionTransformation extends AbstractExpansionTransformation implements 
                 list.set(pos, newF)
             }
             else {
-                setExpression(newF, f.eContainer)
+                setExpression(newF, f.eContainer, false)
             }
         }
     }

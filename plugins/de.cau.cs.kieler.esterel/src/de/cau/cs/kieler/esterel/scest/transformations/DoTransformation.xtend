@@ -32,6 +32,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -86,8 +87,8 @@ class DoTransformation extends AbstractExpansionTransformation implements Tracea
             var abort = createAbort
             abort.statements.add(doo.statements)
             // do upto
-            if (doo.expr != null) {
-                abort.delay = EcoreUtil.copy(doo.expr)
+            if (doo.expression != null) {
+                abort.delay = EcoreUtil.copy(doo.expression)
                 abort.statements.add(createHalt)
             }
             // do watching
@@ -107,6 +108,9 @@ class DoTransformation extends AbstractExpansionTransformation implements Tracea
             else if (statement instanceof Abort) {
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]

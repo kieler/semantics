@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EmitImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EmitImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EmitImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
@@ -45,14 +45,14 @@ public class EmitImpl extends StatementImpl implements Emit
   protected ISignal signal;
 
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression expr;
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -123,9 +123,9 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpr()
+  public Expression getExpression()
   {
-    return expr;
+    return expression;
   }
 
   /**
@@ -133,13 +133,13 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldExpr = expr;
-    expr = newExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPR, oldExpr, newExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -150,20 +150,20 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(Expression newExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newExpr != expr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPR, newExpr, newExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -176,8 +176,8 @@ public class EmitImpl extends StatementImpl implements Emit
   {
     switch (featureID)
     {
-      case EsterelPackage.EMIT__EXPR:
-        return basicSetExpr(null, msgs);
+      case EsterelPackage.EMIT__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -195,8 +195,8 @@ public class EmitImpl extends StatementImpl implements Emit
       case EsterelPackage.EMIT__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
-      case EsterelPackage.EMIT__EXPR:
-        return getExpr();
+      case EsterelPackage.EMIT__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -214,8 +214,8 @@ public class EmitImpl extends StatementImpl implements Emit
       case EsterelPackage.EMIT__SIGNAL:
         setSignal((ISignal)newValue);
         return;
-      case EsterelPackage.EMIT__EXPR:
-        setExpr((Expression)newValue);
+      case EsterelPackage.EMIT__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -234,8 +234,8 @@ public class EmitImpl extends StatementImpl implements Emit
       case EsterelPackage.EMIT__SIGNAL:
         setSignal((ISignal)null);
         return;
-      case EsterelPackage.EMIT__EXPR:
-        setExpr((Expression)null);
+      case EsterelPackage.EMIT__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -253,8 +253,8 @@ public class EmitImpl extends StatementImpl implements Emit
     {
       case EsterelPackage.EMIT__SIGNAL:
         return signal != null;
-      case EsterelPackage.EMIT__EXPR:
-        return expr != null;
+      case EsterelPackage.EMIT__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }

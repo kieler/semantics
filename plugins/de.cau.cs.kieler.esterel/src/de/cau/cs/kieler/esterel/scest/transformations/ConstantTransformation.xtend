@@ -134,7 +134,7 @@ class ConstantTransformation extends AbstractExpansionTransformation implements 
                         list.set(pos, createValuedObjectReference(newVariables.get(constant)))
                     }
                     else {
-                        setExpression(createValuedObjectReference(newVariables.get(constant)), expr.eContainer)
+                        setExpression(createValuedObjectReference(newVariables.get(constant)), expr.eContainer, false)
                     }
                 }
             }
@@ -145,7 +145,7 @@ class ConstantTransformation extends AbstractExpansionTransformation implements 
                     list.set(pos, createStringValue(expr.value))
                 }
                 else {
-                    setExpression(createStringValue(expr.value), expr.eContainer)
+                    setExpression(createStringValue(expr.value), expr.eContainer, false)
                 }
             }
             else {

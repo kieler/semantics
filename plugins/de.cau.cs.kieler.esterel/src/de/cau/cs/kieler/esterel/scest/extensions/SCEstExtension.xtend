@@ -78,6 +78,9 @@ import de.cau.cs.kieler.esterel.esterel.TrapSignal
 import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.esterel.esterel.IVariable
 import de.cau.cs.kieler.esterel.scest.scest.Set
+import java.util.List
+import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
+import de.cau.cs.kieler.esterel.esterel.TrapHandler
 
 /**
  * @author mrb
@@ -122,6 +125,10 @@ class SCEstExtension {
     
     // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
     var static HashMap<ISignal, NewSignals> newSignals = new HashMap<ISignal, NewSignals>()
+    
+//    var static HashMap<Statement, PauseJoin> pauseJoinTransformations = new HashMap()
+    
+//    var static HashMap<Statement, List<Statement>> containedBy = new HashMap()
 
     /**
      * Searches a valuedObject in a declarations list by its name
@@ -142,6 +149,14 @@ class SCEstExtension {
     def getNewSignals() {
         newSignals
     }
+    
+//    def getPauseJoinTransformations() {
+//        pauseJoinTransformations
+//    }
+//    
+//    def getContainedBy() {
+//        containedBy
+//    }
 
     /**
      * Searches a valuedObject by name in the signalToVariableMap of the EsterelToSclTransformation class
@@ -1424,7 +1439,7 @@ class SCEstExtension {
     def createEmit(Sustain sustain) {
         EsterelFactory::eINSTANCE.createEmit => [
             it.signal = sustain.signal
-            it.expr = sustain.expression
+            it.expression = sustain.expression
         ]
     }
     
@@ -1855,35 +1870,35 @@ class SCEstExtension {
         }
     }
     
-    /**
-     * Decide if the Valued Object Reference is a reference to a signal in a pre() expression.
-     * 
-     * @param ref The Valued Object Reference which might be in a pre() expression in a Signal Expression
-     */
-    def isSignalPreExpression(ValuedObjectReference ref) {
-        var parent = ref.eContainer
-        if (parent instanceof OperatorExpression) {
-            if( (parent as OperatorExpression).operator == OperatorType.PRE) {
-                var EObject nextParent = parent
-                while (nextParent instanceof Expression) {
-                    parent = nextParent
-                    nextParent = nextParent.eContainer
-                }
-                if (nextParent instanceof Present) {
-                    return true
-                }
-                else if (nextParent instanceof PresentCase) {
-                    return true
-                }
-                else if (nextParent instanceof DelayExpr) {
-                    if ( (nextParent as DelayExpr).signalExpr == parent) {
-                        return true
-                    }
-                }
-            }
-        }
-        return false
-    }
+//    /**
+//     * Decide if the Valued Object Reference is a reference to a signal in a pre() expression.
+//     * 
+//     * @param ref The Valued Object Reference which might be in a pre() expression in a Signal Expression
+//     */
+//    def isSignalPreExpression(ValuedObjectReference ref) {
+//        var parent = ref.eContainer
+//        if (parent instanceof OperatorExpression) {
+//            if( (parent as OperatorExpression).operator == OperatorType.PRE) {
+//                var EObject nextParent = parent
+//                while (nextParent instanceof Expression) {
+//                    parent = nextParent
+//                    nextParent = nextParent.eContainer
+//                }
+//                if (nextParent instanceof Present) {
+//                    return true
+//                }
+//                else if (nextParent instanceof PresentCase) {
+//                    return true
+//                }
+//                else if (nextParent instanceof DelayExpr) {
+//                    if ( (nextParent as DelayExpr).signalExpr == parent) {
+//                        return true
+//                    }
+//                }
+//            }
+//        }
+//        return false
+//    }
     
     /**
      * Transform all references to ISignals in the scope of the given statement.
@@ -1893,9 +1908,8 @@ class SCEstExtension {
     def transformReferences(Statement statement) {
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed signal then set the reference to the new signal
-        var references = statement.eAllContents.filter(ValuedObjectReference)
-        while (references.hasNext) {
-            var ref = references.next
+        var references = statement.eAllContents.filter(ValuedObjectReference).toList
+        for (ref : references) {
             if (ref.valuedObject instanceof ISignal) {
                 var signal = ref.valuedObject as ISignal
                 // if the valued object reference references a transformed signal
@@ -1910,9 +1924,10 @@ class SCEstExtension {
                             removeValueTestOperator(parent)
                         }
                         else if ( (parent as OperatorExpression).operator == OperatorType.PRE) { 
-                            // check if the value operator is used for the signal or the value of the signal
-                            if (ref.isSignalPreExpression){
-                                ref.valuedObject = newSignals.get(signal).s
+                            if (ref instanceof SignalReferenceExpr){
+                                var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
+                                var pos = list.indexOf(ref)
+                                list.set(pos, createValuedObjectReference(newSignals.get(signal).s))
                             }
                             else {
                                 if (newSignals.get(signal).s_val == null) {
@@ -1930,7 +1945,36 @@ class SCEstExtension {
                     }
                 }
             }
+            if (ref.eContainer != null && ref instanceof SignalReferenceExpr) {
+                if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
+                    var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
+                    var pos = list.indexOf(ref)
+                    list.set(pos, createValuedObjectReference(ref.valuedObject))
+                }
+                else {
+                    var voRef = createValuedObjectReference(ref.valuedObject)
+                    setExpression(voRef, ref.eContainer, true)
+                    System.out.println(voRef)
+                }
+            }
         }
+//        var references2 = statement.eAllContents.filter(SignalReferenceExpr).toList
+//        for (ref : references2) {
+//            if (ref.valuedObject instanceof ISignal) {
+//                var signal = ref.valuedObject as ISignal
+//                // if the signal reference references a transformed signal
+//                if (newSignals.containsKey(signal)) {
+//                    if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
+//                        var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
+//                        var pos = list.indexOf(ref)
+//                        list.set(pos, createValuedObjectReference(ref.valuedObject))
+//                    }
+//                    else {
+//                        setExpression(createValuedObjectReference(ref.valuedObject), ref.eContainer)
+//                    }
+//                }
+//            }
+//        }
     }
     
     /**
@@ -1965,25 +2009,26 @@ class SCEstExtension {
      * 
      * @param expr The expression which needs to be placed somewhere
      * @param o The object which should be able to hold an expression
+     * @param signalExpr set a previous signalExpression
      */
-    def setExpression(Expression expr, EObject o) {
+    def setExpression(Expression expr, EObject o, boolean signalExpr) {
         if (o instanceof ISignal) {
             (o as ISignal).expression = expr
         }
         else if (o instanceof Emit) {
-            (o as Emit).expr = expr
+            (o as Emit).expression = expr
         }
         else if (o instanceof Sustain) {
             (o as Sustain).expression = expr
         }
         else if (o instanceof EsterelAssignment) {
-            (o as EsterelAssignment).expr = expr
+            (o as EsterelAssignment).expression = expr
         }
         else if (o instanceof IfTest) {
-            (o as IfTest).expr = expr
+            (o as IfTest).expression = expr
         }
         else if (o instanceof ElsIf) {
-            (o as ElsIf).expr = expr
+            (o as ElsIf).expression = expr
         }
         else if (o instanceof Repeat) {
             (o as Repeat).expression = expr
@@ -1995,7 +2040,12 @@ class SCEstExtension {
             (o as IVariable).expression = expr
         }
         else if (o instanceof DelayExpr) {
-            (o as DelayExpr).expr = expr
+            if (signalExpr) {
+                (o as DelayExpr).signalExpr = expr                
+            }
+            else {
+                (o as DelayExpr).expression = expr
+            }
         }
         else if (o instanceof Conditional) {
             (o as Conditional).expression = expr
@@ -2004,7 +2054,13 @@ class SCEstExtension {
             (o as Assignment).expression = expr
         }
         else if (o instanceof Set) {
-            (o as Set).expr = expr
+            (o as Set).expression = expr
+        }
+        else if (o instanceof Present) {
+            (o as Present).expression = expr
+        }
+        else if (o instanceof TrapHandler) {
+            (o as TrapHandler).trapExpr = expr
         }
         else {
             throw new UnsupportedOperationException("The following expression will be homeless! " + expr.toString)
@@ -2081,7 +2137,7 @@ class SCEstExtension {
                     list.set(pos, expr.subExpressions.get(0))
                 }
                 else {
-                    setExpression(expr.subExpressions.get(0), expr.eContainer)
+                    setExpression(expr.subExpressions.get(0), expr.eContainer, false)
                 }
             }
         }

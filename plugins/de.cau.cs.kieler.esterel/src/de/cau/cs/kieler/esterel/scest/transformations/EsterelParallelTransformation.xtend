@@ -31,6 +31,7 @@ import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -99,6 +100,9 @@ class EsterelParallelTransformation extends AbstractExpansionTransformation impl
                 if ((statement as Abort).cases != null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
                 }
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList != null) {

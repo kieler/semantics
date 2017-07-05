@@ -63,6 +63,7 @@ import de.cau.cs.kieler.esterel.esterel.Return;
 import de.cau.cs.kieler.esterel.esterel.Run;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
+import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr;
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
 import de.cau.cs.kieler.esterel.esterel.Suspend;
 import de.cau.cs.kieler.esterel.esterel.Sustain;
@@ -602,6 +603,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass constantExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass signalReferenceExprEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1461,7 +1469,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEmit_Expr()
+  public EReference getEmit_Expression()
   {
     return (EReference)emitEClass.getEStructuralFeatures().get(1);
   }
@@ -1521,7 +1529,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEsterelAssignment_Expr()
+  public EReference getEsterelAssignment_Expression()
   {
     return (EReference)esterelAssignmentEClass.getEStructuralFeatures().get(1);
   }
@@ -1671,7 +1679,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getIfTest_Expr()
+  public EReference getIfTest_Expression()
   {
     return (EReference)ifTestEClass.getEStructuralFeatures().get(0);
   }
@@ -1751,7 +1759,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getElsIf_Expr()
+  public EReference getElsIf_Expression()
   {
     return (EReference)elsIfEClass.getEStructuralFeatures().get(1);
   }
@@ -2571,7 +2579,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDo_Expr()
+  public EReference getDo_Expression()
   {
     return (EReference)doEClass.getEStructuralFeatures().get(1);
   }
@@ -2611,7 +2619,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDelayExpr_Expr()
+  public EReference getDelayExpr_Expression()
   {
     return (EReference)delayExprEClass.getEStructuralFeatures().get(0);
   }
@@ -2841,6 +2849,16 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getSignalReferenceExpr()
+  {
+    return signalReferenceExprEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getTrapReferenceExpr()
   {
     return trapReferenceExprEClass;
@@ -2980,7 +2998,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     emitEClass = createEClass(EMIT);
     createEReference(emitEClass, EMIT__SIGNAL);
-    createEReference(emitEClass, EMIT__EXPR);
+    createEReference(emitEClass, EMIT__EXPRESSION);
 
     sustainEClass = createEClass(SUSTAIN);
     createEReference(sustainEClass, SUSTAIN__SIGNAL);
@@ -2988,7 +3006,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     esterelAssignmentEClass = createEClass(ESTEREL_ASSIGNMENT);
     createEReference(esterelAssignmentEClass, ESTEREL_ASSIGNMENT__VAR);
-    createEReference(esterelAssignmentEClass, ESTEREL_ASSIGNMENT__EXPR);
+    createEReference(esterelAssignmentEClass, ESTEREL_ASSIGNMENT__EXPRESSION);
 
     procCallEClass = createEClass(PROC_CALL);
     createEReference(procCallEClass, PROC_CALL__PROC);
@@ -3007,7 +3025,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(presentCaseEClass, PRESENT_CASE__EXPRESSION);
 
     ifTestEClass = createEClass(IF_TEST);
-    createEReference(ifTestEClass, IF_TEST__EXPR);
+    createEReference(ifTestEClass, IF_TEST__EXPRESSION);
     createEReference(ifTestEClass, IF_TEST__THEN_ANNOTATIONS);
     createEReference(ifTestEClass, IF_TEST__THEN_STATEMENTS);
     createEReference(ifTestEClass, IF_TEST__ELSEIF);
@@ -3016,7 +3034,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     elsIfEClass = createEClass(ELS_IF);
     createEReference(elsIfEClass, ELS_IF__ANNOTATIONS);
-    createEReference(elsIfEClass, ELS_IF__EXPR);
+    createEReference(elsIfEClass, ELS_IF__EXPRESSION);
     createEReference(elsIfEClass, ELS_IF__THEN_STATEMENTS);
 
     loopEClass = createEClass(LOOP);
@@ -3124,12 +3142,12 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     doEClass = createEClass(DO);
     createEReference(doEClass, DO__ENDING_ANNOTATIONS);
-    createEReference(doEClass, DO__EXPR);
+    createEReference(doEClass, DO__EXPRESSION);
     createEReference(doEClass, DO__DELAY);
     createEReference(doEClass, DO__WATCHING_STATEMENTS);
 
     delayExprEClass = createEClass(DELAY_EXPR);
-    createEReference(delayExprEClass, DELAY_EXPR__EXPR);
+    createEReference(delayExprEClass, DELAY_EXPR__EXPRESSION);
     createEAttribute(delayExprEClass, DELAY_EXPR__IS_IMMEDIATE);
     createEReference(delayExprEClass, DELAY_EXPR__SIGNAL_EXPR);
 
@@ -3163,6 +3181,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     constantExpressionEClass = createEClass(CONSTANT_EXPRESSION);
     createEReference(constantExpressionEClass, CONSTANT_EXPRESSION__CONSTANT);
     createEAttribute(constantExpressionEClass, CONSTANT_EXPRESSION__VALUE);
+
+    signalReferenceExprEClass = createEClass(SIGNAL_REFERENCE_EXPR);
 
     trapReferenceExprEClass = createEClass(TRAP_REFERENCE_EXPR);
   }
@@ -3257,6 +3277,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     trapExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
     functionExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
     constantExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
+    signalReferenceExprEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
     trapReferenceExprEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
 
     // Initialize classes and features; add operations and parameters
@@ -3364,7 +3385,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(emitEClass, Emit.class, "Emit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEmit_Signal(), this.getISignal(), null, "signal", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEmit_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEmit_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sustainEClass, Sustain.class, "Sustain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSustain_Signal(), this.getISignal(), null, "signal", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3372,7 +3393,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(esterelAssignmentEClass, EsterelAssignment.class, "EsterelAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEsterelAssignment_Var(), this.getIVariable(), null, "var", null, 0, 1, EsterelAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEsterelAssignment_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, EsterelAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEsterelAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, EsterelAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(procCallEClass, ProcCall.class, "ProcCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getProcCall_Proc(), this.getProcedure(), null, "proc", null, 0, 1, ProcCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3391,7 +3412,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getPresentCase_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, PresentCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ifTestEClass, IfTest.class, "IfTest", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIfTest_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfTest_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTest_ThenAnnotations(), theAnnotationsPackage.getAnnotation(), null, "thenAnnotations", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTest_ThenStatements(), theSclPackage.getStatement(), null, "thenStatements", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTest_Elseif(), this.getElsIf(), null, "elseif", null, 0, -1, IfTest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3400,7 +3421,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(elsIfEClass, ElsIf.class, "ElsIf", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getElsIf_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getElsIf_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElsIf_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getElsIf_ThenStatements(), theSclPackage.getStatement(), null, "thenStatements", null, 0, -1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(loopEClass, Loop.class, "Loop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3508,12 +3529,12 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(doEClass, Do.class, "Do", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDo_EndingAnnotations(), theAnnotationsPackage.getAnnotation(), null, "endingAnnotations", null, 0, -1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDo_Expr(), this.getDelayExpr(), null, "expr", null, 0, 1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDo_Expression(), this.getDelayExpr(), null, "expression", null, 0, 1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDo_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDo_WatchingStatements(), theSclPackage.getStatement(), null, "watchingStatements", null, 0, -1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(delayExprEClass, DelayExpr.class, "DelayExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDelayExpr_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDelayExpr_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDelayExpr_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDelayExpr_SignalExpr(), theKExpressionsPackage.getExpression(), null, "signalExpr", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3547,6 +3568,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(constantExpressionEClass, ConstantExpression.class, "ConstantExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConstantExpression_Constant(), this.getConstant(), null, "constant", null, 0, 1, ConstantExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConstantExpression_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstantExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(signalReferenceExprEClass, SignalReferenceExpr.class, "SignalReferenceExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(trapReferenceExprEClass, TrapReferenceExpr.class, "TrapReferenceExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

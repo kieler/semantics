@@ -46,6 +46,7 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import java.util.HashMap
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -69,11 +70,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     }
     
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID,
-            SCEstTransformation::ABORT_ID, SCEstTransformation::SUSPEND_ID,
-            SCEstTransformation::LOOP_ID, SCEstTransformation::DO_ID,
-            SCEstTransformation::AWAIT_ID, SCEstTransformation::EVERYDO_ID,
-            SCEstTransformation::PRESENT_ID
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID
         )
     }
 
@@ -86,6 +83,12 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
      *  SCL doesn't allow anything else then the predefined types
      *  see KExt.xtext => Declaration
     */
+    
+    /*
+     * This transformation has to be done before the local signal transformation because the local signal transformation
+     * writes also in the end its signals to "newSignals" in SCEstExtension.
+     * Therefore this transformation would also iterate over the local signals when "createParallelForSignals" is called.
+     */
     
     def SCEstProgram transform(SCEstProgram prog) {
         for (m : prog.modules) { 
@@ -252,6 +255,9 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
             }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
+            }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
             }
@@ -290,7 +296,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
         var emit = statement as Emit
         var signal = emit.signal
         // when emitting a valued signal, 'expr' can't be null
-        if (emit.expr == null && signal.type != ValueType.PURE) {
+        if (emit.expression == null && signal.type != ValueType.PURE) {
             throw new UnsupportedOperationException("The following signal is a valued signal. 
                                     Thus a non valued emit is invalid! " + signal.toString)
         }
@@ -301,11 +307,11 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
             var expr = createOr(createValuedObjectReference(s), createTrue)
             statements.set(pos, createAssignment(s, expr))
             // valued emit
-            if (emit.expr != null) {
+            if (emit.expression != null) {
                 if (signal.type != ValueType.PURE) {
                     var s_cur = newSignals.get(signal).s_cur
                     var assign2 = createAssignment(s_cur, 
-                        createOperatorExpression(createValuedObjectReference(s_cur), emit.expr, getOperator(signal.combineOperator)))
+                        createOperatorExpression(createValuedObjectReference(s_cur), emit.expression, getOperator(signal.combineOperator)))
                     statements.add(pos+1, assign2)
                 }
                 else {
@@ -338,7 +344,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
             var s_cur = newSignals.get(signal).s_cur
             var assign1 = createAssignment(s, createOr(createValuedObjectReference(s), createTrue))
             var assign2 = createAssignment(s_set, createOr(createValuedObjectReference(s_set), createTrue))
-            var assign3 = createAssignment(s_cur, set.expr)
+            var assign3 = createAssignment(s_cur, set.expression)
             statements.set(pos, assign3)
             statements.add(pos, assign2)
             statements.add(pos, assign1)

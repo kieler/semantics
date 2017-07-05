@@ -95,10 +95,10 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                 var label = createLabel(createNewUniqueLabel)
                 var variable = createNewUniqueVariable(createIntValue(0))
                 var decl = createDeclaration(ValueType.INT, variable)
-                if (await.delay.expr != null) {
+                if (await.delay.expression != null) {
                     var scope = createScopeStatement(decl)
                     statements.set(pos, scope)
-                    var lt = createLT(createValuedObjectReference(variable), await.delay.expr)
+                    var lt = createLT(createValuedObjectReference(variable), await.delay.expression)
                     var conditional = createConditional(await.delay.signalExpr)
                     conditional.statements.add(incrementInt(variable))
                     conditional.annotations.add(createAnnotation(0))
@@ -159,17 +159,18 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                 for (var i=0; i<cases.length; i++) {
                     var c = cases.get(i)
                     if (c.delay != null) {
-                        if (c.delay.expr != null) {
+                        if (c.delay.expression != null) {
                             var variable = createNewUniqueVariable(createIntValue(0))
                             var decl = createDeclaration(ValueType.INT, variable)
                             scope.declarations.add(decl)
                             var conditional = createConditional(c.delay.signalExpr)
                             conditional.statements.add(incrementInt(variable))
-                            var lt = createLT(createValuedObjectReference(variable), c.delay.expr)
+                            var lt = createLT(createValuedObjectReference(variable), c.delay.expression)
                             var conditional2 = newIfThenGoto(lt, nextLabel, false)
                             scope.statements.add(1, conditional)
                             scope.statements.add(conditional2)
                             if (c.statements != null) {
+                                c.statements.transformStatements 
                                 scope.statements.add(c.statements)
                             }
                             scope.statements.add(createGotoStatement(endLabel))
@@ -186,6 +187,7 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
                                 immediateLabels.add(new Pair(label, conditional))
                             }
                             if (c.statements != null) {
+                                c.statements.transformStatements 
                                 scope.statements.add(c.statements)
                             }
                             scope.statements.add(createGotoStatement(endLabel))

@@ -31,6 +31,7 @@ import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -91,12 +92,12 @@ class IfTestTransformation extends AbstractExpansionTransformation implements Tr
             }
             transformStatements(ifTest.elseStatements)
             
-            var conditional = createConditional(ifTest.expr)
+            var conditional = createConditional(ifTest.expression)
             conditional.statements.add(ifTest.thenStatements)
             if (!ifTest.elseif.empty) {
                 var tempConditional = conditional
                 for (e : ifTest.elseif) {
-                    var conditional2 = createConditional(e.expr)
+                    var conditional2 = createConditional(e.expression)
                     conditional2.statements.add(e.thenStatements)
                     var elseStatement = createElseScope(conditional2)
                     tempConditional.setElse(elseStatement)
@@ -126,6 +127,9 @@ class IfTestTransformation extends AbstractExpansionTransformation implements Tr
                 if ((statement as Abort).cases != null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
                 }
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList != null) {

@@ -19,7 +19,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getEndingAnnotations <em>Ending Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getWatchingStatements <em>Watching Statements</em>}</li>
  * </ul>
@@ -47,30 +47,30 @@ public interface Do extends StatementContainer, Statement
   EList<Annotation> getEndingAnnotations();
 
   /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(DelayExpr)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_Expr()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(DelayExpr)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_Expression()
    * @model containment="true"
    * @generated
    */
-  DelayExpr getExpr();
+  DelayExpr getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getExpr <em>Expr</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expr</em>' containment reference.
-   * @see #getExpr()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setExpr(DelayExpr value);
+  void setExpression(DelayExpr value);
 
   /**
    * Returns the value of the '<em><b>Delay</b></em>' containment reference.

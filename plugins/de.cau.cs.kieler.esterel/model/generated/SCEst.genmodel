@@ -27,7 +27,7 @@
     </genClasses>
     <genClasses ecoreClass="SCEst.ecore#//Set">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCEst.ecore#//Set/signal"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//Set/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//Set/expression"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

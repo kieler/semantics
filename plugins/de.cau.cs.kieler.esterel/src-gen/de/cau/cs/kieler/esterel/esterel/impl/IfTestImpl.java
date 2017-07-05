@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThenAnnotations <em>Then Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThenStatements <em>Then Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElseif <em>Elseif</em>}</li>
@@ -50,14 +50,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class IfTestImpl extends StatementImpl implements IfTest
 {
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression expr;
+  protected Expression expression;
 
   /**
    * The cached value of the '{@link #getThenAnnotations() <em>Then Annotations</em>}' containment reference list.
@@ -135,9 +135,9 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpr()
+  public Expression getExpression()
   {
-    return expr;
+    return expression;
   }
 
   /**
@@ -145,13 +145,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldExpr = expr;
-    expr = newExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__EXPR, oldExpr, newExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -162,20 +162,20 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(Expression newExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newExpr != expr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__EXPR, newExpr, newExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -258,8 +258,8 @@ public class IfTestImpl extends StatementImpl implements IfTest
   {
     switch (featureID)
     {
-      case EsterelPackage.IF_TEST__EXPR:
-        return basicSetExpr(null, msgs);
+      case EsterelPackage.IF_TEST__EXPRESSION:
+        return basicSetExpression(null, msgs);
       case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
         return ((InternalEList<?>)getThenAnnotations()).basicRemove(otherEnd, msgs);
       case EsterelPackage.IF_TEST__THEN_STATEMENTS:
@@ -284,8 +284,8 @@ public class IfTestImpl extends StatementImpl implements IfTest
   {
     switch (featureID)
     {
-      case EsterelPackage.IF_TEST__EXPR:
-        return getExpr();
+      case EsterelPackage.IF_TEST__EXPRESSION:
+        return getExpression();
       case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
         return getThenAnnotations();
       case EsterelPackage.IF_TEST__THEN_STATEMENTS:
@@ -311,8 +311,8 @@ public class IfTestImpl extends StatementImpl implements IfTest
   {
     switch (featureID)
     {
-      case EsterelPackage.IF_TEST__EXPR:
-        setExpr((Expression)newValue);
+      case EsterelPackage.IF_TEST__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
       case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
         getThenAnnotations().clear();
@@ -348,8 +348,8 @@ public class IfTestImpl extends StatementImpl implements IfTest
   {
     switch (featureID)
     {
-      case EsterelPackage.IF_TEST__EXPR:
-        setExpr((Expression)null);
+      case EsterelPackage.IF_TEST__EXPRESSION:
+        setExpression((Expression)null);
         return;
       case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
         getThenAnnotations().clear();
@@ -380,8 +380,8 @@ public class IfTestImpl extends StatementImpl implements IfTest
   {
     switch (featureID)
     {
-      case EsterelPackage.IF_TEST__EXPR:
-        return expr != null;
+      case EsterelPackage.IF_TEST__EXPRESSION:
+        return expression != null;
       case EsterelPackage.IF_TEST__THEN_ANNOTATIONS:
         return thenAnnotations != null && !thenAnnotations.isEmpty();
       case EsterelPackage.IF_TEST__THEN_STATEMENTS:

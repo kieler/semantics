@@ -47,6 +47,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.esterel.esterel.TrapExpression
 import de.cau.cs.kieler.kexpressions.Expression
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -74,7 +75,10 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
 //    }
 //
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID,
+            SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID,
+            SCEstTransformation::AWAIT_ID, SCEstTransformation::SUSTAIN_ID,
+            SCEstTransformation::DO_ID)
     }
 
     @Inject
@@ -184,6 +188,9 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
             }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
+            }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
             }
@@ -253,6 +260,14 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             }
             transformJoin(statement, conditional, label)
         }
+        else if (statement instanceof Conditional) {
+            // Don't transform the pauses in generated Conditionals.
+            var annotations = (statement as Conditional).annotations
+            if (!isGenerated(annotations)) {
+                cryingWolf = transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+                cryingWolf = transformPausesJoins((statement as Conditional).getElse()?.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
+            }
+        }
         else if (statement instanceof StatementContainer) {
             
             cryingWolf = transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
@@ -270,6 +285,12 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                     cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, temp) && cryingWolf
                 }
             }
+            else if (statement instanceof Await) {
+                temp = cryingWolf
+                for (c : statement.cases) {
+                    cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, temp) && cryingWolf
+                }
+            }
             else if (statement instanceof Exec) {
                 for (c : statement.execCaseList) {
                     cryingWolf = transformPausesJoins(c.statements, conditional, label, exitVariables, temp) && cryingWolf
@@ -277,14 +298,6 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             }
             else if (statement instanceof Do) {
                 cryingWolf = transformPausesJoins((statement as Do).watchingStatements, conditional, label, exitVariables, cryingWolf) && cryingWolf
-            }
-            else if (statement instanceof Conditional) {
-                // Don't transform the pauses in generated Conditionals.
-                var annotations = (statement as Conditional).annotations
-                if (!isGenerated(annotations)) {
-                    cryingWolf = transformPausesJoins((statement as StatementContainer).statements, conditional, label, exitVariables, criedWolf) && cryingWolf
-                    cryingWolf = transformPausesJoins((statement as Conditional).getElse()?.statements, conditional, label, exitVariables, criedWolf) && cryingWolf
-                }
             }
         }
         else if (statement instanceof Present) {
@@ -385,7 +398,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                             list.set(pos, createValuedObjectReference(exitVariables.get(signal).value))
                         }
                         else {
-                            setExpression(createValuedObjectReference(exitVariables.get(signal).value), expr.eContainer)
+                            setExpression(createValuedObjectReference(exitVariables.get(signal).value), expr.eContainer, false)
                         }
                     }
                     else {
@@ -440,6 +453,14 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 }
                 for (c : (statement as Abort).cases) {
                     temp = checkPotentiallyInstantaneous(c.statements)
+                    if (temp.key == true) {
+                        criedWolf = new Pair(true, criedWolf.value && temp.value)
+                    }
+                }
+            }
+            else if (statement instanceof Await) {
+                for (c : (statement as Await).cases) {
+                    var temp = checkPotentiallyInstantaneous(c.statements)
                     if (temp.key == true) {
                         criedWolf = new Pair(true, criedWolf.value && temp.value)
                     }

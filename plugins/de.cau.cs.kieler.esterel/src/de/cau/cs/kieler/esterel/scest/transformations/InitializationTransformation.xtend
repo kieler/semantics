@@ -113,6 +113,7 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
             }
             else if (statement instanceof Await) {
                 (statement as Await).annotations.add(createAnnotation(depth))
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements, depth+1)]
             }
             else if (statement instanceof EveryDo) {
                 (statement as EveryDo).annotations.add(createAnnotation(depth))

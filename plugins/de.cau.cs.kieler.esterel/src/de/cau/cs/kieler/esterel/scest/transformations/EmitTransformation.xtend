@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Emit
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -99,6 +100,9 @@ class EmitTransformation extends AbstractExpansionTransformation implements Trac
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
             }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
+            }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
             }
@@ -135,7 +139,7 @@ class EmitTransformation extends AbstractExpansionTransformation implements Trac
         var emit = statement as Emit
         var signal = emit.signal
         // when emitting a valued signal, 'expr' can't be null
-        if (emit.expr == null && signal.type != ValueType.PURE) {
+        if (emit.expression == null && signal.type != ValueType.PURE) {
             throw new UnsupportedOperationException("The following signal is a valued signal. 
                                     Thus a non valued emit is invalid! " + signal.toString)
         }
@@ -146,11 +150,11 @@ class EmitTransformation extends AbstractExpansionTransformation implements Trac
             var expr = createOr(createValuedObjectReference(s), createTrue)
             statements.set(pos, createAssignment(s, expr))
             // valued emit
-            if (emit.expr != null) {
+            if (emit.expression != null) {
                 if (signal.type != ValueType.PURE) {
                     var s_cur = newSignals.get(signal).s_cur
                     var assign2 = createAssignment(s_cur, 
-                        createOperatorExpression(createValuedObjectReference(s_cur), emit.expr, getOperator(signal.combineOperator)))
+                        createOperatorExpression(createValuedObjectReference(s_cur), emit.expression, getOperator(signal.combineOperator)))
                     statements.add(pos+1, assign2)
                 }
                 else {

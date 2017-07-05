@@ -32,6 +32,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.scest.scest.Set
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -95,6 +96,9 @@ class SetTransformation extends AbstractExpansionTransformation implements Trace
                 transformStatements((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | transformStatements(c.statements)]
             }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
+            }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements)]
             }
@@ -138,7 +142,7 @@ class SetTransformation extends AbstractExpansionTransformation implements Trace
             var s_cur = newSignals.get(signal).s_cur
             var assign1 = createAssignment(s, createOr(createValuedObjectReference(s), createTrue))
             var assign2 = createAssignment(s_set, createOr(createValuedObjectReference(s_set), createTrue))
-            var assign3 = createAssignment(s_cur, set.expr)
+            var assign3 = createAssignment(s_cur, set.expression)
             statements.set(pos, assign3)
             statements.add(pos, assign2)
             statements.add(pos, assign1)

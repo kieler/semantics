@@ -129,7 +129,7 @@ PresentCase returns esterel::PresentCase:
 IfTest returns esterel::IfTest:
     (annotations += Annotation)*
     "if" 
-    expr=Expression 
+    expression=Expression 
     (
         (thenAnnotations += Annotation)*
         "then" 
@@ -146,7 +146,7 @@ IfTest returns esterel::IfTest:
 ElsIf returns esterel::ElsIf:
     (annotations += Annotation)*
     "elsif" 
-    expr=Expression 
+    expression=Expression 
     (
         "then" 
         ( (thenStatements+=SCEstStatement ";" | thenStatements+=MetaStatement)* thenStatements+=SCEstStatement? )
@@ -314,7 +314,7 @@ Do returns esterel::Do:
     ( 
         (endingAnnotations += Annotation)* 
         "upto" 
-        expr=DelayExpr
+        expression=DelayExpr
         | 
         (endingAnnotations += Annotation)* 
         "watching" 
@@ -344,7 +344,7 @@ Set:
     (annotations += Annotation)*
     "set" 
     signal=[esterel::ISignal|ID] 
-    ("("expr=Expression")");
+    ("("expression=Expression")");
      
     
 /* ###################################################

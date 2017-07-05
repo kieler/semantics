@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.EveryDo
 import org.eclipse.emf.ecore.util.EcoreUtil
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.esterel.Await
 
 /**
  * @author mrb
@@ -119,6 +120,9 @@ class EveryDoTransformation extends AbstractExpansionTransformation implements T
                 if ((statement as Abort).cases != null) {
                     (statement as Abort).cases.forEach[ c | transformStatements(c.statements)]
                 }
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements)]
             }
             else if (statement instanceof Exec) {
                 if ((statement as Exec).execCaseList != null) {
