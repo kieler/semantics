@@ -122,7 +122,7 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
                 val inputFileHandler = new SimulationInputFileHandler
                 simulator = inputFileHandler
                 inputFileHandler.fileLocation = file.location.toOSString
-            } if(file.fileExtension == "simout") {
+            } else if(file.fileExtension == "simout") {
                 val outputFileHandler = new SimulationOutputFileHandler
                 outputFileHandler.fileLocation = file.location.toOSString
                 val simMan = SimulationManager.instance
