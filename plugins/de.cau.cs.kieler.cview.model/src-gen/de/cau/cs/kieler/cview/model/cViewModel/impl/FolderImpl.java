@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#isProject <em>Project</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#getLocation <em>Location</em>}</li>
  * </ul>
  *
@@ -60,6 +61,26 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
    * @ordered
    */
   protected Folder parent;
+
+  /**
+   * The default value of the '{@link #isProject() <em>Project</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isProject()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean PROJECT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isProject() <em>Project</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isProject()
+   * @generated
+   * @ordered
+   */
+  protected boolean project = PROJECT_EDEFAULT;
 
   /**
    * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
@@ -173,6 +194,29 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isProject()
+  {
+    return project;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setProject(boolean newProject)
+  {
+    boolean oldProject = project;
+    project = newProject;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.FOLDER__PROJECT, oldProject, project));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getLocation()
   {
     return location;
@@ -206,6 +250,8 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
       case CViewModelPackage.FOLDER__PARENT:
         if (resolve) return getParent();
         return basicGetParent();
+      case CViewModelPackage.FOLDER__PROJECT:
+        return isProject();
       case CViewModelPackage.FOLDER__LOCATION:
         return getLocation();
     }
@@ -227,6 +273,9 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
         return;
       case CViewModelPackage.FOLDER__PARENT:
         setParent((Folder)newValue);
+        return;
+      case CViewModelPackage.FOLDER__PROJECT:
+        setProject((Boolean)newValue);
         return;
       case CViewModelPackage.FOLDER__LOCATION:
         setLocation((String)newValue);
@@ -251,6 +300,9 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
       case CViewModelPackage.FOLDER__PARENT:
         setParent((Folder)null);
         return;
+      case CViewModelPackage.FOLDER__PROJECT:
+        setProject(PROJECT_EDEFAULT);
+        return;
       case CViewModelPackage.FOLDER__LOCATION:
         setLocation(LOCATION_EDEFAULT);
         return;
@@ -272,6 +324,8 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case CViewModelPackage.FOLDER__PARENT:
         return parent != null;
+      case CViewModelPackage.FOLDER__PROJECT:
+        return project != PROJECT_EDEFAULT;
       case CViewModelPackage.FOLDER__LOCATION:
         return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
     }
@@ -291,6 +345,8 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", project: ");
+    result.append(project);
     result.append(", location: ");
     result.append(location);
     result.append(')');

@@ -3,11 +3,11 @@
  */
 package de.cau.cs.kieler.cview.model.cViewModel.impl;
 
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.model.cViewModel.File;
 import de.cau.cs.kieler.cview.model.cViewModel.Folder;
-import de.cau.cs.kieler.cview.model.cViewModel.Model;
 
 import java.util.Collection;
 
@@ -25,20 +25,20 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Model</b></em>'.
+ * An implementation of the model object '<em><b>CView Model</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl#getFolders <em>Folders</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl#getFiles <em>Files</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl#getComponents <em>Components</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl#getFolders <em>Folders</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl#getFiles <em>Files</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl#getComponents <em>Components</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ModelImpl extends MinimalEObjectImpl.Container implements Model
+public class CViewModelImpl extends MinimalEObjectImpl.Container implements CViewModel
 {
   /**
    * The cached value of the '{@link #getFolders() <em>Folders</em>}' containment reference list.
@@ -75,7 +75,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ModelImpl()
+  protected CViewModelImpl()
   {
     super();
   }
@@ -88,7 +88,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   @Override
   protected EClass eStaticClass()
   {
-    return CViewModelPackage.Literals.MODEL;
+    return CViewModelPackage.Literals.CVIEW_MODEL;
   }
 
   /**
@@ -100,7 +100,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     if (folders == null)
     {
-      folders = new EObjectContainmentEList<Folder>(Folder.class, this, CViewModelPackage.MODEL__FOLDERS);
+      folders = new EObjectContainmentEList<Folder>(Folder.class, this, CViewModelPackage.CVIEW_MODEL__FOLDERS);
     }
     return folders;
   }
@@ -114,7 +114,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     if (files == null)
     {
-      files = new EObjectContainmentEList<File>(File.class, this, CViewModelPackage.MODEL__FILES);
+      files = new EObjectContainmentEList<File>(File.class, this, CViewModelPackage.CVIEW_MODEL__FILES);
     }
     return files;
   }
@@ -128,7 +128,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     if (components == null)
     {
-      components = new EObjectContainmentEList<Component>(Component.class, this, CViewModelPackage.MODEL__COMPONENTS);
+      components = new EObjectContainmentEList<Component>(Component.class, this, CViewModelPackage.CVIEW_MODEL__COMPONENTS);
     }
     return components;
   }
@@ -143,11 +143,11 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__FOLDERS:
+      case CViewModelPackage.CVIEW_MODEL__FOLDERS:
         return ((InternalEList<?>)getFolders()).basicRemove(otherEnd, msgs);
-      case CViewModelPackage.MODEL__FILES:
+      case CViewModelPackage.CVIEW_MODEL__FILES:
         return ((InternalEList<?>)getFiles()).basicRemove(otherEnd, msgs);
-      case CViewModelPackage.MODEL__COMPONENTS:
+      case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         return ((InternalEList<?>)getComponents()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -163,11 +163,11 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__FOLDERS:
+      case CViewModelPackage.CVIEW_MODEL__FOLDERS:
         return getFolders();
-      case CViewModelPackage.MODEL__FILES:
+      case CViewModelPackage.CVIEW_MODEL__FILES:
         return getFiles();
-      case CViewModelPackage.MODEL__COMPONENTS:
+      case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         return getComponents();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -184,15 +184,15 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__FOLDERS:
+      case CViewModelPackage.CVIEW_MODEL__FOLDERS:
         getFolders().clear();
         getFolders().addAll((Collection<? extends Folder>)newValue);
         return;
-      case CViewModelPackage.MODEL__FILES:
+      case CViewModelPackage.CVIEW_MODEL__FILES:
         getFiles().clear();
         getFiles().addAll((Collection<? extends File>)newValue);
         return;
-      case CViewModelPackage.MODEL__COMPONENTS:
+      case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         getComponents().clear();
         getComponents().addAll((Collection<? extends Component>)newValue);
         return;
@@ -210,13 +210,13 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__FOLDERS:
+      case CViewModelPackage.CVIEW_MODEL__FOLDERS:
         getFolders().clear();
         return;
-      case CViewModelPackage.MODEL__FILES:
+      case CViewModelPackage.CVIEW_MODEL__FILES:
         getFiles().clear();
         return;
-      case CViewModelPackage.MODEL__COMPONENTS:
+      case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         getComponents().clear();
         return;
     }
@@ -233,14 +233,14 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__FOLDERS:
+      case CViewModelPackage.CVIEW_MODEL__FOLDERS:
         return folders != null && !folders.isEmpty();
-      case CViewModelPackage.MODEL__FILES:
+      case CViewModelPackage.CVIEW_MODEL__FILES:
         return files != null && !files.isEmpty();
-      case CViewModelPackage.MODEL__COMPONENTS:
+      case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         return components != null && !components.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //ModelImpl
+} //CViewModelImpl

@@ -44,7 +44,7 @@ import de.cau.cs.kieler.cview.model.services.CViewModelGrammarAccess;
 
     @Override
     protected String getFirstRuleName() {
-    	return "Model";
+    	return "CViewModel";
    	}
 
    	@Override
@@ -61,15 +61,15 @@ import de.cau.cs.kieler.cview.model.services.CViewModelGrammarAccess;
     }
 }
 
-// Entry rule entryRuleModel
-entryRuleModel returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getModelRule()); }
-	iv_ruleModel=ruleModel
-	{ $current=$iv_ruleModel.current; }
+// Entry rule entryRuleCViewModel
+entryRuleCViewModel returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getCViewModelRule()); }
+	iv_ruleCViewModel=ruleCViewModel
+	{ $current=$iv_ruleCViewModel.current; }
 	EOF;
 
-// Rule Model
-ruleModel returns [EObject current=null]
+// Rule CViewModel
+ruleCViewModel returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -80,12 +80,12 @@ ruleModel returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getModelAccess().getFoldersFolderParserRuleCall_0_0());
+					newCompositeNode(grammarAccess.getCViewModelAccess().getFoldersFolderParserRuleCall_0_0());
 				}
 				lv_folders_0_0=ruleFolder
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getModelRule());
+						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
 					}
 					add(
 						$current,
@@ -98,17 +98,17 @@ ruleModel returns [EObject current=null]
 		)*
 		otherlv_1=';'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getModelAccess().getSemicolonKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getCViewModelAccess().getSemicolonKeyword_1());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getModelAccess().getFilesFileParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getCViewModelAccess().getFilesFileParserRuleCall_2_0());
 				}
 				lv_files_2_0=ruleFile
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getModelRule());
+						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
 					}
 					add(
 						$current,
@@ -121,17 +121,17 @@ ruleModel returns [EObject current=null]
 		)*
 		otherlv_3=';'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getModelAccess().getSemicolonKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getCViewModelAccess().getSemicolonKeyword_3());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getModelAccess().getComponentsComponentParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getCViewModelAccess().getComponentsComponentParserRuleCall_4_0());
 				}
 				lv_components_4_0=ruleComponent
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getModelRule());
+						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
 					}
 					add(
 						$current,
@@ -206,19 +206,33 @@ ruleFolder returns [EObject current=null]
 				)
 			)
 		)?
-		otherlv_5='location'
+		(
+			(
+				lv_project_5_0='project'
+				{
+					newLeafNode(lv_project_5_0, grammarAccess.getFolderAccess().getProjectProjectKeyword_3_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFolderRule());
+					}
+					setWithLastConsumed($current, "project", true, "project");
+				}
+			)
+		)
+		otherlv_6='location'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getFolderAccess().getLocationKeyword_3());
+			newLeafNode(otherlv_6, grammarAccess.getFolderAccess().getLocationKeyword_4());
 		}
-		otherlv_6='='
+		otherlv_7='='
 		{
-			newLeafNode(otherlv_6, grammarAccess.getFolderAccess().getEqualsSignKeyword_4());
+			newLeafNode(otherlv_7, grammarAccess.getFolderAccess().getEqualsSignKeyword_5());
 		}
 		(
 			(
-				lv_location_7_0=RULE_STRING
+				lv_location_8_0=RULE_STRING
 				{
-					newLeafNode(lv_location_7_0, grammarAccess.getFolderAccess().getLocationSTRINGTerminalRuleCall_5_0());
+					newLeafNode(lv_location_8_0, grammarAccess.getFolderAccess().getLocationSTRINGTerminalRuleCall_6_0());
 				}
 				{
 					if ($current==null) {
@@ -227,7 +241,7 @@ ruleFolder returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"location",
-						lv_location_7_0,
+						lv_location_8_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)
@@ -273,40 +287,42 @@ ruleFile returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='parent'
-		{
-			newLeafNode(otherlv_2, grammarAccess.getFileAccess().getParentKeyword_2());
-		}
-		otherlv_3='='
-		{
-			newLeafNode(otherlv_3, grammarAccess.getFileAccess().getEqualsSignKeyword_3());
-		}
 		(
+			otherlv_2='parent'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getFileAccess().getParentKeyword_2_0());
+			}
+			otherlv_3='='
+			{
+				newLeafNode(otherlv_3, grammarAccess.getFileAccess().getEqualsSignKeyword_2_1());
+			}
 			(
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFileRule());
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getFileRule());
+						}
 					}
-				}
-				otherlv_4=RULE_ID
-				{
-					newLeafNode(otherlv_4, grammarAccess.getFileAccess().getParentFolderCrossReference_4_0());
-				}
+					otherlv_4=RULE_ID
+					{
+						newLeafNode(otherlv_4, grammarAccess.getFileAccess().getParentFolderCrossReference_2_2_0());
+					}
+				)
 			)
-		)
+		)?
 		otherlv_5='location'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getFileAccess().getLocationKeyword_5());
+			newLeafNode(otherlv_5, grammarAccess.getFileAccess().getLocationKeyword_3());
 		}
 		otherlv_6='='
 		{
-			newLeafNode(otherlv_6, grammarAccess.getFileAccess().getEqualsSignKeyword_6());
+			newLeafNode(otherlv_6, grammarAccess.getFileAccess().getEqualsSignKeyword_4());
 		}
 		(
 			(
 				lv_location_7_0=RULE_STRING
 				{
-					newLeafNode(lv_location_7_0, grammarAccess.getFileAccess().getLocationSTRINGTerminalRuleCall_7_0());
+					newLeafNode(lv_location_7_0, grammarAccess.getFileAccess().getLocationSTRINGTerminalRuleCall_5_0());
 				}
 				{
 					if ($current==null) {

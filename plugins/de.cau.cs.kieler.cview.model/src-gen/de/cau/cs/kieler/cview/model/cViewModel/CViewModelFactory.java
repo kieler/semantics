@@ -24,13 +24,13 @@ public interface CViewModelFactory extends EFactory
   CViewModelFactory eINSTANCE = de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Model</em>'.
+   * Returns a new object of class '<em>CView Model</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Model</em>'.
+   * @return a new object of class '<em>CView Model</em>'.
    * @generated
    */
-  Model createModel();
+  CViewModel createCViewModel();
 
   /**
    * Returns a new object of class '<em>Folder</em>'.

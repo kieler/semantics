@@ -66,7 +66,7 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
   {
     switch (eClass.getClassifierID())
     {
-      case CViewModelPackage.MODEL: return createModel();
+      case CViewModelPackage.CVIEW_MODEL: return createCViewModel();
       case CViewModelPackage.FOLDER: return createFolder();
       case CViewModelPackage.FILE: return createFile();
       case CViewModelPackage.COMPONENT: return createComponent();
@@ -114,10 +114,10 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
    * <!-- end-user-doc -->
    * @generated
    */
-  public Model createModel()
+  public CViewModel createCViewModel()
   {
-    ModelImpl model = new ModelImpl();
-    return model;
+    CViewModelImpl cViewModel = new CViewModelImpl();
+    return cViewModel;
   }
 
   /**

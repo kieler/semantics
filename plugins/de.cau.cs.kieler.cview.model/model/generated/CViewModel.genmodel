@@ -14,14 +14,15 @@
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/READER"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/WRITER"/>
     </genEnums>
-    <genClasses ecoreClass="CViewModel.ecore#//Model">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Model/folders"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Model/files"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Model/components"/>
+    <genClasses ecoreClass="CViewModel.ecore#//CViewModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/folders"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/files"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/components"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//Folder">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Folder/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Folder/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Folder/project"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Folder/location"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//File">

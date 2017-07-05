@@ -9,23 +9,23 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Model</b></em>'.
+ * A representation of the model object '<em><b>CView Model</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFolders <em>Folders</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFiles <em>Files</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getComponents <em>Components</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFolders <em>Folders</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFiles <em>Files</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getComponents <em>Components</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel()
+ * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel()
  * @model
  * @generated
  */
-public interface Model extends EObject
+public interface CViewModel extends EObject
 {
   /**
    * Returns the value of the '<em><b>Folders</b></em>' containment reference list.
@@ -37,7 +37,7 @@ public interface Model extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Folders</em>' containment reference list.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel_Folders()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel_Folders()
    * @model containment="true"
    * @generated
    */
@@ -53,7 +53,7 @@ public interface Model extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Files</em>' containment reference list.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel_Files()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel_Files()
    * @model containment="true"
    * @generated
    */
@@ -69,10 +69,10 @@ public interface Model extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Components</em>' containment reference list.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel_Components()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel_Components()
    * @model containment="true"
    * @generated
    */
   EList<Component> getComponents();
 
-} // Model
+} // CViewModel

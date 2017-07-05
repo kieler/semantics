@@ -59,14 +59,14 @@ public interface CViewModelPackage extends EPackage
   CViewModelPackage eINSTANCE = de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl <em>Model</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl <em>CView Model</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl
-   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getModel()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getCViewModel()
    * @generated
    */
-  int MODEL = 0;
+  int CVIEW_MODEL = 0;
 
   /**
    * The feature id for the '<em><b>Folders</b></em>' containment reference list.
@@ -75,7 +75,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL__FOLDERS = 0;
+  int CVIEW_MODEL__FOLDERS = 0;
 
   /**
    * The feature id for the '<em><b>Files</b></em>' containment reference list.
@@ -84,7 +84,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL__FILES = 1;
+  int CVIEW_MODEL__FILES = 1;
 
   /**
    * The feature id for the '<em><b>Components</b></em>' containment reference list.
@@ -93,16 +93,16 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL__COMPONENTS = 2;
+  int CVIEW_MODEL__COMPONENTS = 2;
 
   /**
-   * The number of structural features of the '<em>Model</em>' class.
+   * The number of structural features of the '<em>CView Model</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_FEATURE_COUNT = 3;
+  int CVIEW_MODEL_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl <em>Folder</em>}' class.
@@ -133,13 +133,22 @@ public interface CViewModelPackage extends EPackage
   int FOLDER__PARENT = 1;
 
   /**
+   * The feature id for the '<em><b>Project</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOLDER__PROJECT = 2;
+
+  /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FOLDER__LOCATION = 2;
+  int FOLDER__LOCATION = 3;
 
   /**
    * The number of structural features of the '<em>Folder</em>' class.
@@ -148,7 +157,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FOLDER_FEATURE_COUNT = 3;
+  int FOLDER_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FileImpl <em>File</em>}' class.
@@ -272,47 +281,47 @@ public interface CViewModelPackage extends EPackage
 
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Model <em>Model</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel <em>CView Model</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Model</em>'.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Model
+   * @return the meta object for class '<em>CView Model</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModel
    * @generated
    */
-  EClass getModel();
+  EClass getCViewModel();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFolders <em>Folders</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFolders <em>Folders</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Folders</em>'.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Model#getFolders()
-   * @see #getModel()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFolders()
+   * @see #getCViewModel()
    * @generated
    */
-  EReference getModel_Folders();
+  EReference getCViewModel_Folders();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFiles <em>Files</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFiles <em>Files</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Files</em>'.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Model#getFiles()
-   * @see #getModel()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFiles()
+   * @see #getCViewModel()
    * @generated
    */
-  EReference getModel_Files();
+  EReference getCViewModel_Files();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getComponents <em>Components</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getComponents <em>Components</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Components</em>'.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Model#getComponents()
-   * @see #getModel()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getComponents()
+   * @see #getCViewModel()
    * @generated
    */
-  EReference getModel_Components();
+  EReference getCViewModel_Components();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder <em>Folder</em>}'.
@@ -345,6 +354,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EReference getFolder_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#isProject <em>Project</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Project</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Folder#isProject()
+   * @see #getFolder()
+   * @generated
+   */
+  EAttribute getFolder_Project();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getLocation <em>Location</em>}'.
@@ -499,14 +519,14 @@ public interface CViewModelPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl <em>Model</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl <em>CView Model</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl
-     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getModel()
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getCViewModel()
      * @generated
      */
-    EClass MODEL = eINSTANCE.getModel();
+    EClass CVIEW_MODEL = eINSTANCE.getCViewModel();
 
     /**
      * The meta object literal for the '<em><b>Folders</b></em>' containment reference list feature.
@@ -514,7 +534,7 @@ public interface CViewModelPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__FOLDERS = eINSTANCE.getModel_Folders();
+    EReference CVIEW_MODEL__FOLDERS = eINSTANCE.getCViewModel_Folders();
 
     /**
      * The meta object literal for the '<em><b>Files</b></em>' containment reference list feature.
@@ -522,7 +542,7 @@ public interface CViewModelPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__FILES = eINSTANCE.getModel_Files();
+    EReference CVIEW_MODEL__FILES = eINSTANCE.getCViewModel_Files();
 
     /**
      * The meta object literal for the '<em><b>Components</b></em>' containment reference list feature.
@@ -530,7 +550,7 @@ public interface CViewModelPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__COMPONENTS = eINSTANCE.getModel_Components();
+    EReference CVIEW_MODEL__COMPONENTS = eINSTANCE.getCViewModel_Components();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl <em>Folder</em>}' class.
@@ -557,6 +577,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EReference FOLDER__PARENT = eINSTANCE.getFolder_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Project</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FOLDER__PROJECT = eINSTANCE.getFolder_Project();
 
     /**
      * The meta object literal for the '<em><b>Location</b></em>' attribute feature.

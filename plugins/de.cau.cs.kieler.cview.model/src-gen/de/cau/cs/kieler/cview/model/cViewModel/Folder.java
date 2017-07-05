@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getParent <em>Parent</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#isProject <em>Project</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getLocation <em>Location</em>}</li>
  * </ul>
  *
@@ -76,6 +77,32 @@ public interface Folder extends EObject
    * @generated
    */
   void setParent(Folder value);
+
+  /**
+   * Returns the value of the '<em><b>Project</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Project</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Project</em>' attribute.
+   * @see #setProject(boolean)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getFolder_Project()
+   * @model
+   * @generated
+   */
+  boolean isProject();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#isProject <em>Project</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Project</em>' attribute.
+   * @see #isProject()
+   * @generated
+   */
+  void setProject(boolean value);
 
   /**
    * Returns the value of the '<em><b>Location</b></em>' attribute.

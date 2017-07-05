@@ -26,8 +26,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 @Singleton
 public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	
-	public class ModelElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Model");
+	public class CViewModelElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.CViewModel");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cFoldersAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cFoldersFolderParserRuleCall_0_0 = (RuleCall)cFoldersAssignment_0.eContents().get(0);
@@ -38,7 +38,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cComponentsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cComponentsComponentParserRuleCall_4_0 = (RuleCall)cComponentsAssignment_4.eContents().get(0);
 		
-		//Model:
+		//CViewModel:
 		//	folders+=Folder*
 		//	';'
 		//	files+=File*
@@ -85,21 +85,93 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cParentAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final CrossReference cParentFolderCrossReference_2_2_0 = (CrossReference)cParentAssignment_2_2.eContents().get(0);
 		private final RuleCall cParentFolderIDTerminalRuleCall_2_2_0_1 = (RuleCall)cParentFolderCrossReference_2_2_0.eContents().get(1);
+		private final Assignment cProjectAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cProjectProjectKeyword_3_0 = (Keyword)cProjectAssignment_3.eContents().get(0);
+		private final Keyword cLocationKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cEqualsSignKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cLocationAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cLocationSTRINGTerminalRuleCall_6_0 = (RuleCall)cLocationAssignment_6.eContents().get(0);
+		
+		//Folder:
+		//	'Folder' name=ID ('parent' '=' parent=[Folder])?
+		//	project?='project' 'location' '=' location=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'Folder' name=ID ('parent' '=' parent=[Folder])? project?='project' 'location' '=' location=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//'Folder'
+		public Keyword getFolderKeyword_0() { return cFolderKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//('parent' '=' parent=[Folder])?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'parent'
+		public Keyword getParentKeyword_2_0() { return cParentKeyword_2_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_2_1() { return cEqualsSignKeyword_2_1; }
+		
+		//parent=[Folder]
+		public Assignment getParentAssignment_2_2() { return cParentAssignment_2_2; }
+		
+		//[Folder]
+		public CrossReference getParentFolderCrossReference_2_2_0() { return cParentFolderCrossReference_2_2_0; }
+		
+		//ID
+		public RuleCall getParentFolderIDTerminalRuleCall_2_2_0_1() { return cParentFolderIDTerminalRuleCall_2_2_0_1; }
+		
+		//project?='project'
+		public Assignment getProjectAssignment_3() { return cProjectAssignment_3; }
+		
+		//'project'
+		public Keyword getProjectProjectKeyword_3_0() { return cProjectProjectKeyword_3_0; }
+		
+		//'location'
+		public Keyword getLocationKeyword_4() { return cLocationKeyword_4; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_5() { return cEqualsSignKeyword_5; }
+		
+		//location=STRING
+		public Assignment getLocationAssignment_6() { return cLocationAssignment_6; }
+		
+		//STRING
+		public RuleCall getLocationSTRINGTerminalRuleCall_6_0() { return cLocationSTRINGTerminalRuleCall_6_0; }
+	}
+	public class FileElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.File");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cFileKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cParentKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cParentAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final CrossReference cParentFolderCrossReference_2_2_0 = (CrossReference)cParentAssignment_2_2.eContents().get(0);
+		private final RuleCall cParentFolderIDTerminalRuleCall_2_2_0_1 = (RuleCall)cParentFolderCrossReference_2_2_0.eContents().get(1);
 		private final Keyword cLocationKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cEqualsSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cLocationAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cLocationSTRINGTerminalRuleCall_5_0 = (RuleCall)cLocationAssignment_5.eContents().get(0);
 		
-		//Folder:
-		//	'Folder' name=ID ('parent' '=' parent=[Folder])?
+		//File:
+		//	'File' name=ID ('parent' '=' parent=[Folder])?
 		//	'location' '=' location=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Folder' name=ID ('parent' '=' parent=[Folder])? 'location' '=' location=STRING
+		//'File' name=ID ('parent' '=' parent=[Folder])? 'location' '=' location=STRING
 		public Group getGroup() { return cGroup; }
 		
-		//'Folder'
-		public Keyword getFolderKeyword_0() { return cFolderKeyword_0; }
+		//'File'
+		public Keyword getFileKeyword_0() { return cFileKeyword_0; }
 		
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -136,67 +208,6 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getLocationSTRINGTerminalRuleCall_5_0() { return cLocationSTRINGTerminalRuleCall_5_0; }
-	}
-	public class FileElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.File");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cFileKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cParentKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cParentAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final CrossReference cParentFolderCrossReference_4_0 = (CrossReference)cParentAssignment_4.eContents().get(0);
-		private final RuleCall cParentFolderIDTerminalRuleCall_4_0_1 = (RuleCall)cParentFolderCrossReference_4_0.eContents().get(1);
-		private final Keyword cLocationKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final Keyword cEqualsSignKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		private final Assignment cLocationAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cLocationSTRINGTerminalRuleCall_7_0 = (RuleCall)cLocationAssignment_7.eContents().get(0);
-		
-		//File:
-		//	'File' name=ID
-		//	'parent' '=' parent=[Folder]
-		//	'location' '=' location=STRING;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'File' name=ID 'parent' '=' parent=[Folder] 'location' '=' location=STRING
-		public Group getGroup() { return cGroup; }
-		
-		//'File'
-		public Keyword getFileKeyword_0() { return cFileKeyword_0; }
-		
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-		
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
-		
-		//'parent'
-		public Keyword getParentKeyword_2() { return cParentKeyword_2; }
-		
-		//'='
-		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
-		
-		//parent=[Folder]
-		public Assignment getParentAssignment_4() { return cParentAssignment_4; }
-		
-		//[Folder]
-		public CrossReference getParentFolderCrossReference_4_0() { return cParentFolderCrossReference_4_0; }
-		
-		//ID
-		public RuleCall getParentFolderIDTerminalRuleCall_4_0_1() { return cParentFolderIDTerminalRuleCall_4_0_1; }
-		
-		//'location'
-		public Keyword getLocationKeyword_5() { return cLocationKeyword_5; }
-		
-		//'='
-		public Keyword getEqualsSignKeyword_6() { return cEqualsSignKeyword_6; }
-		
-		//location=STRING
-		public Assignment getLocationAssignment_7() { return cLocationAssignment_7; }
-		
-		//STRING
-		public RuleCall getLocationSTRINGTerminalRuleCall_7_0() { return cLocationSTRINGTerminalRuleCall_7_0; }
 	}
 	public class ComponentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Component");
@@ -372,7 +383,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getWRITERWRITERKeyword_5_0() { return cWRITERWRITERKeyword_5_0; }
 	}
 	
-	private final ModelElements pModel;
+	private final CViewModelElements pCViewModel;
 	private final FolderElements pFolder;
 	private final FileElements pFile;
 	private final ComponentElements pComponent;
@@ -387,7 +398,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
-		this.pModel = new ModelElements();
+		this.pCViewModel = new CViewModelElements();
 		this.pFolder = new FolderElements();
 		this.pFile = new FileElements();
 		this.pComponent = new ComponentElements();
@@ -421,23 +432,23 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//Model:
+	//CViewModel:
 	//	folders+=Folder*
 	//	';'
 	//	files+=File*
 	//	';'
 	//	components+=Component*;
-	public ModelElements getModelAccess() {
-		return pModel;
+	public CViewModelElements getCViewModelAccess() {
+		return pCViewModel;
 	}
 	
-	public ParserRule getModelRule() {
-		return getModelAccess().getRule();
+	public ParserRule getCViewModelRule() {
+		return getCViewModelAccess().getRule();
 	}
 	
 	//Folder:
 	//	'Folder' name=ID ('parent' '=' parent=[Folder])?
-	//	'location' '=' location=STRING;
+	//	project?='project' 'location' '=' location=STRING;
 	public FolderElements getFolderAccess() {
 		return pFolder;
 	}
@@ -447,8 +458,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//File:
-	//	'File' name=ID
-	//	'parent' '=' parent=[Folder]
+	//	'File' name=ID ('parent' '=' parent=[Folder])?
 	//	'location' '=' location=STRING;
 	public FileElements getFileAccess() {
 		return pFile;

@@ -76,9 +76,9 @@ public class CViewModelAdapterFactory extends AdapterFactoryImpl
     new CViewModelSwitch<Adapter>()
     {
       @Override
-      public Adapter caseModel(Model object)
+      public Adapter caseCViewModel(CViewModel object)
       {
-        return createModelAdapter();
+        return createCViewModelAdapter();
       }
       @Override
       public Adapter caseFolder(Folder object)
@@ -118,16 +118,16 @@ public class CViewModelAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.cview.model.cViewModel.Model <em>Model</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel <em>CView Model</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Model
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModel
    * @generated
    */
-  public Adapter createModelAdapter()
+  public Adapter createCViewModelAdapter()
   {
     return null;
   }

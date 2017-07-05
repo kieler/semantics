@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'Folder'", "'parent'", "'='", "'location'", "'File'", "'Component'", "'!'", "'type'", "'referenceFile'", "'referenceLine'", "'DIR'", "'FILE'", "'FUNC'", "'COMPOUND'", "'READER'", "'WRITER'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'Folder'", "'parent'", "'='", "'project'", "'location'", "'File'", "'Component'", "'!'", "'type'", "'referenceFile'", "'referenceLine'", "'DIR'", "'FILE'", "'FUNC'", "'COMPOUND'", "'READER'", "'WRITER'"
     };
     public static final int RULE_STRING=5;
     public static final int RULE_SL_COMMENT=8;
@@ -41,6 +41,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final int RULE_ANY_OTHER=10;
     public static final int T__26=26;
     public static final int T__27=27;
+    public static final int T__28=28;
     public static final int RULE_INT=6;
     public static final int T__22=22;
     public static final int RULE_ML_COMMENT=7;
@@ -78,7 +79,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
         @Override
         protected String getFirstRuleName() {
-        	return "Model";
+        	return "CViewModel";
        	}
 
        	@Override
@@ -89,25 +90,25 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
 
-    // $ANTLR start "entryRuleModel"
-    // InternalCViewModel.g:65:1: entryRuleModel returns [EObject current=null] : iv_ruleModel= ruleModel EOF ;
-    public final EObject entryRuleModel() throws RecognitionException {
+    // $ANTLR start "entryRuleCViewModel"
+    // InternalCViewModel.g:65:1: entryRuleCViewModel returns [EObject current=null] : iv_ruleCViewModel= ruleCViewModel EOF ;
+    public final EObject entryRuleCViewModel() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleModel = null;
+        EObject iv_ruleCViewModel = null;
 
 
         try {
-            // InternalCViewModel.g:65:46: (iv_ruleModel= ruleModel EOF )
-            // InternalCViewModel.g:66:2: iv_ruleModel= ruleModel EOF
+            // InternalCViewModel.g:65:51: (iv_ruleCViewModel= ruleCViewModel EOF )
+            // InternalCViewModel.g:66:2: iv_ruleCViewModel= ruleCViewModel EOF
             {
-             newCompositeNode(grammarAccess.getModelRule()); 
+             newCompositeNode(grammarAccess.getCViewModelRule()); 
             pushFollow(FOLLOW_1);
-            iv_ruleModel=ruleModel();
+            iv_ruleCViewModel=ruleCViewModel();
 
             state._fsp--;
 
-             current =iv_ruleModel; 
+             current =iv_ruleCViewModel; 
             match(input,EOF,FOLLOW_2); 
 
             }
@@ -122,12 +123,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleModel"
+    // $ANTLR end "entryRuleCViewModel"
 
 
-    // $ANTLR start "ruleModel"
-    // InternalCViewModel.g:72:1: ruleModel returns [EObject current=null] : ( ( (lv_folders_0_0= ruleFolder ) )* otherlv_1= ';' ( (lv_files_2_0= ruleFile ) )* otherlv_3= ';' ( (lv_components_4_0= ruleComponent ) )* ) ;
-    public final EObject ruleModel() throws RecognitionException {
+    // $ANTLR start "ruleCViewModel"
+    // InternalCViewModel.g:72:1: ruleCViewModel returns [EObject current=null] : ( ( (lv_folders_0_0= ruleFolder ) )* otherlv_1= ';' ( (lv_files_2_0= ruleFile ) )* otherlv_3= ';' ( (lv_components_4_0= ruleComponent ) )* ) ;
+    public final EObject ruleCViewModel() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -168,7 +169,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
             	    // InternalCViewModel.g:82:5: lv_folders_0_0= ruleFolder
             	    {
 
-            	    					newCompositeNode(grammarAccess.getModelAccess().getFoldersFolderParserRuleCall_0_0());
+            	    					newCompositeNode(grammarAccess.getCViewModelAccess().getFoldersFolderParserRuleCall_0_0());
             	    				
             	    pushFollow(FOLLOW_3);
             	    lv_folders_0_0=ruleFolder();
@@ -177,7 +178,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
             	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getModelRule());
+            	    						current = createModelElementForParent(grammarAccess.getCViewModelRule());
             	    					}
             	    					add(
             	    						current,
@@ -200,7 +201,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             otherlv_1=(Token)match(input,11,FOLLOW_4); 
 
-            			newLeafNode(otherlv_1, grammarAccess.getModelAccess().getSemicolonKeyword_1());
+            			newLeafNode(otherlv_1, grammarAccess.getCViewModelAccess().getSemicolonKeyword_1());
             		
             // InternalCViewModel.g:103:3: ( (lv_files_2_0= ruleFile ) )*
             loop2:
@@ -208,7 +209,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( (LA2_0==16) ) {
+                if ( (LA2_0==17) ) {
                     alt2=1;
                 }
 
@@ -221,7 +222,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
             	    // InternalCViewModel.g:105:5: lv_files_2_0= ruleFile
             	    {
 
-            	    					newCompositeNode(grammarAccess.getModelAccess().getFilesFileParserRuleCall_2_0());
+            	    					newCompositeNode(grammarAccess.getCViewModelAccess().getFilesFileParserRuleCall_2_0());
             	    				
             	    pushFollow(FOLLOW_4);
             	    lv_files_2_0=ruleFile();
@@ -230,7 +231,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
             	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getModelRule());
+            	    						current = createModelElementForParent(grammarAccess.getCViewModelRule());
             	    					}
             	    					add(
             	    						current,
@@ -253,7 +254,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             otherlv_3=(Token)match(input,11,FOLLOW_5); 
 
-            			newLeafNode(otherlv_3, grammarAccess.getModelAccess().getSemicolonKeyword_3());
+            			newLeafNode(otherlv_3, grammarAccess.getCViewModelAccess().getSemicolonKeyword_3());
             		
             // InternalCViewModel.g:126:3: ( (lv_components_4_0= ruleComponent ) )*
             loop3:
@@ -261,7 +262,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( (LA3_0==17) ) {
+                if ( (LA3_0==18) ) {
                     alt3=1;
                 }
 
@@ -274,7 +275,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
             	    // InternalCViewModel.g:128:5: lv_components_4_0= ruleComponent
             	    {
 
-            	    					newCompositeNode(grammarAccess.getModelAccess().getComponentsComponentParserRuleCall_4_0());
+            	    					newCompositeNode(grammarAccess.getCViewModelAccess().getComponentsComponentParserRuleCall_4_0());
             	    				
             	    pushFollow(FOLLOW_5);
             	    lv_components_4_0=ruleComponent();
@@ -283,7 +284,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
             	    					if (current==null) {
-            	    						current = createModelElementForParent(grammarAccess.getModelRule());
+            	    						current = createModelElementForParent(grammarAccess.getCViewModelRule());
             	    					}
             	    					add(
             	    						current,
@@ -323,7 +324,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleModel"
+    // $ANTLR end "ruleCViewModel"
 
 
     // $ANTLR start "entryRuleFolder"
@@ -363,7 +364,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFolder"
-    // InternalCViewModel.g:156:1: ruleFolder returns [EObject current=null] : (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) ) ;
+    // InternalCViewModel.g:156:1: ruleFolder returns [EObject current=null] : (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? ( (lv_project_5_0= 'project' ) ) otherlv_6= 'location' otherlv_7= '=' ( (lv_location_8_0= RULE_STRING ) ) ) ;
     public final EObject ruleFolder() throws RecognitionException {
         EObject current = null;
 
@@ -372,19 +373,20 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         Token otherlv_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
-        Token otherlv_5=null;
+        Token lv_project_5_0=null;
         Token otherlv_6=null;
-        Token lv_location_7_0=null;
+        Token otherlv_7=null;
+        Token lv_location_8_0=null;
 
 
         	enterRule();
 
         try {
-            // InternalCViewModel.g:162:2: ( (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) ) )
-            // InternalCViewModel.g:163:2: (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:162:2: ( (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? ( (lv_project_5_0= 'project' ) ) otherlv_6= 'location' otherlv_7= '=' ( (lv_location_8_0= RULE_STRING ) ) ) )
+            // InternalCViewModel.g:163:2: (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? ( (lv_project_5_0= 'project' ) ) otherlv_6= 'location' otherlv_7= '=' ( (lv_location_8_0= RULE_STRING ) ) )
             {
-            // InternalCViewModel.g:163:2: (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) )
-            // InternalCViewModel.g:164:3: otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) )
+            // InternalCViewModel.g:163:2: (otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? ( (lv_project_5_0= 'project' ) ) otherlv_6= 'location' otherlv_7= '=' ( (lv_location_8_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:164:3: otherlv_0= 'Folder' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? ( (lv_project_5_0= 'project' ) ) otherlv_6= 'location' otherlv_7= '=' ( (lv_location_8_0= RULE_STRING ) )
             {
             otherlv_0=(Token)match(input,12,FOLLOW_6); 
 
@@ -462,23 +464,45 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,15,FOLLOW_8); 
-
-            			newLeafNode(otherlv_5, grammarAccess.getFolderAccess().getLocationKeyword_3());
-            		
-            otherlv_6=(Token)match(input,14,FOLLOW_10); 
-
-            			newLeafNode(otherlv_6, grammarAccess.getFolderAccess().getEqualsSignKeyword_4());
-            		
-            // InternalCViewModel.g:217:3: ( (lv_location_7_0= RULE_STRING ) )
-            // InternalCViewModel.g:218:4: (lv_location_7_0= RULE_STRING )
+            // InternalCViewModel.g:209:3: ( (lv_project_5_0= 'project' ) )
+            // InternalCViewModel.g:210:4: (lv_project_5_0= 'project' )
             {
-            // InternalCViewModel.g:218:4: (lv_location_7_0= RULE_STRING )
-            // InternalCViewModel.g:219:5: lv_location_7_0= RULE_STRING
+            // InternalCViewModel.g:210:4: (lv_project_5_0= 'project' )
+            // InternalCViewModel.g:211:5: lv_project_5_0= 'project'
             {
-            lv_location_7_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
+            lv_project_5_0=(Token)match(input,15,FOLLOW_10); 
 
-            					newLeafNode(lv_location_7_0, grammarAccess.getFolderAccess().getLocationSTRINGTerminalRuleCall_5_0());
+            					newLeafNode(lv_project_5_0, grammarAccess.getFolderAccess().getProjectProjectKeyword_3_0());
+            				
+
+            					if (current==null) {
+            						current = createModelElement(grammarAccess.getFolderRule());
+            					}
+            					setWithLastConsumed(current, "project", true, "project");
+            				
+
+            }
+
+
+            }
+
+            otherlv_6=(Token)match(input,16,FOLLOW_8); 
+
+            			newLeafNode(otherlv_6, grammarAccess.getFolderAccess().getLocationKeyword_4());
+            		
+            otherlv_7=(Token)match(input,14,FOLLOW_11); 
+
+            			newLeafNode(otherlv_7, grammarAccess.getFolderAccess().getEqualsSignKeyword_5());
+            		
+            // InternalCViewModel.g:231:3: ( (lv_location_8_0= RULE_STRING ) )
+            // InternalCViewModel.g:232:4: (lv_location_8_0= RULE_STRING )
+            {
+            // InternalCViewModel.g:232:4: (lv_location_8_0= RULE_STRING )
+            // InternalCViewModel.g:233:5: lv_location_8_0= RULE_STRING
+            {
+            lv_location_8_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
+
+            					newLeafNode(lv_location_8_0, grammarAccess.getFolderAccess().getLocationSTRINGTerminalRuleCall_6_0());
             				
 
             					if (current==null) {
@@ -487,7 +511,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
             					setWithLastConsumed(
             						current,
             						"location",
-            						lv_location_7_0,
+            						lv_location_8_0,
             						"org.eclipse.xtext.common.Terminals.STRING");
             				
 
@@ -519,7 +543,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFile"
-    // InternalCViewModel.g:239:1: entryRuleFile returns [EObject current=null] : iv_ruleFile= ruleFile EOF ;
+    // InternalCViewModel.g:253:1: entryRuleFile returns [EObject current=null] : iv_ruleFile= ruleFile EOF ;
     public final EObject entryRuleFile() throws RecognitionException {
         EObject current = null;
 
@@ -527,8 +551,8 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalCViewModel.g:239:45: (iv_ruleFile= ruleFile EOF )
-            // InternalCViewModel.g:240:2: iv_ruleFile= ruleFile EOF
+            // InternalCViewModel.g:253:45: (iv_ruleFile= ruleFile EOF )
+            // InternalCViewModel.g:254:2: iv_ruleFile= ruleFile EOF
             {
              newCompositeNode(grammarAccess.getFileRule()); 
             pushFollow(FOLLOW_1);
@@ -555,7 +579,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFile"
-    // InternalCViewModel.g:246:1: ruleFile returns [EObject current=null] : (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) ) ;
+    // InternalCViewModel.g:260:1: ruleFile returns [EObject current=null] : (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) ) ;
     public final EObject ruleFile() throws RecognitionException {
         EObject current = null;
 
@@ -572,23 +596,23 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalCViewModel.g:252:2: ( (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) ) )
-            // InternalCViewModel.g:253:2: (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:266:2: ( (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) ) )
+            // InternalCViewModel.g:267:2: (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) )
             {
-            // InternalCViewModel.g:253:2: (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) )
-            // InternalCViewModel.g:254:3: otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) )
+            // InternalCViewModel.g:267:2: (otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:268:3: otherlv_0= 'File' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'location' otherlv_6= '=' ( (lv_location_7_0= RULE_STRING ) )
             {
-            otherlv_0=(Token)match(input,16,FOLLOW_6); 
+            otherlv_0=(Token)match(input,17,FOLLOW_6); 
 
             			newLeafNode(otherlv_0, grammarAccess.getFileAccess().getFileKeyword_0());
             		
-            // InternalCViewModel.g:258:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalCViewModel.g:259:4: (lv_name_1_0= RULE_ID )
+            // InternalCViewModel.g:272:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalCViewModel.g:273:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalCViewModel.g:259:4: (lv_name_1_0= RULE_ID )
-            // InternalCViewModel.g:260:5: lv_name_1_0= RULE_ID
+            // InternalCViewModel.g:273:4: (lv_name_1_0= RULE_ID )
+            // InternalCViewModel.g:274:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_11); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
 
             					newLeafNode(lv_name_1_0, grammarAccess.getFileAccess().getNameIDTerminalRuleCall_1_0());
             				
@@ -608,52 +632,69 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,13,FOLLOW_8); 
+            // InternalCViewModel.g:290:3: (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )?
+            int alt5=2;
+            int LA5_0 = input.LA(1);
 
-            			newLeafNode(otherlv_2, grammarAccess.getFileAccess().getParentKeyword_2());
-            		
-            otherlv_3=(Token)match(input,14,FOLLOW_6); 
+            if ( (LA5_0==13) ) {
+                alt5=1;
+            }
+            switch (alt5) {
+                case 1 :
+                    // InternalCViewModel.g:291:4: otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) )
+                    {
+                    otherlv_2=(Token)match(input,13,FOLLOW_8); 
 
-            			newLeafNode(otherlv_3, grammarAccess.getFileAccess().getEqualsSignKeyword_3());
-            		
-            // InternalCViewModel.g:284:3: ( (otherlv_4= RULE_ID ) )
-            // InternalCViewModel.g:285:4: (otherlv_4= RULE_ID )
-            {
-            // InternalCViewModel.g:285:4: (otherlv_4= RULE_ID )
-            // InternalCViewModel.g:286:5: otherlv_4= RULE_ID
-            {
+                    				newLeafNode(otherlv_2, grammarAccess.getFileAccess().getParentKeyword_2_0());
+                    			
+                    otherlv_3=(Token)match(input,14,FOLLOW_6); 
 
-            					if (current==null) {
-            						current = createModelElement(grammarAccess.getFileRule());
-            					}
-            				
-            otherlv_4=(Token)match(input,RULE_ID,FOLLOW_9); 
+                    				newLeafNode(otherlv_3, grammarAccess.getFileAccess().getEqualsSignKeyword_2_1());
+                    			
+                    // InternalCViewModel.g:299:4: ( (otherlv_4= RULE_ID ) )
+                    // InternalCViewModel.g:300:5: (otherlv_4= RULE_ID )
+                    {
+                    // InternalCViewModel.g:300:5: (otherlv_4= RULE_ID )
+                    // InternalCViewModel.g:301:6: otherlv_4= RULE_ID
+                    {
 
-            					newLeafNode(otherlv_4, grammarAccess.getFileAccess().getParentFolderCrossReference_4_0());
-            				
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getFileRule());
+                    						}
+                    					
+                    otherlv_4=(Token)match(input,RULE_ID,FOLLOW_10); 
+
+                    						newLeafNode(otherlv_4, grammarAccess.getFileAccess().getParentFolderCrossReference_2_2_0());
+                    					
+
+                    }
+
+
+                    }
+
+
+                    }
+                    break;
 
             }
 
+            otherlv_5=(Token)match(input,16,FOLLOW_8); 
 
-            }
-
-            otherlv_5=(Token)match(input,15,FOLLOW_8); 
-
-            			newLeafNode(otherlv_5, grammarAccess.getFileAccess().getLocationKeyword_5());
+            			newLeafNode(otherlv_5, grammarAccess.getFileAccess().getLocationKeyword_3());
             		
-            otherlv_6=(Token)match(input,14,FOLLOW_10); 
+            otherlv_6=(Token)match(input,14,FOLLOW_11); 
 
-            			newLeafNode(otherlv_6, grammarAccess.getFileAccess().getEqualsSignKeyword_6());
+            			newLeafNode(otherlv_6, grammarAccess.getFileAccess().getEqualsSignKeyword_4());
             		
-            // InternalCViewModel.g:305:3: ( (lv_location_7_0= RULE_STRING ) )
-            // InternalCViewModel.g:306:4: (lv_location_7_0= RULE_STRING )
+            // InternalCViewModel.g:321:3: ( (lv_location_7_0= RULE_STRING ) )
+            // InternalCViewModel.g:322:4: (lv_location_7_0= RULE_STRING )
             {
-            // InternalCViewModel.g:306:4: (lv_location_7_0= RULE_STRING )
-            // InternalCViewModel.g:307:5: lv_location_7_0= RULE_STRING
+            // InternalCViewModel.g:322:4: (lv_location_7_0= RULE_STRING )
+            // InternalCViewModel.g:323:5: lv_location_7_0= RULE_STRING
             {
             lv_location_7_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
-            					newLeafNode(lv_location_7_0, grammarAccess.getFileAccess().getLocationSTRINGTerminalRuleCall_7_0());
+            					newLeafNode(lv_location_7_0, grammarAccess.getFileAccess().getLocationSTRINGTerminalRuleCall_5_0());
             				
 
             					if (current==null) {
@@ -694,7 +735,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleComponent"
-    // InternalCViewModel.g:327:1: entryRuleComponent returns [EObject current=null] : iv_ruleComponent= ruleComponent EOF ;
+    // InternalCViewModel.g:343:1: entryRuleComponent returns [EObject current=null] : iv_ruleComponent= ruleComponent EOF ;
     public final EObject entryRuleComponent() throws RecognitionException {
         EObject current = null;
 
@@ -702,8 +743,8 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalCViewModel.g:327:50: (iv_ruleComponent= ruleComponent EOF )
-            // InternalCViewModel.g:328:2: iv_ruleComponent= ruleComponent EOF
+            // InternalCViewModel.g:343:50: (iv_ruleComponent= ruleComponent EOF )
+            // InternalCViewModel.g:344:2: iv_ruleComponent= ruleComponent EOF
             {
              newCompositeNode(grammarAccess.getComponentRule()); 
             pushFollow(FOLLOW_1);
@@ -730,7 +771,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComponent"
-    // InternalCViewModel.g:334:1: ruleComponent returns [EObject current=null] : (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? ) ;
+    // InternalCViewModel.g:350:1: ruleComponent returns [EObject current=null] : (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? ) ;
     public final EObject ruleComponent() throws RecognitionException {
         EObject current = null;
 
@@ -755,23 +796,23 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalCViewModel.g:340:2: ( (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? ) )
-            // InternalCViewModel.g:341:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? )
+            // InternalCViewModel.g:356:2: ( (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? ) )
+            // InternalCViewModel.g:357:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? )
             {
-            // InternalCViewModel.g:341:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? )
-            // InternalCViewModel.g:342:3: otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )?
+            // InternalCViewModel.g:357:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )? )
+            // InternalCViewModel.g:358:3: otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '!' (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )? otherlv_6= 'type' otherlv_7= '=' ( (lv_type_8_0= ruleComponentType ) ) (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )? (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )?
             {
-            otherlv_0=(Token)match(input,17,FOLLOW_6); 
+            otherlv_0=(Token)match(input,18,FOLLOW_6); 
 
             			newLeafNode(otherlv_0, grammarAccess.getComponentAccess().getComponentKeyword_0());
             		
-            // InternalCViewModel.g:346:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalCViewModel.g:347:4: (lv_name_1_0= RULE_ID )
+            // InternalCViewModel.g:362:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalCViewModel.g:363:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalCViewModel.g:347:4: (lv_name_1_0= RULE_ID )
-            // InternalCViewModel.g:348:5: lv_name_1_0= RULE_ID
+            // InternalCViewModel.g:363:4: (lv_name_1_0= RULE_ID )
+            // InternalCViewModel.g:364:5: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_12); 
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_13); 
 
             					newLeafNode(lv_name_1_0, grammarAccess.getComponentAccess().getNameIDTerminalRuleCall_1_0());
             				
@@ -791,20 +832,20 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,18,FOLLOW_13); 
+            otherlv_2=(Token)match(input,19,FOLLOW_14); 
 
             			newLeafNode(otherlv_2, grammarAccess.getComponentAccess().getExclamationMarkKeyword_2());
             		
-            // InternalCViewModel.g:368:3: (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )?
-            int alt5=2;
-            int LA5_0 = input.LA(1);
+            // InternalCViewModel.g:384:3: (otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) ) )?
+            int alt6=2;
+            int LA6_0 = input.LA(1);
 
-            if ( (LA5_0==13) ) {
-                alt5=1;
+            if ( (LA6_0==13) ) {
+                alt6=1;
             }
-            switch (alt5) {
+            switch (alt6) {
                 case 1 :
-                    // InternalCViewModel.g:369:4: otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) )
+                    // InternalCViewModel.g:385:4: otherlv_3= 'parent' otherlv_4= '=' ( (otherlv_5= RULE_ID ) )
                     {
                     otherlv_3=(Token)match(input,13,FOLLOW_8); 
 
@@ -814,18 +855,18 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_4, grammarAccess.getComponentAccess().getEqualsSignKeyword_3_1());
                     			
-                    // InternalCViewModel.g:377:4: ( (otherlv_5= RULE_ID ) )
-                    // InternalCViewModel.g:378:5: (otherlv_5= RULE_ID )
+                    // InternalCViewModel.g:393:4: ( (otherlv_5= RULE_ID ) )
+                    // InternalCViewModel.g:394:5: (otherlv_5= RULE_ID )
                     {
-                    // InternalCViewModel.g:378:5: (otherlv_5= RULE_ID )
-                    // InternalCViewModel.g:379:6: otherlv_5= RULE_ID
+                    // InternalCViewModel.g:394:5: (otherlv_5= RULE_ID )
+                    // InternalCViewModel.g:395:6: otherlv_5= RULE_ID
                     {
 
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getComponentRule());
                     						}
                     					
-                    otherlv_5=(Token)match(input,RULE_ID,FOLLOW_14); 
+                    otherlv_5=(Token)match(input,RULE_ID,FOLLOW_15); 
 
                     						newLeafNode(otherlv_5, grammarAccess.getComponentAccess().getParentComponentCrossReference_3_2_0());
                     					
@@ -841,24 +882,24 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_6=(Token)match(input,19,FOLLOW_8); 
+            otherlv_6=(Token)match(input,20,FOLLOW_8); 
 
             			newLeafNode(otherlv_6, grammarAccess.getComponentAccess().getTypeKeyword_4());
             		
-            otherlv_7=(Token)match(input,14,FOLLOW_15); 
+            otherlv_7=(Token)match(input,14,FOLLOW_16); 
 
             			newLeafNode(otherlv_7, grammarAccess.getComponentAccess().getEqualsSignKeyword_5());
             		
-            // InternalCViewModel.g:399:3: ( (lv_type_8_0= ruleComponentType ) )
-            // InternalCViewModel.g:400:4: (lv_type_8_0= ruleComponentType )
+            // InternalCViewModel.g:415:3: ( (lv_type_8_0= ruleComponentType ) )
+            // InternalCViewModel.g:416:4: (lv_type_8_0= ruleComponentType )
             {
-            // InternalCViewModel.g:400:4: (lv_type_8_0= ruleComponentType )
-            // InternalCViewModel.g:401:5: lv_type_8_0= ruleComponentType
+            // InternalCViewModel.g:416:4: (lv_type_8_0= ruleComponentType )
+            // InternalCViewModel.g:417:5: lv_type_8_0= ruleComponentType
             {
 
             					newCompositeNode(grammarAccess.getComponentAccess().getTypeComponentTypeEnumRuleCall_6_0());
             				
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_17);
             lv_type_8_0=ruleComponentType();
 
             state._fsp--;
@@ -880,18 +921,18 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalCViewModel.g:418:3: (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )?
-            int alt6=2;
-            int LA6_0 = input.LA(1);
+            // InternalCViewModel.g:434:3: (otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) ) )?
+            int alt7=2;
+            int LA7_0 = input.LA(1);
 
-            if ( (LA6_0==20) ) {
-                alt6=1;
+            if ( (LA7_0==21) ) {
+                alt7=1;
             }
-            switch (alt6) {
+            switch (alt7) {
                 case 1 :
-                    // InternalCViewModel.g:419:4: otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) )
+                    // InternalCViewModel.g:435:4: otherlv_9= 'referenceFile' otherlv_10= '=' ( (otherlv_11= RULE_ID ) )
                     {
-                    otherlv_9=(Token)match(input,20,FOLLOW_8); 
+                    otherlv_9=(Token)match(input,21,FOLLOW_8); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getComponentAccess().getReferenceFileKeyword_7_0());
                     			
@@ -899,18 +940,18 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_10, grammarAccess.getComponentAccess().getEqualsSignKeyword_7_1());
                     			
-                    // InternalCViewModel.g:427:4: ( (otherlv_11= RULE_ID ) )
-                    // InternalCViewModel.g:428:5: (otherlv_11= RULE_ID )
+                    // InternalCViewModel.g:443:4: ( (otherlv_11= RULE_ID ) )
+                    // InternalCViewModel.g:444:5: (otherlv_11= RULE_ID )
                     {
-                    // InternalCViewModel.g:428:5: (otherlv_11= RULE_ID )
-                    // InternalCViewModel.g:429:6: otherlv_11= RULE_ID
+                    // InternalCViewModel.g:444:5: (otherlv_11= RULE_ID )
+                    // InternalCViewModel.g:445:6: otherlv_11= RULE_ID
                     {
 
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getComponentRule());
                     						}
                     					
-                    otherlv_11=(Token)match(input,RULE_ID,FOLLOW_17); 
+                    otherlv_11=(Token)match(input,RULE_ID,FOLLOW_18); 
 
                     						newLeafNode(otherlv_11, grammarAccess.getComponentAccess().getReferenceFileFileCrossReference_7_2_0());
                     					
@@ -926,30 +967,30 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalCViewModel.g:441:3: (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )?
-            int alt7=2;
-            int LA7_0 = input.LA(1);
+            // InternalCViewModel.g:457:3: (otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) ) )?
+            int alt8=2;
+            int LA8_0 = input.LA(1);
 
-            if ( (LA7_0==21) ) {
-                alt7=1;
+            if ( (LA8_0==22) ) {
+                alt8=1;
             }
-            switch (alt7) {
+            switch (alt8) {
                 case 1 :
-                    // InternalCViewModel.g:442:4: otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) )
+                    // InternalCViewModel.g:458:4: otherlv_12= 'referenceLine' otherlv_13= '=' ( (lv_referenceLine_14_0= RULE_INT ) )
                     {
-                    otherlv_12=(Token)match(input,21,FOLLOW_8); 
+                    otherlv_12=(Token)match(input,22,FOLLOW_8); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getComponentAccess().getReferenceLineKeyword_8_0());
                     			
-                    otherlv_13=(Token)match(input,14,FOLLOW_18); 
+                    otherlv_13=(Token)match(input,14,FOLLOW_19); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getComponentAccess().getEqualsSignKeyword_8_1());
                     			
-                    // InternalCViewModel.g:450:4: ( (lv_referenceLine_14_0= RULE_INT ) )
-                    // InternalCViewModel.g:451:5: (lv_referenceLine_14_0= RULE_INT )
+                    // InternalCViewModel.g:466:4: ( (lv_referenceLine_14_0= RULE_INT ) )
+                    // InternalCViewModel.g:467:5: (lv_referenceLine_14_0= RULE_INT )
                     {
-                    // InternalCViewModel.g:451:5: (lv_referenceLine_14_0= RULE_INT )
-                    // InternalCViewModel.g:452:6: lv_referenceLine_14_0= RULE_INT
+                    // InternalCViewModel.g:467:5: (lv_referenceLine_14_0= RULE_INT )
+                    // InternalCViewModel.g:468:6: lv_referenceLine_14_0= RULE_INT
                     {
                     lv_referenceLine_14_0=(Token)match(input,RULE_INT,FOLLOW_2); 
 
@@ -1000,7 +1041,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComponentType"
-    // InternalCViewModel.g:473:1: ruleComponentType returns [Enumerator current=null] : ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) ;
+    // InternalCViewModel.g:489:1: ruleComponentType returns [Enumerator current=null] : ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) ;
     public final Enumerator ruleComponentType() throws RecognitionException {
         Enumerator current = null;
 
@@ -1015,57 +1056,57 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalCViewModel.g:479:2: ( ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) )
-            // InternalCViewModel.g:480:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
+            // InternalCViewModel.g:495:2: ( ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) )
+            // InternalCViewModel.g:496:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
             {
-            // InternalCViewModel.g:480:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
-            int alt8=6;
+            // InternalCViewModel.g:496:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
+            int alt9=6;
             switch ( input.LA(1) ) {
-            case 22:
-                {
-                alt8=1;
-                }
-                break;
             case 23:
                 {
-                alt8=2;
+                alt9=1;
                 }
                 break;
             case 24:
                 {
-                alt8=3;
+                alt9=2;
                 }
                 break;
             case 25:
                 {
-                alt8=4;
+                alt9=3;
                 }
                 break;
             case 26:
                 {
-                alt8=5;
+                alt9=4;
                 }
                 break;
             case 27:
                 {
-                alt8=6;
+                alt9=5;
+                }
+                break;
+            case 28:
+                {
+                alt9=6;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 8, 0, input);
+                    new NoViableAltException("", 9, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt8) {
+            switch (alt9) {
                 case 1 :
-                    // InternalCViewModel.g:481:3: (enumLiteral_0= 'DIR' )
+                    // InternalCViewModel.g:497:3: (enumLiteral_0= 'DIR' )
                     {
-                    // InternalCViewModel.g:481:3: (enumLiteral_0= 'DIR' )
-                    // InternalCViewModel.g:482:4: enumLiteral_0= 'DIR'
+                    // InternalCViewModel.g:497:3: (enumLiteral_0= 'DIR' )
+                    // InternalCViewModel.g:498:4: enumLiteral_0= 'DIR'
                     {
-                    enumLiteral_0=(Token)match(input,22,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,23,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getDIREnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getComponentTypeAccess().getDIREnumLiteralDeclaration_0());
@@ -1077,12 +1118,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalCViewModel.g:489:3: (enumLiteral_1= 'FILE' )
+                    // InternalCViewModel.g:505:3: (enumLiteral_1= 'FILE' )
                     {
-                    // InternalCViewModel.g:489:3: (enumLiteral_1= 'FILE' )
-                    // InternalCViewModel.g:490:4: enumLiteral_1= 'FILE'
+                    // InternalCViewModel.g:505:3: (enumLiteral_1= 'FILE' )
+                    // InternalCViewModel.g:506:4: enumLiteral_1= 'FILE'
                     {
-                    enumLiteral_1=(Token)match(input,23,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,24,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getFILEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getComponentTypeAccess().getFILEEnumLiteralDeclaration_1());
@@ -1094,12 +1135,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalCViewModel.g:497:3: (enumLiteral_2= 'FUNC' )
+                    // InternalCViewModel.g:513:3: (enumLiteral_2= 'FUNC' )
                     {
-                    // InternalCViewModel.g:497:3: (enumLiteral_2= 'FUNC' )
-                    // InternalCViewModel.g:498:4: enumLiteral_2= 'FUNC'
+                    // InternalCViewModel.g:513:3: (enumLiteral_2= 'FUNC' )
+                    // InternalCViewModel.g:514:4: enumLiteral_2= 'FUNC'
                     {
-                    enumLiteral_2=(Token)match(input,24,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,25,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2());
@@ -1111,12 +1152,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalCViewModel.g:505:3: (enumLiteral_3= 'COMPOUND' )
+                    // InternalCViewModel.g:521:3: (enumLiteral_3= 'COMPOUND' )
                     {
-                    // InternalCViewModel.g:505:3: (enumLiteral_3= 'COMPOUND' )
-                    // InternalCViewModel.g:506:4: enumLiteral_3= 'COMPOUND'
+                    // InternalCViewModel.g:521:3: (enumLiteral_3= 'COMPOUND' )
+                    // InternalCViewModel.g:522:4: enumLiteral_3= 'COMPOUND'
                     {
-                    enumLiteral_3=(Token)match(input,25,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,26,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_3());
@@ -1128,12 +1169,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalCViewModel.g:513:3: (enumLiteral_4= 'READER' )
+                    // InternalCViewModel.g:529:3: (enumLiteral_4= 'READER' )
                     {
-                    // InternalCViewModel.g:513:3: (enumLiteral_4= 'READER' )
-                    // InternalCViewModel.g:514:4: enumLiteral_4= 'READER'
+                    // InternalCViewModel.g:529:3: (enumLiteral_4= 'READER' )
+                    // InternalCViewModel.g:530:4: enumLiteral_4= 'READER'
                     {
-                    enumLiteral_4=(Token)match(input,26,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,27,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_4().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_4());
@@ -1145,12 +1186,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalCViewModel.g:521:3: (enumLiteral_5= 'WRITER' )
+                    // InternalCViewModel.g:537:3: (enumLiteral_5= 'WRITER' )
                     {
-                    // InternalCViewModel.g:521:3: (enumLiteral_5= 'WRITER' )
-                    // InternalCViewModel.g:522:4: enumLiteral_5= 'WRITER'
+                    // InternalCViewModel.g:537:3: (enumLiteral_5= 'WRITER' )
+                    // InternalCViewModel.g:538:4: enumLiteral_5= 'WRITER'
                     {
-                    enumLiteral_5=(Token)match(input,27,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,28,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_5());
@@ -1190,20 +1231,21 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000001800L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000010800L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000020800L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000040002L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x000000000000A000L});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000004000L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000082000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x000000000FC00000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000300002L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000200002L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000012000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000102000L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x000000001F800000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000600002L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000000040L});
 
 }

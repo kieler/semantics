@@ -26,6 +26,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.Workbench;
 
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
@@ -35,13 +37,15 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * @author delphino
  *
  */
-public class KLighDController extends AbstractViewUpdateController {
+public abstract class AbstractKLighDController extends AbstractViewUpdateController {
 
-    static String displayElem = "NO SELECTION";
+    static CViewModel model = null;
 
-    static KLighDController controller = null;
+    static AbstractKLighDController controller = null;
 
-    public KLighDController() {
+    public abstract CViewModel calculateModel(Object[] allselections);
+
+    public AbstractKLighDController() {
         System.out.println("+++ CONTROLLER INSTANTIATED +++");
         controller = this;
 
@@ -59,26 +63,13 @@ public class KLighDController extends AbstractViewUpdateController {
                 if (!(selection instanceof IStructuredSelection))
                     return;
 
-                displayElem = "";
+                Object[] allSelections = null;
+                allSelections = ((IStructuredSelection) selection).toArray();
 
-                Object[] allselections = null;
-                allselections = ((IStructuredSelection) selection).toArray();
-                for (Object element : allselections) {
-
-                    if (element instanceof org.eclipse.core.runtime.PlatformObject) {
-                        if (displayElem.length() > 0) {
-                            displayElem += "\n";
-                        }
-                        displayElem += getFilePath(element);
-                    }
-                }
-
-                if (displayElem.length() == 0) {
-                    displayElem = "NO SELECTION";
-                }
+                model = calculateModel(allSelections);
 
                 if (controller != null) {
-                    controller.updateModel(displayElem, null);
+                    controller.updateModel(model, null);
                     controller.getDiagramView().updateDiagram();
                 }
 
@@ -90,9 +81,9 @@ public class KLighDController extends AbstractViewUpdateController {
     }
 
     public String getFilePath(Object object) {
-        PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
         try {
             // The FILE type
+            PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
             Class fieldType = po.getClass();
             File res = (org.eclipse.core.internal.resources.File) fieldType
                     .getMethod("getFile", null).invoke(po, null);
@@ -100,33 +91,41 @@ public class KLighDController extends AbstractViewUpdateController {
             String fullPath = resolveFile(workspacePath);
             return fullPath;
         } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                // The FOLDER type
-                Class fieldType = po.getClass();
-                Folder res = (org.eclipse.core.internal.resources.Folder) fieldType
-                        .getMethod("getResource", null).invoke(po, null);
-                String workspacePath = res.getFullPath().toString();
-                String fullPath = resolveFile(workspacePath);
-                return fullPath;
+        }
+        return null;
+    }
 
-            } catch (Exception ee) {
-                ee.printStackTrace();
-                try {
-                    // The PROJECT type
+    // -------------------------------------------------------------------------
 
-                    Class fieldType = po.getClass();
-                    IPath res = (IPath) fieldType
-                            .getMethod("getWorkingLocation", String.class).invoke(po, ".");
-                    String workspacePath = res.toString().substring(0, res.toString().indexOf("/."))
+    public String getFolderPath(Object object) {
+        try {
+            PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
+            // The FOLDER type
+            Class fieldType = po.getClass();
+            Folder res = (org.eclipse.core.internal.resources.Folder) fieldType
+                    .getMethod("getResource", null).invoke(po, null);
+            String workspacePath = res.getFullPath().toString();
+            String fullPath = resolveFile(workspacePath);
+            return fullPath;
+
+        } catch (Exception ee) {
+        }
+        return null;
+    }
+
+    public String getProjectPath(Object object) {
+        try {
+            // The PROJECT type
+            PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
+            Class fieldType = po.getClass();
+            IPath res =
+                    (IPath) fieldType.getMethod("getWorkingLocation", String.class).invoke(po, ".");
+            String workspacePath = res.toString().substring(0, res.toString().indexOf("/."))
                     + po.toString().substring(1);
-                    String fullPath = workspacePath;
-                    return fullPath;
+            String fullPath = workspacePath;
+            return fullPath;
 
-                } catch (Exception eee) {
-                    eee.printStackTrace();
-                }
-            }
+        } catch (Exception eee) {
         }
         return null;
     }
@@ -161,7 +160,6 @@ public class KLighDController extends AbstractViewUpdateController {
         String editorID = editor.getEditorSite().getId();
         System.out.println("+++ ID '" + editorID + "'");
 
-        Object model = displayElem + " [" + (c++) + "]";
         this.updateModel(model, null);
         this.getDiagramView().updateDiagram();
     }

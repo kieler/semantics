@@ -27,7 +27,7 @@ public class CViewModelParser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Model";
+		return "CViewModel";
 	}
 
 	public CViewModelGrammarAccess getGrammarAccess() {

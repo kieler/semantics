@@ -2,7 +2,7 @@ grammar de.cau.cs.kieler.cview.model.CViewModel with org.eclipse.xtext.common.Te
 
 generate cViewModel "http://www.cau.de/cs/kieler/cview/model/CViewModel"
 
-Model:
+CViewModel:
     folders+=Folder*
     ';'
     files+=File*
@@ -12,11 +12,12 @@ Model:
 Folder:
 	'Folder'  name=ID  
 	         ('parent' '=' parent=[Folder])?
+	         (project?='project')
 	         'location' '=' location=STRING;
 
 File:
     'File'  name=ID  
-           'parent' '=' parent=[Folder]
+           ('parent' '=' parent=[Folder])?
            'location' '=' location=STRING;
 	
 
