@@ -403,6 +403,10 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         return new Pair(keywords, content);
     }    
     
+    def dispatch Pair<List<String>, List<String>> serializeComponents(Void void, boolean hr) {
+        // error handling
+    }
+    
     
     def dispatch serialize(State state) {
         state.label

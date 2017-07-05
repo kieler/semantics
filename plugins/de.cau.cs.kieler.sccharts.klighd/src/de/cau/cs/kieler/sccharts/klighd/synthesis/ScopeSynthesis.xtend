@@ -107,21 +107,21 @@ class ScopeSynthesis extends AbstractSCChartsSynthesis<Scope> {
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
         
-        val scc = root.getSCCharts
-        clearSymbols
-        for(symbolTable : scc.getStringPragmas(PRAGMA_SYMBOLS)) {  
-            var prefix = ""
-            if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
-            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_GREEK)) { defineGreekSymbols(prefix) }
-            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_SUBSCRIPT)) { defineSubscriptSymbols(prefix) }
-            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_SCRIPT)) { defineMathScriptSymbols(prefix) }
-            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
-            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
-        }             
-        for(symbol : scc.getStringPragmas(PRAGMA_SYMBOL)) {
-            symbol.values.head.defineSymbol(symbol.values.get(1))
-        }
-        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head
+//        val scc = root.getSCCharts
+//        clearSymbols
+//        for(symbolTable : scc.getStringPragmas(PRAGMA_SYMBOLS)) {  
+//            var prefix = ""
+//            if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
+//            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_GREEK)) { defineGreekSymbols(prefix) }
+//            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_SUBSCRIPT)) { defineSubscriptSymbols(prefix) }
+//            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_SCRIPT)) { defineMathScriptSymbols(prefix) }
+//            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
+//            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
+//        }             
+//        for(symbol : scc.getStringPragmas(PRAGMA_SYMBOL)) {
+//            symbol.values.head.defineSymbol(symbol.values.get(1))
+//        }
+//        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head
 
         if (root instanceof SCCharts) {
             if (SHOW_ALL_SCCHARTS.booleanValue) {
@@ -142,10 +142,10 @@ class ScopeSynthesis extends AbstractSCChartsSynthesis<Scope> {
         // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
         rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
-        val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
-        if (pragmaFont != null) {
-            rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
-        }
+//        val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
+//        if (pragmaFont != null) {
+//            rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
+//        }
         
         hooks.invokeFinish(root, rootNode)
 

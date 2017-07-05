@@ -27,7 +27,7 @@ class SCChartsDataflowRegionExtensions {
         state.regions.filter(DataflowRegion)
     }
     
-    def boolean hasDataflowRegions(State state) {
+    def boolean containsDataflowRegions(State state) {
         !state.regions.filter(DataflowRegion).empty
     }    
 

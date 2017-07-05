@@ -146,7 +146,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
 
             // Add child area for regions
-            if (state.controlflowRegionsContainStates || state.hasDataflowRegions || state.isReferencedState) {
+            if (state.controlflowRegionsContainStates || state.containsDataflowRegions || state.isReferencedState) {
                 node.addRegionsArea;
             }
         }
@@ -182,7 +182,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
-        return state.controlflowRegionsContainStates || state.hasDataflowRegions || !state.actions.empty ||
+        return state.controlflowRegionsContainStates || state.containsDataflowRegions || !state.actions.empty ||
             !state.declarations.empty || state.isReferencedState;
     }
     

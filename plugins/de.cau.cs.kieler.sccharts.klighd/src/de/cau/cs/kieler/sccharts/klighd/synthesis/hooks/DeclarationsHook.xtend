@@ -115,7 +115,7 @@ class DeclarationsHook extends SynthesisActionHook {
                         declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER)
                     } else if (scope instanceof State) {
                         val state = scope as State;
-                        innerContent = state.controlflowRegionsContainStates || state.hasDataflowRegions;
+                        innerContent = state.controlflowRegionsContainStates || state.containsDataflowRegions;
                         container = node.contentContainer;
                         declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
                     }

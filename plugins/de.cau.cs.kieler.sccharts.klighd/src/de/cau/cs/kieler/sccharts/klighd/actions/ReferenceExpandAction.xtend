@@ -13,13 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.actions
 
-import de.cau.cs.kieler.klighd.IAction.ActionContext
-import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import de.cau.cs.kieler.sccharts.State
+import org.eclipse.elk.graph.properties.MapPropertyHolder
 
 /**
  * This Action provides the normal collapse expand behavior for a reference {@link State} and
@@ -43,7 +43,10 @@ class ReferenceExpandAction extends CollapseExpandAction {
                 if (state.reference != null) {
                     val diagram = LightDiagramServices.translateModel(
                         state.reference.scope,
-                        context.viewContext
+                        context.viewContext,
+                        new MapPropertyHolder => [ 
+                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.klighd.synthesis.ScopeSynthesis") 
+                        ]
                     );
                     context.getKNode.children += diagram.children;
                 }
