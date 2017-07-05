@@ -3,7 +3,34 @@ grammar de.cau.cs.kieler.cview.model.CViewModel with org.eclipse.xtext.common.Te
 generate cViewModel "http://www.cau.de/cs/kieler/cview/model/CViewModel"
 
 Model:
-	greetings+=Greeting*;
+    folders+=Folder*
+    ';'
+    files+=File*
+    ';'
+	components+=Component*;
 	
-Greeting:
-	'Hello' name=ID '!';
+Folder:
+	'Folder'  name=ID  
+	         ('parent' '=' parent=[Folder])?
+	         'location' '=' location=STRING;
+
+File:
+    'File'  name=ID  
+           'parent' '=' parent=[Folder]
+           'location' '=' location=STRING;
+	
+
+Component:
+    'Component' name=ID '!'
+           ('parent' '=' parent=[Component])?
+           'type' '=' type=ComponentType
+           ('referenceFile' '=' referenceFile=[File])?
+           ('referenceLine' '=' referenceLine=INT)?
+    ;
+	
+	
+	
+enum ComponentType:
+    DIR="DIR" | FILE="FILE" | FUNC="FUNC" | COMPOUND="COMPOUND" | READER="READER" | WRITER="WRITER" 
+;	
+	

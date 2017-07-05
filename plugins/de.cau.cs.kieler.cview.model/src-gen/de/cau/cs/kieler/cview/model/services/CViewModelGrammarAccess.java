@@ -6,7 +6,11 @@ package de.cau.cs.kieler.cview.model.services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.List;
+import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.EnumLiteralDeclaration;
+import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Group;
@@ -15,6 +19,7 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
 import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
@@ -23,36 +28,216 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class ModelElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Model");
-		private final Assignment cGreetingsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cGreetingsGreetingParserRuleCall_0 = (RuleCall)cGreetingsAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cFoldersAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cFoldersFolderParserRuleCall_0_0 = (RuleCall)cFoldersAssignment_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cFilesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFilesFileParserRuleCall_2_0 = (RuleCall)cFilesAssignment_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cComponentsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cComponentsComponentParserRuleCall_4_0 = (RuleCall)cComponentsAssignment_4.eContents().get(0);
 		
 		//Model:
-		//	greetings+=Greeting*;
+		//	folders+=Folder*
+		//	';'
+		//	files+=File*
+		//	';'
+		//	components+=Component*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//greetings+=Greeting*
-		public Assignment getGreetingsAssignment() { return cGreetingsAssignment; }
+		//folders+=Folder* ';' files+=File* ';' components+=Component*
+		public Group getGroup() { return cGroup; }
 		
-		//Greeting
-		public RuleCall getGreetingsGreetingParserRuleCall_0() { return cGreetingsGreetingParserRuleCall_0; }
+		//folders+=Folder*
+		public Assignment getFoldersAssignment_0() { return cFoldersAssignment_0; }
+		
+		//Folder
+		public RuleCall getFoldersFolderParserRuleCall_0_0() { return cFoldersFolderParserRuleCall_0_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
+		
+		//files+=File*
+		public Assignment getFilesAssignment_2() { return cFilesAssignment_2; }
+		
+		//File
+		public RuleCall getFilesFileParserRuleCall_2_0() { return cFilesFileParserRuleCall_2_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+		
+		//components+=Component*
+		public Assignment getComponentsAssignment_4() { return cComponentsAssignment_4; }
+		
+		//Component
+		public RuleCall getComponentsComponentParserRuleCall_4_0() { return cComponentsComponentParserRuleCall_4_0; }
 	}
-	public class GreetingElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Greeting");
+	public class FolderElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Folder");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cHelloKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cFolderKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cParentKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cParentAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final CrossReference cParentFolderCrossReference_2_2_0 = (CrossReference)cParentAssignment_2_2.eContents().get(0);
+		private final RuleCall cParentFolderIDTerminalRuleCall_2_2_0_1 = (RuleCall)cParentFolderCrossReference_2_2_0.eContents().get(1);
+		private final Keyword cLocationKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cEqualsSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cLocationAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cLocationSTRINGTerminalRuleCall_5_0 = (RuleCall)cLocationAssignment_5.eContents().get(0);
+		
+		//Folder:
+		//	'Folder' name=ID ('parent' '=' parent=[Folder])?
+		//	'location' '=' location=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'Folder' name=ID ('parent' '=' parent=[Folder])? 'location' '=' location=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//'Folder'
+		public Keyword getFolderKeyword_0() { return cFolderKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//('parent' '=' parent=[Folder])?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'parent'
+		public Keyword getParentKeyword_2_0() { return cParentKeyword_2_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_2_1() { return cEqualsSignKeyword_2_1; }
+		
+		//parent=[Folder]
+		public Assignment getParentAssignment_2_2() { return cParentAssignment_2_2; }
+		
+		//[Folder]
+		public CrossReference getParentFolderCrossReference_2_2_0() { return cParentFolderCrossReference_2_2_0; }
+		
+		//ID
+		public RuleCall getParentFolderIDTerminalRuleCall_2_2_0_1() { return cParentFolderIDTerminalRuleCall_2_2_0_1; }
+		
+		//'location'
+		public Keyword getLocationKeyword_3() { return cLocationKeyword_3; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_4() { return cEqualsSignKeyword_4; }
+		
+		//location=STRING
+		public Assignment getLocationAssignment_5() { return cLocationAssignment_5; }
+		
+		//STRING
+		public RuleCall getLocationSTRINGTerminalRuleCall_5_0() { return cLocationSTRINGTerminalRuleCall_5_0; }
+	}
+	public class FileElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.File");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cFileKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cParentKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cParentAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cParentFolderCrossReference_4_0 = (CrossReference)cParentAssignment_4.eContents().get(0);
+		private final RuleCall cParentFolderIDTerminalRuleCall_4_0_1 = (RuleCall)cParentFolderCrossReference_4_0.eContents().get(1);
+		private final Keyword cLocationKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Keyword cEqualsSignKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cLocationAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cLocationSTRINGTerminalRuleCall_7_0 = (RuleCall)cLocationAssignment_7.eContents().get(0);
+		
+		//File:
+		//	'File' name=ID
+		//	'parent' '=' parent=[Folder]
+		//	'location' '=' location=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'File' name=ID 'parent' '=' parent=[Folder] 'location' '=' location=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//'File'
+		public Keyword getFileKeyword_0() { return cFileKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//'parent'
+		public Keyword getParentKeyword_2() { return cParentKeyword_2; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
+		
+		//parent=[Folder]
+		public Assignment getParentAssignment_4() { return cParentAssignment_4; }
+		
+		//[Folder]
+		public CrossReference getParentFolderCrossReference_4_0() { return cParentFolderCrossReference_4_0; }
+		
+		//ID
+		public RuleCall getParentFolderIDTerminalRuleCall_4_0_1() { return cParentFolderIDTerminalRuleCall_4_0_1; }
+		
+		//'location'
+		public Keyword getLocationKeyword_5() { return cLocationKeyword_5; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_6() { return cEqualsSignKeyword_6; }
+		
+		//location=STRING
+		public Assignment getLocationAssignment_7() { return cLocationAssignment_7; }
+		
+		//STRING
+		public RuleCall getLocationSTRINGTerminalRuleCall_7_0() { return cLocationSTRINGTerminalRuleCall_7_0; }
+	}
+	public class ComponentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Component");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cComponentKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cExclamationMarkKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cParentKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cParentAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final CrossReference cParentComponentCrossReference_3_2_0 = (CrossReference)cParentAssignment_3_2.eContents().get(0);
+		private final RuleCall cParentComponentIDTerminalRuleCall_3_2_0_1 = (RuleCall)cParentComponentCrossReference_3_2_0.eContents().get(1);
+		private final Keyword cTypeKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cEqualsSignKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cTypeAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cTypeComponentTypeEnumRuleCall_6_0 = (RuleCall)cTypeAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cReferenceFileKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
+		private final Assignment cReferenceFileAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
+		private final CrossReference cReferenceFileFileCrossReference_7_2_0 = (CrossReference)cReferenceFileAssignment_7_2.eContents().get(0);
+		private final RuleCall cReferenceFileFileIDTerminalRuleCall_7_2_0_1 = (RuleCall)cReferenceFileFileCrossReference_7_2_0.eContents().get(1);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cReferenceLineKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_8_1 = (Keyword)cGroup_8.eContents().get(1);
+		private final Assignment cReferenceLineAssignment_8_2 = (Assignment)cGroup_8.eContents().get(2);
+		private final RuleCall cReferenceLineINTTerminalRuleCall_8_2_0 = (RuleCall)cReferenceLineAssignment_8_2.eContents().get(0);
 		
-		//Greeting:
-		//	'Hello' name=ID '!';
+		//Component:
+		//	'Component' name=ID '!' ('parent' '=' parent=[Component])?
+		//	'type' '=' type=ComponentType ('referenceFile' '=' referenceFile=[File])? ('referenceLine' '=' referenceLine=INT)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Hello' name=ID '!'
+		//'Component' name=ID '!' ('parent' '=' parent=[Component])? 'type' '=' type=ComponentType ('referenceFile' '='
+		//referenceFile=[File])? ('referenceLine' '=' referenceLine=INT)?
 		public Group getGroup() { return cGroup; }
 		
-		//'Hello'
-		public Keyword getHelloKeyword_0() { return cHelloKeyword_0; }
+		//'Component'
+		public Keyword getComponentKeyword_0() { return cComponentKeyword_0; }
 		
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -62,11 +247,136 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'!'
 		public Keyword getExclamationMarkKeyword_2() { return cExclamationMarkKeyword_2; }
+		
+		//('parent' '=' parent=[Component])?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'parent'
+		public Keyword getParentKeyword_3_0() { return cParentKeyword_3_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_3_1() { return cEqualsSignKeyword_3_1; }
+		
+		//parent=[Component]
+		public Assignment getParentAssignment_3_2() { return cParentAssignment_3_2; }
+		
+		//[Component]
+		public CrossReference getParentComponentCrossReference_3_2_0() { return cParentComponentCrossReference_3_2_0; }
+		
+		//ID
+		public RuleCall getParentComponentIDTerminalRuleCall_3_2_0_1() { return cParentComponentIDTerminalRuleCall_3_2_0_1; }
+		
+		//'type'
+		public Keyword getTypeKeyword_4() { return cTypeKeyword_4; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_5() { return cEqualsSignKeyword_5; }
+		
+		//type=ComponentType
+		public Assignment getTypeAssignment_6() { return cTypeAssignment_6; }
+		
+		//ComponentType
+		public RuleCall getTypeComponentTypeEnumRuleCall_6_0() { return cTypeComponentTypeEnumRuleCall_6_0; }
+		
+		//('referenceFile' '=' referenceFile=[File])?
+		public Group getGroup_7() { return cGroup_7; }
+		
+		//'referenceFile'
+		public Keyword getReferenceFileKeyword_7_0() { return cReferenceFileKeyword_7_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_7_1() { return cEqualsSignKeyword_7_1; }
+		
+		//referenceFile=[File]
+		public Assignment getReferenceFileAssignment_7_2() { return cReferenceFileAssignment_7_2; }
+		
+		//[File]
+		public CrossReference getReferenceFileFileCrossReference_7_2_0() { return cReferenceFileFileCrossReference_7_2_0; }
+		
+		//ID
+		public RuleCall getReferenceFileFileIDTerminalRuleCall_7_2_0_1() { return cReferenceFileFileIDTerminalRuleCall_7_2_0_1; }
+		
+		//('referenceLine' '=' referenceLine=INT)?
+		public Group getGroup_8() { return cGroup_8; }
+		
+		//'referenceLine'
+		public Keyword getReferenceLineKeyword_8_0() { return cReferenceLineKeyword_8_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_8_1() { return cEqualsSignKeyword_8_1; }
+		
+		//referenceLine=INT
+		public Assignment getReferenceLineAssignment_8_2() { return cReferenceLineAssignment_8_2; }
+		
+		//INT
+		public RuleCall getReferenceLineINTTerminalRuleCall_8_2_0() { return cReferenceLineINTTerminalRuleCall_8_2_0; }
 	}
 	
+	public class ComponentTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.ComponentType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cDIREnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cDIRDIRKeyword_0_0 = (Keyword)cDIREnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cFILEEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cFILEFILEKeyword_1_0 = (Keyword)cFILEEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cFUNCEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cFUNCFUNCKeyword_2_0 = (Keyword)cFUNCEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cCOMPOUNDEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cCOMPOUNDCOMPOUNDKeyword_3_0 = (Keyword)cCOMPOUNDEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cREADEREnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cREADERREADERKeyword_4_0 = (Keyword)cREADEREnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cWRITEREnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cWRITERWRITERKeyword_5_0 = (Keyword)cWRITEREnumLiteralDeclaration_5.eContents().get(0);
+		
+		//enum ComponentType:
+		//	DIR | FILE | FUNC | COMPOUND | READER | WRITER;
+		public EnumRule getRule() { return rule; }
+		
+		//DIR | FILE | FUNC | COMPOUND | READER | WRITER
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//DIR
+		public EnumLiteralDeclaration getDIREnumLiteralDeclaration_0() { return cDIREnumLiteralDeclaration_0; }
+		
+		//"DIR"
+		public Keyword getDIRDIRKeyword_0_0() { return cDIRDIRKeyword_0_0; }
+		
+		//FILE
+		public EnumLiteralDeclaration getFILEEnumLiteralDeclaration_1() { return cFILEEnumLiteralDeclaration_1; }
+		
+		//"FILE"
+		public Keyword getFILEFILEKeyword_1_0() { return cFILEFILEKeyword_1_0; }
+		
+		//FUNC
+		public EnumLiteralDeclaration getFUNCEnumLiteralDeclaration_2() { return cFUNCEnumLiteralDeclaration_2; }
+		
+		//"FUNC"
+		public Keyword getFUNCFUNCKeyword_2_0() { return cFUNCFUNCKeyword_2_0; }
+		
+		//COMPOUND
+		public EnumLiteralDeclaration getCOMPOUNDEnumLiteralDeclaration_3() { return cCOMPOUNDEnumLiteralDeclaration_3; }
+		
+		//"COMPOUND"
+		public Keyword getCOMPOUNDCOMPOUNDKeyword_3_0() { return cCOMPOUNDCOMPOUNDKeyword_3_0; }
+		
+		//READER
+		public EnumLiteralDeclaration getREADEREnumLiteralDeclaration_4() { return cREADEREnumLiteralDeclaration_4; }
+		
+		//"READER"
+		public Keyword getREADERREADERKeyword_4_0() { return cREADERREADERKeyword_4_0; }
+		
+		//WRITER
+		public EnumLiteralDeclaration getWRITEREnumLiteralDeclaration_5() { return cWRITEREnumLiteralDeclaration_5; }
+		
+		//"WRITER"
+		public Keyword getWRITERWRITERKeyword_5_0() { return cWRITERWRITERKeyword_5_0; }
+	}
 	
 	private final ModelElements pModel;
-	private final GreetingElements pGreeting;
+	private final FolderElements pFolder;
+	private final FileElements pFile;
+	private final ComponentElements pComponent;
+	private final ComponentTypeElements eComponentType;
 	
 	private final Grammar grammar;
 	
@@ -78,7 +388,10 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 		this.pModel = new ModelElements();
-		this.pGreeting = new GreetingElements();
+		this.pFolder = new FolderElements();
+		this.pFile = new FileElements();
+		this.pComponent = new ComponentElements();
+		this.eComponentType = new ComponentTypeElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -109,7 +422,11 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Model:
-	//	greetings+=Greeting*;
+	//	folders+=Folder*
+	//	';'
+	//	files+=File*
+	//	';'
+	//	components+=Component*;
 	public ModelElements getModelAccess() {
 		return pModel;
 	}
@@ -118,14 +435,48 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		return getModelAccess().getRule();
 	}
 	
-	//Greeting:
-	//	'Hello' name=ID '!';
-	public GreetingElements getGreetingAccess() {
-		return pGreeting;
+	//Folder:
+	//	'Folder' name=ID ('parent' '=' parent=[Folder])?
+	//	'location' '=' location=STRING;
+	public FolderElements getFolderAccess() {
+		return pFolder;
 	}
 	
-	public ParserRule getGreetingRule() {
-		return getGreetingAccess().getRule();
+	public ParserRule getFolderRule() {
+		return getFolderAccess().getRule();
+	}
+	
+	//File:
+	//	'File' name=ID
+	//	'parent' '=' parent=[Folder]
+	//	'location' '=' location=STRING;
+	public FileElements getFileAccess() {
+		return pFile;
+	}
+	
+	public ParserRule getFileRule() {
+		return getFileAccess().getRule();
+	}
+	
+	//Component:
+	//	'Component' name=ID '!' ('parent' '=' parent=[Component])?
+	//	'type' '=' type=ComponentType ('referenceFile' '=' referenceFile=[File])? ('referenceLine' '=' referenceLine=INT)?;
+	public ComponentElements getComponentAccess() {
+		return pComponent;
+	}
+	
+	public ParserRule getComponentRule() {
+		return getComponentAccess().getRule();
+	}
+	
+	//enum ComponentType:
+	//	DIR | FILE | FUNC | COMPOUND | READER | WRITER;
+	public ComponentTypeElements getComponentTypeAccess() {
+		return eComponentType;
+	}
+	
+	public EnumRule getComponentTypeRule() {
+		return getComponentTypeAccess().getRule();
 	}
 	
 	//terminal ID:

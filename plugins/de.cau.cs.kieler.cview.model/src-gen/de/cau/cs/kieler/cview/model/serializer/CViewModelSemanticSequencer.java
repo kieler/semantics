@@ -5,7 +5,9 @@ package de.cau.cs.kieler.cview.model.serializer;
 
 import com.google.inject.Inject;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
-import de.cau.cs.kieler.cview.model.cViewModel.Greeting;
+import de.cau.cs.kieler.cview.model.cViewModel.Component;
+import de.cau.cs.kieler.cview.model.cViewModel.File;
+import de.cau.cs.kieler.cview.model.cViewModel.Folder;
 import de.cau.cs.kieler.cview.model.cViewModel.Model;
 import de.cau.cs.kieler.cview.model.services.CViewModelGrammarAccess;
 import java.util.Set;
@@ -33,8 +35,14 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == CViewModelPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case CViewModelPackage.GREETING:
-				sequence_Greeting(context, (Greeting) semanticObject); 
+			case CViewModelPackage.COMPONENT:
+				sequence_Component(context, (Component) semanticObject); 
+				return; 
+			case CViewModelPackage.FILE:
+				sequence_File(context, (File) semanticObject); 
+				return; 
+			case CViewModelPackage.FOLDER:
+				sequence_Folder(context, (Folder) semanticObject); 
 				return; 
 			case CViewModelPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
@@ -46,19 +54,49 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	
 	/**
 	 * Contexts:
-	 *     Greeting returns Greeting
+	 *     Component returns Component
 	 *
 	 * Constraint:
-	 *     name=ID
+	 *     (name=ID parent=[Component|ID]? type=ComponentType referenceFile=[File|ID]? referenceLine=INT?)
 	 */
-	protected void sequence_Greeting(ISerializationContext context, Greeting semanticObject) {
+	protected void sequence_Component(ISerializationContext context, Component semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     File returns File
+	 *
+	 * Constraint:
+	 *     (name=ID parent=[Folder|ID] location=STRING)
+	 */
+	protected void sequence_File(ISerializationContext context, File semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.GREETING__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.GREETING__NAME));
+			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.FILE__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.FILE__NAME));
+			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.FILE__PARENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.FILE__PARENT));
+			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.FILE__LOCATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.FILE__LOCATION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getGreetingAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getFileAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getFileAccess().getParentFolderIDTerminalRuleCall_4_0_1(), semanticObject.getParent());
+		feeder.accept(grammarAccess.getFileAccess().getLocationSTRINGTerminalRuleCall_7_0(), semanticObject.getLocation());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Folder returns Folder
+	 *
+	 * Constraint:
+	 *     (name=ID parent=[Folder|ID]? location=STRING)
+	 */
+	protected void sequence_Folder(ISerializationContext context, Folder semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -67,7 +105,7 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *     Model returns Model
 	 *
 	 * Constraint:
-	 *     greetings+=Greeting+
+	 *     (folders+=Folder* files+=File* components+=Component*)
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

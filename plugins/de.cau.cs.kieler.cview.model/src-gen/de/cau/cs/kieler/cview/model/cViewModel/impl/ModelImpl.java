@@ -4,7 +4,9 @@
 package de.cau.cs.kieler.cview.model.cViewModel.impl;
 
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
-import de.cau.cs.kieler.cview.model.cViewModel.Greeting;
+import de.cau.cs.kieler.cview.model.cViewModel.Component;
+import de.cau.cs.kieler.cview.model.cViewModel.File;
+import de.cau.cs.kieler.cview.model.cViewModel.Folder;
 import de.cau.cs.kieler.cview.model.cViewModel.Model;
 
 import java.util.Collection;
@@ -29,7 +31,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl#getGreetings <em>Greetings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl#getFolders <em>Folders</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl#getFiles <em>Files</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ModelImpl#getComponents <em>Components</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,14 +41,34 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ModelImpl extends MinimalEObjectImpl.Container implements Model
 {
   /**
-   * The cached value of the '{@link #getGreetings() <em>Greetings</em>}' containment reference list.
+   * The cached value of the '{@link #getFolders() <em>Folders</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGreetings()
+   * @see #getFolders()
    * @generated
    * @ordered
    */
-  protected EList<Greeting> greetings;
+  protected EList<Folder> folders;
+
+  /**
+   * The cached value of the '{@link #getFiles() <em>Files</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFiles()
+   * @generated
+   * @ordered
+   */
+  protected EList<File> files;
+
+  /**
+   * The cached value of the '{@link #getComponents() <em>Components</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getComponents()
+   * @generated
+   * @ordered
+   */
+  protected EList<Component> components;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,13 +96,41 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Greeting> getGreetings()
+  public EList<Folder> getFolders()
   {
-    if (greetings == null)
+    if (folders == null)
     {
-      greetings = new EObjectContainmentEList<Greeting>(Greeting.class, this, CViewModelPackage.MODEL__GREETINGS);
+      folders = new EObjectContainmentEList<Folder>(Folder.class, this, CViewModelPackage.MODEL__FOLDERS);
     }
-    return greetings;
+    return folders;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<File> getFiles()
+  {
+    if (files == null)
+    {
+      files = new EObjectContainmentEList<File>(File.class, this, CViewModelPackage.MODEL__FILES);
+    }
+    return files;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Component> getComponents()
+  {
+    if (components == null)
+    {
+      components = new EObjectContainmentEList<Component>(Component.class, this, CViewModelPackage.MODEL__COMPONENTS);
+    }
+    return components;
   }
 
   /**
@@ -91,8 +143,12 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__GREETINGS:
-        return ((InternalEList<?>)getGreetings()).basicRemove(otherEnd, msgs);
+      case CViewModelPackage.MODEL__FOLDERS:
+        return ((InternalEList<?>)getFolders()).basicRemove(otherEnd, msgs);
+      case CViewModelPackage.MODEL__FILES:
+        return ((InternalEList<?>)getFiles()).basicRemove(otherEnd, msgs);
+      case CViewModelPackage.MODEL__COMPONENTS:
+        return ((InternalEList<?>)getComponents()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -107,8 +163,12 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__GREETINGS:
-        return getGreetings();
+      case CViewModelPackage.MODEL__FOLDERS:
+        return getFolders();
+      case CViewModelPackage.MODEL__FILES:
+        return getFiles();
+      case CViewModelPackage.MODEL__COMPONENTS:
+        return getComponents();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -124,9 +184,17 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__GREETINGS:
-        getGreetings().clear();
-        getGreetings().addAll((Collection<? extends Greeting>)newValue);
+      case CViewModelPackage.MODEL__FOLDERS:
+        getFolders().clear();
+        getFolders().addAll((Collection<? extends Folder>)newValue);
+        return;
+      case CViewModelPackage.MODEL__FILES:
+        getFiles().clear();
+        getFiles().addAll((Collection<? extends File>)newValue);
+        return;
+      case CViewModelPackage.MODEL__COMPONENTS:
+        getComponents().clear();
+        getComponents().addAll((Collection<? extends Component>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,8 +210,14 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__GREETINGS:
-        getGreetings().clear();
+      case CViewModelPackage.MODEL__FOLDERS:
+        getFolders().clear();
+        return;
+      case CViewModelPackage.MODEL__FILES:
+        getFiles().clear();
+        return;
+      case CViewModelPackage.MODEL__COMPONENTS:
+        getComponents().clear();
         return;
     }
     super.eUnset(featureID);
@@ -159,8 +233,12 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case CViewModelPackage.MODEL__GREETINGS:
-        return greetings != null && !greetings.isEmpty();
+      case CViewModelPackage.MODEL__FOLDERS:
+        return folders != null && !folders.isEmpty();
+      case CViewModelPackage.MODEL__FILES:
+        return files != null && !files.isEmpty();
+      case CViewModelPackage.MODEL__COMPONENTS:
+        return components != null && !components.isEmpty();
     }
     return super.eIsSet(featureID);
   }

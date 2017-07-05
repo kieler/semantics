@@ -23,6 +23,7 @@ import org.eclipse.xtext.parser.*;
 import org.eclipse.xtext.parser.impl.*;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
@@ -77,34 +78,82 @@ ruleModel returns [EObject current=null]
 }:
 	(
 		(
-			{
-				newCompositeNode(grammarAccess.getModelAccess().getGreetingsGreetingParserRuleCall_0());
-			}
-			lv_greetings_0_0=ruleGreeting
-			{
-				if ($current==null) {
-					$current = createModelElementForParent(grammarAccess.getModelRule());
+			(
+				{
+					newCompositeNode(grammarAccess.getModelAccess().getFoldersFolderParserRuleCall_0_0());
 				}
-				add(
-					$current,
-					"greetings",
-					lv_greetings_0_0,
-					"de.cau.cs.kieler.cview.model.CViewModel.Greeting");
-				afterParserOrEnumRuleCall();
-			}
-		)
-	)*
+				lv_folders_0_0=ruleFolder
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getModelRule());
+					}
+					add(
+						$current,
+						"folders",
+						lv_folders_0_0,
+						"de.cau.cs.kieler.cview.model.CViewModel.Folder");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_1=';'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getModelAccess().getSemicolonKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getModelAccess().getFilesFileParserRuleCall_2_0());
+				}
+				lv_files_2_0=ruleFile
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getModelRule());
+					}
+					add(
+						$current,
+						"files",
+						lv_files_2_0,
+						"de.cau.cs.kieler.cview.model.CViewModel.File");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_3=';'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getModelAccess().getSemicolonKeyword_3());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getModelAccess().getComponentsComponentParserRuleCall_4_0());
+				}
+				lv_components_4_0=ruleComponent
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getModelRule());
+					}
+					add(
+						$current,
+						"components",
+						lv_components_4_0,
+						"de.cau.cs.kieler.cview.model.CViewModel.Component");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+	)
 ;
 
-// Entry rule entryRuleGreeting
-entryRuleGreeting returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getGreetingRule()); }
-	iv_ruleGreeting=ruleGreeting
-	{ $current=$iv_ruleGreeting.current; }
+// Entry rule entryRuleFolder
+entryRuleFolder returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getFolderRule()); }
+	iv_ruleFolder=ruleFolder
+	{ $current=$iv_ruleFolder.current; }
 	EOF;
 
-// Rule Greeting
-ruleGreeting returns [EObject current=null]
+// Rule Folder
+ruleFolder returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -112,19 +161,197 @@ ruleGreeting returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='Hello'
+		otherlv_0='Folder'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getGreetingAccess().getHelloKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getFolderAccess().getFolderKeyword_0());
 		}
 		(
 			(
 				lv_name_1_0=RULE_ID
 				{
-					newLeafNode(lv_name_1_0, grammarAccess.getGreetingAccess().getNameIDTerminalRuleCall_1_0());
+					newLeafNode(lv_name_1_0, grammarAccess.getFolderAccess().getNameIDTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getGreetingRule());
+						$current = createModelElement(grammarAccess.getFolderRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		(
+			otherlv_2='parent'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getFolderAccess().getParentKeyword_2_0());
+			}
+			otherlv_3='='
+			{
+				newLeafNode(otherlv_3, grammarAccess.getFolderAccess().getEqualsSignKeyword_2_1());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getFolderRule());
+						}
+					}
+					otherlv_4=RULE_ID
+					{
+						newLeafNode(otherlv_4, grammarAccess.getFolderAccess().getParentFolderCrossReference_2_2_0());
+					}
+				)
+			)
+		)?
+		otherlv_5='location'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getFolderAccess().getLocationKeyword_3());
+		}
+		otherlv_6='='
+		{
+			newLeafNode(otherlv_6, grammarAccess.getFolderAccess().getEqualsSignKeyword_4());
+		}
+		(
+			(
+				lv_location_7_0=RULE_STRING
+				{
+					newLeafNode(lv_location_7_0, grammarAccess.getFolderAccess().getLocationSTRINGTerminalRuleCall_5_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFolderRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"location",
+						lv_location_7_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleFile
+entryRuleFile returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getFileRule()); }
+	iv_ruleFile=ruleFile
+	{ $current=$iv_ruleFile.current; }
+	EOF;
+
+// Rule File
+ruleFile returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='File'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getFileAccess().getFileKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getFileAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFileRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_2='parent'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getFileAccess().getParentKeyword_2());
+		}
+		otherlv_3='='
+		{
+			newLeafNode(otherlv_3, grammarAccess.getFileAccess().getEqualsSignKeyword_3());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFileRule());
+					}
+				}
+				otherlv_4=RULE_ID
+				{
+					newLeafNode(otherlv_4, grammarAccess.getFileAccess().getParentFolderCrossReference_4_0());
+				}
+			)
+		)
+		otherlv_5='location'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getFileAccess().getLocationKeyword_5());
+		}
+		otherlv_6='='
+		{
+			newLeafNode(otherlv_6, grammarAccess.getFileAccess().getEqualsSignKeyword_6());
+		}
+		(
+			(
+				lv_location_7_0=RULE_STRING
+				{
+					newLeafNode(lv_location_7_0, grammarAccess.getFileAccess().getLocationSTRINGTerminalRuleCall_7_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFileRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"location",
+						lv_location_7_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleComponent
+entryRuleComponent returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getComponentRule()); }
+	iv_ruleComponent=ruleComponent
+	{ $current=$iv_ruleComponent.current; }
+	EOF;
+
+// Rule Component
+ruleComponent returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='Component'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getComponentAccess().getComponentKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getComponentAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
 					}
 					setWithLastConsumed(
 						$current,
@@ -136,8 +363,168 @@ ruleGreeting returns [EObject current=null]
 		)
 		otherlv_2='!'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getGreetingAccess().getExclamationMarkKeyword_2());
+			newLeafNode(otherlv_2, grammarAccess.getComponentAccess().getExclamationMarkKeyword_2());
 		}
+		(
+			otherlv_3='parent'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getComponentAccess().getParentKeyword_3_0());
+			}
+			otherlv_4='='
+			{
+				newLeafNode(otherlv_4, grammarAccess.getComponentAccess().getEqualsSignKeyword_3_1());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getComponentRule());
+						}
+					}
+					otherlv_5=RULE_ID
+					{
+						newLeafNode(otherlv_5, grammarAccess.getComponentAccess().getParentComponentCrossReference_3_2_0());
+					}
+				)
+			)
+		)?
+		otherlv_6='type'
+		{
+			newLeafNode(otherlv_6, grammarAccess.getComponentAccess().getTypeKeyword_4());
+		}
+		otherlv_7='='
+		{
+			newLeafNode(otherlv_7, grammarAccess.getComponentAccess().getEqualsSignKeyword_5());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getComponentAccess().getTypeComponentTypeEnumRuleCall_6_0());
+				}
+				lv_type_8_0=ruleComponentType
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getComponentRule());
+					}
+					set(
+						$current,
+						"type",
+						lv_type_8_0,
+						"de.cau.cs.kieler.cview.model.CViewModel.ComponentType");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_9='referenceFile'
+			{
+				newLeafNode(otherlv_9, grammarAccess.getComponentAccess().getReferenceFileKeyword_7_0());
+			}
+			otherlv_10='='
+			{
+				newLeafNode(otherlv_10, grammarAccess.getComponentAccess().getEqualsSignKeyword_7_1());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getComponentRule());
+						}
+					}
+					otherlv_11=RULE_ID
+					{
+						newLeafNode(otherlv_11, grammarAccess.getComponentAccess().getReferenceFileFileCrossReference_7_2_0());
+					}
+				)
+			)
+		)?
+		(
+			otherlv_12='referenceLine'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getComponentAccess().getReferenceLineKeyword_8_0());
+			}
+			otherlv_13='='
+			{
+				newLeafNode(otherlv_13, grammarAccess.getComponentAccess().getEqualsSignKeyword_8_1());
+			}
+			(
+				(
+					lv_referenceLine_14_0=RULE_INT
+					{
+						newLeafNode(lv_referenceLine_14_0, grammarAccess.getComponentAccess().getReferenceLineINTTerminalRuleCall_8_2_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getComponentRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"referenceLine",
+							lv_referenceLine_14_0,
+							"org.eclipse.xtext.common.Terminals.INT");
+					}
+				)
+			)
+		)?
+	)
+;
+
+// Rule ComponentType
+ruleComponentType returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='DIR'
+			{
+				$current = grammarAccess.getComponentTypeAccess().getDIREnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getComponentTypeAccess().getDIREnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='FILE'
+			{
+				$current = grammarAccess.getComponentTypeAccess().getFILEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getComponentTypeAccess().getFILEEnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='FUNC'
+			{
+				$current = grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2());
+			}
+		)
+		    |
+		(
+			enumLiteral_3='COMPOUND'
+			{
+				$current = grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_3());
+			}
+		)
+		    |
+		(
+			enumLiteral_4='READER'
+			{
+				$current = grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_4());
+			}
+		)
+		    |
+		(
+			enumLiteral_5='WRITER'
+			{
+				$current = grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_5());
+			}
+		)
 	)
 ;
 

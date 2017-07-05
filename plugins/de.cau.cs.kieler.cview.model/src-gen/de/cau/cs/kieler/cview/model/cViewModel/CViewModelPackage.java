@@ -5,6 +5,7 @@ package de.cau.cs.kieler.cview.model.cViewModel;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -68,13 +69,31 @@ public interface CViewModelPackage extends EPackage
   int MODEL = 0;
 
   /**
-   * The feature id for the '<em><b>Greetings</b></em>' containment reference list.
+   * The feature id for the '<em><b>Folders</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL__GREETINGS = 0;
+  int MODEL__FOLDERS = 0;
+
+  /**
+   * The feature id for the '<em><b>Files</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL__FILES = 1;
+
+  /**
+   * The feature id for the '<em><b>Components</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL__COMPONENTS = 2;
 
   /**
    * The number of structural features of the '<em>Model</em>' class.
@@ -83,17 +102,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL_FEATURE_COUNT = 1;
+  int MODEL_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.GreetingImpl <em>Greeting</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl <em>Folder</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.GreetingImpl
-   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getGreeting()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getFolder()
    * @generated
    */
-  int GREETING = 1;
+  int FOLDER = 1;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -102,16 +121,154 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GREETING__NAME = 0;
+  int FOLDER__NAME = 0;
 
   /**
-   * The number of structural features of the '<em>Greeting</em>' class.
+   * The feature id for the '<em><b>Parent</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GREETING_FEATURE_COUNT = 1;
+  int FOLDER__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Location</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOLDER__LOCATION = 2;
+
+  /**
+   * The number of structural features of the '<em>Folder</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOLDER_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FileImpl <em>File</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.FileImpl
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getFile()
+   * @generated
+   */
+  int FILE = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Location</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE__LOCATION = 2;
+
+  /**
+   * The number of structural features of the '<em>File</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl <em>Component</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getComponent()
+   * @generated
+   */
+  int COMPONENT = 3;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__PARENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__TYPE = 2;
+
+  /**
+   * The feature id for the '<em><b>Reference File</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__REFERENCE_FILE = 3;
+
+  /**
+   * The feature id for the '<em><b>Reference Line</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__REFERENCE_LINE = 4;
+
+  /**
+   * The number of structural features of the '<em>Component</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT_FEATURE_COUNT = 5;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.cview.model.cViewModel.ComponentType
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getComponentType()
+   * @generated
+   */
+  int COMPONENT_TYPE = 4;
 
 
   /**
@@ -125,36 +282,198 @@ public interface CViewModelPackage extends EPackage
   EClass getModel();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getGreetings <em>Greetings</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFolders <em>Folders</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Greetings</em>'.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Model#getGreetings()
+   * @return the meta object for the containment reference list '<em>Folders</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Model#getFolders()
    * @see #getModel()
    * @generated
    */
-  EReference getModel_Greetings();
+  EReference getModel_Folders();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Greeting <em>Greeting</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFiles <em>Files</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Greeting</em>'.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Greeting
+   * @return the meta object for the containment reference list '<em>Files</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Model#getFiles()
+   * @see #getModel()
    * @generated
    */
-  EClass getGreeting();
+  EReference getModel_Files();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Greeting#getName <em>Name</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getComponents <em>Components</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Components</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Model#getComponents()
+   * @see #getModel()
+   * @generated
+   */
+  EReference getModel_Components();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder <em>Folder</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Folder</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Folder
+   * @generated
+   */
+  EClass getFolder();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Greeting#getName()
-   * @see #getGreeting()
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Folder#getName()
+   * @see #getFolder()
    * @generated
    */
-  EAttribute getGreeting_Name();
+  EAttribute getFolder_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getParent <em>Parent</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Parent</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Folder#getParent()
+   * @see #getFolder()
+   * @generated
+   */
+  EReference getFolder_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getLocation <em>Location</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Location</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Folder#getLocation()
+   * @see #getFolder()
+   * @generated
+   */
+  EAttribute getFolder_Location();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.File <em>File</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>File</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.File
+   * @generated
+   */
+  EClass getFile();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.File#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.File#getName()
+   * @see #getFile()
+   * @generated
+   */
+  EAttribute getFile_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.File#getParent <em>Parent</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Parent</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.File#getParent()
+   * @see #getFile()
+   * @generated
+   */
+  EReference getFile_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.File#getLocation <em>Location</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Location</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.File#getLocation()
+   * @see #getFile()
+   * @generated
+   */
+  EAttribute getFile_Location();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Component <em>Component</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Component</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component
+   * @generated
+   */
+  EClass getComponent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getName()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_Name();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getParent <em>Parent</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Parent</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getParent()
+   * @see #getComponent()
+   * @generated
+   */
+  EReference getComponent_Parent();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getType()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_Type();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceFile <em>Reference File</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Reference File</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceFile()
+   * @see #getComponent()
+   * @generated
+   */
+  EReference getComponent_ReferenceFile();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceLine <em>Reference Line</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Reference Line</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceLine()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_ReferenceLine();
+
+  /**
+   * Returns the meta object for enum '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Component Type</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.ComponentType
+   * @generated
+   */
+  EEnum getComponentType();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -190,22 +509,38 @@ public interface CViewModelPackage extends EPackage
     EClass MODEL = eINSTANCE.getModel();
 
     /**
-     * The meta object literal for the '<em><b>Greetings</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Folders</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__GREETINGS = eINSTANCE.getModel_Greetings();
+    EReference MODEL__FOLDERS = eINSTANCE.getModel_Folders();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.GreetingImpl <em>Greeting</em>}' class.
+     * The meta object literal for the '<em><b>Files</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.GreetingImpl
-     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getGreeting()
      * @generated
      */
-    EClass GREETING = eINSTANCE.getGreeting();
+    EReference MODEL__FILES = eINSTANCE.getModel_Files();
+
+    /**
+     * The meta object literal for the '<em><b>Components</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODEL__COMPONENTS = eINSTANCE.getModel_Components();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl <em>Folder</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getFolder()
+     * @generated
+     */
+    EClass FOLDER = eINSTANCE.getFolder();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -213,7 +548,117 @@ public interface CViewModelPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GREETING__NAME = eINSTANCE.getGreeting_Name();
+    EAttribute FOLDER__NAME = eINSTANCE.getFolder_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FOLDER__PARENT = eINSTANCE.getFolder_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FOLDER__LOCATION = eINSTANCE.getFolder_Location();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FileImpl <em>File</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.FileImpl
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getFile()
+     * @generated
+     */
+    EClass FILE = eINSTANCE.getFile();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FILE__NAME = eINSTANCE.getFile_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FILE__PARENT = eINSTANCE.getFile_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FILE__LOCATION = eINSTANCE.getFile_Location();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl <em>Component</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getComponent()
+     * @generated
+     */
+    EClass COMPONENT = eINSTANCE.getComponent();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__NAME = eINSTANCE.getComponent_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPONENT__PARENT = eINSTANCE.getComponent_Parent();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__TYPE = eINSTANCE.getComponent_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Reference File</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPONENT__REFERENCE_FILE = eINSTANCE.getComponent_ReferenceFile();
+
+    /**
+     * The meta object literal for the '<em><b>Reference Line</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__REFERENCE_LINE = eINSTANCE.getComponent_ReferenceLine();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.cview.model.cViewModel.ComponentType
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getComponentType()
+     * @generated
+     */
+    EEnum COMPONENT_TYPE = eINSTANCE.getComponentType();
 
   }
 

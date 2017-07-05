@@ -16,7 +16,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getGreetings <em>Greetings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFolders <em>Folders</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getFiles <em>Files</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Model#getComponents <em>Components</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel()
@@ -26,19 +28,51 @@ import org.eclipse.emf.ecore.EObject;
 public interface Model extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Greetings</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.Greeting}.
+   * Returns the value of the '<em><b>Folders</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.Folder}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Greetings</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Folders</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Greetings</em>' containment reference list.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel_Greetings()
+   * @return the value of the '<em>Folders</em>' containment reference list.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel_Folders()
    * @model containment="true"
    * @generated
    */
-  EList<Greeting> getGreetings();
+  EList<Folder> getFolders();
+
+  /**
+   * Returns the value of the '<em><b>Files</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.File}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Files</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Files</em>' containment reference list.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel_Files()
+   * @model containment="true"
+   * @generated
+   */
+  EList<File> getFiles();
+
+  /**
+   * Returns the value of the '<em><b>Components</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.Component}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Components</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Components</em>' containment reference list.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getModel_Components()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Component> getComponents();
 
 } // Model

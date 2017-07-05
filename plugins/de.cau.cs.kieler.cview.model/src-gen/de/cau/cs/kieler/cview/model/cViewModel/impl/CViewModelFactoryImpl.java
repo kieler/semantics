@@ -6,6 +6,7 @@ package de.cau.cs.kieler.cview.model.cViewModel.impl;
 import de.cau.cs.kieler.cview.model.cViewModel.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -66,9 +67,45 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
     switch (eClass.getClassifierID())
     {
       case CViewModelPackage.MODEL: return createModel();
-      case CViewModelPackage.GREETING: return createGreeting();
+      case CViewModelPackage.FOLDER: return createFolder();
+      case CViewModelPackage.FILE: return createFile();
+      case CViewModelPackage.COMPONENT: return createComponent();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case CViewModelPackage.COMPONENT_TYPE:
+        return createComponentTypeFromString(eDataType, initialValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case CViewModelPackage.COMPONENT_TYPE:
+        return convertComponentTypeToString(eDataType, instanceValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -88,10 +125,54 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
    * <!-- end-user-doc -->
    * @generated
    */
-  public Greeting createGreeting()
+  public Folder createFolder()
   {
-    GreetingImpl greeting = new GreetingImpl();
-    return greeting;
+    FolderImpl folder = new FolderImpl();
+    return folder;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public File createFile()
+  {
+    FileImpl file = new FileImpl();
+    return file;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Component createComponent()
+  {
+    ComponentImpl component = new ComponentImpl();
+    return component;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ComponentType createComponentTypeFromString(EDataType eDataType, String initialValue)
+  {
+    ComponentType result = ComponentType.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertComponentTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

@@ -33,13 +33,31 @@ public interface CViewModelFactory extends EFactory
   Model createModel();
 
   /**
-   * Returns a new object of class '<em>Greeting</em>'.
+   * Returns a new object of class '<em>Folder</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Greeting</em>'.
+   * @return a new object of class '<em>Folder</em>'.
    * @generated
    */
-  Greeting createGreeting();
+  Folder createFolder();
+
+  /**
+   * Returns a new object of class '<em>File</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>File</em>'.
+   * @generated
+   */
+  File createFile();
+
+  /**
+   * Returns a new object of class '<em>Component</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Component</em>'.
+   * @generated
+   */
+  Component createComponent();
 
   /**
    * Returns the package supported by this factory.
