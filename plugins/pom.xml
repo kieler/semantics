@@ -30,6 +30,8 @@
     <module>de.cau.cs.kieler.core.perspectives</module> 
     <module>de.cau.cs.kieler.core.product</module>
     <module>de.cau.cs.kieler.cview</module>
+    <module>de.cau.cs.kieler.cview.model</module>
+    <module>de.cau.cs.kieler.cview.model.ui</module>
     <module>de.cau.cs.kieler.cview.ecids</module>
     <module>de.cau.cs.kieler.esterel</module>
     <module>de.cau.cs.kieler.esterel.cec</module>
