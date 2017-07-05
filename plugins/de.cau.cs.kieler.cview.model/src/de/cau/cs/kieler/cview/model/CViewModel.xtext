@@ -1,0 +1,9 @@
+grammar de.cau.cs.kieler.cview.model.CViewModel with org.eclipse.xtext.common.Terminals
+
+generate cViewModel "http://www.cau.de/cs/kieler/cview/model/CViewModel"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
