@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.cview.model.ui
 Bundle-Vendor: Kiel University
 Bundle-Version: 0.1.0.qualifier
-Bundle-SymbolicName: de.cau.cs.kieler.cview.model.ui; singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.cview.model.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.cview.model,
  org.eclipse.xtext.ui,
