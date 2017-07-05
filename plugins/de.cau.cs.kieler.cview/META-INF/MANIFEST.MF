@@ -16,3 +16,5 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.ui.view;bundle-version="0.42.0",
  org.eclipse.core.resources;bundle-version="3.11.1",
  de.cau.cs.kieler.cview.model
+Bundle-Activator: de.cau.cs.kieler.cview.CViewPlugin
+Bundle-ActivationPolicy: lazy

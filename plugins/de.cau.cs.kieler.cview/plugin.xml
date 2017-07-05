@@ -21,5 +21,45 @@
             class="de.cau.cs.kieler.cview.KLighDController">
       </controller>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.cau.cs.kieler.cview.category"
+            name="C View Category">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command"
+            name="C View Toggle Command">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.cview.CommandToggleHandler"
+            commandId="de.cau.cs.kieler.cview.command">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.cau.cs.kieler.cview.toolbar.command"
+               style="toggle">
+            <command
+                  commandId="de.cau.cs.kieler.cview.command"
+                  icon="icon/cview.png"
+                  id="de.cau.cs.kieler.cview.toolbar.command"
+                  style="toggle"
+                  tooltip="Enabled/Disable  C View">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
 
 </plugin>

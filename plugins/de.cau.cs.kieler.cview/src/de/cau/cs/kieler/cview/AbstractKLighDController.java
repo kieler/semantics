@@ -4,6 +4,11 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.internal.resources.Folder;
@@ -42,8 +47,28 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
     static CViewModel model = null;
 
     static AbstractKLighDController controller = null;
+    
+    static Object[] allSelections;
 
     public abstract CViewModel calculateModel(Object[] allselections);
+
+    public List<java.io.File> listFiles(String dirPath) {
+        return listFiles(dirPath, "*.{c,h}");
+    }
+
+    public List<java.io.File> listFiles(String dirPath, String filter) {
+        List<java.io.File> files = new ArrayList<>();
+        java.nio.file.Path path = Paths.get(dirPath);
+        try (DirectoryStream<java.nio.file.Path > stream = Files.newDirectoryStream(path, filter)) {
+            for (java.nio.file.Path  entry: stream) {
+                files.add(entry.toFile());
+            }
+            return files;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }    
+        return null; 
+    }
 
     public AbstractKLighDController() {
         System.out.println("+++ CONTROLLER INSTANTIATED +++");
@@ -60,23 +85,34 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
 
         ISelectionListener selectionListener = new ISelectionListener() {
             public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-                if (!(selection instanceof IStructuredSelection))
-                    return;
 
-                Object[] allSelections = null;
+                // Save selection in ANY case (for later usage)
                 allSelections = ((IStructuredSelection) selection).toArray();
 
-                model = calculateModel(allSelections);
-
-                if (controller != null) {
-                    controller.updateModel(model, null);
-                    controller.getDiagramView().updateDiagram();
+                if (!CViewPlugin.isEnabled()) {
+                    return;
                 }
-
+                
+                if (!(selection instanceof IStructuredSelection)) {
+                    return;
+                }
+                
+                CViewPlugin.refreshCView();
             }
         };
         selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
                 selectionListener);
+
+    }
+    
+    
+    public void refreshCView() {
+        model = calculateModel(allSelections);
+
+        if (controller != null) {
+            controller.updateModel(model, null);
+            controller.getDiagramView().updateDiagram();
+        }
 
     }
 
@@ -97,7 +133,7 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
 
     // -------------------------------------------------------------------------
 
-    public String getFolderPath(Object object) {
+    public String getDirPath(Object object) {
         try {
             PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
             // The FOLDER type
