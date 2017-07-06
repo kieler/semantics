@@ -51,12 +51,6 @@ public class OpenEditorAction implements IAction {
         Object inputModel = context.getViewContext().getInputModel();
         Object domainElement = context.getDomainElement(context.getKNode());
         
-//        IWorkbenchWindow window = Workbench.getInstance().getWorkbenchWindows()[0];
-//        MessageDialog.openInformation(
-//                window.getShell(),
-//                "Plugin",
-//                "Action!!!!");
-        
         String pathString = ((FileOrFolder)domainElement).getLocation();
         Path path = new Path(pathString);
         IFile file = null;

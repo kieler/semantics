@@ -128,12 +128,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectCol.background = "YELLOW".color;
         rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectCol.addDoubleClickAction(OpenEditorAction.ID);
+        rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        //rectCol.addDoubleClickAction(OpenEditorAction.ID);
 
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectExp.background = "YEWLLO".color;
         rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectExp.addDoubleClickAction(OpenEditorAction.ID);
+        rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        //rectExp.addDoubleClickAction(OpenEditorAction.ID);
 
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
@@ -146,7 +148,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (item.hieararchical) {
             // Hierarchical case
             label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+            label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            //label.firstText.addDoubleClickAction(OpenEditorAction.ID);
             
             val childArea = item.children.createNode().associateWith(item)
             val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
