@@ -482,6 +482,7 @@ public class TimingAnalysis extends Job {
                         // determine how much percent of the overall WCET is
                         // attributed to this region
                         int percentageInt = 0;
+                        int deepPercentageInt = 0;
                         StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
                         // stop calculating with BigIntegers, when overall time value is small
                         // enough to fit a double
@@ -489,20 +490,28 @@ public class TimingAnalysis extends Job {
                         if ((overallWCETDouble != Double.NEGATIVE_INFINITY)
                                 && (overallWCETDouble != Double.POSITIVE_INFINITY)) {
                             double timingvalue = Double.parseDouble(resultTokenizer.nextToken());
+                            resultTokenizer.nextToken();
+                            double deepTimingValue = Double.parseDouble(resultTokenizer.nextToken());
                             double onePercent = overallWCETDouble / 100.0;
                             double percentage = timingvalue / onePercent;
                             percentageInt = (int)percentage;
+                            double deepPercentage = deepTimingValue / onePercent;
+                            deepPercentageInt = (int)deepPercentage;
                         } else {
                             BigInteger percentage = new BigInteger("0");
                             if (timingResultChart != null) {
                                 BigInteger timingvalue =
                                         new BigInteger(resultTokenizer.nextToken());
+                                resultTokenizer.nextToken();
+                                BigInteger deepTimingValue =  new BigInteger(resultTokenizer.nextToken());
                                 BigInteger onePercent = overallWCET.divide(new BigInteger("100"));
                                 percentage = timingvalue.divide(onePercent);
+                                BigInteger deepPercentage = deepTimingValue.divide(onePercent);
                                 percentageInt = percentage.intValue();
+                                deepPercentageInt = deepPercentage.intValue();
                             }
                         }
-                        timingHighlighter.highlightRegion(region, percentageInt,
+                        timingHighlighter.highlightRegion(region, percentageInt, deepPercentageInt,
                                 timingLabels.get(region), regionRectangles, renderingExtensions,
                                 viewContext);
                     }

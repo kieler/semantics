@@ -71,13 +71,14 @@ public class TimingHighlighter {
 	 * @param percentage
 	 *            The percentage of the region's fractional WCET in relation to
 	 *            overall WCET
+	 * @param deepPercentageInt 
 	 * @param labels
 	 *            The set with the timing labels of the regions of the model
 	 * @param regionRectangles 
 	 *            The mapping that says which region belongs to which rectangle.
 	 * @param viewContext 
 	 */
-    public void highlightRegion(Region region, int percentage, Set<WeakReference<KText>> labels,
+    public void highlightRegion(Region region, int percentage, int deepPercentageInt, Set<WeakReference<KText>> labels,
             HashMultimap<Region, WeakReference<KRectangle>> regionRectangles,
             KRenderingExtensions renderingExtensions, ViewContext viewContext) {
         IViewer view = viewContext.getViewer();
@@ -112,18 +113,13 @@ public class TimingHighlighter {
                     KText label = labelRef.get();
                     renderingExtensions.setForegroundColor(label, 0, 0, 0);
                 }
-            } else if (percentage < 10) {
+            }
+            if (deepPercentageInt < 10) {
                 if (regionNode != null) {
-                    State regionParentState = region.getParentState();
-                    List<State> macroChildren = annotationProvider.getMacroChildStates(regionParentState);
-                    //TODO: Check for sibling regions that have more timing?
-                    if (macroChildren.isEmpty()){
                     view.collapse(regionNode);
-                    }
                 }
             }
         }
-        LightDiagramServices.layoutDiagram(viewContext);
     }
 	
 	/**
