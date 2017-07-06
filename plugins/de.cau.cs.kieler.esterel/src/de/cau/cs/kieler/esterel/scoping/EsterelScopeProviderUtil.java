@@ -149,8 +149,8 @@ public final class EsterelScopeProviderUtil {
      * @return list with the new scope elements.
      */
     public static List<IEObjectDescription> getAllSignals(final EObject context) {
-        List<IEObjectDescription> scopeElems = getAllElements(context, COLLECT_SIGNALS);
-        scopeElems.addAll(getLocalSignals(context));
+        List<IEObjectDescription> scopeElems = getLocalSignals(context);
+        scopeElems.addAll(getAllElements(context, COLLECT_SIGNALS));
         return scopeElems;
     }
 
@@ -172,16 +172,7 @@ public final class EsterelScopeProviderUtil {
         while (!(parent instanceof Module)) {
             parent = parent.eContainer();
         }
-        if (       (((Module) parent).getIntSignalDecls() != null)
-                || (((Module) parent).getIntTypeDecls() != null)
-                || (((Module) parent).getIntSensorDecls() != null)
-                || (((Module) parent).getIntConstantDecls() != null)
-                || (((Module) parent).getIntRelationDecls() != null)
-                || (((Module) parent).getIntTaskDecls() != null)
-                || (((Module) parent).getIntFunctionDecls() != null)
-                || (((Module) parent).getIntProcedureDecls() != null)  ) {
-            function.collect((Module) parent, scopeElems);
-        }
+        function.collect((Module) parent, scopeElems);
         return scopeElems;
     }
 
@@ -204,16 +195,7 @@ public final class EsterelScopeProviderUtil {
         while (!(parent instanceof Module)) {
             parent = parent.eContainer();
         }
-        if (       (((Module) parent).getIntSignalDecls() != null)
-                || (((Module) parent).getIntTypeDecls() != null)
-                || (((Module) parent).getIntSensorDecls() != null)
-                || (((Module) parent).getIntConstantDecls() != null)
-                || (((Module) parent).getIntRelationDecls() != null)
-                || (((Module) parent).getIntTaskDecls() != null)
-                || (((Module) parent).getIntFunctionDecls() != null)
-                || (((Module) parent).getIntProcedureDecls() != null)  ) {
-            function.collect((Module) parent, scopeElems);
-        }
+        function.collect((Module) parent, scopeElems);
         // collect from possible other modules
         Program p = (Program) ((Module) parent).eContainer();
         for (Module m : p.getModules()) {

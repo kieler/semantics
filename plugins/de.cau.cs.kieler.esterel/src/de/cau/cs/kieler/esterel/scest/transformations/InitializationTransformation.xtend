@@ -34,6 +34,9 @@ import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.EveryDo
 import de.cau.cs.kieler.esterel.esterel.Suspend
+import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.Module
+import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 
 /**
  * @author mrb
@@ -66,7 +69,7 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
 
     @Inject
     extension SCEstExtension
-
+    
     def SCEstProgram transform(SCEstProgram prog) {
         resetLabelSuffix
         resetConstantSuffix

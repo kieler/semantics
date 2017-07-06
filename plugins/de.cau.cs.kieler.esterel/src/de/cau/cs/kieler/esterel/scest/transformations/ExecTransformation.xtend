@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
+import com.google.common.collect.Sets
 
 /**
  * @author mrb
@@ -40,15 +41,9 @@ class ExecTransformation extends AbstractExpansionTransformation implements Trac
         return SCEstFeature::EXEC_ID
     }
         
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::COUNTDELAY_ID, SCEstTransformation::COMPLEXFINALSTATE_ID, SCEstTransformation::HISTORY_ID,
-//            SCEstTransformation::EXPANSION_ID)
-//    }
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+    }
 
     def SCEstProgram transform(SCEstProgram prog) {
         return prog

@@ -81,28 +81,20 @@ import de.cau.cs.kieler.esterel.scest.scest.Set
 import java.util.List
 import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
 import de.cau.cs.kieler.esterel.esterel.TrapHandler
+import de.cau.cs.kieler.esterel.scest.scest.ScestFactory
 
 /**
+ * Methods and static variables which are used by the transformations which
+ * transform a given Esterel/SCEst program into a SCL program.
  * @author mrb
- *
- */
-
-
-
-/**
- * Collection of methods and shortcuts to ease the Esterel to SCL transformation. Besides methds to
- * abbreviate the creation of SCL elements, a method to check whether an Esterel statement may not
- * terminate can be found here.
- * 
  * @author krat
- * @kieler.rating yellow 2015-03-14 review KI-63 by ssm, ima, cmot
+ *
  */
 class SCEstExtension {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
 
-    // Current labelSuffix ensures the creation of fresh labels, i.e. labels are numbered (l1, l2,...)
     var static labelSuffix = 0;
     
     var static constantSuffix = 0;
@@ -125,76 +117,10 @@ class SCEstExtension {
     
     // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
     var static HashMap<ISignal, NewSignals> newSignals = new HashMap<ISignal, NewSignals>()
-    
-//    var static HashMap<Statement, PauseJoin> pauseJoinTransformations = new HashMap()
-    
-//    var static HashMap<Statement, List<Statement>> containedBy = new HashMap()
 
-    /**
-     * Searches a valuedObject in a declarations list by its name
-     * 
-     * @param sclDeclarationList List of declarations
-     * @param searchedName The string to search for
-     * @return The ValuedObject with name n
-     */
-    def getValuedObjectByName(EList<Declaration> sclDeclarationList, String searchedName) {
-        for (sclDeclaration : sclDeclarationList) {
-            val valuedObject = sclDeclaration.valuedObjects.findFirst[name == searchedName]
-            if (valuedObject != null)
-                return valuedObject
-        }
-        throw new TransformerException("getValuedObject: Signal not declared: " + searchedName)
-    }
-    
     def getNewSignals() {
         newSignals
     }
-    
-//    def getPauseJoinTransformations() {
-//        pauseJoinTransformations
-//    }
-//    
-//    def getContainedBy() {
-//        containedBy
-//    }
-
-    /**
-     * Searches a valuedObject by name in the signalToVariableMap of the EsterelToSclTransformation class
-     * 
-     * @param searchedName The ValuedObject name to search for
-     */
-//    def getValuedObjectByName(String searchedName) {
-//        val valuedObject = signalToVariableMap.findLast[key == searchedName]
-//        if (valuedObject != null)
-//            return valuedObject.value
-//        val retExit = exitToLabelMap.filter[p1, p2| p1.name == searchedName].values.last
-//        if (retExit != null)
-//            return retExit.key
-//        throw new TransformerException("getValuedObject: Signal not declared: " + searchedName)
-//    }
-
-    /**
-     * Returns a reference to a valued objects name
-     * 
-     * @param sclDeclarationList List of declarations
-     * @param searchedName The name of the searched ValuedObject
-     * @return ValuedObjectReference to given name
-     */
-    def getValuedObjectReferenceByName(EList<Declaration> sclDeclarationList, String searchedName) {
-        KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-            valuedObject = getValuedObjectByName(sclDeclarationList, searchedName)
-        ]
-    }
-
-    /**
-     * Returns a reference to a valued objects name
-     * 
-     * @param searchedName The valued objects name
-     * @return ValuedObjectReference to given name
-     */
-//    def getValuedObjectReferenceByName(String searchedName) {
-//        searchedName.getValuedObjectByName.createValuedObjectReference
-//    }
 
     /**
      * Creates a reference to a ValuedObject
@@ -294,31 +220,6 @@ class SCEstExtension {
     def clearNewSignalsMap() {
         newSignals.clear
     }
-    
-    /**
-     * Returns an unused constant by appending the constantCount to "_l" and incrementing constantCount.
-     * 
-     * @return An unused constant
-     */
-//    def createNewUniqueConstantName() {
-//        constantSuffix++
-//
-//        "_c" + constantSuffix
-//    }
-
-    /**
-     * Returns a new variable, i.e., one with a name which is not already on the signalToVariableMap
-     * 
-     * @param name The desired name, "_" will be appended until it is unqiue
-     * @return A new ValuedObject with an unused name
-     */
-//    def ValuedObject createNewUniqueVariable(String designatedName) {
-//        val newUniqueVariable = createValuedObject(uniqueName(designatedName))
-//        signalToVariableMap.add(name -> newUniqueVariable)
-//        signalToVariableMap.add(newUniqueVariable.name -> newUniqueVariable)
-//
-//        newUniqueVariable
-//    }
     
     /**
      * Returns a new variable.
@@ -535,26 +436,6 @@ class SCEstExtension {
     }
 
     /**
-     * Returns a unused variable and adds it to given ScopeStatement
-     * 
-     * @param ScopeStatement The ScopeStatement to add it to
-     * @param designatedName The desired name, "_" may be added to make it unique
-     * @param designatedName The type of the variable
-     * @return A new ValuedObject with an unused name
-     */
-//    def ValuedObject createFreshVar(ScopeStatement ScopeStatement, String designatedName, ValueType valueType) {
-//        val newUniqueVariable = createValuedObject(uniqueName(designatedName))
-//        ScopeStatement.declarations += createDeclaration => [
-//            valuedObjects += newUniqueVariable
-//            type = valueType
-//        ]
-//        signalToVariableMap.add(designatedName -> newUniqueVariable)
-//        signalToVariableMap.add(newUniqueVariable.name -> newUniqueVariable)
-//
-//        newUniqueVariable
-//    }
-
-    /**
      * Creates a new Label
      * 
      * @param label The label of the EmptyStatement
@@ -578,37 +459,6 @@ class SCEstExtension {
     }
 
     /**
-     * Takes a variable name and adds "_" until variable name is new
-     * 
-     * @param designatedName Desired variable name
-     * @return  An unused variable name
-     */
-//    def String uniqueName(String designatedName) {
-//
-//        // The variable should not be on the current signalMap
-//        if (signalToVariableMap.filter[ key == designatedName ].nullOrEmpty) {
-//            return designatedName
-//        } else {
-//            return uniqueName(designatedName + "_")
-//        }
-//    }
-
-    /**
-     * Creates name that is not on the given list
-     * 
-     * @param definedVariables List of variable names
-     * @param designatedName The desired String, "_" are added until unique
-     * @return Name that is not already in the list
-     */
-    def String uniqueNameByList(LinkedList<String> definedVariables, String designatedName) {
-        if (!definedVariables.contains(designatedName)) {
-            return designatedName;
-        } else {
-            return uniqueNameByList(definedVariables, designatedName + "_")
-        }
-    }
-
-    /**
      * Creates a statement which increments a valued object by 1
      * 
      * @param valuedObject The valued object to increment
@@ -624,287 +474,6 @@ class SCEstExtension {
     }
 
     /**
-     * Checks for valid names. The suffix "_val" is reserved for valued signals. Exception is thrown
-     * if the suffix is used.
-     * 
-     * @param esterelProgram The Esterel Program to validate
-     * @return True if no invalid names
-     * @throws IllegalArgumentException if variable ending with "_val" exists
-     */
-    def boolean validateNames(Program esterelProgram) {
-        esterelProgram.modules.forEach [
-                intSignalDecls.forEach [
-                    signals.forEach [
-                        if (it.name.endsWith("_val"))
-                            throw new IllegalArgumentException("Variables should not have the suffix _val")
-                    ]
-                ]
-
-                intSensorDecls.forEach [
-                    sensors.forEach [
-                        if (it.sensor.name.endsWith("_val"))
-                            throw new IllegalArgumentException("Variables should not have the suffix _val")
-                    ]
-                ]
-                intConstantDecls.forEach [
-                    constants.forEach [
-                        it.constants.forEach [
-                            if (it.name.endsWith("_val"))
-                                throw new IllegalArgumentException("Variables should not have the suffix _val")
-                        ]
-                    ]
-                ]
-        ]
-
-        return true;
-    }
-
-    /**
-     * Checks, whether a variable is already declared either in the signalToVariableMap or in the
-     * signalToValueMap.
-     * 
-     * @param  variableName The to-be-checked variable name
-     * @return Whether the name is already declared
-     */
-//    def boolean alreadyDefined(String variableName) {
-//        if ((!signalToVariableMap.filter[key == variableName].nullOrEmpty) || 
-//            (!signalToValueMap.values.filter[name == variableName].nullOrEmpty))
-//            return true
-//        false
-//    }
-
-    /**
-      * Removes possibly instantaneous reachable gotos. Used for the transformation of traps and
-      * delayed weak abort to avoid unnecessary potentially instantaneous loops.
-      * 
-      * @param statementSequence The list of statements to process
-      * @param label The label to remove all instantaneous gotos to
-      * @param exitObject The ValuedObject triggering the trap
-      * @return True if list has an instantaneous path
-      */
-    def boolean removeInstantaneousGotos(EList<Statement> statementSequence, String label, LinkedList<ValuedObject> exitObjects) {
-        var index = 0
-        var continue = true
-        while (index < statementSequence.length && continue) {
-            if (statementSequence.get(index) instanceof Statement &&
-                (statementSequence.get(index) as Statement) instanceof Pause) {
-                continue = false
-            } else if (statementSequence.get(index) instanceof Statement &&
-                (statementSequence.get(index) as Statement) instanceof Goto &&
-                ((statementSequence.get(index) as Statement) as Goto).target == label) {
-                statementSequence.remove(index)
-            } else if (statementSequence.get(index) instanceof Statement &&
-                (statementSequence.get(index) as Statement) instanceof Conditional) {
-                val conditional = (statementSequence.get(index) as Statement) as Conditional
-                continue = conditional.statements.removeInstantaneousGotos(label, exitObjects)
-                continue = conditional.getElse().statements.removeInstantaneousGotos(label, exitObjects) && continue
-                index++
-            } else if (statementSequence.get(index) instanceof Statement &&
-                (statementSequence.get(index) as Statement) instanceof ScopeStatement) {
-                continue = ((statementSequence.get(index) as Statement) as ScopeStatement).statements.
-                    removeInstantaneousGotos(label, exitObjects)
-                index++
-            } else if (statementSequence.get(index) instanceof Statement &&
-                (statementSequence.get(index) as Statement) instanceof de.cau.cs.kieler.scl.scl.Parallel) {
-                    for (thread : ((statementSequence.get(index) as Statement) as de.cau.cs.kieler.scl.scl.Parallel).threads) {
-                        for (exitObject : exitObjects) {
-                            if (isAssignedInInitialTick(thread.statements, exitObject))
-                                continue = false
-                        }
-                    }
-                    if (continue) {
-                        for (thread : ((statementSequence.get(index) as Statement) as de.cau.cs.kieler.scl.scl.Parallel).threads) {
-                            if (thread.statements.getSequenceEndLabel != null) {
-                                continue = thread.statements.removeInstantaneousGotos(thread.statements.getSequenceEndLabel, exitObjects) && continue
-                            }
-                    }
-                    }
-                    index++
-            } else if (statementSequence.get(index) instanceof Statement &&
-                (statementSequence.get(index) as Statement) instanceof Assignment &&
-                exitObjects.contains(((statementSequence.get(index) as Statement) as Assignment).valuedObject)) {
-                continue = false
-            } 
-            else {         
-                   index++
-            }
-        }
-
-        return continue
-    }
-
-    /**
-       * Checks whether an ValuedObject is assigned in the initial tick
-       * 
-       * @param statementList The list of statements
-       * @param valObj        The ValuedObject
-       * @return              True if the ValuedObject is assigned in the initial tick
-       */
-    def boolean isAssignedInInitialTick(EList<Statement> statementList, ValuedObject valuedObject) {
-        var index = 0
-        var boolean wasAssigned = false
-        while (index < statementList.length && !wasAssigned) {
-            if (statementList.get(index) instanceof Statement &&
-                (statementList.get(index) as Statement) instanceof Assignment &&
-                ((statementList.get(index) as Statement) as Assignment).valuedObject == valuedObject) {
-                return true
-            } else if (statementList.get(index) instanceof Statement &&
-                (statementList.get(index) as Statement) instanceof Pause) {
-                return false
-            } else if (statementList.get(index) instanceof Statement &&
-                (statementList.get(index) as Statement) instanceof de.cau.cs.kieler.scl.scl.Parallel) {
-                for (thread : ((statementList.get(index) as Statement) as de.cau.cs.kieler.scl.scl.Parallel).
-                    threads)
-                    wasAssigned = wasAssigned || thread.statements.isAssignedInInitialTick(valuedObject)
-            } else if (statementList.get(index) instanceof Statement &&
-                (statementList.get(index) as Statement) instanceof Conditional) {
-                val cond = (statementList.get(index) as Statement) as Conditional
-                wasAssigned = cond.getElse().statements.isAssignedInInitialTick(valuedObject) ||
-                    cond.statements.isAssignedInInitialTick(valuedObject)
-            } else if (statementList.get(index) instanceof Statement &&
-                (statementList.get(index) as Statement) instanceof ScopeStatement) {
-                val sScope = (statementList.get(index) as Statement) as ScopeStatement
-                wasAssigned = sScope.statements.isAssignedInInitialTick(valuedObject)
-            }
-            index++
-
-        }
-
-        wasAssigned
-    }
-    
-    /**
-     * Returns the label at the end of a StatementSequence if there is one
-     * 
-     * @param thread The thread
-     * @return       The label at the end of the given StatementSequence
-     */
-     def getSequenceEndLabel(EList<Statement> statements) {
-         val endLabel = statements.findLast[ it instanceof Label ]
-         if (endLabel != null)
-            return (endLabel as Label).name
-            
-         null
-     }
-     
-     /**
-      * Counts the amount of statements in a given Esterel Program
-      * 
-      * @param esterelProgram The given Esterel program
-      * @return Amount of stamtents
-      */
-      def countStatements(Program esterelProgram) {
-          esterelProgram.eAllContents.toList.filter(de.cau.cs.kieler.scl.scl.Statement).length
-      }
-      
-      /**
-      * Counts the amount of statements in a given SCL Program
-      * 
-      * @param esterelProgram The given SCL program
-      * @return Amount of stamtents
-      */
-      def countStatements(SCLProgram sclProgram) {
-          sclProgram.eAllContents.toList.filter(Statement).length
-      }
-
-    // -------------------------------------------------------------------------
-    // -- Esterel Termination Check
-    // -------------------------------------------------------------------------
-    /**
-    * Checks whether an Esterel statement terminates. The check works inductively: E.g. a halt or a loop
-    * statement does not terminate, whilst an abort or pause statement does. A conditional does not
-    * terminate if none of its branches do so. The analysis is not complete: E.g. if a branch of a
-    * conditional is never executed as the condition alway evaluates the same, it is considered for the
-    * termination check nontheless. A full analysis would be way too expensive.
-    * 
-    * @param stm The statement to check
-    * @return True if program terminates, else false
-    */
-    def dispatch boolean checkTerminate(Statement statement) {
-        var terminates = true;
-        if (statement instanceof Halt) {
-            return false;
-        } else if (statement instanceof Loop) {
-            return false;
-        } else if (statement instanceof Sustain) {
-            return false;
-        } else if (statement instanceof EsterelParallel) {
-            val parallel = statement as EsterelParallel
-            for (thread : parallel.threads) {
-                terminates = terminates && thread.checkTerminate
-            }
-            return terminates
-        } else if (statement instanceof Present) {
-            val present = statement as Present
-            if (present.cases == null) {
-                if (present.thenStatements != null)
-                    terminates = present.thenStatements.checkTerminate
-                if (present.elseStatements != null)
-                    terminates = terminates && present.elseStatements.checkTerminate
-
-                return terminates
-            } else {
-                for (singleCase : present.cases) {
-                    terminates = terminates && singleCase.statements.checkTerminate
-                }
-                if (present.elseStatements != null)
-                    terminates = terminates && present.elseStatements.checkTerminate
-                return terminates
-            }
-        } else if (statement instanceof EveryDo) {
-            return false;
-        } else if (statement instanceof LocalSignalDecl) {
-            return (statement as LocalSignalDecl).statements.checkTerminate
-        } else if (statement instanceof Await) {
-            val await = statement as Await
-            if (await.cases != null) {
-                for (singleCase : await.cases) {
-                    terminates = terminates && singleCase.statements.checkTerminate
-                }
-                return terminates
-            }
-            else {
-                terminates = terminates && await.statements.checkTerminate
-                return terminates
-            }
-        } else if (statement instanceof Run) {
-            return (statement as Run).module.module.statements.checkTerminate
-        } else if (statement instanceof LocalVariable) {
-            return (statement as LocalVariable).statements.checkTerminate
-        } else if (statement instanceof Suspend) {
-            return (statement as Suspend).statements.checkTerminate
-        } else if (statement instanceof Block) {
-            return (statement as Block).statements.checkTerminate
-        }
-        return true;
-    }
-
-    def dispatch boolean checkTerminate(Program esterelProgram) {
-        var terminates = true;
-        for (th : esterelProgram.modules.head.statements) {
-            terminates = terminates && th.checkTerminate
-        }
-        return terminates
-    }
-
-    def dispatch boolean checkTerminate(EList<de.cau.cs.kieler.scl.scl.Statement> statements) {
-        var terminates = true;
-        for (statement : statements) {
-            terminates = terminates && statement.checkTerminate
-        }
-
-        terminates
-    }
-
-    def dispatch boolean checkTerminate(Void x) {
-        return true;
-    }
-
-    // -------------------------------------------------------------------------
-    // -- SCL Shortcuts
-    // -------------------------------------------------------------------------
-
-    /**
       * Creates "if c then (pause;) goto l"
       * 
       * @param condition The condition
@@ -916,32 +485,12 @@ class SCEstExtension {
             expression = EcoreUtil.copy(condition)
             if (isImmediate) {
                 statements.addAll(SclFactory::eINSTANCE.createPause)
-//                statements.addAll(createPause.statements)
             }
             statements.add(
                     SclFactory::eINSTANCE.createGoto => [
                         it.target = targetLabel
                     ])
         ]
-    }
-    
-    def Conditional newIfStatement(Expression expr) {
-        SclFactory::eINSTANCE.createConditional => [
-            expression = EcoreUtil.copy(expr)
-        ]
-    }
-
-    /**
-     * Adds a new empty statement to a StatementSequence
-     * 
-     * @param statementSequence The StatementSequence to add the empty statement
-     * @param label The label
-     */
-    def addLabel(EList<Statement> statementSequence, String label) {
-        statementSequence.add(
-            SclFactory::eINSTANCE.createLabel => [
-                it.name = label
-            ])
     }
 
     /**
@@ -952,43 +501,6 @@ class SCEstExtension {
      */
     def addGoto(EList<Statement> statementSequence, Label label) {
         statementSequence.add(createGotoStatement(label))
-    }
-
-    /**
-     * Returns a gotoj l: Jumps to l if l is in the current thread and to the end of the
-     * thread otherwise
-     * 
-     * @param label The target label
-     * @param currentThreadEndLabel Label at the end of the currently transformed thread
-     * @param labelToThreadMap Map of which label is in which thread
-         */
-    def createGotoj(Label label, Label currentThreadEndLabel, Multimap<String, String> labelToThreadMap) {
-        if (labelToThreadMap.get(currentThreadEndLabel.name).contains(label)) {
-            return createGotoStatement(label)
-        } else {
-            return createGotoStatement(currentThreadEndLabel)
-        }
-    }
-
-    /**
-     * Adds a gotoj l: Jumps to l if l is in the current thread and to the end of the
-     * thread otherwise
-     * 
-     * @param statementSeqeuence The StatementSequence to add the gotoj
-     * @paramt targetLabel The target label
-     * @param currentThreadEndLabel Label at the end of the current thread
-     * @param labelToThreadMap Map of which label is in which thread
-     */
-    def addGotoj(EList<Statement> statementSeqeuence, Label targetLabel, Label currentThreadEndLabel, 
-        Multimap<String, String> labelToThreadMap
-    ) {
-        if (labelToThreadMap.get(currentThreadEndLabel.name).contains(targetLabel)) {
-            statementSeqeuence.addGoto(targetLabel)
-        } else {
-            statementSeqeuence.addGoto(currentThreadEndLabel)
-        }
-
-        statementSeqeuence
     }
 
     /**
@@ -1120,7 +632,7 @@ class SCEstExtension {
      */
     def createConditional(Expression expr) {
         SclFactory::eINSTANCE.createConditional => [
-            it.expression = expr
+            it.expression = EcoreUtil.copy(expr)
         ]
     }
     
@@ -1174,20 +686,6 @@ class SCEstExtension {
             it.value = value
         ]
     }
-    
-    /**
-     * Creates an Esterel Constant
-     * 
-     * @param name The name of the Constant
-     * @param value The Value of the Constant
-     * @return A KExpression ValuedObject
-     */
-    def createConstant(String name, String value) {
-        EsterelFactory::eINSTANCE.createConstant => [
-            it.name = name
-            it.value = value
-        ]
-    }
   
     /**
      * Adds a Statement to a StatementSequence
@@ -1198,7 +696,6 @@ class SCEstExtension {
      */
     def dispatch add(EList<Statement> statementSequence, Statement statement) {
         statementSequence.add(statement)
-
         statementSequence
     }
 
@@ -1211,14 +708,14 @@ class SCEstExtension {
      */
     def dispatch add(EList<Statement> statementSequence, EList<Statement> statementSequenceToAdd) {
         statementSequence.addAll(statementSequenceToAdd)
-
         statementSequence
     }
     
     /**
-     * Adds all statements of a StatementSequence to another StatementSequence
+     * Adds all statements of a StatementSequence to another StatementSequence at a specific position
      * 
      * @param statementSequence The StatementSequence to add the other to
+     * @param pos The position where the statements should be added
      * @param statementSequenceToAdd The StatementSequence which should be added to the other one
      * @return The StatementSequence with the statements of the other one added
      */
@@ -1326,7 +823,6 @@ class SCEstExtension {
         ]
     }
     
-
     /**
      * Creates a new SCL Parallel
      * 
@@ -1394,7 +890,7 @@ class SCEstExtension {
     }
     
     /**
-     * Creates a new Annotation
+     * Creates a new IntAnnotation with a specific value
      * 
      * @param depth The depth of the statement which includes this annotation
      * @return The newly created Annotation
@@ -1407,7 +903,7 @@ class SCEstExtension {
     }
     
     /**
-     * Check whether in an annotation list there is an annotation named "generated_ifTest".
+     * Check whether in an annotation list there is an annotation named "depth".
      * 
      * @param annotations
      * @return Is there an annotation which is named "generated_ifTest"?
@@ -1556,8 +1052,8 @@ class SCEstExtension {
     /**
      * Returns the given label or the thread end label. Depends on which comes first.
      * 
-     * @param label
-     * @param statement
+     * @param label The label which is the current target
+     * @param statement The statement which is the starting point of the search
      * @return Returns the given label or the thread end label. Depends on which comes first.
      */
     def Label findClosestLabel(Label label, Statement statement) {
@@ -1598,91 +1094,6 @@ class SCEstExtension {
             }
             parent = parent.eContainer
         }
-    }
-    
-    /**
-     * Create a Scope which has a counting int variable, a conditional for counting and a conditional for checking the variable
-     * 
-     * @param statements The statements which will be inside of the scope
-     * @param pos The position of the pause Statement, for which the transformation is done
-     * @param expr The counting Expression
-     * @param singalExpr The signal expression
-     * @param label The label for the goto statement
-     * @param depth The depth of statement which caused the pause transformations 
-     * @param flag A possible flag. e.g. strong delayed abort "abort when A"
-     * @param depthFlag A depth flag is used to not invoke an abort in the first cycle 
-     */
-    def ScopeStatement scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth, ValuedObject flag, ValuedObject depthFlag) {
-        var variable = createNewUniqueVariable(createIntValue(0))
-        var decl = createDeclaration(ValueType.INT, variable)
-        var scope = createScopeStatement(decl)
-        var signalAndDepthFlag = createAnd(EcoreUtil.copy(signalExpr), createValuedObjectReference(depthFlag))
-        var conditional = newIfStatement(signalAndDepthFlag)
-        statements.add(pos+1, createAssignment(depthFlag, createBoolValue(true)))
-        conditional.statements.add(incrementInt(variable))
-        conditional.annotations.add(createAnnotation(0))
-        insertConditionalAbove(statements, conditional, pos, depth)
-        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
-        conditional2.statements.add(0, createAssignment(flag, createBoolValue(true)))
-        conditional2.annotations.add(createAnnotation(depth))
-        insertConditionalAbove(statements, conditional2, pos+1, depth)
-        scope.statements.add(statements)
-        statements.add(scope)
-        return scope
-    }
-    
-    /**
-     * Create a Scope which has a counting int variable, a conditional for counting and a conditional for checking the variable
-     * 
-     * @param statements The statements which will be inside of the scope
-     * @param pos The position of the pause Statement, for which the transformation is done
-     * @param expr The counting Expression
-     * @param singalExpr The signal expression
-     * @param label The label for the goto statement
-     * @param depth The depth of statement which caused the pause transformations 
-     * @param flag A possible flag. e.g. strong delayed abort "abort when A"
-     */
-    def ScopeStatement scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth, ValuedObject flag) {
-        var variable = createNewUniqueVariable(createIntValue(0))
-        var decl = createDeclaration(ValueType.INT, variable)
-        var scope = createScopeStatement(decl)
-        var conditional = newIfStatement(signalExpr)
-        conditional.statements.add(incrementInt(variable))
-        conditional.annotations.add(createAnnotation(0))
-        statements.add(pos+1, conditional)
-        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
-        conditional2.statements.add(0, createAssignment(flag, createBoolValue(true)))
-        conditional2.annotations.add(createAnnotation(depth))
-        insertConditional(statements, conditional2, pos, depth)
-        scope.statements.add(statements)
-        statements.add(scope)
-        return scope
-    }
-    
-    /**
-     * Create a Scope which has a counting int variable, a conditional for counting and a conditional for checking the variable
-     * 
-     * @param statements The statements which will be inside of the scope
-     * @param pos The position of the pause Statement, for which the transformation is done
-     * @param expr The counting Expression
-     * @param singalExpr The signal expression
-     * @param label The label for the goto statement
-     * @param depth The depth of statement which caused the pause transformations 
-     */
-    def ScopeStatement scopeWithDecl(EList<Statement> statements, int pos, Expression expr, Expression signalExpr, Label label, int depth) {
-        var variable = createNewUniqueVariable(createIntValue(0))
-        var decl = createDeclaration(ValueType.INT, variable)
-        var scope = createScopeStatement(decl)
-        var conditional = newIfStatement(signalExpr)
-        conditional.statements.add(incrementInt(variable))
-        conditional.annotations.add(createAnnotation(0))
-        statements.add(pos+1, conditional)
-        var conditional2 = newIfThenGoto(createLT(createValuedObjectReference(variable), EcoreUtil.copy(expr)), label, false)
-        conditional2.annotations.add(createAnnotation(depth))
-        insertConditional(statements, conditional2, pos, depth)
-        scope.statements.add(statements)
-        statements.add(scope)
-        return scope
     }
     
     /**
@@ -1743,22 +1154,22 @@ class SCEstExtension {
     }
     
     /**
-     * Check every Goto statement if its target is still inside its Thread.
+     * Check for every Goto statement if its target is still inside its Thread
      * 
      * @param statements The statements which need to be checked
      */
     def void checkGotos(EList<Statement> statements) {
         statements?.forEach [ s |
-            s.checkGotos
+            s.checkGoto
         ]
     }
     
     /**
-     * Check if 'statement' is a Goto statement and when it is, check if its target is still inside its Thread.
+     * Check if 'statement' is a Goto statement and when it is, check if its target is still inside its Thread
      * 
      * @param statement A statement which needs to be checked
      */
-    def void checkGotos(Statement statement) {
+    def void checkGoto(Statement statement) {
         if (statement instanceof Goto) {
             var goto = (statement as Goto)
             goto.target = findClosestLabel(goto.target, statement)
@@ -1773,6 +1184,9 @@ class SCEstExtension {
             else if (statement instanceof Abort) {
                 checkGotos((statement as Abort).doStatements)
                 (statement as Abort).cases?.forEach[ c | checkGotos(c.statements)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | checkGotos(c.statements)]
             }
             else if (statement instanceof Exec) {
                 (statement as Exec).execCaseList?.forEach[ c | checkGotos(c.statements)]
@@ -1861,44 +1275,13 @@ class SCEstExtension {
                 return createFalse
             case CombineOperator.AND :
                 return createTrue
-// TODO 
-//            case CombineOperator.NONE
+// TODO          case CombineOperator.NONE:
             default : {
                 throw new UnsupportedOperationException(
                         "No neutral Element for: " + op.toString)
             }
         }
     }
-    
-//    /**
-//     * Decide if the Valued Object Reference is a reference to a signal in a pre() expression.
-//     * 
-//     * @param ref The Valued Object Reference which might be in a pre() expression in a Signal Expression
-//     */
-//    def isSignalPreExpression(ValuedObjectReference ref) {
-//        var parent = ref.eContainer
-//        if (parent instanceof OperatorExpression) {
-//            if( (parent as OperatorExpression).operator == OperatorType.PRE) {
-//                var EObject nextParent = parent
-//                while (nextParent instanceof Expression) {
-//                    parent = nextParent
-//                    nextParent = nextParent.eContainer
-//                }
-//                if (nextParent instanceof Present) {
-//                    return true
-//                }
-//                else if (nextParent instanceof PresentCase) {
-//                    return true
-//                }
-//                else if (nextParent instanceof DelayExpr) {
-//                    if ( (nextParent as DelayExpr).signalExpr == parent) {
-//                        return true
-//                    }
-//                }
-//            }
-//        }
-//        return false
-//    }
     
     /**
      * Transform all references to ISignals in the scope of the given statement.
@@ -1945,7 +1328,8 @@ class SCEstExtension {
                     }
                 }
             }
-            if (ref.eContainer != null && ref instanceof SignalReferenceExpr) {
+            // if "ref" is still a SignalReferenceExpr it must be transformed into a ValuedObjectReference
+            if (ref.eContainer != null && ref instanceof SignalReferenceExpr && ref.valuedObject != null) {
                 if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
                     var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
                     var pos = list.indexOf(ref)
@@ -1958,23 +1342,6 @@ class SCEstExtension {
                 }
             }
         }
-//        var references2 = statement.eAllContents.filter(SignalReferenceExpr).toList
-//        for (ref : references2) {
-//            if (ref.valuedObject instanceof ISignal) {
-//                var signal = ref.valuedObject as ISignal
-//                // if the signal reference references a transformed signal
-//                if (newSignals.containsKey(signal)) {
-//                    if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
-//                        var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
-//                        var pos = list.indexOf(ref)
-//                        list.set(pos, createValuedObjectReference(ref.valuedObject))
-//                    }
-//                    else {
-//                        setExpression(createValuedObjectReference(ref.valuedObject), ref.eContainer)
-//                    }
-//                }
-//            }
-//        }
     }
     
     /**
@@ -2149,6 +1516,20 @@ class SCEstExtension {
     def createSCLProg() {
         SclFactory::eINSTANCE.createSCLProgram
     }
+    
+    /**
+     * Creates a SCEstProgram
+     */
+     def createSCEstProgram() {
+         ScestFactory::eINSTANCE.createSCEstProgram
+     }
+     
+     /**
+      * Creates a SCEstModule
+      */
+     def createSCEstModule() {
+         ScestFactory::eINSTANCE.createSCEstModule
+     }
     
     /**
      * Renames an interface scope to the module name

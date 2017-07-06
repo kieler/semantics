@@ -331,9 +331,9 @@
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.esterel.Esterel"
-            features="scl.scg, scl.basic, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target, s.c, s.java, s.arduino"
+            features="esterel.scest, scest.prog, scest.controllflowstatements, scest.signalhandlingstatements, scest.datahandlingstatements, scest.preemptionstatements, scest.derivedstatements, scest.optimization, esterel.parallel, esterel.nothing, esterel.halt, esterel.block, esterel.sustain, esterel.proccall, esterel.present, esterel.iftest, esterel.loop, esterel.repeat, esterel.abort, esterel.await, esterel.everydo, esterel.suspend, esterel.trap, esterel.exec, esterel.localsignaldecl, esterel.localvariable, esterel.run, esterel.do, scest.set, scest.labelrenaming, scest.initialization, esterel.signal, esterel.emit, scest.unemit, esterel.function, esterel.sensor, esterel.constant, scest.scl, scl.scg, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target, s.c, s.java, s.arduino"
             label="Esterel-SCL-Compilation"
-            preferred="s.c, scl.scg, ESTERELNOSIMULATIONVISUALIZATION"
+            preferred="s.c, scl.scg"
             priority="100">
       </editor>
       <editor

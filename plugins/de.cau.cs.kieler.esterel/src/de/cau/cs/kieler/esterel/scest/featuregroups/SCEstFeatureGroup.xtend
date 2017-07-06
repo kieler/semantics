@@ -19,7 +19,7 @@ package de.cau.cs.kieler.esterel.scest.featuregroups
 class SCEstFeatureGroup {
     
     public final static String SCESTPROG_ID = "scest.prog";
-    public final static String SCESTPROG_NAME = "Complete SCEst Progam";
+    public final static String SCESTPROG_NAME = "Single SCEst Transformations";
     
     public final static String SCESTCONTROLFLOWSTATEMENTS_ID = "scest.controllflowstatements";
     public final static String SCESTCONTROLFLOWSTATEMENTS_NAME = "Control Flow";

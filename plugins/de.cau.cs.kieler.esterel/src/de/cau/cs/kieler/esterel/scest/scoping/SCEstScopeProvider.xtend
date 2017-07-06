@@ -57,6 +57,8 @@ import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage
 import de.cau.cs.kieler.esterel.esterel.Trap
+import de.cau.cs.kieler.esterel.esterel.TrapHandler
+import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
 
 /**
  * This class contains custom scoping description.
@@ -89,25 +91,48 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
     def voScope(EObject context) { 
         var parent = context;
         val vos = newLinkedList()
-        while (parent != null) {
-            if (parent instanceof Scope) {
-                parent.declarations.forEach[d | vos.addAll(d.valuedObjects)]
+        if (parent instanceof TrapReferenceExpr) {
+            // parent is of type TrapReferenceExpr therefore parent=parent.eContainer is not valid
+            var EObject newParent = context
+            while (newParent != null) {
+                if (newParent instanceof Trap) {
+                    vos.addAll(newParent.trapSignals)
+                } 
+                newParent = newParent.eContainer              
             }
-            else if (parent instanceof LocalVariable) {
-                parent.varDecls.forEach[d | vos.addAll(d.variables)]
+        }
+        else if (parent instanceof SignalReferenceExpr) {
+            // parent is of type TrapReferenceExpr therefore parent=parent.eContainer is not valid
+            var EObject newParent = context
+            while (newParent != null) {
+                if (newParent instanceof LocalSignalDecl) {
+                    vos.addAll(newParent.signals)
+                }
+                else if (parent instanceof SCEstModule) {
+                    parent.intSignalDecls.forEach [d | vos.addAll(d.signals)]
+                    parent.intSensorDecls.forEach [d | d.sensors.forEach[s | vos.add(s.sensor)]]
+                }
+                newParent = newParent.eContainer              
             }
-            else if (parent instanceof LocalSignalDecl) {
-                vos.addAll(parent.signals)
+        }
+        else {
+            while (parent != null) {
+                if (parent instanceof Scope) {
+                    parent.declarations.forEach[d | vos.addAll(d.valuedObjects)]
+                }
+                else if (parent instanceof LocalVariable) {
+                    parent.varDecls.forEach[d | vos.addAll(d.variables)]
+                }
+                else if (parent instanceof LocalSignalDecl) {
+                    vos.addAll(parent.signals)
+                }
+                else if (parent instanceof SCEstModule) {
+                    parent.intSignalDecls.forEach [d | vos.addAll(d.signals)]
+                    parent.intSensorDecls.forEach [d | d.sensors.forEach[s | vos.add(s.sensor)]]
+                    parent.intConstantDecls.forEach [d | d.constants.forEach[c | vos.addAll(c.constants)]]
+                }
+                parent = parent.eContainer
             }
-            else if (parent instanceof Trap) {
-                vos.addAll(parent.trapSignals)
-            }
-            else if (parent instanceof SCEstModule) {
-                parent.intSignalDecls.forEach [d | vos.addAll(d.signals)]
-                parent.intSensorDecls.forEach [d | d.sensors.forEach[s | vos.add(s.sensor)]]
-                parent.intConstantDecls.forEach [d | d.constants.forEach[c | vos.addAll(c.constants)]]
-            }
-            parent = parent.eContainer
         }
         return vos.map[
                 new EObjectDescription(QualifiedName.create(it.name), it, Collections.<String, String>emptyMap()) as IEObjectDescription

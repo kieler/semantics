@@ -702,9 +702,35 @@ ConstantExpression returns kexpressions::Expression:
 
 // --> B.3.5 Trap Expressions <--
 // -------------------------------------
+// The warning can be ignored since the operator will only override itself in this loop.
 TrapExpr returns kexpressions::Expression:
-    SignalExpression;
+    TrapAndExpression 
+    (   {kexpressions::OperatorExpression.subExpressions+=current} 
+        (operator=Esterel_OrOperator subExpressions+=TrapAndExpression)+
+    )?;
+    
+// The warning can be ignored since the operator will only override itself in this loop.
+TrapAndExpression returns kexpressions::Expression:
+    TrapNotExpression 
+    (   {kexpressions::OperatorExpression.subExpressions+=current} 
+        (operator=Esterel_AndOperator subExpressions+=TrapNotExpression)+
+    )?;
 
+// The warning can be ignored since the operator will only override itself in this loop.
+TrapNotExpression returns kexpressions::Expression:
+    {kexpressions::OperatorExpression} 
+    (operator=Esterel_NotOperator)+ 
+    subExpressions+=TrapAtomicExpression
+    |
+    TrapAtomicExpression;
+
+TrapAtomicExpression returns kexpressions::Expression:
+      TrapReferenceExpr
+    | "(" TrapExpression ")";
+
+TrapReferenceExpr returns kexpressions::ValuedObjectReference:
+    {TrapReferenceExpr} valuedObject=[TrapSignal|ID];    
+    
 // --> B.3.3 Signal Expressions <--
 // -------------------------------------
 // The warning can be ignored since the operator will only override itself in this loop.
@@ -730,10 +756,9 @@ SignalNotExpression returns kexpressions::Expression:
     SignalAtomicExpression;
 
 SignalAtomicExpression returns kexpressions::Expression:
-    SignalReferenceExpr
-    | "(" SignalExpression ")"
+     "(" SignalExpression ")"
     | SignalPreExpr
-    | TrapReferenceExpr;
+    | SignalReferenceExpr;
 
 SignalReferenceExpr returns kexpressions::ValuedObjectReference:
     {SignalReferenceExpr} valuedObject=[ISignal|ID];
@@ -742,9 +767,6 @@ SignalPreExpr returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=Esterel_PreOperator 
     '(' subExpressions+=SignalReferenceExpr ')';
-
-TrapReferenceExpr returns kexpressions::ValuedObjectReference:
-    {TrapReferenceExpr} valuedObject=[TrapSignal|ID];
 
 // --> B.3.4 Delay Expressions <--
 // -------------------------------------
