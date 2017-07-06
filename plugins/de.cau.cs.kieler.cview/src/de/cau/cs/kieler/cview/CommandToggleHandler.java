@@ -12,33 +12,25 @@ public class CommandToggleHandler implements IHandler {
 
     @Override
     public void addHandlerListener(IHandlerListener handlerListener) {
-        if (CViewPlugin.isEnabled()) {
-//            this.is
-        }
-
-
     }
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        
+
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
-        
-        
+
         CViewPlugin.setEnabled(!oldValue);
-        
+
         if (!oldValue) {
-            CViewPlugin.showModelView();
+            // CViewPlugin.showModelView();
             CViewPlugin.refreshCView();
         }
-        
+
         return null;
     }
 

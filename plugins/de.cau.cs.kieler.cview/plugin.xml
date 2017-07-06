@@ -11,16 +11,16 @@
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.editor">
       <editor
-            controllerID="de.cau.cs.kieler.cview.klighd.controller"
-            editorID="org.eclipse.cdt.ui.editor.CEditor">
+            controllerID="de.cau.cs.kieler.cview.klighd.controllerX"
+            editorID="org.eclipse.cdt.ui.editor.CEditorX">
       </editor>
       <editor
-            controllerID="de.cau.cs.kieler.cview.klighd.controller"
-            editorID="org.eclipse.ui.DefaultTextEditor">
+            controllerID="de.cau.cs.kieler.cview.klighd.controllerX"
+            editorID="org.eclipse.ui.DefaultTextEditorX">
       </editor>
       <fallbackController
-            controllerID="de.cau.cs.kieler.cview.klighd.controller"
-            editorClass="de.cau.cs.kieler.cview.KLighDController">
+            controllerID="de.cau.cs.kieler.cview.klighd.controllerX"
+            editorClass="de.cau.cs.kieler.cview.KLighDControllerX">
       </fallbackController>
    </extension>
    <extension

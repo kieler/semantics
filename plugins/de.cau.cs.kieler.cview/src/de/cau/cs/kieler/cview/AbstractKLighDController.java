@@ -50,6 +50,7 @@ import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.controller.DiagramController;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KNodeAbstractNode;
+import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.RenderingContextData;
@@ -62,10 +63,13 @@ import de.cau.cs.kieler.klighd.util.RenderingContextData;
  */
 public abstract class AbstractKLighDController extends AbstractViewUpdateController {
 
+    static String CVIEW_KLIGHD_ID = "de.cau.cs.kieler.cview.klighd";
+    static String CVIEW_KLIGHD_TITLE = "C View";
+
     static CViewModel model = null;
 
     static AbstractKLighDController controller = null;
-    
+
     static Object[] allSelections;
 
     public abstract CViewModel calculateModel(Object[] allselections);
@@ -77,15 +81,15 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
     public List<java.io.File> listFiles(String dirPath, String filter) {
         List<java.io.File> files = new ArrayList<>();
         java.nio.file.Path path = Paths.get(dirPath);
-        try (DirectoryStream<java.nio.file.Path > stream = Files.newDirectoryStream(path, filter)) {
-            for (java.nio.file.Path  entry: stream) {
+        try (DirectoryStream<java.nio.file.Path> stream = Files.newDirectoryStream(path, filter)) {
+            for (java.nio.file.Path entry : stream) {
                 files.add(entry.toFile());
             }
             return files;
         } catch (Exception e) {
             e.printStackTrace();
-        }    
-        return null; 
+        }
+        return null;
     }
 
     public AbstractKLighDController() {
@@ -110,11 +114,11 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
                 if (!CViewPlugin.isEnabled()) {
                     return;
                 }
-                
+
                 if (!(selection instanceof IStructuredSelection)) {
                     return;
                 }
-                
+
                 CViewPlugin.refreshCView();
             }
         };
@@ -122,35 +126,22 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
                 selectionListener);
 
     }
-    
-    
-    /** the property for the Piccolo2D representation of a node. */
-    static final IProperty<KNodeAbstractNode> REP = new Property<KNodeAbstractNode>(
-            "klighd.piccolo.representation");
-    
+
+
     public void refreshCView() {
         model = calculateModel(allSelections);
 
         if (controller != null && model != null) {
             controller.updateModel(model, null);
-            controller.getDiagramView().updateDiagram();
-            IViewer viewer = controller.getDiagramView().getViewer();
-            viewer = controller.getDiagramView().getViewContext().getViewer();
-            //ActionContext getActiveViewer().toggleExpansion
-            
-//            for (KNode node : DiagramSynthesis.allNodes) {
-//                
-//                Object rcd = RenderingContextData.get(node).getProperty(REP);
-//                
-//                
-//                viewer.toggleExpansion(node);
-////                try {
-////                    viewer.getClass().getMethod("collapse", KNode.class).invoke(viewer, node);
-////                } catch (Exception e) {
-////                    e.printStackTrace();
-////                }
-//            }
-            controller.getDiagramView().updateDiagram();
+            // controller.getDiagramView().updateDiagram();
+            // IViewer viewer = controller.getDiagramView().getViewer();
+            // viewer = controller.getDiagramView().getViewContext().getViewer();
+            // ActionContext getActiveViewer().toggleExpansion
+
+            DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, model,
+                    KlighdSynthesisProperties.create());
+
+            // controller.getDiagramView().updateDiagram();
         }
 
     }
@@ -250,27 +241,26 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
         System.out.println("+++ CONTROLLER REFRESHED +++");
 
     }
-    
+
     public static Charset getEncoding() {
         Charset encoding = Charset.defaultCharset();
         return encoding;
     }
-    
-    static char[] handleFile(String filePath)
-            throws IOException {
+
+    static char[] handleFile(String filePath) throws IOException {
         Charset encoding = getEncoding();
         StringBuilder stringBuilder = new StringBuilder();
         try (InputStream in = new FileInputStream(filePath);
-             Reader reader = new InputStreamReader(in, encoding);
-             Reader buffer = new BufferedReader(reader)) {
+                Reader reader = new InputStreamReader(in, encoding);
+                Reader buffer = new BufferedReader(reader)) {
             int r;
             while ((r = reader.read()) != -1) {
                 char ch = (char) r;
                 stringBuilder.append(ch);
-                //System.out.print(ch);
-            }            
+                // System.out.print(ch);
+            }
         }
-        //Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
+        // Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
         return stringBuilder.toString().toCharArray();
     }
 
