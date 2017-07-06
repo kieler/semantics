@@ -237,7 +237,7 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
             while ((r = reader.read()) != -1) {
                 char ch = (char) r;
                 stringBuilder.append(ch);
-                System.out.print(ch);
+                //System.out.print(ch);
             }            
         }
         //Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;

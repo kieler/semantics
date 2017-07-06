@@ -14,6 +14,14 @@
             controllerID="de.cau.cs.kieler.cview.klighd.controller"
             editorID="org.eclipse.cdt.ui.editor.CEditor">
       </editor>
+      <editor
+            controllerID="de.cau.cs.kieler.cview.klighd.controller"
+            editorID="org.eclipse.ui.DefaultTextEditor">
+      </editor>
+      <fallbackController
+            controllerID="de.cau.cs.kieler.cview.klighd.controller"
+            editorClass="de.cau.cs.kieler.cview.KLighDController">
+      </fallbackController>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.controller">
