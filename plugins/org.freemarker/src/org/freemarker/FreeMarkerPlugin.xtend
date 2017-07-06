@@ -71,11 +71,12 @@ class FreeMarkerPlugin implements BundleActivator {
         configuration.locale = Locale.US;
         configuration.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
         configuration.whitespaceStripping = true
-        configuration.setNumberFormat("0.##########")
-         
+        configuration.numberFormat = "0.##########"
+        configuration.classicCompatible = false
+        
         // We want to load templates from files in the directory
         // as well as from simple strings.
-        stringTemplateLoader = new StringTemplateLoader();        
+        stringTemplateLoader = new StringTemplateLoader();
         fileTemplateLoader = new FileTemplateLoader(new File(templateDirectory));
         
         val loaders = #{ stringTemplateLoader, fileTemplateLoader };

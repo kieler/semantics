@@ -107,7 +107,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".c"
         launchData.wrapperCodeSnippetDirectory = "snippets"
-        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
         
         
         var env = new EnvironmentData("Generic")
@@ -132,7 +132,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetTemplate = targetTemplateFile.projectRelativePath
-        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
         launchData.wrapperCodeSnippetDirectory = "snippets"
         
         var env = new EnvironmentData("Generic Java")

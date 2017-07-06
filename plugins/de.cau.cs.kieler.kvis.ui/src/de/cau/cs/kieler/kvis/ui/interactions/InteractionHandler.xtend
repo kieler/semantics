@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -113,7 +113,6 @@ class InteractionHandler {
         if(eventListener == null) {
             eventListener = new EventListener() {
                 override handleEvent(Event evt) {
-                    println("Event '"+evt.type+"' on '"+interaction.event.element+"'")
                     performActions
                 }
             }

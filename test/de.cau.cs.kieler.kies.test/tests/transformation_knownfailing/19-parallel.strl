@@ -1,4 +1,0 @@
-module loopModule:
-output O;
-nothing || nothing || nothing || emit O ; nothing 
-end module

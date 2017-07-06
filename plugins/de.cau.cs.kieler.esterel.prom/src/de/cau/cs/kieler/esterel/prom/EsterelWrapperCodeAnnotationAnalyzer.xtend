@@ -30,6 +30,10 @@ import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
     
+    override getSimulationInterface(EObject model) {
+        return null
+    }
+    
     override getAnnotations(EObject model) {
         // At the moment there are no annotations for inputs/outputs in the esterel grammar.
         // So instead we parse the text file manually and search for special comments.
@@ -177,5 +181,5 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
             this.name = name
             this.type = type
         }
-    }
+    }    
 }

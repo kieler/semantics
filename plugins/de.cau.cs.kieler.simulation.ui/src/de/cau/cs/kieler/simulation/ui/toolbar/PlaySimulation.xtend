@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.simulation.ui.toolbar
 
 import de.cau.cs.kieler.prom.ui.console.PromConsole
-import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 

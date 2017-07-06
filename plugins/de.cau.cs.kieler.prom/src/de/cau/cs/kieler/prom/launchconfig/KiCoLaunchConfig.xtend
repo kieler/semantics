@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.prom.builder.KiCoBuilder
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
@@ -67,11 +68,6 @@ class KiCoLaunchConfig extends PromLaunchConfig {
      * The id for the wrapper code generator extension point.
      */
     public static val WRAPPER_CODE_GENERATOR_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.wrapperCodeGenerator"
-
-    /**
-     * The directory in which compiled output of this launch will be saved per default.
-     */
-    public static val BUILD_DIRECTORY = "kieler-gen"
     
     // Attribute names
     public static val ATTR_COMMANDS = "de.cau.cs.kieler.prom.launchconfig.commands"
@@ -168,7 +164,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                 "' does not exist.\n"
             writeToConsole(message);
                 
-            return new Status(Status.ERROR, PromPlugin.ID, message)
+            return new Status(Status.ERROR, PromPlugin.PLUGIN_ID, message)
         }
         
         return Status.OK_STATUS
@@ -215,12 +211,8 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                                 " for the launch configuration '"+configuration.name +"' could not be instantiated.")
         }
         
-        // There is an "invalid thread access" exception if this asyncExec is not used.
-        Display.getDefault().asyncExec(new Runnable() {
-           override run() {
-              shortcut.launch(selection, mode)
-           }
-       })
+        // There is an "invalid thread access" exception, if the launch is not executed in the UI thread.
+        PromPlugin.asyncExecInUI[shortcut.launch(selection, mode)]
     }
 
     /**
@@ -273,7 +265,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                     // resolve template path
                     val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate, project)
                     // Create wrapper code
-                    val generator = new WrapperCodeGenerator(project, launchData)
+                    val generator = new WrapperCodeGenerator(project, launchData.wrapperCodeSnippetDirectory)
                     val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate, launchData.files)
                     // Save output
                     val resolvedWrapperCodeTargetLocation = launchConfig.computeTargetPath(resolvedWrapperCodeTemplate, false)
@@ -330,7 +322,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
             // TODO: ABORTWTO often makes trouble and is not deterministicly choosen, so we explicitly disable it.
             var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO"
-            if(launchData.isCompileChain) {
+            if(KiCoBuilder.isCompileChain(launchData.targetLanguage)) {
                 compileChain += ", " + launchData.targetLanguage
             } else {
                 // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
@@ -459,12 +451,11 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                 // Create wrapper code
                 val modelName = Files.getNameWithoutExtension(data.name)
                 val annotationDatas = WrapperCodeGenerator.getWrapperCodeAnnotationData(project, data)
-                val generator = new WrapperCodeGenerator(project, launchData)
-                val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate,
-                    #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string,
-                      WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
-                      WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]},
-                      annotationDatas)
+                val generator = new WrapperCodeGenerator(project, launchData.wrapperCodeSnippetDirectory)
+                val mappings = #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string,
+                                 WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
+                                 WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]}
+                val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate, annotationDatas, mappings)
                 
                 // Save output
                 Files.write(wrapperCode, new File(targetLocation), Charsets.UTF_8)

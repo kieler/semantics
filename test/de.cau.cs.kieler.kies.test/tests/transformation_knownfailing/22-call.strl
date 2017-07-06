@@ -1,6 +1,0 @@
-module callModule:
-procedure PROC(integer, integer)(string, string);
-	var v1: integer in
-	call PROC(v1, v1)( 1 = 1, 2= 2)
-	end var
-end module

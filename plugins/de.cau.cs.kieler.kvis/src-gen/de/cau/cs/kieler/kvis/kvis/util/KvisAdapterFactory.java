@@ -150,6 +150,21 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
         return createBooleanOperatorAdapter();
       }
       @Override
+      public Adapter caseLiteral(Literal object)
+      {
+        return createLiteralAdapter();
+      }
+      @Override
+      public Adapter caseSignedFloat(SignedFloat object)
+      {
+        return createSignedFloatAdapter();
+      }
+      @Override
+      public Adapter caseSignedInt(SignedInt object)
+      {
+        return createSignedIntAdapter();
+      }
+      @Override
       public Adapter caseAndExpression(AndExpression object)
       {
         return createAndExpressionAdapter();
@@ -397,6 +412,51 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createBooleanOperatorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Literal <em>Literal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.Literal
+   * @generated
+   */
+  public Adapter createLiteralAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.SignedFloat <em>Signed Float</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.SignedFloat
+   * @generated
+   */
+  public Adapter createSignedFloatAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.SignedInt <em>Signed Int</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kvis.kvis.SignedInt
+   * @generated
+   */
+  public Adapter createSignedIntAdapter()
   {
     return null;
   }

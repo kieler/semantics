@@ -595,7 +595,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         targetDirectoryKielerGen.addSelectionListener(new SelectionAdapter() {
             override void widgetSelected(SelectionEvent e) {
                 if(currentData != null){
-                    currentData.launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+                    currentData.launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
                     checkConsistency()
                 }
             }

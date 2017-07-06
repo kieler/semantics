@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,64 +14,36 @@ package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.simulation.core.DataPool
+import org.w3c.dom.Element
 
 /**
  * @author aas
  *
  */
 class TextAnimation extends AnimationHandler {
-    var double fontSize = -1
-    var String fontFamily
-    var String text
-    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        initialize()
+        addAttributes("text", "fontSize", "fontFamily", "text")
     }
     
-    private def void initialize() {
-        // Read attribute values
-        for(attributeMapping : animation.attributeMappings) {
-            val literal = attributeMapping.literal
-            if(literal != null) {
-                val attributeName = attributeMapping.attribute
-                switch(attributeName) {
-                    case "fontSize" : fontSize = literal.primitiveValue.doubleValue
-                    case "fontFamily" : fontFamily = literal.primitiveValue.toString
-                    case "text" : text = literal.primitiveValue.toString
-                    default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
-                        + "Handled attributes are:\n"
-                        + "text, fontSize, fontFamily"
-                    )
-                }
-            }
-        }
-    }
-
     override getName() {
         return "text"
     }
     
-    override doApply(DataPool pool) {
-        val elem = findElement()
-        val value = variableValue
-        
-        // Get mapped value
-        val newText = animation.getAttribute("text").getMappedValue(value)
-        if(newText != null) {
-            text = newText.toString
-        }
-        
+    override doApply(DataPool pool, Element elem) {
         // Apply attributes to svg element
-        if(fontSize >= 0) {
-            elem.setAttributeField("style", "font-size", String.valueOf(fontSize))                
-        }
-        if(fontFamily != null) {
-            elem.setAttributeField("style", "font-family", fontFamily)
-        }
+        val text = getAttribute("text").stringValue
         if(text != null) {
             elem.setText(text)
         }
-        println(elem.getAttribute("style"))
+        
+        val fontSize = getAttribute("fontSize").floatValue
+        if(fontSize != null && fontSize >= 0) {
+            elem.setAttributeField("style", "font-size", String.valueOf(fontSize))                
+        }
+        val fontFamily = getAttribute("fontFamily").stringValue
+        if(fontFamily != null) {
+            elem.setAttributeField("style", "font-family", fontFamily)
+        }
     }
 }

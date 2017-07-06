@@ -19,23 +19,21 @@
 <!-- all plugins need to be listed as module -->
 
   <modules>
-    <module>de.cau.cs.kieler.semantics.test.common</module>
-    <!-- responsible: ssm  --><module>de.cau.cs.kieler.core.kexpressions.text.test</module>
-    <module>de.cau.cs.kieler.sccharts.test</module>
+    <!-- TEST General infrastructure -->
+    <module>de.cau.cs.kieler.test.common</module>
     <module>de.cau.cs.kieler.sim.kiem.test</module>
-    <module>de.cau.cs.kieler.sccharts.sim.c.test</module>
-    <module>de.cau.cs.kieler.esterel.sim.c.test</module>
-    
-    <!--  ESTEREL IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.esterel.cec.sim.test</module> -->
-    <!--  SIM S IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.s.sim.sc.test</module> -->
-    <!--  SOME TESTS ARE CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.synccharts.sim.s.test</module> -->
-    <!--  IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.semantics.test.common</module> -->
-    <!--  KIEM IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.sim.kiem.test</module> -->
-    <!--  SJ IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.sj.test</module> -->
-    <!--  KIES IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.kies.test</module> -->
-    <!--  TEXT IS CURRENTLY FAILING, responsible: chsch <module>de.cau.cs.kieler.synccharts.text.bridge.test</module> -->
-    <!-- responsible: ssm <module>de.cau.cs.kieler.core.kexpressions.test</module>-->
-    <!-- IS CURRENTLY FAILING responsible: ssm <module>de.cau.cs.kieler.scg.test</module> -->
+
+    <!-- TEST Plugins -->
+    <module>de.cau.cs.kieler.kexpressions.text.test</module> <!-- responsible: ssm  -->
+    <module>de.cau.cs.kieler.sccharts.test</module> <!-- responsible: als  -->
+    <module>de.cau.cs.kieler.sccharts.sim.c.test</module> <!-- responsible: aas  -->
+    <module>de.cau.cs.kieler.esterel.sim.c.test</module> <!-- responsible: aas  -->
+
+    <!-- BENCHMARK General infrastructure -->
+    <module>de.cau.cs.kieler.benchmark.common</module>
+
+    <!-- BENCHMARK Plugins -->
+    <module>de.cau.cs.kieler.sccharts.benchmark</module> <!-- responsible: als  -->
   </modules>
 
 </project>

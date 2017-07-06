@@ -240,13 +240,13 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVariableVariableReferenceParserRuleCall_0_0 = (RuleCall)cVariableAssignment_0.eContents().get(0);
 		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueAnyValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final RuleCall cValueLiteralParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
 		//VariableAssignment Action:
-		//	variable=VariableReference '=' value=AnyValue
+		//	variable=VariableReference '=' value=Literal
 		@Override public ParserRule getRule() { return rule; }
 
-		//variable=VariableReference '=' value=AnyValue
+		//variable=VariableReference '=' value=Literal
 		public Group getGroup() { return cGroup; }
 
 		//variable=VariableReference
@@ -258,11 +258,11 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'='
 		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
 
-		//value=AnyValue
+		//value=Literal
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
-		//AnyValue
-		public RuleCall getValueAnyValueParserRuleCall_2_0() { return cValueAnyValueParserRuleCall_2_0; }
+		//Literal
+		public RuleCall getValueLiteralParserRuleCall_2_0() { return cValueLiteralParserRuleCall_2_0; }
 	}
 
 	public class SimulationActionElements extends AbstractParserRuleElementFinder {
@@ -372,7 +372,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Assignment cLiteralAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cLiteralAnyValueParserRuleCall_2_0_0 = (RuleCall)cLiteralAssignment_2_0.eContents().get(0);
+		private final RuleCall cLiteralLiteralParserRuleCall_2_0_0 = (RuleCall)cLiteralAssignment_2_0.eContents().get(0);
 		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
 		private final Assignment cMappingsAssignment_2_1_0 = (Assignment)cGroup_2_1.eContents().get(0);
 		private final RuleCall cMappingsMappingParserRuleCall_2_1_0_0 = (RuleCall)cMappingsAssignment_2_1_0.eContents().get(0);
@@ -382,10 +382,10 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMappingsMappingParserRuleCall_2_1_1_1_0 = (RuleCall)cMappingsAssignment_2_1_1_1.eContents().get(0);
 		
 		//AttributeMapping:
-		//	attribute=ID ':' (literal=AnyValue | mappings+=Mapping (',' mappings+=Mapping)*);
+		//	attribute=ID ':' (literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*);
 		@Override public ParserRule getRule() { return rule; }
 
-		//attribute=ID ':' (literal=AnyValue | mappings+=Mapping (',' mappings+=Mapping)*)
+		//attribute=ID ':' (literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*)
 		public Group getGroup() { return cGroup; }
 
 		//attribute=ID
@@ -397,14 +397,14 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
 
-		//(literal=AnyValue | mappings+=Mapping (',' mappings+=Mapping)*)
+		//(literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//literal=AnyValue
+		//literal=Literal
 		public Assignment getLiteralAssignment_2_0() { return cLiteralAssignment_2_0; }
 
-		//AnyValue
-		public RuleCall getLiteralAnyValueParserRuleCall_2_0_0() { return cLiteralAnyValueParserRuleCall_2_0_0; }
+		//Literal
+		public RuleCall getLiteralLiteralParserRuleCall_2_0_0() { return cLiteralLiteralParserRuleCall_2_0_0; }
 
 		//mappings+=Mapping (',' mappings+=Mapping)*
 		public Group getGroup_2_1() { return cGroup_2_1; }
@@ -513,16 +513,16 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRelationCompareOperatorEnumRuleCall_1_0 = (RuleCall)cRelationAssignment_1.eContents().get(0);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Assignment cRightAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cRightAnyValueParserRuleCall_2_0_0 = (RuleCall)cRightAssignment_2_0.eContents().get(0);
+		private final RuleCall cRightLiteralParserRuleCall_2_0_0 = (RuleCall)cRightAssignment_2_0.eContents().get(0);
 		private final Assignment cRightAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
 		private final RuleCall cRightVariableReferenceParserRuleCall_2_1_0 = (RuleCall)cRightAssignment_2_1.eContents().get(0);
 		
 		//Comparison:
 		//	left=VariableReference
-		//	relation=CompareOperator (right=AnyValue | right=VariableReference);
+		//	relation=CompareOperator (right=Literal | right=VariableReference);
 		@Override public ParserRule getRule() { return rule; }
 
-		//left=VariableReference relation=CompareOperator (right=AnyValue | right=VariableReference)
+		//left=VariableReference relation=CompareOperator (right=Literal | right=VariableReference)
 		public Group getGroup() { return cGroup; }
 
 		//left=VariableReference
@@ -537,14 +537,14 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		//CompareOperator
 		public RuleCall getRelationCompareOperatorEnumRuleCall_1_0() { return cRelationCompareOperatorEnumRuleCall_1_0; }
 
-		//(right=AnyValue | right=VariableReference)
+		//(right=Literal | right=VariableReference)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
-		//right=AnyValue
+		//right=Literal
 		public Assignment getRightAssignment_2_0() { return cRightAssignment_2_0; }
 
-		//AnyValue
-		public RuleCall getRightAnyValueParserRuleCall_2_0_0() { return cRightAnyValueParserRuleCall_2_0_0; }
+		//Literal
+		public RuleCall getRightLiteralParserRuleCall_2_0_0() { return cRightLiteralParserRuleCall_2_0_0; }
 
 		//right=VariableReference
 		public Assignment getRightAssignment_2_1() { return cRightAssignment_2_1; }
@@ -557,23 +557,23 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.VariableDomain");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cValueAnyValueParserRuleCall_0_0 = (RuleCall)cValueAssignment_0.eContents().get(0);
+		private final RuleCall cValueLiteralParserRuleCall_0_0 = (RuleCall)cValueAssignment_0.eContents().get(0);
 		private final Assignment cRangeAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cRangeIntervalParserRuleCall_1_0 = (RuleCall)cRangeAssignment_1.eContents().get(0);
 		
 		//VariableDomain Domain:
-		//	value=AnyValue
+		//	value=Literal
 		//	| range=Interval
 		@Override public ParserRule getRule() { return rule; }
 
-		//value=AnyValue | range=Interval
+		//value=Literal | range=Interval
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//value=AnyValue
+		//value=Literal
 		public Assignment getValueAssignment_0() { return cValueAssignment_0; }
 
-		//AnyValue
-		public RuleCall getValueAnyValueParserRuleCall_0_0() { return cValueAnyValueParserRuleCall_0_0; }
+		//Literal
+		public RuleCall getValueLiteralParserRuleCall_0_0() { return cValueLiteralParserRuleCall_0_0; }
 
 		//range=Interval
 		public Assignment getRangeAssignment_1() { return cRangeAssignment_1; }
@@ -739,6 +739,42 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
 	}
 
+	public class LiteralElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Literal");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cValueSignedIntParserRuleCall_0_0 = (RuleCall)cValueAssignment_0.eContents().get(0);
+		private final Assignment cValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cValueSignedFloatParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cValueAnyValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//Literal:
+		//	value=SignedInt | value=SignedFloat | value=AnyValue;
+		@Override public ParserRule getRule() { return rule; }
+
+		//value=SignedInt | value=SignedFloat | value=AnyValue
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//value=SignedInt
+		public Assignment getValueAssignment_0() { return cValueAssignment_0; }
+
+		//SignedInt
+		public RuleCall getValueSignedIntParserRuleCall_0_0() { return cValueSignedIntParserRuleCall_0_0; }
+
+		//value=SignedFloat
+		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+
+		//SignedFloat
+		public RuleCall getValueSignedFloatParserRuleCall_1_0() { return cValueSignedFloatParserRuleCall_1_0; }
+
+		//value=AnyValue
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+
+		//AnyValue
+		public RuleCall getValueAnyValueParserRuleCall_2_0() { return cValueAnyValueParserRuleCall_2_0; }
+	}
+
 	public class RangeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Range");
 		private final Keyword cHyphenMinusKeyword = (Keyword)rule.eContents().get(1);
@@ -750,6 +786,64 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'-'
 		public Keyword getHyphenMinusKeyword() { return cHyphenMinusKeyword; }
+	}
+
+	public class SignedFloatElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.SignedFloat");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSignAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cSignSignEnumRuleCall_0_0 = (RuleCall)cSignAssignment_0.eContents().get(0);
+		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValueFLOATTerminalRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		
+		//SignedFloat:
+		//	sign=Sign?
+		//	value=FLOAT;
+		@Override public ParserRule getRule() { return rule; }
+
+		//sign=Sign? value=FLOAT
+		public Group getGroup() { return cGroup; }
+
+		//sign=Sign?
+		public Assignment getSignAssignment_0() { return cSignAssignment_0; }
+
+		//Sign
+		public RuleCall getSignSignEnumRuleCall_0_0() { return cSignSignEnumRuleCall_0_0; }
+
+		//value=FLOAT
+		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+
+		//FLOAT
+		public RuleCall getValueFLOATTerminalRuleCall_1_0() { return cValueFLOATTerminalRuleCall_1_0; }
+	}
+
+	public class SignedIntElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.SignedInt");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSignAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cSignSignEnumRuleCall_0_0 = (RuleCall)cSignAssignment_0.eContents().get(0);
+		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValueINTTerminalRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		
+		//SignedInt:
+		//	sign=Sign?
+		//	value=INT;
+		@Override public ParserRule getRule() { return rule; }
+
+		//sign=Sign? value=INT
+		public Group getGroup() { return cGroup; }
+
+		//sign=Sign?
+		public Assignment getSignAssignment_0() { return cSignAssignment_0; }
+
+		//Sign
+		public RuleCall getSignSignEnumRuleCall_0_0() { return cSignSignEnumRuleCall_0_0; }
+
+		//value=INT
+		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+
+		//INT
+		public RuleCall getValueINTTerminalRuleCall_1_0() { return cValueINTTerminalRuleCall_1_0; }
 	}
 	
 	
@@ -847,6 +941,34 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'play'
 		public Keyword getPLAYPlayKeyword_3_0() { return cPLAYPlayKeyword_3_0; }
 	}
+
+	public class SignElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Sign");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cPOSITIVEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cPOSITIVEPlusSignKeyword_0_0 = (Keyword)cPOSITIVEEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cNEGATIVEEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cNEGATIVEHyphenMinusKeyword_1_0 = (Keyword)cNEGATIVEEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum Sign:
+		//	POSITIVE='+' | NEGATIVE='-';
+		public EnumRule getRule() { return rule; }
+
+		//POSITIVE='+' | NEGATIVE='-'
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//POSITIVE='+'
+		public EnumLiteralDeclaration getPOSITIVEEnumLiteralDeclaration_0() { return cPOSITIVEEnumLiteralDeclaration_0; }
+
+		//'+'
+		public Keyword getPOSITIVEPlusSignKeyword_0_0() { return cPOSITIVEPlusSignKeyword_0_0; }
+
+		//NEGATIVE='-'
+		public EnumLiteralDeclaration getNEGATIVEEnumLiteralDeclaration_1() { return cNEGATIVEEnumLiteralDeclaration_1; }
+
+		//'-'
+		public Keyword getNEGATIVEHyphenMinusKeyword_1_0() { return cNEGATIVEHyphenMinusKeyword_1_0; }
+	}
 	
 	private final VisualizationElements pVisualization;
 	private final ElementElements pElement;
@@ -866,9 +988,13 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final VariableReferenceElements pVariableReference;
 	private final ModelReferenceElements pModelReference;
 	private final AndOperatorElements pAndOperator;
+	private final LiteralElements pLiteral;
 	private final DOMEventElements eDOMEvent;
 	private final SimulationOperationElements eSimulationOperation;
+	private final SignElements eSign;
 	private final RangeElements pRange;
+	private final SignedFloatElements pSignedFloat;
+	private final SignedIntElements pSignedInt;
 	
 	private final Grammar grammar;
 
@@ -905,9 +1031,13 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.pVariableReference = new VariableReferenceElements();
 		this.pModelReference = new ModelReferenceElements();
 		this.pAndOperator = new AndOperatorElements();
+		this.pLiteral = new LiteralElements();
 		this.eDOMEvent = new DOMEventElements();
 		this.eSimulationOperation = new SimulationOperationElements();
+		this.eSign = new SignElements();
 		this.pRange = new RangeElements();
+		this.pSignedFloat = new SignedFloatElements();
+		this.pSignedInt = new SignedIntElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1001,7 +1131,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariableAssignment Action:
-	//	variable=VariableReference '=' value=AnyValue
+	//	variable=VariableReference '=' value=Literal
 	public VariableAssignmentElements getVariableAssignmentAccess() {
 		return pVariableAssignment;
 	}
@@ -1020,7 +1150,10 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getSimulationActionAccess().getRule();
 	}
 
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kvis/KVis.xtext#XtextFragmentProvider_de.cau.cs.kieler.kvis.KVis/AttributeMapping'
+	//Animation:
+	//	'apply' type=ID ('using' variable=VariableReference)? '{'
+	//	attributeMappings+=AttributeMapping*
+	//	'}' ('when' condition=AndExpression)?;
 	public AnimationElements getAnimationAccess() {
 		return pAnimation;
 	}
@@ -1029,7 +1162,8 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnimationAccess().getRule();
 	}
 
-	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kvis/KVis.xtext#XtextFragmentProvider_de.cau.cs.kieler.kvis.KVis/AttributeMapping'
+	//AttributeMapping:
+	//	attribute=ID ':' (literal=Literal | mappings+=Mapping (',' mappings+=Mapping)*);
 	public AttributeMappingElements getAttributeMappingAccess() {
 		return pAttributeMapping;
 	}
@@ -1060,7 +1194,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Comparison:
 	//	left=VariableReference
-	//	relation=CompareOperator (right=AnyValue | right=VariableReference);
+	//	relation=CompareOperator (right=Literal | right=VariableReference);
 	public ComparisonElements getComparisonAccess() {
 		return pComparison;
 	}
@@ -1070,7 +1204,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariableDomain Domain:
-	//	value=AnyValue
+	//	value=Literal
 	//	| range=Interval
 	public VariableDomainElements getVariableDomainAccess() {
 		return pVariableDomain;
@@ -1131,6 +1265,16 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getAndOperatorAccess().getRule();
 	}
 
+	//Literal:
+	//	value=SignedInt | value=SignedFloat | value=AnyValue;
+	public LiteralElements getLiteralAccess() {
+		return pLiteral;
+	}
+	
+	public ParserRule getLiteralRule() {
+		return getLiteralAccess().getRule();
+	}
+
 	//enum DOMEvent:
 	//	CLICK='click'
 	//	| MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
@@ -1158,6 +1302,16 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getSimulationOperationAccess().getRule();
 	}
 
+	//enum Sign:
+	//	POSITIVE='+' | NEGATIVE='-';
+	public SignElements getSignAccess() {
+		return eSign;
+	}
+	
+	public EnumRule getSignRule() {
+		return getSignAccess().getRule();
+	}
+
 	//Range:
 	//	'-' // Alternative would be '..'
 	//;
@@ -1167,6 +1321,28 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getRangeRule() {
 		return getRangeAccess().getRule();
+	}
+
+	//SignedFloat:
+	//	sign=Sign?
+	//	value=FLOAT;
+	public SignedFloatElements getSignedFloatAccess() {
+		return pSignedFloat;
+	}
+	
+	public ParserRule getSignedFloatRule() {
+		return getSignedFloatAccess().getRule();
+	}
+
+	//SignedInt:
+	//	sign=Sign?
+	//	value=INT;
+	public SignedIntElements getSignedIntAccess() {
+		return pSignedInt;
+	}
+	
+	public ParserRule getSignedIntRule() {
+		return getSignedIntAccess().getRule();
 	}
 
 	/// **
