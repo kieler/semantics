@@ -1,9 +1,16 @@
 package de.cau.cs.kieler.cview;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,6 +37,8 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.Workbench;
+
+import com.google.common.primitives.Bytes;
 
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory;
@@ -210,6 +219,29 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
     public void refresh() {
         System.out.println("+++ CONTROLLER REFRESHED +++");
 
+    }
+    
+    public static Charset getEncoding() {
+        Charset encoding = Charset.defaultCharset();
+        return encoding;
+    }
+    
+    static char[] handleFile(String filePath)
+            throws IOException {
+        Charset encoding = getEncoding();
+        StringBuilder stringBuilder = new StringBuilder();
+        try (InputStream in = new FileInputStream(filePath);
+             Reader reader = new InputStreamReader(in, encoding);
+             Reader buffer = new BufferedReader(reader)) {
+            int r;
+            while ((r = reader.read()) != -1) {
+                char ch = (char) r;
+                stringBuilder.append(ch);
+                System.out.print(ch);
+            }            
+        }
+        //Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
+        return stringBuilder.toString().toCharArray();
     }
 
 }

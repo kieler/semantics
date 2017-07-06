@@ -101,6 +101,15 @@ class KLighDController extends AbstractKLighDController {
 
         for (Object element : allselections) {
             model.addToModel(element)
+            
+            if (allSelections.size == 1) {
+                val filePath = getFilePath(element);
+                if (filePath != null) {
+                    val content = handleFile(filePath);    
+                    CFileParser.parse(content)
+                }
+            }
+            
         }
         return model;
     }
