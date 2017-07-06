@@ -16,13 +16,16 @@ import de.cau.cs.kieler.cview.AbstractKLighDController
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 import java.io.File
+import org.eclipse.cdt.core.dom.ast.ASTVisitor
+import org.eclipse.cdt.core.dom.ast.IASTName
+import org.eclipse.cdt.core.dom.ast.IFunction
 
 /**
  * @author cmot
  * 
  */
 class KLighDController extends AbstractKLighDController {
-    
+
     def void addToModel(CViewModel model, Object element) {
         var filePath = getFilePath(element);
         var folderPath = getDirPath(element);
@@ -87,9 +90,9 @@ class KLighDController extends AbstractKLighDController {
                 if (j2 > 0) {
                     i2 = j2;
                 }
-                return folderOrFilePath.substring(i2+1);
+                return folderOrFilePath.substring(i2 + 1);
             }
-            return folderOrFilePath.substring(i+1);
+            return folderOrFilePath.substring(i + 1);
         } else {
             return folderOrFilePath;
         }
@@ -101,15 +104,34 @@ class KLighDController extends AbstractKLighDController {
 
         for (Object element : allselections) {
             model.addToModel(element)
-            
+
             if (allSelections.size == 1) {
                 val filePath = getFilePath(element);
                 if (filePath != null) {
-                    val content = handleFile(filePath);    
-                    CFileParser.parse(content)
+                    val content = handleFile(filePath);
+                    val ast = CFileParser.parse(content);
+
+                    val visitor = new ASTVisitor() {
+                        override int visit(IASTName name) {
+                            if (name.active) {
+                                val binding = name.resolveBinding
+                                if (binding instanceof IFunction) {
+                                    if (name.definition) {
+                                        System.out.println("- D " + name.toString() + " ");
+                                    } else if (name.reference) {
+                                        System.out.println("- R " + name.toString() + " ");
+                                    }
+                                }
+                            }
+                            return ASTVisitor.PROCESS_CONTINUE;
+                        }
+                    };
+                    visitor.shouldVisitNames = true;
+                    ast.accept(visitor);
+
                 }
             }
-            
+
         }
         return model;
     }
