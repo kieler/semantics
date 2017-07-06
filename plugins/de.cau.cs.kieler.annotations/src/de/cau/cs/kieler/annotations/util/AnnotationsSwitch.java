@@ -173,6 +173,7 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 CommentAnnotation commentAnnotation = (CommentAnnotation)theEObject;
                 T result = caseCommentAnnotation(commentAnnotation);
                 if (result == null) result = caseStringAnnotation(commentAnnotation);
+                if (result == null) result = caseAnnotatable(commentAnnotation);
                 if (result == null) result = caseAnnotation(commentAnnotation);
                 if (result == null) result = caseNamedObject(commentAnnotation);
                 if (result == null) result = defaultCase(theEObject);

@@ -513,13 +513,22 @@ public interface AnnotationsPackage extends EPackage {
     int COMMENT_ANNOTATION__VALUES = STRING_ANNOTATION__VALUES;
 
     /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENT_ANNOTATION__ANNOTATIONS = STRING_ANNOTATION_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Comment Annotation</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMMENT_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 0;
+    int COMMENT_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 1;
 
 
     /**

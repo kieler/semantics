@@ -44,7 +44,7 @@ public class SCTXResource extends LazyLinkingResource {
      * Starts model consolidation before {@link LazyLinkingResource#doLinking()}.
      */
     protected void doLinking() {
-        consolidateModel();
+//        consolidateModel();
         super.doLinking();
     }
 
@@ -86,29 +86,29 @@ public class SCTXResource extends LazyLinkingResource {
 
     // ---------------------------------------------------------------------------------------
 
-    /**
-     * Iterates on the parsed model and delegates to {@link #setupTickSignal(Region)},
-     * {@link #setupScopeID(Scope, HashSet)} and {@link #setupPriorities(State)}.
-     */
-    private void consolidateModel() {
-
-        EObject o = null;
-        for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
-            o = i.next();
-            if (SCChartsPackage.eINSTANCE.getScope().isInstance(o)) {
-                setupScopeLabel((Scope) o);
-            }
-        }
-    }
-    
-    /**
-     * Sets implicit scope labels.
-     */
-    private void setupScopeLabel(Scope scope) {
-        if (scope.getLabel() == null) {
-            scope.setLabel(scope.getId());
-        }
-    }
+//    /**
+//     * Iterates on the parsed model and delegates to {@link #setupTickSignal(Region)},
+//     * {@link #setupScopeID(Scope, HashSet)} and {@link #setupPriorities(State)}.
+//     */
+//    private void consolidateModel() {
+//
+//        EObject o = null;
+//        for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
+//            o = i.next();
+//            if (SCChartsPackage.eINSTANCE.getScope().isInstance(o)) {
+//                setupScopeLabel((Scope) o);
+//            }
+//        }
+//    }
+//    
+//    /**
+//     * Sets implicit scope labels.
+//     */
+//    private void setupScopeLabel(Scope scope) {
+//        if (scope.getLabel() == null) {
+//            scope.setLabel(scope.getId());
+//        }
+//    }
 
 
 }

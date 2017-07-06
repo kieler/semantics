@@ -563,6 +563,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         importAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         typedStringAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
         commentAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
+        commentAnnotationEClass.getESuperTypes().add(this.getAnnotatable());
         pragmaEClass.getESuperTypes().add(this.getNamedObject());
         stringPragmaEClass.getESuperTypes().add(this.getPragma());
 
