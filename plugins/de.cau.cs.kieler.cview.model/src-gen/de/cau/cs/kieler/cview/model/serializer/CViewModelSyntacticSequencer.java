@@ -11,6 +11,9 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
+import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 
@@ -18,10 +21,12 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected CViewModelGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CViewModelGrammarAccess) access;
+		match_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getFolderAccess().getChildrenKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getFolderAccess().getEqualsSignKeyword_7_1()));
 	}
 	
 	@Override
@@ -36,8 +41,21 @@ public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			acceptNodes(getLastNavigableState(), syntaxNodes);
+			if (match_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q.equals(syntax))
+				emit_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ('children' '=')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     location=STRING (ambiguity) (rule end)
+	 */
+	protected void emit_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 }

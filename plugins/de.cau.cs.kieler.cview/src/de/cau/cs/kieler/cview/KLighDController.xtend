@@ -19,6 +19,8 @@ import java.io.File
 import org.eclipse.cdt.core.dom.ast.ASTVisitor
 import org.eclipse.cdt.core.dom.ast.IASTName
 import org.eclipse.cdt.core.dom.ast.IFunction
+import de.cau.cs.kieler.cview.model.cViewModel.Folder
+import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder
 
 /**
  * @author cmot
@@ -27,6 +29,10 @@ import org.eclipse.cdt.core.dom.ast.IFunction
 class KLighDController extends AbstractKLighDController {
 
     def void addToModel(CViewModel model, Object element) {
+        model.addToModel(element, null)
+    }
+
+    def void addToModel(CViewModel model, Object element, Folder parentFolder) {
         var filePath = getFilePath(element);
         var folderPath = getDirPath(element);
         val projectPath = getProjectPath(element);
@@ -46,6 +52,10 @@ class KLighDController extends AbstractKLighDController {
             folder.name = element.toString.folderOrFileName
             folder.project = true
             model.folders.add(folder)
+            if (parentFolder != null) {
+                folder.parent = parentFolder
+                parentFolder.children.add(folder)
+            }
 
 //            listFiles(folder.location, "*").forEach [ e |
 //                model.addToModel(e)
@@ -57,9 +67,13 @@ class KLighDController extends AbstractKLighDController {
             folder.name = element.toString.folderOrFileName
             folder.project = false
             model.folders.add(folder)
+            if (parentFolder != null) {
+                folder.parent = parentFolder
+                parentFolder.children.add(folder)
+            }
 
             for (e : listFiles(folder.location, "*")) {
-                model.addToModel(e)
+                model.addToModel(e, folder)
             }
 
 //            listFiles(folder.location, "*").forEach [ e |
@@ -68,9 +82,14 @@ class KLighDController extends AbstractKLighDController {
         } else if (!filePath.nullOrEmpty) {
             // File
             val file = CViewModelFactory.eINSTANCE.createFile;
-            file.location = folderPath;
+            file.location = filePath; 
             file.name = element.toString.folderOrFileName
             model.files.add(file);
+
+            if (parentFolder != null) {
+                file.parent = parentFolder
+                parentFolder.children.add(file as FileOrFolder)
+            }
         }
 
     }

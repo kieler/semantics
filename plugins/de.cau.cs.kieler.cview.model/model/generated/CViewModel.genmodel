@@ -20,15 +20,14 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/components"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//Folder">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Folder/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Folder/parent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Folder/project"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Folder/location"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Folder/children"/>
     </genClasses>
-    <genClasses ecoreClass="CViewModel.ecore#//File">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//File/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//File/parent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//File/location"/>
+    <genClasses ecoreClass="CViewModel.ecore#//File"/>
+    <genClasses ecoreClass="CViewModel.ecore#//FileOrFolder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//FileOrFolder/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//FileOrFolder/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//FileOrFolder/location"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//Component">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/name"/>

@@ -246,6 +246,29 @@ ruleFolder returns [EObject current=null]
 				}
 			)
 		)
+		(
+			otherlv_9='children'
+			{
+				newLeafNode(otherlv_9, grammarAccess.getFolderAccess().getChildrenKeyword_7_0());
+			}
+			otherlv_10='='
+			{
+				newLeafNode(otherlv_10, grammarAccess.getFolderAccess().getEqualsSignKeyword_7_1());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getFolderRule());
+						}
+					}
+					otherlv_11=RULE_ID
+					{
+						newLeafNode(otherlv_11, grammarAccess.getFolderAccess().getChildrenFileOrFolderCrossReference_7_2_0());
+					}
+				)
+			)*
+		)?
 	)
 ;
 

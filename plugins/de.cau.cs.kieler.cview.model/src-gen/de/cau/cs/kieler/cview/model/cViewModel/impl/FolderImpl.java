@@ -4,15 +4,20 @@
 package de.cau.cs.kieler.cview.model.cViewModel.impl;
 
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
+import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder;
 import de.cau.cs.kieler.cview.model.cViewModel.Folder;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,46 +27,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#isProject <em>Project</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#getLocation <em>Location</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.FolderImpl#getChildren <em>Children</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
+public class FolderImpl extends FileOrFolderImpl implements Folder
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getParent() <em>Parent</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getParent()
-   * @generated
-   * @ordered
-   */
-  protected Folder parent;
-
   /**
    * The default value of the '{@link #isProject() <em>Project</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -83,24 +56,14 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
   protected boolean project = PROJECT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
+   * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getLocation()
+   * @see #getChildren()
    * @generated
    * @ordered
    */
-  protected static final String LOCATION_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLocation()
-   * @generated
-   * @ordered
-   */
-  protected String location = LOCATION_EDEFAULT;
+  protected EList<FileOrFolder> children;
 
   /**
    * <!-- begin-user-doc -->
@@ -121,72 +84,6 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
   protected EClass eStaticClass()
   {
     return CViewModelPackage.Literals.FOLDER;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.FOLDER__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Folder getParent()
-  {
-    if (parent != null && parent.eIsProxy())
-    {
-      InternalEObject oldParent = (InternalEObject)parent;
-      parent = (Folder)eResolveProxy(oldParent);
-      if (parent != oldParent)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CViewModelPackage.FOLDER__PARENT, oldParent, parent));
-      }
-    }
-    return parent;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Folder basicGetParent()
-  {
-    return parent;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setParent(Folder newParent)
-  {
-    Folder oldParent = parent;
-    parent = newParent;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.FOLDER__PARENT, oldParent, parent));
   }
 
   /**
@@ -217,22 +114,13 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getLocation()
+  public EList<FileOrFolder> getChildren()
   {
-    return location;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setLocation(String newLocation)
-  {
-    String oldLocation = location;
-    location = newLocation;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.FOLDER__LOCATION, oldLocation, location));
+    if (children == null)
+    {
+      children = new EObjectResolvingEList<FileOrFolder>(FileOrFolder.class, this, CViewModelPackage.FOLDER__CHILDREN);
+    }
+    return children;
   }
 
   /**
@@ -245,15 +133,10 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
   {
     switch (featureID)
     {
-      case CViewModelPackage.FOLDER__NAME:
-        return getName();
-      case CViewModelPackage.FOLDER__PARENT:
-        if (resolve) return getParent();
-        return basicGetParent();
       case CViewModelPackage.FOLDER__PROJECT:
         return isProject();
-      case CViewModelPackage.FOLDER__LOCATION:
-        return getLocation();
+      case CViewModelPackage.FOLDER__CHILDREN:
+        return getChildren();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -263,22 +146,18 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case CViewModelPackage.FOLDER__NAME:
-        setName((String)newValue);
-        return;
-      case CViewModelPackage.FOLDER__PARENT:
-        setParent((Folder)newValue);
-        return;
       case CViewModelPackage.FOLDER__PROJECT:
         setProject((Boolean)newValue);
         return;
-      case CViewModelPackage.FOLDER__LOCATION:
-        setLocation((String)newValue);
+      case CViewModelPackage.FOLDER__CHILDREN:
+        getChildren().clear();
+        getChildren().addAll((Collection<? extends FileOrFolder>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -294,17 +173,11 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
   {
     switch (featureID)
     {
-      case CViewModelPackage.FOLDER__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case CViewModelPackage.FOLDER__PARENT:
-        setParent((Folder)null);
-        return;
       case CViewModelPackage.FOLDER__PROJECT:
         setProject(PROJECT_EDEFAULT);
         return;
-      case CViewModelPackage.FOLDER__LOCATION:
-        setLocation(LOCATION_EDEFAULT);
+      case CViewModelPackage.FOLDER__CHILDREN:
+        getChildren().clear();
         return;
     }
     super.eUnset(featureID);
@@ -320,14 +193,10 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
   {
     switch (featureID)
     {
-      case CViewModelPackage.FOLDER__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case CViewModelPackage.FOLDER__PARENT:
-        return parent != null;
       case CViewModelPackage.FOLDER__PROJECT:
         return project != PROJECT_EDEFAULT;
-      case CViewModelPackage.FOLDER__LOCATION:
-        return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
+      case CViewModelPackage.FOLDER__CHILDREN:
+        return children != null && !children.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -343,12 +212,8 @@ public class FolderImpl extends MinimalEObjectImpl.Container implements Folder
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", project: ");
+    result.append(" (project: ");
     result.append(project);
-    result.append(", location: ");
-    result.append(location);
     result.append(')');
     return result.toString();
   }

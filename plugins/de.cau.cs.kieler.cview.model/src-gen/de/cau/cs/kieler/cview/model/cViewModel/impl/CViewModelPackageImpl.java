@@ -9,6 +9,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType;
 import de.cau.cs.kieler.cview.model.cViewModel.File;
+import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder;
 import de.cau.cs.kieler.cview.model.cViewModel.Folder;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -47,6 +48,13 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * @generated
    */
   private EClass fileEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fileOrFolderEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -180,7 +188,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getFolder_Name()
+  public EAttribute getFolder_Project()
   {
     return (EAttribute)folderEClass.getEStructuralFeatures().get(0);
   }
@@ -190,29 +198,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFolder_Parent()
+  public EReference getFolder_Children()
   {
     return (EReference)folderEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFolder_Project()
-  {
-    return (EAttribute)folderEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFolder_Location()
-  {
-    return (EAttribute)folderEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -230,9 +218,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getFile_Name()
+  public EClass getFileOrFolder()
   {
-    return (EAttribute)fileEClass.getEStructuralFeatures().get(0);
+    return fileOrFolderEClass;
   }
 
   /**
@@ -240,9 +228,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFile_Parent()
+  public EAttribute getFileOrFolder_Name()
   {
-    return (EReference)fileEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)fileOrFolderEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -250,9 +238,19 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getFile_Location()
+  public EReference getFileOrFolder_Parent()
   {
-    return (EAttribute)fileEClass.getEStructuralFeatures().get(2);
+    return (EReference)fileOrFolderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFileOrFolder_Location()
+  {
+    return (EAttribute)fileOrFolderEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -361,15 +359,15 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEReference(cViewModelEClass, CVIEW_MODEL__COMPONENTS);
 
     folderEClass = createEClass(FOLDER);
-    createEAttribute(folderEClass, FOLDER__NAME);
-    createEReference(folderEClass, FOLDER__PARENT);
     createEAttribute(folderEClass, FOLDER__PROJECT);
-    createEAttribute(folderEClass, FOLDER__LOCATION);
+    createEReference(folderEClass, FOLDER__CHILDREN);
 
     fileEClass = createEClass(FILE);
-    createEAttribute(fileEClass, FILE__NAME);
-    createEReference(fileEClass, FILE__PARENT);
-    createEAttribute(fileEClass, FILE__LOCATION);
+
+    fileOrFolderEClass = createEClass(FILE_OR_FOLDER);
+    createEAttribute(fileOrFolderEClass, FILE_OR_FOLDER__NAME);
+    createEReference(fileOrFolderEClass, FILE_OR_FOLDER__PARENT);
+    createEAttribute(fileOrFolderEClass, FILE_OR_FOLDER__LOCATION);
 
     componentEClass = createEClass(COMPONENT);
     createEAttribute(componentEClass, COMPONENT__NAME);
@@ -411,6 +409,8 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    folderEClass.getESuperTypes().add(this.getFileOrFolder());
+    fileEClass.getESuperTypes().add(this.getFileOrFolder());
 
     // Initialize classes and features; add operations and parameters
     initEClass(cViewModelEClass, CViewModel.class, "CViewModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -419,15 +419,15 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEReference(getCViewModel_Components(), this.getComponent(), null, "components", null, 0, -1, CViewModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(folderEClass, Folder.class, "Folder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFolder_Name(), ecorePackage.getEString(), "name", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFolder_Parent(), this.getFolder(), null, "parent", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFolder_Project(), ecorePackage.getEBoolean(), "project", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getFolder_Location(), ecorePackage.getEString(), "location", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFolder_Children(), this.getFileOrFolder(), null, "children", null, 0, -1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fileEClass, File.class, "File", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFile_Name(), ecorePackage.getEString(), "name", null, 0, 1, File.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFile_Parent(), this.getFolder(), null, "parent", null, 0, 1, File.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getFile_Location(), ecorePackage.getEString(), "location", null, 0, 1, File.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fileOrFolderEClass, FileOrFolder.class, "FileOrFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFileOrFolder_Name(), ecorePackage.getEString(), "name", null, 0, 1, FileOrFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFileOrFolder_Parent(), this.getFolder(), null, "parent", null, 0, 1, FileOrFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFileOrFolder_Location(), ecorePackage.getEString(), "location", null, 0, 1, FileOrFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

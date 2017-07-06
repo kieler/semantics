@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,8 +29,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.ISelectionListener;
@@ -42,8 +46,13 @@ import com.google.common.primitives.Bytes;
 
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory;
+import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
+import de.cau.cs.kieler.klighd.piccolo.internal.controller.DiagramController;
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KNodeAbstractNode;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
+import de.cau.cs.kieler.klighd.util.RenderingContextData;
 
 /**
  * Controller for de.cau.cs.kieler.cview
@@ -115,11 +124,31 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
     }
     
     
+    /** the property for the Piccolo2D representation of a node. */
+    static final IProperty<KNodeAbstractNode> REP = new Property<KNodeAbstractNode>(
+            "klighd.piccolo.representation");
+    
     public void refreshCView() {
         model = calculateModel(allSelections);
 
-        if (controller != null) {
+        if (controller != null && model != null) {
             controller.updateModel(model, null);
+            controller.getDiagramView().updateDiagram();
+            IViewer viewer = controller.getDiagramView().getViewer();
+            viewer = controller.getDiagramView().getViewContext().getViewer();
+            //ActionContext getActiveViewer().toggleExpansion
+            
+            for (KNode node : DiagramSynthesis.allNodes) {
+                
+                Object rcd = RenderingContextData.get(node).getProperty(REP);
+                
+                viewer.toggleExpansion(node);
+//                try {
+//                    viewer.getClass().getMethod("collapse", KNode.class).invoke(viewer, node);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+            }
             controller.getDiagramView().updateDiagram();
         }
 

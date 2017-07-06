@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.cview.model.cViewModel;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,70 +14,16 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#isProject <em>Project</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getLocation <em>Location</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getChildren <em>Children</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getFolder()
  * @model
  * @generated
  */
-public interface Folder extends EObject
+public interface Folder extends FileOrFolder
 {
-  /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getFolder_Name()
-   * @model
-   * @generated
-   */
-  String getName();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
-   * @generated
-   */
-  void setName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Parent</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Parent</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Parent</em>' reference.
-   * @see #setParent(Folder)
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getFolder_Parent()
-   * @model
-   * @generated
-   */
-  Folder getParent();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getParent <em>Parent</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Parent</em>' reference.
-   * @see #getParent()
-   * @generated
-   */
-  void setParent(Folder value);
-
   /**
    * Returns the value of the '<em><b>Project</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -105,29 +51,19 @@ public interface Folder extends EObject
   void setProject(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Location</b></em>' attribute.
+   * Returns the value of the '<em><b>Children</b></em>' reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Location</em>' attribute isn't clear,
+   * If the meaning of the '<em>Children</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Location</em>' attribute.
-   * @see #setLocation(String)
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getFolder_Location()
+   * @return the value of the '<em>Children</em>' reference list.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getFolder_Children()
    * @model
    * @generated
    */
-  String getLocation();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder#getLocation <em>Location</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Location</em>' attribute.
-   * @see #getLocation()
-   * @generated
-   */
-  void setLocation(String value);
+  EList<FileOrFolder> getChildren();
 
 } // Folder

@@ -77,6 +77,7 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	/**
 	 * Contexts:
 	 *     File returns File
+	 *     FileOrFolder returns File
 	 *
 	 * Constraint:
 	 *     (name=ID parent=[Folder|ID]? location=STRING)
@@ -89,9 +90,10 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	/**
 	 * Contexts:
 	 *     Folder returns Folder
+	 *     FileOrFolder returns Folder
 	 *
 	 * Constraint:
-	 *     (name=ID parent=[Folder|ID]? project?='project' location=STRING)
+	 *     (name=ID parent=[Folder|ID]? project?='project' location=STRING children+=[FileOrFolder|ID]*)
 	 */
 	protected void sequence_Folder(ISerializationContext context, Folder semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

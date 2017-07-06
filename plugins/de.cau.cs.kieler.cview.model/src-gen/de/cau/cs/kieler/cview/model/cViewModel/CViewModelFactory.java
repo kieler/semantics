@@ -51,6 +51,15 @@ public interface CViewModelFactory extends EFactory
   File createFile();
 
   /**
+   * Returns a new object of class '<em>File Or Folder</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>File Or Folder</em>'.
+   * @generated
+   */
+  FileOrFolder createFileOrFolder();
+
+  /**
    * Returns a new object of class '<em>Component</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

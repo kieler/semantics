@@ -84,6 +84,7 @@ public class CViewModelSwitch<T> extends Switch<T>
       {
         Folder folder = (Folder)theEObject;
         T result = caseFolder(folder);
+        if (result == null) result = caseFileOrFolder(folder);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -91,6 +92,14 @@ public class CViewModelSwitch<T> extends Switch<T>
       {
         File file = (File)theEObject;
         T result = caseFile(file);
+        if (result == null) result = caseFileOrFolder(file);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CViewModelPackage.FILE_OR_FOLDER:
+      {
+        FileOrFolder fileOrFolder = (FileOrFolder)theEObject;
+        T result = caseFileOrFolder(fileOrFolder);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -149,6 +158,22 @@ public class CViewModelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseFile(File object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>File Or Folder</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>File Or Folder</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFileOrFolder(FileOrFolder object)
   {
     return null;
   }

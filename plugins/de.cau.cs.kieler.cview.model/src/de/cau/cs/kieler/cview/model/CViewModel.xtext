@@ -13,13 +13,17 @@ Folder:
 	'Folder'  name=ID  
 	         ('parent' '=' parent=[Folder])?
 	         (project?='project')
-	         'location' '=' location=STRING;
+	         'location' '=' location=STRING
+             ('children' '=' children+=([FileOrFolder])*)?;
 
 File:
     'File'  name=ID  
            ('parent' '=' parent=[Folder])?
            'location' '=' location=STRING;
 	
+FileOrFolder returns FileOrFolder:
+    File | Folder
+;	
 
 Component:
     'Component' name=ID '!'

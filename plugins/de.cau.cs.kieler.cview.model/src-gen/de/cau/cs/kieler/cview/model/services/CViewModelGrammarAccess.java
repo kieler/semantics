@@ -91,13 +91,20 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEqualsSignKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Assignment cLocationAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cLocationSTRINGTerminalRuleCall_6_0 = (RuleCall)cLocationAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cChildrenKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
+		private final Assignment cChildrenAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
+		private final CrossReference cChildrenFileOrFolderCrossReference_7_2_0 = (CrossReference)cChildrenAssignment_7_2.eContents().get(0);
+		private final RuleCall cChildrenFileOrFolderIDTerminalRuleCall_7_2_0_1 = (RuleCall)cChildrenFileOrFolderCrossReference_7_2_0.eContents().get(1);
 		
 		//Folder:
 		//	'Folder' name=ID ('parent' '=' parent=[Folder])?
-		//	project?='project' 'location' '=' location=STRING;
+		//	project?='project' 'location' '=' location=STRING ('children' '=' children+=[FileOrFolder]*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Folder' name=ID ('parent' '=' parent=[Folder])? project?='project' 'location' '=' location=STRING
+		//'Folder' name=ID ('parent' '=' parent=[Folder])? project?='project' 'location' '=' location=STRING ('children' '='
+		//children+=[FileOrFolder]*)?
 		public Group getGroup() { return cGroup; }
 		
 		//'Folder'
@@ -144,6 +151,24 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getLocationSTRINGTerminalRuleCall_6_0() { return cLocationSTRINGTerminalRuleCall_6_0; }
+		
+		//('children' '=' children+=[FileOrFolder]*)?
+		public Group getGroup_7() { return cGroup_7; }
+		
+		//'children'
+		public Keyword getChildrenKeyword_7_0() { return cChildrenKeyword_7_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_7_1() { return cEqualsSignKeyword_7_1; }
+		
+		//children+=[FileOrFolder]*
+		public Assignment getChildrenAssignment_7_2() { return cChildrenAssignment_7_2; }
+		
+		//[FileOrFolder]
+		public CrossReference getChildrenFileOrFolderCrossReference_7_2_0() { return cChildrenFileOrFolderCrossReference_7_2_0; }
+		
+		//ID
+		public RuleCall getChildrenFileOrFolderIDTerminalRuleCall_7_2_0_1() { return cChildrenFileOrFolderIDTerminalRuleCall_7_2_0_1; }
 	}
 	public class FileElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.File");
@@ -208,6 +233,25 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getLocationSTRINGTerminalRuleCall_5_0() { return cLocationSTRINGTerminalRuleCall_5_0; }
+	}
+	public class FileOrFolderElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.FileOrFolder");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cFileParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cFolderParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//FileOrFolder:
+		//	File | Folder;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//File | Folder
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//File
+		public RuleCall getFileParserRuleCall_0() { return cFileParserRuleCall_0; }
+		
+		//Folder
+		public RuleCall getFolderParserRuleCall_1() { return cFolderParserRuleCall_1; }
 	}
 	public class ComponentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Component");
@@ -386,6 +430,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	private final CViewModelElements pCViewModel;
 	private final FolderElements pFolder;
 	private final FileElements pFile;
+	private final FileOrFolderElements pFileOrFolder;
 	private final ComponentElements pComponent;
 	private final ComponentTypeElements eComponentType;
 	
@@ -401,6 +446,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		this.pCViewModel = new CViewModelElements();
 		this.pFolder = new FolderElements();
 		this.pFile = new FileElements();
+		this.pFileOrFolder = new FileOrFolderElements();
 		this.pComponent = new ComponentElements();
 		this.eComponentType = new ComponentTypeElements();
 	}
@@ -448,7 +494,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Folder:
 	//	'Folder' name=ID ('parent' '=' parent=[Folder])?
-	//	project?='project' 'location' '=' location=STRING;
+	//	project?='project' 'location' '=' location=STRING ('children' '=' children+=[FileOrFolder]*)?;
 	public FolderElements getFolderAccess() {
 		return pFolder;
 	}
@@ -466,6 +512,16 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFileRule() {
 		return getFileAccess().getRule();
+	}
+	
+	//FileOrFolder:
+	//	File | Folder;
+	public FileOrFolderElements getFileOrFolderAccess() {
+		return pFileOrFolder;
+	}
+	
+	public ParserRule getFileOrFolderRule() {
+		return getFileOrFolderAccess().getRule();
 	}
 	
 	//Component:

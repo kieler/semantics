@@ -69,6 +69,7 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
       case CViewModelPackage.CVIEW_MODEL: return createCViewModel();
       case CViewModelPackage.FOLDER: return createFolder();
       case CViewModelPackage.FILE: return createFile();
+      case CViewModelPackage.FILE_OR_FOLDER: return createFileOrFolder();
       case CViewModelPackage.COMPONENT: return createComponent();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -140,6 +141,17 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
   {
     FileImpl file = new FileImpl();
     return file;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FileOrFolder createFileOrFolder()
+  {
+    FileOrFolderImpl fileOrFolder = new FileOrFolderImpl();
+    return fileOrFolder;
   }
 
   /**
