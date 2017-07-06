@@ -48,6 +48,7 @@ import de.cau.cs.kieler.esterel.esterel.TrapExpression
 import de.cau.cs.kieler.kexpressions.Expression
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr
 
 /**
  * @author mrb
@@ -378,6 +379,14 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 // if the valued object reference references a transformed trap signal
                 if (exitVariables.containsKey(signal)) {
                     ref.valuedObject = exitVariables.get(signal).key
+                    if(ref.eContainer.eGet(ref.eContainingFeature) instanceof EList) {
+                        var list = ref.eContainer.eGet(ref.eContainingFeature) as EList<Expression>
+                        var pos = list.indexOf(ref)
+                        list.set(pos, createValuedObjectReference(ref.valuedObject))
+                    }
+                    else {
+                        setExpression(createValuedObjectReference(ref.valuedObject), ref.eContainer, false)
+                    }
                 }
             }
         }

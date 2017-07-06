@@ -92,7 +92,7 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
         var parent = context;
         val vos = newLinkedList()
         if (parent instanceof TrapReferenceExpr) {
-            // parent is of type TrapReferenceExpr therefore parent=parent.eContainer is not valid
+            // parent is of type TrapReferenceExpr therefore parent=parent.eContainer is not valid 
             var EObject newParent = context
             while (newParent != null) {
                 if (newParent instanceof Trap) {
@@ -108,9 +108,9 @@ public class SCEstScopeProvider extends AbstractDeclarativeScopeProvider {
                 if (newParent instanceof LocalSignalDecl) {
                     vos.addAll(newParent.signals)
                 }
-                else if (parent instanceof SCEstModule) {
-                    parent.intSignalDecls.forEach [d | vos.addAll(d.signals)]
-                    parent.intSensorDecls.forEach [d | d.sensors.forEach[s | vos.add(s.sensor)]]
+                else if (newParent instanceof SCEstModule) {
+                    newParent.intSignalDecls.forEach [d | vos.addAll(d.signals)]
+                    newParent.intSensorDecls.forEach [d | d.sensors.forEach[s | vos.add(s.sensor)]]
                 }
                 newParent = newParent.eContainer              
             }

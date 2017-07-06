@@ -12,6 +12,20 @@ import "http://kieler.cs.cau.de/scl/0.2.0" as scl
 Program hidden(SL_COMMENT, ML_COMMENT, WS):
     (modules+=Module)*;
 
+/*
+ * The numbering references:
+ * 
+ *   The Esterel v5 Language Primer
+ *   Version v5 91
+ *   Gérard Berry
+ *   Centre de Mathématiques Appliquées
+ *   Ecole des Mines and INRIA
+ *   2004 Route des Lucioles
+ *   06565 Sophia-Antipolis
+ *   berry@sophia.inria.fr
+ *   June 5, 2000
+ * 
+ */
 
 /* ###################################################
  * ###                 7.2 Modules                 ###
@@ -788,7 +802,6 @@ DelayExpr:
  */    
 
 Expression returns kexpressions::Expression:
-//    => BooleanExpression // old
       BooleanExpression
     | ValuedExpression;
 
@@ -822,22 +835,10 @@ CompareOperation returns kexpressions::Expression:
     ({kexpressions::OperatorExpression.subExpressions+=current} 
         operator=Esterel_CompareOperator subExpressions+=NotOrValuedExpression
     )?;
-/*   
-    // old
-    => NotOrValuedExpression 
-    ( {kexpressions::OperatorExpression.subExpressions+=current} 
-        operator=Esterel_CompareOperator 
-        subExpressions+=NotOrValuedExpression
-    )
-    | 
-    NotExpression; 
-*/    
-    
 
 
 // order IS IMPORTANT
 NotOrValuedExpression returns kexpressions::Expression:
-//    => ValuedExpression // old
       ValuedExpression
     | NotExpression;
 
@@ -915,8 +916,6 @@ NegExpression returns kexpressions::Expression:
 AtomicValuedExpression returns kexpressions::Expression:
     IntValue
     | FloatValue
-//    | '(' DivExpression ')'
-//    | => '(' ValuedExpression ')'  // old
     | '(' ValuedExpression ')'
     | AtomicExpression;
 
@@ -928,14 +927,5 @@ ValuedObjectTestExpression returns kexpressions::Expression:
     | ValuedObjectReference;
 
 
-//// Example: A, varB
-//ValuedObjectReference returns kexpressions::ValuedObjectReference:
-//    {kexpressions::ValuedObjectReference} 
-//    valuedObject=[kexpressions::ValuedObject|ID];
-
 Esterel_ValuedObject returns kexpressions::ValuedObject:
     ISignal | Constant | TrapSignal | IVariable | ValuedObject;
-
-//// Example: 'printf(...)'(C)
-//TextExpression returns TextExpression:
-//    code=HOSTCODE ("(" type=ID ")")?; // in KExpressions there is no 'type'
