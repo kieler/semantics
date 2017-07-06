@@ -34,7 +34,6 @@ class RailSLGenerator extends AbstractGenerator {
         if (visualizer == null) {
             visualizer = new Visualizer()
            }
-        visualizer.assembleModel(resource.contents.filter(Program).head)
         visualizer.updateView()
     }
 

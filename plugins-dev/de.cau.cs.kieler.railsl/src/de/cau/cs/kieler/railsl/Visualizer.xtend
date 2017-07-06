@@ -27,6 +27,14 @@ import de.cau.cs.kieler.railsl.compilation.RailSLTransformation
 import org.eclipse.ui.PlatformUI
 import de.cau.cs.kieler.kvis.ui.views.KVisView
 import org.eclipse.swt.widgets.Display
+import org.eclipse.xtext.ui.editor.utils.EditorUtils
+import org.eclipse.core.commands.ExecutionEvent
+import org.eclipse.xtext.util.concurrent.IUnitOfWork
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.jface.text.TextSelection
+import org.eclipse.xtext.resource.EObjectAtOffsetHelper
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.ui.editor.XtextEditor
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -43,8 +51,13 @@ class Visualizer {
         "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2", "OC_LN_3", "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1",
         "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1", "OI_LN_2"}
 
-    @Inject extension RailSLExtensions
-
+    @Inject 
+    extension RailSLExtensions
+    
+    @Inject 
+    EObjectAtOffsetHelper eObjectAtOffsetHelper;
+    
+    
     private var DataPool pool
 
     new() {
@@ -72,7 +85,32 @@ class Visualizer {
         return pool
     }
 
+    /**
+     * Read the current cursor position from the active editor and 
+     * display the changes made by the currently selected Statement.
+     */
     public def void updateView() {
+
+        // TODO this throws a NullPointerException
+        val editor = PlatformUI.workbench.activeWorkbenchWindow.activePage.activeEditor as XtextEditor
+        val workbench = PlatformUI.workbench
+        val activeWindow = workbench.activeWorkbenchWindow
+        val activePage = activeWindow.activePage
+//        val editor = activePage.activeEditor as XtextEditor
+        
+//        val editor = workbench.editorRegistry.getDefaultEditor("things.railsl") as XtextEditor
+        editor?.document.readOnly(new IUnitOfWork<String, XtextResource>() {
+            
+            override exec(XtextResource state) throws Exception {
+                val textSelection = editor.getSelectionProvider().getSelection() as TextSelection;
+                val object = eObjectAtOffsetHelper.resolveElementAt(state, textSelection.getOffset())
+                
+                updatePool(object)
+                
+                return null
+            }
+            
+        })
 
         Display.getDefault().asyncExec(new Runnable() {
             override void run() {
@@ -80,29 +118,43 @@ class Visualizer {
             }
         });
     }
-
-    public def void assembleModel(Program program) {
-
-        val model = pool.getModel("railway")
-
-        for (block : program.blocks) {
-            model.assembleBlock(block)
+    
+    def void updatePool(EObject object) {
+        
+        //reset the pool to the last state
+        pool = pool.history.get(0)
+        val model = pool.getModel("railway");
+        
+        switch (object) {
+//            case Program: return
+            case Block: return // TODO do something cool here
+            case Statement: model.addValues(object as Statement)
         }
-
     }
 
-    def Model assembleBlock(Model model, Block block) {
-        for (statement : block.statements) {
-            model.addValues(statement)
-        }
-        return model
-    }
-
+//    public def void assembleModel(Program program) {
+//
+//        val model = pool.getModel("railway")
+//
+//        for (block : program.blocks) {
+//            model.assembleBlock(block)
+//        }
+//
+//    }
+//
+//    def Model assembleBlock(Model model, Block block) {
+//        for (statement : block.statements) {
+//            model.addValues(statement)
+//        }
+//        return model
+//    }
+//
     def addValues(Model model, Statement statement) {
         switch (statement) {
             SetTrackStatement: model.addTrackValues(statement as SetTrackStatement)
             SetPointStatement: model.addPointValues(statement as SetPointStatement)
             LightStatement: model.addLightValues(statement as LightStatement)
+            // TODO add more cases here for other types of statements
             default: return
         }
 
