@@ -16,13 +16,13 @@ package de.cau.cs.kieler.esterel.prom
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl
-import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
+import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.launch.IWrapperCodeAnnotationAnalyzer
 import java.io.File
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.

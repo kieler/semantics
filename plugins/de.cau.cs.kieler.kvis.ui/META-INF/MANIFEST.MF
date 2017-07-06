@@ -24,9 +24,10 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.w3c.dom.svg,
  de.cau.cs.kieler.kvis,
  de.cau.cs.kieler.prom,
- de.cau.cs.kieler.kexpressions.ui;bundle-version="0.12.0",
- de.cau.cs.kieler.annotations.ui;bundle-version="0.12.0",
- de.cau.cs.kieler.simulation;bundle-version="0.1.0"
+ de.cau.cs.kieler.prom.ui,
+ de.cau.cs.kieler.kexpressions.ui,
+ de.cau.cs.kieler.annotations.ui,
+ de.cau.cs.kieler.simulation
 Export-Package: de.cau.cs.kieler.kvis.ui.animations,
  de.cau.cs.kieler.kvis.ui.contentassist,
  de.cau.cs.kieler.kvis.ui.contentassist.antlr,

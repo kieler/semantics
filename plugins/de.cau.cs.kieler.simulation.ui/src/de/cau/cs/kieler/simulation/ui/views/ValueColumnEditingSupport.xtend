@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.views
 
-import de.cau.cs.kieler.prom.ui.console.PromConsole
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 import de.cau.cs.kieler.simulation.core.Variable

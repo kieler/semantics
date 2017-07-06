@@ -23,14 +23,15 @@ import de.cau.cs.kieler.kvis.ui.animations.TextAnimation
 import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
 import de.cau.cs.kieler.kvis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
-import de.cau.cs.kieler.prom.common.ModelImporter
-import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
+import java.awt.geom.AffineTransform
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -56,7 +57,6 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.awt.geom.AffineTransform
 
 /**
  * @author aas
@@ -471,7 +471,7 @@ class KVisView extends ViewPart {
         val bars = getViewSite().getActionBars();
         if(bars != null) {
             val statusLineManager = bars.getStatusLineManager()
-            PromPlugin.asyncExecInUI[statusLineManager.setMessage(message)]
+            PromUIPlugin.asyncExecInUI[statusLineManager.setMessage(message)]
         }
     }
     
@@ -497,7 +497,7 @@ class KVisView extends ViewPart {
             override update(SimulationEvent e) {
                 if(KVisView.instance != null && KVisView.instance.lastPool !== e.newPool) {
                     // Update the view in the UI thread
-                    PromPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
+                    PromUIPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
                 }
             }
         }

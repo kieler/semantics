@@ -21,9 +21,9 @@ import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
-import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
-import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
+import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.launch.IWrapperCodeAnnotationAnalyzer
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
@@ -60,7 +60,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                     // that is neither input nor output
                     for (annotation : decl.annotations) {
                          if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
-                             KiCoLaunchConfig.writeToConsole('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
+                             PromConsole.print('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
                          }
                     }
                 }

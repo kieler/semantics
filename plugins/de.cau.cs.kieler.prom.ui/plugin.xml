@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="de.cau.cs.kieler.prom.launch.kiCoLaunchConfig"
+            icon="icons/foerde-logo-16.png"
+            id="de.cau.cs.kieler.prom.launch.kiCoLaunchConfigImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="de.cau.cs.kieler.prom.ui.launch.KiCoLaunchConfigTabGroup"
+            id="de.cau.cs.kieler.prom.ui.launch.kiCoLaunchConfigTabGroup"
+            type="de.cau.cs.kieler.prom.launch.kiCoLaunchConfig">
+         <launchMode
+               mode="run">
+         </launchMode>
+         <launchMode
+               mode="debug">
+         </launchMode>
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="de.cau.cs.kieler.sccharts"
+            class="de.cau.cs.kieler.prom.ui.environments.EnvironmentsPage"
+            id="de.cau.cs.kieler.prom.environmentsPreferencePage"
+            name="Execution Environments">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <newWizardShortcut
+               id="org.eclipse.ui.wizards.new.folder">
+         </newWizardShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="org.eclipse.ui.wizards.new.folder">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="de.cau.cs.kieler.prom.ui.build.PromProjectProperties"
+            id="de.cau.cs.kieler.prom.projectProperties"
+            name="KiCo Build">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+               <test
+                     property="org.eclipse.core.resources.projectNature"
+                     value="de.cau.cs.kieler.prom.KiCoNature">
+               </test>
+            </adapt>
+         </enabledWhen>
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            class="de.cau.cs.kieler.prom.ui.wizards.FreemarkerTemplateFileWizard"
+            hasPages="true"
+            id="de.cau.cs.kieler.prom.ui.ftlFileWizard"
+            name="Freemarker Template"
+            project="false">
+         <description>
+            Create a new FTL file.
+         </description>
+      </wizard>
+   </extension>
+
+</plugin>

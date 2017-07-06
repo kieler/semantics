@@ -5,45 +5,14 @@
    <extension-point id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer" schema="schema/de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer.exsd"/>
    <extension-point id="de.cau.cs.kieler.prom.simulator" name="KIELER Simulator" schema="schema/de.cau.cs.kieler.prom.simulator.exsd"/>
    <extension
-         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
-      <launchConfigurationTypeImage
-            configTypeID="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfig"
-            icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfigImage">
-      </launchConfigurationTypeImage>
-   </extension>
-   <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            delegate="de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig"
-            id="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfig"
+            delegate="de.cau.cs.kieler.prom.launch.KiCoLaunchConfig"
+            id="de.cau.cs.kieler.prom.launch.kiCoLaunchConfig"
             modes="run,debug"
             name="KiCo Compilation"
             public="true">
       </launchConfigurationType>
-   </extension>
-   <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchConfigTabGroup"
-            id="de.cau.cs.kieler.prom.launchconfig.ui.kiCoLaunchConfigTabGroup"
-            type="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfig">
-         <launchMode
-               mode="run">
-         </launchMode>
-         <launchMode
-               mode="debug">
-         </launchMode>
-      </launchConfigurationTabGroup>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="de.cau.cs.kieler.sccharts"
-            class="de.cau.cs.kieler.prom.environments.ui.EnvironmentsPage"
-            id="de.cau.cs.kieler.prom.environmentsPreferencePage"
-            name="Execution Environments">
-      </page>
    </extension>
    <extension
          point="de.cau.cs.kieler.prom.environmentInitializer">
@@ -54,7 +23,7 @@
    <extension
          point="org.eclipse.ltk.core.refactoring.renameParticipants">
       <renameParticipant
-            class="de.cau.cs.kieler.prom.launchconfig.LaunchConfigRenameParticipant"
+            class="de.cau.cs.kieler.prom.launch.LaunchConfigRenameParticipant"
             id="de.cau.cs.kieler.prom.renameParticipant"
             name="Launch Config Rename Participant">
          <enablement>
@@ -67,7 +36,7 @@
    <extension
          point="org.eclipse.ltk.core.refactoring.deleteParticipants">
       <deleteParticipant
-            class="de.cau.cs.kieler.prom.launchconfig.LaunchConfigDeleteParticipant"
+            class="de.cau.cs.kieler.prom.launch.LaunchConfigDeleteParticipant"
             id="de.cau.cs.kieler.prom.deleteParticipant"
             name="Launch Config Delete Participant">
          <enablement>
@@ -75,21 +44,6 @@
                   value="org.eclipse.core.resources.IResource">
             </instanceof></enablement>
       </deleteParticipant>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="de.cau.cs.kieler.Modeling">
-         <newWizardShortcut
-               id="org.eclipse.ui.wizards.new.folder">
-         </newWizardShortcut>
-      </perspectiveExtension>
-      <perspectiveExtension
-            targetID="de.cau.cs.kieler.simulation">
-         <newWizardShortcut
-               id="org.eclipse.ui.wizards.new.folder">
-         </newWizardShortcut>
-      </perspectiveExtension>
    </extension>
    <extension
          id="KiCoBuilder"
@@ -100,7 +54,7 @@
             hasNature="true"
             isConfigurable="true">
          <run
-               class="de.cau.cs.kieler.prom.builder.KiCoBuilder">
+               class="de.cau.cs.kieler.prom.build.KiCoBuilder">
          </run>
       </builder>
    </extension>
@@ -113,26 +67,9 @@
       </builder>
       <runtime>
          <run
-               class="de.cau.cs.kieler.prom.builder.KiCoNature">
+               class="de.cau.cs.kieler.prom.build.KiCoNature">
          </run>
       </runtime>
-   </extension>
-   <extension
-         point="org.eclipse.ui.propertyPages">
-      <page
-            class="de.cau.cs.kieler.prom.builder.ui.PromProjectProperties"
-            id="de.cau.cs.kieler.prom.projectProperties"
-            name="KiCo Build">
-         <enabledWhen>
-            <adapt
-                  type="org.eclipse.core.resources.IProject">
-               <test
-                     property="org.eclipse.core.resources.projectNature"
-                     value="de.cau.cs.kieler.prom.KiCoNature">
-               </test>
-            </adapt>
-         </enabledWhen>
-      </page>
    </extension>
    <extension
          id="kico.problem"
@@ -140,20 +77,6 @@
       <super
             type="org.eclipse.core.resources.problemmarker">
       </super>
-   </extension>
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <wizard
-            canFinishEarly="false"
-            class="de.cau.cs.kieler.prom.filewizard.FreemarkerTemplateFileWizard"
-            hasPages="true"
-            id="de.cau.cs.kieler.prom.ftlFileWizard"
-            name="Freemarker Template"
-            project="false">
-         <description>
-            Create a new FTL file.
-         </description>
-      </wizard>
    </extension>
 
 </plugin>

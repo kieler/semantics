@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.prom.ui.console.PromConsole
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.ui.launch.SimulationLaunchShortcut
 import org.eclipse.core.commands.AbstractHandler

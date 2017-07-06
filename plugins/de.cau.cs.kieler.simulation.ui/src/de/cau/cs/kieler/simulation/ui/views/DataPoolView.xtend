@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import com.google.common.base.Strings
-import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.prom.ui.console.PromConsole
+import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationEvent
@@ -335,7 +335,7 @@ class DataPoolView extends ViewPart {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
                 // Execute in UI thread
-                PromPlugin.asyncExecInUI[
+                PromUIPlugin.asyncExecInUI[
                         // Update status line
                         DataPoolView.instance?.updateStatusBar(e)
                         // Set pool data
