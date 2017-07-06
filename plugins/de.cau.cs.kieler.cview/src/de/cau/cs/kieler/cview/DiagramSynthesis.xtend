@@ -107,11 +107,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     def KNode transformItemFile(File item) {
         val childNode = item.createNode().associateWith(item);
         val childRect = childNode.addRoundedRectangle(4, 4, 2);
-        childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+        val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
         childRect.background = "WHITE".color;
+        childRect.addDoubleClickAction(OpenEditorAction.ID);
+        label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
 
         return childNode
     }
@@ -125,12 +127,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectCol.background = "YELLOW".color;
-        // rectCol.setAsExpandedView
-        rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectCol.addDoubleClickAction(OpenEditorAction.ID);
 
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectExp.background = "YEWLLO".color;
-        rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectExp.addDoubleClickAction(OpenEditorAction.ID);
 
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
@@ -139,16 +142,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
-        label.getFirstText.setAsExpandedView
-
-//        val labelCollapsed = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
-//            KlighdConstants.DEFAULT_FONT_NAME);
-//        labelCollapsed.associateWith(item)
-//        labelCollapsed.getFirstText.setAsCollapsedView
 
         if (item.hieararchical) {
             // Hierarchical case
-            label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+            
             val childArea = item.children.createNode().associateWith(item)
             val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
             childAreaRect.background = "WHITE".color;
@@ -168,17 +167,30 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return childNodeOuter
     }
 
-    def static <T extends KRendering> T setAsExpandedView(T krendering) {
-        krendering.getProperties().removeKey(KlighdProperties.COLLAPSED_RENDERING);
-        krendering.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
-        return krendering;
-    }
 
-    def static <T extends KRendering> T setAsCollapsedView(T krendering) {
-        krendering.getProperties().removeKey(KlighdProperties.EXPANDED_RENDERING);
-        krendering.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
-        return krendering;
-    }
+
+
+
+//        label.getFirstText.setAsExpandedView
+
+//        val labelCollapsed = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
+//            KlighdConstants.DEFAULT_FONT_NAME);
+//        labelCollapsed.associateWith(item)
+//        labelCollapsed.getFirstText.setAsCollapsedView
+
+
+
+//    def static <T extends KRendering> T setAsExpandedView(T krendering) {
+//        krendering.getProperties().removeKey(KlighdProperties.COLLAPSED_RENDERING);
+//        krendering.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
+//        return krendering;
+//    }
+//
+//    def static <T extends KRendering> T setAsCollapsedView(T krendering) {
+//        krendering.getProperties().removeKey(KlighdProperties.EXPANDED_RENDERING);
+//        krendering.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
+//        return krendering;
+//    }
 
 //        (childNodeOuter.class.getMethod("setExpanded", boolean).invoke(childNodeOuter, false))
 //        DiagramController.

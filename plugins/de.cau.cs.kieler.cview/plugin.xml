@@ -69,5 +69,12 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.cview.OpenEditorAction"
+            id="de.cau.cs.kieler.cview.OpenEditorAction">
+      </action>
+   </extension>
 
 </plugin>
