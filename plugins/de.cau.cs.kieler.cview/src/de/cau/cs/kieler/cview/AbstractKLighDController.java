@@ -138,17 +138,18 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
             viewer = controller.getDiagramView().getViewContext().getViewer();
             //ActionContext getActiveViewer().toggleExpansion
             
-            for (KNode node : DiagramSynthesis.allNodes) {
-                
-                Object rcd = RenderingContextData.get(node).getProperty(REP);
-                
-                viewer.toggleExpansion(node);
-//                try {
-//                    viewer.getClass().getMethod("collapse", KNode.class).invoke(viewer, node);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-            }
+//            for (KNode node : DiagramSynthesis.allNodes) {
+//                
+//                Object rcd = RenderingContextData.get(node).getProperty(REP);
+//                
+//                
+//                viewer.toggleExpansion(node);
+////                try {
+////                    viewer.getClass().getMethod("collapse", KNode.class).invoke(viewer, node);
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                }
+//            }
             controller.getDiagramView().updateDiagram();
         }
 

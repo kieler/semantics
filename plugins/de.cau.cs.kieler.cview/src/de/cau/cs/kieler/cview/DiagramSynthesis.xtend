@@ -38,6 +38,9 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KNodeAbstractNode
 import org.eclipse.emf.common.util.EList
 import java.util.List
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KChildAreaNode
+import de.cau.cs.kieler.klighd.SynthesisOption
+import java.util.LinkedHashSet
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -52,26 +55,36 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KColorExtensions
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
-    
-    
-    public static val List<KNode> allNodes = newArrayList
+
+    /** Option for enabling adaptive zoom */
+    public static final SynthesisOption EXPAND_ALL = SynthesisOption.createCheckOption(
+            "Expand Nodes", false);
+
+    public static final SynthesisOption EXPANDED_SLIDER = SynthesisOption.createRangeOption("Expanded Layers", 1, 5, 2);
+
+    override getDisplayedSynthesisOptions() {
+        val options = new LinkedHashSet();
+        // Add general options
+        options.addAll(EXPANDED_SLIDER);
+        return options.toList;
+    }
 
     override KNode transform(CViewModel model) {
-        allNodes.clear
-
+//        allNodes.clear
         // If you get a NPE here, then add "de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:" before the
         // class name of the synthesis defined in the plugin.xml under "<diagramSynthesis>" 
         val root = model.createNode().associateWith(model);
+        val depth = 1;
 
         // val parentNode = model.createNode().associateWith(model);
         for (item : model.folders) {
             if (item.parent == null) {
-                root.children.add(item.transformItem)
+                root.children.add(item.transformItem(depth))
             }
         }
         for (item : model.files) {
             if (item.parent == null) {
-                root.children.add(item.transformItem)
+                root.children.add(item.transformItem(depth))
             }
         }
 
@@ -83,11 +96,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return root;
     }
 
-    def KNode transformItem(FileOrFolder item) {
+    def KNode transformItem(FileOrFolder item, int depth) {
         if (item instanceof File) {
             return item.transformItemFile()
         } else if (item instanceof Folder) {
-            return item.transformItemFolder()
+            return item.transformItemFolder(depth)
         }
     }
 
@@ -107,56 +120,64 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return !item.children.nullOrEmpty;
     }
 
-    def KNode transformItemFolder(Folder item) {
+    def KNode transformItemFolder(Folder item, int depth) {
         val childNodeOuter = item.createNode().associateWith(item);
 
         val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectCol.background = "YELLOW".color;
-        //rectCol.setAsExpandedView
+        // rectCol.setAsExpandedView
         rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
 
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectExp.background = "YEWLLO".color;
-        //rectExp.setAsCollapsedView
+        // rectExp.setAsCollapsedView
         rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
 
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
-        if (!item.hieararchical) {
-            // Non-hierarchical case
-//                childNode.addDefaultFigure
-        } else {
+        val itemLabel = item.name
+        val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
+            KlighdConstants.DEFAULT_FONT_NAME);
+        label.associateWith(item)
+
+        if (item.hieararchical) {
             // Hierarchical case
-            val itemLabel = item.name
-
-            childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
-                KlighdConstants.DEFAULT_FONT_NAME).associateWith(item);
-
+            label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             val childArea = item.children.createNode().associateWith(item)
             val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
             childAreaRect.background = "WHITE".color;
             childAreaRect.foreground = "GRAY".color;
-
-            rectExp.setAreaPlacementData().from(LEFT, -2, 0, TOP, 2, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-
+            rectExp.setAreaPlacementData().from(LEFT, -2, 0, TOP, 4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
             childNodeOuter.children.add(childArea)
             childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-
+            
+            childNodeOuter.setProperty(KlighdProperties.EXPAND, (EXPANDED_SLIDER.intValue > 4 || EXPANDED_SLIDER.intValue > depth));
+            
             for (child : item.children) {
-                childArea.children += child.transformItem;
+                childArea.children += child.transformItem(depth+1);
             }
         }
-
-//        (childNodeOuter.class.getMethod("setExpanded", boolean).invoke(childNodeOuter, false))
-//        DiagramController.
-
-        allNodes.add(childNodeOuter)
 
         return childNodeOuter
     }
 
+    def static <T extends KRendering> T setAsExpandedView(T krendering) {
+        krendering.getProperties().removeKey(KlighdProperties.COLLAPSED_RENDERING);
+        krendering.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
+        return krendering;
+    }
+
+    def static <T extends KRendering> T setAsCollapsedView(T krendering) {
+        krendering.getProperties().removeKey(KlighdProperties.EXPANDED_RENDERING);
+        krendering.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
+        return krendering;
+    }
+
+//        (childNodeOuter.class.getMethod("setExpanded", boolean).invoke(childNodeOuter, false))
+//        DiagramController.
+//        allNodes.add(childNodeOuter)
 //            val childArea = item.createNode().associateWith(item)
 //            val areaRect = childArea.addRoundedRectangle(4, 4, 1)
 //            childNode.children.add(childArea)
@@ -221,18 +242,23 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //            }
 //        ]
 //    }
-    def static <T extends KRendering> T setAsExpandedView(T krendering) {
-        krendering.getProperties().removeKey(KlighdProperties.COLLAPSED_RENDERING);
-        krendering.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
-        return krendering;
-    }
-
-    def static <T extends KRendering> T setAsCollapsedView(T krendering) {
-        krendering.getProperties().removeKey(KlighdProperties.EXPANDED_RENDERING);
-        krendering.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
-        return krendering;
-    }
-
+//    def KText addButtonTop(KContainerRendering container, String text) {
+//        container.addText(text) => [
+//            foreground = "BLACK".color;
+//            fontSize = 10;
+//            val size = estimateTextSize;
+//            setPointPlacementData(LEFT, 3, 0, TOP, 1, 0, H_CENTRAL, V_TOP, 8, 8, size.width, size.height);
+//        ]
+//    }
+//
+//    def KText addButtonCenter(KContainerRendering container, String text) {
+//        container.addText(text) => [
+//            foreground = "BLACK".color;
+//            fontSize = 10;
+//            val size = estimateTextSize;
+//            setPointPlacementData(LEFT, 3, 0, TOP, 1, 0, H_CENTRAL, V_CENTRAL, 8, 8, size.width, size.height);
+//        ]
+//    }
 //        /**
 //     * Adds a button with text.
 //     */
@@ -270,4 +296,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //    val static Bounds estimateTextSize(KText kText) {
 //        return estimateTextSize(kText, kText.getText());
 //    }
+//    public static val List<KNode> allNodes = newArrayList
+//    public static val List<KChildAreaNode> allChildAreas = newArrayList
 }
