@@ -127,6 +127,8 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionRenamingAccess().getAlternatives_0(), "rule__FunctionRenaming__Alternatives_0");
 					put(grammarAccess.getBuildInFunctionAccess().getAlternatives(), "rule__BuildInFunction__Alternatives");
 					put(grammarAccess.getConstantExpressionAccess().getAlternatives_1(), "rule__ConstantExpression__Alternatives_1");
+					put(grammarAccess.getTrapNotExpressionAccess().getAlternatives(), "rule__TrapNotExpression__Alternatives");
+					put(grammarAccess.getTrapAtomicExpressionAccess().getAlternatives(), "rule__TrapAtomicExpression__Alternatives");
 					put(grammarAccess.getSignalNotExpressionAccess().getAlternatives(), "rule__SignalNotExpression__Alternatives");
 					put(grammarAccess.getSignalAtomicExpressionAccess().getAlternatives(), "rule__SignalAtomicExpression__Alternatives");
 					put(grammarAccess.getDelayExprAccess().getAlternatives_0(), "rule__DelayExpr__Alternatives_0");
@@ -418,6 +420,15 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionExpressionAccess().getGroup_3(), "rule__FunctionExpression__Group_3__0");
 					put(grammarAccess.getFunctionExpressionAccess().getGroup_3_1(), "rule__FunctionExpression__Group_3_1__0");
 					put(grammarAccess.getConstantExpressionAccess().getGroup(), "rule__ConstantExpression__Group__0");
+					put(grammarAccess.getTrapExprAccess().getGroup(), "rule__TrapExpr__Group__0");
+					put(grammarAccess.getTrapExprAccess().getGroup_1(), "rule__TrapExpr__Group_1__0");
+					put(grammarAccess.getTrapExprAccess().getGroup_1_1(), "rule__TrapExpr__Group_1_1__0");
+					put(grammarAccess.getTrapAndExpressionAccess().getGroup(), "rule__TrapAndExpression__Group__0");
+					put(grammarAccess.getTrapAndExpressionAccess().getGroup_1(), "rule__TrapAndExpression__Group_1__0");
+					put(grammarAccess.getTrapAndExpressionAccess().getGroup_1_1(), "rule__TrapAndExpression__Group_1_1__0");
+					put(grammarAccess.getTrapNotExpressionAccess().getGroup_0(), "rule__TrapNotExpression__Group_0__0");
+					put(grammarAccess.getTrapAtomicExpressionAccess().getGroup_1(), "rule__TrapAtomicExpression__Group_1__0");
+					put(grammarAccess.getTrapReferenceExprAccess().getGroup(), "rule__TrapReferenceExpr__Group__0");
 					put(grammarAccess.getSignalExpressionAccess().getGroup(), "rule__SignalExpression__Group__0");
 					put(grammarAccess.getSignalExpressionAccess().getGroup_1(), "rule__SignalExpression__Group_1__0");
 					put(grammarAccess.getSignalExpressionAccess().getGroup_1_1(), "rule__SignalExpression__Group_1_1__0");
@@ -425,10 +436,9 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAndExpressionAccess().getGroup_1(), "rule__SignalAndExpression__Group_1__0");
 					put(grammarAccess.getSignalAndExpressionAccess().getGroup_1_1(), "rule__SignalAndExpression__Group_1_1__0");
 					put(grammarAccess.getSignalNotExpressionAccess().getGroup_0(), "rule__SignalNotExpression__Group_0__0");
-					put(grammarAccess.getSignalAtomicExpressionAccess().getGroup_1(), "rule__SignalAtomicExpression__Group_1__0");
+					put(grammarAccess.getSignalAtomicExpressionAccess().getGroup_0(), "rule__SignalAtomicExpression__Group_0__0");
 					put(grammarAccess.getSignalReferenceExprAccess().getGroup(), "rule__SignalReferenceExpr__Group__0");
 					put(grammarAccess.getSignalPreExprAccess().getGroup(), "rule__SignalPreExpr__Group__0");
-					put(grammarAccess.getTrapReferenceExprAccess().getGroup(), "rule__TrapReferenceExpr__Group__0");
 					put(grammarAccess.getDelayExprAccess().getGroup(), "rule__DelayExpr__Group__0");
 					put(grammarAccess.getDelayExprAccess().getGroup_1_1(), "rule__DelayExpr__Group_1_1__0");
 					put(grammarAccess.getOrExpressionAccess().getGroup(), "rule__OrExpression__Group__0");
@@ -902,6 +912,13 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionExpressionAccess().getKexpressionsAssignment_3_1_1(), "rule__FunctionExpression__KexpressionsAssignment_3_1_1");
 					put(grammarAccess.getConstantExpressionAccess().getConstantAssignment_1_0(), "rule__ConstantExpression__ConstantAssignment_1_0");
 					put(grammarAccess.getConstantExpressionAccess().getValueAssignment_1_1(), "rule__ConstantExpression__ValueAssignment_1_1");
+					put(grammarAccess.getTrapExprAccess().getOperatorAssignment_1_1_0(), "rule__TrapExpr__OperatorAssignment_1_1_0");
+					put(grammarAccess.getTrapExprAccess().getSubExpressionsAssignment_1_1_1(), "rule__TrapExpr__SubExpressionsAssignment_1_1_1");
+					put(grammarAccess.getTrapAndExpressionAccess().getOperatorAssignment_1_1_0(), "rule__TrapAndExpression__OperatorAssignment_1_1_0");
+					put(grammarAccess.getTrapAndExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__TrapAndExpression__SubExpressionsAssignment_1_1_1");
+					put(grammarAccess.getTrapNotExpressionAccess().getOperatorAssignment_0_1(), "rule__TrapNotExpression__OperatorAssignment_0_1");
+					put(grammarAccess.getTrapNotExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__TrapNotExpression__SubExpressionsAssignment_0_2");
+					put(grammarAccess.getTrapReferenceExprAccess().getValuedObjectAssignment_1(), "rule__TrapReferenceExpr__ValuedObjectAssignment_1");
 					put(grammarAccess.getSignalExpressionAccess().getOperatorAssignment_1_1_0(), "rule__SignalExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getSignalExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__SignalExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getSignalAndExpressionAccess().getOperatorAssignment_1_1_0(), "rule__SignalAndExpression__OperatorAssignment_1_1_0");
@@ -911,7 +928,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalReferenceExprAccess().getValuedObjectAssignment_1(), "rule__SignalReferenceExpr__ValuedObjectAssignment_1");
 					put(grammarAccess.getSignalPreExprAccess().getOperatorAssignment_1(), "rule__SignalPreExpr__OperatorAssignment_1");
 					put(grammarAccess.getSignalPreExprAccess().getSubExpressionsAssignment_3(), "rule__SignalPreExpr__SubExpressionsAssignment_3");
-					put(grammarAccess.getTrapReferenceExprAccess().getValuedObjectAssignment_1(), "rule__TrapReferenceExpr__ValuedObjectAssignment_1");
 					put(grammarAccess.getDelayExprAccess().getExpressionAssignment_0_0(), "rule__DelayExpr__ExpressionAssignment_0_0");
 					put(grammarAccess.getDelayExprAccess().getIsImmediateAssignment_0_1(), "rule__DelayExpr__IsImmediateAssignment_0_1");
 					put(grammarAccess.getDelayExprAccess().getSignalExprAssignment_1_0(), "rule__DelayExpr__SignalExprAssignment_1_0");

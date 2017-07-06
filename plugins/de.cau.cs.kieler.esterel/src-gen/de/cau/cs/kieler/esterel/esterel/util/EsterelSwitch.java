@@ -675,21 +675,21 @@ public class EsterelSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.SIGNAL_REFERENCE_EXPR:
-      {
-        SignalReferenceExpr signalReferenceExpr = (SignalReferenceExpr)theEObject;
-        T result = caseSignalReferenceExpr(signalReferenceExpr);
-        if (result == null) result = caseValuedObjectReference(signalReferenceExpr);
-        if (result == null) result = caseExpression(signalReferenceExpr);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsterelPackage.TRAP_REFERENCE_EXPR:
       {
         TrapReferenceExpr trapReferenceExpr = (TrapReferenceExpr)theEObject;
         T result = caseTrapReferenceExpr(trapReferenceExpr);
         if (result == null) result = caseValuedObjectReference(trapReferenceExpr);
         if (result == null) result = caseExpression(trapReferenceExpr);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.SIGNAL_REFERENCE_EXPR:
+      {
+        SignalReferenceExpr signalReferenceExpr = (SignalReferenceExpr)theEObject;
+        T result = caseSignalReferenceExpr(signalReferenceExpr);
+        if (result == null) result = caseValuedObjectReference(signalReferenceExpr);
+        if (result == null) result = caseExpression(signalReferenceExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1850,22 +1850,6 @@ public class EsterelSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal Reference Expr</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal Reference Expr</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignalReferenceExpr(SignalReferenceExpr object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Trap Reference Expr</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1877,6 +1861,22 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTrapReferenceExpr(TrapReferenceExpr object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Signal Reference Expr</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Signal Reference Expr</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSignalReferenceExpr(SignalReferenceExpr object)
   {
     return null;
   }

@@ -401,6 +401,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="constant" eType="#//Constant"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SignalReferenceExpr" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="TrapReferenceExpr" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SignalReferenceExpr" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
 </ecore:EPackage>

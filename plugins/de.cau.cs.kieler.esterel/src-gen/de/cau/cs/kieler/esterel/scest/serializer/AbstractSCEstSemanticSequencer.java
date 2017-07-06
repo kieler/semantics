@@ -489,8 +489,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTrapExprRule()
-						|| rule == grammarAccess.getSignalExpressionRule()
+				else if (rule == grammarAccess.getSignalExpressionRule()
 						|| action == grammarAccess.getSignalExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSignalAndExpressionRule()
 						|| action == grammarAccess.getSignalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
@@ -501,6 +500,20 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				}
 				else if (rule == grammarAccess.getSignalPreExprRule()) {
 					sequence_SignalPreExpr(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTrapExprRule()) {
+					sequence_TrapAndExpression_TrapExpr_TrapNotExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (action == grammarAccess.getTrapExprAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getTrapAndExpressionRule()) {
+					sequence_TrapAndExpression_TrapNotExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (action == grammarAccess.getTrapAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getTrapNotExpressionRule()) {
+					sequence_TrapNotExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {

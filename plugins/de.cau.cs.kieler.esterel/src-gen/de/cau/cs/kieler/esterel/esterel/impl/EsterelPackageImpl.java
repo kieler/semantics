@@ -609,14 +609,14 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass signalReferenceExprEClass = null;
+  private EClass trapReferenceExprEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass trapReferenceExprEClass = null;
+  private EClass signalReferenceExprEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -2849,9 +2849,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSignalReferenceExpr()
+  public EClass getTrapReferenceExpr()
   {
-    return signalReferenceExprEClass;
+    return trapReferenceExprEClass;
   }
 
   /**
@@ -2859,9 +2859,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getTrapReferenceExpr()
+  public EClass getSignalReferenceExpr()
   {
-    return trapReferenceExprEClass;
+    return signalReferenceExprEClass;
   }
 
   /**
@@ -3182,9 +3182,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(constantExpressionEClass, CONSTANT_EXPRESSION__CONSTANT);
     createEAttribute(constantExpressionEClass, CONSTANT_EXPRESSION__VALUE);
 
-    signalReferenceExprEClass = createEClass(SIGNAL_REFERENCE_EXPR);
-
     trapReferenceExprEClass = createEClass(TRAP_REFERENCE_EXPR);
+
+    signalReferenceExprEClass = createEClass(SIGNAL_REFERENCE_EXPR);
   }
 
   /**
@@ -3277,8 +3277,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     trapExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
     functionExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
     constantExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
-    signalReferenceExprEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
     trapReferenceExprEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
+    signalReferenceExprEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3569,9 +3569,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getConstantExpression_Constant(), this.getConstant(), null, "constant", null, 0, 1, ConstantExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConstantExpression_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstantExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(signalReferenceExprEClass, SignalReferenceExpr.class, "SignalReferenceExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
     initEClass(trapReferenceExprEClass, TrapReferenceExpr.class, "TrapReferenceExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(signalReferenceExprEClass, SignalReferenceExpr.class, "SignalReferenceExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

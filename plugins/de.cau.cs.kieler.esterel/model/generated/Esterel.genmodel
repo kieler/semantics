@@ -285,7 +285,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantExpression/constant"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantExpression/value"/>
     </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//SignalReferenceExpr"/>
     <genClasses ecoreClass="Esterel.ecore#//TrapReferenceExpr"/>
+    <genClasses ecoreClass="Esterel.ecore#//SignalReferenceExpr"/>
   </genPackages>
 </genmodel:GenModel>

@@ -6135,16 +6135,205 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class TrapExprElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.TrapExpr");
-		private final RuleCall cSignalExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cTrapAndExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsTrapAndExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// --> B.3.5 Trap Expressions <--
 		//// -------------------------------------
+		//// The warning can be ignored since the operator will only override itself in this loop.
 		//TrapExpr kexpressions::Expression:
-		//	SignalExpression
+		//	TrapAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//	subExpressions+=TrapAndExpression)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//SignalExpression
-		public RuleCall getSignalExpressionParserRuleCall() { return cSignalExpressionParserRuleCall; }
+		//TrapAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//subExpressions+=TrapAndExpression)+)?
+		public Group getGroup() { return cGroup; }
+
+		//TrapAndExpression
+		public RuleCall getTrapAndExpressionParserRuleCall_0() { return cTrapAndExpressionParserRuleCall_0; }
+
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+		//subExpressions+=TrapAndExpression)+)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{kexpressions::OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//(operator=Esterel_OrOperator subExpressions+=TrapAndExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//operator=Esterel_OrOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+
+		//Esterel_OrOperator
+		public RuleCall getOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0; }
+
+		//subExpressions+=TrapAndExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+
+		//TrapAndExpression
+		public RuleCall getSubExpressionsTrapAndExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsTrapAndExpressionParserRuleCall_1_1_1_0; }
+	}
+
+	public class TrapAndExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.TrapAndExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cTrapNotExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsTrapNotExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
+		
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//TrapAndExpression kexpressions::Expression:
+		//	TrapNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//	subExpressions+=TrapNotExpression)+)?
+		@Override public ParserRule getRule() { return rule; }
+
+		//TrapNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//subExpressions+=TrapNotExpression)+)?
+		public Group getGroup() { return cGroup; }
+
+		//TrapNotExpression
+		public RuleCall getTrapNotExpressionParserRuleCall_0() { return cTrapNotExpressionParserRuleCall_0; }
+
+		//({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+		//subExpressions+=TrapNotExpression)+)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{kexpressions::OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//(operator=Esterel_AndOperator subExpressions+=TrapNotExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//operator=Esterel_AndOperator
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
+
+		//Esterel_AndOperator
+		public RuleCall getOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0() { return cOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0; }
+
+		//subExpressions+=TrapNotExpression
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
+
+		//TrapNotExpression
+		public RuleCall getSubExpressionsTrapNotExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsTrapNotExpressionParserRuleCall_1_1_1_0; }
+	}
+
+	public class TrapNotExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.TrapNotExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorEsterel_NotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsTrapAtomicExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cTrapAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// The warning can be ignored since the operator will only override itself in this loop.
+		//TrapNotExpression kexpressions::Expression:
+		//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator+
+		//	subExpressions+=TrapAtomicExpression
+		//	| TrapAtomicExpression
+		@Override public ParserRule getRule() { return rule; }
+
+		//{kexpressions::OperatorExpression} operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression |
+		//TrapAtomicExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{kexpressions::OperatorExpression} operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{kexpressions::OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+
+		//operator=Esterel_NotOperator+
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+
+		//Esterel_NotOperator
+		public RuleCall getOperatorEsterel_NotOperatorEnumRuleCall_0_1_0() { return cOperatorEsterel_NotOperatorEnumRuleCall_0_1_0; }
+
+		//subExpressions+=TrapAtomicExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+
+		//TrapAtomicExpression
+		public RuleCall getSubExpressionsTrapAtomicExpressionParserRuleCall_0_2_0() { return cSubExpressionsTrapAtomicExpressionParserRuleCall_0_2_0; }
+
+		//TrapAtomicExpression
+		public RuleCall getTrapAtomicExpressionParserRuleCall_1() { return cTrapAtomicExpressionParserRuleCall_1; }
+	}
+
+	public class TrapAtomicExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.TrapAtomicExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cTrapReferenceExprParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cTrapExpressionParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//TrapAtomicExpression kexpressions::Expression:
+		//	TrapReferenceExpr
+		//	| "(" TrapExpression ")"
+		@Override public ParserRule getRule() { return rule; }
+
+		//TrapReferenceExpr | "(" TrapExpression ")"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//TrapReferenceExpr
+		public RuleCall getTrapReferenceExprParserRuleCall_0() { return cTrapReferenceExprParserRuleCall_0; }
+
+		//"(" TrapExpression ")"
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+
+		//TrapExpression
+		public RuleCall getTrapExpressionParserRuleCall_1_1() { return cTrapExpressionParserRuleCall_1_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+	}
+
+	public class TrapReferenceExprElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.TrapReferenceExpr");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTrapReferenceExprAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cValuedObjectTrapSignalCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
+		private final RuleCall cValuedObjectTrapSignalIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectTrapSignalCrossReference_1_0.eContents().get(1);
+		
+		//TrapReferenceExpr kexpressions::ValuedObjectReference:
+		//	{TrapReferenceExpr} valuedObject=[TrapSignal]
+		@Override public ParserRule getRule() { return rule; }
+
+		//{TrapReferenceExpr} valuedObject=[TrapSignal]
+		public Group getGroup() { return cGroup; }
+
+		//{TrapReferenceExpr}
+		public Action getTrapReferenceExprAction_0() { return cTrapReferenceExprAction_0; }
+
+		//valuedObject=[TrapSignal]
+		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
+
+		//[TrapSignal]
+		public CrossReference getValuedObjectTrapSignalCrossReference_1_0() { return cValuedObjectTrapSignalCrossReference_1_0; }
+
+		//ID
+		public RuleCall getValuedObjectTrapSignalIDTerminalRuleCall_1_0_1() { return cValuedObjectTrapSignalIDTerminalRuleCall_1_0_1; }
 	}
 
 	public class SignalExpressionElements extends AbstractParserRuleElementFinder {
@@ -6292,44 +6481,39 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	public class SignalAtomicExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.SignalAtomicExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cSignalReferenceExprParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final RuleCall cSignalExpressionParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final RuleCall cSignalPreExprParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cTrapReferenceExprParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final RuleCall cSignalExpressionParserRuleCall_0_1 = (RuleCall)cGroup_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final RuleCall cSignalPreExprParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSignalReferenceExprParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//SignalAtomicExpression kexpressions::Expression:
-		//	SignalReferenceExpr
-		//	| "(" SignalExpression ")"
+		//	"(" SignalExpression ")"
 		//	| SignalPreExpr
-		//	| TrapReferenceExpr
+		//	| SignalReferenceExpr
 		@Override public ParserRule getRule() { return rule; }
 
-		//SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | TrapReferenceExpr
+		//"(" SignalExpression ")" | SignalPreExpr | SignalReferenceExpr
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//SignalReferenceExpr
-		public RuleCall getSignalReferenceExprParserRuleCall_0() { return cSignalReferenceExprParserRuleCall_0; }
-
 		//"(" SignalExpression ")"
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_0() { return cGroup_0; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		public Keyword getLeftParenthesisKeyword_0_0() { return cLeftParenthesisKeyword_0_0; }
 
 		//SignalExpression
-		public RuleCall getSignalExpressionParserRuleCall_1_1() { return cSignalExpressionParserRuleCall_1_1; }
+		public RuleCall getSignalExpressionParserRuleCall_0_1() { return cSignalExpressionParserRuleCall_0_1; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+		public Keyword getRightParenthesisKeyword_0_2() { return cRightParenthesisKeyword_0_2; }
 
 		//SignalPreExpr
-		public RuleCall getSignalPreExprParserRuleCall_2() { return cSignalPreExprParserRuleCall_2; }
+		public RuleCall getSignalPreExprParserRuleCall_1() { return cSignalPreExprParserRuleCall_1; }
 
-		//TrapReferenceExpr
-		public RuleCall getTrapReferenceExprParserRuleCall_3() { return cTrapReferenceExprParserRuleCall_3; }
+		//SignalReferenceExpr
+		public RuleCall getSignalReferenceExprParserRuleCall_2() { return cSignalReferenceExprParserRuleCall_2; }
 	}
 
 	public class SignalReferenceExprElements extends AbstractParserRuleElementFinder {
@@ -6399,34 +6583,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//')'
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
-	}
-
-	public class TrapReferenceExprElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.Esterel.TrapReferenceExpr");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cTrapReferenceExprAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cValuedObjectTrapSignalCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
-		private final RuleCall cValuedObjectTrapSignalIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectTrapSignalCrossReference_1_0.eContents().get(1);
-		
-		//TrapReferenceExpr kexpressions::ValuedObjectReference:
-		//	{TrapReferenceExpr} valuedObject=[TrapSignal]
-		@Override public ParserRule getRule() { return rule; }
-
-		//{TrapReferenceExpr} valuedObject=[TrapSignal]
-		public Group getGroup() { return cGroup; }
-
-		//{TrapReferenceExpr}
-		public Action getTrapReferenceExprAction_0() { return cTrapReferenceExprAction_0; }
-
-		//valuedObject=[TrapSignal]
-		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
-
-		//[TrapSignal]
-		public CrossReference getValuedObjectTrapSignalCrossReference_1_0() { return cValuedObjectTrapSignalCrossReference_1_0; }
-
-		//ID
-		public RuleCall getValuedObjectTrapSignalIDTerminalRuleCall_1_0_1() { return cValuedObjectTrapSignalIDTerminalRuleCall_1_0_1; }
 	}
 
 	public class DelayExprElements extends AbstractParserRuleElementFinder {
@@ -7677,13 +7833,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private final FunctionExpressionElements pFunctionExpression;
 	private final ConstantExpressionElements pConstantExpression;
 	private final TrapExprElements pTrapExpr;
+	private final TrapAndExpressionElements pTrapAndExpression;
+	private final TrapNotExpressionElements pTrapNotExpression;
+	private final TrapAtomicExpressionElements pTrapAtomicExpression;
+	private final TrapReferenceExprElements pTrapReferenceExpr;
 	private final SignalExpressionElements pSignalExpression;
 	private final SignalAndExpressionElements pSignalAndExpression;
 	private final SignalNotExpressionElements pSignalNotExpression;
 	private final SignalAtomicExpressionElements pSignalAtomicExpression;
 	private final SignalReferenceExprElements pSignalReferenceExpr;
 	private final SignalPreExprElements pSignalPreExpr;
-	private final TrapReferenceExprElements pTrapReferenceExpr;
 	private final DelayExprElements pDelayExpr;
 	private final ExpressionElements pExpression;
 	private final BooleanExpressionElements pBooleanExpression;
@@ -7822,13 +7981,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		this.pFunctionExpression = new FunctionExpressionElements();
 		this.pConstantExpression = new ConstantExpressionElements();
 		this.pTrapExpr = new TrapExprElements();
+		this.pTrapAndExpression = new TrapAndExpressionElements();
+		this.pTrapNotExpression = new TrapNotExpressionElements();
+		this.pTrapAtomicExpression = new TrapAtomicExpressionElements();
+		this.pTrapReferenceExpr = new TrapReferenceExprElements();
 		this.pSignalExpression = new SignalExpressionElements();
 		this.pSignalAndExpression = new SignalAndExpressionElements();
 		this.pSignalNotExpression = new SignalNotExpressionElements();
 		this.pSignalAtomicExpression = new SignalAtomicExpressionElements();
 		this.pSignalReferenceExpr = new SignalReferenceExprElements();
 		this.pSignalPreExpr = new SignalPreExprElements();
-		this.pTrapReferenceExpr = new TrapReferenceExprElements();
 		this.pDelayExpr = new DelayExprElements();
 		this.pExpression = new ExpressionElements();
 		this.pBooleanExpression = new BooleanExpressionElements();
@@ -9031,14 +9193,62 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --> B.3.5 Trap Expressions <--
 	//// -------------------------------------
+	//// The warning can be ignored since the operator will only override itself in this loop.
 	//TrapExpr kexpressions::Expression:
-	//	SignalExpression
+	//	TrapAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+	//	subExpressions+=TrapAndExpression)+)?
 	public TrapExprElements getTrapExprAccess() {
 		return pTrapExpr;
 	}
 	
 	public ParserRule getTrapExprRule() {
 		return getTrapExprAccess().getRule();
+	}
+
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//TrapAndExpression kexpressions::Expression:
+	//	TrapNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+	//	subExpressions+=TrapNotExpression)+)?
+	public TrapAndExpressionElements getTrapAndExpressionAccess() {
+		return pTrapAndExpression;
+	}
+	
+	public ParserRule getTrapAndExpressionRule() {
+		return getTrapAndExpressionAccess().getRule();
+	}
+
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//TrapNotExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator+
+	//	subExpressions+=TrapAtomicExpression
+	//	| TrapAtomicExpression
+	public TrapNotExpressionElements getTrapNotExpressionAccess() {
+		return pTrapNotExpression;
+	}
+	
+	public ParserRule getTrapNotExpressionRule() {
+		return getTrapNotExpressionAccess().getRule();
+	}
+
+	//TrapAtomicExpression kexpressions::Expression:
+	//	TrapReferenceExpr
+	//	| "(" TrapExpression ")"
+	public TrapAtomicExpressionElements getTrapAtomicExpressionAccess() {
+		return pTrapAtomicExpression;
+	}
+	
+	public ParserRule getTrapAtomicExpressionRule() {
+		return getTrapAtomicExpressionAccess().getRule();
+	}
+
+	//TrapReferenceExpr kexpressions::ValuedObjectReference:
+	//	{TrapReferenceExpr} valuedObject=[TrapSignal]
+	public TrapReferenceExprElements getTrapReferenceExprAccess() {
+		return pTrapReferenceExpr;
+	}
+	
+	public ParserRule getTrapReferenceExprRule() {
+		return getTrapReferenceExprAccess().getRule();
 	}
 
 	//// --> B.3.3 Signal Expressions <--
@@ -9081,10 +9291,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SignalAtomicExpression kexpressions::Expression:
-	//	SignalReferenceExpr
-	//	| "(" SignalExpression ")"
+	//	"(" SignalExpression ")"
 	//	| SignalPreExpr
-	//	| TrapReferenceExpr
+	//	| SignalReferenceExpr
 	public SignalAtomicExpressionElements getSignalAtomicExpressionAccess() {
 		return pSignalAtomicExpression;
 	}
@@ -9112,16 +9321,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSignalPreExprRule() {
 		return getSignalPreExprAccess().getRule();
-	}
-
-	//TrapReferenceExpr kexpressions::ValuedObjectReference:
-	//	{TrapReferenceExpr} valuedObject=[TrapSignal]
-	public TrapReferenceExprElements getTrapReferenceExprAccess() {
-		return pTrapReferenceExpr;
-	}
-	
-	public ParserRule getTrapReferenceExprRule() {
-		return getTrapReferenceExprAccess().getRule();
 	}
 
 	//// --> B.3.4 Delay Expressions <--

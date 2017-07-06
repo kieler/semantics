@@ -5335,14 +5335,62 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --> B.3.5 Trap Expressions <--
 	//// -------------------------------------
+	//// The warning can be ignored since the operator will only override itself in this loop.
 	//TrapExpr kexpressions::Expression:
-	//	SignalExpression
+	//	TrapAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_OrOperator
+	//	subExpressions+=TrapAndExpression)+)?
 	public EsterelGrammarAccess.TrapExprElements getTrapExprAccess() {
 		return gaEsterel.getTrapExprAccess();
 	}
 	
 	public ParserRule getTrapExprRule() {
 		return getTrapExprAccess().getRule();
+	}
+
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//TrapAndExpression kexpressions::Expression:
+	//	TrapNotExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=Esterel_AndOperator
+	//	subExpressions+=TrapNotExpression)+)?
+	public EsterelGrammarAccess.TrapAndExpressionElements getTrapAndExpressionAccess() {
+		return gaEsterel.getTrapAndExpressionAccess();
+	}
+	
+	public ParserRule getTrapAndExpressionRule() {
+		return getTrapAndExpressionAccess().getRule();
+	}
+
+	//// The warning can be ignored since the operator will only override itself in this loop.
+	//TrapNotExpression kexpressions::Expression:
+	//	{kexpressions::OperatorExpression} operator=Esterel_NotOperator+
+	//	subExpressions+=TrapAtomicExpression
+	//	| TrapAtomicExpression
+	public EsterelGrammarAccess.TrapNotExpressionElements getTrapNotExpressionAccess() {
+		return gaEsterel.getTrapNotExpressionAccess();
+	}
+	
+	public ParserRule getTrapNotExpressionRule() {
+		return getTrapNotExpressionAccess().getRule();
+	}
+
+	//TrapAtomicExpression kexpressions::Expression:
+	//	TrapReferenceExpr
+	//	| "(" TrapExpression ")"
+	public EsterelGrammarAccess.TrapAtomicExpressionElements getTrapAtomicExpressionAccess() {
+		return gaEsterel.getTrapAtomicExpressionAccess();
+	}
+	
+	public ParserRule getTrapAtomicExpressionRule() {
+		return getTrapAtomicExpressionAccess().getRule();
+	}
+
+	//TrapReferenceExpr kexpressions::ValuedObjectReference:
+	//	{TrapReferenceExpr} valuedObject=[TrapSignal]
+	public EsterelGrammarAccess.TrapReferenceExprElements getTrapReferenceExprAccess() {
+		return gaEsterel.getTrapReferenceExprAccess();
+	}
+	
+	public ParserRule getTrapReferenceExprRule() {
+		return getTrapReferenceExprAccess().getRule();
 	}
 
 	//// --> B.3.3 Signal Expressions <--
@@ -5385,10 +5433,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SignalAtomicExpression kexpressions::Expression:
-	//	SignalReferenceExpr
-	//	| "(" SignalExpression ")"
+	//	"(" SignalExpression ")"
 	//	| SignalPreExpr
-	//	| TrapReferenceExpr
+	//	| SignalReferenceExpr
 	public EsterelGrammarAccess.SignalAtomicExpressionElements getSignalAtomicExpressionAccess() {
 		return gaEsterel.getSignalAtomicExpressionAccess();
 	}
@@ -5416,16 +5463,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSignalPreExprRule() {
 		return getSignalPreExprAccess().getRule();
-	}
-
-	//TrapReferenceExpr kexpressions::ValuedObjectReference:
-	//	{TrapReferenceExpr} valuedObject=[TrapSignal]
-	public EsterelGrammarAccess.TrapReferenceExprElements getTrapReferenceExprAccess() {
-		return gaEsterel.getTrapReferenceExprAccess();
-	}
-	
-	public ParserRule getTrapReferenceExprRule() {
-		return getTrapReferenceExprAccess().getRule();
 	}
 
 	//// --> B.3.4 Delay Expressions <--

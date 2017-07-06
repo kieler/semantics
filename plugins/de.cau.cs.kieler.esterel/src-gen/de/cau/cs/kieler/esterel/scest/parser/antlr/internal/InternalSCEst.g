@@ -11224,19 +11224,321 @@ ruleTrapExpr returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getTrapExprAccess().getTrapAndExpressionParserRuleCall_0()); 
+    }
+    this_TrapAndExpression_0=ruleTrapAndExpression
+    { 
+        $current = $this_TrapAndExpression_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElementAndAdd(
+            grammarAccess.getTrapExprAccess().getOperatorExpressionSubExpressionsAction_1_0(),
+            $current);
+    }
+)((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTrapExprAccess().getOperatorEsterel_OrOperatorEnumRuleCall_1_1_0_0()); 
+	    }
+		lv_operator_2_0=ruleEsterel_OrOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTrapExprRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_2_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.Esterel_OrOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTrapExprAccess().getSubExpressionsTrapAndExpressionParserRuleCall_1_1_1_0()); 
+	    }
+		lv_subExpressions_3_0=ruleTrapAndExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTrapExprRule());
+	        }
+       		add(
+       			$current, 
+       			"subExpressions",
+        		lv_subExpressions_3_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.TrapAndExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))+)?)
+;
+
+
+
+
+
+// Entry rule entryRuleTrapAndExpression
+entryRuleTrapAndExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTrapAndExpressionRule()); }
+	 iv_ruleTrapAndExpression=ruleTrapAndExpression 
+	 { $current=$iv_ruleTrapAndExpression.current; } 
+	 EOF 
+;
+
+// Rule TrapAndExpression
+ruleTrapAndExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getTrapAndExpressionAccess().getTrapNotExpressionParserRuleCall_0()); 
+    }
+    this_TrapNotExpression_0=ruleTrapNotExpression
+    { 
+        $current = $this_TrapNotExpression_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElementAndAdd(
+            grammarAccess.getTrapAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
+            $current);
+    }
+)((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTrapAndExpressionAccess().getOperatorEsterel_AndOperatorEnumRuleCall_1_1_0_0()); 
+	    }
+		lv_operator_2_0=ruleEsterel_AndOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTrapAndExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_2_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.Esterel_AndOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTrapAndExpressionAccess().getSubExpressionsTrapNotExpressionParserRuleCall_1_1_1_0()); 
+	    }
+		lv_subExpressions_3_0=ruleTrapNotExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTrapAndExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"subExpressions",
+        		lv_subExpressions_3_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.TrapNotExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))+)?)
+;
+
+
+
+
+
+// Entry rule entryRuleTrapNotExpression
+entryRuleTrapNotExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTrapNotExpressionRule()); }
+	 iv_ruleTrapNotExpression=ruleTrapNotExpression 
+	 { $current=$iv_ruleTrapNotExpression.current; } 
+	 EOF 
+;
+
+// Rule TrapNotExpression
+ruleTrapNotExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getTrapNotExpressionAccess().getOperatorExpressionAction_0_0(),
+            $current);
+    }
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTrapNotExpressionAccess().getOperatorEsterel_NotOperatorEnumRuleCall_0_1_0()); 
+	    }
+		lv_operator_1_0=ruleEsterel_NotOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTrapNotExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_1_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.Esterel_NotOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTrapNotExpressionAccess().getSubExpressionsTrapAtomicExpressionParserRuleCall_0_2_0()); 
+	    }
+		lv_subExpressions_2_0=ruleTrapAtomicExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTrapNotExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"subExpressions",
+        		lv_subExpressions_2_0, 
+        		"de.cau.cs.kieler.esterel.Esterel.TrapAtomicExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getTrapNotExpressionAccess().getTrapAtomicExpressionParserRuleCall_1()); 
+    }
+    this_TrapAtomicExpression_3=ruleTrapAtomicExpression
+    { 
+        $current = $this_TrapAtomicExpression_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleTrapAtomicExpression
+entryRuleTrapAtomicExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTrapAtomicExpressionRule()); }
+	 iv_ruleTrapAtomicExpression=ruleTrapAtomicExpression 
+	 { $current=$iv_ruleTrapAtomicExpression.current; } 
+	 EOF 
+;
+
+// Rule TrapAtomicExpression
+ruleTrapAtomicExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getTrapAtomicExpressionAccess().getTrapReferenceExprParserRuleCall_0()); 
+    }
+    this_TrapReferenceExpr_0=ruleTrapReferenceExpr
+    { 
+        $current = $this_TrapReferenceExpr_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |(	otherlv_1='(' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTrapAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
+    }
 
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getTrapExprAccess().getSignalExpressionParserRuleCall()); 
+        newCompositeNode(grammarAccess.getTrapAtomicExpressionAccess().getTrapExpressionParserRuleCall_1_1()); 
     }
-    this_SignalExpression_0=ruleSignalExpression
+    this_TrapExpression_2=ruleTrapExpression
     { 
-        $current = $this_SignalExpression_0.current; 
+        $current = $this_TrapExpression_2.current; 
         afterParserOrEnumRuleCall();
     }
+	otherlv_3=')' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getTrapAtomicExpressionAccess().getRightParenthesisKeyword_1_2());
+    }
+))
+;
 
+
+
+
+
+// Entry rule entryRuleTrapReferenceExpr
+entryRuleTrapReferenceExpr returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTrapReferenceExprRule()); }
+	 iv_ruleTrapReferenceExpr=ruleTrapReferenceExpr 
+	 { $current=$iv_ruleTrapReferenceExpr.current; } 
+	 EOF 
+;
+
+// Rule TrapReferenceExpr
+ruleTrapReferenceExpr returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getTrapReferenceExprAccess().getTrapReferenceExprAction_0(),
+            $current);
+    }
+)(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTrapReferenceExprRule());
+	        }
+        }
+	otherlv_1=RULE_ID
+	{
+		newLeafNode(otherlv_1, grammarAccess.getTrapReferenceExprAccess().getValuedObjectTrapSignalCrossReference_1_0()); 
+	}
+
+)
+))
 ;
 
 
@@ -11492,38 +11794,25 @@ ruleSignalAtomicExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalReferenceExprParserRuleCall_0()); 
-    }
-    this_SignalReferenceExpr_0=ruleSignalReferenceExpr
-    { 
-        $current = $this_SignalReferenceExpr_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |(	otherlv_1='(' 
+((	otherlv_0='(' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
+    	newLeafNode(otherlv_0, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_0_0());
     }
 
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalExpressionParserRuleCall_1_1()); 
+        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalExpressionParserRuleCall_0_1()); 
     }
-    this_SignalExpression_2=ruleSignalExpression
+    this_SignalExpression_1=ruleSignalExpression
     { 
-        $current = $this_SignalExpression_2.current; 
+        $current = $this_SignalExpression_1.current; 
         afterParserOrEnumRuleCall();
     }
-	otherlv_3=')' 
+	otherlv_2=')' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getSignalAtomicExpressionAccess().getRightParenthesisKeyword_1_2());
+    	newLeafNode(otherlv_2, grammarAccess.getSignalAtomicExpressionAccess().getRightParenthesisKeyword_0_2());
     }
 )
     |
@@ -11531,11 +11820,11 @@ ruleSignalAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalPreExprParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalPreExprParserRuleCall_1()); 
     }
-    this_SignalPreExpr_4=ruleSignalPreExpr
+    this_SignalPreExpr_3=ruleSignalPreExpr
     { 
-        $current = $this_SignalPreExpr_4.current; 
+        $current = $this_SignalPreExpr_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -11544,11 +11833,11 @@ ruleSignalAtomicExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getTrapReferenceExprParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getSignalAtomicExpressionAccess().getSignalReferenceExprParserRuleCall_2()); 
     }
-    this_TrapReferenceExpr_5=ruleTrapReferenceExpr
+    this_SignalReferenceExpr_4=ruleSignalReferenceExpr
     { 
-        $current = $this_TrapReferenceExpr_5.current; 
+        $current = $this_SignalReferenceExpr_4.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -11672,52 +11961,6 @@ ruleSignalPreExpr returns [EObject current=null]
     	newLeafNode(otherlv_4, grammarAccess.getSignalPreExprAccess().getRightParenthesisKeyword_4());
     }
 )
-;
-
-
-
-
-
-// Entry rule entryRuleTrapReferenceExpr
-entryRuleTrapReferenceExpr returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getTrapReferenceExprRule()); }
-	 iv_ruleTrapReferenceExpr=ruleTrapReferenceExpr 
-	 { $current=$iv_ruleTrapReferenceExpr.current; } 
-	 EOF 
-;
-
-// Rule TrapReferenceExpr
-ruleTrapReferenceExpr returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getTrapReferenceExprAccess().getTrapReferenceExprAction_0(),
-            $current);
-    }
-)(
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTrapReferenceExprRule());
-	        }
-        }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getTrapReferenceExprAccess().getValuedObjectTrapSignalCrossReference_1_0()); 
-	}
-
-)
-))
 ;
 
 

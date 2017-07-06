@@ -487,8 +487,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getTrapExprRule()
-						|| rule == grammarAccess.getSignalExpressionRule()
+				else if (rule == grammarAccess.getSignalExpressionRule()
 						|| action == grammarAccess.getSignalExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSignalAndExpressionRule()
 						|| action == grammarAccess.getSignalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
@@ -499,6 +498,20 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				}
 				else if (rule == grammarAccess.getSignalPreExprRule()) {
 					sequence_SignalPreExpr(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTrapExprRule()) {
+					sequence_TrapAndExpression_TrapExpr_TrapNotExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (action == grammarAccess.getTrapExprAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getTrapAndExpressionRule()) {
+					sequence_TrapAndExpression_TrapNotExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (action == grammarAccess.getTrapAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getTrapNotExpressionRule()) {
+					sequence_TrapNotExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -1659,7 +1672,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     TrapExpr returns OperatorExpression
 	 *     SignalExpression returns OperatorExpression
 	 *     SignalExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     SignalAndExpression returns OperatorExpression
@@ -1694,7 +1706,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     TrapExpr returns SignalReferenceExpr
 	 *     SignalExpression returns SignalReferenceExpr
 	 *     SignalExpression.OperatorExpression_1_0 returns SignalReferenceExpr
 	 *     SignalAndExpression returns SignalReferenceExpr
@@ -1814,8 +1825,46 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     TrapExpr returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (subExpressions+=TrapExpr_OperatorExpression_1_0 (operator=Esterel_OrOperator subExpressions+=TrapAndExpression)+) | 
+	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=TrapNotExpression)+) | 
+	 *         (operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression)
+	 *     )
+	 */
+	protected void sequence_TrapAndExpression_TrapExpr_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TrapExpr.OperatorExpression_1_0 returns OperatorExpression
+	 *     TrapAndExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (subExpressions+=TrapAndExpression_OperatorExpression_1_0 (operator=Esterel_AndOperator subExpressions+=TrapNotExpression)+) | 
+	 *         (operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression)
+	 *     )
+	 */
+	protected void sequence_TrapAndExpression_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     AtomicExpression returns TrapExpression
 	 *     TrapExpression returns TrapExpression
+	 *     TrapExpr returns TrapExpression
+	 *     TrapExpr.OperatorExpression_1_0 returns TrapExpression
+	 *     TrapAndExpression returns TrapExpression
+	 *     TrapAndExpression.OperatorExpression_1_0 returns TrapExpression
+	 *     TrapNotExpression returns TrapExpression
+	 *     TrapAtomicExpression returns TrapExpression
 	 *     Expression returns TrapExpression
 	 *     BooleanExpression returns TrapExpression
 	 *     OrExpression returns TrapExpression
@@ -1879,13 +1928,25 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     TrapAndExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     TrapNotExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (operator=Esterel_NotOperator+ subExpressions+=TrapAtomicExpression)
+	 */
+	protected void sequence_TrapNotExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     TrapExpr returns TrapReferenceExpr
-	 *     SignalExpression returns TrapReferenceExpr
-	 *     SignalExpression.OperatorExpression_1_0 returns TrapReferenceExpr
-	 *     SignalAndExpression returns TrapReferenceExpr
-	 *     SignalAndExpression.OperatorExpression_1_0 returns TrapReferenceExpr
-	 *     SignalNotExpression returns TrapReferenceExpr
-	 *     SignalAtomicExpression returns TrapReferenceExpr
+	 *     TrapExpr.OperatorExpression_1_0 returns TrapReferenceExpr
+	 *     TrapAndExpression returns TrapReferenceExpr
+	 *     TrapAndExpression.OperatorExpression_1_0 returns TrapReferenceExpr
+	 *     TrapNotExpression returns TrapReferenceExpr
+	 *     TrapAtomicExpression returns TrapReferenceExpr
 	 *     TrapReferenceExpr returns TrapReferenceExpr
 	 *
 	 * Constraint:

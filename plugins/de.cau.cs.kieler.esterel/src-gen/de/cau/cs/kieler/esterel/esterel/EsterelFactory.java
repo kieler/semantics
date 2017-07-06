@@ -671,15 +671,6 @@ public interface EsterelFactory extends EFactory
   ConstantExpression createConstantExpression();
 
   /**
-   * Returns a new object of class '<em>Signal Reference Expr</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signal Reference Expr</em>'.
-   * @generated
-   */
-  SignalReferenceExpr createSignalReferenceExpr();
-
-  /**
    * Returns a new object of class '<em>Trap Reference Expr</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -687,6 +678,15 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   TrapReferenceExpr createTrapReferenceExpr();
+
+  /**
+   * Returns a new object of class '<em>Signal Reference Expr</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Signal Reference Expr</em>'.
+   * @generated
+   */
+  SignalReferenceExpr createSignalReferenceExpr();
 
   /**
    * Returns the package supported by this factory.

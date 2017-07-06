@@ -62,8 +62,8 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	protected AbstractElementAlias match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1__;
 	protected AbstractElementAlias match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__;
 	protected AbstractElementAlias match_SCLProgram_ColonKeyword_3_q;
-	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a;
-	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p;
+	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a;
+	protected AbstractElementAlias match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p;
 	protected AbstractElementAlias match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q;
 	protected AbstractElementAlias match_TrapSignal_ColonKeyword_2_0_0_q;
 	protected AbstractElementAlias match_Trap_TrapKeyword_8_q;
@@ -111,8 +111,8 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 		match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getEndKeyword_5_0_2_0_0()), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getModuleKeyword_5_0_2_0_1())), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getFullStopKeyword_5_0_2_1()));
 		match_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getEndKeyword_5_0_2_0_0()), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getModuleKeyword_5_0_2_0_1())), new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getLeftCurlyBracketKeyword_5_1_1()), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getRightCurlyBracketKeyword_5_1_3())), new TokenAlias(false, false, grammarAccess.getSCEstModuleAccess().getFullStopKeyword_5_0_2_1()));
 		match_SCLProgram_ColonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getSCLProgramAccess().getColonKeyword_3());
-		match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a = new TokenAlias(true, true, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
-		match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p = new TokenAlias(true, false, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
+		match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_0_0());
+		match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getSignalAtomicExpressionAccess().getLeftParenthesisKeyword_0_0());
 		match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getThreadAccess().getLeftCurlyBracketKeyword_1_0_1()), new TokenAlias(false, false, grammarAccess.getThreadAccess().getRightCurlyBracketKeyword_1_0_4()));
 		match_TrapSignal_ColonKeyword_2_0_0_q = new TokenAlias(false, true, grammarAccess.getTrapSignalAccess().getColonKeyword_2_0_0());
 		match_Trap_TrapKeyword_8_q = new TokenAlias(false, true, grammarAccess.getTrapAccess().getTrapKeyword_8());
@@ -210,10 +210,10 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 				emit_SCEstModule_FullStopKeyword_5_0_2_1_or___EndKeyword_5_0_2_0_0_ModuleKeyword_5_0_2_0_1___or___LeftCurlyBracketKeyword_5_1_1_RightCurlyBracketKeyword_5_1_3__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SCLProgram_ColonKeyword_3_q.equals(syntax))
 				emit_SCLProgram_ColonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a.equals(syntax))
-				emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p.equals(syntax))
-				emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a.equals(syntax))
+				emit_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p.equals(syntax))
+				emit_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q.equals(syntax))
 				emit_Thread___LeftCurlyBracketKeyword_1_0_1_RightCurlyBracketKeyword_1_0_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TrapSignal_ColonKeyword_2_0_0_q.equals(syntax))
@@ -802,10 +802,9 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     (rule start) (ambiguity) operator=Esterel_NotOperator
 	 *     (rule start) (ambiguity) operator=Esterel_PreOperator
 	 *     (rule start) (ambiguity) valuedObject=[ISignal|ID]
-	 *     (rule start) (ambiguity) valuedObject=[TrapSignal|ID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_SignalAtomicExpression_LeftParenthesisKeyword_0_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -817,7 +816,7 @@ public abstract class AbstractSCEstSyntacticSequencer extends AbstractSyntacticS
 	 *     (rule start) (ambiguity) operator=Esterel_NotOperator
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_SignalAtomicExpression_LeftParenthesisKeyword_0_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

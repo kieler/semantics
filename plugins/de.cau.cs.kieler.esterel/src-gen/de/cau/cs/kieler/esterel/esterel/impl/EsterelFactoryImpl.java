@@ -136,8 +136,8 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TRAP_EXPRESSION: return createTrapExpression();
       case EsterelPackage.FUNCTION_EXPRESSION: return createFunctionExpression();
       case EsterelPackage.CONSTANT_EXPRESSION: return createConstantExpression();
-      case EsterelPackage.SIGNAL_REFERENCE_EXPR: return createSignalReferenceExpr();
       case EsterelPackage.TRAP_REFERENCE_EXPR: return createTrapReferenceExpr();
+      case EsterelPackage.SIGNAL_REFERENCE_EXPR: return createSignalReferenceExpr();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -940,10 +940,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SignalReferenceExpr createSignalReferenceExpr()
+  public TrapReferenceExpr createTrapReferenceExpr()
   {
-    SignalReferenceExprImpl signalReferenceExpr = new SignalReferenceExprImpl();
-    return signalReferenceExpr;
+    TrapReferenceExprImpl trapReferenceExpr = new TrapReferenceExprImpl();
+    return trapReferenceExpr;
   }
 
   /**
@@ -951,10 +951,10 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public TrapReferenceExpr createTrapReferenceExpr()
+  public SignalReferenceExpr createSignalReferenceExpr()
   {
-    TrapReferenceExprImpl trapReferenceExpr = new TrapReferenceExprImpl();
-    return trapReferenceExpr;
+    SignalReferenceExprImpl signalReferenceExpr = new SignalReferenceExprImpl();
+    return signalReferenceExpr;
   }
 
   /**

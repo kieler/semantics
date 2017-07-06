@@ -444,14 +444,14 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createConstantExpressionAdapter();
       }
       @Override
-      public Adapter caseSignalReferenceExpr(SignalReferenceExpr object)
-      {
-        return createSignalReferenceExprAdapter();
-      }
-      @Override
       public Adapter caseTrapReferenceExpr(TrapReferenceExpr object)
       {
         return createTrapReferenceExprAdapter();
+      }
+      @Override
+      public Adapter caseSignalReferenceExpr(SignalReferenceExpr object)
+      {
+        return createSignalReferenceExprAdapter();
       }
       @Override
       public Adapter caseAnnotatable(Annotatable object)
@@ -1586,21 +1586,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr <em>Signal Reference Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
-   * @generated
-   */
-  public Adapter createSignalReferenceExprAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr <em>Trap Reference Expr</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1611,6 +1596,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTrapReferenceExprAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr <em>Signal Reference Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
+   * @generated
+   */
+  public Adapter createSignalReferenceExprAdapter()
   {
     return null;
   }

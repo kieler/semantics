@@ -3481,43 +3481,6 @@ public interface EsterelPackage extends EPackage
   int CONSTANT_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl <em>Signal Reference Expr</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl
-   * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignalReferenceExpr()
-   * @generated
-   */
-  int SIGNAL_REFERENCE_EXPR = 72;
-
-  /**
-   * The feature id for the '<em><b>Valued Object</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_REFERENCE_EXPR__VALUED_OBJECT = KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT;
-
-  /**
-   * The feature id for the '<em><b>Indices</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_REFERENCE_EXPR__INDICES = KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES;
-
-  /**
-   * The number of structural features of the '<em>Signal Reference Expr</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_REFERENCE_EXPR_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TrapReferenceExprImpl <em>Trap Reference Expr</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3525,7 +3488,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getTrapReferenceExpr()
    * @generated
    */
-  int TRAP_REFERENCE_EXPR = 73;
+  int TRAP_REFERENCE_EXPR = 72;
 
   /**
    * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -3553,6 +3516,43 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int TRAP_REFERENCE_EXPR_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl <em>Signal Reference Expr</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl
+   * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignalReferenceExpr()
+   * @generated
+   */
+  int SIGNAL_REFERENCE_EXPR = 73;
+
+  /**
+   * The feature id for the '<em><b>Valued Object</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR__VALUED_OBJECT = KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR__INDICES = KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES;
+
+  /**
+   * The number of structural features of the '<em>Signal Reference Expr</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_REFERENCE_EXPR_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
 
 
   /**
@@ -5860,16 +5860,6 @@ public interface EsterelPackage extends EPackage
   EAttribute getConstantExpression_Value();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr <em>Signal Reference Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Signal Reference Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
-   * @generated
-   */
-  EClass getSignalReferenceExpr();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr <em>Trap Reference Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5878,6 +5868,16 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EClass getTrapReferenceExpr();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr <em>Signal Reference Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Signal Reference Expr</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
+   * @generated
+   */
+  EClass getSignalReferenceExpr();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -7775,16 +7775,6 @@ public interface EsterelPackage extends EPackage
     EAttribute CONSTANT_EXPRESSION__VALUE = eINSTANCE.getConstantExpression_Value();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl <em>Signal Reference Expr</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl
-     * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignalReferenceExpr()
-     * @generated
-     */
-    EClass SIGNAL_REFERENCE_EXPR = eINSTANCE.getSignalReferenceExpr();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TrapReferenceExprImpl <em>Trap Reference Expr</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7793,6 +7783,16 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EClass TRAP_REFERENCE_EXPR = eINSTANCE.getTrapReferenceExpr();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl <em>Signal Reference Expr</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.esterel.esterel.impl.SignalReferenceExprImpl
+     * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignalReferenceExpr()
+     * @generated
+     */
+    EClass SIGNAL_REFERENCE_EXPR = eINSTANCE.getSignalReferenceExpr();
 
   }
 
