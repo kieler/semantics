@@ -54,7 +54,7 @@ import de.cau.cs.kieler.sccharts.featuregroups.Core
 @ViewSynthesisShared
 class CommentSynthesis extends SubSynthesis<CommentAnnotation, KNode> {
 
-    @Inject extension KNodeExtensions
+    @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsStateExtensions

@@ -46,7 +46,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 @ViewSynthesisShared
 class ScopeSynthesis extends AbstractSCChartsSynthesis<Scope> {
 
-    @Inject extension KNodeExtensions
+    @Inject extension KNodeExtensionsReplacement
     @Inject extension KRenderingExtensions
     @Inject extension SCChartsScopeExtensions 
     @Inject extension SCChartsSerializeHRExtensions

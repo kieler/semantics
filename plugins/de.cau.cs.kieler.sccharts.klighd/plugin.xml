@@ -95,6 +95,9 @@
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ExpandCollapseHook">
       </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ColorAnnotationHook">
+      </hook>
    </extension>
 
 </plugin>

@@ -41,7 +41,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
-    @Inject extension KNodeExtensions
+    @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsSerializeHRExtensions

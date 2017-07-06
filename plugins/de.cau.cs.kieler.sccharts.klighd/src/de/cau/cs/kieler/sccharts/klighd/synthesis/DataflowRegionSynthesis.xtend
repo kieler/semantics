@@ -59,7 +59,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     
     @Inject 
-    extension KNodeExtensions
+    extension KNodeExtensionsReplacement
 
     @Inject
     extension KRenderingExtensions

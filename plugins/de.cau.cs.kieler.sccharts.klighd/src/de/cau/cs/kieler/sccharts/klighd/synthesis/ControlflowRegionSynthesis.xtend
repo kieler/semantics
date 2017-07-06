@@ -51,7 +51,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 @ViewSynthesisShared
 class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> {
 
-    @Inject extension KNodeExtensions
+    @Inject extension KNodeExtensionsReplacement
     @Inject extension KRenderingExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsSerializeHRExtensions

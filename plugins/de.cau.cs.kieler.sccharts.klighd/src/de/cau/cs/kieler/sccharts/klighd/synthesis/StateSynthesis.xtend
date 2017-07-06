@@ -50,7 +50,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 @ViewSynthesisShared
 class StateSynthesis extends SubSynthesis<State, KNode> {
 
-    @Inject extension KNodeExtensions
+    @Inject extension KNodeExtensionsReplacement
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
