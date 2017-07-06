@@ -20,6 +20,10 @@
       <repository location="http://download.eclipse.org/releases/neon"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="org.eclipse.cdt.core" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/tools/cdt/releases/9.2"/>
+    </location>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="javax.xml.bind" version="0.0.0"/>
       <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/"/>
     </location>
