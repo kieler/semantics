@@ -130,7 +130,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectExp.background = "YEWLLO".color;
-        // rectExp.setAsCollapsedView
         rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
 
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
@@ -140,6 +139,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
+        label.getFirstText.setAsExpandedView
+
+//        val labelCollapsed = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
+//            KlighdConstants.DEFAULT_FONT_NAME);
+//        labelCollapsed.associateWith(item)
+//        labelCollapsed.getFirstText.setAsCollapsedView
 
         if (item.hieararchical) {
             // Hierarchical case
@@ -148,7 +153,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
             childAreaRect.background = "WHITE".color;
             childAreaRect.foreground = "GRAY".color;
-            rectExp.setAreaPlacementData().from(LEFT, -2, 0, TOP, 4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
+            label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
             childNodeOuter.children.add(childArea)
             childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));

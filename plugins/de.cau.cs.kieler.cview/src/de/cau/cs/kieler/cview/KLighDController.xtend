@@ -48,7 +48,7 @@ class KLighDController extends AbstractKLighDController {
         if (!projectPath.nullOrEmpty) {
             // Project
             val folder = CViewModelFactory.eINSTANCE.createFolder;
-            folder.location = folderPath;
+            folder.location = projectPath;
             folder.name = element.toString.folderOrFileName
             folder.project = true
             model.folders.add(folder)
@@ -56,10 +56,10 @@ class KLighDController extends AbstractKLighDController {
                 folder.parent = parentFolder
                 parentFolder.children.add(folder)
             }
-
-//            listFiles(folder.location, "*").forEach [ e |
-//                model.addToModel(e)
-//            ];
+            
+            for (e : listFiles(folder.location, "*")) {
+                model.addToModel(e, folder)
+            }
         } else if (!folderPath.nullOrEmpty) {
             // Folder   
             val folder = CViewModelFactory.eINSTANCE.createFolder;
