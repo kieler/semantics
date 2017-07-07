@@ -7,8 +7,6 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
-import de.cau.cs.kieler.cview.model.cViewModel.File;
-import de.cau.cs.kieler.cview.model.cViewModel.Folder;
 import de.cau.cs.kieler.cview.model.services.CViewModelGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -39,12 +37,6 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 			case CViewModelPackage.COMPONENT:
 				sequence_Component(context, (Component) semanticObject); 
 				return; 
-			case CViewModelPackage.FILE:
-				sequence_File(context, (File) semanticObject); 
-				return; 
-			case CViewModelPackage.FOLDER:
-				sequence_Folder(context, (Folder) semanticObject); 
-				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -55,7 +47,7 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *     CViewModel returns CViewModel
 	 *
 	 * Constraint:
-	 *     (folders+=Folder* files+=File* components+=Component*)
+	 *     components+=Component+
 	 */
 	protected void sequence_CViewModel(ISerializationContext context, CViewModel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -67,35 +59,16 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *     Component returns Component
 	 *
 	 * Constraint:
-	 *     (name=ID parent=[Component|ID]? type=ComponentType referenceFile=[File|ID]? referenceLine=INT?)
+	 *     (
+	 *         name=ID 
+	 *         parent=[Component|ID]? 
+	 *         type=ComponentType 
+	 *         location=STRING 
+	 *         referenceLine=INT? 
+	 *         children+=[Component|ID]*
+	 *     )
 	 */
 	protected void sequence_Component(ISerializationContext context, Component semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     File returns File
-	 *     FileOrFolder returns File
-	 *
-	 * Constraint:
-	 *     (name=ID parent=[Folder|ID]? location=STRING)
-	 */
-	protected void sequence_File(ISerializationContext context, File semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Folder returns Folder
-	 *     FileOrFolder returns Folder
-	 *
-	 * Constraint:
-	 *     (name=ID parent=[Folder|ID]? project?='project' location=STRING children+=[FileOrFolder|ID]*)
-	 */
-	protected void sequence_Folder(ISerializationContext context, Folder semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

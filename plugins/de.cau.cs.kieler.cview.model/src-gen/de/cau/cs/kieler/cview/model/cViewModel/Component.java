@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.cview.model.cViewModel;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,8 +19,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceFile <em>Reference File</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceLine <em>Reference Line</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getChildren <em>Children</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent()
@@ -109,30 +112,30 @@ public interface Component extends EObject
   void setType(ComponentType value);
 
   /**
-   * Returns the value of the '<em><b>Reference File</b></em>' reference.
+   * Returns the value of the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Reference File</em>' reference isn't clear,
+   * If the meaning of the '<em>Location</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Reference File</em>' reference.
-   * @see #setReferenceFile(File)
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_ReferenceFile()
+   * @return the value of the '<em>Location</em>' attribute.
+   * @see #setLocation(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_Location()
    * @model
    * @generated
    */
-  File getReferenceFile();
+  String getLocation();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceFile <em>Reference File</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Reference File</em>' reference.
-   * @see #getReferenceFile()
+   * @param value the new value of the '<em>Location</em>' attribute.
+   * @see #getLocation()
    * @generated
    */
-  void setReferenceFile(File value);
+  void setLocation(String value);
 
   /**
    * Returns the value of the '<em><b>Reference Line</b></em>' attribute.
@@ -159,5 +162,21 @@ public interface Component extends EObject
    * @generated
    */
   void setReferenceLine(int value);
+
+  /**
+   * Returns the value of the '<em><b>Children</b></em>' reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.Component}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Children</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Children</em>' reference list.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_Children()
+   * @model
+   * @generated
+   */
+  EList<Component> getChildren();
 
 } // Component

@@ -27,7 +27,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.internal.editors.text.FileEditorInputAdapterFactory;
 
-import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder;
+import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -51,7 +51,7 @@ public class OpenEditorAction implements IAction {
         Object inputModel = context.getViewContext().getInputModel();
         Object domainElement = context.getDomainElement(context.getKNode());
         
-        String pathString = ((FileOrFolder)domainElement).getLocation();
+        String pathString = ((Component)domainElement).getLocation();
         Path path = new Path(pathString);
         IFile file = null;
         boolean done = false;

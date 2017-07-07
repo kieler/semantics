@@ -78,288 +78,23 @@ ruleCViewModel returns [EObject current=null]
 }:
 	(
 		(
-			(
-				{
-					newCompositeNode(grammarAccess.getCViewModelAccess().getFoldersFolderParserRuleCall_0_0());
+			{
+				newCompositeNode(grammarAccess.getCViewModelAccess().getComponentsComponentParserRuleCall_0());
+			}
+			lv_components_0_0=ruleComponent
+			{
+				if ($current==null) {
+					$current = createModelElementForParent(grammarAccess.getCViewModelRule());
 				}
-				lv_folders_0_0=ruleFolder
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
-					}
-					add(
-						$current,
-						"folders",
-						lv_folders_0_0,
-						"de.cau.cs.kieler.cview.model.CViewModel.Folder");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-		otherlv_1=';'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getCViewModelAccess().getSemicolonKeyword_1());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getCViewModelAccess().getFilesFileParserRuleCall_2_0());
-				}
-				lv_files_2_0=ruleFile
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
-					}
-					add(
-						$current,
-						"files",
-						lv_files_2_0,
-						"de.cau.cs.kieler.cview.model.CViewModel.File");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-		otherlv_3=';'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getCViewModelAccess().getSemicolonKeyword_3());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getCViewModelAccess().getComponentsComponentParserRuleCall_4_0());
-				}
-				lv_components_4_0=ruleComponent
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
-					}
-					add(
-						$current,
-						"components",
-						lv_components_4_0,
-						"de.cau.cs.kieler.cview.model.CViewModel.Component");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-	)
-;
-
-// Entry rule entryRuleFolder
-entryRuleFolder returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getFolderRule()); }
-	iv_ruleFolder=ruleFolder
-	{ $current=$iv_ruleFolder.current; }
-	EOF;
-
-// Rule Folder
-ruleFolder returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='Folder'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getFolderAccess().getFolderKeyword_0());
-		}
-		(
-			(
-				lv_name_1_0=RULE_ID
-				{
-					newLeafNode(lv_name_1_0, grammarAccess.getFolderAccess().getNameIDTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFolderRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"name",
-						lv_name_1_0,
-						"org.eclipse.xtext.common.Terminals.ID");
-				}
-			)
+				add(
+					$current,
+					"components",
+					lv_components_0_0,
+					"de.cau.cs.kieler.cview.model.CViewModel.Component");
+				afterParserOrEnumRuleCall();
+			}
 		)
-		(
-			otherlv_2='parent'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getFolderAccess().getParentKeyword_2_0());
-			}
-			otherlv_3='='
-			{
-				newLeafNode(otherlv_3, grammarAccess.getFolderAccess().getEqualsSignKeyword_2_1());
-			}
-			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getFolderRule());
-						}
-					}
-					otherlv_4=RULE_ID
-					{
-						newLeafNode(otherlv_4, grammarAccess.getFolderAccess().getParentFolderCrossReference_2_2_0());
-					}
-				)
-			)
-		)?
-		(
-			(
-				lv_project_5_0='project'
-				{
-					newLeafNode(lv_project_5_0, grammarAccess.getFolderAccess().getProjectProjectKeyword_3_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFolderRule());
-					}
-					setWithLastConsumed($current, "project", true, "project");
-				}
-			)
-		)
-		otherlv_6='location'
-		{
-			newLeafNode(otherlv_6, grammarAccess.getFolderAccess().getLocationKeyword_4());
-		}
-		otherlv_7='='
-		{
-			newLeafNode(otherlv_7, grammarAccess.getFolderAccess().getEqualsSignKeyword_5());
-		}
-		(
-			(
-				lv_location_8_0=RULE_STRING
-				{
-					newLeafNode(lv_location_8_0, grammarAccess.getFolderAccess().getLocationSTRINGTerminalRuleCall_6_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFolderRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"location",
-						lv_location_8_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
-				}
-			)
-		)
-		(
-			otherlv_9='children'
-			{
-				newLeafNode(otherlv_9, grammarAccess.getFolderAccess().getChildrenKeyword_7_0());
-			}
-			otherlv_10='='
-			{
-				newLeafNode(otherlv_10, grammarAccess.getFolderAccess().getEqualsSignKeyword_7_1());
-			}
-			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getFolderRule());
-						}
-					}
-					otherlv_11=RULE_ID
-					{
-						newLeafNode(otherlv_11, grammarAccess.getFolderAccess().getChildrenFileOrFolderCrossReference_7_2_0());
-					}
-				)
-			)*
-		)?
-	)
-;
-
-// Entry rule entryRuleFile
-entryRuleFile returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getFileRule()); }
-	iv_ruleFile=ruleFile
-	{ $current=$iv_ruleFile.current; }
-	EOF;
-
-// Rule File
-ruleFile returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='File'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getFileAccess().getFileKeyword_0());
-		}
-		(
-			(
-				lv_name_1_0=RULE_ID
-				{
-					newLeafNode(lv_name_1_0, grammarAccess.getFileAccess().getNameIDTerminalRuleCall_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFileRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"name",
-						lv_name_1_0,
-						"org.eclipse.xtext.common.Terminals.ID");
-				}
-			)
-		)
-		(
-			otherlv_2='parent'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getFileAccess().getParentKeyword_2_0());
-			}
-			otherlv_3='='
-			{
-				newLeafNode(otherlv_3, grammarAccess.getFileAccess().getEqualsSignKeyword_2_1());
-			}
-			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getFileRule());
-						}
-					}
-					otherlv_4=RULE_ID
-					{
-						newLeafNode(otherlv_4, grammarAccess.getFileAccess().getParentFolderCrossReference_2_2_0());
-					}
-				)
-			)
-		)?
-		otherlv_5='location'
-		{
-			newLeafNode(otherlv_5, grammarAccess.getFileAccess().getLocationKeyword_3());
-		}
-		otherlv_6='='
-		{
-			newLeafNode(otherlv_6, grammarAccess.getFileAccess().getEqualsSignKeyword_4());
-		}
-		(
-			(
-				lv_location_7_0=RULE_STRING
-				{
-					newLeafNode(lv_location_7_0, grammarAccess.getFileAccess().getLocationSTRINGTerminalRuleCall_5_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFileRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"location",
-						lv_location_7_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
-				}
-			)
-		)
-	)
+	)*
 ;
 
 // Entry rule entryRuleComponent
@@ -400,18 +135,14 @@ ruleComponent returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='!'
-		{
-			newLeafNode(otherlv_2, grammarAccess.getComponentAccess().getExclamationMarkKeyword_2());
-		}
 		(
-			otherlv_3='parent'
+			otherlv_2='parent'
 			{
-				newLeafNode(otherlv_3, grammarAccess.getComponentAccess().getParentKeyword_3_0());
+				newLeafNode(otherlv_2, grammarAccess.getComponentAccess().getParentKeyword_2_0());
 			}
-			otherlv_4='='
+			otherlv_3='='
 			{
-				newLeafNode(otherlv_4, grammarAccess.getComponentAccess().getEqualsSignKeyword_3_1());
+				newLeafNode(otherlv_3, grammarAccess.getComponentAccess().getEqualsSignKeyword_2_1());
 			}
 			(
 				(
@@ -420,27 +151,27 @@ ruleComponent returns [EObject current=null]
 							$current = createModelElement(grammarAccess.getComponentRule());
 						}
 					}
-					otherlv_5=RULE_ID
+					otherlv_4=RULE_ID
 					{
-						newLeafNode(otherlv_5, grammarAccess.getComponentAccess().getParentComponentCrossReference_3_2_0());
+						newLeafNode(otherlv_4, grammarAccess.getComponentAccess().getParentComponentCrossReference_2_2_0());
 					}
 				)
 			)
 		)?
-		otherlv_6='type'
+		otherlv_5='type'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getComponentAccess().getTypeKeyword_4());
+			newLeafNode(otherlv_5, grammarAccess.getComponentAccess().getTypeKeyword_3());
 		}
-		otherlv_7='='
+		otherlv_6='='
 		{
-			newLeafNode(otherlv_7, grammarAccess.getComponentAccess().getEqualsSignKeyword_5());
+			newLeafNode(otherlv_6, grammarAccess.getComponentAccess().getEqualsSignKeyword_4());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getComponentAccess().getTypeComponentTypeEnumRuleCall_6_0());
+					newCompositeNode(grammarAccess.getComponentAccess().getTypeComponentTypeEnumRuleCall_5_0());
 				}
-				lv_type_8_0=ruleComponentType
+				lv_type_7_0=ruleComponentType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getComponentRule());
@@ -448,49 +179,52 @@ ruleComponent returns [EObject current=null]
 					set(
 						$current,
 						"type",
-						lv_type_8_0,
+						lv_type_7_0,
 						"de.cau.cs.kieler.cview.model.CViewModel.ComponentType");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
+		otherlv_8='location'
+		{
+			newLeafNode(otherlv_8, grammarAccess.getComponentAccess().getLocationKeyword_6());
+		}
+		otherlv_9='='
+		{
+			newLeafNode(otherlv_9, grammarAccess.getComponentAccess().getEqualsSignKeyword_7());
+		}
 		(
-			otherlv_9='referenceFile'
-			{
-				newLeafNode(otherlv_9, grammarAccess.getComponentAccess().getReferenceFileKeyword_7_0());
-			}
-			otherlv_10='='
-			{
-				newLeafNode(otherlv_10, grammarAccess.getComponentAccess().getEqualsSignKeyword_7_1());
-			}
 			(
-				(
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getComponentRule());
-						}
+				lv_location_10_0=RULE_STRING
+				{
+					newLeafNode(lv_location_10_0, grammarAccess.getComponentAccess().getLocationSTRINGTerminalRuleCall_8_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
 					}
-					otherlv_11=RULE_ID
-					{
-						newLeafNode(otherlv_11, grammarAccess.getComponentAccess().getReferenceFileFileCrossReference_7_2_0());
-					}
-				)
+					setWithLastConsumed(
+						$current,
+						"location",
+						lv_location_10_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
 			)
-		)?
+		)
 		(
-			otherlv_12='referenceLine'
+			otherlv_11='referenceLine'
 			{
-				newLeafNode(otherlv_12, grammarAccess.getComponentAccess().getReferenceLineKeyword_8_0());
+				newLeafNode(otherlv_11, grammarAccess.getComponentAccess().getReferenceLineKeyword_9_0());
 			}
-			otherlv_13='='
+			otherlv_12='='
 			{
-				newLeafNode(otherlv_13, grammarAccess.getComponentAccess().getEqualsSignKeyword_8_1());
+				newLeafNode(otherlv_12, grammarAccess.getComponentAccess().getEqualsSignKeyword_9_1());
 			}
 			(
 				(
-					lv_referenceLine_14_0=RULE_INT
+					lv_referenceLine_13_0=RULE_INT
 					{
-						newLeafNode(lv_referenceLine_14_0, grammarAccess.getComponentAccess().getReferenceLineINTTerminalRuleCall_8_2_0());
+						newLeafNode(lv_referenceLine_13_0, grammarAccess.getComponentAccess().getReferenceLineINTTerminalRuleCall_9_2_0());
 					}
 					{
 						if ($current==null) {
@@ -499,11 +233,34 @@ ruleComponent returns [EObject current=null]
 						setWithLastConsumed(
 							$current,
 							"referenceLine",
-							lv_referenceLine_14_0,
+							lv_referenceLine_13_0,
 							"org.eclipse.xtext.common.Terminals.INT");
 					}
 				)
 			)
+		)?
+		(
+			otherlv_14='children'
+			{
+				newLeafNode(otherlv_14, grammarAccess.getComponentAccess().getChildrenKeyword_10_0());
+			}
+			otherlv_15='='
+			{
+				newLeafNode(otherlv_15, grammarAccess.getComponentAccess().getEqualsSignKeyword_10_1());
+			}
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getComponentRule());
+						}
+					}
+					otherlv_16=RULE_ID
+					{
+						newLeafNode(otherlv_16, grammarAccess.getComponentAccess().getChildrenComponentCrossReference_10_2_0());
+					}
+				)
+			)*
 		)?
 	)
 ;

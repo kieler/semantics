@@ -8,9 +8,6 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType;
-import de.cau.cs.kieler.cview.model.cViewModel.File;
-import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder;
-import de.cau.cs.kieler.cview.model.cViewModel.Folder;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -34,27 +31,6 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * @generated
    */
   private EClass cViewModelEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass folderEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass fileEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass fileOrFolderEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -148,109 +124,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getCViewModel_Folders()
-  {
-    return (EReference)cViewModelEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getCViewModel_Files()
-  {
-    return (EReference)cViewModelEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getCViewModel_Components()
   {
-    return (EReference)cViewModelEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getFolder()
-  {
-    return folderEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFolder_Project()
-  {
-    return (EAttribute)folderEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getFolder_Children()
-  {
-    return (EReference)folderEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getFile()
-  {
-    return fileEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getFileOrFolder()
-  {
-    return fileOrFolderEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFileOrFolder_Name()
-  {
-    return (EAttribute)fileOrFolderEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getFileOrFolder_Parent()
-  {
-    return (EReference)fileOrFolderEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFileOrFolder_Location()
-  {
-    return (EAttribute)fileOrFolderEClass.getEStructuralFeatures().get(2);
+    return (EReference)cViewModelEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -298,9 +174,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getComponent_ReferenceFile()
+  public EAttribute getComponent_Location()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -311,6 +187,16 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
   public EAttribute getComponent_ReferenceLine()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getComponent_Children()
+  {
+    return (EReference)componentEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -354,27 +240,15 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
 
     // Create classes and their features
     cViewModelEClass = createEClass(CVIEW_MODEL);
-    createEReference(cViewModelEClass, CVIEW_MODEL__FOLDERS);
-    createEReference(cViewModelEClass, CVIEW_MODEL__FILES);
     createEReference(cViewModelEClass, CVIEW_MODEL__COMPONENTS);
-
-    folderEClass = createEClass(FOLDER);
-    createEAttribute(folderEClass, FOLDER__PROJECT);
-    createEReference(folderEClass, FOLDER__CHILDREN);
-
-    fileEClass = createEClass(FILE);
-
-    fileOrFolderEClass = createEClass(FILE_OR_FOLDER);
-    createEAttribute(fileOrFolderEClass, FILE_OR_FOLDER__NAME);
-    createEReference(fileOrFolderEClass, FILE_OR_FOLDER__PARENT);
-    createEAttribute(fileOrFolderEClass, FILE_OR_FOLDER__LOCATION);
 
     componentEClass = createEClass(COMPONENT);
     createEAttribute(componentEClass, COMPONENT__NAME);
     createEReference(componentEClass, COMPONENT__PARENT);
     createEAttribute(componentEClass, COMPONENT__TYPE);
-    createEReference(componentEClass, COMPONENT__REFERENCE_FILE);
+    createEAttribute(componentEClass, COMPONENT__LOCATION);
     createEAttribute(componentEClass, COMPONENT__REFERENCE_LINE);
+    createEReference(componentEClass, COMPONENT__CHILDREN);
 
     // Create enums
     componentTypeEEnum = createEEnum(COMPONENT_TYPE);
@@ -409,32 +283,18 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    folderEClass.getESuperTypes().add(this.getFileOrFolder());
-    fileEClass.getESuperTypes().add(this.getFileOrFolder());
 
     // Initialize classes and features; add operations and parameters
     initEClass(cViewModelEClass, CViewModel.class, "CViewModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCViewModel_Folders(), this.getFolder(), null, "folders", null, 0, -1, CViewModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCViewModel_Files(), this.getFile(), null, "files", null, 0, -1, CViewModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCViewModel_Components(), this.getComponent(), null, "components", null, 0, -1, CViewModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(folderEClass, Folder.class, "Folder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFolder_Project(), ecorePackage.getEBoolean(), "project", null, 0, 1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFolder_Children(), this.getFileOrFolder(), null, "children", null, 0, -1, Folder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(fileEClass, File.class, "File", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(fileOrFolderEClass, FileOrFolder.class, "FileOrFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFileOrFolder_Name(), ecorePackage.getEString(), "name", null, 0, 1, FileOrFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFileOrFolder_Parent(), this.getFolder(), null, "parent", null, 0, 1, FileOrFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getFileOrFolder_Location(), ecorePackage.getEString(), "location", null, 0, 1, FileOrFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Parent(), this.getComponent(), null, "parent", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Type(), this.getComponentType(), "type", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getComponent_ReferenceFile(), this.getFile(), null, "referenceFile", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_Location(), ecorePackage.getEString(), "location", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_ReferenceLine(), ecorePackage.getEInt(), "referenceLine", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getComponent_Children(), this.getComponent(), null, "children", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(componentTypeEEnum, ComponentType.class, "ComponentType");

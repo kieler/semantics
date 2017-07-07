@@ -19,8 +19,9 @@ import java.io.File
 import org.eclipse.cdt.core.dom.ast.ASTVisitor
 import org.eclipse.cdt.core.dom.ast.IASTName
 import org.eclipse.cdt.core.dom.ast.IFunction
-import de.cau.cs.kieler.cview.model.cViewModel.Folder
-import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder
+import de.cau.cs.kieler.cview.model.cViewModel.Component
+
+import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 
 /**
  * @author cmot
@@ -28,11 +29,13 @@ import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder
  */
 class KLighDController extends AbstractKLighDController {
 
-    def void addToModel(CViewModel model, Object element) {
-        model.addToModel(element, null)
+    public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
+
+    def Component addToModel(CViewModel model, Object element) {
+        return model.addToModel(element, null)
     }
 
-    def void addToModel(CViewModel model, Object element, Folder parentFolder) {
+    def Component addToModel(CViewModel model, Object element, Component parent) {
         var filePath = getFilePath(element);
         var folderPath = getDirPath(element);
         val projectPath = getProjectPath(element);
@@ -47,112 +50,118 @@ class KLighDController extends AbstractKLighDController {
 
         if (!projectPath.nullOrEmpty) {
             // Project
-            val folder = CViewModelFactory.eINSTANCE.createFolder;
-            folder.location = projectPath;
-            folder.name = element.toString.folderOrFileName
-            folder.project = true
-            model.folders.add(folder)
-            if (parentFolder != null) {
-                folder.parent = parentFolder
-                parentFolder.children.add(folder)
+            val dir = cViewModelExtensions.createDir
+            dir.location = projectPath;
+            dir.name = element.toString.componentName
+            // dir.project = true
+            model.components.add(dir)
+            if (parent != null) {
+                dir.parent = parent
+                parent.children.add(dir)
             }
-            
-            for (e : listFiles(folder.location, "*")) {
-                model.addToModel(e, folder)
+
+            for (e : listFiles(dir.location, "*")) {
+                model.addToModel(e, dir)
             }
+            return dir;
         } else if (!folderPath.nullOrEmpty) {
             // Folder   
-            val folder = CViewModelFactory.eINSTANCE.createFolder;
-            folder.location = folderPath;
-            folder.name = element.toString.folderOrFileName
-            folder.project = false
-            model.folders.add(folder)
-            if (parentFolder != null) {
-                folder.parent = parentFolder
-                parentFolder.children.add(folder)
+            val dir = cViewModelExtensions.createDir
+            dir.location = folderPath;
+            dir.name = element.toString.componentName
+            model.components.add(dir)
+            if (parent != null) {
+                dir.parent = parent
+                parent.children.add(dir)
             }
 
-            for (e : listFiles(folder.location, "*")) {
-                model.addToModel(e, folder)
+            for (e : listFiles(dir.location, "*")) {
+                model.addToModel(e, dir)
             }
-
-//            listFiles(folder.location, "*").forEach [ e |
-//                model.addToModel(e)
-//            ];
+            return dir;
         } else if (!filePath.nullOrEmpty) {
             // File
-            val file = CViewModelFactory.eINSTANCE.createFile;
-            file.location = filePath; 
-            file.name = element.toString.folderOrFileName
-            model.files.add(file);
+            val file = cViewModelExtensions.createFile; // CViewModelFactory.eINSTANCE.createFile;
+            file.location = filePath;
+            file.name = element.toString.componentName
+            model.components.add(file);
+            
+            // Add all functions to the file
+            fillFileWithFunctions(file)
 
-            if (parentFolder != null) {
-                file.parent = parentFolder
-                parentFolder.children.add(file as FileOrFolder)
+            if (parent != null) {
+                file.parent = parent
+                parent.children.add(file)
             }
+            return file;
         }
 
     }
 
-    def folderOrFileName(String folderOrFilePath) {
-        var i = folderOrFilePath.lastIndexOf("\\");
-        var j = folderOrFilePath.lastIndexOf("/");
+    def componentName(String componentPath) {
+        var i = componentPath.lastIndexOf("\\");
+        var j = componentPath.lastIndexOf("/");
 
         if (j > 0) {
             i = j;
         }
         if (i > 0) {
             // Path or File?
-            if (i == folderOrFilePath.length) {
-                var i2 = folderOrFilePath.lastIndexOf("\\", i - 1);
-                var j2 = folderOrFilePath.lastIndexOf("/", i - 1);
+            if (i == componentPath.length) {
+                var i2 = componentPath.lastIndexOf("\\", i - 1);
+                var j2 = componentPath.lastIndexOf("/", i - 1);
                 if (j2 > 0) {
                     i2 = j2;
                 }
-                return folderOrFilePath.substring(i2 + 1);
+                return componentPath.substring(i2 + 1);
             }
-            return folderOrFilePath.substring(i + 1);
+            return componentPath.substring(i + 1);
         } else {
-            return folderOrFilePath;
+            return componentPath;
         }
+    }
+
+    def fillFileWithFunctions(Component fileComponent) {
+        // val filePath = getFilePath(fileComponent.location);
+        val filePath = fileComponent.location
+        if (filePath != null) {
+            val content = readFile(filePath);
+            val ast = CFileParser.parse(content);
+
+            val visitor = new ASTVisitor() {
+                override int visit(IASTName name) {
+                    if (name.active) {
+                        val binding = name.resolveBinding
+                        if (binding instanceof IFunction) {
+                            if (name.definition) {
+                                val functionComponent = cViewModelExtensions.createFunc
+                                model.addToModel(functionComponent)
+                                functionComponent.name = name.toString()
+                                functionComponent.location = fileComponent.location
+                                fileComponent.children.add(functionComponent)
+                                functionComponent.parent = fileComponent
+                                System.out.println("- D " + name.toString() + " ");
+                            } else if (name.reference) {
+                                System.out.println("- R " + name.toString() + " ");
+                            }
+                        }
+                    }
+                    return ASTVisitor.PROCESS_CONTINUE;
+                }
+            };
+            visitor.shouldVisitNames = true;
+            ast.accept(visitor);
+
+        }
+
     }
 
     override calculateModel(Object[] allselections) {
-
         model = CViewModelFactory.eINSTANCE.createCViewModel();
-
         for (Object element : allselections) {
-            model.addToModel(element)
-
-            if (allSelections.size == 1) {
-                val filePath = getFilePath(element);
-                if (filePath != null) {
-                    val content = handleFile(filePath);
-                    val ast = CFileParser.parse(content);
-
-                    val visitor = new ASTVisitor() {
-                        override int visit(IASTName name) {
-                            if (name.active) {
-                                val binding = name.resolveBinding
-                                if (binding instanceof IFunction) {
-                                    if (name.definition) {
-                                        System.out.println("- D " + name.toString() + " ");
-                                    } else if (name.reference) {
-                                        System.out.println("- R " + name.toString() + " ");
-                                    }
-                                }
-                            }
-                            return ASTVisitor.PROCESS_CONTINUE;
-                        }
-                    };
-                    visitor.shouldVisitNames = true;
-                    ast.accept(visitor);
-
-                }
-            }
-
+            val component = model.addToModel(element)
         }
         return model;
     }
-    
+
 }

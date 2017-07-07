@@ -6,15 +6,20 @@ package de.cau.cs.kieler.cview.model.cViewModel.impl;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType;
-import de.cau.cs.kieler.cview.model.cViewModel.File;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,8 +32,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceFile <em>Reference File</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceLine <em>Reference Line</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getChildren <em>Children</em>}</li>
  * </ul>
  *
  * @generated
@@ -86,14 +92,24 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   protected ComponentType type = TYPE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getReferenceFile() <em>Reference File</em>}' reference.
+   * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getReferenceFile()
+   * @see #getLocation()
    * @generated
    * @ordered
    */
-  protected File referenceFile;
+  protected static final String LOCATION_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLocation() <em>Location</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLocation()
+   * @generated
+   * @ordered
+   */
+  protected String location = LOCATION_EDEFAULT;
 
   /**
    * The default value of the '{@link #getReferenceLine() <em>Reference Line</em>}' attribute.
@@ -114,6 +130,16 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @ordered
    */
   protected int referenceLine = REFERENCE_LINE_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getChildren()
+   * @generated
+   * @ordered
+   */
+  protected EList<Component> children;
 
   /**
    * <!-- begin-user-doc -->
@@ -230,19 +256,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
-  public File getReferenceFile()
+  public String getLocation()
   {
-    if (referenceFile != null && referenceFile.eIsProxy())
-    {
-      InternalEObject oldReferenceFile = (InternalEObject)referenceFile;
-      referenceFile = (File)eResolveProxy(oldReferenceFile);
-      if (referenceFile != oldReferenceFile)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CViewModelPackage.COMPONENT__REFERENCE_FILE, oldReferenceFile, referenceFile));
-      }
-    }
-    return referenceFile;
+    return location;
   }
 
   /**
@@ -250,22 +266,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
-  public File basicGetReferenceFile()
+  public void setLocation(String newLocation)
   {
-    return referenceFile;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setReferenceFile(File newReferenceFile)
-  {
-    File oldReferenceFile = referenceFile;
-    referenceFile = newReferenceFile;
+    String oldLocation = location;
+    location = newLocation;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__REFERENCE_FILE, oldReferenceFile, referenceFile));
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__LOCATION, oldLocation, location));
   }
 
   /**
@@ -296,6 +302,20 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Component> getChildren()
+  {
+    if (children == null)
+    {
+      children = new EObjectResolvingEList<Component>(Component.class, this, CViewModelPackage.COMPONENT__CHILDREN);
+    }
+    return children;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -308,11 +328,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return basicGetParent();
       case CViewModelPackage.COMPONENT__TYPE:
         return getType();
-      case CViewModelPackage.COMPONENT__REFERENCE_FILE:
-        if (resolve) return getReferenceFile();
-        return basicGetReferenceFile();
+      case CViewModelPackage.COMPONENT__LOCATION:
+        return getLocation();
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
         return getReferenceLine();
+      case CViewModelPackage.COMPONENT__CHILDREN:
+        return getChildren();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -322,6 +343,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -336,11 +358,15 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__TYPE:
         setType((ComponentType)newValue);
         return;
-      case CViewModelPackage.COMPONENT__REFERENCE_FILE:
-        setReferenceFile((File)newValue);
+      case CViewModelPackage.COMPONENT__LOCATION:
+        setLocation((String)newValue);
         return;
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
         setReferenceLine((Integer)newValue);
+        return;
+      case CViewModelPackage.COMPONENT__CHILDREN:
+        getChildren().clear();
+        getChildren().addAll((Collection<? extends Component>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -365,11 +391,14 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__TYPE:
         setType(TYPE_EDEFAULT);
         return;
-      case CViewModelPackage.COMPONENT__REFERENCE_FILE:
-        setReferenceFile((File)null);
+      case CViewModelPackage.COMPONENT__LOCATION:
+        setLocation(LOCATION_EDEFAULT);
         return;
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
         setReferenceLine(REFERENCE_LINE_EDEFAULT);
+        return;
+      case CViewModelPackage.COMPONENT__CHILDREN:
+        getChildren().clear();
         return;
     }
     super.eUnset(featureID);
@@ -391,10 +420,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return parent != null;
       case CViewModelPackage.COMPONENT__TYPE:
         return type != TYPE_EDEFAULT;
-      case CViewModelPackage.COMPONENT__REFERENCE_FILE:
-        return referenceFile != null;
+      case CViewModelPackage.COMPONENT__LOCATION:
+        return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
         return referenceLine != REFERENCE_LINE_EDEFAULT;
+      case CViewModelPackage.COMPONENT__CHILDREN:
+        return children != null && !children.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -414,6 +445,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     result.append(name);
     result.append(", type: ");
     result.append(type);
+    result.append(", location: ");
+    result.append(location);
     result.append(", referenceLine: ");
     result.append(referenceLine);
     result.append(')');

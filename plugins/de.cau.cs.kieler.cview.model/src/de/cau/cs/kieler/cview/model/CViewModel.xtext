@@ -3,35 +3,37 @@ grammar de.cau.cs.kieler.cview.model.CViewModel with org.eclipse.xtext.common.Te
 generate cViewModel "http://www.cau.de/cs/kieler/cview/model/CViewModel"
 
 CViewModel:
-    folders+=Folder*
-    ';'
-    files+=File*
-    ';'
+//    folders+=Folder*
+//    ';'
+//    files+=File*
+//    ';'
 	components+=Component*;
 	
-Folder:
-	'Folder'  name=ID  
-	         ('parent' '=' parent=[Folder])?
-	         (project?='project')
-	         'location' '=' location=STRING
-             ('children' '=' children+=([FileOrFolder])*)?;
-
-File:
-    'File'  name=ID  
-           ('parent' '=' parent=[Folder])?
-           'location' '=' location=STRING;
-	
-FileOrFolder returns FileOrFolder:
-    File | Folder
-;	
+//Folder:
+//	'Folder'  name=ID  
+//	         ('parent' '=' parent=[Folder])?
+//	         (project?='project')
+//	         'location' '=' location=STRING
+//             ('children' '=' children+=([FileOrFolder])*)?;
+//
+//File:
+//    'File'  name=ID  
+//           ('parent' '=' parent=[Folder])?
+//           'location' '=' location=STRING;
+//	
+//FileOrFolder returns FileOrFolder:
+//    File | Folder
+//;	
 
 Component:
-    'Component' name=ID '!'
+    'Component' name=ID 
            ('parent' '=' parent=[Component])?
            'type' '=' type=ComponentType
-           ('referenceFile' '=' referenceFile=[File])?
+//           ('referenceFile' '=' referenceFile=[File])?
+           'location' '=' location=STRING
            ('referenceLine' '=' referenceLine=INT)?
-    ;
+           ('children' '=' children+=([Component])*)?
+;
 	
 	
 	

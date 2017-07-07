@@ -15,26 +15,15 @@
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/WRITER"/>
     </genEnums>
     <genClasses ecoreClass="CViewModel.ecore#//CViewModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/folders"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/files"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/components"/>
-    </genClasses>
-    <genClasses ecoreClass="CViewModel.ecore#//Folder">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Folder/project"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Folder/children"/>
-    </genClasses>
-    <genClasses ecoreClass="CViewModel.ecore#//File"/>
-    <genClasses ecoreClass="CViewModel.ecore#//FileOrFolder">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//FileOrFolder/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//FileOrFolder/parent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//FileOrFolder/location"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//Component">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/parent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/type"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/referenceFile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/referenceLine"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/children"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -21,12 +21,12 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected CViewModelGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q;
+	protected AbstractElementAlias match_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CViewModelGrammarAccess) access;
-		match_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getFolderAccess().getChildrenKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getFolderAccess().getEqualsSignKeyword_7_1()));
+		match_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getComponentAccess().getChildrenKeyword_10_0()), new TokenAlias(false, false, grammarAccess.getComponentAccess().getEqualsSignKeyword_10_1()));
 	}
 	
 	@Override
@@ -41,8 +41,8 @@ public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q.equals(syntax))
-				emit_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q.equals(syntax))
+				emit_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -53,8 +53,9 @@ public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     location=STRING (ambiguity) (rule end)
+	 *     referenceLine=INT (ambiguity) (rule end)
 	 */
-	protected void emit_Folder___ChildrenKeyword_7_0_EqualsSignKeyword_7_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

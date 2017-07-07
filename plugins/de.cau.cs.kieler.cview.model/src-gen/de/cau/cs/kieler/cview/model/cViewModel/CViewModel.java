@@ -16,8 +16,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFolders <em>Folders</em>}</li>
- *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getFiles <em>Files</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getComponents <em>Components</em>}</li>
  * </ul>
  *
@@ -27,38 +25,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface CViewModel extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Folders</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.Folder}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Folders</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Folders</em>' containment reference list.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel_Folders()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Folder> getFolders();
-
-  /**
-   * Returns the value of the '<em><b>Files</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.File}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Files</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Files</em>' containment reference list.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel_Files()
-   * @model containment="true"
-   * @generated
-   */
-  EList<File> getFiles();
-
   /**
    * Returns the value of the '<em><b>Components</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.Component}.

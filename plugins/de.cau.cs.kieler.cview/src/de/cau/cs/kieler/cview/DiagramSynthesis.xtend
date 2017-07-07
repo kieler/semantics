@@ -22,10 +22,7 @@ import org.eclipse.emf.ecore.EObject
 import java.lang.Object
 import org.eclipse.ui.texteditor.AbstractMarkerAnnotationModel
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
-import de.cau.cs.kieler.cview.model.cViewModel.File
-import de.cau.cs.kieler.cview.model.cViewModel.Folder
 import java.util.HashMap
-import de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -41,6 +38,9 @@ import java.util.List
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KChildAreaNode
 import de.cau.cs.kieler.klighd.SynthesisOption
 import java.util.LinkedHashSet
+import de.cau.cs.kieler.cview.model.cViewModel.Component
+import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
+import de.cau.cs.kieler.klighd.krendering.KColor
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -53,90 +53,122 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KContainerRenderingExtensions
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
+    @Inject extension CViewModelExtensions
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
+    public static final int DEFAULT_EXPANDED_VALUE = 2;
+    public static final int MAX_EXPANDED_VALUE = 4;
+    public static final int MIN_EXPANDED_VALUE = 1;
+
     /** Option for enabling adaptive zoom */
-    public static final SynthesisOption EXPAND_ALL = SynthesisOption.createCheckOption(
-            "Expand Nodes", false);
 
-    public static final SynthesisOption EXPANDED_SLIDER = SynthesisOption.createRangeOption("Expanded Layers", 1, 5, 2);
+    public static final SynthesisOption EXPANDED_SLIDER = SynthesisOption.createRangeOption("Expanded Layers",
+        MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE + 1, DEFAULT_EXPANDED_VALUE);
 
+    public static final SynthesisOption FLATTEN_HIERARCHY = SynthesisOption.createCheckOption(
+        "Flatten Hierarchy", false);
+
+    public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption(
+        "Show Functions", false);
+
+
+    // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
         // Add general options
         options.addAll(EXPANDED_SLIDER);
+        options.addAll(FLATTEN_HIERARCHY);
+        options.addAll(SHOW_FUNCTIONS);
         return options.toList;
     }
 
     override KNode transform(CViewModel model) {
-//        allNodes.clear
-        // If you get a NPE here, then add "de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:" before the
-        // class name of the synthesis defined in the plugin.xml under "<diagramSynthesis>" 
         val root = model.createNode().associateWith(model);
         val depth = 1;
 
-        // val parentNode = model.createNode().associateWith(model);
-        for (item : model.folders) {
-            if (item.parent == null) {
+        for (item : model.components) {
+            if (item.parent == null || FLATTEN_HIERARCHY.booleanValue) {
+                
+                var skip = false;
+                if (FLATTEN_HIERARCHY.booleanValue) {
+                    if (EXPANDED_SLIDER.intValue < MAX_EXPANDED_VALUE && item.depth > EXPANDED_SLIDER.intValue) {
+                        skip = true
+                    }
+                }
+                
+                if (!skip) {
                 root.children.add(item.transformItem(depth))
+                }
             }
         }
-        for (item : model.files) {
-            if (item.parent == null) {
-                root.children.add(item.transformItem(depth))
-            }
-        }
-
-//        parentNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-//            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-//
-//
-//        root.children.add(parentNode)
         return root;
     }
 
-    def KNode transformItem(FileOrFolder item, int depth) {
-        if (item instanceof File) {
-            return item.transformItemFile()
-        } else if (item instanceof Folder) {
-            return item.transformItemFolder(depth)
+    def KNode transformItem(Component item, int depth) {
+        if (item.isFile) {
+            if (SHOW_FUNCTIONS.booleanValue) {
+                return item.transformItemFileWithFunctions(depth)
+            } else {
+                return item.transformItemFile(depth)
+            }
+        } else if (item.isDir) {
+            return item.transformItemDir(depth)
+        } else if (item.isFunc) {
+            return item.transformItemFunc(depth)
         }
     }
 
-    def KNode transformItemFile(File item) {
+    def KNode transformItemFunc(Component item, int depth) {
         val childNode = item.createNode().associateWith(item);
         val childRect = childNode.addRoundedRectangle(4, 4, 2);
         val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-        childRect.background = "WHITE".color;
+        childRect.background = "LIGHTBLUE".color;
         childRect.addDoubleClickAction(OpenEditorAction.ID);
         label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
 
         return childNode
     }
 
-    def boolean hieararchical(Folder item) {
-        return !item.children.nullOrEmpty;
+
+    def KNode transformItemFile(Component item, int depth) {
+        val childNode = item.createNode().associateWith(item);
+        val childRect = childNode.addRoundedRectangle(4, 4, 2);
+        val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+            KlighdConstants.DEFAULT_FONT_NAME);
+        childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+        childRect.background = item.getFileColor
+        childRect.addDoubleClickAction(OpenEditorAction.ID);
+        label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+
+        return childNode
     }
 
-    def KNode transformItemFolder(Folder item, int depth) {
+    def KColor getFileColor(Component item) {
+        if (item.hieararchical) {
+            return "WHITE".color;
+        } else {
+           return "LIGHTGRAY".color;
+        }
+    }
+
+    def KNode transformItemFileWithFunctions(Component item, int depth) {
         val childNodeOuter = item.createNode().associateWith(item);
 
         val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
-        rectCol.background = "YELLOW".color;
+        rectCol.background = item.getFileColor
         rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        //rectCol.addDoubleClickAction(OpenEditorAction.ID);
-
+        //rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectCol.addDoubleClickAction(OpenEditorAction.ID);
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
-        rectExp.background = "YEWLLO".color;
+        rectExp.background = item.getFileColor
         rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        //rectExp.addDoubleClickAction(OpenEditorAction.ID);
-
+        //rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectExp.addDoubleClickAction(OpenEditorAction.ID);
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
@@ -144,13 +176,15 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
-
+        
         if (item.hieararchical) {
             // Hierarchical case
             label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            //label.firstText.addDoubleClickAction(OpenEditorAction.ID);
-            
+            //label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+        }
+
+        if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
             val childArea = item.children.createNode().associateWith(item)
             val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
             childAreaRect.background = "WHITE".color;
@@ -159,11 +193,64 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             childNodeOuter.children.add(childArea)
             childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-            
-            childNodeOuter.setProperty(KlighdProperties.EXPAND, (EXPANDED_SLIDER.intValue > 4 || EXPANDED_SLIDER.intValue > depth));
-            
-            for (child : item.children) {
-                childArea.children += child.transformItem(depth+1);
+
+            val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
+
+            childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
+
+            if (!FLATTEN_HIERARCHY.booleanValue) {
+                for (child : item.children) {
+                    childArea.children += child.transformItem(depth + 1);
+                }
+            }
+        } 
+
+        return childNodeOuter
+    }
+
+    def KNode transformItemDir(Component item, int depth) {
+        val childNodeOuter = item.createNode().associateWith(item);
+
+        val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+        rectCol.background = "YELLOW".color;
+        rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        // rectCol.addDoubleClickAction(OpenEditorAction.ID);
+        val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+        rectExp.background = "YELLOW".color;
+        rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        // rectExp.addDoubleClickAction(OpenEditorAction.ID);
+        childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+
+        val itemLabel = item.name
+        val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
+            KlighdConstants.DEFAULT_FONT_NAME);
+        label.associateWith(item)
+
+        if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+            // Hierarchical case
+            label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+            val childArea = item.children.createNode().associateWith(item)
+            val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
+            childAreaRect.background = "WHITE".color;
+            childAreaRect.foreground = "GRAY".color;
+            label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
+            childNodeOuter.children.add(childArea)
+            childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+
+            val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
+
+            childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
+
+            if (!FLATTEN_HIERARCHY.booleanValue) {
+                for (child : item.children) {
+                    childArea.children += child.transformItem(depth + 1);
+                }
             }
         }
 
@@ -174,15 +261,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
 
 
-//        label.getFirstText.setAsExpandedView
 
+
+
+
+
+
+    //public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
+    //public static boolean changedExpandedValue = false;
+
+
+//        label.getFirstText.setAsExpandedView
 //        val labelCollapsed = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
 //            KlighdConstants.DEFAULT_FONT_NAME);
 //        labelCollapsed.associateWith(item)
 //        labelCollapsed.getFirstText.setAsCollapsedView
-
-
-
 //    def static <T extends KRendering> T setAsExpandedView(T krendering) {
 //        krendering.getProperties().removeKey(KlighdProperties.COLLAPSED_RENDERING);
 //        krendering.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
@@ -194,7 +287,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //        krendering.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
 //        return krendering;
 //    }
-
 //        (childNodeOuter.class.getMethod("setExpanded", boolean).invoke(childNodeOuter, false))
 //        DiagramController.
 //        allNodes.add(childNodeOuter)

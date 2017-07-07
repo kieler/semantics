@@ -95,19 +95,9 @@ public abstract class AbstractKLighDController {
         return null;
     }
 
-
-    
     public AbstractKLighDController() {
         System.out.println("+++ CONTROLLER INSTANTIATED +++");
         controller = this;
-
-        // IEditorPart editor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage()
-        // .getActiveEditor();
-        // String editorID = editor.getEditorSite().getId();
-        // System.out.println("+++ ID '" + editorID + "'");
-        ;
-
-        
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 ISelectionService selectionService =
@@ -115,54 +105,34 @@ public abstract class AbstractKLighDController {
 
                 ISelectionListener selectionListener = new ISelectionListener() {
                     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-
                         // Save selection in ANY case (for later usage)
                         allSelections = ((IStructuredSelection) selection).toArray();
-
                         if (!CViewPlugin.isEnabled()) {
                             return;
                         }
-
                         if (!(selection instanceof IStructuredSelection)) {
                             return;
                         }
-
                         CViewPlugin.refreshCView();
                     }
                 };
                 selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
                         selectionListener);
-
-            }});
-
-
+            }
+        });
     }
-
 
     public void refreshCView() {
         model = calculateModel(allSelections);
-
         if (controller != null && model != null) {
-            //controller.updateModel(model, null);
-            // IViewer viewer = controller.getDiagramView().getViewer();
-            // viewer = controller.getDiagramView().getViewContext().getViewer();
-            // ActionContext getActiveViewer().toggleExpansion
-
             DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
             if (view == null) {
                 DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, model,
                         KlighdSynthesisProperties.create());
             } else {
-                //controller.getDiagramView().updateDiagram();
                 DiagramViewManager.updateView(view.getViewContext(), model);
-                //DiagramViewManager.updateView(CVIEW_KLIGHD_ID);
-                //view.setFocus();
             }
-            
-
-            // controller.getDiagramView().updateDiagram();
         }
-
     }
 
     public String getFilePath(Object object) {
@@ -229,44 +199,12 @@ public abstract class AbstractKLighDController {
         return null;
     }
 
-//    @Override
-//    public String getID() {
-//        return "de.cau.cs.kieler.cview.klighd.controller";
-//    }
-//
-//    static int c = 1;
-//
-//    @Override
-//    public void onActivate(IEditorPart editor) {
-//        System.out.println("+++ CONTROLLER ACTIVATED +++");
-//
-//        // IEditorPart editor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage()
-//        // .getActiveEditor();
-//        String editorID = editor.getEditorSite().getId();
-//        System.out.println("+++ ID '" + editorID + "'");
-//
-//        this.updateModel(model, null);
-//        this.getDiagramView().updateDiagram();
-//    }
-//
-//    @Override
-//    public void onDeactivate() {
-//        System.out.println("+++ CONTROLLER DEACTIVATED +++");
-//
-//    }
-//
-//    @Override
-//    public void refresh() {
-//        System.out.println("+++ CONTROLLER REFRESHED +++");
-//
-//    }
-
     public static Charset getEncoding() {
         Charset encoding = Charset.defaultCharset();
         return encoding;
     }
 
-    static char[] handleFile(String filePath) throws IOException {
+    static char[] readFile(String filePath) throws IOException {
         Charset encoding = getEncoding();
         StringBuilder stringBuilder = new StringBuilder();
         try (InputStream in = new FileInputStream(filePath);

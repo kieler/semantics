@@ -81,21 +81,6 @@ public class CViewModelAdapterFactory extends AdapterFactoryImpl
         return createCViewModelAdapter();
       }
       @Override
-      public Adapter caseFolder(Folder object)
-      {
-        return createFolderAdapter();
-      }
-      @Override
-      public Adapter caseFile(File object)
-      {
-        return createFileAdapter();
-      }
-      @Override
-      public Adapter caseFileOrFolder(FileOrFolder object)
-      {
-        return createFileOrFolderAdapter();
-      }
-      @Override
       public Adapter caseComponent(Component object)
       {
         return createComponentAdapter();
@@ -133,51 +118,6 @@ public class CViewModelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCViewModelAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.cview.model.cViewModel.Folder <em>Folder</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.Folder
-   * @generated
-   */
-  public Adapter createFolderAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.cview.model.cViewModel.File <em>File</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.File
-   * @generated
-   */
-  public Adapter createFileAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder <em>File Or Folder</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.cview.model.cViewModel.FileOrFolder
-   * @generated
-   */
-  public Adapter createFileOrFolderAdapter()
   {
     return null;
   }
