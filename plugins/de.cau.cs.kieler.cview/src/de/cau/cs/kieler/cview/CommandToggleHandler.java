@@ -20,7 +20,7 @@ public class CommandToggleHandler implements IHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        CViewPlugin.refreshCView();
+        CViewPlugin.refreshCView(true);
         return null;
     }
 

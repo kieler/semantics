@@ -64,8 +64,8 @@ public class CViewPlugin implements BundleActivator {
         return (preferences.get(CVIEW_PREFERENCE_ENABLED, "disabled").equals("enabled"));
     }
 
-    public static void refreshCView() {
-        AbstractKLighDController.controller.refreshCView();
+    public static void refreshCView(boolean forceRebuid) {
+        AbstractKLighDController.controller.refreshCView(forceRebuid);
     }
 
     // -------------------------------------------------------------------------

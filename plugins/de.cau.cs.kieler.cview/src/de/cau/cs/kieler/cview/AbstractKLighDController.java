@@ -122,7 +122,17 @@ public abstract class AbstractKLighDController {
         });
     }
 
-    public void refreshCView() {
+    public void refreshCView(boolean forceRebuild) {
+        if (forceRebuild) {
+            CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
+            DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+            if (view == null) {
+                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
+                        KlighdSynthesisProperties.create());
+            } else {
+                DiagramViewManager.updateView(view.getViewContext(), nullModel);
+            }
+        }
         model = calculateModel(allSelections);
         if (controller != null && model != null) {
             DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
