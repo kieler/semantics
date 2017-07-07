@@ -34,10 +34,12 @@ import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.Workbench;
@@ -51,6 +53,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.controller.DiagramController;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KNodeAbstractNode;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
+import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.RenderingContextData;
@@ -61,7 +64,7 @@ import de.cau.cs.kieler.klighd.util.RenderingContextData;
  * @author delphino
  *
  */
-public abstract class AbstractKLighDController extends AbstractViewUpdateController {
+public abstract class AbstractKLighDController {
 
     static String CVIEW_KLIGHD_ID = "de.cau.cs.kieler.cview.klighd";
     static String CVIEW_KLIGHD_TITLE = "C View";
@@ -92,6 +95,8 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
         return null;
     }
 
+
+    
     public AbstractKLighDController() {
         System.out.println("+++ CONTROLLER INSTANTIATED +++");
         controller = this;
@@ -102,28 +107,34 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
         // System.out.println("+++ ID '" + editorID + "'");
         ;
 
-        ISelectionService selectionService =
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService();
+        
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                ISelectionService selectionService =
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService();
 
-        ISelectionListener selectionListener = new ISelectionListener() {
-            public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+                ISelectionListener selectionListener = new ISelectionListener() {
+                    public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 
-                // Save selection in ANY case (for later usage)
-                allSelections = ((IStructuredSelection) selection).toArray();
+                        // Save selection in ANY case (for later usage)
+                        allSelections = ((IStructuredSelection) selection).toArray();
 
-                if (!CViewPlugin.isEnabled()) {
-                    return;
-                }
+                        if (!CViewPlugin.isEnabled()) {
+                            return;
+                        }
 
-                if (!(selection instanceof IStructuredSelection)) {
-                    return;
-                }
+                        if (!(selection instanceof IStructuredSelection)) {
+                            return;
+                        }
 
-                CViewPlugin.refreshCView();
-            }
-        };
-        selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
-                selectionListener);
+                        CViewPlugin.refreshCView();
+                    }
+                };
+                selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
+                        selectionListener);
+
+            }});
+
 
     }
 
@@ -132,14 +143,22 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
         model = calculateModel(allSelections);
 
         if (controller != null && model != null) {
-            controller.updateModel(model, null);
-            // controller.getDiagramView().updateDiagram();
+            //controller.updateModel(model, null);
             // IViewer viewer = controller.getDiagramView().getViewer();
             // viewer = controller.getDiagramView().getViewContext().getViewer();
             // ActionContext getActiveViewer().toggleExpansion
 
-            DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, model,
-                    KlighdSynthesisProperties.create());
+            DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+            if (view == null) {
+                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, model,
+                        KlighdSynthesisProperties.create());
+            } else {
+                //controller.getDiagramView().updateDiagram();
+                DiagramViewManager.updateView(view.getViewContext(), model);
+                //DiagramViewManager.updateView(CVIEW_KLIGHD_ID);
+                //view.setFocus();
+            }
+            
 
             // controller.getDiagramView().updateDiagram();
         }
@@ -210,37 +229,37 @@ public abstract class AbstractKLighDController extends AbstractViewUpdateControl
         return null;
     }
 
-    @Override
-    public String getID() {
-        return "de.cau.cs.kieler.cview.klighd.controller";
-    }
-
-    static int c = 1;
-
-    @Override
-    public void onActivate(IEditorPart editor) {
-        System.out.println("+++ CONTROLLER ACTIVATED +++");
-
-        // IEditorPart editor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage()
-        // .getActiveEditor();
-        String editorID = editor.getEditorSite().getId();
-        System.out.println("+++ ID '" + editorID + "'");
-
-        this.updateModel(model, null);
-        this.getDiagramView().updateDiagram();
-    }
-
-    @Override
-    public void onDeactivate() {
-        System.out.println("+++ CONTROLLER DEACTIVATED +++");
-
-    }
-
-    @Override
-    public void refresh() {
-        System.out.println("+++ CONTROLLER REFRESHED +++");
-
-    }
+//    @Override
+//    public String getID() {
+//        return "de.cau.cs.kieler.cview.klighd.controller";
+//    }
+//
+//    static int c = 1;
+//
+//    @Override
+//    public void onActivate(IEditorPart editor) {
+//        System.out.println("+++ CONTROLLER ACTIVATED +++");
+//
+//        // IEditorPart editor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage()
+//        // .getActiveEditor();
+//        String editorID = editor.getEditorSite().getId();
+//        System.out.println("+++ ID '" + editorID + "'");
+//
+//        this.updateModel(model, null);
+//        this.getDiagramView().updateDiagram();
+//    }
+//
+//    @Override
+//    public void onDeactivate() {
+//        System.out.println("+++ CONTROLLER DEACTIVATED +++");
+//
+//    }
+//
+//    @Override
+//    public void refresh() {
+//        System.out.println("+++ CONTROLLER REFRESHED +++");
+//
+//    }
 
     public static Charset getEncoding() {
         Charset encoding = Charset.defaultCharset();

@@ -154,5 +154,5 @@ class KLighDController extends AbstractKLighDController {
         }
         return model;
     }
-
+    
 }
