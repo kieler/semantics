@@ -29,6 +29,10 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore
+
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -43,11 +47,11 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
+    @Inject extension AnnotationsExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsSerializeHRExtensions
-
-    @Inject
-    extension TransitionStyles
+    @Inject extension TransitionStyles
+    @Inject extension ColorStore
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
@@ -87,6 +91,11 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             default: {
             }
         };
+        
+        transition.getCommentAnnotations.forEach[
+            edge.addLabel(it.values.head, 
+                COMMENT_BACKGROUND_GRADIENT_1.color)
+        ]     
 
         // Add Label
         val label = new StringBuilder();
@@ -102,7 +111,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         if (label.length != 0) {
             edge.addLabel(label.toString).associateWith(transition);
         }
-
+        
         return <KEdge> newArrayList(edge)
     }
 

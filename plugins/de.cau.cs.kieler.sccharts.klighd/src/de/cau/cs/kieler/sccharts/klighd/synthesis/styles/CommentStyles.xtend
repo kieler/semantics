@@ -85,6 +85,7 @@ class CommentStyles {
     def KPolyline addCommentPolyline(KEdge edge) {
         edge.addPolyline => [
             lineWidth = 1;
+            foreground = COMMENT_EDGE.color
         ]
     }     
 
