@@ -77,6 +77,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -216,7 +217,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         if (eObject instanceof SCGraph) {
             return (eObject as SCGraph).processSCG(context)
         } else {
-            return (eObject as State).transformSCG(context)
+            for (rootState : (eObject as SCCharts).rootStates) {
+                return rootState.transformSCG(context)    
+            }
         }
     }
 
@@ -350,7 +353,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // Remove superfluous fork constructs 
         // ssm, 04.05.2014
-        val scg = if (context?.getProperty(ENABLE_SFR)) {
+        val scg = if (true) { // (context?.getProperty(ENABLE_SFR)) {
                 timestamp = System.currentTimeMillis
                 val SuperfluousThreadRemover superfluousThreadRemover = Guice.createInjector().
                     getInstance(typeof(SuperfluousThreadRemover))

@@ -10,17 +10,14 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.scg.processors.transformators
+package de.cau.cs.kieler.scg.processors.transformators
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.scg.SCGTransformation
 import de.cau.cs.kieler.kicool.compilation.TypeSafeProcessor
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -31,25 +28,21 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.design 2017-06-16 proposed
  * @kieler.rating 2017-06-16 proposed yellow  
  */
-class SCGTransformationWrapper extends TypeSafeProcessor<SCCharts, SCGraph> {
+class BasicBlocksWrapper extends TypeSafeProcessor<SCGraph, SCGraph> {
     
     @Inject Injector injector
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG"
+        "de.cau.cs.kieler.scg.processors.transformators.basicBlocks"
     }
     
     override getName() {
-        "SCG"
+        "Basic Blocks"
     }
     
     override process() {
-        val model = environment.model
-        val wrappedTransformation = injector.getInstance(SCGTransformation)
-        switch (model) {
-            State: environment.model = wrappedTransformation.transform(model)
-            SCCharts: environment.model = wrappedTransformation.transform(model, null)
-        }
+        val wrappedTransformation = injector.getInstance(BasicBlockTransformation)
+        setModel(wrappedTransformation.transform(getModel))
     }
     
     override getType() {

@@ -36,7 +36,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
     @Inject SCTXQualifiedNameProvider nameProvider
 
     override getScope(EObject context, EReference reference) {
-        println(context + "\n  " + reference)
+//        println(context + "\n  " + reference)
         
         switch(context) {
             Transition: return getScopeForTransition(context, reference)

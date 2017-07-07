@@ -84,6 +84,7 @@ class SCChartsCoreExtensions {
                     scopeId = "region" + parent.regions.indexOf(scope)
                 }
             }
+            if (scope.eContainer instanceof SCCharts) return scopeId + "_" + decendingName
             return (scope.eContainer as Scope).getHierarchicalName(scopeId + "_" + decendingName)
         }
     }    

@@ -30,7 +30,7 @@ class SCChartsUniqueNameExtensions extends UniqueNameExtensions {
             val p = Pattern.compile("[0-9]+$");
             val m = p.matcher(namedObject.id);
             if(m.find()) {
-                val n = Integer.parseInt(m.group)
+                val n = Integer.parseInt(m.group) + 1
                 namedObject.id = namedObject.id.substring(0, namedObject.id.length - m.group.length) + n
             } else {
                 namedObject.id = namedObject.id + "0"

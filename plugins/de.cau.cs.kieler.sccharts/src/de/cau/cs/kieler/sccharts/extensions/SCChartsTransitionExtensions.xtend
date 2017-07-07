@@ -118,7 +118,10 @@ class SCChartsTransitionExtensions {
     def Transition setSpecificPriority(Transition transition, int priority) {
         val state = transition.sourceState
         state.outgoingTransitions.remove(transition)
-        state.outgoingTransitions.add(priority, transition)
+        var newPriority = priority
+        if (priority > state.outgoingTransitions.size)
+            newPriority = state.outgoingTransitions.size
+        state.outgoingTransitions.add(newPriority, transition)
         transition
     }
     

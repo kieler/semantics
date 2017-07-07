@@ -110,7 +110,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         parameterMapping.clear
         val mainEntry = scg.getStringAnnotationValue("main")
         for(tickStart : tickStarts) {
-            if (tickStart.id.equals(mainEntry)) {
+            if (tickStart.id == null || tickStart.id.equals(mainEntry)) {
                 entryMapping.put(tickStart.id, "")
             } else {
                 entryMapping.put(tickStart.id, suffixCounter.toString)

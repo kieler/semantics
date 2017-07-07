@@ -123,8 +123,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
                 compilationUnit.process
             }
         } catch (Exception e) {
-            compilationUnit.environment.error = e.message
+            compilationUnit.environment.error = e.toString
             notify(new ProcessorError(e.message, this, processor, compilationUnit))
+            java.lang.System.err.println("Error in processor " + processor)
+            e.printStackTrace
         }
         val stopTimestamp = java.lang.System.nanoTime
         environmentPrime.setData(STOP_TIMESTAMP, stopTimestamp)
