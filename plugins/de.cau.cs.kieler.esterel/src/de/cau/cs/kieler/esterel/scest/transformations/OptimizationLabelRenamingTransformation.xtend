@@ -60,7 +60,7 @@ class OptimizationLabelRenamingTransformation extends AbstractExpansionTransform
               SCEstTransformation::ABORT_ID, SCEstTransformation::ESTERELPARALLEL_ID
             , SCEstTransformation::NOTHING_ID, SCEstTransformation::HALT_ID
             , SCEstTransformation::BLOCK_ID, SCEstTransformation::EMIT_ID
-            , SCEstTransformation::SUSTAIN_ID, SCEstTransformation::ESTERELASSIGNMENT_ID
+            , SCEstTransformation::SUSTAIN_ID
             , SCEstTransformation::PROCCALL_ID, SCEstTransformation::PRESENT_ID
             , SCEstTransformation::IFTEST_ID, SCEstTransformation::LOOP_ID
             , SCEstTransformation::REPEAT_ID, SCEstTransformation::AWAIT_ID

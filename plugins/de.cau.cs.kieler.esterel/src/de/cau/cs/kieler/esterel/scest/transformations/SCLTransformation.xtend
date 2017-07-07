@@ -24,6 +24,8 @@ import de.cau.cs.kieler.scl.scl.ScopeStatement
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
+import de.cau.cs.kieler.scl.features.SCLFeatures
+import de.cau.cs.kieler.annotations.Annotation
 
 /**
  * @author mrb
@@ -45,13 +47,17 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
     override getExpandsFeatureId() {
         return SCEstFeature::SCL_ID
     }
+    
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCLFeatures.BASIC_ID)
+    }
 
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(
               SCEstTransformation::ABORT_ID, SCEstTransformation::ESTERELPARALLEL_ID
             , SCEstTransformation::NOTHING_ID, SCEstTransformation::HALT_ID
             , SCEstTransformation::BLOCK_ID, SCEstTransformation::EMIT_ID
-            , SCEstTransformation::SUSTAIN_ID, SCEstTransformation::ESTERELASSIGNMENT_ID
+            , SCEstTransformation::SUSTAIN_ID
             , SCEstTransformation::PROCCALL_ID, SCEstTransformation::PRESENT_ID
             , SCEstTransformation::IFTEST_ID, SCEstTransformation::LOOP_ID
             , SCEstTransformation::REPEAT_ID, SCEstTransformation::AWAIT_ID
@@ -74,6 +80,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
         sclProg.name = "GENERATED_SCL_MODULE"
         for (m : prog.modules) {
             m.removeLocalSignalsAndVariables
+            m.removeDepthAnnotations
             transformModule(m, sclProg)
         }
         return sclProg
@@ -115,6 +122,16 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
             else {
                 throw new UnsupportedOperationException(
                         "There should be just one statement (a scope) in the statements list of the following local signal declaration! " + s)
+            }
+        }
+    }
+    
+    def removeDepthAnnotations(SCEstModule module) {
+        var annotationList = module.eAllContents.toList.filter(Annotation)
+        for (a : annotationList) {
+            if (a.isGenerated) {
+                var annotations =  a.getContainingList
+                annotations.remove(a)
             }
         }
     }

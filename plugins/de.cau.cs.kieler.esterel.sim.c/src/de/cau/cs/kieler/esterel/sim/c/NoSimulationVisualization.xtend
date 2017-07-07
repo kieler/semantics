@@ -46,13 +46,7 @@ class NoSimulationVisualization extends AbstractExpansionTransformation {
 
     override getProducesFeatureIds() {
         return Sets.newHashSet(EsterelFeature::BASIC_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
     }    
-    
-    //-------------------------------------------------------------------------
 
     // Do nothing
     def Program transform(Program program) {

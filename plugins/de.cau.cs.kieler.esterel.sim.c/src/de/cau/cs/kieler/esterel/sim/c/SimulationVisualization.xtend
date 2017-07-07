@@ -196,8 +196,10 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 //            abortISignal.setIsInput(false);
 //            abortISignal.setIsOutput(false);
             abortISignal.setType(ValueType::PURE);
+            abortSignalDecl.signals.add(abortISignal)
 //            abortSignalLink.signal.add(abortISignal);
 //            abortSignalDecl.setSignalList(abortSignalLink as LocalSignalList);
+            
             // Set the abortSignal for emission (to abort parallel sustain)
             abortEmitStatement.setSignal(abortISignal);
 

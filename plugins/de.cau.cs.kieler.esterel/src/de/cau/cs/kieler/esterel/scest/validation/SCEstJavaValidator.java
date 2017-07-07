@@ -3,12 +3,15 @@
  */
 package de.cau.cs.kieler.esterel.scest.validation;
 
+import de.cau.cs.kieler.core.model.validation.CustomEValidator;
+
 /**
  * This class contains custom validation rules. 
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-public class SCEstJavaValidator extends de.cau.cs.kieler.esterel.scest.validation.AbstractSCEstJavaValidator {
+public class SCEstJavaValidator extends de.cau.cs.kieler.esterel.scest.validation.AbstractSCEstJavaValidator implements
+CustomEValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {

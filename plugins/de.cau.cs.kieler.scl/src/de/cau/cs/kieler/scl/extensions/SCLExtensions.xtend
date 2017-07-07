@@ -131,13 +131,10 @@ class SCLExtensions {
      */
     def Scope removeUnreachableCode(Scope scope) {
         val toDelete = <Statement>newLinkedList
-        for (goto : scope.eAllContents.toList.filter(typeof(Goto))) {
-            var statement = goto.eContainer
-            var parent = if (statement.eContainer instanceof Scope) {
-                statement.eContainer as Scope
-            } else {
-                statement.eContainer.eContainer as Scope
-            }
+        var gotos = scope.eAllContents.toList.filter(typeof(Goto))
+        for (goto : gotos) {
+            var statement = goto
+            var parent = statement.eContainer as Scope
             var index = parent.statements.indexOf(statement)
             var noLabel = true
             while (parent.statements.size > index + 1 && noLabel) {
@@ -383,7 +380,7 @@ class SCLExtensions {
          for (parallel : scope.eAllContents.toList.filter(Parallel)) {
              if (parallel.threads.length <= 1) {
                  val parent = parallel.eContainer as Scope
-                 val indexOfParallel = parent.statements.indexOf(parallel.eContainer)
+                 val indexOfParallel = parent.statements.indexOf(parallel)
                  parent.statements.remove(indexOfParallel)
                  if (parallel.threads.length == 1) {
                      parent.statements.addAll(indexOfParallel, parallel.threads.head.statements)

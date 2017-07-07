@@ -82,6 +82,7 @@ import java.util.List
 import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
 import de.cau.cs.kieler.esterel.esterel.TrapHandler
 import de.cau.cs.kieler.esterel.scest.scest.ScestFactory
+import de.cau.cs.kieler.esterel.esterel.Output
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -120,6 +121,14 @@ class SCEstExtension {
 
     def getNewSignals() {
         newSignals
+    }
+    
+    def getGeneratedAnnotation() {
+        generatedAnnotation
+    }
+    
+    def getInterfaceScope() {
+        interfaceScope
     }
 
     /**
@@ -735,6 +744,16 @@ class SCEstExtension {
      */
     def getContainingList(Statement statement) {
         statement.eContainer.eGet(statement.eContainingFeature) as EList<Statement>
+    }
+    
+    /**
+     * Returns the list in which the given Annotation is contained.
+     * 
+     * @param annotation An annotation which is in the returned list 
+     * @return The annotation list which includes the given annotation
+     */
+    def getContainingList(Annotation annotation) {
+        annotation.eContainer.eGet(annotation.eContainingFeature) as EList<Annotation>
     }
 
     /**
@@ -1453,6 +1472,15 @@ class SCEstExtension {
     }
     
     /**
+     * Checks if the given annotation is named "IScope"
+     * 
+     * @param annotation The annotation in question
+     */
+    def isInterfaceAnnotation(Annotation annotation) {
+        annotation.name.equals(interfaceScope)
+    } 
+    
+    /**
      * Adds the specific interfaceScope annotation to the given scope
      * 
      * @param scope The scope which needs an annotation
@@ -1550,5 +1578,59 @@ class SCEstExtension {
                 it.name = name
             ])
     } 
+    
+    /**
+     * Checks if the given ValueType is of type PURE
+     * 
+     * @param type The ValueType in question
+     */
+    def isPure(ValueType type) {
+         type == ValueType.PURE
+     }
+     
+     /**
+      * Checks if an emit is allowed for a specific signal
+      * 
+      * @param signal The signal in question
+      */
+     def emitAllowed(ISignal signal) {
+         (signal.eContainer instanceof Output || signal.eContainer instanceof LocalSignalDecl
+         || signal.eContainer instanceof InputOutput)
+     }
+     
+     /**
+      * Checks if combine operator fits value type
+      * 
+      * @param type The type of the valued object
+      * @param the combine operator of the valued object
+      */
+     def combineOperatorFitsType(ValueType type, CombineOperator operator) {
+         if (type == ValueType.DOUBLE || type == ValueType.FLOAT ||
+             type == ValueType.INT || type == ValueType.UNSIGNED 
+             ) {
+                 if (operator == CombineOperator.ADD || operator == CombineOperator.MULT ||
+                     operator == CombineOperator.MIN || operator == CombineOperator.MAX  ||
+                     operator == CombineOperator.NONE
+                 ) {
+                     return true
+                 }
+                 else {
+                     return false
+                 }
+         }
+         else if (type == ValueType.BOOL) {
+             if (operator == CombineOperator.AND || operator == CombineOperator.OR ||
+                     operator == CombineOperator.NONE 
+                 ) {
+                     return true
+                 }
+                 else {
+                     return false
+                 }
+         }
+         else {
+             return true
+         }
+     }
  
 }

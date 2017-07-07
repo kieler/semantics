@@ -3,9 +3,13 @@
  */
 package de.cau.cs.kieler.esterel.scest;
 
+import de.cau.cs.kieler.esterel.scest.validation.SCEstValidator;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class SCEstRuntimeModule extends de.cau.cs.kieler.esterel.scest.AbstractSCEstRuntimeModule {
-
+    @org.eclipse.xtext.service.SingletonBinding(eager=true) public Class<? extends de.cau.cs.kieler.esterel.scest.validation.SCEstValidator> bindSctJavaValidator() {
+        return SCEstValidator.class;
+    }
 }

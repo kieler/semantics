@@ -107,7 +107,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
      * {@inheritDoc}
      */
     override Set<String> getRequiredFeatureIds() {
-        return Sets.newHashSet("scest.scl")
+        return Sets.newHashSet(SCLFeatures.BASIC_ID)
     }
     
     
@@ -137,6 +137,8 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
         program.removeDoubleJumps
         program.removeLocalDeclarations
         program.removeRedundantForks
+        program.optimizeLabels
+        program.removeUnreachableCode
 
         // Variable initialization
         program.declarations.forEach [

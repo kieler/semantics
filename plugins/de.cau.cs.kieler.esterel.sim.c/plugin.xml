@@ -51,10 +51,10 @@
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <expansionTransformationClass
-            class="de.cau.cs.kieler.esterel.sim.c.xtend.SimulationVisualization">
+            class="de.cau.cs.kieler.esterel.sim.c.SimulationVisualization">
       </expansionTransformationClass>
       <expansionTransformationClass
-            class="de.cau.cs.kieler.esterel.sim.c.xtend.NoSimulationVisualization">
+            class="de.cau.cs.kieler.esterel.sim.c.NoSimulationVisualization">
       </expansionTransformationClass>
    </extension>
 
