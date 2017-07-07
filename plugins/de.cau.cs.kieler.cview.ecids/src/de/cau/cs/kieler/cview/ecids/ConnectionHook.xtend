@@ -24,7 +24,8 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
     
     override createConnections(Component component, CViewModel model) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+        println(" ####### create connections for '" + component.name + "'")
+        return null
     } 
     
 }

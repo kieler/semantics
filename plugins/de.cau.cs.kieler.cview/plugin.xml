@@ -63,8 +63,8 @@
                   commandId="de.cau.cs.kieler.cview.command"
                   icon="icon/cview.png"
                   id="de.cau.cs.kieler.cview.toolbar.command"
-                  style="toggle"
-                  tooltip="Enabled/Disable  C View">
+                  style="push"
+                  tooltip="Refresh  C View">
             </command>
          </toolbar>
       </menuContribution>

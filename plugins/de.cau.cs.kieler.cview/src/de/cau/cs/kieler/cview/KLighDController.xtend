@@ -22,6 +22,9 @@ import org.eclipse.cdt.core.dom.ast.IFunction
 import de.cau.cs.kieler.cview.model.cViewModel.Component
 
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
+import java.util.List
+import de.cau.cs.kieler.cview.hooks.IConnectionHook
+import java.util.ArrayList
 
 /**
  * @author cmot
@@ -161,6 +164,18 @@ class KLighDController extends AbstractKLighDController {
         for (Object element : allselections) {
             val component = model.addToModel(element)
         }
+        
+        // Now call connections extensions
+        for (Component component: model.components) {
+           val connectionHooks = CViewPlugin.getRegisteredConnectionHooks(false)
+           for (connectionHook : connectionHooks) {
+              val connectionsToAdd = connectionHook.createConnections(component, model)
+              if (!connectionsToAdd.nullOrEmpty) {
+                  model.connections.addAll(connectionsToAdd)
+              }
+           }
+        }
+        
         return model;
     }
 

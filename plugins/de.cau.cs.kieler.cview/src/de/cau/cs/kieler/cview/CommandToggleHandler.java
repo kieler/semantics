@@ -20,17 +20,7 @@ public class CommandToggleHandler implements IHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-
-        Command command = event.getCommand();
-        boolean oldValue = HandlerUtil.toggleCommandState(command);
-
-        CViewPlugin.setEnabled(!oldValue);
-
-        if (!oldValue) {
-            // CViewPlugin.showModelView();
-            CViewPlugin.refreshCView();
-        }
-
+        CViewPlugin.refreshCView();
         return null;
     }
 
@@ -51,3 +41,13 @@ public class CommandToggleHandler implements IHandler {
     }
 
 }
+
+//Command command = event.getCommand();
+// CViewPlugin.setEnabled(false);
+// boolean oldValue = HandlerUtil.toggleCommandState(command);
+// CViewPlugin.setEnabled(!oldValue);
+//
+// if (!oldValue) {
+// // CViewPlugin.showModelView();
+// CViewPlugin.refreshCView();
+// }

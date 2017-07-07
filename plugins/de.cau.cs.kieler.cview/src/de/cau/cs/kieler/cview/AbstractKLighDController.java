@@ -107,13 +107,13 @@ public abstract class AbstractKLighDController {
                     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
                         // Save selection in ANY case (for later usage)
                         allSelections = ((IStructuredSelection) selection).toArray();
-                        if (!CViewPlugin.isEnabled()) {
-                            return;
-                        }
-                        if (!(selection instanceof IStructuredSelection)) {
-                            return;
-                        }
-                        CViewPlugin.refreshCView();
+                        // if (!CViewPlugin.isEnabled()) {
+                        // return;
+                        // }
+                        // if (!(selection instanceof IStructuredSelection)) {
+                        // return;
+                        // }
+                        // CViewPlugin.refreshCView();
                     }
                 };
                 selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
