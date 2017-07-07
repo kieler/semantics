@@ -11,6 +11,8 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.generator.IFileSystemAccess
 import de.cau.cs.kieler.railsl.Visualizer
 import de.cau.cs.kieler.railSL.Program
+import com.google.inject.Inject
+import com.google.inject.Injector
 
 /**
  * Main class for code generation of RailSL.
@@ -23,6 +25,8 @@ class RailSLGenerator extends AbstractGenerator {
 
     private static Visualizer visualizer  
 
+    @Inject Injector injector
+
     /**
      * Generates static code required by PROM.
      * This method is called by XText whenever the editor is saved.
@@ -32,8 +36,8 @@ class RailSLGenerator extends AbstractGenerator {
         generateSnippets(fsa)
         
         if (visualizer == null) {
-            visualizer = new Visualizer()
-           }
+            visualizer = injector.getInstance(Visualizer)
+        }
         visualizer.updateView()
     }
 

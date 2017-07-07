@@ -76,7 +76,7 @@ class RailSLExtensions {
     /**
      * Helper method to determine the direction of travel.
      */
-    def int parseDirection(SetTrackStatement stStatement) {
+    def parseDirection(SetTrackStatement stStatement) {
         if (stStatement.mode.contains("reverse")) {
             return 1;
         } else {

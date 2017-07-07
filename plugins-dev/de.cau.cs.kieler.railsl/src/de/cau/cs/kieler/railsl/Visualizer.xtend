@@ -35,6 +35,7 @@ import org.eclipse.jface.text.TextSelection
 import org.eclipse.xtext.resource.EObjectAtOffsetHelper
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.ui.editor.XtextEditor
+import org.eclipse.ui.IWorkbenchWindow
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -44,93 +45,93 @@ import org.eclipse.xtext.ui.editor.XtextEditor
  */
 class Visualizer {
 
-    final static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4",
-        "IC_LN_5", "IC_ST_0", "IC_ST_1", "IC_ST_2", "IC_ST_3", "IC_ST_4", "IO_LN_0", "IO_LN_1", "IO_LN_2",
-        "KH_LN_0", "KH_LN_1", "KH_LN_2", "KH_LN_3", "KH_LN_4", "KH_LN_5", "KH_LN_6", "KH_LN_7", "KH_LN_8",
-        "KH_ST_0", "KH_ST_1", "KH_ST_2", "KH_ST_3", "KH_ST_4", "KH_ST_5", "KH_ST_6", "KIO_LN_0", "KIO_LN_1",
-        "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2", "OC_LN_3", "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1",
-        "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1", "OI_LN_2"}
+    final static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4", "IC_LN_5",
+        "IC_ST_0", "IC_ST_1", "IC_ST_2", "IC_ST_3", "IC_ST_4", "IO_LN_0", "IO_LN_1", "IO_LN_2", "KH_LN_0", "KH_LN_1",
+        "KH_LN_2", "KH_LN_3", "KH_LN_4", "KH_LN_5", "KH_LN_6", "KH_LN_7", "KH_LN_8", "KH_ST_0", "KH_ST_1", "KH_ST_2",
+        "KH_ST_3", "KH_ST_4", "KH_ST_5", "KH_ST_6", "KIO_LN_0", "KIO_LN_1", "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2",
+        "OC_LN_3", "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1", "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1",
+        "OI_LN_2"}
 
-    @Inject 
-    extension RailSLExtensions
-    
-    @Inject 
-    EObjectAtOffsetHelper eObjectAtOffsetHelper;
-    
-    
-    private var DataPool pool
+        @Inject
+        extension RailSLExtensions
 
-    new() {
-        pool = new DataPool()
-        val model = new Model()
-        model.name = "railway"
-        model.pool = pool
-        pool.addModel(model)
+        @Inject
+        EObjectAtOffsetHelper eObjectAtOffsetHelper = new EObjectAtOffsetHelper();
 
-        model.addVariable(new Variable("Backfisch", "1"))
+        private var DataPool pool
 
-        // Add tracks at speed 0
-        for (constant : constants) {
-            model.addVariable(new Variable(constant, "0"))
-        }
+        new() {
+            pool = new DataPool()
+            val model = new Model()
+            model.name = "railway"
+            model.pool = pool
+            pool.addModel(model)
 
-        // Add points as straight
-        for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
-        }
+            model.addVariable(new Variable("Backfisch", "1"))
 
-        updateView()
-    }
-
-    public def DataPool getDataPool() {
-        return pool
-    }
-
-    /**
-     * Read the current cursor position from the active editor and 
-     * display the changes made by the currently selected Statement.
-     */
-    public def void updateView() {
-
-        // TODO this throws a NullPointerException
-        val editor = PlatformUI.workbench.activeWorkbenchWindow.activePage.activeEditor as XtextEditor
-        val workbench = PlatformUI.workbench
-        val activeWindow = workbench.activeWorkbenchWindow
-        val activePage = activeWindow.activePage
-//        val editor = activePage.activeEditor as XtextEditor
-        
-//        val editor = workbench.editorRegistry.getDefaultEditor("things.railsl") as XtextEditor
-        editor?.document.readOnly(new IUnitOfWork<String, XtextResource>() {
-            
-            override exec(XtextResource state) throws Exception {
-                val textSelection = editor.getSelectionProvider().getSelection() as TextSelection;
-                val object = eObjectAtOffsetHelper.resolveElementAt(state, textSelection.getOffset())
-                
-                updatePool(object)
-                
-                return null
+            // Add tracks at speed 0
+            for (constant : constants) {
+                model.addVariable(new Variable(constant, "0"))
+                model.addVariable(new Variable("S0_" + constant, "RED"))
+                model.addVariable(new Variable("S1_" + constant, "RED"))
             }
-            
-        })
 
-        Display.getDefault().asyncExec(new Runnable() {
-            override void run() {
-                KVisView.instance?.update(pool)
+            // Add points as straight
+            for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
             }
-        });
-    }
-    
-    def void updatePool(EObject object) {
-        
-        //reset the pool to the last state
-        pool = pool.history.get(0)
-        val model = pool.getModel("railway");
-        
-        switch (object) {
-//            case Program: return
-            case Block: return // TODO do something cool here
-            case Statement: model.addValues(object as Statement)
+            pool.previousPool = pool.clone
+
         }
-    }
+
+        public def DataPool getDataPool() {
+            return pool
+        }
+
+        /**
+         * Read the current cursor position from the active editor and 
+         * display the changes made by the currently selected Statement.
+         */
+        public def void updateView() {
+
+            Display.getDefault().asyncExec(new Runnable() {
+
+                @Override
+                override void run() {
+                    val editor = EditorUtils.activeXtextEditor
+                    editor.document.readOnly(new IUnitOfWork<String, XtextResource>() {
+
+                        override exec(XtextResource state) {
+                            try {
+                                val textSelection = editor.getSelectionProvider().getSelection() as TextSelection;
+                                val object = eObjectAtOffsetHelper.resolveElementAt(state, textSelection.getOffset())
+                                updatePool(object)
+
+                                KVisView.instance?.update(pool)
+
+                                return null
+                            } catch (Exception e) {
+                                e.printStackTrace
+                                return null
+                            }
+                        }
+                    })
+                }
+            })
+
+        }
+
+        def void updatePool(EObject object) {
+
+            // reset the pool to the last state
+            pool = pool.previousPool.clone
+            pool.previousPool = pool
+            val model = pool.getModel("railway");
+//                case Block: return // TODO do something cool here
+            if (object instanceof Statement) {
+                model.addValues(object as Statement)
+
+            }
+        }
 
 //    public def void assembleModel(Program program) {
 //
@@ -149,59 +150,63 @@ class Visualizer {
 //        return model
 //    }
 //
-    def addValues(Model model, Statement statement) {
-        switch (statement) {
-            SetTrackStatement: model.addTrackValues(statement as SetTrackStatement)
-            SetPointStatement: model.addPointValues(statement as SetPointStatement)
-            LightStatement: model.addLightValues(statement as LightStatement)
-            // TODO add more cases here for other types of statements
-            default: return
+        def addValues(Model model, Statement statement) {
+            
+            //TODO fix the removal and addition of variables in the consecutive rounds.
+            
+            if (statement instanceof SetTrackStatement) {
+                model.addTrackValues(statement as SetTrackStatement)
+            } else if (statement instanceof SetPointStatement) {
+                 model.addPointValues(statement as SetPointStatement)
+            } else if (statement instanceof LightStatement) {
+                model.addLightValues(statement as LightStatement)
+            }
+
+
         }
 
-    }
-
-    def addLightValues(Model model, LightStatement statement) {
-        for (index : statement.lights) {
-            model.addVariable(new Variable("light_" + index, statement.state))
-        }
-    }
-
-    def addPointValues(Model model, SetPointStatement statement) {
-        for (index : statement.points) {
-            model.addVariable(new Variable("point_" + index, statement.orientation))
-        }
-    }
-
-    def addTrackValues(Model model, SetTrackStatement statement) {
-        val direction = statement.parseDirection
-        val speed = statement.parseSpeed
-        for (segment : statement.segments) {
-            model.addVariable(new Variable(segment, speed))
-           // model.addVariable(new Variable(segment + "_direction", direction))
-
-            if (direction == 0) {
-                if (speed == RailSLExtensions::SPEED_FULL) {
-                    model.addVariable(new Variable("S0_" + segment, "GREEN"))
-                    
-                } else if (speed == RailSLExtensions::SPEED_SLOW) {
-                    model.addVariable(new Variable("S0_" + segment, "YELLOW"))
-                } else {
-                    model.addVariable(new Variable("S0_" + segment, "RED"))
-                }
-                model.addVariable(new Variable("S1_" + segment, "RED"))
-                
-            } else {
-                if (speed == RailSLExtensions::SPEED_FULL) {
-                    model.addVariable(new Variable("S1_" + segment, "GREEN"))
-                    
-                } else if (speed == RailSLExtensions::SPEED_SLOW) {
-                    model.addVariable(new Variable("S1_" + segment, "YELLOW"))
-                } else {
-                    model.addVariable(new Variable("S1_" + segment, "RED"))
-                }
-                model.addVariable(new Variable("S0_" + segment, "RED"))
+        def addLightValues(Model model, LightStatement statement) {
+            for (index : statement.lights) {
+                model.addVariable(new Variable("light_" + index, statement.state))
             }
         }
-    }
 
-}
+        def addPointValues(Model model, SetPointStatement statement) {
+            for (index : statement.points) {
+                model.addVariable(new Variable("point_" + index, statement.orientation))
+            }
+        }
+
+        def addTrackValues(Model model, SetTrackStatement statement) {
+            val direction = statement.parseDirection
+            val speed = statement.parseSpeed
+            for (segment : statement.segments) {
+                model.addVariable(new Variable(segment, speed))
+                // model.addVariable(new Variable(segment + "_direction", direction))
+                if (direction == 0) {
+                    if (speed == RailSLExtensions::SPEED_FULL) {
+                        model.addVariable(new Variable("S0_" + segment, "GREEN"))
+
+                    } else if (speed == RailSLExtensions::SPEED_SLOW) {
+                        model.addVariable(new Variable("S0_" + segment, "YELLOW"))
+                    } else {
+                        model.addVariable(new Variable("S0_" + segment, "RED"))
+                    }
+                    model.addVariable(new Variable("S1_" + segment, "RED"))
+
+                } else {
+                    if (speed == RailSLExtensions::SPEED_FULL) {
+                        model.addVariable(new Variable("S1_" + segment, "GREEN"))
+
+                    } else if (speed == RailSLExtensions::SPEED_SLOW) {
+                        model.addVariable(new Variable("S1_" + segment, "YELLOW"))
+                    } else {
+                        model.addVariable(new Variable("S1_" + segment, "RED"))
+                    }
+                    model.addVariable(new Variable("S0_" + segment, "RED"))
+                }
+            }
+        }
+
+    }
+    
