@@ -32,4 +32,5 @@ Export-Package: de.cau.cs.kieler.kicool.ui.contentassist,
  de.cau.cs.kieler.kicool.ui.quickfix,
  de.cau.cs.kieler.kicool.ui.contentassist.antlr,
  de.cau.cs.kieler.kicool.ui.contentassist.antlr.internal
-Import-Package: org.apache.log4j
+Import-Package: de.cau.cs.kieler.kico.klighd.internal.model,
+ org.apache.log4j

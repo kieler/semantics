@@ -18,6 +18,7 @@ import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
+import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder
 
 /**
  * Class that handles the intermediate model requests.
@@ -39,7 +40,8 @@ class SelectIntermediateAction implements IAction {
         val editor = intermediateData.view.editPartSystemManager.findEditorForSystem(compilationContext.getRootContext.system)
         var model = intermediateData.model
         if (model instanceof String) {
-            model = new Container<String>(model)
+//            model = new Container<String>(model)
+            model = new CodePlaceHolder(editor.title + ".c", model)
         }
         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)        
         
