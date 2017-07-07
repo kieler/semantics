@@ -27,14 +27,22 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.ISelectionListener;
@@ -75,7 +83,9 @@ public abstract class AbstractKLighDController {
 
     static Object[] allSelections;
 
-    public abstract CViewModel calculateModel(Object[] allselections);
+    public abstract CViewModel calculateModel(Object[] allselections, IProgressMonitor monitor);
+
+    public abstract int preCalculateModel(Object[] allselections);
 
     public List<java.io.File> listFiles(String dirPath) {
         return listFiles(dirPath, "*.{c,h}");
@@ -123,25 +133,44 @@ public abstract class AbstractKLighDController {
     }
 
     public void refreshCView(boolean forceRebuild) {
-        if (forceRebuild) {
-            CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
-            DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
-            if (view == null) {
-                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, nullModel,
-                        KlighdSynthesisProperties.create());
-            } else {
-                DiagramViewManager.updateView(view.getViewContext(), nullModel);
-            }
-        }
-        model = calculateModel(allSelections);
-        if (controller != null && model != null) {
-            DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
-            if (view == null) {
-                DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, model,
-                        KlighdSynthesisProperties.create());
-            } else {
-                DiagramViewManager.updateView(view.getViewContext(), model);
-            }
+        int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
+        try {
+            new CViewProgressMonitorDialog(new Shell()).run(true,true, (new RunnableWithProgress() {
+                public void run(IProgressMonitor monitor) {
+                    SubMonitor subMonitor = SubMonitor.convert(monitor, workTotal);
+                    monitor.beginTask("Processing "+workTotal+" files...", workTotal);
+                    subMonitor.worked(1);
+                    model = calculateModel(allSelections, subMonitor); // , IProgressMonitor monitor));
+
+                    Display.getDefault().asyncExec(new Runnable() {
+                        public void run() {
+                            if (forceRebuild) {
+                                CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
+                                DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+                                if (view == null) {
+                                    DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
+                                            nullModel, KlighdSynthesisProperties.create());
+                                } else {
+                                    DiagramViewManager.updateView(view.getViewContext(), nullModel);
+                                }
+                            }
+                            if (controller != null && model != null) {
+                                DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+                                if (view == null) {
+                                    DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
+                                            model, KlighdSynthesisProperties.create());
+                                } else {
+                                    DiagramViewManager.updateView(view.getViewContext(), model);
+                                }
+                            }
+                        }
+                    });
+                }
+            }));
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

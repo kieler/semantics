@@ -25,6 +25,7 @@ import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import java.util.List
 import de.cau.cs.kieler.cview.hooks.IConnectionHook
 import java.util.ArrayList
+import org.eclipse.core.runtime.IProgressMonitor
 
 /**
  * @author cmot
@@ -34,15 +35,53 @@ class KLighDController extends AbstractKLighDController {
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
 
-    def Component addToModel(CViewModel model, Object element) {
-        return model.addToModel(element, null)
-    }
 
-    def Component addToModel(CViewModel model, Object element, Component parent) {
+    def int countModel(CViewModel model, Object element) {
+        var i = 1;
         var filePath = getFilePath(element);
         var folderPath = getDirPath(element);
         val projectPath = getProjectPath(element);
+        if (element instanceof File) {
+            if (!element.isDirectory) {
+                filePath = element.absolutePath
+            } else {
+                folderPath = element.absolutePath
+            }
+        }
+        if (!projectPath.nullOrEmpty) {
+            // Project
+            for (e : listFiles(projectPath, "*")) {
+                i = i + model.countModel(e)
+            }
+        } else if (!folderPath.nullOrEmpty) {
+            // Folder   
+            for (e : listFiles(folderPath, "*")) {
+                i = i + model.countModel(e)
+            }
+        } else if (!filePath.nullOrEmpty) {
+            // File
+        }
+        return i;
+    }
 
+
+
+    def Component addToModel(CViewModel model, Object element, IProgressMonitor monitor) {
+        return model.addToModel(element, monitor, null)
+    }
+
+    def Component addToModel(CViewModel model, Object element, IProgressMonitor monitor, Component parent ) {
+        var filePath = getFilePath(element);
+        var folderPath = getDirPath(element);
+        val projectPath = getProjectPath(element);
+        
+        if (monitor.canceled) {
+            return null;
+        }
+
+        monitor.worked(1)
+        //monitor.beginTask("Processing file '"+element.toString+"'", 0);
+        
         if (element instanceof File) {
             if (!element.isDirectory) {
                 filePath = element.absolutePath
@@ -64,7 +103,7 @@ class KLighDController extends AbstractKLighDController {
             }
 
             for (e : listFiles(dir.location, "*")) {
-                model.addToModel(e, dir)
+                model.addToModel(e, monitor, dir)
             }
             return dir;
         } else if (!folderPath.nullOrEmpty) {
@@ -79,7 +118,7 @@ class KLighDController extends AbstractKLighDController {
             }
 
             for (e : listFiles(dir.location, "*")) {
-                model.addToModel(e, dir)
+                model.addToModel(e, monitor, dir)
             }
             return dir;
         } else if (!filePath.nullOrEmpty) {
@@ -90,7 +129,7 @@ class KLighDController extends AbstractKLighDController {
             model.components.add(file);
             
             // Add all functions to the file
-            fillFileWithFunctions(file)
+            fillFileWithFunctions(file, monitor)
 
             if (parent != null) {
                 file.parent = parent
@@ -124,7 +163,7 @@ class KLighDController extends AbstractKLighDController {
         }
     }
 
-    def fillFileWithFunctions(Component fileComponent) {
+    def fillFileWithFunctions(Component fileComponent, IProgressMonitor monitor) {
         // val filePath = getFilePath(fileComponent.location);
         val filePath = fileComponent.location
         if (filePath != null) {
@@ -138,7 +177,7 @@ class KLighDController extends AbstractKLighDController {
                         if (binding instanceof IFunction) {
                             if (name.definition) {
                                 val functionComponent = cViewModelExtensions.createFunc
-                                model.addToModel(functionComponent)
+                                model.addToModel(functionComponent, monitor)
                                 functionComponent.name = name.toString()
                                 functionComponent.location = fileComponent.location
                                 fileComponent.children.add(functionComponent)
@@ -159,10 +198,19 @@ class KLighDController extends AbstractKLighDController {
 
     }
 
-    override calculateModel(Object[] allselections) {
+    override preCalculateModel(Object[] allselections) {
+        var i = 0;
+        for (Object element : allselections) {
+            i = i + model.countModel(element)
+        }
+        return i;
+    }
+
+
+    override calculateModel(Object[] allselections, IProgressMonitor monitor) {
         model = CViewModelFactory.eINSTANCE.createCViewModel();
         for (Object element : allselections) {
-            val component = model.addToModel(element)
+            val component = model.addToModel(element, monitor)
         }
         
         // Now call connections extensions
