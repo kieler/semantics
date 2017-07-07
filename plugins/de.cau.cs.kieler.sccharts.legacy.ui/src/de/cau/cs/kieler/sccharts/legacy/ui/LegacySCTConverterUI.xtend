@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.handlers.HandlerUtil
 import static de.cau.cs.kieler.sccharts.legacy.SCChartsLegacyConverter.*
+import org.eclipse.ui.statushandlers.StatusManager
 
 /**
  * @author als
@@ -46,14 +47,17 @@ class LegacySCTConverterUI extends AbstractHandler {
 
                     override protected run(IProgressMonitor monitor) {
                         monitor.beginTask("Converting legacy SCCharts", files.size)
-
+                        
                         for (file : files) {
                             monitor.subTask("Converting: " + file.projectRelativePath.toString)
 
+                            if (monitor.canceled) return Status.CANCEL_STATUS
+                            
                             try {
-                                export(file)
+                                export(file, files)
                             } catch (Exception e) {
-                                // drop ?
+                                StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.legacy.ui", e.message, e), StatusManager.LOG)
+                                StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.legacy.ui", e.message, e.cause), StatusManager.SHOW)
                             }
 
                             monitor.worked(1)
