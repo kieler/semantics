@@ -86,6 +86,11 @@ public class CViewModelAdapterFactory extends AdapterFactoryImpl
         return createComponentAdapter();
       }
       @Override
+      public Adapter caseConnection(Connection object)
+      {
+        return createConnectionAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -133,6 +138,21 @@ public class CViewModelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createComponentAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection <em>Connection</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection
+   * @generated
+   */
+  public Adapter createConnectionAdapter()
   {
     return null;
   }

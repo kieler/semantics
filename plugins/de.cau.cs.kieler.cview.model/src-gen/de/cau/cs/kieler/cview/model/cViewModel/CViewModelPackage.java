@@ -78,13 +78,22 @@ public interface CViewModelPackage extends EPackage
   int CVIEW_MODEL__COMPONENTS = 0;
 
   /**
+   * The feature id for the '<em><b>Connections</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CVIEW_MODEL__CONNECTIONS = 1;
+
+  /**
    * The number of structural features of the '<em>CView Model</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CVIEW_MODEL_FEATURE_COUNT = 1;
+  int CVIEW_MODEL_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl <em>Component</em>}' class.
@@ -160,6 +169,52 @@ public interface CViewModelPackage extends EPackage
   int COMPONENT_FEATURE_COUNT = 6;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl
+   * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getConnection()
+   * @generated
+   */
+  int CONNECTION = 2;
+
+  /**
+   * The feature id for the '<em><b>Src</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__SRC = 0;
+
+  /**
+   * The feature id for the '<em><b>Dst</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__DST = 1;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__TYPE = 2;
+
+  /**
+   * The number of structural features of the '<em>Connection</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -167,7 +222,7 @@ public interface CViewModelPackage extends EPackage
    * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 2;
+  int COMPONENT_TYPE = 3;
 
 
   /**
@@ -190,6 +245,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EReference getCViewModel_Components();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getConnections <em>Connections</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Connections</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getConnections()
+   * @see #getCViewModel()
+   * @generated
+   */
+  EReference getCViewModel_Connections();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Component <em>Component</em>}'.
@@ -268,6 +334,49 @@ public interface CViewModelPackage extends EPackage
   EReference getComponent_Children();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection <em>Connection</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Connection</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection
+   * @generated
+   */
+  EClass getConnection();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getSrc <em>Src</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Src</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getSrc()
+   * @see #getConnection()
+   * @generated
+   */
+  EReference getConnection_Src();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getDst <em>Dst</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Dst</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getDst()
+   * @see #getConnection()
+   * @generated
+   */
+  EReference getConnection_Dst();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getType()
+   * @see #getConnection()
+   * @generated
+   */
+  EAttribute getConnection_Type();
+
+  /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -317,6 +426,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EReference CVIEW_MODEL__COMPONENTS = eINSTANCE.getCViewModel_Components();
+
+    /**
+     * The meta object literal for the '<em><b>Connections</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CVIEW_MODEL__CONNECTIONS = eINSTANCE.getCViewModel_Connections();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl <em>Component</em>}' class.
@@ -375,6 +492,40 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EReference COMPONENT__CHILDREN = eINSTANCE.getComponent_Children();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl
+     * @see de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelPackageImpl#getConnection()
+     * @generated
+     */
+    EClass CONNECTION = eINSTANCE.getConnection();
+
+    /**
+     * The meta object literal for the '<em><b>Src</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONNECTION__SRC = eINSTANCE.getConnection_Src();
+
+    /**
+     * The meta object literal for the '<em><b>Dst</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONNECTION__DST = eINSTANCE.getConnection_Dst();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONNECTION__TYPE = eINSTANCE.getConnection_Type();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.

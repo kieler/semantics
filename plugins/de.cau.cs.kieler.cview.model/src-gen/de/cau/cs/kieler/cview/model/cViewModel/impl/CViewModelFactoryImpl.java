@@ -68,6 +68,7 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
     {
       case CViewModelPackage.CVIEW_MODEL: return createCViewModel();
       case CViewModelPackage.COMPONENT: return createComponent();
+      case CViewModelPackage.CONNECTION: return createConnection();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -127,6 +128,17 @@ public class CViewModelFactoryImpl extends EFactoryImpl implements CViewModelFac
   {
     ComponentImpl component = new ComponentImpl();
     return component;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Connection createConnection()
+  {
+    ConnectionImpl connection = new ConnectionImpl();
+    return connection;
   }
 
   /**

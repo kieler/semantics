@@ -3,27 +3,12 @@ grammar de.cau.cs.kieler.cview.model.CViewModel with org.eclipse.xtext.common.Te
 generate cViewModel "http://www.cau.de/cs/kieler/cview/model/CViewModel"
 
 CViewModel:
-//    folders+=Folder*
-//    ';'
-//    files+=File*
-//    ';'
-	components+=Component*;
+	components+=Component*
+    ';'
+    connections+=Connection*
+    ;
 	
-//Folder:
-//	'Folder'  name=ID  
-//	         ('parent' '=' parent=[Folder])?
-//	         (project?='project')
-//	         'location' '=' location=STRING
-//             ('children' '=' children+=([FileOrFolder])*)?;
-//
-//File:
-//    'File'  name=ID  
-//           ('parent' '=' parent=[Folder])?
-//           'location' '=' location=STRING;
-//	
-//FileOrFolder returns FileOrFolder:
-//    File | Folder
-//;	
+
 
 Component:
     'Component' name=ID 
@@ -35,9 +20,36 @@ Component:
            ('children' '=' children+=([Component])*)?
 ;
 	
+Connection:
+    'src' src=[Component]
+    'dst' dst=[Component]
+    'label' type=STRING
+    'type' type=STRING
+;	
 	
 	
 enum ComponentType:
     DIR="DIR" | FILE="FILE" | FUNC="FUNC" | COMPOUND="COMPOUND" | READER="READER" | WRITER="WRITER" 
 ;	
 	
+	
+	
+//Folder:
+//  'Folder'  name=ID  
+//           ('parent' '=' parent=[Folder])?
+//           (project?='project')
+//           'location' '=' location=STRING
+//             ('children' '=' children+=([FileOrFolder])*)?;
+//
+//File:
+//    'File'  name=ID  
+//           ('parent' '=' parent=[Folder])?
+//           'location' '=' location=STRING;
+//  
+//FileOrFolder returns FileOrFolder:
+//    File | Folder
+//; 	
+
+//    folders+=Folder*
+//    ';'
+//    files+=File*

@@ -8,6 +8,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType;
+import de.cau.cs.kieler.cview.model.cViewModel.Connection;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -38,6 +39,13 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * @generated
    */
   private EClass componentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass connectionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -134,6 +142,16 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getCViewModel_Connections()
+  {
+    return (EReference)cViewModelEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getComponent()
   {
     return componentEClass;
@@ -204,6 +222,46 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getConnection()
+  {
+    return connectionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConnection_Src()
+  {
+    return (EReference)connectionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConnection_Dst()
+  {
+    return (EReference)connectionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConnection_Type()
+  {
+    return (EAttribute)connectionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EEnum getComponentType()
   {
     return componentTypeEEnum;
@@ -241,6 +299,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     // Create classes and their features
     cViewModelEClass = createEClass(CVIEW_MODEL);
     createEReference(cViewModelEClass, CVIEW_MODEL__COMPONENTS);
+    createEReference(cViewModelEClass, CVIEW_MODEL__CONNECTIONS);
 
     componentEClass = createEClass(COMPONENT);
     createEAttribute(componentEClass, COMPONENT__NAME);
@@ -249,6 +308,11 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEAttribute(componentEClass, COMPONENT__LOCATION);
     createEAttribute(componentEClass, COMPONENT__REFERENCE_LINE);
     createEReference(componentEClass, COMPONENT__CHILDREN);
+
+    connectionEClass = createEClass(CONNECTION);
+    createEReference(connectionEClass, CONNECTION__SRC);
+    createEReference(connectionEClass, CONNECTION__DST);
+    createEAttribute(connectionEClass, CONNECTION__TYPE);
 
     // Create enums
     componentTypeEEnum = createEEnum(COMPONENT_TYPE);
@@ -287,6 +351,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     // Initialize classes and features; add operations and parameters
     initEClass(cViewModelEClass, CViewModel.class, "CViewModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCViewModel_Components(), this.getComponent(), null, "components", null, 0, -1, CViewModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCViewModel_Connections(), this.getConnection(), null, "connections", null, 0, -1, CViewModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -295,6 +360,11 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEAttribute(getComponent_Location(), ecorePackage.getEString(), "location", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_ReferenceLine(), ecorePackage.getEInt(), "referenceLine", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Children(), this.getComponent(), null, "children", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(connectionEClass, Connection.class, "Connection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConnection_Src(), this.getComponent(), null, "src", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConnection_Dst(), this.getComponent(), null, "dst", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConnection_Type(), ecorePackage.getEString(), "type", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(componentTypeEEnum, ComponentType.class, "ComponentType");

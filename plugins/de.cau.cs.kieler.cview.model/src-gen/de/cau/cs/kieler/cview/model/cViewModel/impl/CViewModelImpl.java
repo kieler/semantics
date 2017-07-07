@@ -6,6 +6,7 @@ package de.cau.cs.kieler.cview.model.cViewModel.impl;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
+import de.cau.cs.kieler.cview.model.cViewModel.Connection;
 
 import java.util.Collection;
 
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl#getComponents <em>Components</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.CViewModelImpl#getConnections <em>Connections</em>}</li>
  * </ul>
  *
  * @generated
@@ -45,6 +47,16 @@ public class CViewModelImpl extends MinimalEObjectImpl.Container implements CVie
    * @ordered
    */
   protected EList<Component> components;
+
+  /**
+   * The cached value of the '{@link #getConnections() <em>Connections</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConnections()
+   * @generated
+   * @ordered
+   */
+  protected EList<Connection> connections;
 
   /**
    * <!-- begin-user-doc -->
@@ -86,6 +98,20 @@ public class CViewModelImpl extends MinimalEObjectImpl.Container implements CVie
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Connection> getConnections()
+  {
+    if (connections == null)
+    {
+      connections = new EObjectContainmentEList<Connection>(Connection.class, this, CViewModelPackage.CVIEW_MODEL__CONNECTIONS);
+    }
+    return connections;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -93,6 +119,8 @@ public class CViewModelImpl extends MinimalEObjectImpl.Container implements CVie
     {
       case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         return ((InternalEList<?>)getComponents()).basicRemove(otherEnd, msgs);
+      case CViewModelPackage.CVIEW_MODEL__CONNECTIONS:
+        return ((InternalEList<?>)getConnections()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,6 +137,8 @@ public class CViewModelImpl extends MinimalEObjectImpl.Container implements CVie
     {
       case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         return getComponents();
+      case CViewModelPackage.CVIEW_MODEL__CONNECTIONS:
+        return getConnections();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -128,6 +158,10 @@ public class CViewModelImpl extends MinimalEObjectImpl.Container implements CVie
         getComponents().clear();
         getComponents().addAll((Collection<? extends Component>)newValue);
         return;
+      case CViewModelPackage.CVIEW_MODEL__CONNECTIONS:
+        getConnections().clear();
+        getConnections().addAll((Collection<? extends Connection>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -145,6 +179,9 @@ public class CViewModelImpl extends MinimalEObjectImpl.Container implements CVie
       case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         getComponents().clear();
         return;
+      case CViewModelPackage.CVIEW_MODEL__CONNECTIONS:
+        getConnections().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -161,6 +198,8 @@ public class CViewModelImpl extends MinimalEObjectImpl.Container implements CVie
     {
       case CViewModelPackage.CVIEW_MODEL__COMPONENTS:
         return components != null && !components.isEmpty();
+      case CViewModelPackage.CVIEW_MODEL__CONNECTIONS:
+        return connections != null && !connections.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -82,5 +82,5 @@
             class="de.cau.cs.kieler.cview.Startup">
       </startup>
    </extension>
-
+   <extension-point id="connection" name="Define Connections" schema="schema/connection.exsd"/>
 </plugin>

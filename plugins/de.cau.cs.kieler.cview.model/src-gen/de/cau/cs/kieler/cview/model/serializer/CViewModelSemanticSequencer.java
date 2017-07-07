@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
+import de.cau.cs.kieler.cview.model.cViewModel.Connection;
 import de.cau.cs.kieler.cview.model.services.CViewModelGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -37,6 +38,9 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 			case CViewModelPackage.COMPONENT:
 				sequence_Component(context, (Component) semanticObject); 
 				return; 
+			case CViewModelPackage.CONNECTION:
+				sequence_Connection(context, (Connection) semanticObject); 
+				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -47,7 +51,7 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *     CViewModel returns CViewModel
 	 *
 	 * Constraint:
-	 *     components+=Component+
+	 *     (components+=Component* connections+=Connection*)
 	 */
 	protected void sequence_CViewModel(ISerializationContext context, CViewModel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -69,6 +73,18 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *     )
 	 */
 	protected void sequence_Component(ISerializationContext context, Component semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Connection returns Connection
+	 *
+	 * Constraint:
+	 *     (src=[Component|ID] dst=[Component|ID] type=STRING type=STRING)
+	 */
+	protected void sequence_Connection(ISerializationContext context, Connection semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

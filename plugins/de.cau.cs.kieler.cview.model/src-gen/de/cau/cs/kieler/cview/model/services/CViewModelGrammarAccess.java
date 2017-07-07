@@ -28,22 +28,36 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class CViewModelElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.CViewModel");
-		private final Assignment cComponentsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cComponentsComponentParserRuleCall_0 = (RuleCall)cComponentsAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cComponentsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cComponentsComponentParserRuleCall_0_0 = (RuleCall)cComponentsAssignment_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cConnectionsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cConnectionsConnectionParserRuleCall_2_0 = (RuleCall)cConnectionsAssignment_2.eContents().get(0);
 		
 		//CViewModel:
-		//	components+=Component*;
+		//	components+=Component*
+		//	';'
+		//	connections+=Connection*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		////    folders+=Folder*
-		////    ';'
-		////    files+=File*
-		////    ';'
+		//components+=Component* ';' connections+=Connection*
+		public Group getGroup() { return cGroup; }
+		
 		//components+=Component*
-		public Assignment getComponentsAssignment() { return cComponentsAssignment; }
+		public Assignment getComponentsAssignment_0() { return cComponentsAssignment_0; }
 		
 		//Component
-		public RuleCall getComponentsComponentParserRuleCall_0() { return cComponentsComponentParserRuleCall_0; }
+		public RuleCall getComponentsComponentParserRuleCall_0_0() { return cComponentsComponentParserRuleCall_0_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
+		
+		//connections+=Connection*
+		public Assignment getConnectionsAssignment_2() { return cConnectionsAssignment_2; }
+		
+		//Connection
+		public RuleCall getConnectionsConnectionParserRuleCall_2_0() { return cConnectionsConnectionParserRuleCall_2_0; }
 	}
 	public class ComponentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Component");
@@ -77,21 +91,6 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cChildrenComponentCrossReference_10_2_0 = (CrossReference)cChildrenAssignment_10_2.eContents().get(0);
 		private final RuleCall cChildrenComponentIDTerminalRuleCall_10_2_0_1 = (RuleCall)cChildrenComponentCrossReference_10_2_0.eContents().get(1);
 		
-		////Folder:
-		////	'Folder'  name=ID  
-		////	         ('parent' '=' parent=[Folder])?
-		////	         (project?='project')
-		////	         'location' '=' location=STRING
-		////             ('children' '=' children+=([FileOrFolder])*)?;
-		////
-		////File:
-		////    'File'  name=ID  
-		////           ('parent' '=' parent=[Folder])?
-		////           'location' '=' location=STRING;
-		////	
-		////FileOrFolder returns FileOrFolder:
-		////    File | Folder
-		////;	
 		//Component:
 		//	'Component' name=ID ('parent' '=' parent=[Component])?
 		//	'type' '=' type=ComponentType
@@ -188,6 +187,76 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getChildrenComponentIDTerminalRuleCall_10_2_0_1() { return cChildrenComponentIDTerminalRuleCall_10_2_0_1; }
 	}
+	public class ConnectionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Connection");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cSrcKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cSrcAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cSrcComponentCrossReference_1_0 = (CrossReference)cSrcAssignment_1.eContents().get(0);
+		private final RuleCall cSrcComponentIDTerminalRuleCall_1_0_1 = (RuleCall)cSrcComponentCrossReference_1_0.eContents().get(1);
+		private final Keyword cDstKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cDstAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cDstComponentCrossReference_3_0 = (CrossReference)cDstAssignment_3.eContents().get(0);
+		private final RuleCall cDstComponentIDTerminalRuleCall_3_0_1 = (RuleCall)cDstComponentCrossReference_3_0.eContents().get(1);
+		private final Keyword cLabelKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cTypeSTRINGTerminalRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
+		private final Keyword cTypeKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cTypeAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cTypeSTRINGTerminalRuleCall_7_0 = (RuleCall)cTypeAssignment_7.eContents().get(0);
+		
+		//Connection:
+		//	'src' src=[Component]
+		//	'dst' dst=[Component]
+		//	'label' type=STRING
+		//	'type' type=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'src' src=[Component] 'dst' dst=[Component] 'label' type=STRING 'type' type=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//'src'
+		public Keyword getSrcKeyword_0() { return cSrcKeyword_0; }
+		
+		//src=[Component]
+		public Assignment getSrcAssignment_1() { return cSrcAssignment_1; }
+		
+		//[Component]
+		public CrossReference getSrcComponentCrossReference_1_0() { return cSrcComponentCrossReference_1_0; }
+		
+		//ID
+		public RuleCall getSrcComponentIDTerminalRuleCall_1_0_1() { return cSrcComponentIDTerminalRuleCall_1_0_1; }
+		
+		//'dst'
+		public Keyword getDstKeyword_2() { return cDstKeyword_2; }
+		
+		//dst=[Component]
+		public Assignment getDstAssignment_3() { return cDstAssignment_3; }
+		
+		//[Component]
+		public CrossReference getDstComponentCrossReference_3_0() { return cDstComponentCrossReference_3_0; }
+		
+		//ID
+		public RuleCall getDstComponentIDTerminalRuleCall_3_0_1() { return cDstComponentIDTerminalRuleCall_3_0_1; }
+		
+		//'label'
+		public Keyword getLabelKeyword_4() { return cLabelKeyword_4; }
+		
+		//type=STRING
+		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
+		
+		//STRING
+		public RuleCall getTypeSTRINGTerminalRuleCall_5_0() { return cTypeSTRINGTerminalRuleCall_5_0; }
+		
+		//'type'
+		public Keyword getTypeKeyword_6() { return cTypeKeyword_6; }
+		
+		//type=STRING
+		public Assignment getTypeAssignment_7() { return cTypeAssignment_7; }
+		
+		//STRING
+		public RuleCall getTypeSTRINGTerminalRuleCall_7_0() { return cTypeSTRINGTerminalRuleCall_7_0; }
+	}
 	
 	public class ComponentTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.ComponentType");
@@ -251,6 +320,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final CViewModelElements pCViewModel;
 	private final ComponentElements pComponent;
+	private final ConnectionElements pConnection;
 	private final ComponentTypeElements eComponentType;
 	
 	private final Grammar grammar;
@@ -264,6 +334,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pCViewModel = new CViewModelElements();
 		this.pComponent = new ComponentElements();
+		this.pConnection = new ConnectionElements();
 		this.eComponentType = new ComponentTypeElements();
 	}
 	
@@ -295,7 +366,9 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//CViewModel:
-	//	components+=Component*;
+	//	components+=Component*
+	//	';'
+	//	connections+=Connection*;
 	public CViewModelElements getCViewModelAccess() {
 		return pCViewModel;
 	}
@@ -304,21 +377,6 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		return getCViewModelAccess().getRule();
 	}
 	
-	////Folder:
-	////	'Folder'  name=ID  
-	////	         ('parent' '=' parent=[Folder])?
-	////	         (project?='project')
-	////	         'location' '=' location=STRING
-	////             ('children' '=' children+=([FileOrFolder])*)?;
-	////
-	////File:
-	////    'File'  name=ID  
-	////           ('parent' '=' parent=[Folder])?
-	////           'location' '=' location=STRING;
-	////	
-	////FileOrFolder returns FileOrFolder:
-	////    File | Folder
-	////;	
 	//Component:
 	//	'Component' name=ID ('parent' '=' parent=[Component])?
 	//	'type' '=' type=ComponentType
@@ -330,6 +388,19 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getComponentRule() {
 		return getComponentAccess().getRule();
+	}
+	
+	//Connection:
+	//	'src' src=[Component]
+	//	'dst' dst=[Component]
+	//	'label' type=STRING
+	//	'type' type=STRING;
+	public ConnectionElements getConnectionAccess() {
+		return pConnection;
+	}
+	
+	public ParserRule getConnectionRule() {
+		return getConnectionAccess().getRule();
 	}
 	
 	//enum ComponentType:

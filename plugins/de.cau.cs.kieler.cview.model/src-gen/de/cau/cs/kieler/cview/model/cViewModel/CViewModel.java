@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getComponents <em>Components</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.CViewModel#getConnections <em>Connections</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel()
@@ -40,5 +41,21 @@ public interface CViewModel extends EObject
    * @generated
    */
   EList<Component> getComponents();
+
+  /**
+   * Returns the value of the '<em><b>Connections</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.cview.model.cViewModel.Connection}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Connections</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Connections</em>' containment reference list.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getCViewModel_Connections()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Connection> getConnections();
 
 } // CViewModel

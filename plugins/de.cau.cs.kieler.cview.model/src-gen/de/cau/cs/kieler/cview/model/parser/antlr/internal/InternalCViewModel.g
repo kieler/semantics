@@ -78,23 +78,48 @@ ruleCViewModel returns [EObject current=null]
 }:
 	(
 		(
-			{
-				newCompositeNode(grammarAccess.getCViewModelAccess().getComponentsComponentParserRuleCall_0());
-			}
-			lv_components_0_0=ruleComponent
-			{
-				if ($current==null) {
-					$current = createModelElementForParent(grammarAccess.getCViewModelRule());
+			(
+				{
+					newCompositeNode(grammarAccess.getCViewModelAccess().getComponentsComponentParserRuleCall_0_0());
 				}
-				add(
-					$current,
-					"components",
-					lv_components_0_0,
-					"de.cau.cs.kieler.cview.model.CViewModel.Component");
-				afterParserOrEnumRuleCall();
-			}
-		)
-	)*
+				lv_components_0_0=ruleComponent
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
+					}
+					add(
+						$current,
+						"components",
+						lv_components_0_0,
+						"de.cau.cs.kieler.cview.model.CViewModel.Component");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_1=';'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getCViewModelAccess().getSemicolonKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getCViewModelAccess().getConnectionsConnectionParserRuleCall_2_0());
+				}
+				lv_connections_2_0=ruleConnection
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getCViewModelRule());
+					}
+					add(
+						$current,
+						"connections",
+						lv_connections_2_0,
+						"de.cau.cs.kieler.cview.model.CViewModel.Connection");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+	)
 ;
 
 // Entry rule entryRuleComponent
@@ -262,6 +287,103 @@ ruleComponent returns [EObject current=null]
 				)
 			)*
 		)?
+	)
+;
+
+// Entry rule entryRuleConnection
+entryRuleConnection returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConnectionRule()); }
+	iv_ruleConnection=ruleConnection
+	{ $current=$iv_ruleConnection.current; }
+	EOF;
+
+// Rule Connection
+ruleConnection returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='src'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getConnectionAccess().getSrcKeyword_0());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+				}
+				otherlv_1=RULE_ID
+				{
+					newLeafNode(otherlv_1, grammarAccess.getConnectionAccess().getSrcComponentCrossReference_1_0());
+				}
+			)
+		)
+		otherlv_2='dst'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getConnectionAccess().getDstKeyword_2());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+				}
+				otherlv_3=RULE_ID
+				{
+					newLeafNode(otherlv_3, grammarAccess.getConnectionAccess().getDstComponentCrossReference_3_0());
+				}
+			)
+		)
+		otherlv_4='label'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getConnectionAccess().getLabelKeyword_4());
+		}
+		(
+			(
+				lv_type_5_0=RULE_STRING
+				{
+					newLeafNode(lv_type_5_0, grammarAccess.getConnectionAccess().getTypeSTRINGTerminalRuleCall_5_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"type",
+						lv_type_5_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_6='type'
+		{
+			newLeafNode(otherlv_6, grammarAccess.getConnectionAccess().getTypeKeyword_6());
+		}
+		(
+			(
+				lv_type_7_0=RULE_STRING
+				{
+					newLeafNode(lv_type_7_0, grammarAccess.getConnectionAccess().getTypeSTRINGTerminalRuleCall_7_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"type",
+						lv_type_7_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
 	)
 ;
 

@@ -16,6 +16,7 @@
     </genEnums>
     <genClasses ecoreClass="CViewModel.ecore#//CViewModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/components"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/connections"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//Component">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/name"/>
@@ -24,6 +25,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/referenceLine"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/children"/>
+    </genClasses>
+    <genClasses ecoreClass="CViewModel.ecore#//Connection">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Connection/src"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Connection/dst"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/type"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
