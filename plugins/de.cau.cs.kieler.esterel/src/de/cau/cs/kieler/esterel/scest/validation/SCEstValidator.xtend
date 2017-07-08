@@ -58,6 +58,13 @@ class SCEstValidator extends SCEstJavaValidator{
     final String CALCULATION_EXPRESSION = "The expression should be of type INT/FLOAT/DOUBLE/UNSIGNED."
     final String BOOLEAN_EXPRESSION = "The expression should be of type BOOL."
         
+        
+    /*
+     * ##########################################################
+     * ###                      ERRORS                        ###
+     * ##########################################################
+     */
+        
     @Check
     def void emitSignal(Emit emit) {
         if (emit.signal.type.isPure) {
@@ -67,7 +74,7 @@ class SCEstValidator extends SCEstJavaValidator{
         }
         else {
             if (emit.expression == null) {
-                error("No valued emit allowed for pure signal " + emit.signal.name + "!", emit, null, -1)
+                error("Must be a valued emit since " + emit.signal.name + " is a valued signal!", emit, null, -1)
             }
         }
     }
@@ -80,7 +87,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void combineOperator(ValuedObject vo) {
+    def void combineOperatorValuedObject(ValuedObject vo) {
         if (vo.eContainer instanceof Declaration) {
             var type = (vo.eContainer as Declaration).type
             if (!combineOperatorFitsType(type, vo.combineOperator)) {
@@ -90,24 +97,27 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void combineOperator(IVariable variable) {
-        if (!combineOperatorFitsType((variable.eContainer as VariableDecl).type?.type, (variable.eContainer as VariableDecl).type?.operator)) {
-            error("The combine operator '" + (variable.eContainer as VariableDecl).type?.operator + "' does not fit the variables type '" + (variable.eContainer as VariableDecl).type?.type + "'!", variable, null, -1)
+    def void combineOperatorIVariable(IVariable variable) {
+        var parent = variable.eContainer as VariableDecl
+        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+            error("The combine operator '" + parent.type?.operator + "' does not fit the variables type '" + parent.type?.type + "'!", variable, null, -1)
         }
     }
     
     @Check
-    def void combineOperator(Constant constant) {
-        if (!combineOperatorFitsType((constant.eContainer as OneTypeConstantDecls).type?.type, (constant.eContainer as OneTypeConstantDecls).type?.operator)) {
-            error("The combine operator '" + (constant.eContainer as OneTypeConstantDecls).type?.operator + "' does not fit the constants type '" + (constant.eContainer as OneTypeConstantDecls).type?.type + "'!", constant, null, -1)
+    def void combineOperatorConstant(Constant constant) {
+        var parent = constant.eContainer as OneTypeConstantDecls
+        if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+            error("The combine operator '" + parent.type?.operator + "' does not fit the constants type '" + parent.type?.type + "'!", constant, null, -1)
         }
     }
     
     @Check
-    def void combineOperator(ISignal signal) {
+    def void combineOperatorISignal(ISignal signal) {
         if (signal.eContainer instanceof SensorWithType) {
-            if (!combineOperatorFitsType((signal.eContainer as SensorWithType).type?.type, (signal.eContainer as SensorWithType).type?.operator)) {
-                error("The combine operator '" + (signal.eContainer as SensorWithType).type?.operator + "' does not fit the sensors type '" + (signal.eContainer as SensorWithType).type?.type + "'!", signal, null, -1)
+            var parent = signal.eContainer as SensorWithType
+            if (!combineOperatorFitsType(parent.type?.type, parent.type?.operator)) {
+                error("The combine operator '" + parent.type?.operator + "' does not fit the sensors type '" + parent.type?.type + "'!", signal, null, -1)
             }
         }
         else if (!combineOperatorFitsType(signal.type, signal.combineOperator)) {
@@ -116,14 +126,21 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void combineOperator(TrapSignal trap) {
+    def void combineOperatorTrapSignal(TrapSignal trap) {
         if (!combineOperatorFitsType(trap.type, trap.combineOperator)) {
             error("The combine operator '" + trap.combineOperator + "' does not fit the traps type '" + trap.type + "'!", trap, null, -1)
         }
     }
     
+    
+    /*
+     * ##########################################################
+     * ###                     WARNINGS                       ###
+     * ##########################################################
+     */
+    
     @Check
-    def void expression(ISignal signal) {
+    def void expressionISignal(ISignal signal) {
         if (signal.expression != null) {
             if (signal.type.isBool && !signal.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
@@ -135,7 +152,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(TrapSignal trap) {
+    def void expressionTrapSignal(TrapSignal trap) {
         if (trap.expression != null) {
             if (trap.type.isBool && !trap.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
@@ -147,7 +164,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(Emit emit) {
+    def void expressionEmit(Emit emit) {
         if (emit.expression != null) {
             if (emit.signal.type.isBool && !emit.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
@@ -159,7 +176,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(Sustain sustain) {
+    def void expressionSustain(Sustain sustain) {
         if (sustain.expression != null) {
             if (sustain.signal.type.isBool && !sustain.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
@@ -171,7 +188,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(EsterelAssignment assign) {
+    def void expressionEsterelAssignment(EsterelAssignment assign) {
         if ((assign.getVar.eContainer as VariableDecl).type?.type.isBool && !assign.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
@@ -181,35 +198,35 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(IfTest ifTest) {
+    def void expressionIfTest(IfTest ifTest) {
         if (!ifTest.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
     }
     
     @Check
-    def void expression(ElsIf elsIf) {
+    def void expressionElsIf(ElsIf elsIf) {
         if (!elsIf.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
     }
     
     @Check
-    def void expression(DelayExpr delay) {
+    def void expressionDelayExpr(DelayExpr delay) {
         if (delay.expression != null && !delay.expression.isCalculationExpr) {
             warning(CALCULATION_EXPRESSION, null)
         }
     }
     
     @Check
-    def void expression(Repeat repeat) {
+    def void expressionRepeat(Repeat repeat) {
         if (!repeat.expression.isCalculationExpr) {
             warning("The expression should be of type INT.", null)
         }
     }
     
     @Check
-    def void expression(Exit exit) {
+    def void expressionExit(Exit exit) {
         if (exit.expression != null) {
             if (exit.trap.type.isBool && !exit.expression.isBoolExpr) {
                 warning(BOOLEAN_EXPRESSION, null)
@@ -221,7 +238,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(IVariable variable) {
+    def void expressionIVariable(IVariable variable) {
         if ((variable.eContainer as VariableDecl).type?.type.isBool && !variable.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
@@ -231,14 +248,14 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(Conditional conditional) {
+    def void expressionConditional(Conditional conditional) {
         if (!conditional.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
     }
     
     @Check
-    def void expression(Assignment assign) {
+    def void expressionAssignment(Assignment assign) {
         if ((assign.valuedObject.eContainer as Declaration).type.isBool && !assign.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
@@ -248,7 +265,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(Set set) {
+    def void expressionSet(Set set) {
         if (set.signal.type.isBool && !set.expression.isBoolExpr) {
             warning(BOOLEAN_EXPRESSION, null)
         }
@@ -258,7 +275,7 @@ class SCEstValidator extends SCEstJavaValidator{
     }
     
     @Check
-    def void expression(ValuedObject vo) {
+    def void expressionValuedObject(ValuedObject vo) {
         var parent = vo.eContainer
         if (parent instanceof Declaration) {
             if (parent.type.isBool && !vo.initialValue.isBoolExpr) {
@@ -312,6 +329,9 @@ class SCEstValidator extends SCEstJavaValidator{
             ValuedObjectReference: {
                 return expr.isCalculationValuedObject
             }
+            case null: {
+                return true
+            }
             default: {
                 return false
             }
@@ -351,6 +371,9 @@ class SCEstValidator extends SCEstJavaValidator{
             }
             ValuedObjectReference: {
                 return expr.isBoolValuedObject
+            }
+            case null: {
+                return true
             }
             default: {
                 return false
@@ -429,6 +452,7 @@ class SCEstValidator extends SCEstJavaValidator{
      */
     def isCalculationType(ValueType type) {
         switch type {
+            case null,
             case ValueType.INT,
             case ValueType.DOUBLE,
             case ValueType.FLOAT,
@@ -447,7 +471,7 @@ class SCEstValidator extends SCEstJavaValidator{
      * @param type The ValueType in question
      */
     def isBoolOrPure(ValueType type) {
-        type == ValueType.BOOL || type == ValueType.PURE
+        type == null || type == ValueType.BOOL || type == ValueType.PURE
     }
     
     /**
@@ -459,6 +483,7 @@ class SCEstValidator extends SCEstJavaValidator{
      */
     def isBoolOperator(OperatorType operator) {
         switch operator {
+            case null,
             case OperatorType.EQ,
             case OperatorType.LT,
             case OperatorType.LEQ,
@@ -487,6 +512,7 @@ class SCEstValidator extends SCEstJavaValidator{
      */
     def isValuedOperator(OperatorType operator) {
         switch operator {
+            case null,
             case OperatorType.ADD,
             case OperatorType.POSTFIX_ADD,
             case OperatorType.SUB,
