@@ -34,10 +34,26 @@ class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
         
         val List<Connection> returnList = newArrayList()
         
-        returnList.add(component.parent.connect(component))
+        if (component.name.contains("DRV_HL_CAN")) {
+            for (filterdComponents : model.findName("SYC_HWIO_pn", true, false)) {
+                returnList.add(component.connect(filterdComponents))
+            }
+        }
+
+        if (component.name.equals("DRV_HL")) {
+            for (filterdComponents : model.findName("SYC_HWIO.c", true, false)) {
+                returnList.add(component.connect(filterdComponents))
+            }
+        }
+        
+        
+        //returnList.add(component.parent.connect(component))
+        
+        
+        
         
         println(" ####### create connections for '" + component.name + "'")
-        return null
+        return returnList
     } 
     
 }

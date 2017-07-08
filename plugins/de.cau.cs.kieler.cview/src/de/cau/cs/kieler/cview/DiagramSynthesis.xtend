@@ -47,6 +47,7 @@ import de.cau.cs.kieler.klighd.krendering.KSpline
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KPort
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -60,7 +61,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     @Inject extension CViewModelExtensions
-    
+
     public static DiagramSynthesis instance = null;
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
@@ -70,7 +71,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final int MIN_EXPANDED_VALUE = 1;
 
     /** Option for enabling adaptive zoom */
-
     public static final SynthesisOption EXPANDED_SLIDER = SynthesisOption.createRangeOption("Expanded Layers",
         MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE + 1, DEFAULT_EXPANDED_VALUE);
     public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
@@ -78,9 +78,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption FLATTEN_HIERARCHY = SynthesisOption.createCheckOption(
         "Flatten Hierarchy", false);
 
-    public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption(
-        "Show Functions", false);
+    public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption("Show Functions", false);
 
+    public static final SynthesisOption INTERLEVEL_CONNECTIONS = SynthesisOption.createCheckOption(
+        "Interlevel Connections", false);
+
+    public static final SynthesisOption HIDE_CONNECTIONS = SynthesisOption.createCheckOption("Hide Connections", false);
 
     // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
     override getDisplayedSynthesisOptions() {
@@ -89,12 +92,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         options.addAll(EXPANDED_SLIDER);
         options.addAll(FLATTEN_HIERARCHY);
         options.addAll(SHOW_FUNCTIONS);
+        options.addAll(INTERLEVEL_CONNECTIONS);
+        options.addAll(HIDE_CONNECTIONS);
         return options.toList;
     }
 
     override KNode transform(CViewModel model) {
         instance = this
-        
+
         val root = model.createNode().associateWith(model);
         val depth = 1;
 
@@ -107,39 +112,122 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     }
                 }
                 if (!skip) {
-                root.children.add(item.transformItem(depth))
+                    root.children.add(item.transformItem(depth))
                 }
             }
         }
-        
+
         // Create connections (added by extensions)
-        for (item : model.connections) {
-            item.createConnection(true)
+        if (!HIDE_CONNECTIONS.booleanValue) {
+            for (item : model.connections) {
+                item.addConnection(INTERLEVEL_CONNECTIONS.booleanValue)
+            }
         }
-        
+
         return root;
     }
-    
-    
-    def KEdge createConnection(Connection connection, boolean interLevelConnections) {
-        val edge = connection.createEdge().associateWith(connection)
-        
+
+    def boolean sameParent(Connection connection) {
+        return (connection.src.sameParent(connection.dst))
+    }
+
+    def boolean sameParent(Component component1, Component component2) {
+        if ((component1 != null) && (component2 != null)) {
+            return component1.parent == component2.parent
+        } else if ((component1 == null) && (component2 == null)) {
+            return true
+        }
+        return false
+    }
+
+    def void addConnection(Connection connection, boolean interLevelConnections) {
+        if (interLevelConnections) {
+            addSimpleConnection(connection, connection.src.node, connection.dst.node);
+        } else {
+//            val depthSrc = connection.src.depth
+//            val depthDst = connection.dst.depth
+            if (connection.sameParent) {
+                addSimpleConnection(connection, connection.src.node, connection.dst.node);
+            } else {
+                addPortbasedConnection(connection, connection.src, connection.dst);
+            }
+
+        }
+    }
+
+    def void addPortbasedConnection(Connection connection, Component src, Component dst) {
+
+        var srcComponent = src
+        var dstComponent = dst
+
+        if (srcComponent.sameParent(dstComponent)) {
+            // Can connect on same level!
+            connection.addSimpleConnection(srcComponent.node, dstComponent.node)
+        } else {
+            val depthSrc = srcComponent.depth
+            val depthDst = dstComponent.depth
+
+            if (depthSrc != depthDst) {
+                var boolean sourceDeeper = false
+                if (depthSrc > depthDst) {
+                    // source is deeper, connect it to its parent
+                    sourceDeeper = true
+                    val parentSrc = connection.addParentConnection(srcComponent, true)
+                    // Continue recursion
+                    if (parentSrc != null) {
+                        connection.addPortbasedConnection(parentSrc, dstComponent)
+                    }
+                    return
+                } else {
+                    // dest is deeper, connect it to its parent
+                    val parentDst = connection.addParentConnection(dstComponent, false)
+                    // Continue recursion
+                    if (parentDst != null) {
+                        connection.addPortbasedConnection(srcComponent, parentDst)
+                    }
+                    return
+                }
+            } else {
+                // At this point srcComponent and destComponent have same level
+                // NOW go one level up until we reach the same parent, then simple connect
+                // on that level
+                val parentSrc = connection.addParentConnection(srcComponent, true)
+                val parentDst = connection.addParentConnection(dstComponent, false)
+                // Continue recursion
+                if (parentSrc != null && parentDst != null) {
+                    connection.addPortbasedConnection(parentSrc, parentDst)
+                }
+            }
+        }
+    }
+
+    def Component addParentConnection(Connection connection, Component component, boolean directionToParent) {
+        if (component.parent == null) {
+            return null
+        }
+        if (directionToParent) {
+            addSimpleConnection(connection, component.node, component.parent.node)
+        } else {
+            addSimpleConnection(connection, component.parent.node, component.node)
+        }
+        return component.parent
+    }
+
+    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
+        val edge = createEdge().associateWith(connection)
         edge.addPolyline(2).addHeadArrowDecorator();
-        
-        edge.source = connection.src.node;
-        edge.target = connection.dst.node;
-        
+        edge.source = srcNode
+        edge.target = dstNode
         // Basic spline
         edge.addConnectionSpline();
-        
         edge.setGrayStyle
-
         // Add Label
         edge.addLabel(connection.label).associateWith(connection);
 
-        return edge
+        // Add the connection
+        srcNode.outgoingEdges.add(edge)
+    // srcNode.port.edges.add(edge)
     }
-    
 
     def KNode transformItem(Component item, int depth) {
         if (item.isFile) {
@@ -171,7 +259,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return childNode
     }
 
-
     def KNode transformItemFile(Component item, int depth) {
         val childNode = item.createNode().associateWith(item);
         val childRect = childNode.addRoundedRectangle(4, 4, 2);
@@ -192,7 +279,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (item.hieararchical) {
             return "WHITE".color;
         } else {
-           return "LIGHTGRAY".color;
+            return "LIGHTGRAY".color;
         }
     }
 
@@ -203,13 +290,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         rectCol.background = item.getFileColor
         rectCol.selectionBackground = item.getFileColor
         rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        //rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        // rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         rectCol.addDoubleClickAction(OpenEditorAction.ID);
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectExp.background = item.getFileColor
         rectExp.selectionBackground = item.getFileColor
         rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        //rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        // rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         rectExp.addDoubleClickAction(OpenEditorAction.ID);
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
@@ -218,11 +305,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
-        
+
         if (item.hieararchical) {
             // Hierarchical case
             label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            //label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             label.firstText.addDoubleClickAction(OpenEditorAction.ID);
             label.firstText.selectionBackground = item.getFileColor
         }
@@ -247,7 +334,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     childArea.children += child.transformItem(depth + 1);
                 }
             }
-        } 
+        }
 
         return childNodeOuter
     }
@@ -305,11 +392,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return childNodeOuter
     }
 
-
     private def line(KEdge edge) {
         return edge.getKContainerRendering as KPolyline;
     }
-    
+
     def setGrayStyle(KEdge edge) {
         edge.line => [
             foreground = Colors.GRAY_50
@@ -344,10 +430,46 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return label;
     }
 
-    //public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
-    //public static boolean changedExpandedValue = false;
-
-
+// var Component deeperComponent = null
+//          var Component deeperSrc = null
+//          var Component deeperDst = null
+//          var boolean sourceDeeper = false
+//          var int depthToReach = 0
+//          if (depthSrc > depthDst) { // source is deeper
+//              deeperComponent = src
+//              depthToReach = depthDst
+//              deeperSrc = connection.src
+//              deeperDst = connection.dst
+//              sourceDeeper = true
+//          } else { // dst is deeper
+//              deeperComponent = dst
+//              depthToReach = depthSrc
+//              deeperSrc = connection.dst
+//              deeperDst = connection.src
+//          }
+//          while (deeperComponent.depth > depthToReach) {
+//              // Connect deeperComponent's parent to deeperComponent
+//              val parentDepperComponent = deeperComponent.parent
+//              val port = deeperComponent.getPort(deeperSrc)
+//              val pport = parentDepperComponent.getPort(deeperDst)
+//              
+//              var srcNode = port
+//              var dstNode = pport
+//              if (!sourceDeeper) {
+//                  srcNode = pport
+//                  dstNode = port
+//              }
+//              addSimpleConnection(connection, srcNode.node, dstNode.node)
+//              
+//              deeperComponent = parentDepperComponent
+//              if (sourceDeeper) {
+//                  srcComponent = deeperComponent
+//              } else {
+//                  dstComponent = deeperComponent
+//              }
+//          }
+// public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
+// public static boolean changedExpandedValue = false;
 //        label.getFirstText.setAsExpandedView
 //        val labelCollapsed = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
 //            KlighdConstants.DEFAULT_FONT_NAME);

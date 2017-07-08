@@ -17,6 +17,8 @@ import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
 import de.cau.cs.kieler.cview.model.cViewModel.Connection
+import java.util.List
+import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 
 /**
  * @author cmot
@@ -25,22 +27,70 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection
 class CViewModelExtensions {
 
     EObject getParent;
-    
+
+    def List<Component> findName(CViewModel model, String searchString) {
+        return model.findName(searchString, true, false, false)
+    }
+
+    def List<Component> findName(CViewModel model, String searchString, boolean caseSensitive) {
+        return model.findName(searchString, caseSensitive, false, false)
+    }
+
+    def List<Component> findName(CViewModel model, String searchString, boolean startsWith, boolean endsWith) {
+        return model.findName(searchString, true, startsWith, endsWith)
+    }
+
+    def List<Component> findName(CViewModel model, String searchString, boolean caseSensitive, boolean startsWith,
+        boolean endsWith) {
+        val List<Component> returnList = newArrayList
+        if (caseSensitive) {
+            returnList.addAll(model.components.filter[name.equals(searchString)].toList)
+        } else {
+            returnList.addAll(model.components.filter[name.toUpperCase.equals(searchString.toUpperCase)].toList)
+        }
+        if (!startsWith && !endsWith) {
+            if (caseSensitive) {
+                returnList.addAll(model.components.filter[name.contains(searchString)].toList)
+            } else {
+                returnList.addAll(model.components.filter[name.toUpperCase.contains(searchString.toUpperCase)].toList)
+            }
+        } else {
+            if (startsWith) {
+                if (caseSensitive) {
+                    returnList.addAll(model.components.filter[name.startsWith(searchString)].toList)
+                } else {
+                    returnList.addAll(
+                        model.components.filter[name.toUpperCase.startsWith(searchString.toUpperCase)].toList)
+                }
+            }
+            if (endsWith) {
+                if (caseSensitive) {
+                    returnList.addAll(model.components.filter[name.endsWith(searchString)].toList)
+                } else {
+                    returnList.addAll(
+                        model.components.filter[name.toUpperCase.endsWith(searchString.toUpperCase)].toList)
+                }
+            }
+        }
+        return returnList
+    }
+
+    // -------------------------------------------------------------------------
     def boolean hieararchical(Component item) {
         return !item.children.nullOrEmpty;
     }
-    
+
     def int getDepth(Component item) {
-        if (item.parent == null) {
+        if (item == null) {
+            return 0;
+        } else if (item.parent == null) {
             return 1;
-        }
-        else {
+        } else {
             return 1 + getDepth(item.parent)
         }
     }
-    
-    //-------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
     def Connection createConnection() {
         return (CViewModelFactory.eINSTANCE.createConnection)
     }
@@ -51,18 +101,17 @@ class CViewModelExtensions {
         connection.dst = dst
         return connection
     }
-    
+
     def Connection setLabel2(Connection connection, String label) {
         connection.label = label
-        return connection   
+        return connection
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
     def Component createFile() {
         return (CViewModelFactory.eINSTANCE.createComponent.setFile)
     }
-    
+
     def Component createDir() {
         return (CViewModelFactory.eINSTANCE.createComponent.setDir)
     }
@@ -79,8 +128,7 @@ class CViewModelExtensions {
         return (CViewModelFactory.eINSTANCE.createComponent.setWriter)
     }
 
-    //-------------------------------------------------------------------------
-
+    // -------------------------------------------------------------------------
     def boolean isFile(Component component) {
         return (component.type == ComponentType::FILE)
     }
@@ -101,8 +149,7 @@ class CViewModelExtensions {
         return (component.type == ComponentType::WRITER)
     }
 
-    //-------------------------------------------------------------------------
-
+    // -------------------------------------------------------------------------
     def Component setFile(Component component) {
         component.type = ComponentType::FILE
         return component
@@ -127,7 +174,6 @@ class CViewModelExtensions {
         component.type = ComponentType::WRITER
         return component
     }
-    
-    //-------------------------------------------------------------------------
 
+// -------------------------------------------------------------------------
 }
