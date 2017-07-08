@@ -663,7 +663,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConnection"
-    // InternalCViewModel.g:301:1: ruleConnection returns [EObject current=null] : (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_type_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) ) ;
+    // InternalCViewModel.g:301:1: ruleConnection returns [EObject current=null] : (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) ) ;
     public final EObject ruleConnection() throws RecognitionException {
         EObject current = null;
 
@@ -672,7 +672,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         Token otherlv_2=null;
         Token otherlv_3=null;
         Token otherlv_4=null;
-        Token lv_type_5_0=null;
+        Token lv_label_5_0=null;
         Token otherlv_6=null;
         Token lv_type_7_0=null;
 
@@ -680,11 +680,11 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalCViewModel.g:307:2: ( (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_type_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) ) )
-            // InternalCViewModel.g:308:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_type_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:307:2: ( (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) ) )
+            // InternalCViewModel.g:308:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) )
             {
-            // InternalCViewModel.g:308:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_type_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) )
-            // InternalCViewModel.g:309:3: otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_type_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) )
+            // InternalCViewModel.g:308:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:309:3: otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) )
             {
             otherlv_0=(Token)match(input,19,FOLLOW_5); 
 
@@ -740,15 +740,15 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_4, grammarAccess.getConnectionAccess().getLabelKeyword_4());
             		
-            // InternalCViewModel.g:347:3: ( (lv_type_5_0= RULE_STRING ) )
-            // InternalCViewModel.g:348:4: (lv_type_5_0= RULE_STRING )
+            // InternalCViewModel.g:347:3: ( (lv_label_5_0= RULE_STRING ) )
+            // InternalCViewModel.g:348:4: (lv_label_5_0= RULE_STRING )
             {
-            // InternalCViewModel.g:348:4: (lv_type_5_0= RULE_STRING )
-            // InternalCViewModel.g:349:5: lv_type_5_0= RULE_STRING
+            // InternalCViewModel.g:348:4: (lv_label_5_0= RULE_STRING )
+            // InternalCViewModel.g:349:5: lv_label_5_0= RULE_STRING
             {
-            lv_type_5_0=(Token)match(input,RULE_STRING,FOLLOW_8); 
+            lv_label_5_0=(Token)match(input,RULE_STRING,FOLLOW_8); 
 
-            					newLeafNode(lv_type_5_0, grammarAccess.getConnectionAccess().getTypeSTRINGTerminalRuleCall_5_0());
+            					newLeafNode(lv_label_5_0, grammarAccess.getConnectionAccess().getLabelSTRINGTerminalRuleCall_5_0());
             				
 
             					if (current==null) {
@@ -756,8 +756,8 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
             					}
             					setWithLastConsumed(
             						current,
-            						"type",
-            						lv_type_5_0,
+            						"label",
+            						lv_label_5_0,
             						"org.eclipse.xtext.common.Terminals.STRING");
             				
 

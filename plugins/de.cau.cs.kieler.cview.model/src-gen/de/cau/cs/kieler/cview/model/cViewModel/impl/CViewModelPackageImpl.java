@@ -252,9 +252,19 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConnection_Type()
+  public EAttribute getConnection_Label()
   {
     return (EAttribute)connectionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConnection_Type()
+  {
+    return (EAttribute)connectionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -312,6 +322,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     connectionEClass = createEClass(CONNECTION);
     createEReference(connectionEClass, CONNECTION__SRC);
     createEReference(connectionEClass, CONNECTION__DST);
+    createEAttribute(connectionEClass, CONNECTION__LABEL);
     createEAttribute(connectionEClass, CONNECTION__TYPE);
 
     // Create enums
@@ -364,6 +375,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEClass(connectionEClass, Connection.class, "Connection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConnection_Src(), this.getComponent(), null, "src", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConnection_Dst(), this.getComponent(), null, "dst", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConnection_Label(), ecorePackage.getEString(), "label", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConnection_Type(), ecorePackage.getEString(), "type", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals

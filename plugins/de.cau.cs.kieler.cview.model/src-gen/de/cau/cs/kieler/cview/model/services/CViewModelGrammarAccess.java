@@ -199,8 +199,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cDstComponentCrossReference_3_0 = (CrossReference)cDstAssignment_3.eContents().get(0);
 		private final RuleCall cDstComponentIDTerminalRuleCall_3_0_1 = (RuleCall)cDstComponentCrossReference_3_0.eContents().get(1);
 		private final Keyword cLabelKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cTypeSTRINGTerminalRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
+		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
 		private final Keyword cTypeKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		private final Assignment cTypeAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cTypeSTRINGTerminalRuleCall_7_0 = (RuleCall)cTypeAssignment_7.eContents().get(0);
@@ -208,11 +208,11 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//Connection:
 		//	'src' src=[Component]
 		//	'dst' dst=[Component]
-		//	'label' type=STRING
+		//	'label' label=STRING
 		//	'type' type=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'src' src=[Component] 'dst' dst=[Component] 'label' type=STRING 'type' type=STRING
+		//'src' src=[Component] 'dst' dst=[Component] 'label' label=STRING 'type' type=STRING
 		public Group getGroup() { return cGroup; }
 		
 		//'src'
@@ -242,11 +242,11 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//'label'
 		public Keyword getLabelKeyword_4() { return cLabelKeyword_4; }
 		
-		//type=STRING
-		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
+		//label=STRING
+		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
 		
 		//STRING
-		public RuleCall getTypeSTRINGTerminalRuleCall_5_0() { return cTypeSTRINGTerminalRuleCall_5_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 		
 		//'type'
 		public Keyword getTypeKeyword_6() { return cTypeKeyword_6; }
@@ -393,7 +393,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//Connection:
 	//	'src' src=[Component]
 	//	'dst' dst=[Component]
-	//	'label' type=STRING
+	//	'label' label=STRING
 	//	'type' type=STRING;
 	public ConnectionElements getConnectionAccess() {
 		return pConnection;

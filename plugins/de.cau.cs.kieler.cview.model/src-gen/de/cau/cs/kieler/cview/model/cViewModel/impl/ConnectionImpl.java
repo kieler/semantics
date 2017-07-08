@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getSrc <em>Src</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getDst <em>Dst</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getType <em>Type</em>}</li>
  * </ul>
  *
@@ -51,6 +52,26 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * @ordered
    */
   protected Component dst;
+
+  /**
+   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected static final String LABEL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected String label = LABEL_EDEFAULT;
 
   /**
    * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -184,6 +205,29 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getLabel()
+  {
+    return label;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLabel(String newLabel)
+  {
+    String oldLabel = label;
+    label = newLabel;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.CONNECTION__LABEL, oldLabel, label));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getType()
   {
     return type;
@@ -218,6 +262,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
       case CViewModelPackage.CONNECTION__DST:
         if (resolve) return getDst();
         return basicGetDst();
+      case CViewModelPackage.CONNECTION__LABEL:
+        return getLabel();
       case CViewModelPackage.CONNECTION__TYPE:
         return getType();
     }
@@ -239,6 +285,9 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return;
       case CViewModelPackage.CONNECTION__DST:
         setDst((Component)newValue);
+        return;
+      case CViewModelPackage.CONNECTION__LABEL:
+        setLabel((String)newValue);
         return;
       case CViewModelPackage.CONNECTION__TYPE:
         setType((String)newValue);
@@ -263,6 +312,9 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
       case CViewModelPackage.CONNECTION__DST:
         setDst((Component)null);
         return;
+      case CViewModelPackage.CONNECTION__LABEL:
+        setLabel(LABEL_EDEFAULT);
+        return;
       case CViewModelPackage.CONNECTION__TYPE:
         setType(TYPE_EDEFAULT);
         return;
@@ -284,6 +336,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return src != null;
       case CViewModelPackage.CONNECTION__DST:
         return dst != null;
+      case CViewModelPackage.CONNECTION__LABEL:
+        return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
       case CViewModelPackage.CONNECTION__TYPE:
         return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
     }
@@ -301,7 +355,9 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
+    result.append(" (label: ");
+    result.append(label);
+    result.append(", type: ");
     result.append(type);
     result.append(')');
     return result.toString();

@@ -1,14 +1,15 @@
 package de.cau.cs.kieler.cview;
 
-import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.handlers.RegistryToggleState;
+
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 
 public class CommandToggleHandler implements IHandler {
+
+    public int lastExpandedSliderValue = DiagramSynthesis.DEFAULT_EXPANDED_VALUE;
 
     @Override
     public void addHandlerListener(IHandlerListener handlerListener) {
@@ -20,7 +21,20 @@ public class CommandToggleHandler implements IHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        CViewPlugin.refreshCView(true);
+
+        boolean changedExpandedSliderValue = false;
+        int currentExpandedSliderValue = KLighDController.getSynthesisOptionIntValue(DiagramSynthesis.EXPANDED_SLIDER);
+        if (currentExpandedSliderValue == -1) {
+            currentExpandedSliderValue = DiagramSynthesis.DEFAULT_EXPANDED_VALUE;
+        }
+        
+        
+        if (lastExpandedSliderValue != currentExpandedSliderValue) {
+            lastExpandedSliderValue = currentExpandedSliderValue;
+            changedExpandedSliderValue = true;
+        }
+
+        CViewPlugin.refreshCView(changedExpandedSliderValue);
         return null;
     }
 
@@ -42,7 +56,7 @@ public class CommandToggleHandler implements IHandler {
 
 }
 
-//Command command = event.getCommand();
+// Command command = event.getCommand();
 // CViewPlugin.setEnabled(false);
 // boolean oldValue = HandlerUtil.toggleCommandState(command);
 // CViewPlugin.setEnabled(!oldValue);

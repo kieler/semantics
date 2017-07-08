@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
+import de.cau.cs.kieler.cview.model.cViewModel.Connection
 
 /**
  * @author cmot
@@ -38,6 +39,24 @@ class CViewModelExtensions {
         }
     }
     
+    //-------------------------------------------------------------------------
+
+    def Connection createConnection() {
+        return (CViewModelFactory.eINSTANCE.createConnection)
+    }
+
+    def Connection connect(Component src, Component dst) {
+        val connection = createConnection
+        connection.src = src
+        connection.dst = dst
+        return connection
+    }
+    
+    def Connection setLabel2(Connection connection, String label) {
+        connection.label = label
+        return connection   
+    }
+
     //-------------------------------------------------------------------------
     
     def Component createFile() {

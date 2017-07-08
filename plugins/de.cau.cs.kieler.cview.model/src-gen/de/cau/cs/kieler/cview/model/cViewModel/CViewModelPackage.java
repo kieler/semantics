@@ -197,13 +197,22 @@ public interface CViewModelPackage extends EPackage
   int CONNECTION__DST = 1;
 
   /**
+   * The feature id for the '<em><b>Label</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__LABEL = 2;
+
+  /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONNECTION__TYPE = 2;
+  int CONNECTION__TYPE = 3;
 
   /**
    * The number of structural features of the '<em>Connection</em>' class.
@@ -212,7 +221,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONNECTION_FEATURE_COUNT = 3;
+  int CONNECTION_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
@@ -364,6 +373,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EReference getConnection_Dst();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getLabel <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Label</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getLabel()
+   * @see #getConnection()
+   * @generated
+   */
+  EAttribute getConnection_Label();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getType <em>Type</em>}'.
@@ -518,6 +538,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EReference CONNECTION__DST = eINSTANCE.getConnection_Dst();
+
+    /**
+     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONNECTION__LABEL = eINSTANCE.getConnection_Label();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' attribute feature.

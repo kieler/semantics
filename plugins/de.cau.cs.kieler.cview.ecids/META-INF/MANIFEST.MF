@@ -9,5 +9,6 @@ Require-Bundle: de.cau.cs.kieler.cview,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
+ org.eclipse.xtend.lib.macro,
+ com.google.inject;bundle-version="3.0.0"
 

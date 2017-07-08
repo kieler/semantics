@@ -23,7 +23,7 @@ Component:
 Connection:
     'src' src=[Component]
     'dst' dst=[Component]
-    'label' type=STRING
+    'label' label=STRING
     'type' type=STRING
 ;	
 	

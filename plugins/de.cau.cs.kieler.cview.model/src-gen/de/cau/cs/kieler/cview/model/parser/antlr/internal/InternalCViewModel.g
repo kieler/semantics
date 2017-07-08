@@ -346,9 +346,9 @@ ruleConnection returns [EObject current=null]
 		}
 		(
 			(
-				lv_type_5_0=RULE_STRING
+				lv_label_5_0=RULE_STRING
 				{
-					newLeafNode(lv_type_5_0, grammarAccess.getConnectionAccess().getTypeSTRINGTerminalRuleCall_5_0());
+					newLeafNode(lv_label_5_0, grammarAccess.getConnectionAccess().getLabelSTRINGTerminalRuleCall_5_0());
 				}
 				{
 					if ($current==null) {
@@ -356,8 +356,8 @@ ruleConnection returns [EObject current=null]
 					}
 					setWithLastConsumed(
 						$current,
-						"type",
-						lv_type_5_0,
+						"label",
+						lv_label_5_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)

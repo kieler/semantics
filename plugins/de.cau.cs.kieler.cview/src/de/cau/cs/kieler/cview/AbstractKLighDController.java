@@ -57,6 +57,8 @@ import com.google.common.primitives.Bytes;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel;
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory;
 import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.controller.DiagramController;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KNodeAbstractNode;
@@ -117,13 +119,6 @@ public abstract class AbstractKLighDController {
                     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
                         // Save selection in ANY case (for later usage)
                         allSelections = ((IStructuredSelection) selection).toArray();
-                        // if (!CViewPlugin.isEnabled()) {
-                        // return;
-                        // }
-                        // if (!(selection instanceof IStructuredSelection)) {
-                        // return;
-                        // }
-                        // CViewPlugin.refreshCView();
                     }
                 };
                 selectionService.addPostSelectionListener(IPageLayout.ID_PROJECT_EXPLORER,
@@ -258,6 +253,36 @@ public abstract class AbstractKLighDController {
         }
         // Byte[] bytes = readBytes.toArray(new Byte[readBytes.size()]);;
         return stringBuilder.toString().toCharArray();
+    }
+
+    // -------------------------------------------------------------------------
+    
+    public static int getSynthesisOptionIntValue(final SynthesisOption option) {
+        ViewContext viewContext = getCurrentViewContext();
+        if (viewContext != null) {
+            final Object result = viewContext.getOptionValue(option);
+            if (result == null) {
+                return 0;
+
+            } else if (result instanceof Float) {
+                return ((Float) result).intValue();
+
+            } else  if (result instanceof Integer) {
+                return (Integer) result;
+            }
+        }
+        return -1;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static ViewContext getCurrentViewContext() {
+        DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+        ViewContext returnContext = null;
+        if (view != null) {
+            returnContext = view.getViewContext();            
+        }
+        return returnContext;
     }
 
 }

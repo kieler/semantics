@@ -16,6 +16,10 @@ import de.cau.cs.kieler.cview.hooks.AbstractConnectionHook
 import de.cau.cs.kieler.cview.hooks.IConnectionHook
 import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
+import de.cau.cs.kieler.cview.model.cViewModel.Connection
+import java.util.List
+import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
+import com.google.inject.Inject
 
 /**
  * @author cmot
@@ -23,7 +27,15 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
  */
 class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
     
+    
+     @Inject extension CViewModelExtensions
+    
     override createConnections(Component component, CViewModel model) {
+        
+        val List<Connection> returnList = newArrayList()
+        
+        returnList.add(component.parent.connect(component))
+        
         println(" ####### create connections for '" + component.name + "'")
         return null
     } 

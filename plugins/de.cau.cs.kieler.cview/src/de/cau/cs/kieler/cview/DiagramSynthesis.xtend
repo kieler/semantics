@@ -41,6 +41,12 @@ import java.util.LinkedHashSet
 import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import de.cau.cs.kieler.klighd.krendering.KColor
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.cview.model.cViewModel.Connection
+import de.cau.cs.kieler.klighd.krendering.KSpline
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.kgraph.KLabel
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -54,6 +60,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     @Inject extension CViewModelExtensions
+    
+    public static DiagramSynthesis instance = null;
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
@@ -65,6 +73,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static final SynthesisOption EXPANDED_SLIDER = SynthesisOption.createRangeOption("Expanded Layers",
         MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE + 1, DEFAULT_EXPANDED_VALUE);
+    public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
 
     public static final SynthesisOption FLATTEN_HIERARCHY = SynthesisOption.createCheckOption(
         "Flatten Hierarchy", false);
@@ -84,26 +93,53 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     override KNode transform(CViewModel model) {
+        instance = this
+        
         val root = model.createNode().associateWith(model);
         val depth = 1;
 
         for (item : model.components) {
             if (item.parent == null || FLATTEN_HIERARCHY.booleanValue) {
-                
                 var skip = false;
                 if (FLATTEN_HIERARCHY.booleanValue) {
                     if (EXPANDED_SLIDER.intValue < MAX_EXPANDED_VALUE && item.depth > EXPANDED_SLIDER.intValue) {
                         skip = true
                     }
                 }
-                
                 if (!skip) {
                 root.children.add(item.transformItem(depth))
                 }
             }
         }
+        
+        // Create connections (added by extensions)
+        for (item : model.connections) {
+            item.createConnection(true)
+        }
+        
         return root;
     }
+    
+    
+    def KEdge createConnection(Connection connection, boolean interLevelConnections) {
+        val edge = connection.createEdge().associateWith(connection)
+        
+        edge.addPolyline(2).addHeadArrowDecorator();
+        
+        edge.source = connection.src.node;
+        edge.target = connection.dst.node;
+        
+        // Basic spline
+        edge.addConnectionSpline();
+        
+        edge.setGrayStyle
+
+        // Add Label
+        edge.addLabel(connection.label).associateWith(connection);
+
+        return edge
+    }
+    
 
     def KNode transformItem(Component item, int depth) {
         if (item.isFile) {
@@ -258,14 +294,43 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
 
+    private def line(KEdge edge) {
+        return edge.getKContainerRendering as KPolyline;
+    }
+    
+    def setGrayStyle(KEdge edge) {
+        edge.line => [
+            foreground = Colors.GRAY_50
+        ]
+    }
 
+    def KSpline addConnectionSpline(KEdge edge) {
+        edge.addSpline => [
+            lineWidth = 2;
+        ]
+    }
 
+    private static val float CONNECTION_DASH_BLACK = 7;
+    private static val float CONNECTION_DASH_WHITE = 3;
+    private static val List<Float> CONNECTION_DASH_PATTERN = newArrayList(CONNECTION_DASH_BLACK, CONNECTION_DASH_WHITE);
 
+    def setDashedStyle(KEdge edge) {
+        edge.line => [
+            lineStyle = LineStyle::CUSTOM;
+            lineStyle.dashPattern.clear;
+            lineStyle.dashPattern += CONNECTION_DASH_PATTERN;
+        ]
+    }
 
-
-
-
-
+    def KLabel addLabel(KEdge edge, String text) {
+        val label = edge.createLabel;
+        label.configureCenterEdgeLabel(text); // Add text
+        label.getKRendering => [ // Configure text
+            fontSize = 11;
+            fontBold = true;
+        ]
+        return label;
+    }
 
     //public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
     //public static boolean changedExpandedValue = false;

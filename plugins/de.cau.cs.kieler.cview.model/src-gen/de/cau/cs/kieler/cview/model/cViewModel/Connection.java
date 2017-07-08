@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getSrc <em>Src</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getDst <em>Dst</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getType <em>Type</em>}</li>
  * </ul>
  *
@@ -76,6 +77,32 @@ public interface Connection extends EObject
    * @generated
    */
   void setDst(Component value);
+
+  /**
+   * Returns the value of the '<em><b>Label</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Label</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Label</em>' attribute.
+   * @see #setLabel(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getConnection_Label()
+   * @model
+   * @generated
+   */
+  String getLabel();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getLabel <em>Label</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Label</em>' attribute.
+   * @see #getLabel()
+   * @generated
+   */
+  void setLabel(String value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' attribute.
