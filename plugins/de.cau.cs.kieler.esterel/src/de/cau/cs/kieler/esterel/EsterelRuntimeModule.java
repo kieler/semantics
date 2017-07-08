@@ -6,6 +6,7 @@ package de.cau.cs.kieler.esterel;
 import org.eclipse.xtext.conversion.IValueConverterService;
 
 import de.cau.cs.kieler.esterel.formatting.EsterelValueConverter;
+import de.cau.cs.kieler.esterel.scest.validation.SCEstValidator;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -27,6 +28,11 @@ public class EsterelRuntimeModule extends de.cau.cs.kieler.esterel.AbstractEster
     public void configureIResourceDescriptions(com.google.inject.Binder binder) {
         binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).to(
                 org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
+    }
+    
+    @org.eclipse.xtext.service.SingletonBinding(eager=true) public Class<? extends 
+            de.cau.cs.kieler.esterel.scest.validation.SCEstValidator> bindSCEstValidator() {
+        return SCEstValidator.class;
     }
     
 }

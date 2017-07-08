@@ -14,19 +14,9 @@ package de.cau.cs.kieler.esterel.scest.extensions
 
 import com.google.inject.Inject
 import org.eclipse.emf.common.util.EList
-import com.google.common.collect.Multimap
 import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.Block
-import de.cau.cs.kieler.esterel.esterel.EveryDo
-import de.cau.cs.kieler.esterel.esterel.Halt
-import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
-import de.cau.cs.kieler.esterel.esterel.LocalVariable
-import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.Program
-import de.cau.cs.kieler.esterel.esterel.Run
-import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
@@ -39,13 +29,9 @@ import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.Pause
-import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import de.cau.cs.kieler.scl.scl.Thread
-import java.util.LinkedList
-import javax.xml.transform.TransformerException
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
@@ -68,21 +54,17 @@ import de.cau.cs.kieler.kexpressions.CombineOperator
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.esterel.esterel.PresentCase
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.esterel.esterel.Emit
 import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
 import de.cau.cs.kieler.esterel.esterel.ElsIf
 import de.cau.cs.kieler.esterel.esterel.Repeat
-import de.cau.cs.kieler.esterel.esterel.TrapSignal
 import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.esterel.esterel.IVariable
 import de.cau.cs.kieler.esterel.scest.scest.Set
-import java.util.List
 import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
 import de.cau.cs.kieler.esterel.esterel.TrapHandler
 import de.cau.cs.kieler.esterel.scest.scest.ScestFactory
-import de.cau.cs.kieler.esterel.esterel.Output
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -1579,58 +1561,5 @@ class SCEstExtension {
             ])
     } 
     
-    /**
-     * Checks if the given ValueType is of type PURE
-     * 
-     * @param type The ValueType in question
-     */
-    def isPure(ValueType type) {
-         type == ValueType.PURE
-     }
-     
-     /**
-      * Checks if an emit is allowed for a specific signal
-      * 
-      * @param signal The signal in question
-      */
-     def emitAllowed(ISignal signal) {
-         (signal.eContainer instanceof Output || signal.eContainer instanceof LocalSignalDecl
-         || signal.eContainer instanceof InputOutput)
-     }
-     
-     /**
-      * Checks if combine operator fits value type
-      * 
-      * @param type The type of the valued object
-      * @param the combine operator of the valued object
-      */
-     def combineOperatorFitsType(ValueType type, CombineOperator operator) {
-         if (type == ValueType.DOUBLE || type == ValueType.FLOAT ||
-             type == ValueType.INT || type == ValueType.UNSIGNED 
-             ) {
-                 if (operator == CombineOperator.ADD || operator == CombineOperator.MULT ||
-                     operator == CombineOperator.MIN || operator == CombineOperator.MAX  ||
-                     operator == CombineOperator.NONE
-                 ) {
-                     return true
-                 }
-                 else {
-                     return false
-                 }
-         }
-         else if (type == ValueType.BOOL) {
-             if (operator == CombineOperator.AND || operator == CombineOperator.OR ||
-                     operator == CombineOperator.NONE 
-                 ) {
-                     return true
-                 }
-                 else {
-                     return false
-                 }
-         }
-         else {
-             return true
-         }
-     }
  
 }

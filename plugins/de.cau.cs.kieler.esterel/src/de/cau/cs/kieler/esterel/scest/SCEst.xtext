@@ -417,6 +417,12 @@ terminal ML_COMMENT:
 terminal SL_COMMENT: 
     ( '//' | '%' ) !('\n'|'\r')* ('\r'? '\n')?;
  
+ 
+ /* ###################################################
+ * ###               Expressions                   ###
+ * ###################################################
+ */
+ 
 // Esterel is a bit richer than what is provided by kexpressions. 
 // These rules are introduced here.
 // Care about order of the rules! 
