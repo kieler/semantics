@@ -36,21 +36,21 @@ class CViewModelExtensions {
         return component
     }
 
-    def List<Component> findName(CViewModel model, String searchString) {
+    def Set<Component> findName(CViewModel model, String searchString) {
         return model.findName(searchString, true, false, false)
     }
 
-    def List<Component> findName(CViewModel model, String searchString, boolean caseSensitive) {
+    def Set<Component> findName(CViewModel model, String searchString, boolean caseSensitive) {
         return model.findName(searchString, caseSensitive, false, false)
     }
 
-    def List<Component> findName(CViewModel model, String searchString, boolean startsWith, boolean endsWith) {
+    def Set<Component> findName(CViewModel model, String searchString, boolean startsWith, boolean endsWith) {
         return model.findName(searchString, true, startsWith, endsWith)
     }
 
-    def List<Component> findName(CViewModel model, String searchString, boolean caseSensitive, boolean startsWith,
+    def Set<Component> findName(CViewModel model, String searchString, boolean caseSensitive, boolean startsWith,
         boolean endsWith) {
-        val List<Component> returnList = newArrayList
+        val Set<Component> returnList = newHashSet
 //        if (caseSensitive) {
 //            returnList.addAll(model.components.filter[name.equals(searchString)].toList)
 //        } else {

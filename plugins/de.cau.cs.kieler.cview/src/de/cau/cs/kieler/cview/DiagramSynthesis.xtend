@@ -179,6 +179,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (srcComponent.sameParent(dstComponent)) {
             // Can connect on same level!
             connection.addSimpleConnection(srcComponent.node, dstComponent.node, true, color)
+        } else if (srcComponent.parent == dstComponent) {
+            connection.addParentConnection(srcComponent, true, true, color)
+        } else if (dstComponent.parent == srcComponent) {
+            connection.addParentConnection(dstComponent, false, true, color)                        
         } else {
             val depthSrc = srcComponent.depth
             val depthDst = dstComponent.depth
@@ -249,7 +253,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         if (usePorts) {
             // Add the connection
-            val portId = connection.toString; // + srcNode.toString
+            val portId = connection.hashCode.toString // + srcNode.toString
+            println("$$$$ PORT ID '" + portId + "'")
+            
+//            val srcPort = srcNode.addPort(portId, 0, 0, 9, null, color)
+//            val dstPort = dstNode.addPort(portId, 0, 0, 9, null, color)
             val srcPort = srcNode.addPort(portId, 0, 0, 9, PortSide::EAST, color)
             val dstPort = dstNode.addPort(portId, 0, 0, 9, PortSide::WEST, color)
 //            srcPort.addOutsidePortLabel("S", 8, KlighdConstants.DEFAULT_FONT_NAME)
@@ -262,6 +270,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side, KColor color) {
         val returnPort = node.createPort(mapping);
         if (side != null) {
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             returnPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
         }
         val rect = returnPort.addRectangle
