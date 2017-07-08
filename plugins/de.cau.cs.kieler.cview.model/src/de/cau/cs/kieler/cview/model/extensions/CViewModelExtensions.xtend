@@ -36,7 +36,7 @@ class CViewModelExtensions {
         return component
     }
 
-    def Set<Component> findName(CViewModel model, String searchString) {
+    def Set<Component> findByName(CViewModel model, String searchString) {
         return model.findName(searchString, true, false, false)
     }
 
@@ -44,7 +44,7 @@ class CViewModelExtensions {
         return model.findName(searchString, caseSensitive, false, false)
     }
 
-    def Set<Component> findName(CViewModel model, String searchString, boolean startsWith, boolean endsWith) {
+    def Set<Component> findByName(CViewModel model, String searchString, boolean startsWith, boolean endsWith) {
         return model.findName(searchString, true, startsWith, endsWith)
     }
 
@@ -105,7 +105,7 @@ class CViewModelExtensions {
         return (CViewModelFactory.eINSTANCE.createConnection)
     }
 
-    def Connection connect(Component src, Component dst) {
+    def Connection connectTo(Component src, Component dst) {
         val connection = createConnection
         connection.src = src
         connection.dst = dst

@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -23,43 +23,29 @@ import com.google.inject.Inject
 
 /**
  * @author cmot
- *
+ * 
  */
 class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
     
-    
-     @Inject extension CViewModelExtensions
+    @Inject extension CViewModelExtensions
     
     override createConnections(Component component, CViewModel model) {
-        
         val List<Connection> returnList = newArrayList()
-        
         if (component.name.contains("DRV_HL_CAN")) {
-            for (filterdComponents : model.findName("SYC_HWIO_pn", true, false)) {
-                returnList.add(component.connect(filterdComponents))
+            for (filteredComponents : model.findByName("SYC_HWIO_pn", true, false)) {
+                returnList.add(component.connectTo(filteredComponents))
             }
         }
-
         if (component.name.equals("DRV_HL")) {
-            for (filterdComponents : model.findName("SYC_HWIO.c", true, false)) {
-                returnList.add(component.connect(filterdComponents).setColor2("Red"))
+            for (filteredComponents : model.findByName("SYC_HWIO.c", true, false)) {
+                returnList.add(component.connectTo(filteredComponents).setColor2("Red"))
             }
         }
-
         if (component.name.equals("HWIO")) {
-            for (filterdComponents : model.findName("DRV_LL.h", true, true)) {
-                returnList.add(component.connect(filterdComponents).setColor2("Blue"))
+            for (filteredComponents : model.findByName("DRV_LL.h", true, true)) {
+                returnList.add(component.connectTo(filteredComponents).setColor2("Blue"))
             }
         }
-        
-        
-        //returnList.add(component.parent.connect(component))
-        
-        
-        
-        
-        println(" ####### create connections for '" + component.name + "'")
         return returnList
-    } 
-    
+    }
 }
