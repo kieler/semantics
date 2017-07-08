@@ -90,16 +90,25 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cChildrenAssignment_10_2 = (Assignment)cGroup_10.eContents().get(2);
 		private final CrossReference cChildrenComponentCrossReference_10_2_0 = (CrossReference)cChildrenAssignment_10_2.eContents().get(0);
 		private final RuleCall cChildrenComponentIDTerminalRuleCall_10_2_0_1 = (RuleCall)cChildrenComponentCrossReference_10_2_0.eContents().get(1);
+		private final Keyword cTooltipKeyword_11 = (Keyword)cGroup.eContents().get(11);
+		private final Assignment cTooltipAssignment_12 = (Assignment)cGroup.eContents().get(12);
+		private final RuleCall cTooltipSTRINGTerminalRuleCall_12_0 = (RuleCall)cTooltipAssignment_12.eContents().get(0);
+		private final Keyword cRawdataKeyword_13 = (Keyword)cGroup.eContents().get(13);
+		private final Assignment cRawdataAssignment_14 = (Assignment)cGroup.eContents().get(14);
+		private final RuleCall cRawdataSTRINGTerminalRuleCall_14_0 = (RuleCall)cRawdataAssignment_14.eContents().get(0);
 		
 		//Component:
 		//	'Component' name=ID ('parent' '=' parent=[Component])?
 		//	'type' '=' type=ComponentType
 		//	//           ('referenceFile' '=' referenceFile=[File])?
-		//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?;
+		//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
+		//	'tooltip' tooltip=STRING
+		//	'rawdata' rawdata=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'Component' name=ID ('parent' '=' parent=[Component])? 'type' '=' type=ComponentType //           ('referenceFile' '=' referenceFile=[File])?
 		//'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
+		//'tooltip' tooltip=STRING 'rawdata' rawdata=STRING
 		public Group getGroup() { return cGroup; }
 		
 		//'Component'
@@ -186,6 +195,24 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ID
 		public RuleCall getChildrenComponentIDTerminalRuleCall_10_2_0_1() { return cChildrenComponentIDTerminalRuleCall_10_2_0_1; }
+		
+		//'tooltip'
+		public Keyword getTooltipKeyword_11() { return cTooltipKeyword_11; }
+		
+		//tooltip=STRING
+		public Assignment getTooltipAssignment_12() { return cTooltipAssignment_12; }
+		
+		//STRING
+		public RuleCall getTooltipSTRINGTerminalRuleCall_12_0() { return cTooltipSTRINGTerminalRuleCall_12_0; }
+		
+		//'rawdata'
+		public Keyword getRawdataKeyword_13() { return cRawdataKeyword_13; }
+		
+		//rawdata=STRING
+		public Assignment getRawdataAssignment_14() { return cRawdataAssignment_14; }
+		
+		//STRING
+		public RuleCall getRawdataSTRINGTerminalRuleCall_14_0() { return cRawdataSTRINGTerminalRuleCall_14_0; }
 	}
 	public class ConnectionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Connection");
@@ -207,16 +234,21 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColorKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		private final Assignment cColorAssignment_9 = (Assignment)cGroup.eContents().get(9);
 		private final RuleCall cColorSTRINGTerminalRuleCall_9_0 = (RuleCall)cColorAssignment_9.eContents().get(0);
+		private final Keyword cTooltipKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Assignment cTooltipAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final RuleCall cTooltipSTRINGTerminalRuleCall_11_0 = (RuleCall)cTooltipAssignment_11.eContents().get(0);
 		
 		//Connection:
 		//	'src' src=[Component]
 		//	'dst' dst=[Component]
 		//	'label' label=STRING
 		//	'type' type=STRING
-		//	'color' color=STRING;
+		//	'color' color=STRING
+		//	'tooltip' tooltip=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'src' src=[Component] 'dst' dst=[Component] 'label' label=STRING 'type' type=STRING 'color' color=STRING
+		//'src' src=[Component] 'dst' dst=[Component] 'label' label=STRING 'type' type=STRING 'color' color=STRING 'tooltip'
+		//tooltip=STRING
 		public Group getGroup() { return cGroup; }
 		
 		//'src'
@@ -269,6 +301,15 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getColorSTRINGTerminalRuleCall_9_0() { return cColorSTRINGTerminalRuleCall_9_0; }
+		
+		//'tooltip'
+		public Keyword getTooltipKeyword_10() { return cTooltipKeyword_10; }
+		
+		//tooltip=STRING
+		public Assignment getTooltipAssignment_11() { return cTooltipAssignment_11; }
+		
+		//STRING
+		public RuleCall getTooltipSTRINGTerminalRuleCall_11_0() { return cTooltipSTRINGTerminalRuleCall_11_0; }
 	}
 	
 	public class ComponentTypeElements extends AbstractEnumRuleElementFinder {
@@ -394,7 +435,9 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//	'Component' name=ID ('parent' '=' parent=[Component])?
 	//	'type' '=' type=ComponentType
 	//	//           ('referenceFile' '=' referenceFile=[File])?
-	//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?;
+	//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
+	//	'tooltip' tooltip=STRING
+	//	'rawdata' rawdata=STRING;
 	public ComponentElements getComponentAccess() {
 		return pComponent;
 	}
@@ -408,7 +451,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//	'dst' dst=[Component]
 	//	'label' label=STRING
 	//	'type' type=STRING
-	//	'color' color=STRING;
+	//	'color' color=STRING
+	//	'tooltip' tooltip=STRING;
 	public ConnectionElements getConnectionAccess() {
 		return pConnection;
 	}

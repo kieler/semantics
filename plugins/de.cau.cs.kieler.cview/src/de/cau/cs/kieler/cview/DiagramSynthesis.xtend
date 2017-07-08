@@ -331,6 +331,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
         label.firstText.selectionBackground = item.getFileColor
 
+        if (item.tooltip != null) {
+            childRect.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
+            label.firstText.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
+        }
+
         return childNode
     }
 
@@ -365,11 +370,18 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
 
+        if (item.tooltip != null) {
+            rectCol.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
+            rectExp.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
+            label.firstText.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
+        }
+
+        label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+
         if (item.hieararchical) {
             // Hierarchical case
             label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             // label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
             label.firstText.selectionBackground = item.getFileColor
         }
 

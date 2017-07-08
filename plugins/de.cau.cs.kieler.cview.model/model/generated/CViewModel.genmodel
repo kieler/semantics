@@ -25,6 +25,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/referenceLine"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/children"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/tooltip"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/rawdata"/>
     </genClasses>
     <genClasses ecoreClass="CViewModel.ecore#//Connection">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Connection/src"/>
@@ -32,6 +34,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/color"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Connection/tooltip"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

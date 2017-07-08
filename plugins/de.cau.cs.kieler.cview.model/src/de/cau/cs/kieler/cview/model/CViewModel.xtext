@@ -18,6 +18,8 @@ Component:
            'location' '=' location=STRING
            ('referenceLine' '=' referenceLine=INT)?
            ('children' '=' children+=([Component])*)?
+           'tooltip' tooltip=STRING
+           'rawdata' rawdata=STRING
 ;
 	
 Connection:
@@ -26,6 +28,7 @@ Connection:
     'label' label=STRING
     'type' type=STRING
     'color' color=STRING
+    'tooltip' tooltip=STRING
 ;	
 	
 	

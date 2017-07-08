@@ -71,7 +71,9 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *         type=ComponentType 
 	 *         location=STRING 
 	 *         referenceLine=INT? 
-	 *         children+=[Component|ID]*
+	 *         children+=[Component|ID]* 
+	 *         tooltip=STRING 
+	 *         rawdata=STRING
 	 *     )
 	 */
 	protected void sequence_Component(ISerializationContext context, Component semanticObject) {
@@ -84,7 +86,14 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 	 *     Connection returns Connection
 	 *
 	 * Constraint:
-	 *     (src=[Component|ID] dst=[Component|ID] label=STRING type=STRING color=STRING)
+	 *     (
+	 *         src=[Component|ID] 
+	 *         dst=[Component|ID] 
+	 *         label=STRING 
+	 *         type=STRING 
+	 *         color=STRING 
+	 *         tooltip=STRING
+	 *     )
 	 */
 	protected void sequence_Connection(ISerializationContext context, Connection semanticObject) {
 		if (errorAcceptor != null) {
@@ -98,6 +107,8 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__TYPE));
 			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__COLOR) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__COLOR));
+			if (transientValues.isValueTransient(semanticObject, CViewModelPackage.Literals.CONNECTION__TOOLTIP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CViewModelPackage.Literals.CONNECTION__TOOLTIP));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getConnectionAccess().getSrcComponentIDTerminalRuleCall_1_0_1(), semanticObject.getSrc());
@@ -105,6 +116,7 @@ public class CViewModelSemanticSequencer extends AbstractDelegatingSemanticSeque
 		feeder.accept(grammarAccess.getConnectionAccess().getLabelSTRINGTerminalRuleCall_5_0(), semanticObject.getLabel());
 		feeder.accept(grammarAccess.getConnectionAccess().getTypeSTRINGTerminalRuleCall_7_0(), semanticObject.getType());
 		feeder.accept(grammarAccess.getConnectionAccess().getColorSTRINGTerminalRuleCall_9_0(), semanticObject.getColor());
+		feeder.accept(grammarAccess.getConnectionAccess().getTooltipSTRINGTerminalRuleCall_11_0(), semanticObject.getTooltip());
 		feeder.finish();
 	}
 	

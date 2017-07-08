@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getColor <em>Color</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getTooltip <em>Tooltip</em>}</li>
  * </ul>
  *
  * @generated
@@ -113,6 +114,26 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * @ordered
    */
   protected String color = COLOR_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTooltip()
+   * @generated
+   * @ordered
+   */
+  protected static final String TOOLTIP_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTooltip()
+   * @generated
+   * @ordered
+   */
+  protected String tooltip = TOOLTIP_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -295,6 +316,29 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getTooltip()
+  {
+    return tooltip;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTooltip(String newTooltip)
+  {
+    String oldTooltip = tooltip;
+    tooltip = newTooltip;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.CONNECTION__TOOLTIP, oldTooltip, tooltip));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -312,6 +356,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return getType();
       case CViewModelPackage.CONNECTION__COLOR:
         return getColor();
+      case CViewModelPackage.CONNECTION__TOOLTIP:
+        return getTooltip();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -340,6 +386,9 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return;
       case CViewModelPackage.CONNECTION__COLOR:
         setColor((String)newValue);
+        return;
+      case CViewModelPackage.CONNECTION__TOOLTIP:
+        setTooltip((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -370,6 +419,9 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
       case CViewModelPackage.CONNECTION__COLOR:
         setColor(COLOR_EDEFAULT);
         return;
+      case CViewModelPackage.CONNECTION__TOOLTIP:
+        setTooltip(TOOLTIP_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -394,6 +446,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       case CViewModelPackage.CONNECTION__COLOR:
         return COLOR_EDEFAULT == null ? color != null : !COLOR_EDEFAULT.equals(color);
+      case CViewModelPackage.CONNECTION__TOOLTIP:
+        return TOOLTIP_EDEFAULT == null ? tooltip != null : !TOOLTIP_EDEFAULT.equals(tooltip);
     }
     return super.eIsSet(featureID);
   }
@@ -415,6 +469,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
     result.append(type);
     result.append(", color: ");
     result.append(color);
+    result.append(", tooltip: ");
+    result.append(tooltip);
     result.append(')');
     return result.toString();
   }

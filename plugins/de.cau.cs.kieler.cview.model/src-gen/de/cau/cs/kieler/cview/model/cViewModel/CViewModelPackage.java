@@ -160,13 +160,31 @@ public interface CViewModelPackage extends EPackage
   int COMPONENT__CHILDREN = 5;
 
   /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__TOOLTIP = 6;
+
+  /**
+   * The feature id for the '<em><b>Rawdata</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__RAWDATA = 7;
+
+  /**
    * The number of structural features of the '<em>Component</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 6;
+  int COMPONENT_FEATURE_COUNT = 8;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
@@ -224,13 +242,22 @@ public interface CViewModelPackage extends EPackage
   int CONNECTION__COLOR = 4;
 
   /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__TOOLTIP = 5;
+
+  /**
    * The number of structural features of the '<em>Connection</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONNECTION_FEATURE_COUNT = 5;
+  int CONNECTION_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
@@ -352,6 +379,28 @@ public interface CViewModelPackage extends EPackage
   EReference getComponent_Children();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getTooltip <em>Tooltip</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Tooltip</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getTooltip()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_Tooltip();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getRawdata <em>Rawdata</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Rawdata</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getRawdata()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_Rawdata();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection <em>Connection</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -415,6 +464,17 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EAttribute getConnection_Color();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getTooltip <em>Tooltip</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Tooltip</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getTooltip()
+   * @see #getConnection()
+   * @generated
+   */
+  EAttribute getConnection_Tooltip();
 
   /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}'.
@@ -534,6 +594,22 @@ public interface CViewModelPackage extends EPackage
     EReference COMPONENT__CHILDREN = eINSTANCE.getComponent_Children();
 
     /**
+     * The meta object literal for the '<em><b>Tooltip</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__TOOLTIP = eINSTANCE.getComponent_Tooltip();
+
+    /**
+     * The meta object literal for the '<em><b>Rawdata</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__RAWDATA = eINSTANCE.getComponent_Rawdata();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -582,6 +658,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EAttribute CONNECTION__COLOR = eINSTANCE.getConnection_Color();
+
+    /**
+     * The meta object literal for the '<em><b>Tooltip</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONNECTION__TOOLTIP = eINSTANCE.getConnection_Tooltip();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.

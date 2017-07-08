@@ -52,8 +52,8 @@ public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('children' '=')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     location=STRING (ambiguity) (rule end)
-	 *     referenceLine=INT (ambiguity) (rule end)
+	 *     location=STRING (ambiguity) 'tooltip' tooltip=STRING
+	 *     referenceLine=INT (ambiguity) 'tooltip' tooltip=STRING
 	 */
 	protected void emit_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

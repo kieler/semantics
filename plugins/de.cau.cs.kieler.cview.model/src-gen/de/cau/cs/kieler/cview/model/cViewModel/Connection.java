@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getColor <em>Color</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getTooltip <em>Tooltip</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getConnection()
@@ -156,5 +157,31 @@ public interface Connection extends EObject
    * @generated
    */
   void setColor(String value);
+
+  /**
+   * Returns the value of the '<em><b>Tooltip</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Tooltip</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Tooltip</em>' attribute.
+   * @see #setTooltip(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getConnection_Tooltip()
+   * @model
+   * @generated
+   */
+  String getTooltip();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getTooltip <em>Tooltip</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tooltip</em>' attribute.
+   * @see #getTooltip()
+   * @generated
+   */
+  void setTooltip(String value);
 
 } // Connection

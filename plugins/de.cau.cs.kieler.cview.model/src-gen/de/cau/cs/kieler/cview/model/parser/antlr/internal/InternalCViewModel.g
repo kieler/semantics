@@ -287,6 +287,50 @@ ruleComponent returns [EObject current=null]
 				)
 			)*
 		)?
+		otherlv_17='tooltip'
+		{
+			newLeafNode(otherlv_17, grammarAccess.getComponentAccess().getTooltipKeyword_11());
+		}
+		(
+			(
+				lv_tooltip_18_0=RULE_STRING
+				{
+					newLeafNode(lv_tooltip_18_0, grammarAccess.getComponentAccess().getTooltipSTRINGTerminalRuleCall_12_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"tooltip",
+						lv_tooltip_18_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_19='rawdata'
+		{
+			newLeafNode(otherlv_19, grammarAccess.getComponentAccess().getRawdataKeyword_13());
+		}
+		(
+			(
+				lv_rawdata_20_0=RULE_STRING
+				{
+					newLeafNode(lv_rawdata_20_0, grammarAccess.getComponentAccess().getRawdataSTRINGTerminalRuleCall_14_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComponentRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"rawdata",
+						lv_rawdata_20_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
 	)
 ;
 
@@ -402,6 +446,28 @@ ruleConnection returns [EObject current=null]
 						$current,
 						"color",
 						lv_color_9_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_10='tooltip'
+		{
+			newLeafNode(otherlv_10, grammarAccess.getConnectionAccess().getTooltipKeyword_10());
+		}
+		(
+			(
+				lv_tooltip_11_0=RULE_STRING
+				{
+					newLeafNode(lv_tooltip_11_0, grammarAccess.getConnectionAccess().getTooltipSTRINGTerminalRuleCall_11_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"tooltip",
+						lv_tooltip_11_0,
 						"org.eclipse.xtext.common.Terminals.STRING");
 				}
 			)

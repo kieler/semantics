@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'Component'", "'parent'", "'='", "'type'", "'location'", "'referenceLine'", "'children'", "'src'", "'dst'", "'label'", "'color'", "'DIR'", "'FILE'", "'FUNC'", "'COMPOUND'", "'READER'", "'WRITER'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'Component'", "'parent'", "'='", "'type'", "'location'", "'referenceLine'", "'children'", "'tooltip'", "'rawdata'", "'src'", "'dst'", "'label'", "'color'", "'DIR'", "'FILE'", "'FUNC'", "'COMPOUND'", "'READER'", "'WRITER'"
     };
     public static final int RULE_STRING=5;
     public static final int RULE_SL_COMMENT=8;
@@ -36,6 +36,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final int T__13=13;
     public static final int T__14=14;
     public static final int EOF=-1;
+    public static final int T__30=30;
     public static final int RULE_ID=4;
     public static final int RULE_WS=9;
     public static final int RULE_ANY_OTHER=10;
@@ -43,6 +44,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final int T__27=27;
     public static final int T__28=28;
     public static final int RULE_INT=6;
+    public static final int T__29=29;
     public static final int T__22=22;
     public static final int RULE_ML_COMMENT=7;
     public static final int T__23=23;
@@ -206,7 +208,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( (LA2_0==19) ) {
+                if ( (LA2_0==21) ) {
                     alt2=1;
                 }
 
@@ -308,7 +310,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComponent"
-    // InternalCViewModel.g:133:1: ruleComponent returns [EObject current=null] : (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? ) ;
+    // InternalCViewModel.g:133:1: ruleComponent returns [EObject current=null] : (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? otherlv_17= 'tooltip' ( (lv_tooltip_18_0= RULE_STRING ) ) otherlv_19= 'rawdata' ( (lv_rawdata_20_0= RULE_STRING ) ) ) ;
     public final EObject ruleComponent() throws RecognitionException {
         EObject current = null;
 
@@ -328,6 +330,10 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         Token otherlv_14=null;
         Token otherlv_15=null;
         Token otherlv_16=null;
+        Token otherlv_17=null;
+        Token lv_tooltip_18_0=null;
+        Token otherlv_19=null;
+        Token lv_rawdata_20_0=null;
         Enumerator lv_type_7_0 = null;
 
 
@@ -335,11 +341,11 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalCViewModel.g:139:2: ( (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? ) )
-            // InternalCViewModel.g:140:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? )
+            // InternalCViewModel.g:139:2: ( (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? otherlv_17= 'tooltip' ( (lv_tooltip_18_0= RULE_STRING ) ) otherlv_19= 'rawdata' ( (lv_rawdata_20_0= RULE_STRING ) ) ) )
+            // InternalCViewModel.g:140:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? otherlv_17= 'tooltip' ( (lv_tooltip_18_0= RULE_STRING ) ) otherlv_19= 'rawdata' ( (lv_rawdata_20_0= RULE_STRING ) ) )
             {
-            // InternalCViewModel.g:140:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? )
-            // InternalCViewModel.g:141:3: otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )?
+            // InternalCViewModel.g:140:2: (otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? otherlv_17= 'tooltip' ( (lv_tooltip_18_0= RULE_STRING ) ) otherlv_19= 'rawdata' ( (lv_rawdata_20_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:141:3: otherlv_0= 'Component' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= 'parent' otherlv_3= '=' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= 'type' otherlv_6= '=' ( (lv_type_7_0= ruleComponentType ) ) otherlv_8= 'location' otherlv_9= '=' ( (lv_location_10_0= RULE_STRING ) ) (otherlv_11= 'referenceLine' otherlv_12= '=' ( (lv_referenceLine_13_0= RULE_INT ) ) )? (otherlv_14= 'children' otherlv_15= '=' ( (otherlv_16= RULE_ID ) )* )? otherlv_17= 'tooltip' ( (lv_tooltip_18_0= RULE_STRING ) ) otherlv_19= 'rawdata' ( (lv_rawdata_20_0= RULE_STRING ) )
             {
             otherlv_0=(Token)match(input,12,FOLLOW_5); 
 
@@ -605,6 +611,66 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
+            otherlv_17=(Token)match(input,19,FOLLOW_11); 
+
+            			newLeafNode(otherlv_17, grammarAccess.getComponentAccess().getTooltipKeyword_11());
+            		
+            // InternalCViewModel.g:294:3: ( (lv_tooltip_18_0= RULE_STRING ) )
+            // InternalCViewModel.g:295:4: (lv_tooltip_18_0= RULE_STRING )
+            {
+            // InternalCViewModel.g:295:4: (lv_tooltip_18_0= RULE_STRING )
+            // InternalCViewModel.g:296:5: lv_tooltip_18_0= RULE_STRING
+            {
+            lv_tooltip_18_0=(Token)match(input,RULE_STRING,FOLLOW_16); 
+
+            					newLeafNode(lv_tooltip_18_0, grammarAccess.getComponentAccess().getTooltipSTRINGTerminalRuleCall_12_0());
+            				
+
+            					if (current==null) {
+            						current = createModelElement(grammarAccess.getComponentRule());
+            					}
+            					setWithLastConsumed(
+            						current,
+            						"tooltip",
+            						lv_tooltip_18_0,
+            						"org.eclipse.xtext.common.Terminals.STRING");
+            				
+
+            }
+
+
+            }
+
+            otherlv_19=(Token)match(input,20,FOLLOW_11); 
+
+            			newLeafNode(otherlv_19, grammarAccess.getComponentAccess().getRawdataKeyword_13());
+            		
+            // InternalCViewModel.g:316:3: ( (lv_rawdata_20_0= RULE_STRING ) )
+            // InternalCViewModel.g:317:4: (lv_rawdata_20_0= RULE_STRING )
+            {
+            // InternalCViewModel.g:317:4: (lv_rawdata_20_0= RULE_STRING )
+            // InternalCViewModel.g:318:5: lv_rawdata_20_0= RULE_STRING
+            {
+            lv_rawdata_20_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
+
+            					newLeafNode(lv_rawdata_20_0, grammarAccess.getComponentAccess().getRawdataSTRINGTerminalRuleCall_14_0());
+            				
+
+            					if (current==null) {
+            						current = createModelElement(grammarAccess.getComponentRule());
+            					}
+            					setWithLastConsumed(
+            						current,
+            						"rawdata",
+            						lv_rawdata_20_0,
+            						"org.eclipse.xtext.common.Terminals.STRING");
+            				
+
+            }
+
+
+            }
+
 
             }
 
@@ -628,7 +694,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConnection"
-    // InternalCViewModel.g:294:1: entryRuleConnection returns [EObject current=null] : iv_ruleConnection= ruleConnection EOF ;
+    // InternalCViewModel.g:338:1: entryRuleConnection returns [EObject current=null] : iv_ruleConnection= ruleConnection EOF ;
     public final EObject entryRuleConnection() throws RecognitionException {
         EObject current = null;
 
@@ -636,8 +702,8 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalCViewModel.g:294:51: (iv_ruleConnection= ruleConnection EOF )
-            // InternalCViewModel.g:295:2: iv_ruleConnection= ruleConnection EOF
+            // InternalCViewModel.g:338:51: (iv_ruleConnection= ruleConnection EOF )
+            // InternalCViewModel.g:339:2: iv_ruleConnection= ruleConnection EOF
             {
              newCompositeNode(grammarAccess.getConnectionRule()); 
             pushFollow(FOLLOW_1);
@@ -664,7 +730,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConnection"
-    // InternalCViewModel.g:301:1: ruleConnection returns [EObject current=null] : (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) ) ;
+    // InternalCViewModel.g:345:1: ruleConnection returns [EObject current=null] : (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) otherlv_10= 'tooltip' ( (lv_tooltip_11_0= RULE_STRING ) ) ) ;
     public final EObject ruleConnection() throws RecognitionException {
         EObject current = null;
 
@@ -678,33 +744,35 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         Token lv_type_7_0=null;
         Token otherlv_8=null;
         Token lv_color_9_0=null;
+        Token otherlv_10=null;
+        Token lv_tooltip_11_0=null;
 
 
         	enterRule();
 
         try {
-            // InternalCViewModel.g:307:2: ( (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) ) )
-            // InternalCViewModel.g:308:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:351:2: ( (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) otherlv_10= 'tooltip' ( (lv_tooltip_11_0= RULE_STRING ) ) ) )
+            // InternalCViewModel.g:352:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) otherlv_10= 'tooltip' ( (lv_tooltip_11_0= RULE_STRING ) ) )
             {
-            // InternalCViewModel.g:308:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) )
-            // InternalCViewModel.g:309:3: otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) )
+            // InternalCViewModel.g:352:2: (otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) otherlv_10= 'tooltip' ( (lv_tooltip_11_0= RULE_STRING ) ) )
+            // InternalCViewModel.g:353:3: otherlv_0= 'src' ( (otherlv_1= RULE_ID ) ) otherlv_2= 'dst' ( (otherlv_3= RULE_ID ) ) otherlv_4= 'label' ( (lv_label_5_0= RULE_STRING ) ) otherlv_6= 'type' ( (lv_type_7_0= RULE_STRING ) ) otherlv_8= 'color' ( (lv_color_9_0= RULE_STRING ) ) otherlv_10= 'tooltip' ( (lv_tooltip_11_0= RULE_STRING ) )
             {
-            otherlv_0=(Token)match(input,19,FOLLOW_5); 
+            otherlv_0=(Token)match(input,21,FOLLOW_5); 
 
             			newLeafNode(otherlv_0, grammarAccess.getConnectionAccess().getSrcKeyword_0());
             		
-            // InternalCViewModel.g:313:3: ( (otherlv_1= RULE_ID ) )
-            // InternalCViewModel.g:314:4: (otherlv_1= RULE_ID )
+            // InternalCViewModel.g:357:3: ( (otherlv_1= RULE_ID ) )
+            // InternalCViewModel.g:358:4: (otherlv_1= RULE_ID )
             {
-            // InternalCViewModel.g:314:4: (otherlv_1= RULE_ID )
-            // InternalCViewModel.g:315:5: otherlv_1= RULE_ID
+            // InternalCViewModel.g:358:4: (otherlv_1= RULE_ID )
+            // InternalCViewModel.g:359:5: otherlv_1= RULE_ID
             {
 
             					if (current==null) {
             						current = createModelElement(grammarAccess.getConnectionRule());
             					}
             				
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_16); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_17); 
 
             					newLeafNode(otherlv_1, grammarAccess.getConnectionAccess().getSrcComponentCrossReference_1_0());
             				
@@ -714,22 +782,22 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,20,FOLLOW_5); 
+            otherlv_2=(Token)match(input,22,FOLLOW_5); 
 
             			newLeafNode(otherlv_2, grammarAccess.getConnectionAccess().getDstKeyword_2());
             		
-            // InternalCViewModel.g:330:3: ( (otherlv_3= RULE_ID ) )
-            // InternalCViewModel.g:331:4: (otherlv_3= RULE_ID )
+            // InternalCViewModel.g:374:3: ( (otherlv_3= RULE_ID ) )
+            // InternalCViewModel.g:375:4: (otherlv_3= RULE_ID )
             {
-            // InternalCViewModel.g:331:4: (otherlv_3= RULE_ID )
-            // InternalCViewModel.g:332:5: otherlv_3= RULE_ID
+            // InternalCViewModel.g:375:4: (otherlv_3= RULE_ID )
+            // InternalCViewModel.g:376:5: otherlv_3= RULE_ID
             {
 
             					if (current==null) {
             						current = createModelElement(grammarAccess.getConnectionRule());
             					}
             				
-            otherlv_3=(Token)match(input,RULE_ID,FOLLOW_17); 
+            otherlv_3=(Token)match(input,RULE_ID,FOLLOW_18); 
 
             					newLeafNode(otherlv_3, grammarAccess.getConnectionAccess().getDstComponentCrossReference_3_0());
             				
@@ -739,15 +807,15 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,21,FOLLOW_11); 
+            otherlv_4=(Token)match(input,23,FOLLOW_11); 
 
             			newLeafNode(otherlv_4, grammarAccess.getConnectionAccess().getLabelKeyword_4());
             		
-            // InternalCViewModel.g:347:3: ( (lv_label_5_0= RULE_STRING ) )
-            // InternalCViewModel.g:348:4: (lv_label_5_0= RULE_STRING )
+            // InternalCViewModel.g:391:3: ( (lv_label_5_0= RULE_STRING ) )
+            // InternalCViewModel.g:392:4: (lv_label_5_0= RULE_STRING )
             {
-            // InternalCViewModel.g:348:4: (lv_label_5_0= RULE_STRING )
-            // InternalCViewModel.g:349:5: lv_label_5_0= RULE_STRING
+            // InternalCViewModel.g:392:4: (lv_label_5_0= RULE_STRING )
+            // InternalCViewModel.g:393:5: lv_label_5_0= RULE_STRING
             {
             lv_label_5_0=(Token)match(input,RULE_STRING,FOLLOW_8); 
 
@@ -773,13 +841,13 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_6, grammarAccess.getConnectionAccess().getTypeKeyword_6());
             		
-            // InternalCViewModel.g:369:3: ( (lv_type_7_0= RULE_STRING ) )
-            // InternalCViewModel.g:370:4: (lv_type_7_0= RULE_STRING )
+            // InternalCViewModel.g:413:3: ( (lv_type_7_0= RULE_STRING ) )
+            // InternalCViewModel.g:414:4: (lv_type_7_0= RULE_STRING )
             {
-            // InternalCViewModel.g:370:4: (lv_type_7_0= RULE_STRING )
-            // InternalCViewModel.g:371:5: lv_type_7_0= RULE_STRING
+            // InternalCViewModel.g:414:4: (lv_type_7_0= RULE_STRING )
+            // InternalCViewModel.g:415:5: lv_type_7_0= RULE_STRING
             {
-            lv_type_7_0=(Token)match(input,RULE_STRING,FOLLOW_18); 
+            lv_type_7_0=(Token)match(input,RULE_STRING,FOLLOW_19); 
 
             					newLeafNode(lv_type_7_0, grammarAccess.getConnectionAccess().getTypeSTRINGTerminalRuleCall_7_0());
             				
@@ -799,17 +867,17 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_8=(Token)match(input,22,FOLLOW_11); 
+            otherlv_8=(Token)match(input,24,FOLLOW_11); 
 
             			newLeafNode(otherlv_8, grammarAccess.getConnectionAccess().getColorKeyword_8());
             		
-            // InternalCViewModel.g:391:3: ( (lv_color_9_0= RULE_STRING ) )
-            // InternalCViewModel.g:392:4: (lv_color_9_0= RULE_STRING )
+            // InternalCViewModel.g:435:3: ( (lv_color_9_0= RULE_STRING ) )
+            // InternalCViewModel.g:436:4: (lv_color_9_0= RULE_STRING )
             {
-            // InternalCViewModel.g:392:4: (lv_color_9_0= RULE_STRING )
-            // InternalCViewModel.g:393:5: lv_color_9_0= RULE_STRING
+            // InternalCViewModel.g:436:4: (lv_color_9_0= RULE_STRING )
+            // InternalCViewModel.g:437:5: lv_color_9_0= RULE_STRING
             {
-            lv_color_9_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
+            lv_color_9_0=(Token)match(input,RULE_STRING,FOLLOW_20); 
 
             					newLeafNode(lv_color_9_0, grammarAccess.getConnectionAccess().getColorSTRINGTerminalRuleCall_9_0());
             				
@@ -821,6 +889,36 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
             						current,
             						"color",
             						lv_color_9_0,
+            						"org.eclipse.xtext.common.Terminals.STRING");
+            				
+
+            }
+
+
+            }
+
+            otherlv_10=(Token)match(input,19,FOLLOW_11); 
+
+            			newLeafNode(otherlv_10, grammarAccess.getConnectionAccess().getTooltipKeyword_10());
+            		
+            // InternalCViewModel.g:457:3: ( (lv_tooltip_11_0= RULE_STRING ) )
+            // InternalCViewModel.g:458:4: (lv_tooltip_11_0= RULE_STRING )
+            {
+            // InternalCViewModel.g:458:4: (lv_tooltip_11_0= RULE_STRING )
+            // InternalCViewModel.g:459:5: lv_tooltip_11_0= RULE_STRING
+            {
+            lv_tooltip_11_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
+
+            					newLeafNode(lv_tooltip_11_0, grammarAccess.getConnectionAccess().getTooltipSTRINGTerminalRuleCall_11_0());
+            				
+
+            					if (current==null) {
+            						current = createModelElement(grammarAccess.getConnectionRule());
+            					}
+            					setWithLastConsumed(
+            						current,
+            						"tooltip",
+            						lv_tooltip_11_0,
             						"org.eclipse.xtext.common.Terminals.STRING");
             				
 
@@ -852,7 +950,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComponentType"
-    // InternalCViewModel.g:413:1: ruleComponentType returns [Enumerator current=null] : ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) ;
+    // InternalCViewModel.g:479:1: ruleComponentType returns [Enumerator current=null] : ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) ;
     public final Enumerator ruleComponentType() throws RecognitionException {
         Enumerator current = null;
 
@@ -867,38 +965,38 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalCViewModel.g:419:2: ( ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) )
-            // InternalCViewModel.g:420:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
+            // InternalCViewModel.g:485:2: ( ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) ) )
+            // InternalCViewModel.g:486:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
             {
-            // InternalCViewModel.g:420:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
+            // InternalCViewModel.g:486:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'COMPOUND' ) | (enumLiteral_4= 'READER' ) | (enumLiteral_5= 'WRITER' ) )
             int alt7=6;
             switch ( input.LA(1) ) {
-            case 23:
+            case 25:
                 {
                 alt7=1;
                 }
                 break;
-            case 24:
+            case 26:
                 {
                 alt7=2;
                 }
                 break;
-            case 25:
+            case 27:
                 {
                 alt7=3;
                 }
                 break;
-            case 26:
+            case 28:
                 {
                 alt7=4;
                 }
                 break;
-            case 27:
+            case 29:
                 {
                 alt7=5;
                 }
                 break;
-            case 28:
+            case 30:
                 {
                 alt7=6;
                 }
@@ -912,12 +1010,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
             switch (alt7) {
                 case 1 :
-                    // InternalCViewModel.g:421:3: (enumLiteral_0= 'DIR' )
+                    // InternalCViewModel.g:487:3: (enumLiteral_0= 'DIR' )
                     {
-                    // InternalCViewModel.g:421:3: (enumLiteral_0= 'DIR' )
-                    // InternalCViewModel.g:422:4: enumLiteral_0= 'DIR'
+                    // InternalCViewModel.g:487:3: (enumLiteral_0= 'DIR' )
+                    // InternalCViewModel.g:488:4: enumLiteral_0= 'DIR'
                     {
-                    enumLiteral_0=(Token)match(input,23,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,25,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getDIREnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getComponentTypeAccess().getDIREnumLiteralDeclaration_0());
@@ -929,12 +1027,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalCViewModel.g:429:3: (enumLiteral_1= 'FILE' )
+                    // InternalCViewModel.g:495:3: (enumLiteral_1= 'FILE' )
                     {
-                    // InternalCViewModel.g:429:3: (enumLiteral_1= 'FILE' )
-                    // InternalCViewModel.g:430:4: enumLiteral_1= 'FILE'
+                    // InternalCViewModel.g:495:3: (enumLiteral_1= 'FILE' )
+                    // InternalCViewModel.g:496:4: enumLiteral_1= 'FILE'
                     {
-                    enumLiteral_1=(Token)match(input,24,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,26,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getFILEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getComponentTypeAccess().getFILEEnumLiteralDeclaration_1());
@@ -946,12 +1044,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalCViewModel.g:437:3: (enumLiteral_2= 'FUNC' )
+                    // InternalCViewModel.g:503:3: (enumLiteral_2= 'FUNC' )
                     {
-                    // InternalCViewModel.g:437:3: (enumLiteral_2= 'FUNC' )
-                    // InternalCViewModel.g:438:4: enumLiteral_2= 'FUNC'
+                    // InternalCViewModel.g:503:3: (enumLiteral_2= 'FUNC' )
+                    // InternalCViewModel.g:504:4: enumLiteral_2= 'FUNC'
                     {
-                    enumLiteral_2=(Token)match(input,25,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,27,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getComponentTypeAccess().getFUNCEnumLiteralDeclaration_2());
@@ -963,12 +1061,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalCViewModel.g:445:3: (enumLiteral_3= 'COMPOUND' )
+                    // InternalCViewModel.g:511:3: (enumLiteral_3= 'COMPOUND' )
                     {
-                    // InternalCViewModel.g:445:3: (enumLiteral_3= 'COMPOUND' )
-                    // InternalCViewModel.g:446:4: enumLiteral_3= 'COMPOUND'
+                    // InternalCViewModel.g:511:3: (enumLiteral_3= 'COMPOUND' )
+                    // InternalCViewModel.g:512:4: enumLiteral_3= 'COMPOUND'
                     {
-                    enumLiteral_3=(Token)match(input,26,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,28,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_3());
@@ -980,12 +1078,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalCViewModel.g:453:3: (enumLiteral_4= 'READER' )
+                    // InternalCViewModel.g:519:3: (enumLiteral_4= 'READER' )
                     {
-                    // InternalCViewModel.g:453:3: (enumLiteral_4= 'READER' )
-                    // InternalCViewModel.g:454:4: enumLiteral_4= 'READER'
+                    // InternalCViewModel.g:519:3: (enumLiteral_4= 'READER' )
+                    // InternalCViewModel.g:520:4: enumLiteral_4= 'READER'
                     {
-                    enumLiteral_4=(Token)match(input,27,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,29,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_4().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_4());
@@ -997,12 +1095,12 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalCViewModel.g:461:3: (enumLiteral_5= 'WRITER' )
+                    // InternalCViewModel.g:527:3: (enumLiteral_5= 'WRITER' )
                     {
-                    // InternalCViewModel.g:461:3: (enumLiteral_5= 'WRITER' )
-                    // InternalCViewModel.g:462:4: enumLiteral_5= 'WRITER'
+                    // InternalCViewModel.g:527:3: (enumLiteral_5= 'WRITER' )
+                    // InternalCViewModel.g:528:4: enumLiteral_5= 'WRITER'
                     {
-                    enumLiteral_5=(Token)match(input,28,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,30,FOLLOW_2); 
 
                     				current = grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_5());
@@ -1042,20 +1140,22 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000001800L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000080002L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000000000200002L});
     public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x000000000000A000L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000004000L});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x000000001F800000L});
+    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x000000007E000000L});
     public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000060002L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x00000000000E0000L});
     public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000000012L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x00000000000C0000L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000080010L});
     public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000080000L});
 
 }

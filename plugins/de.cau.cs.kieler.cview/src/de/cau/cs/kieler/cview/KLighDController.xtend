@@ -162,12 +162,40 @@ class KLighDController extends AbstractKLighDController {
             return componentPath;
         }
     }
+    
+    
+    def extractTooltip(String data) {
+        // TODO: Make this available as an extension point for other plugins to contribute
+        val iStart1 = data.indexOf("/*");
+        var iEnd1 = data.indexOf("*/", iStart1);
+
+        val iStart2 = data.indexOf("/**");
+        var iEnd2 = data.indexOf("*/", iStart2);
+
+        var altTooltip1 = "";
+        if (iStart1 > -1 && iEnd1 > -1 && iEnd1 > iStart1) {
+            altTooltip1 = data.substring(iStart1, iEnd1+2);
+        }
+        
+        var altTooltip2 = "";
+        if (iStart2 > -1 && iEnd2 > -1 && iEnd2 > iStart2) {
+            altTooltip2 = data.substring(iStart2, iEnd2+2);
+        }
+        
+        if (altTooltip1.length > altTooltip2.length) {
+            return altTooltip1
+        }
+        return altTooltip2
+    }
 
     def fillFileWithFunctions(Component fileComponent, IProgressMonitor monitor) {
         // val filePath = getFilePath(fileComponent.location);
         val filePath = fileComponent.location
         if (filePath != null) {
             val content = readFile(filePath);
+            fileComponent.rawdata = String.valueOf(content)
+            val tooltip = extractTooltip(fileComponent.rawdata)
+            fileComponent.tooltip = tooltip
             val ast = CFileParser.parse(content);
 
             val visitor = new ASTVisitor() {

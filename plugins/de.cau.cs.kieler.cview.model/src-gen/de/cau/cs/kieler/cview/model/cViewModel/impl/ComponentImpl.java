@@ -35,6 +35,8 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceLine <em>Reference Line</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getTooltip <em>Tooltip</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getRawdata <em>Rawdata</em>}</li>
  * </ul>
  *
  * @generated
@@ -140,6 +142,46 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @ordered
    */
   protected EList<Component> children;
+
+  /**
+   * The default value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTooltip()
+   * @generated
+   * @ordered
+   */
+  protected static final String TOOLTIP_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTooltip()
+   * @generated
+   * @ordered
+   */
+  protected String tooltip = TOOLTIP_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getRawdata() <em>Rawdata</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRawdata()
+   * @generated
+   * @ordered
+   */
+  protected static final String RAWDATA_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getRawdata() <em>Rawdata</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRawdata()
+   * @generated
+   * @ordered
+   */
+  protected String rawdata = RAWDATA_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -316,6 +358,52 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getTooltip()
+  {
+    return tooltip;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTooltip(String newTooltip)
+  {
+    String oldTooltip = tooltip;
+    tooltip = newTooltip;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__TOOLTIP, oldTooltip, tooltip));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getRawdata()
+  {
+    return rawdata;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRawdata(String newRawdata)
+  {
+    String oldRawdata = rawdata;
+    rawdata = newRawdata;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__RAWDATA, oldRawdata, rawdata));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -334,6 +422,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return getReferenceLine();
       case CViewModelPackage.COMPONENT__CHILDREN:
         return getChildren();
+      case CViewModelPackage.COMPONENT__TOOLTIP:
+        return getTooltip();
+      case CViewModelPackage.COMPONENT__RAWDATA:
+        return getRawdata();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -368,6 +460,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         getChildren().clear();
         getChildren().addAll((Collection<? extends Component>)newValue);
         return;
+      case CViewModelPackage.COMPONENT__TOOLTIP:
+        setTooltip((String)newValue);
+        return;
+      case CViewModelPackage.COMPONENT__RAWDATA:
+        setRawdata((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -400,6 +498,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__CHILDREN:
         getChildren().clear();
         return;
+      case CViewModelPackage.COMPONENT__TOOLTIP:
+        setTooltip(TOOLTIP_EDEFAULT);
+        return;
+      case CViewModelPackage.COMPONENT__RAWDATA:
+        setRawdata(RAWDATA_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -426,6 +530,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return referenceLine != REFERENCE_LINE_EDEFAULT;
       case CViewModelPackage.COMPONENT__CHILDREN:
         return children != null && !children.isEmpty();
+      case CViewModelPackage.COMPONENT__TOOLTIP:
+        return TOOLTIP_EDEFAULT == null ? tooltip != null : !TOOLTIP_EDEFAULT.equals(tooltip);
+      case CViewModelPackage.COMPONENT__RAWDATA:
+        return RAWDATA_EDEFAULT == null ? rawdata != null : !RAWDATA_EDEFAULT.equals(rawdata);
     }
     return super.eIsSet(featureID);
   }
@@ -449,6 +557,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     result.append(location);
     result.append(", referenceLine: ");
     result.append(referenceLine);
+    result.append(", tooltip: ");
+    result.append(tooltip);
+    result.append(", rawdata: ");
+    result.append(rawdata);
     result.append(')');
     return result.toString();
   }

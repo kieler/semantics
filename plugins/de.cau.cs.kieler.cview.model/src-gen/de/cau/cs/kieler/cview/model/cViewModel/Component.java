@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceLine <em>Reference Line</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getChildren <em>Children</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getTooltip <em>Tooltip</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getRawdata <em>Rawdata</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent()
@@ -178,5 +180,57 @@ public interface Component extends EObject
    * @generated
    */
   EList<Component> getChildren();
+
+  /**
+   * Returns the value of the '<em><b>Tooltip</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Tooltip</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Tooltip</em>' attribute.
+   * @see #setTooltip(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_Tooltip()
+   * @model
+   * @generated
+   */
+  String getTooltip();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getTooltip <em>Tooltip</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tooltip</em>' attribute.
+   * @see #getTooltip()
+   * @generated
+   */
+  void setTooltip(String value);
+
+  /**
+   * Returns the value of the '<em><b>Rawdata</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Rawdata</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Rawdata</em>' attribute.
+   * @see #setRawdata(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_Rawdata()
+   * @model
+   * @generated
+   */
+  String getRawdata();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getRawdata <em>Rawdata</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Rawdata</em>' attribute.
+   * @see #getRawdata()
+   * @generated
+   */
+  void setRawdata(String value);
 
 } // Component
