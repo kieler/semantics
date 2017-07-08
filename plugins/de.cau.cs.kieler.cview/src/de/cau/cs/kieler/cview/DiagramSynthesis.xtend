@@ -163,8 +163,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
         childRect.background = "LIGHTBLUE".color;
+        childRect.selectionBackground = "LIGHTBLUE".color;
         childRect.addDoubleClickAction(OpenEditorAction.ID);
         label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+        label.firstText.selectionBackground = "LIGHTBLUE".color;
 
         return childNode
     }
@@ -178,8 +180,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
         childRect.background = item.getFileColor
+        childRect.selectionBackground = item.getFileColor
         childRect.addDoubleClickAction(OpenEditorAction.ID);
         label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+        label.firstText.selectionBackground = item.getFileColor
 
         return childNode
     }
@@ -197,11 +201,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectCol.background = item.getFileColor
+        rectCol.selectionBackground = item.getFileColor
         rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         //rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         rectCol.addDoubleClickAction(OpenEditorAction.ID);
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectExp.background = item.getFileColor
+        rectExp.selectionBackground = item.getFileColor
         rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         //rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         rectExp.addDoubleClickAction(OpenEditorAction.ID);
@@ -218,12 +224,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             //label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+            label.firstText.selectionBackground = item.getFileColor
         }
 
         if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
             val childArea = item.children.createNode().associateWith(item)
             val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
             childAreaRect.background = "WHITE".color;
+            childAreaRect.selectionBackground = "WHITE".color;
             childAreaRect.foreground = "GRAY".color;
             label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
             childNodeOuter.children.add(childArea)
@@ -249,11 +257,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectCol.background = "YELLOW".color;
+        rectCol.selectionBackground = "YELLOW".color;
         rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         // rectCol.addDoubleClickAction(OpenEditorAction.ID);
         val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
         rectExp.background = "YELLOW".color;
+        rectExp.selectionBackground = "YELLOW".color;
         rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
         // rectExp.addDoubleClickAction(OpenEditorAction.ID);
@@ -264,6 +274,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
+        label.firstText.selectionBackground = "YELLOW".color;
 
         if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
             // Hierarchical case
@@ -273,6 +284,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val childArea = item.children.createNode().associateWith(item)
             val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
             childAreaRect.background = "WHITE".color;
+            childAreaRect.selectionBackground = "WHITE".color;
             childAreaRect.foreground = "GRAY".color;
             label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
             childNodeOuter.children.add(childArea)
