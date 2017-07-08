@@ -48,6 +48,17 @@ import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import de.cau.cs.kieler.klighd.krendering.LineCap
+import de.cau.cs.kieler.klighd.krendering.LineJoin
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.PortConstraints
+import de.cau.cs.kieler.klighd.krendering.KStyle
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -119,8 +130,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         // Create connections (added by extensions)
         if (!HIDE_CONNECTIONS.booleanValue) {
-            for (item : model.connections) {
-                item.addConnection(INTERLEVEL_CONNECTIONS.booleanValue)
+            for (connection : model.connections) {
+                
+                var connectionColor = "Black".color
+                if (connection.color != null) {
+                    connectionColor = connection.color.color
+                }
+                connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
             }
         }
 
@@ -140,29 +156,29 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return false
     }
 
-    def void addConnection(Connection connection, boolean interLevelConnections) {
+    def void addConnection(Connection connection, boolean interLevelConnections, KColor color) {
         if (interLevelConnections) {
-            addSimpleConnection(connection, connection.src.node, connection.dst.node);
+            addSimpleConnection(connection, connection.src.node, connection.dst.node, false, color);
         } else {
 //            val depthSrc = connection.src.depth
 //            val depthDst = connection.dst.depth
             if (connection.sameParent) {
-                addSimpleConnection(connection, connection.src.node, connection.dst.node);
+                addSimpleConnection(connection, connection.src.node, connection.dst.node, false, color);
             } else {
-                addPortbasedConnection(connection, connection.src, connection.dst);
+                addPortbasedConnection(connection, connection.src, connection.dst, color);
             }
 
         }
     }
 
-    def void addPortbasedConnection(Connection connection, Component src, Component dst) {
+    def void addPortbasedConnection(Connection connection, Component src, Component dst, KColor color) {
 
         var srcComponent = src
         var dstComponent = dst
 
         if (srcComponent.sameParent(dstComponent)) {
             // Can connect on same level!
-            connection.addSimpleConnection(srcComponent.node, dstComponent.node)
+            connection.addSimpleConnection(srcComponent.node, dstComponent.node, true, color)
         } else {
             val depthSrc = srcComponent.depth
             val depthDst = dstComponent.depth
@@ -172,18 +188,18 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 if (depthSrc > depthDst) {
                     // source is deeper, connect it to its parent
                     sourceDeeper = true
-                    val parentSrc = connection.addParentConnection(srcComponent, true)
+                    val parentSrc = connection.addParentConnection(srcComponent, true, true, color)
                     // Continue recursion
                     if (parentSrc != null) {
-                        connection.addPortbasedConnection(parentSrc, dstComponent)
+                        connection.addPortbasedConnection(parentSrc, dstComponent, color)
                     }
                     return
                 } else {
                     // dest is deeper, connect it to its parent
-                    val parentDst = connection.addParentConnection(dstComponent, false)
+                    val parentDst = connection.addParentConnection(dstComponent, false, true, color)
                     // Continue recursion
                     if (parentDst != null) {
-                        connection.addPortbasedConnection(srcComponent, parentDst)
+                        connection.addPortbasedConnection(srcComponent, parentDst, color)
                     }
                     return
                 }
@@ -191,44 +207,87 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 // At this point srcComponent and destComponent have same level
                 // NOW go one level up until we reach the same parent, then simple connect
                 // on that level
-                val parentSrc = connection.addParentConnection(srcComponent, true)
-                val parentDst = connection.addParentConnection(dstComponent, false)
+                val parentSrc = connection.addParentConnection(srcComponent, true, true, color)
+                val parentDst = connection.addParentConnection(dstComponent, false, true, color)
                 // Continue recursion
                 if (parentSrc != null && parentDst != null) {
-                    connection.addPortbasedConnection(parentSrc, parentDst)
+                    connection.addPortbasedConnection(parentSrc, parentDst, color)
                 }
             }
         }
     }
 
-    def Component addParentConnection(Connection connection, Component component, boolean directionToParent) {
+    def Component addParentConnection(Connection connection, Component component, boolean directionToParent,
+        boolean usePorts, KColor color) {
         if (component.parent == null) {
             return null
         }
         if (directionToParent) {
-            addSimpleConnection(connection, component.node, component.parent.node)
+            addSimpleConnection(connection, component.node, component.parent.node, usePorts, color)
         } else {
-            addSimpleConnection(connection, component.parent.node, component.node)
+            addSimpleConnection(connection, component.parent.node, component.node, usePorts, color)
         }
         return component.parent
     }
 
-    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
-        val edge = createEdge().associateWith(connection)
-        edge.addPolyline(2).addHeadArrowDecorator();
+    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts, KColor color) {
+        val edge = (connection.hashCode + srcNode.hashCode).createEdge().associateWith(connection)
+        val arrowRendering = edge.addPolyline(2).addHeadArrowDecorator();
+        arrowRendering.background = color.copy
+        arrowRendering.foreground = color.copy
         edge.source = srcNode
         edge.target = dstNode
         // Basic spline
         edge.addConnectionSpline();
-        edge.setGrayStyle
+        edge.line.foreground = color.copy
         // Add Label
         edge.addLabel(connection.label).associateWith(connection);
 
-        // Add the connection
-        srcNode.outgoingEdges.add(edge)
-    // srcNode.port.edges.add(edge)
+        connection.src.rootComponent.node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+        connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+
+        if (usePorts) {
+            // Add the connection
+            val portId = connection.toString; // + srcNode.toString
+            val srcPort = srcNode.addPort(portId, 0, 0, 9, PortSide::EAST, color)
+            val dstPort = dstNode.addPort(portId, 0, 0, 9, PortSide::WEST, color)
+//            srcPort.addOutsidePortLabel("S", 8, KlighdConstants.DEFAULT_FONT_NAME)
+//            srcPort.addOutsidePortLabel("D", 8, KlighdConstants.DEFAULT_FONT_NAME)
+            edge.sourcePort = srcPort
+            edge.targetPort = dstPort
+        }
     }
 
+    def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side, KColor color) {
+        val returnPort = node.createPort(mapping);
+        if (side != null) {
+            returnPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
+        }
+        val rect = returnPort.addRectangle
+        rect.background = color.copy
+        rect.foreground = color.copy
+        returnPort.setSize(size, size)
+        returnPort.addRectangle.invisible = true;
+        node.ports += returnPort
+        return returnPort
+    }
+
+//    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
+//        val edge = createEdge().associateWith(connection)
+//        edge.addPolyline(2).addHeadArrowDecorator();
+//        edge.source = srcNode
+//        edge.target = dstNode
+//        // Basic spline
+//        edge.addConnectionSpline();
+//        edge.setGrayStyle
+//        // Add Label
+//        edge.addLabel(connection.label).associateWith(connection);
+//
+//        // Add the connection
+//        srcNode.outgoingEdges.add(edge)
+//    // srcNode.port.edges.add(edge)
+//    }
     def KNode transformItem(Component item, int depth) {
         if (item.isFile) {
             if (SHOW_FUNCTIONS.booleanValue) {
@@ -430,6 +489,18 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         return label;
     }
 
+//        val poly = kPort.addPolygon()
+//        poly.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
+//        poly.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
+//        poly.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
+//        poly.background = "black".color;
+//        poly.lineWidth = 2
+//        poly.lineCap = LineCap.CAP_ROUND;
+//        poly.lineJoin = LineJoin.JOIN_ROUND;
+//        poly.selectionBackground = "gray".color;
+//        srcNode.ports.add(kPort)
+//        kPort.edges.add(edge)
+//        kPort.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.WEST)
 // var Component deeperComponent = null
 //          var Component deeperSrc = null
 //          var Component deeperDst = null

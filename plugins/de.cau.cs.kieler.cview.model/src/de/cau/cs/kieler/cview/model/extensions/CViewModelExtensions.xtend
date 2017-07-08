@@ -19,6 +19,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModelFactory
 import de.cau.cs.kieler.cview.model.cViewModel.Connection
 import java.util.List
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
+import java.util.Set
 
 /**
  * @author cmot
@@ -27,6 +28,13 @@ import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 class CViewModelExtensions {
 
     EObject getParent;
+    
+    def Component rootComponent(Component component) {
+        if (component.parent != null) {
+            return rootComponent(component.parent)
+        }
+        return component
+    }
 
     def List<Component> findName(CViewModel model, String searchString) {
         return model.findName(searchString, true, false, false)
@@ -43,11 +51,11 @@ class CViewModelExtensions {
     def List<Component> findName(CViewModel model, String searchString, boolean caseSensitive, boolean startsWith,
         boolean endsWith) {
         val List<Component> returnList = newArrayList
-        if (caseSensitive) {
-            returnList.addAll(model.components.filter[name.equals(searchString)].toList)
-        } else {
-            returnList.addAll(model.components.filter[name.toUpperCase.equals(searchString.toUpperCase)].toList)
-        }
+//        if (caseSensitive) {
+//            returnList.addAll(model.components.filter[name.equals(searchString)].toList)
+//        } else {
+//            returnList.addAll(model.components.filter[name.toUpperCase.equals(searchString.toUpperCase)].toList)
+//        }
         if (!startsWith && !endsWith) {
             if (caseSensitive) {
                 returnList.addAll(model.components.filter[name.contains(searchString)].toList)
@@ -91,6 +99,8 @@ class CViewModelExtensions {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
     def Connection createConnection() {
         return (CViewModelFactory.eINSTANCE.createConnection)
     }
@@ -107,7 +117,14 @@ class CViewModelExtensions {
         return connection
     }
 
+    def Connection setColor2(Connection connection, String color) {
+        connection.color = color
+        return connection
+    }
+
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
     def Component createFile() {
         return (CViewModelFactory.eINSTANCE.createComponent.setFile)
     }

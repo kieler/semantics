@@ -204,15 +204,19 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTypeKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		private final Assignment cTypeAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cTypeSTRINGTerminalRuleCall_7_0 = (RuleCall)cTypeAssignment_7.eContents().get(0);
+		private final Keyword cColorKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cColorAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cColorSTRINGTerminalRuleCall_9_0 = (RuleCall)cColorAssignment_9.eContents().get(0);
 		
 		//Connection:
 		//	'src' src=[Component]
 		//	'dst' dst=[Component]
 		//	'label' label=STRING
-		//	'type' type=STRING;
+		//	'type' type=STRING
+		//	'color' color=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'src' src=[Component] 'dst' dst=[Component] 'label' label=STRING 'type' type=STRING
+		//'src' src=[Component] 'dst' dst=[Component] 'label' label=STRING 'type' type=STRING 'color' color=STRING
 		public Group getGroup() { return cGroup; }
 		
 		//'src'
@@ -256,6 +260,15 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getTypeSTRINGTerminalRuleCall_7_0() { return cTypeSTRINGTerminalRuleCall_7_0; }
+		
+		//'color'
+		public Keyword getColorKeyword_8() { return cColorKeyword_8; }
+		
+		//color=STRING
+		public Assignment getColorAssignment_9() { return cColorAssignment_9; }
+		
+		//STRING
+		public RuleCall getColorSTRINGTerminalRuleCall_9_0() { return cColorSTRINGTerminalRuleCall_9_0; }
 	}
 	
 	public class ComponentTypeElements extends AbstractEnumRuleElementFinder {
@@ -394,7 +407,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//	'src' src=[Component]
 	//	'dst' dst=[Component]
 	//	'label' label=STRING
-	//	'type' type=STRING;
+	//	'type' type=STRING
+	//	'color' color=STRING;
 	public ConnectionElements getConnectionAccess() {
 		return pConnection;
 	}

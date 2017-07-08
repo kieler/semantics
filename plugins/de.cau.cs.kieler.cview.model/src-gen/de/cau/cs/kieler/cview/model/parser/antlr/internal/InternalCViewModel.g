@@ -384,6 +384,28 @@ ruleConnection returns [EObject current=null]
 				}
 			)
 		)
+		otherlv_8='color'
+		{
+			newLeafNode(otherlv_8, grammarAccess.getConnectionAccess().getColorKeyword_8());
+		}
+		(
+			(
+				lv_color_9_0=RULE_STRING
+				{
+					newLeafNode(lv_color_9_0, grammarAccess.getConnectionAccess().getColorSTRINGTerminalRuleCall_9_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConnectionRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"color",
+						lv_color_9_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
 	)
 ;
 

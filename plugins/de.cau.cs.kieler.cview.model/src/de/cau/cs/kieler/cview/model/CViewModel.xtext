@@ -25,6 +25,7 @@ Connection:
     'dst' dst=[Component]
     'label' label=STRING
     'type' type=STRING
+    'color' color=STRING
 ;	
 	
 	

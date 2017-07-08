@@ -1,13 +1,14 @@
 ';'=11
 '='=14
-'COMPOUND'=25
+'COMPOUND'=26
 'Component'=12
-'DIR'=22
-'FILE'=23
-'FUNC'=24
-'READER'=26
-'WRITER'=27
+'DIR'=23
+'FILE'=24
+'FUNC'=25
+'READER'=27
+'WRITER'=28
 'children'=18
+'color'=22
 'dst'=20
 'label'=21
 'location'=16
@@ -39,3 +40,4 @@ T__24=24
 T__25=25
 T__26=26
 T__27=27
+T__28=28

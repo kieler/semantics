@@ -42,7 +42,13 @@ class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
 
         if (component.name.equals("DRV_HL")) {
             for (filterdComponents : model.findName("SYC_HWIO.c", true, false)) {
-                returnList.add(component.connect(filterdComponents))
+                returnList.add(component.connect(filterdComponents).setColor2("Red"))
+            }
+        }
+
+        if (component.name.equals("HWIO")) {
+            for (filterdComponents : model.findName("DRV_LL.h", true, true)) {
+                returnList.add(component.connect(filterdComponents).setColor2("Blue"))
             }
         }
         

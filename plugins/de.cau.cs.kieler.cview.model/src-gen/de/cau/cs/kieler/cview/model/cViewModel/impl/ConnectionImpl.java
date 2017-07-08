@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getDst <em>Dst</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl#getColor <em>Color</em>}</li>
  * </ul>
  *
  * @generated
@@ -92,6 +93,26 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * @ordered
    */
   protected String type = TYPE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getColor() <em>Color</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getColor()
+   * @generated
+   * @ordered
+   */
+  protected static final String COLOR_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getColor() <em>Color</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getColor()
+   * @generated
+   * @ordered
+   */
+  protected String color = COLOR_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -251,6 +272,29 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getColor()
+  {
+    return color;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setColor(String newColor)
+  {
+    String oldColor = color;
+    color = newColor;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.CONNECTION__COLOR, oldColor, color));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -266,6 +310,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return getLabel();
       case CViewModelPackage.CONNECTION__TYPE:
         return getType();
+      case CViewModelPackage.CONNECTION__COLOR:
+        return getColor();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -291,6 +337,9 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return;
       case CViewModelPackage.CONNECTION__TYPE:
         setType((String)newValue);
+        return;
+      case CViewModelPackage.CONNECTION__COLOR:
+        setColor((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -318,6 +367,9 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
       case CViewModelPackage.CONNECTION__TYPE:
         setType(TYPE_EDEFAULT);
         return;
+      case CViewModelPackage.CONNECTION__COLOR:
+        setColor(COLOR_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -340,6 +392,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
         return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
       case CViewModelPackage.CONNECTION__TYPE:
         return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+      case CViewModelPackage.CONNECTION__COLOR:
+        return COLOR_EDEFAULT == null ? color != null : !COLOR_EDEFAULT.equals(color);
     }
     return super.eIsSet(featureID);
   }
@@ -359,6 +413,8 @@ public class ConnectionImpl extends MinimalEObjectImpl.Container implements Conn
     result.append(label);
     result.append(", type: ");
     result.append(type);
+    result.append(", color: ");
+    result.append(color);
     result.append(')');
     return result.toString();
   }

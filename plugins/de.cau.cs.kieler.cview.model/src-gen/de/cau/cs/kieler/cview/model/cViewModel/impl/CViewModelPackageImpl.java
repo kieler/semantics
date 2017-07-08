@@ -272,6 +272,16 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getConnection_Color()
+  {
+    return (EAttribute)connectionEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EEnum getComponentType()
   {
     return componentTypeEEnum;
@@ -324,6 +334,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEReference(connectionEClass, CONNECTION__DST);
     createEAttribute(connectionEClass, CONNECTION__LABEL);
     createEAttribute(connectionEClass, CONNECTION__TYPE);
+    createEAttribute(connectionEClass, CONNECTION__COLOR);
 
     // Create enums
     componentTypeEEnum = createEEnum(COMPONENT_TYPE);
@@ -377,6 +388,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEReference(getConnection_Dst(), this.getComponent(), null, "dst", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConnection_Label(), ecorePackage.getEString(), "label", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConnection_Type(), ecorePackage.getEString(), "type", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConnection_Color(), ecorePackage.getEString(), "color", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(componentTypeEEnum, ComponentType.class, "ComponentType");

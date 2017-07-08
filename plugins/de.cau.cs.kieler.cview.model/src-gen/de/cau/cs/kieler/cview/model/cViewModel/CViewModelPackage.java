@@ -215,13 +215,22 @@ public interface CViewModelPackage extends EPackage
   int CONNECTION__TYPE = 3;
 
   /**
+   * The feature id for the '<em><b>Color</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONNECTION__COLOR = 4;
+
+  /**
    * The number of structural features of the '<em>Connection</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONNECTION_FEATURE_COUNT = 4;
+  int CONNECTION_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
@@ -397,6 +406,17 @@ public interface CViewModelPackage extends EPackage
   EAttribute getConnection_Type();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Connection#getColor <em>Color</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Color</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Connection#getColor()
+   * @see #getConnection()
+   * @generated
+   */
+  EAttribute getConnection_Color();
+
+  /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -554,6 +574,14 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EAttribute CONNECTION__TYPE = eINSTANCE.getConnection_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Color</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONNECTION__COLOR = eINSTANCE.getConnection_Color();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.cview.model.cViewModel.ComponentType <em>Component Type</em>}' enum.
