@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kvis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationListener
@@ -90,6 +91,8 @@ class KVisView extends ViewPart {
     private var boolean linkWithSimulation = true
     private var AffineTransform lastRenderingTransform
     
+    private var LabelContribution currentFileLabel
+    
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
      */
@@ -101,8 +104,10 @@ class KVisView extends ViewPart {
         createCanvas(parent)
  
         // Create menu and toolbars.
-        createMenu()
-        createToolbar()
+        createMenu
+        createToolbar
+        // Create status line
+        createStatusLine
     }
 
     /**
@@ -134,6 +139,7 @@ class KVisView extends ViewPart {
                 if (model instanceof Visualization) {
                     kvisConfig = model
                     kvisFile = file
+                    currentFileLabel.text = kvisFile.name
                     saveUsedKvisFile(kvisFile)
                     updateAfterRendering = true
                     isImageUnchanged = true
@@ -353,7 +359,7 @@ class KVisView extends ViewPart {
     }
 
     private def void createMenu() {
-        val mgr = getViewSite().getActionBars().getMenuManager();
+//        val mgr = getViewSite().getActionBars().getMenuManager();
     }
 
     private def void createToolbar() {
@@ -417,6 +423,18 @@ class KVisView extends ViewPart {
             }
         })
     }
+    
+    private def void createStatusLine() {
+        val bars = getViewSite().getActionBars()
+        if(bars != null) {
+            val statusLineManager = bars.getStatusLineManager()
+            // Add name of currently loaded document to status line
+            currentFileLabel = new LabelContribution("de.cau.cs.kieler.kvis.ui.currentFileLabel",
+                                                     "",
+                                                     "Currently loaded visualization")
+            statusLineManager.add(currentFileLabel)
+        }
+    }
 
     /**
      * Updates the image with the loaded configuration.
@@ -468,10 +486,10 @@ class KVisView extends ViewPart {
     }
     
     private def void setStatusBarMessage(String message) {
-        val bars = getViewSite().getActionBars();
+        val bars = getViewSite().getActionBars()
         if(bars != null) {
             val statusLineManager = bars.getStatusLineManager()
-            PromUIPlugin.asyncExecInUI[statusLineManager.setMessage(message)]
+            PromUIPlugin.asyncExecInUI[statusLineManager.message = message]
         }
     }
     
@@ -488,8 +506,6 @@ class KVisView extends ViewPart {
         }
         val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
         StatusManager.getManager().handle(s, StatusManager.SHOW);
-        
-        statusBarMessage = e.message
     }
     
     private static def SimulationListener createSimulationListener() {

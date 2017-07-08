@@ -26,5 +26,6 @@ Export-Package: de.cau.cs.kieler.prom.ui,
  de.cau.cs.kieler.prom.ui.console,
  de.cau.cs.kieler.prom.ui.environments,
  de.cau.cs.kieler.prom.ui.launch,
+ de.cau.cs.kieler.prom.ui.views,
  de.cau.cs.kieler.prom.ui.wizards
 

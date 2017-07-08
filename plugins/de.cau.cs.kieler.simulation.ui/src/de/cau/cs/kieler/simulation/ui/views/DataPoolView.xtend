@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.ui.views.LabelContribution
 
 /**
  * @author aas
@@ -63,7 +64,7 @@ class DataPoolView extends ViewPart {
     var TableViewerColumn inputColumn
     var TableViewerColumn outputColumn
     
-    var TickInfoContribution tickInfo
+    var LabelContribution tickInfo
     
     @Accessors(PUBLIC_GETTER)
     var boolean subTicksEnabled
@@ -78,11 +79,12 @@ class DataPoolView extends ViewPart {
         
         // Create viewer.
         viewer = createTable(parent);
-
+                                         
         // Create menu and toolbars.
-        createMenu();
-        createToolbar();
-
+        createMenu
+        createToolbar
+        createStatusLine
+        
         // Add key listeners for fast controls
         addKeyListeners()
     }
@@ -147,13 +149,11 @@ class DataPoolView extends ViewPart {
         });
     }
     
-    /**
-     * Create toolbar.
-     */
     private def void createToolbar() {
-        val mgr = getViewSite().getActionBars().getToolBarManager();
-        
-        tickInfo = new TickInfoContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo")
+        val mgr = getViewSite().getActionBars().getToolBarManager()
+        tickInfo = new LabelContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo",
+                                         "Tick #0000 (-000)",
+                                         "Last fully executed macro tick")
         mgr.add(tickInfo)
         mgr.add(new Separator())
         mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
@@ -189,6 +189,13 @@ class DataPoolView extends ViewPart {
                 dialog.open
             }
         })
+    }
+    
+    private def void createStatusLine() {
+//        val bars = getViewSite().getActionBars()
+//        if(bars != null) {
+//            val statusLineManager = bars.getStatusLineManager()
+//        }
     }
     
     private def void addKeyListeners() {
@@ -310,7 +317,7 @@ class DataPoolView extends ViewPart {
         return viewerColumn
     }
     
-    private def void updateStatusBar(SimulationEvent e) {
+    private def void updateTickInfo(SimulationEvent e) {
         val bars = getViewSite().getActionBars();
         if(bars != null) {
             val statusLineManager = bars.getStatusLineManager()
@@ -322,7 +329,7 @@ class DataPoolView extends ViewPart {
                 }
             }
             statusLineManager.setMessage(txt);
-            tickInfo?.label?.setText(Strings.nullToEmpty(txt))
+            tickInfo?.setText(Strings.nullToEmpty(txt))
         }
     }
     
@@ -336,8 +343,8 @@ class DataPoolView extends ViewPart {
             override update(SimulationEvent e) {
                 // Execute in UI thread
                 PromUIPlugin.asyncExecInUI[
-                        // Update status line
-                        DataPoolView.instance?.updateStatusBar(e)
+                        // Update tick info
+                        DataPoolView.instance?.updateTickInfo(e)
                         // Set pool data
                         DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
                     ]

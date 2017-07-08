@@ -22,13 +22,13 @@ import org.w3c.dom.svg.SVGLocatable
  *
  */
 class RotateAnimation extends AnimationHandler {
-    var double angle
-    var double anchorX = 0.5
-    var double anchorY = 0.5
+    public val angle = new AnimationHandlerAttribute("x", 0)
+    public val anchorX = new AnimationHandlerAttribute("x", 0.5)
+    public val anchorY = new AnimationHandlerAttribute("x", 0.5)
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        addAttributes("angle", "anchorX", "anchorY")
+        initialize
     }
     
     override getName() {
@@ -36,27 +36,15 @@ class RotateAnimation extends AnimationHandler {
     }
     
     override doApply(DataPool pool, Element elem) {
-        // Get mapped value
-        val newAngle = getAttribute("angle").floatValue
-        if(newAngle != null) {
-            angle = newAngle
-        }
-        val newAnchorX = getAttribute("anchorX").floatValue
-        if(newAnchorX != null) {
-            anchorX = newAnchorX
-        }
-        val newAnchorY = getAttribute("anchorY").floatValue
-        if(newAnchorY != null) {
-            anchorY = newAnchorY
-        }
-        
         // Compute position
         if(elem instanceof SVGLocatable) {
             // Position and size of the element
             val SVGLocatable locatable = elem as SVGLocatable
             val box = locatable.getBBox()
             // Set new transform
-            var rotation =  angle + "," + (box.x+anchorX*box.width) + "," + (box.y+anchorY*box.width)
+            val rotationCenterX = box.x+anchorX.floatValue*box.width
+            val rotationCenterY = box.y+anchorY.floatValue*box.width
+            var rotation =  angle.floatValue + "," + rotationCenterX + "," + rotationCenterY
             elem.setAttributeFunction("transform", "rotate", rotation)
         } else {
             throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")

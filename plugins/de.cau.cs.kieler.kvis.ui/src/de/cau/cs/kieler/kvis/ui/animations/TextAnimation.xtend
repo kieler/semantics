@@ -21,9 +21,13 @@ import org.w3c.dom.Element
  *
  */
 class TextAnimation extends AnimationHandler {
+    public val text = new AnimationHandlerAttribute("text")
+    public val fontSize = new AnimationHandlerAttribute("fontSize", 0)
+    public val fontFamily = new AnimationHandlerAttribute("fontFamily")
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        addAttributes("text", "fontSize", "fontFamily", "text")
+        initialize
     }
     
     override getName() {
@@ -32,18 +36,14 @@ class TextAnimation extends AnimationHandler {
     
     override doApply(DataPool pool, Element elem) {
         // Apply attributes to svg element
-        val text = getAttribute("text").stringValue
         if(text != null) {
-            elem.setText(text)
+            elem.setText(text.stringValue)
         }
-        
-        val fontSize = getAttribute("fontSize").floatValue
-        if(fontSize != null && fontSize >= 0) {
-            elem.setAttributeField("style", "font-size", String.valueOf(fontSize))                
+        if(fontSize != null && fontSize.floatValue >= 0) {
+            elem.setAttributeField("style", "font-size", String.valueOf(fontSize.floatValue))                
         }
-        val fontFamily = getAttribute("fontFamily").stringValue
         if(fontFamily != null) {
-            elem.setAttributeField("style", "font-family", fontFamily)
+            elem.setAttributeField("style", "font-family", fontFamily.stringValue)
         }
     }
 }

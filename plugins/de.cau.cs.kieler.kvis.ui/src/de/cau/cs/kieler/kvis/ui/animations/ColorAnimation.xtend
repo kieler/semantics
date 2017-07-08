@@ -22,9 +22,16 @@ import org.w3c.dom.Element
  */
 class ColorAnimation extends AnimationHandler {
     
+    public val fillColor = new AnimationHandlerAttribute("fillColor")
+    public val strokeColor = new AnimationHandlerAttribute("strokeColor")
+    public val strokeWidth = new AnimationHandlerAttribute("strokeWidth")
+    public val opacity = new AnimationHandlerAttribute("opacity")
+    public val fillOpacity = new AnimationHandlerAttribute("fillOpacity")
+    public val strokeOpacity = new AnimationHandlerAttribute("strokeOpacity")
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        addAttributes("fillColor", "strokeColor", "strokeWidth", "opacity", "fillOpacity", "strokeOpacity")
+        initialize
     }
     
     override getName() {

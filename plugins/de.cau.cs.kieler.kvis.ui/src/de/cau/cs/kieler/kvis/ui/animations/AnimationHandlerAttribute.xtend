@@ -30,8 +30,13 @@ class AnimationHandlerAttribute {
         this.name = name
     }
     
-    new(String name, boolean isMandatory) {
-        this.name = name
+    new(String name, Object defaultValue) {
+        this(name)
+        this.value = defaultValue
+    }
+    
+    new(String name, Object defaultValue, boolean isMandatory) {
+        this(name, defaultValue)
         this.mandatory = isMandatory
     }
     
@@ -64,5 +69,9 @@ class AnimationHandlerAttribute {
     
     public def Boolean boolValue() {
         return value as Boolean
+    }
+    
+    override toString() {
+        return name + ":" + value
     }
 }
