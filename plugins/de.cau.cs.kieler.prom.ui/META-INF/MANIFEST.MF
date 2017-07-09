@@ -4,20 +4,26 @@ Bundle-Name: KIELER Prom UI
 Bundle-SymbolicName: de.cau.cs.kieler.prom.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.prom.ui.PromUIPlugin
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- de.cau.cs.kieler.prom,
+Require-Bundle: org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.ui.editors,
+ org.eclipse.ui,
+ org.eclipse.ui.ide;bundle-version="3.12.3",
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
+ org.eclipse.core.runtime,
  org.eclipse.xtend.lib.macro,
  org.eclipse.debug.core;bundle-version="3.10.100",
  org.eclipse.debug.ui;bundle-version="3.11.202",
  org.eclipse.ui.console;bundle-version="3.6.201",
- org.eclipse.ui.ide;bundle-version="3.12.3",
+ org.eclipse.jdt.core;bundle-version="3.10.0",
+ de.cau.cs.kieler.prom,
  de.cau.cs.kieler.kico;bundle-version="0.12.0",
  de.cau.cs.kieler.scg.s;bundle-version="0.12.0",
- org.eclipse.jdt.core;bundle-version="3.10.0"
+ de.cau.cs.kieler.kexpressions,
+ de.cau.cs.kieler.kexpressions.ui,
+ de.cau.cs.kieler.annotations.ui;bundle-version="0.12.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University
@@ -27,5 +33,9 @@ Export-Package: de.cau.cs.kieler.prom.ui,
  de.cau.cs.kieler.prom.ui.environments,
  de.cau.cs.kieler.prom.ui.launch,
  de.cau.cs.kieler.prom.ui.views,
- de.cau.cs.kieler.prom.ui.wizards
-
+ de.cau.cs.kieler.prom.ui.wizards,
+ de.cau.cs.kieler.prom.ui.contentassist,
+ de.cau.cs.kieler.prom.ui.quickfix,
+ de.cau.cs.kieler.prom.ui.contentassist.antlr,
+ de.cau.cs.kieler.prom.ui.contentassist.antlr.internal
+Import-Package: org.apache.log4j

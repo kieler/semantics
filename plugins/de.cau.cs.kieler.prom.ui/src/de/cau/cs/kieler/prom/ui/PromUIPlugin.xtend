@@ -11,11 +11,12 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.osgi.framework.BundleContext
 
 import static de.cau.cs.kieler.prom.console.PromConsole.*
+import de.cau.cs.kieler.prom.ui.internal.KiBuildActivator
 
 /** 
  * The activator class controls the plug-in life cycle
  */
-class PromUIPlugin extends AbstractUIPlugin {
+class PromUIPlugin extends KiBuildActivator {
     // The plug-in ID
     public static val PLUGIN_ID = "de.cau.cs.kieler.prom.ui"
     // $NON-NLS-1$

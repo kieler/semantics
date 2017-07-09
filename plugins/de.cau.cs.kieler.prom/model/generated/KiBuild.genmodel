@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.prom/src-gen" editDirectory="/de.cau.cs.kieler.prom.edit/src"
+    editorDirectory="/de.cau.cs.kieler.prom.editor/src" modelPluginID="de.cau.cs.kieler.prom"
+    forceOverwrite="true" modelName="KiBuild" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.prom.edit"
+    editorPluginID="de.cau.cs.kieler.prom.editor" runtimeVersion="2.12">
+  <genPackages prefix="Kibuild" basePackage="de.cau.cs.kieler.prom" disposableProviderFactory="true"
+      ecorePackage="KiBuild.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KiBuild.ecore#//Sign">
+      <genEnumLiterals ecoreEnumLiteral="KiBuild.ecore#//Sign/POSITIVE"/>
+      <genEnumLiterals ecoreEnumLiteral="KiBuild.ecore#//Sign/NEGATIVE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KiBuild.ecore#//TEMPLATE_TYPE">
+      <genEnumLiterals ecoreEnumLiteral="KiBuild.ecore#//TEMPLATE_TYPE/NORMAL"/>
+      <genEnumLiterals ecoreEnumLiteral="KiBuild.ecore#//TEMPLATE_TYPE/WRAPPER"/>
+      <genEnumLiterals ecoreEnumLiteral="KiBuild.ecore#//TEMPLATE_TYPE/SIMULATION"/>
+    </genEnums>
+    <genClasses ecoreClass="KiBuild.ecore#//BuildConfiguration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//BuildConfiguration/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//BuildConfiguration/modelCompilers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//BuildConfiguration/simulationCompilers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//BuildConfiguration/templateProcessors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//BuildConfiguration/outputFolder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//BuildConfiguration/snippetFolder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//BuildConfiguration/fileExtension"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//ModelCompiler">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//ModelCompiler/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//ModelCompiler/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//ModelCompiler/simulationCompiler"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//SimulationCompiler">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//SimulationCompiler/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//SimulationCompiler/attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//TemplateProcessor">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//TemplateProcessor/attributes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//TemplateProcessor/type"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//AttributeMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//AttributeMapping/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeMapping/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeMapping/values"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeMapping/attributes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//AttributeMapping/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//AttributeMapping/texts"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//Literal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//Literal/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//SignedFloat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//SignedFloat/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//SignedFloat/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//SignedInt">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//SignedInt/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//SignedInt/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//TextValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//TextValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KiBuild.ecore#//NormalTemplateProcessor"/>
+    <genClasses ecoreClass="KiBuild.ecore#//SimulationTemplateProcessor"/>
+    <genClasses ecoreClass="KiBuild.ecore#//WrapperCodeTemplateProcessor"/>
+    <genClasses ecoreClass="KiBuild.ecore#//AttributeValue">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeValue/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeValue/values"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//AttributeValue/attributes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//AttributeValue/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//AttributeValue/texts"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
