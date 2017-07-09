@@ -39,7 +39,7 @@ import de.cau.cs.kieler.kvis.kvis.ModelReference;
 import de.cau.cs.kieler.kvis.kvis.SignedFloat;
 import de.cau.cs.kieler.kvis.kvis.SignedInt;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
-import de.cau.cs.kieler.kvis.kvis.Visualization;
+import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration;
 import de.cau.cs.kieler.kvis.services.KVisGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -236,8 +236,8 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 			case KvisPackage.VARIABLE_REFERENCE:
 				sequence_VariableReference(context, (VariableReference) semanticObject); 
 				return; 
-			case KvisPackage.VISUALIZATION:
-				sequence_Visualization(context, (Visualization) semanticObject); 
+			case KvisPackage.VISUALIZATION_CONFIGURATION:
+				sequence_VisualizationConfiguration(context, (VisualizationConfiguration) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -535,12 +535,12 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
-	 *     Visualization returns Visualization
+	 *     VisualizationConfiguration returns VisualizationConfiguration
 	 *
 	 * Constraint:
-	 *     (image=STRING (elements+=Element | interactions+=Interaction)*)
+	 *     (image=STRING | (image=STRING (elements+=Element | interactions+=Interaction)+))?
 	 */
-	protected void sequence_Visualization(ISerializationContext context, Visualization semanticObject) {
+	protected void sequence_VisualizationConfiguration(ISerializationContext context, VisualizationConfiguration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

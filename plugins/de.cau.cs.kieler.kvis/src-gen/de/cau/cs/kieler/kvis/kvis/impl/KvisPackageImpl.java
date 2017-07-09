@@ -27,7 +27,7 @@ import de.cau.cs.kieler.kvis.kvis.SignedFloat;
 import de.cau.cs.kieler.kvis.kvis.SignedInt;
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
-import de.cau.cs.kieler.kvis.kvis.Visualization;
+import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -50,7 +50,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass visualizationEClass = null;
+  private EClass visualizationConfigurationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -270,9 +270,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVisualization()
+  public EClass getVisualizationConfiguration()
   {
-    return visualizationEClass;
+    return visualizationConfigurationEClass;
   }
 
   /**
@@ -280,9 +280,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVisualization_Image()
+  public EAttribute getVisualizationConfiguration_Image()
   {
-    return (EAttribute)visualizationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)visualizationConfigurationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -290,9 +290,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getVisualization_Elements()
+  public EReference getVisualizationConfiguration_Elements()
   {
-    return (EReference)visualizationEClass.getEStructuralFeatures().get(1);
+    return (EReference)visualizationConfigurationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -300,9 +300,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getVisualization_Interactions()
+  public EReference getVisualizationConfiguration_Interactions()
   {
-    return (EReference)visualizationEClass.getEStructuralFeatures().get(2);
+    return (EReference)visualizationConfigurationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -935,10 +935,10 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     isCreated = true;
 
     // Create classes and their features
-    visualizationEClass = createEClass(VISUALIZATION);
-    createEAttribute(visualizationEClass, VISUALIZATION__IMAGE);
-    createEReference(visualizationEClass, VISUALIZATION__ELEMENTS);
-    createEReference(visualizationEClass, VISUALIZATION__INTERACTIONS);
+    visualizationConfigurationEClass = createEClass(VISUALIZATION_CONFIGURATION);
+    createEAttribute(visualizationConfigurationEClass, VISUALIZATION_CONFIGURATION__IMAGE);
+    createEReference(visualizationConfigurationEClass, VISUALIZATION_CONFIGURATION__ELEMENTS);
+    createEReference(visualizationConfigurationEClass, VISUALIZATION_CONFIGURATION__INTERACTIONS);
 
     elementEClass = createEClass(ELEMENT);
     createEAttribute(elementEClass, ELEMENT__NAME);
@@ -1057,10 +1057,10 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     andExpressionEClass.getESuperTypes().add(this.getCondition());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(visualizationEClass, Visualization.class, "Visualization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVisualization_Image(), ecorePackage.getEString(), "image", null, 0, 1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVisualization_Elements(), this.getElement(), null, "elements", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVisualization_Interactions(), this.getInteraction(), null, "interactions", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(visualizationConfigurationEClass, VisualizationConfiguration.class, "VisualizationConfiguration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVisualizationConfiguration_Image(), ecorePackage.getEString(), "image", null, 0, 1, VisualizationConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVisualizationConfiguration_Elements(), this.getElement(), null, "elements", null, 0, -1, VisualizationConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVisualizationConfiguration_Interactions(), this.getInteraction(), null, "interactions", null, 0, -1, VisualizationConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

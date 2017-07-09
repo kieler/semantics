@@ -65,7 +65,7 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
   {
     switch (eClass.getClassifierID())
     {
-      case KvisPackage.VISUALIZATION: return createVisualization();
+      case KvisPackage.VISUALIZATION_CONFIGURATION: return createVisualizationConfiguration();
       case KvisPackage.ELEMENT: return createElement();
       case KvisPackage.INTERACTION: return createInteraction();
       case KvisPackage.EVENT: return createEvent();
@@ -136,10 +136,10 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Visualization createVisualization()
+  public VisualizationConfiguration createVisualizationConfiguration()
   {
-    VisualizationImpl visualization = new VisualizationImpl();
-    return visualization;
+    VisualizationConfigurationImpl visualizationConfiguration = new VisualizationConfigurationImpl();
+    return visualizationConfiguration;
   }
 
   /**

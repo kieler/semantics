@@ -20,52 +20,56 @@ import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class VisualizationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Visualization");
+	public class VisualizationConfigurationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.VisualizationConfiguration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cImageKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cImageAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cImageSTRINGTerminalRuleCall_2_0 = (RuleCall)cImageAssignment_2.eContents().get(0);
-		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Assignment cElementsAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
-		private final RuleCall cElementsElementParserRuleCall_3_0_0 = (RuleCall)cElementsAssignment_3_0.eContents().get(0);
-		private final Assignment cInteractionsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
-		private final RuleCall cInteractionsInteractionParserRuleCall_3_1_0 = (RuleCall)cInteractionsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Keyword cImageKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Keyword cColonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cImageAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cImageSTRINGTerminalRuleCall_0_2_0 = (RuleCall)cImageAssignment_0_2.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cElementsAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cElementsElementParserRuleCall_1_0_0 = (RuleCall)cElementsAssignment_1_0.eContents().get(0);
+		private final Assignment cInteractionsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cInteractionsInteractionParserRuleCall_1_1_0 = (RuleCall)cInteractionsAssignment_1_1.eContents().get(0);
 		
-		//Visualization:
-		//	'image' ':' image=STRING (elements+=Element | interactions+=Interaction)*;
+		//VisualizationConfiguration:
+		//	('image' ':' image=STRING)? (elements+=Element | interactions+=Interaction)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'image' ':' image=STRING (elements+=Element | interactions+=Interaction)*
+		//('image' ':' image=STRING)? (elements+=Element | interactions+=Interaction)*
 		public Group getGroup() { return cGroup; }
 
+		//('image' ':' image=STRING)?
+		public Group getGroup_0() { return cGroup_0; }
+
 		//'image'
-		public Keyword getImageKeyword_0() { return cImageKeyword_0; }
+		public Keyword getImageKeyword_0_0() { return cImageKeyword_0_0; }
 
 		//':'
-		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+		public Keyword getColonKeyword_0_1() { return cColonKeyword_0_1; }
 
 		//image=STRING
-		public Assignment getImageAssignment_2() { return cImageAssignment_2; }
+		public Assignment getImageAssignment_0_2() { return cImageAssignment_0_2; }
 
 		//STRING
-		public RuleCall getImageSTRINGTerminalRuleCall_2_0() { return cImageSTRINGTerminalRuleCall_2_0; }
+		public RuleCall getImageSTRINGTerminalRuleCall_0_2_0() { return cImageSTRINGTerminalRuleCall_0_2_0; }
 
 		//(elements+=Element | interactions+=Interaction)*
-		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
 		//elements+=Element
-		public Assignment getElementsAssignment_3_0() { return cElementsAssignment_3_0; }
+		public Assignment getElementsAssignment_1_0() { return cElementsAssignment_1_0; }
 
 		//Element
-		public RuleCall getElementsElementParserRuleCall_3_0_0() { return cElementsElementParserRuleCall_3_0_0; }
+		public RuleCall getElementsElementParserRuleCall_1_0_0() { return cElementsElementParserRuleCall_1_0_0; }
 
 		//interactions+=Interaction
-		public Assignment getInteractionsAssignment_3_1() { return cInteractionsAssignment_3_1; }
+		public Assignment getInteractionsAssignment_1_1() { return cInteractionsAssignment_1_1; }
 
 		//Interaction
-		public RuleCall getInteractionsInteractionParserRuleCall_3_1_0() { return cInteractionsInteractionParserRuleCall_3_1_0; }
+		public RuleCall getInteractionsInteractionParserRuleCall_1_1_0() { return cInteractionsInteractionParserRuleCall_1_1_0; }
 	}
 
 	public class ElementElements extends AbstractParserRuleElementFinder {
@@ -970,7 +974,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getNEGATIVEHyphenMinusKeyword_1_0() { return cNEGATIVEHyphenMinusKeyword_1_0; }
 	}
 	
-	private final VisualizationElements pVisualization;
+	private final VisualizationConfigurationElements pVisualizationConfiguration;
 	private final ElementElements pElement;
 	private final InteractionElements pInteraction;
 	private final EventElements pEvent;
@@ -1013,7 +1017,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaKExpressions = gaKExpressions;
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
-		this.pVisualization = new VisualizationElements();
+		this.pVisualizationConfiguration = new VisualizationConfigurationElements();
 		this.pElement = new ElementElements();
 		this.pInteraction = new InteractionElements();
 		this.pEvent = new EventElements();
@@ -1075,14 +1079,14 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//Visualization:
-	//	'image' ':' image=STRING (elements+=Element | interactions+=Interaction)*;
-	public VisualizationElements getVisualizationAccess() {
-		return pVisualization;
+	//VisualizationConfiguration:
+	//	('image' ':' image=STRING)? (elements+=Element | interactions+=Interaction)*;
+	public VisualizationConfigurationElements getVisualizationConfigurationAccess() {
+		return pVisualizationConfiguration;
 	}
 	
-	public ParserRule getVisualizationRule() {
-		return getVisualizationAccess().getRule();
+	public ParserRule getVisualizationConfigurationRule() {
+		return getVisualizationConfigurationAccess().getRule();
 	}
 
 	//Element:

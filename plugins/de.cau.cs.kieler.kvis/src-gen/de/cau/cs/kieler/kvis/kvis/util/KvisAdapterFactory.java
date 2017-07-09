@@ -75,9 +75,9 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
     new KvisSwitch<Adapter>()
     {
       @Override
-      public Adapter caseVisualization(Visualization object)
+      public Adapter caseVisualizationConfiguration(VisualizationConfiguration object)
       {
-        return createVisualizationAdapter();
+        return createVisualizationConfigurationAdapter();
       }
       @Override
       public Adapter caseElement(Element object)
@@ -192,16 +192,16 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Visualization <em>Visualization</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration <em>Visualization Configuration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration
    * @generated
    */
-  public Adapter createVisualizationAdapter()
+  public Adapter createVisualizationConfigurationAdapter()
   {
     return null;
   }

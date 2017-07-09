@@ -58,14 +58,14 @@ public interface KvisPackage extends EPackage
   KvisPackage eINSTANCE = de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl <em>Visualization</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl <em>Visualization Configuration</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl
-   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualizationConfiguration()
    * @generated
    */
-  int VISUALIZATION = 0;
+  int VISUALIZATION_CONFIGURATION = 0;
 
   /**
    * The feature id for the '<em><b>Image</b></em>' attribute.
@@ -74,7 +74,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VISUALIZATION__IMAGE = 0;
+  int VISUALIZATION_CONFIGURATION__IMAGE = 0;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list.
@@ -83,7 +83,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VISUALIZATION__ELEMENTS = 1;
+  int VISUALIZATION_CONFIGURATION__ELEMENTS = 1;
 
   /**
    * The feature id for the '<em><b>Interactions</b></em>' containment reference list.
@@ -92,16 +92,16 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VISUALIZATION__INTERACTIONS = 2;
+  int VISUALIZATION_CONFIGURATION__INTERACTIONS = 2;
 
   /**
-   * The number of structural features of the '<em>Visualization</em>' class.
+   * The number of structural features of the '<em>Visualization Configuration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION_FEATURE_COUNT = 3;
+  int VISUALIZATION_CONFIGURATION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ElementImpl <em>Element</em>}' class.
@@ -828,47 +828,47 @@ public interface KvisPackage extends EPackage
 
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Visualization <em>Visualization</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration <em>Visualization Configuration</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Visualization</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization
+   * @return the meta object for class '<em>Visualization Configuration</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration
    * @generated
    */
-  EClass getVisualization();
+  EClass getVisualizationConfiguration();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getImage <em>Image</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getImage <em>Image</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Image</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization#getImage()
-   * @see #getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getImage()
+   * @see #getVisualizationConfiguration()
    * @generated
    */
-  EAttribute getVisualization_Image();
+  EAttribute getVisualizationConfiguration_Image();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getElements <em>Elements</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Elements</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization#getElements()
-   * @see #getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getElements()
+   * @see #getVisualizationConfiguration()
    * @generated
    */
-  EReference getVisualization_Elements();
+  EReference getVisualizationConfiguration_Elements();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions <em>Interactions</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getInteractions <em>Interactions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Interactions</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions()
-   * @see #getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getInteractions()
+   * @see #getVisualizationConfiguration()
    * @generated
    */
-  EReference getVisualization_Interactions();
+  EReference getVisualizationConfiguration_Interactions();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Element <em>Element</em>}'.
@@ -1533,14 +1533,14 @@ public interface KvisPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl <em>Visualization</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl <em>Visualization Configuration</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl
-     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualization()
+     * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualizationConfiguration()
      * @generated
      */
-    EClass VISUALIZATION = eINSTANCE.getVisualization();
+    EClass VISUALIZATION_CONFIGURATION = eINSTANCE.getVisualizationConfiguration();
 
     /**
      * The meta object literal for the '<em><b>Image</b></em>' attribute feature.
@@ -1548,7 +1548,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VISUALIZATION__IMAGE = eINSTANCE.getVisualization_Image();
+    EAttribute VISUALIZATION_CONFIGURATION__IMAGE = eINSTANCE.getVisualizationConfiguration_Image();
 
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
@@ -1556,7 +1556,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VISUALIZATION__ELEMENTS = eINSTANCE.getVisualization_Elements();
+    EReference VISUALIZATION_CONFIGURATION__ELEMENTS = eINSTANCE.getVisualizationConfiguration_Elements();
 
     /**
      * The meta object literal for the '<em><b>Interactions</b></em>' containment reference list feature.
@@ -1564,7 +1564,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VISUALIZATION__INTERACTIONS = eINSTANCE.getVisualization_Interactions();
+    EReference VISUALIZATION_CONFIGURATION__INTERACTIONS = eINSTANCE.getVisualizationConfiguration_Interactions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ElementImpl <em>Element</em>}' class.

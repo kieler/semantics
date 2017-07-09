@@ -37,7 +37,7 @@ public class KVisParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getVisualizationAccess().getAlternatives_3(), "rule__Visualization__Alternatives_3");
+					put(grammarAccess.getVisualizationConfigurationAccess().getAlternatives_1(), "rule__VisualizationConfiguration__Alternatives_1");
 					put(grammarAccess.getActionAccess().getAlternatives(), "rule__Action__Alternatives");
 					put(grammarAccess.getAttributeMappingAccess().getAlternatives_2(), "rule__AttributeMapping__Alternatives_2");
 					put(grammarAccess.getComparisonAccess().getAlternatives_2(), "rule__Comparison__Alternatives_2");
@@ -67,7 +67,8 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-					put(grammarAccess.getVisualizationAccess().getGroup(), "rule__Visualization__Group__0");
+					put(grammarAccess.getVisualizationConfigurationAccess().getGroup(), "rule__VisualizationConfiguration__Group__0");
+					put(grammarAccess.getVisualizationConfigurationAccess().getGroup_0(), "rule__VisualizationConfiguration__Group_0__0");
 					put(grammarAccess.getElementAccess().getGroup(), "rule__Element__Group__0");
 					put(grammarAccess.getInteractionAccess().getGroup(), "rule__Interaction__Group__0");
 					put(grammarAccess.getInteractionAccess().getGroup_2(), "rule__Interaction__Group_2__0");
@@ -159,9 +160,9 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-					put(grammarAccess.getVisualizationAccess().getImageAssignment_2(), "rule__Visualization__ImageAssignment_2");
-					put(grammarAccess.getVisualizationAccess().getElementsAssignment_3_0(), "rule__Visualization__ElementsAssignment_3_0");
-					put(grammarAccess.getVisualizationAccess().getInteractionsAssignment_3_1(), "rule__Visualization__InteractionsAssignment_3_1");
+					put(grammarAccess.getVisualizationConfigurationAccess().getImageAssignment_0_2(), "rule__VisualizationConfiguration__ImageAssignment_0_2");
+					put(grammarAccess.getVisualizationConfigurationAccess().getElementsAssignment_1_0(), "rule__VisualizationConfiguration__ElementsAssignment_1_0");
+					put(grammarAccess.getVisualizationConfigurationAccess().getInteractionsAssignment_1_1(), "rule__VisualizationConfiguration__InteractionsAssignment_1_1");
 					put(grammarAccess.getElementAccess().getNameAssignment_1(), "rule__Element__NameAssignment_1");
 					put(grammarAccess.getElementAccess().getAnimationsAssignment_3(), "rule__Element__AnimationsAssignment_3");
 					put(grammarAccess.getInteractionAccess().getEventAssignment_2_1(), "rule__Interaction__EventAssignment_2_1");
@@ -286,7 +287,7 @@ public class KVisParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			de.cau.cs.kieler.kvis.ui.contentassist.antlr.internal.InternalKVisParser typedParser = (de.cau.cs.kieler.kvis.ui.contentassist.antlr.internal.InternalKVisParser) parser;
-			typedParser.entryRuleVisualization();
+			typedParser.entryRuleVisualizationConfiguration();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);

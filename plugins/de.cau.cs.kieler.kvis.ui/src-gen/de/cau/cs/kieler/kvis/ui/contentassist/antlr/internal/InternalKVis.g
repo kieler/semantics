@@ -57,25 +57,25 @@ import de.cau.cs.kieler.kvis.services.KVisGrammarAccess;
 
 
 
-// Entry rule entryRuleVisualization
-entryRuleVisualization 
+// Entry rule entryRuleVisualizationConfiguration
+entryRuleVisualizationConfiguration 
 :
-{ before(grammarAccess.getVisualizationRule()); }
-	 ruleVisualization
-{ after(grammarAccess.getVisualizationRule()); } 
+{ before(grammarAccess.getVisualizationConfigurationRule()); }
+	 ruleVisualizationConfiguration
+{ after(grammarAccess.getVisualizationConfigurationRule()); } 
 	 EOF 
 ;
 
-// Rule Visualization
-ruleVisualization
+// Rule VisualizationConfiguration
+ruleVisualizationConfiguration
     @init {
 		int stackSize = keepStackSize();
     }
 	:
 (
-{ before(grammarAccess.getVisualizationAccess().getGroup()); }
-(rule__Visualization__Group__0)
-{ after(grammarAccess.getVisualizationAccess().getGroup()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getGroup()); }
+(rule__VisualizationConfiguration__Group__0)
+{ after(grammarAccess.getVisualizationConfigurationAccess().getGroup()); }
 )
 
 ;
@@ -2162,21 +2162,21 @@ finally {
 
 
 
-rule__Visualization__Alternatives_3
+rule__VisualizationConfiguration__Alternatives_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getVisualizationAccess().getElementsAssignment_3_0()); }
-(rule__Visualization__ElementsAssignment_3_0)
-{ after(grammarAccess.getVisualizationAccess().getElementsAssignment_3_0()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getElementsAssignment_1_0()); }
+(rule__VisualizationConfiguration__ElementsAssignment_1_0)
+{ after(grammarAccess.getVisualizationConfigurationAccess().getElementsAssignment_1_0()); }
 )
 
     |(
-{ before(grammarAccess.getVisualizationAccess().getInteractionsAssignment_3_1()); }
-(rule__Visualization__InteractionsAssignment_3_1)
-{ after(grammarAccess.getVisualizationAccess().getInteractionsAssignment_3_1()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getInteractionsAssignment_1_1()); }
+(rule__VisualizationConfiguration__InteractionsAssignment_1_1)
+{ after(grammarAccess.getVisualizationConfigurationAccess().getInteractionsAssignment_1_1()); }
 )
 
 ;
@@ -2824,29 +2824,90 @@ finally {
 
 
 
-rule__Visualization__Group__0
+rule__VisualizationConfiguration__Group__0
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__Visualization__Group__0__Impl
-	rule__Visualization__Group__1
+	rule__VisualizationConfiguration__Group__0__Impl
+	rule__VisualizationConfiguration__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Visualization__Group__0__Impl
+rule__VisualizationConfiguration__Group__0__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getVisualizationAccess().getImageKeyword_0()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getGroup_0()); }
+(rule__VisualizationConfiguration__Group_0__0)?
+{ after(grammarAccess.getVisualizationConfigurationAccess().getGroup_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__VisualizationConfiguration__Group__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__VisualizationConfiguration__Group__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VisualizationConfiguration__Group__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getVisualizationConfigurationAccess().getAlternatives_1()); }
+(rule__VisualizationConfiguration__Alternatives_1)*
+{ after(grammarAccess.getVisualizationConfigurationAccess().getAlternatives_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
+
+
+rule__VisualizationConfiguration__Group_0__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__VisualizationConfiguration__Group_0__0__Impl
+	rule__VisualizationConfiguration__Group_0__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__VisualizationConfiguration__Group_0__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getVisualizationConfigurationAccess().getImageKeyword_0_0()); }
 
 	'image' 
 
-{ after(grammarAccess.getVisualizationAccess().getImageKeyword_0()); }
+{ after(grammarAccess.getVisualizationConfigurationAccess().getImageKeyword_0_0()); }
 )
 
 ;
@@ -2855,29 +2916,29 @@ finally {
 }
 
 
-rule__Visualization__Group__1
+rule__VisualizationConfiguration__Group_0__1
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__Visualization__Group__1__Impl
-	rule__Visualization__Group__2
+	rule__VisualizationConfiguration__Group_0__1__Impl
+	rule__VisualizationConfiguration__Group_0__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Visualization__Group__1__Impl
+rule__VisualizationConfiguration__Group_0__1__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getVisualizationAccess().getColonKeyword_1()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getColonKeyword_0_1()); }
 
 	':' 
 
-{ after(grammarAccess.getVisualizationAccess().getColonKeyword_1()); }
+{ after(grammarAccess.getVisualizationConfigurationAccess().getColonKeyword_0_1()); }
 )
 
 ;
@@ -2886,63 +2947,32 @@ finally {
 }
 
 
-rule__Visualization__Group__2
+rule__VisualizationConfiguration__Group_0__2
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__Visualization__Group__2__Impl
-	rule__Visualization__Group__3
+	rule__VisualizationConfiguration__Group_0__2__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Visualization__Group__2__Impl
+rule__VisualizationConfiguration__Group_0__2__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getVisualizationAccess().getImageAssignment_2()); }
-(rule__Visualization__ImageAssignment_2)
-{ after(grammarAccess.getVisualizationAccess().getImageAssignment_2()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getImageAssignment_0_2()); }
+(rule__VisualizationConfiguration__ImageAssignment_0_2)
+{ after(grammarAccess.getVisualizationConfigurationAccess().getImageAssignment_0_2()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
-
-
-rule__Visualization__Group__3
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Visualization__Group__3__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Visualization__Group__3__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getVisualizationAccess().getAlternatives_3()); }
-(rule__Visualization__Alternatives_3)*
-{ after(grammarAccess.getVisualizationAccess().getAlternatives_3()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
 
 
 
@@ -10559,14 +10589,14 @@ finally {
 
 
 
-rule__Visualization__ImageAssignment_2
+rule__VisualizationConfiguration__ImageAssignment_0_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getVisualizationAccess().getImageSTRINGTerminalRuleCall_2_0()); }
-	RULE_STRING{ after(grammarAccess.getVisualizationAccess().getImageSTRINGTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getImageSTRINGTerminalRuleCall_0_2_0()); }
+	RULE_STRING{ after(grammarAccess.getVisualizationConfigurationAccess().getImageSTRINGTerminalRuleCall_0_2_0()); }
 )
 
 ;
@@ -10574,14 +10604,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Visualization__ElementsAssignment_3_0
+rule__VisualizationConfiguration__ElementsAssignment_1_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getVisualizationAccess().getElementsElementParserRuleCall_3_0_0()); }
-	ruleElement{ after(grammarAccess.getVisualizationAccess().getElementsElementParserRuleCall_3_0_0()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getElementsElementParserRuleCall_1_0_0()); }
+	ruleElement{ after(grammarAccess.getVisualizationConfigurationAccess().getElementsElementParserRuleCall_1_0_0()); }
 )
 
 ;
@@ -10589,14 +10619,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Visualization__InteractionsAssignment_3_1
+rule__VisualizationConfiguration__InteractionsAssignment_1_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getVisualizationAccess().getInteractionsInteractionParserRuleCall_3_1_0()); }
-	ruleInteraction{ after(grammarAccess.getVisualizationAccess().getInteractionsInteractionParserRuleCall_3_1_0()); }
+{ before(grammarAccess.getVisualizationConfigurationAccess().getInteractionsInteractionParserRuleCall_1_1_0()); }
+	ruleInteraction{ after(grammarAccess.getVisualizationConfigurationAccess().getInteractionsInteractionParserRuleCall_1_1_0()); }
 )
 
 ;

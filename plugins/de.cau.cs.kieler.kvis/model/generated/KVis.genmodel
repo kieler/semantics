@@ -58,11 +58,10 @@
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationTypeName/MOVEMENT"/>
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationTypeName/VISIBILITY"/>
     </genEnums>
-    <genClasses ecoreClass="KVis.ecore#//Visualization">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/image"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/elements"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/interactions"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/file"/>
+    <genClasses ecoreClass="KVis.ecore#//VisualizationConfiguration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//VisualizationConfiguration/image"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//VisualizationConfiguration/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//VisualizationConfiguration/interactions"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Element">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Element/name"/>
@@ -140,6 +139,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AndExpression/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/right"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//Visualization">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/image"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/interactions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/file"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Value">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Value/value"/>

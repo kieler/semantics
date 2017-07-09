@@ -72,10 +72,10 @@ public class KvisSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case KvisPackage.VISUALIZATION:
+      case KvisPackage.VISUALIZATION_CONFIGURATION:
       {
-        Visualization visualization = (Visualization)theEObject;
-        T result = caseVisualization(visualization);
+        VisualizationConfiguration visualizationConfiguration = (VisualizationConfiguration)theEObject;
+        T result = caseVisualizationConfiguration(visualizationConfiguration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -212,17 +212,17 @@ public class KvisSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Visualization</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Visualization Configuration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Visualization</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Visualization Configuration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseVisualization(Visualization object)
+  public T caseVisualizationConfiguration(VisualizationConfiguration object)
   {
     return null;
   }

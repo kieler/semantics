@@ -51,7 +51,7 @@ import de.cau.cs.kieler.kvis.services.KVisGrammarAccess;
     
     @Override
     protected String getFirstRuleName() {
-    	return "Visualization";	
+    	return "VisualizationConfiguration";	
    	}
    	
    	@Override
@@ -70,37 +70,37 @@ import de.cau.cs.kieler.kvis.services.KVisGrammarAccess;
 
 
 
-// Entry rule entryRuleVisualization
-entryRuleVisualization returns [EObject current=null] 
+// Entry rule entryRuleVisualizationConfiguration
+entryRuleVisualizationConfiguration returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getVisualizationRule()); }
-	 iv_ruleVisualization=ruleVisualization 
-	 { $current=$iv_ruleVisualization.current; } 
+	{ newCompositeNode(grammarAccess.getVisualizationConfigurationRule()); }
+	 iv_ruleVisualizationConfiguration=ruleVisualizationConfiguration 
+	 { $current=$iv_ruleVisualizationConfiguration.current; } 
 	 EOF 
 ;
 
-// Rule Visualization
-ruleVisualization returns [EObject current=null] 
+// Rule VisualizationConfiguration
+ruleVisualizationConfiguration returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='image' 
+((	otherlv_0='image' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getVisualizationAccess().getImageKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getVisualizationConfigurationAccess().getImageKeyword_0_0());
     }
 	otherlv_1=':' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getVisualizationAccess().getColonKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getVisualizationConfigurationAccess().getColonKeyword_0_1());
     }
 (
 (
 		lv_image_2_0=RULE_STRING
 		{
-			newLeafNode(lv_image_2_0, grammarAccess.getVisualizationAccess().getImageSTRINGTerminalRuleCall_2_0()); 
+			newLeafNode(lv_image_2_0, grammarAccess.getVisualizationConfigurationAccess().getImageSTRINGTerminalRuleCall_0_2_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getVisualizationRule());
+	            $current = createModelElement(grammarAccess.getVisualizationConfigurationRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -110,14 +110,14 @@ ruleVisualization returns [EObject current=null]
 	    }
 
 )
-)((
+))?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getVisualizationAccess().getElementsElementParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getVisualizationConfigurationAccess().getElementsElementParserRuleCall_1_0_0()); 
 	    }
 		lv_elements_3_0=ruleElement		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getVisualizationRule());
+	            $current = createModelElementForParent(grammarAccess.getVisualizationConfigurationRule());
 	        }
        		add(
        			$current, 
@@ -132,11 +132,11 @@ ruleVisualization returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getVisualizationAccess().getInteractionsInteractionParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getVisualizationConfigurationAccess().getInteractionsInteractionParserRuleCall_1_1_0()); 
 	    }
 		lv_interactions_4_0=ruleInteraction		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getVisualizationRule());
+	            $current = createModelElementForParent(grammarAccess.getVisualizationConfigurationRule());
 	        }
        		add(
        			$current, 

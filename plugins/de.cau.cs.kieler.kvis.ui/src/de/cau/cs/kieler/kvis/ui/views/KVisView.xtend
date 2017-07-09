@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.kvis.ui.views
 
 import com.google.common.io.Files
-import de.cau.cs.kieler.kvis.kvis.Visualization
+import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration
 import de.cau.cs.kieler.kvis.ui.KVisUiModule
 import de.cau.cs.kieler.kvis.ui.animations.AnimationHandler
 import de.cau.cs.kieler.kvis.ui.animations.ColorAnimation
@@ -83,7 +83,7 @@ class KVisView extends ViewPart {
     private var IResourceChangeListener resourceChangeListener
     private var boolean updateAfterRendering
     private var boolean isImageUnchanged
-    private var Visualization kvisConfig
+    private var VisualizationConfiguration kvisConfig
     private var IFile kvisFile
     private var IFile svgImage
     @Accessors(PUBLIC_GETTER)
@@ -136,7 +136,7 @@ class KVisView extends ViewPart {
             }
             val model = ModelImporter.load(file)
             if (model != null) {
-                if (model instanceof Visualization) {
+                if (model instanceof VisualizationConfiguration) {
                     kvisConfig = model
                     kvisFile = file
                     currentFileLabel.text = kvisFile.name
@@ -165,7 +165,7 @@ class KVisView extends ViewPart {
         }
     }
     
-    private def void createInteractionHandlers(Visualization model) {
+    private def void createInteractionHandlers(VisualizationConfiguration model) {
         interactionHandlers = newArrayList
         for(interaction : model.interactions) {
             val interactionHandler = new InteractionHandler(interaction)
@@ -173,7 +173,7 @@ class KVisView extends ViewPart {
         }
     }
     
-    private def void createAnimationHandlers(Visualization model) {
+    private def void createAnimationHandlers(VisualizationConfiguration model) {
         animationHandlers = newArrayList
         for (element : model.elements) {
             for (animation : element.animations) {

@@ -8,23 +8,23 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Visualization</b></em>'.
+ * A representation of the model object '<em><b>Visualization Configuration</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.Visualization#getImage <em>Image</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.Visualization#getElements <em>Elements</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions <em>Interactions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getImage <em>Image</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getElements <em>Elements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getInteractions <em>Interactions</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualization()
+ * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualizationConfiguration()
  * @model
  * @generated
  */
-public interface Visualization extends EObject
+public interface VisualizationConfiguration extends EObject
 {
   /**
    * Returns the value of the '<em><b>Image</b></em>' attribute.
@@ -36,14 +36,14 @@ public interface Visualization extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Image</em>' attribute.
    * @see #setImage(String)
-   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualization_Image()
+   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualizationConfiguration_Image()
    * @model
    * @generated
    */
   String getImage();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getImage <em>Image</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getImage <em>Image</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Image</em>' attribute.
@@ -62,7 +62,7 @@ public interface Visualization extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' containment reference list.
-   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualization_Elements()
+   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualizationConfiguration_Elements()
    * @model containment="true"
    * @generated
    */
@@ -78,10 +78,10 @@ public interface Visualization extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Interactions</em>' containment reference list.
-   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualization_Interactions()
+   * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getVisualizationConfiguration_Interactions()
    * @model containment="true"
    * @generated
    */
   EList<Interaction> getInteractions();
 
-} // Visualization
+} // VisualizationConfiguration
