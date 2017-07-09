@@ -43,7 +43,6 @@ public class XMIModelParser {
         boolean name = false;
         boolean value = false;  // is true after the first " 
         boolean beforeValue = false; // is true before the first " 
-        boolean content = false;
         
         StringBuilder typePart = new StringBuilder();
         StringBuilder namePart = new StringBuilder();
@@ -104,7 +103,6 @@ public class XMIModelParser {
                     name = true; // Next is an attribute name
                 } else {
                     contentPart = new StringBuilder(); // Delete part for next time
-                    content = true; // Possible content is next
                 }
                 skip = true;
             }
@@ -128,7 +126,6 @@ public class XMIModelParser {
             if (!skip && !value && name && character == '>') {
                 name = false;
                 contentPart = new StringBuilder(); // Delete part for next time
-                content = true; // Possible content is next
                 skip = true;
             }
             // End of attribute name
