@@ -302,7 +302,7 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         }
         else {
             // Try to load SCCharts model
-            XMIResourceImpl inputResource = new XMIResourceImpl(input);            
+            PTCXMIResourceImpl inputResource = new PTCXMIResourceImpl(input);            
             // Load SCCharts model
             try {
                 inputResource.load(null);
@@ -317,6 +317,7 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         model.eResource().unload();
 
         // Set destination uri
+        System.out.println("INPUT: " +  originalInput.toString());
         output = URI.createURI(originalInput.toString());
         output = output.trimFragment();
         output = output.trimFileExtension().appendFileExtension(getTargetExtension(model, event, selection));
@@ -354,23 +355,8 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
 
             // Save text
             if (transformedObject instanceof CharSequence) {
-                IPath txtOutputPath = new Path(output.toPlatformString(false).replace("%20", " "));
-                IFile txtOutputFile = ModelUtil.convertIPathToIFile(txtOutputPath);
-                String txtOutputString = ModelUtil.getAbsoluteFilePath(txtOutputFile);
-
-                CharSequence charSequenceContent = (CharSequence) transformedObject;
-                String stringContent = charSequenceContent.toString();
-
-                // Write out model/program
-                FileWriter fileWriter2 = new FileWriter(txtOutputString);
-                if (fileWriter2 != null) {
-                    BufferedWriter out2 = new BufferedWriter(fileWriter2);
-                    if (out2 != null) {
-                        out2.write(stringContent);
-                        out2.close();
-                    }
-                }
-
+                String text = ((CharSequence) transformedObject).toString();
+                saveToFile(output, text);
             }
 
             // Open associated editor, if necessary
@@ -395,6 +381,27 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
 
     }
 
+    
+    protected void saveToFile(URI output, String text) throws IOException {
+        IPath txtOutputPath = new Path(output.toPlatformString(false).replace("%20", " "));
+        IFile txtOutputFile = ModelUtil.convertIPathToIFile(txtOutputPath);
+        String txtOutputString = ModelUtil.getAbsoluteFilePath(txtOutputFile);
+
+        CharSequence charSequenceContent = (CharSequence) text;
+        String stringContent = charSequenceContent.toString();
+
+        // Write out model/program
+        FileWriter fileWriter2 = new FileWriter(txtOutputString);
+        if (fileWriter2 != null) {
+            BufferedWriter out2 = new BufferedWriter(fileWriter2);
+            if (out2 != null) {
+                out2.write(stringContent);
+                out2.close();
+            }
+        }
+    }
+    
+    
     /**
      * This method calls the method to opens an editor for a model in the context of the ui thread.
      * 

@@ -42,26 +42,12 @@
             name="PTCImport">
       </command>
    </extension>
-   <extension
-         point="org.eclipse.uml2.uml.dynamic_package">
-      <profile
-            uri="System_Architecture_Profile">
-      </profile>
-      <profile
-            uri="System_Architecture_Profile:interface_device">
-      </profile>
-      <profile
-            uri="C_plus_plus_Profile">
-      </profile>
-      <profile
-            uri="C_plus_plus_Profile:C_plus_plus_Class">
-      </profile>
-      <profile
-            uri="ACS_Profile">
-      </profile>
-      <profile
-            uri="ACS_Profile:ACSProfile">
-      </profile>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated XMIModel -->
+      <package
+            uri="http://www.cau.de/cs/kieler/sccharts/ptc/model/XMIModel"
+            class="de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage"
+            genModel="model/XMIModel.genmodel"/>
    </extension>
 
 </plugin>

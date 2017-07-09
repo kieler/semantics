@@ -1,12 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: PTC Integrity Modeler Import
+Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.ptc;singleton:=true
 Bundle-Version: 0.1.0.qualifier
+Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.sccharts.ptc.SCChartsPTCPlugin
-Bundle-Vendor: Kiel University
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.sccharts,
  org.eclipse.emf.ecore.xmi;bundle-version="2.12.0",
  com.google.inject;bundle-version="3.0.0",
@@ -25,5 +28,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.workspace;bundle-version="1.5.1",
  org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel,
+ de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl,
+ de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.util
 Bundle-ActivationPolicy: lazy
 

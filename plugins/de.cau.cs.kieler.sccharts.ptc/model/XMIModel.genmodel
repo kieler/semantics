@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.sccharts.ptc/src" editDirectory="/de.cau.cs.kieler.sccharts.ptc.xmi.edit/src"
+    editorDirectory="/de.cau.cs.kieler.sccharts.ptc.xmi.editor/src" modelPluginID="de.cau.cs.kieler.sccharts.ptc"
+    modelName="XMIModel" modelPluginClass="" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testsDirectory="/de.cau.cs.kieler.sccharts.ptc.xmi.tests/src" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="8.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.sccharts.ptc"
+    editorPluginID="de.cau.cs.kieler.sccharts.ptc" testsPluginID="de.cau.cs.kieler.sccharts.ptc"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>XMIModel.ecore</foreignModel>
+  <genPackages prefix="XMIModel" basePackage="de.cau.cs.kieler.sccharts.ptc.xmi" disposableProviderFactory="true"
+      ecorePackage="XMIModel.ecore#/">
+    <genClasses ecoreClass="XMIModel.ecore#//Container">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute XMIModel.ecore#//Container/Type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference XMIModel.ecore#//Container/Children"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference XMIModel.ecore#//Container/Attributes"/>
+    </genClasses>
+    <genClasses ecoreClass="XMIModel.ecore#//Attribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute XMIModel.ecore#//Attribute/Name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute XMIModel.ecore#//Attribute/Value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
