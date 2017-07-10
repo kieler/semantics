@@ -19,22 +19,12 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.scest.extensions.SCEstExtension
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import de.cau.cs.kieler.esterel.esterel.Run
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.esterel.ISignal
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
-import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
-import de.cau.cs.kieler.esterel.esterel.TypeRenaming
-import de.cau.cs.kieler.esterel.esterel.TaskRenaming
-import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
 import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.esterel.esterel.Function
-import de.cau.cs.kieler.esterel.esterel.Procedure
-import de.cau.cs.kieler.esterel.esterel.Type
-import de.cau.cs.kieler.esterel.esterel.Task
 import java.util.LinkedList
 import de.cau.cs.kieler.esterel.esterel.Emit
 import de.cau.cs.kieler.esterel.esterel.Exec
@@ -45,6 +35,20 @@ import de.cau.cs.kieler.esterel.scest.scest.Set
 import de.cau.cs.kieler.esterel.esterel.ModuleRenaming
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.esterel.Constant
+import de.cau.cs.kieler.esterel.esterel.Module
+import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
+import de.cau.cs.kieler.esterel.esterel.SensorWithType
+//import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
+//import de.cau.cs.kieler.esterel.esterel.TypeRenaming
+//import de.cau.cs.kieler.esterel.esterel.TaskRenaming
+//import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
+//import de.cau.cs.kieler.kexpressions.ValuedObject
+//import de.cau.cs.kieler.esterel.esterel.Function
+//import de.cau.cs.kieler.esterel.esterel.Procedure
+//import de.cau.cs.kieler.esterel.esterel.Type
+//import de.cau.cs.kieler.esterel.esterel.Task
+
 
 /**
  * @author mrb
@@ -75,12 +79,14 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     extension SCEstExtension
         
     var signalRenamings = new HashMap<ISignal, ISignal>
-    var constantRenamings = new HashMap<ValuedObject, ValuedObject>
+    var constantRenamings = new HashMap<Constant, ConstantRenaming>
 //    var functionRenamings = new HashMap<Function, Function>
 //    var procedureRenamings = new HashMap<Procedure, Procedure>
 //    var typeRenamings = new HashMap<Type, Type>
 //    var taskRenamings = new HashMap<Task, Task> 
     var parentSignals = new HashMap<String, ISignal>
+    var parentConstants = new HashMap<String, Constant>
+    var parentSensors = new HashMap<String, ISignal>
     var valuedObjectReferences = new LinkedList<ValuedObjectReference>
     var constantExpressions = new LinkedList<ConstantExpression>
     var emits = new LinkedList<Emit>
@@ -91,13 +97,14 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     def SCEstProgram transform(SCEstProgram prog) {
         prog.modules.forEach [ m | 
             m.getSignals
+            m.getConstants
             m.findRunStatements
             clearMapsLists
         ]
         return prog
     }
     
-    def void getSignals(SCEstModule parentModule) {
+    def void getSignals(Module parentModule) {
         for (signalDecl : parentModule.intSignalDecls) {
             for (signal : signalDecl.signals) {
                 parentSignals.put(signal.name, signal)
@@ -105,14 +112,24 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         }
     }
     
-    def findRunStatements(SCEstModule parentModule) {
+    def void getConstants(Module parentModule) {
+        for (decls : parentModule.intConstantDecls) {
+            for (oneTypeDecl : decls.constants) {
+                for (constant : oneTypeDecl.constants) {
+                    parentConstants.put(constant.name, constant)
+                }
+            }
+        }
+    }
+    
+    def findRunStatements(Module parentModule) {
         var runStatements = parentModule.eAllContents.filter(Run).toList
         for (r : runStatements) {
             transformRunStatement(r, parentModule)
         }
     }
     
-    def transformRunStatement(Run run, SCEstModule parentModule) {
+    def transformRunStatement(Run run, Module parentModule) {
         var statementList = run.containingList
         var pos = statementList.indexOf(run)
         var runCopy = EcoreUtil.copy(run)
@@ -133,6 +150,13 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         
         // SIGNALS
         moduleRenaming = moduleRenaming.transformSignals
+        // CONSTANTS
+        moduleRenaming = transformConstants(moduleRenaming, parentModule)
+        // SENSORS
+        moduleRenaming = transformSensors(moduleRenaming, parentModule)
+        
+        scope.statements.add(moduleRenaming.module.statements)
+        statementList.set(pos, scope)        
         
         // TYPES, FUNCTIONS, PROCEDURES, TASKS will not be transformed
         // because they get thrown away anyway
@@ -150,6 +174,8 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
 //        typeRenamings.clear
 //        taskRenamings.clear
         parentSignals.clear
+        parentConstants.clear
+        parentSensors.clear
         valuedObjectReferences.clear
         emits.clear
         unemits.clear
@@ -171,7 +197,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                             signalRenamings.put(renaming.oldName, renaming.newName)
                         }
                         ConstantRenaming: {
-                            constantRenamings.put(renaming.oldName, renaming.newName)
+                            constantRenamings.put(renaming.oldName, renaming)
                         }
 //                        FunctionRenaming: {
 //                            functionRenamings.put(renaming.oldName, renaming.newName)
@@ -204,6 +230,22 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         if (correspondingSignal instanceof ISignal) {
             if (correspondingSignal.type == type) {
                 return correspondingSignal
+            }
+        }
+        return null
+    }
+    
+    /**
+     * Check if a sensor already exists by a given name and type
+     * 
+     * @param name The name of the sensor
+     * @param type The type of the sensor
+     */
+    def ISignal checkIfSensorExistsByNameAndType(String name, ValueType type) {
+        var correspondingSensor = parentConstants.get(name)
+        if (correspondingSensor instanceof ISignal) {
+            if ((correspondingSensor.eContainer as SensorWithType).type?.type == type) {
+                return correspondingSensor
             }
         }
         return null
@@ -290,6 +332,81 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                 }
                 else {
                     throw new UnsupportedOperationException("There is no corresponding signal in the parent module for " + signal.name + "!")
+                }
+            }
+        }
+        return moduleRenaming
+    }
+    
+    /**
+     * Transform all renamings for the constants and all references from the old to the new constants
+     * 
+     * @param moduleRenaming ModuleRenaming of a run statement
+     * @param parentModule The parent module where the constants will be copied to
+     */
+    def ModuleRenaming transformConstants(ModuleRenaming moduleRenaming, Module parentModule) {
+        for (decl : moduleRenaming.module.intConstantDecls) {
+            for (oneTypeConstants : decl.constants) {
+                for (var i=0; i<oneTypeConstants.constants.length; i++) {
+                    var constant = oneTypeConstants.constants.get(i)
+                    var updateReferences = true
+                    var ConstantRenaming relatedConstantRenaming
+                    if (constantRenamings.containsKey(constant)) {
+                        relatedConstantRenaming = constantRenamings.get(constant)
+                        if (relatedConstantRenaming.newName != null) {
+                            updateReferences = true
+                        }
+                        else {
+                            constant.value = relatedConstantRenaming.newValue
+                            updateReferences = false
+                        }
+                    }
+                    else {
+                        updateReferences = false
+                    }
+                    if (updateReferences) {
+                        for (voRef : valuedObjectReferences) {
+                            if (voRef.valuedObject == constant) {
+                                voRef.valuedObject = relatedConstantRenaming.newName
+                            }
+                        }
+                        for (expr : constantExpressions) {
+                            if (expr.constant == constant) {
+                                expr.constant = relatedConstantRenaming.newName
+                            }
+                        }
+                    }
+                    else {
+                        constant.name = createNewUniqueConstantName(constant.name)
+                        parentModule.intConstantDecls.add(createConstantDecl(constant, (constant.eContainer as OneTypeConstantDecls).type))
+                    }
+                    
+                }
+            }
+        }
+        return moduleRenaming
+    }
+    
+    /**
+     * Transform all references from the old to the new sensor or just copy sensor to parent module
+     * 
+     * @param moduleRenaming ModuleRenaming of a run statement
+     * @param parentModule The parent module where the sensors will be copied to
+     */
+    def transformSensors(ModuleRenaming moduleRenaming, Module parentModule) {
+        for (decl : moduleRenaming.module.intSensorDecls) {
+            for (var i=0; i<decl.sensors.length; i++) {
+                var sensorWType = decl.sensors.get(i)
+                var sensor = checkIfSensorExistsByNameAndType(sensorWType.sensor.name, sensorWType.type?.type)
+                if (sensor instanceof ISignal) {
+                    for (voRef : valuedObjectReferences) {
+                        if (voRef.valuedObject == sensorWType.sensor) {
+                            voRef.valuedObject = sensor
+                        }
+                    }
+                }
+                else {
+                    parentModule.intSensorDecls.add(createSensorDecl(sensorWType))
                 }
             }
         }

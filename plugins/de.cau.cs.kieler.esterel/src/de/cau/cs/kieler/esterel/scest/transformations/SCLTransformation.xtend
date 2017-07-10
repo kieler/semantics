@@ -18,7 +18,6 @@ import de.cau.cs.kieler.esterel.scest.features.SCEstFeature
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import com.google.common.collect.Sets
@@ -26,6 +25,7 @@ import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.scl.features.SCLFeatures
 import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.esterel.esterel.Module
 
 /**
  * @author mrb
@@ -86,7 +86,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
         return sclProg
     }
     
-    def transformModule(SCEstModule module, SCLProgram prog) {
+    def transformModule(Module module, SCLProgram prog) {
         if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
             (module.statements.get(0) as ScopeStatement).renameIScope(module.name)
             prog.statements.add( module.statements.get(0) )
@@ -97,7 +97,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
         }
     }
     
-    def removeLocalSignalsAndVariables(SCEstModule module) {
+    def removeLocalSignalsAndVariables(Module module) {
         var localVariables = module.eAllContents.toList.filter(LocalVariable)
         var localSignals = module.eAllContents.toList.filter(LocalSignalDecl)
         // remove original local IVariables
@@ -126,7 +126,7 @@ class SCLTransformation extends AbstractExpansionTransformation implements Trace
         }
     }
     
-    def removeDepthAnnotations(SCEstModule module) {
+    def removeDepthAnnotations(Module module) {
         var annotationList = module.eAllContents.toList.filter(Annotation)
         for (a : annotationList) {
             if (a.isGenerated) {

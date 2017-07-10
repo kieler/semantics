@@ -34,9 +34,8 @@ import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.EveryDo
 import de.cau.cs.kieler.esterel.esterel.Suspend
-import de.cau.cs.kieler.esterel.esterel.Program
-import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
+import de.cau.cs.kieler.esterel.esterel.Run
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author mrb
@@ -165,6 +164,13 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
                 (statement as IfTest).elseif.forEach [ elsif | transformStatements(elsif.thenStatements, depth+1)]
             }
             transformStatements((statement as IfTest).elseStatements, depth+1)
+        }
+        else if (statement instanceof Run) {
+            var statements = statement.containingList
+            var pos = statements.indexOf(statement)
+            var runCopy = EcoreUtil.copy(statement)
+            transformStatements(runCopy.module.module.statements, depth+1)
+            statements.set(pos, runCopy)
         }
         return statement
     }

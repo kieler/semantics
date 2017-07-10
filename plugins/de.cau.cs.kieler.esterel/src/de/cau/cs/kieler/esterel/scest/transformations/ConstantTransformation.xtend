@@ -66,7 +66,7 @@ class ConstantTransformation extends AbstractExpansionTransformation implements 
     extension SCEstExtension
     
     def SCEstProgram transform(SCEstProgram prog) {
-        prog.modules.forEach [ m | m.transformConstants]
+        prog.modules.forEach [ m | (m as SCEstModule).transformConstants]
         return prog
     }
     

@@ -25,9 +25,9 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import de.cau.cs.kieler.esterel.esterel.ISignal
+import de.cau.cs.kieler.esterel.esterel.Module
 
 /**
  * @author mrb
@@ -67,7 +67,7 @@ class SensorTransformation extends AbstractExpansionTransformation implements Tr
         return prog
     }
     
-    def transformSensors(SCEstModule module) {
+    def transformSensors(Module module) {
         // this map combines an Esterel sensor with the new SCL variable
         var HashMap<ISignal, ValuedObject> newVariables = new HashMap<ISignal, ValuedObject>()
         var ScopeStatement scope = module.getIScope

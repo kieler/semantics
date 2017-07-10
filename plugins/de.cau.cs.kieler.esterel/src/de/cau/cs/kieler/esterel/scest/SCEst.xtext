@@ -307,9 +307,6 @@ LocalVariable returns esterel::LocalVariable:
     ( (statements+=SCEstStatement ";" | statements+=MetaStatement)* statements+=SCEstStatement? ) 
     "end" "var"?;
     
-ModuleRenaming:
-       module=[SCEstModule|ID] 
-    | (newName=ID "/" module=[SCEstModule|ID]);    
     
 /* ###################################################
  * ###               7.6 Old Syntax                ###

@@ -87,7 +87,7 @@ ConstantDecls:
 OneTypeConstantDecls:
     constants+=Constant ("," constants+=Constant)* ":" type=TypeIdentifier;
 
-Constant returns kexpressions::ValuedObject:
+Constant:
     {Constant} name=ID ("=" value=ConstantValue)?;
 
 ConstantValue:

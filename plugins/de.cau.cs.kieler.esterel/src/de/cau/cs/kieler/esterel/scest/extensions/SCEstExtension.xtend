@@ -65,6 +65,10 @@ import de.cau.cs.kieler.esterel.scest.scest.Set
 import de.cau.cs.kieler.esterel.esterel.SignalReferenceExpr
 import de.cau.cs.kieler.esterel.esterel.TrapHandler
 import de.cau.cs.kieler.esterel.scest.scest.ScestFactory
+import de.cau.cs.kieler.esterel.esterel.Constant
+import de.cau.cs.kieler.esterel.esterel.TypeIdentifier
+import de.cau.cs.kieler.esterel.esterel.SensorWithType
+import de.cau.cs.kieler.esterel.esterel.Module
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -424,6 +428,16 @@ class SCEstExtension {
         else {
             "s" + signalSuffix
         }
+    }
+    
+    /**
+     * Returns an unused constant name. String: ( name + "_" + "C" + counter )
+     * @param name The name of the previous constant
+     * @return Returns an unused constant name. String: ( name + "_" + C" + counter )
+     */
+    def createNewUniqueConstantName(String name) {
+        constantSuffix++
+        name + "_" + "C" + constantSuffix 
     }
 
     /**
@@ -1497,7 +1511,7 @@ class SCEstExtension {
      * 
      * @param module The module which is searched for the interface scope
      */
-    def ScopeStatement getIScope(SCEstModule module) {
+    def ScopeStatement getIScope(Module module) {
         var ScopeStatement scope
         // check whether there is already a scope for the interface declarations or not
         if (module.statements.length == 1 && module.statements.get(0).isInterfaceScope() ) {
@@ -1573,5 +1587,30 @@ class SCEstExtension {
             ])
     } 
     
+    /**
+     * Create new constant declaration with a TypeIdentifier and Constant
+     * 
+     * @param constant The constant
+     * @param type The TypeIdentifier
+     */
+    def createConstantDecl(Constant constant, TypeIdentifier type) {
+        EsterelFactory::eINSTANCE.createConstantDecls => [
+            it.constants.add(EsterelFactory::eINSTANCE.createOneTypeConstantDecls => [
+                it.type = EcoreUtil.copy(type)
+                it.constants.add(constant)
+            ])
+        ]
+    }
+    
+    /**
+     * Create new sensor declaration with a given sensor with type
+     * 
+     * @param swt The SensorWithType object
+     */
+    def createSensorDecl(SensorWithType swt) {
+        EsterelFactory::eINSTANCE.createSensorDecl => [
+            it.sensors.add(swt)
+        ]
+    }
  
 }

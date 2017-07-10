@@ -41,12 +41,12 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.esterel.Input
 import de.cau.cs.kieler.esterel.esterel.Output
 import de.cau.cs.kieler.esterel.esterel.InputOutput
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
 import de.cau.cs.kieler.scl.scl.ScopeStatement
 import java.util.HashMap
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Module
 
 /**
  * @author mrb
@@ -99,7 +99,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
         return prog
     }
     
-    def transformSignals(EList<InterfaceSignalDecl> signalDecl, SCEstModule module) {
+    def transformSignals(EList<InterfaceSignalDecl> signalDecl, Module module) {
         var ScopeStatement scope = module.getIScope
         for (interfaceSD : signalDecl) {
             for (signal : interfaceSD.signals) {
