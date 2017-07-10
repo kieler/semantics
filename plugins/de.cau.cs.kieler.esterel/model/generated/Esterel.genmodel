@@ -41,6 +41,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/constants"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/type"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Constant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Constant/value"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//FunctionDecl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionDecl/annotations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionDecl/functions"/>
@@ -261,9 +264,6 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//EsterelType">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelType/estType"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Constant">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Constant/value"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Input"/>
     <genClasses ecoreClass="Esterel.ecore#//Output"/>

@@ -7953,7 +7953,7 @@ ruleConstantRenaming returns [EObject current=null]
         }
 	otherlv_0=RULE_ID
 	{
-		newLeafNode(otherlv_0, grammarAccess.getConstantRenamingAccess().getNewNameValuedObjectCrossReference_0_0_0()); 
+		newLeafNode(otherlv_0, grammarAccess.getConstantRenamingAccess().getNewNameConstantCrossReference_0_0_0()); 
 	}
 
 )
@@ -7992,7 +7992,7 @@ ruleConstantRenaming returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getConstantRenamingAccess().getOldNameValuedObjectCrossReference_2_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getConstantRenamingAccess().getOldNameConstantCrossReference_2_0()); 
 	}
 
 )

@@ -66,6 +66,7 @@ public class ScestFactoryImpl extends EFactoryImpl implements ScestFactory
     {
       case ScestPackage.SC_EST_PROGRAM: return createSCEstProgram();
       case ScestPackage.SC_EST_MODULE: return createSCEstModule();
+      case ScestPackage.MODULE_RENAMING: return createModuleRenaming();
       case ScestPackage.UN_EMIT: return createUnEmit();
       case ScestPackage.SET: return createSet();
       default:
@@ -93,6 +94,17 @@ public class ScestFactoryImpl extends EFactoryImpl implements ScestFactory
   {
     SCEstModuleImpl scEstModule = new SCEstModuleImpl();
     return scEstModule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ModuleRenaming createModuleRenaming()
+  {
+    ModuleRenamingImpl moduleRenaming = new ModuleRenamingImpl();
+    return moduleRenaming;
   }
 
   /**

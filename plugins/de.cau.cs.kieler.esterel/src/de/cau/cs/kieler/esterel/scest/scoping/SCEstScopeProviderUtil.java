@@ -25,7 +25,7 @@ import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 import de.cau.cs.kieler.esterel.esterel.*;
-import de.cau.cs.kieler.esterel.scest.scest.SCEstModule;
+import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
@@ -42,8 +42,8 @@ public final class SCEstScopeProviderUtil {
     }
 
     /** collecting all sensors of a passed module. */
-    protected static final ScopeFunction<SCEstModule> COLLECT_SENSORS = new ScopeFunction<SCEstModule>() {
-        public void collect(final SCEstModule m, final List<IEObjectDescription> scopeElems) {
+    protected static final ScopeFunction<Module> COLLECT_SENSORS = new ScopeFunction<Module>() {
+        public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
             if (m.getIntSensorDecls() != null) {
                 for (SensorDecl sd : m.getIntSensorDecls()) {
                     for (SensorWithType swt : sd.getSensors()) {
@@ -56,8 +56,8 @@ public final class SCEstScopeProviderUtil {
     };
 
     /** collecting all constants of a passed module. */
-    protected static final ScopeFunction<SCEstModule> COLLECT_CONSTANTS = new ScopeFunction<SCEstModule>() {
-        public void collect(final SCEstModule m, final List<IEObjectDescription> scopeElems) {
+    protected static final ScopeFunction<Module> COLLECT_CONSTANTS = new ScopeFunction<Module>() {
+        public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
             if (m.getIntConstantDecls() != null) {
                 for (ConstantDecls decls : m.getIntConstantDecls()) {
                     for (OneTypeConstantDecls otcd : decls.getConstants()) {
@@ -73,8 +73,8 @@ public final class SCEstScopeProviderUtil {
     };
 
     /** collecting all functions of a passed module. */
-    protected static final ScopeFunction<SCEstModule> COLLECT_FUNCTIONS = new ScopeFunction<SCEstModule>() {
-        public void collect(final SCEstModule m, final List<IEObjectDescription> scopeElems) {
+    protected static final ScopeFunction<Module> COLLECT_FUNCTIONS = new ScopeFunction<Module>() {
+        public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
             if (m.getIntFunctionDecls() != null) {
                 for (FunctionDecl fd : m.getIntFunctionDecls()) {
                     for (Function f : fd.getFunctions()) {
@@ -87,8 +87,8 @@ public final class SCEstScopeProviderUtil {
     };
 
     /** collecting all procedures of a passed module. */
-    protected static final ScopeFunction<SCEstModule> COLLECT_PROCEDURES = new ScopeFunction<SCEstModule>() {
-        public void collect(final SCEstModule m, final List<IEObjectDescription> scopeElems) {
+    protected static final ScopeFunction<Module> COLLECT_PROCEDURES = new ScopeFunction<Module>() {
+        public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
             if (m.getIntProcedureDecls() != null) {
                 for (ProcedureDecl procDecl : m.getIntProcedureDecls()) {
                     EList<Procedure> procList = procDecl.getProcedures();
@@ -102,8 +102,8 @@ public final class SCEstScopeProviderUtil {
     };
 
     /** collecting all signals of a passed module. */
-    protected static final ScopeFunction<SCEstModule> COLLECT_SIGNALS = new ScopeFunction<SCEstModule>() {
-        public void collect(final SCEstModule m, final List<IEObjectDescription> scopeElems) {
+    protected static final ScopeFunction<Module> COLLECT_SIGNALS = new ScopeFunction<Module>() {
+        public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
             if (m.getIntSignalDecls() != null) {
                 for (InterfaceSignalDecl isd : m.getIntSignalDecls()) {
                     for (ISignal s : isd.getSignals()) {
@@ -115,8 +115,8 @@ public final class SCEstScopeProviderUtil {
         }
     };
     /** collecting all types of a passed module. */
-    protected static final ScopeFunction<SCEstModule> COLLECT_TYPES = new ScopeFunction<SCEstModule>() {
-        public void collect(final SCEstModule m, final List<IEObjectDescription> scopeElems) {
+    protected static final ScopeFunction<Module> COLLECT_TYPES = new ScopeFunction<Module>() {
+        public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
             if (m.getIntTypeDecls() != null) {
                 for (TypeDecl typeDecl : m.getIntTypeDecls()) {
                     for (Type type : typeDecl.getTypes()) {
@@ -128,8 +128,8 @@ public final class SCEstScopeProviderUtil {
         }
     };
     /** collecting all tasks of a passed module. */
-    protected static final ScopeFunction<SCEstModule> COLLECT_TASKS = new ScopeFunction<SCEstModule>() {
-        public void collect(final SCEstModule m, final List<IEObjectDescription> scopeElems) {
+    protected static final ScopeFunction<Module> COLLECT_TASKS = new ScopeFunction<Module>() {
+        public void collect(final Module m, final List<IEObjectDescription> scopeElems) {
             if (m.getIntTaskDecls() != null) {
                 for (TaskDecl taskDecl : m.getIntTaskDecls()) {
                     for (Task task : taskDecl.getTasks()) {
@@ -165,14 +165,14 @@ public final class SCEstScopeProviderUtil {
      * @return list with the according scope elements.
      */
     public static List<IEObjectDescription> getElements(final EObject context,
-            final ScopeFunction<SCEstModule> function) {
+            final ScopeFunction<Module> function) {
         ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
         EObject parent = context.eContainer();
         // get this scope's module interface
-        while (!(parent instanceof SCEstModule)) {
+        while (!(parent instanceof Module)) {
             parent = parent.eContainer();
         }
-        function.collect((SCEstModule) parent, scopeElems);
+        function.collect((Module) parent, scopeElems);
         return scopeElems;
     }
 
@@ -187,18 +187,18 @@ public final class SCEstScopeProviderUtil {
      * @return list with the according scope elements.n
      */
     public static List<IEObjectDescription> getAllElements(final EObject context,
-            final ScopeFunction<SCEstModule> function) {
+            final ScopeFunction<Module> function) {
 
         ArrayList<IEObjectDescription> scopeElems = new ArrayList<IEObjectDescription>();
         EObject parent = context.eContainer();
         // get this scope's module interface
-        while (!(parent instanceof SCEstModule)) {
+        while (!(parent instanceof Module)) {
             parent = parent.eContainer();
         }
-        function.collect((SCEstModule) parent, scopeElems);
+        function.collect((Module) parent, scopeElems);
         // collect from possible other modules
-        SCEstProgram p = (SCEstProgram) ((SCEstModule) parent).eContainer();
-        for (SCEstModule m : p.getModules()) {
+        SCEstProgram p = (SCEstProgram) ((Module) parent).eContainer();
+        for (Module m : p.getModules()) {
             function.collect(m, scopeElems);
         }
 
@@ -217,7 +217,7 @@ public final class SCEstScopeProviderUtil {
 
         EObject parent = context.eContainer();
         // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof SCEstModule)) {
+        while (!(parent instanceof Module)) {
             // Get the local signals into the scope
             if (parent instanceof LocalSignalDecl) {
                 EList<ISignal> signals = ((LocalSignalDecl) parent).getSignals();
@@ -244,7 +244,7 @@ public final class SCEstScopeProviderUtil {
 
         EObject parent = context.eContainer();
         // Go up in the Structure until Module/MainModule
-        while (!(parent instanceof SCEstModule)) {
+        while (!(parent instanceof Module)) {
             // Get the local variables into the scope
             if (parent instanceof LocalVariable) {
                 EList<VariableDecl> decl = ((LocalVariable) parent).getVarDecls();
@@ -273,7 +273,7 @@ public final class SCEstScopeProviderUtil {
 
         EObject parent = context.eContainer();
         // find all Traps
-        while (!(parent instanceof SCEstModule)) {
+        while (!(parent instanceof Module)) {
             if (parent instanceof Trap) {
                 EList<ISignal> trapDecl = ((Trap) parent).getTrapSignals();
                 // add Trap to the scope
@@ -304,7 +304,7 @@ public final class SCEstScopeProviderUtil {
             if (parent instanceof SCEstProgram) {
                 SCEstProgram p = (SCEstProgram) parent;
                 // add Trap to the scope
-                for (SCEstModule m : p.getModules()) {
+                for (Module m : p.getModules()) {
                     scopeElems.add(new EObjectDescription(QualifiedName.create(m.getName()), m,
                             getEmptyMap(String.class)));
                 }

@@ -47,7 +47,6 @@ import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
 import de.cau.cs.kieler.esterel.esterel.LocalVariable;
 import de.cau.cs.kieler.esterel.esterel.Loop;
 import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.esterel.ModuleRenaming;
 import de.cau.cs.kieler.esterel.esterel.Nothing;
 import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.Output;
@@ -84,6 +83,7 @@ import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
 import de.cau.cs.kieler.esterel.esterel.VariableDecl;
+import de.cau.cs.kieler.esterel.scest.scest.ModuleRenaming;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram;
 import de.cau.cs.kieler.esterel.scest.scest.ScestPackage;
@@ -294,9 +294,6 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				return; 
 			case EsterelPackage.MODULE:
 				sequence_Module(context, (Module) semanticObject); 
-				return; 
-			case EsterelPackage.MODULE_RENAMING:
-				sequence_ModuleRenaming(context, (ModuleRenaming) semanticObject); 
 				return; 
 			case EsterelPackage.NOTHING:
 				sequence_Nothing(context, (Nothing) semanticObject); 
@@ -551,6 +548,9 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			}
 		else if (epackage == ScestPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case ScestPackage.MODULE_RENAMING:
+				sequence_ModuleRenaming(context, (ModuleRenaming) semanticObject); 
+				return; 
 			case ScestPackage.SC_EST_MODULE:
 				sequence_SCEstModule(context, (SCEstModule) semanticObject); 
 				return; 
@@ -933,6 +933,18 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     ModuleRenaming returns ModuleRenaming
+	 *
+	 * Constraint:
+	 *     (module=[SCEstModule|ID] | (newName=ID module=[SCEstModule|ID]))
+	 */
+	protected void sequence_ModuleRenaming(ISerializationContext context, ModuleRenaming semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     SCEstStatement returns Parallel
 	 *     SCEstAtomicStatement returns Parallel
 	 *     Parallel returns Parallel
@@ -1022,6 +1034,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     SCEstModule returns SCEstModule
+	 *     ModuleInterface returns SCEstModule
 	 *     StatementContainerInterface returns SCEstModule
 	 *
 	 * Constraint:
@@ -1056,6 +1069,7 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	/**
 	 * Contexts:
 	 *     SCEstProgram returns SCEstProgram
+	 *     ProgramInterface returns SCEstProgram
 	 *
 	 * Constraint:
 	 *     modules+=SCEstModule+

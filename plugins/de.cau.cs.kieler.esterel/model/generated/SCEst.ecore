@@ -2,32 +2,13 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scest" nsURI="http://www.cau.de/cs/kieler/esterel/scest/SCEst"
     nsPrefix="scest">
-  <eClassifiers xsi:type="ecore:EClass" name="SCEstProgram">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
-        eType="#//SCEstModule" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SCEstModule" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//StatementContainer">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intSignalDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//InterfaceSignalDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intTypeDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//TypeDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intSensorDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//SensorDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intConstantDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//ConstantDecls" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intRelationDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//RelationDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intTaskDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//TaskDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intFunctionDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//FunctionDecl" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intProcedureDecls" upperBound="-1"
-        eType="ecore:EClass Esterel.ecore#//ProcedureDecl" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SCEstProgram" eSuperTypes="Esterel.ecore#//Program"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SCEstModule" eSuperTypes="Esterel.ecore#//Module">
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModuleRenaming" eSuperTypes="Esterel.ecore#//ModuleRenaming"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnEmit" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass Esterel.ecore#//ISignal"/>
   </eClassifiers>

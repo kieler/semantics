@@ -43579,12 +43579,12 @@ rule__ConstantRenaming__NewNameAssignment_0_0
     }
 :
 (
-{ before(grammarAccess.getConstantRenamingAccess().getNewNameValuedObjectCrossReference_0_0_0()); }
+{ before(grammarAccess.getConstantRenamingAccess().getNewNameConstantCrossReference_0_0_0()); }
 (
-{ before(grammarAccess.getConstantRenamingAccess().getNewNameValuedObjectIDTerminalRuleCall_0_0_0_1()); }
-	RULE_ID{ after(grammarAccess.getConstantRenamingAccess().getNewNameValuedObjectIDTerminalRuleCall_0_0_0_1()); }
+{ before(grammarAccess.getConstantRenamingAccess().getNewNameConstantIDTerminalRuleCall_0_0_0_1()); }
+	RULE_ID{ after(grammarAccess.getConstantRenamingAccess().getNewNameConstantIDTerminalRuleCall_0_0_0_1()); }
 )
-{ after(grammarAccess.getConstantRenamingAccess().getNewNameValuedObjectCrossReference_0_0_0()); }
+{ after(grammarAccess.getConstantRenamingAccess().getNewNameConstantCrossReference_0_0_0()); }
 )
 
 ;
@@ -43613,12 +43613,12 @@ rule__ConstantRenaming__OldNameAssignment_2
     }
 :
 (
-{ before(grammarAccess.getConstantRenamingAccess().getOldNameValuedObjectCrossReference_2_0()); }
+{ before(grammarAccess.getConstantRenamingAccess().getOldNameConstantCrossReference_2_0()); }
 (
-{ before(grammarAccess.getConstantRenamingAccess().getOldNameValuedObjectIDTerminalRuleCall_2_0_1()); }
-	RULE_ID{ after(grammarAccess.getConstantRenamingAccess().getOldNameValuedObjectIDTerminalRuleCall_2_0_1()); }
+{ before(grammarAccess.getConstantRenamingAccess().getOldNameConstantIDTerminalRuleCall_2_0_1()); }
+	RULE_ID{ after(grammarAccess.getConstantRenamingAccess().getOldNameConstantIDTerminalRuleCall_2_0_1()); }
 )
-{ after(grammarAccess.getConstantRenamingAccess().getOldNameValuedObjectCrossReference_2_0()); }
+{ after(grammarAccess.getConstantRenamingAccess().getOldNameConstantCrossReference_2_0()); }
 )
 
 ;

@@ -154,6 +154,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass constantEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass functionDeclEClass = null;
 
   /**
@@ -533,13 +540,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass esterelTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass constantEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -952,6 +952,26 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getOneTypeConstantDecls_Type()
   {
     return (EReference)oneTypeConstantDeclsEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConstant()
+  {
+    return constantEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConstant_Value()
+  {
+    return (EAttribute)constantEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2669,26 +2689,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getConstant()
-  {
-    return constantEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getConstant_Value()
-  {
-    return (EAttribute)constantEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getInput()
   {
     return inputEClass;
@@ -2928,6 +2928,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(oneTypeConstantDeclsEClass, ONE_TYPE_CONSTANT_DECLS__CONSTANTS);
     createEReference(oneTypeConstantDeclsEClass, ONE_TYPE_CONSTANT_DECLS__TYPE);
 
+    constantEClass = createEClass(CONSTANT);
+    createEAttribute(constantEClass, CONSTANT__VALUE);
+
     functionDeclEClass = createEClass(FUNCTION_DECL);
     createEReference(functionDeclEClass, FUNCTION_DECL__ANNOTATIONS);
     createEReference(functionDeclEClass, FUNCTION_DECL__FUNCTIONS);
@@ -3154,9 +3157,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     esterelTypeEClass = createEClass(ESTEREL_TYPE);
     createEReference(esterelTypeEClass, ESTEREL_TYPE__EST_TYPE);
 
-    constantEClass = createEClass(CONSTANT);
-    createEAttribute(constantEClass, CONSTANT__VALUE);
-
     inputEClass = createEClass(INPUT);
 
     outputEClass = createEClass(OUTPUT);
@@ -3222,6 +3222,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     // Add supertypes to classes
     moduleEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
+    constantEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     iSignalEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     relationImplicationEClass.getESuperTypes().add(this.getRelationType());
     relationIncompatibilityEClass.getESuperTypes().add(this.getRelationType());
@@ -3267,7 +3268,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     doEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
     doEClass.getESuperTypes().add(theSclPackage.getStatement());
     esterelTypeEClass.getESuperTypes().add(this.getTypeIdentifier());
-    constantEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     inputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
     outputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
     inputOutputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
@@ -3312,8 +3312,11 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getConstantDecls_Constants(), this.getOneTypeConstantDecls(), null, "constants", null, 0, -1, ConstantDecls.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(oneTypeConstantDeclsEClass, OneTypeConstantDecls.class, "OneTypeConstantDecls", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOneTypeConstantDecls_Constants(), theKExpressionsPackage.getValuedObject(), null, "constants", null, 0, -1, OneTypeConstantDecls.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOneTypeConstantDecls_Constants(), this.getConstant(), null, "constants", null, 0, -1, OneTypeConstantDecls.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getOneTypeConstantDecls_Type(), this.getTypeIdentifier(), null, "type", null, 0, 1, OneTypeConstantDecls.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(constantEClass, Constant.class, "Constant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, Constant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(functionDeclEClass, FunctionDecl.class, "FunctionDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFunctionDecl_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, FunctionDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3506,9 +3509,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getTypeRenaming_OldName(), this.getType(), null, "oldName", null, 0, 1, TypeRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constantRenamingEClass, ConstantRenaming.class, "ConstantRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConstantRenaming_NewName(), theKExpressionsPackage.getValuedObject(), null, "newName", null, 0, 1, ConstantRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstantRenaming_NewName(), this.getConstant(), null, "newName", null, 0, 1, ConstantRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConstantRenaming_NewValue(), ecorePackage.getEString(), "newValue", null, 0, 1, ConstantRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConstantRenaming_OldName(), theKExpressionsPackage.getValuedObject(), null, "oldName", null, 0, 1, ConstantRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstantRenaming_OldName(), this.getConstant(), null, "oldName", null, 0, 1, ConstantRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(functionRenamingEClass, FunctionRenaming.class, "FunctionRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFunctionRenaming_NewName(), this.getFunction(), null, "newName", null, 0, 1, FunctionRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3540,9 +3543,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(esterelTypeEClass, EsterelType.class, "EsterelType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEsterelType_EstType(), this.getType(), null, "estType", null, 0, 1, EsterelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(constantEClass, Constant.class, "Constant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, Constant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputEClass, Input.class, "Input", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

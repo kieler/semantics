@@ -119,6 +119,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleSCEstModule
 entryRuleSCEstModule returns [EObject current=null] 
 	:
@@ -497,6 +499,8 @@ ruleSCEstModule returns [EObject current=null]
     }
 )))
 ;
+
+
 
 
 
@@ -4244,6 +4248,82 @@ ruleLocalVariable returns [EObject current=null]
     	newLeafNode(otherlv_11, grammarAccess.getLocalVariableAccess().getVarKeyword_7());
     }
 )?)
+;
+
+
+
+
+
+// Entry rule entryRuleModuleRenaming
+entryRuleModuleRenaming returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getModuleRenamingRule()); }
+	 iv_ruleModuleRenaming=ruleModuleRenaming 
+	 { $current=$iv_ruleModuleRenaming.current; } 
+	 EOF 
+;
+
+// Rule ModuleRenaming
+ruleModuleRenaming returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getModuleRenamingRule());
+	        }
+        }
+	otherlv_0=RULE_ID
+	{
+		newLeafNode(otherlv_0, grammarAccess.getModuleRenamingAccess().getModuleSCEstModuleCrossReference_0_0()); 
+	}
+
+)
+)
+    |((
+(
+		lv_newName_1_0=RULE_ID
+		{
+			newLeafNode(lv_newName_1_0, grammarAccess.getModuleRenamingAccess().getNewNameIDTerminalRuleCall_1_0_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getModuleRenamingRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"newName",
+        		lv_newName_1_0, 
+        		"org.eclipse.xtext.common.Terminals.ID");
+	    }
+
+)
+)	otherlv_2='/' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getModuleRenamingAccess().getSolidusKeyword_1_1());
+    }
+(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getModuleRenamingRule());
+	        }
+        }
+	otherlv_3=RULE_ID
+	{
+		newLeafNode(otherlv_3, grammarAccess.getModuleRenamingAccess().getModuleSCEstModuleCrossReference_1_2_0()); 
+	}
+
+)
+)))
 ;
 
 
@@ -9969,7 +10049,7 @@ ruleRun returns [EObject current=null]
        			$current, 
        			"module",
         		lv_module_2_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.ModuleRenaming");
+        		"de.cau.cs.kieler.esterel.scest.SCEst.ModuleRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10040,7 +10120,7 @@ ruleRun returns [EObject current=null]
        			$current, 
        			"module",
         		lv_module_9_0, 
-        		"de.cau.cs.kieler.esterel.Esterel.ModuleRenaming");
+        		"de.cau.cs.kieler.esterel.scest.SCEst.ModuleRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10094,82 +10174,6 @@ ruleRun returns [EObject current=null]
     	newLeafNode(otherlv_14, grammarAccess.getRunAccess().getRightSquareBracketKeyword_1_1_2_3());
     }
 )?)))
-;
-
-
-
-
-
-// Entry rule entryRuleModuleRenaming
-entryRuleModuleRenaming returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getModuleRenamingRule()); }
-	 iv_ruleModuleRenaming=ruleModuleRenaming 
-	 { $current=$iv_ruleModuleRenaming.current; } 
-	 EOF 
-;
-
-// Rule ModuleRenaming
-ruleModuleRenaming returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getModuleRenamingRule());
-	        }
-        }
-	otherlv_0=RULE_ID
-	{
-		newLeafNode(otherlv_0, grammarAccess.getModuleRenamingAccess().getModuleModuleCrossReference_0_0()); 
-	}
-
-)
-)
-    |((
-(
-		lv_newName_1_0=RULE_ID
-		{
-			newLeafNode(lv_newName_1_0, grammarAccess.getModuleRenamingAccess().getNewNameIDTerminalRuleCall_1_0_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getModuleRenamingRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"newName",
-        		lv_newName_1_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
-	    }
-
-)
-)	otherlv_2='/' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getModuleRenamingAccess().getSolidusKeyword_1_1());
-    }
-(
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getModuleRenamingRule());
-	        }
-        }
-	otherlv_3=RULE_ID
-	{
-		newLeafNode(otherlv_3, grammarAccess.getModuleRenamingAccess().getModuleModuleCrossReference_1_2_0()); 
-	}
-
-)
-)))
 ;
 
 
@@ -10586,7 +10590,7 @@ ruleConstantRenaming returns [EObject current=null]
         }
 	otherlv_0=RULE_ID
 	{
-		newLeafNode(otherlv_0, grammarAccess.getConstantRenamingAccess().getNewNameValuedObjectCrossReference_0_0_0()); 
+		newLeafNode(otherlv_0, grammarAccess.getConstantRenamingAccess().getNewNameConstantCrossReference_0_0_0()); 
 	}
 
 )
@@ -10625,7 +10629,7 @@ ruleConstantRenaming returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getConstantRenamingAccess().getOldNameValuedObjectCrossReference_2_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getConstantRenamingAccess().getOldNameConstantCrossReference_2_0()); 
 	}
 
 )

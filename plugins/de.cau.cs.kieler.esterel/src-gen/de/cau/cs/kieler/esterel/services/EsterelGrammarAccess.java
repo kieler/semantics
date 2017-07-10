@@ -79,7 +79,20 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cModuleKeyword_6_0_1 = (Keyword)cGroup_6_0.eContents().get(1);
 		private final Keyword cFullStopKeyword_6_1 = (Keyword)cAlternatives_6.eContents().get(1);
 		
-		/// * ###################################################
+		/// *
+		// * The numbering references:
+		// * 
+		// *   The Esterel v5 Language Primer
+		// *   Version v5 91
+		// *   Gérard Berry
+		// *   Centre de Mathématiques Appliquées
+		// *   Ecole des Mines and INRIA
+		// *   2004 Route des Lucioles
+		// *   06565 Sophia-Antipolis
+		// *   berry@sophia.inria.fr
+		// *   June 5, 2000
+		// * 
+		// * / / * ###################################################
 		// * ###                 7.2 Modules                 ###
 		// * ###################################################
 		// * / // ==> module: a module consists of an interface and a body
@@ -499,8 +512,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cValueConstantValueParserRuleCall_2_1_0 = (RuleCall)cValueAssignment_2_1.eContents().get(0);
 		
-		//Constant kexpressions::ValuedObject:
-		//	{Constant} name=ID ("=" value=ConstantValue)?
+		//Constant:
+		//	{Constant} name=ID ("=" value=ConstantValue)?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//{Constant} name=ID ("=" value=ConstantValue)?
@@ -5481,33 +5494,33 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Assignment cNewNameAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final CrossReference cNewNameValuedObjectCrossReference_0_0_0 = (CrossReference)cNewNameAssignment_0_0.eContents().get(0);
-		private final RuleCall cNewNameValuedObjectIDTerminalRuleCall_0_0_0_1 = (RuleCall)cNewNameValuedObjectCrossReference_0_0_0.eContents().get(1);
+		private final CrossReference cNewNameConstantCrossReference_0_0_0 = (CrossReference)cNewNameAssignment_0_0.eContents().get(0);
+		private final RuleCall cNewNameConstantIDTerminalRuleCall_0_0_0_1 = (RuleCall)cNewNameConstantCrossReference_0_0_0.eContents().get(1);
 		private final Assignment cNewValueAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
 		private final RuleCall cNewValueConstantValueParserRuleCall_0_1_0 = (RuleCall)cNewValueAssignment_0_1.eContents().get(0);
 		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cOldNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cOldNameValuedObjectCrossReference_2_0 = (CrossReference)cOldNameAssignment_2.eContents().get(0);
-		private final RuleCall cOldNameValuedObjectIDTerminalRuleCall_2_0_1 = (RuleCall)cOldNameValuedObjectCrossReference_2_0.eContents().get(1);
+		private final CrossReference cOldNameConstantCrossReference_2_0 = (CrossReference)cOldNameAssignment_2.eContents().get(0);
+		private final RuleCall cOldNameConstantIDTerminalRuleCall_2_0_1 = (RuleCall)cOldNameConstantCrossReference_2_0.eContents().get(1);
 		
 		//ConstantRenaming:
-		//	(newName=[kexpressions::ValuedObject] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject];
+		//	(newName=[Constant] | newValue=ConstantValue) "/" oldName=[Constant];
 		@Override public ParserRule getRule() { return rule; }
 
-		//(newName=[kexpressions::ValuedObject] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject]
+		//(newName=[Constant] | newValue=ConstantValue) "/" oldName=[Constant]
 		public Group getGroup() { return cGroup; }
 
-		//(newName=[kexpressions::ValuedObject] | newValue=ConstantValue)
+		//(newName=[Constant] | newValue=ConstantValue)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//newName=[kexpressions::ValuedObject]
+		//newName=[Constant]
 		public Assignment getNewNameAssignment_0_0() { return cNewNameAssignment_0_0; }
 
-		//[kexpressions::ValuedObject]
-		public CrossReference getNewNameValuedObjectCrossReference_0_0_0() { return cNewNameValuedObjectCrossReference_0_0_0; }
+		//[Constant]
+		public CrossReference getNewNameConstantCrossReference_0_0_0() { return cNewNameConstantCrossReference_0_0_0; }
 
 		//ID
-		public RuleCall getNewNameValuedObjectIDTerminalRuleCall_0_0_0_1() { return cNewNameValuedObjectIDTerminalRuleCall_0_0_0_1; }
+		public RuleCall getNewNameConstantIDTerminalRuleCall_0_0_0_1() { return cNewNameConstantIDTerminalRuleCall_0_0_0_1; }
 
 		//newValue=ConstantValue
 		public Assignment getNewValueAssignment_0_1() { return cNewValueAssignment_0_1; }
@@ -5518,14 +5531,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"/"
 		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
 
-		//oldName=[kexpressions::ValuedObject]
+		//oldName=[Constant]
 		public Assignment getOldNameAssignment_2() { return cOldNameAssignment_2; }
 
-		//[kexpressions::ValuedObject]
-		public CrossReference getOldNameValuedObjectCrossReference_2_0() { return cOldNameValuedObjectCrossReference_2_0; }
+		//[Constant]
+		public CrossReference getOldNameConstantCrossReference_2_0() { return cOldNameConstantCrossReference_2_0; }
 
 		//ID
-		public RuleCall getOldNameValuedObjectIDTerminalRuleCall_2_0_1() { return cOldNameValuedObjectIDTerminalRuleCall_2_0_1; }
+		public RuleCall getOldNameConstantIDTerminalRuleCall_2_0_1() { return cOldNameConstantIDTerminalRuleCall_2_0_1; }
 	}
 
 	public class FunctionRenamingElements extends AbstractParserRuleElementFinder {
@@ -6672,11 +6685,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//	| ValuedExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		////    => BooleanExpression // old
 		//BooleanExpression | ValuedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		////    => BooleanExpression // old
 		//BooleanExpression
 		public RuleCall getBooleanExpressionParserRuleCall_0() { return cBooleanExpressionParserRuleCall_0; }
 
@@ -6845,26 +6856,15 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		/// *   
-		//    // old
-		//    => NotOrValuedExpression 
-		//    ( {kexpressions::OperatorExpression.subExpressions+=current} 
-		//        operator=Esterel_CompareOperator 
-		//        subExpressions+=NotOrValuedExpression
-		//    )
-		//    | 
-		//    NotExpression; 
-		// * / // order IS IMPORTANT
+		//// order IS IMPORTANT
 		//NotOrValuedExpression kexpressions::Expression:
 		//	ValuedExpression
 		//	| NotExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		////    => ValuedExpression // old
 		//ValuedExpression | NotExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		////    => ValuedExpression // old
 		//ValuedExpression
 		public RuleCall getValuedExpressionParserRuleCall_0() { return cValuedExpressionParserRuleCall_0; }
 
@@ -7220,15 +7220,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicValuedExpression kexpressions::Expression:
 		//	IntValue
 		//	| FloatValue
-		//	//    | '(' DivExpression ')'
-		//	//    | => '(' ValuedExpression ')'  // old
 		//	| '(' ValuedExpression ')'
 		//	| AtomicExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//IntValue | FloatValue //    | '(' DivExpression ')'
-		////    | => '(' ValuedExpression ')'  // old
-		//| '(' ValuedExpression ')' | AtomicExpression
+		//IntValue | FloatValue | '(' ValuedExpression ')' | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IntValue
@@ -7339,10 +7335,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIVariableParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cValuedObjectParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
-		////// Example: A, varB
-		////ValuedObjectReference returns kexpressions::ValuedObjectReference:
-		////    {kexpressions::ValuedObjectReference} 
-		////    valuedObject=[kexpressions::ValuedObject|ID];
 		//Esterel_ValuedObject kexpressions::ValuedObject:
 		//	ISignal | Constant | TrapSignal | IVariable | ValuedObject
 		@Override public ParserRule getRule() { return rule; }
@@ -8069,7 +8061,20 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getProgramAccess().getRule();
 	}
 
-	/// * ###################################################
+	/// *
+	// * The numbering references:
+	// * 
+	// *   The Esterel v5 Language Primer
+	// *   Version v5 91
+	// *   Gérard Berry
+	// *   Centre de Mathématiques Appliquées
+	// *   Ecole des Mines and INRIA
+	// *   2004 Route des Lucioles
+	// *   06565 Sophia-Antipolis
+	// *   berry@sophia.inria.fr
+	// *   June 5, 2000
+	// * 
+	// * / / * ###################################################
 	// * ###                 7.2 Modules                 ###
 	// * ###################################################
 	// * / // ==> module: a module consists of an interface and a body
@@ -8163,8 +8168,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getOneTypeConstantDeclsAccess().getRule();
 	}
 
-	//Constant kexpressions::ValuedObject:
-	//	{Constant} name=ID ("=" value=ConstantValue)?
+	//Constant:
+	//	{Constant} name=ID ("=" value=ConstantValue)?;
 	public ConstantElements getConstantAccess() {
 		return pConstant;
 	}
@@ -8901,7 +8906,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ConstantRenaming:
-	//	(newName=[kexpressions::ValuedObject] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject];
+	//	(newName=[Constant] | newValue=ConstantValue) "/" oldName=[Constant];
 	public ConstantRenamingElements getConstantRenamingAccess() {
 		return pConstantRenaming;
 	}
@@ -9404,16 +9409,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getCompareOperationAccess().getRule();
 	}
 
-	/// *   
-	//    // old
-	//    => NotOrValuedExpression 
-	//    ( {kexpressions::OperatorExpression.subExpressions+=current} 
-	//        operator=Esterel_CompareOperator 
-	//        subExpressions+=NotOrValuedExpression
-	//    )
-	//    | 
-	//    NotExpression; 
-	// * / // order IS IMPORTANT
+	//// order IS IMPORTANT
 	//NotOrValuedExpression kexpressions::Expression:
 	//	ValuedExpression
 	//	| NotExpression
@@ -9529,8 +9525,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//AtomicValuedExpression kexpressions::Expression:
 	//	IntValue
 	//	| FloatValue
-	//	//    | '(' DivExpression ')'
-	//	//    | => '(' ValuedExpression ')'  // old
 	//	| '(' ValuedExpression ')'
 	//	| AtomicExpression
 	public AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
@@ -9554,10 +9548,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
-	////// Example: A, varB
-	////ValuedObjectReference returns kexpressions::ValuedObjectReference:
-	////    {kexpressions::ValuedObjectReference} 
-	////    valuedObject=[kexpressions::ValuedObject|ID];
 	//Esterel_ValuedObject kexpressions::ValuedObject:
 	//	ISignal | Constant | TrapSignal | IVariable | ValuedObject
 	public Esterel_ValuedObjectElements getEsterel_ValuedObjectAccess() {

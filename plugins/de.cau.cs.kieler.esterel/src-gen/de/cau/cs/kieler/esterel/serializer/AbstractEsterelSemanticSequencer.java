@@ -875,7 +875,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ConstantRenaming returns ConstantRenaming
 	 *
 	 * Constraint:
-	 *     ((newName=[ValuedObject|ID] | newValue=ConstantValue) oldName=[ValuedObject|ID])
+	 *     ((newName=[Constant|ID] | newValue=ConstantValue) oldName=[Constant|ID])
 	 */
 	protected void sequence_ConstantRenaming(ISerializationContext context, ConstantRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

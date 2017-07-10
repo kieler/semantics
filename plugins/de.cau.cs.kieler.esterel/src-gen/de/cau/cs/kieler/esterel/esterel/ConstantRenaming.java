@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.kexpressions.ValuedObject;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -35,12 +33,12 @@ public interface ConstantRenaming extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>New Name</em>' reference.
-   * @see #setNewName(ValuedObject)
+   * @see #setNewName(Constant)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantRenaming_NewName()
    * @model
    * @generated
    */
-  ValuedObject getNewName();
+  Constant getNewName();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName <em>New Name</em>}' reference.
@@ -50,7 +48,7 @@ public interface ConstantRenaming extends EObject
    * @see #getNewName()
    * @generated
    */
-  void setNewName(ValuedObject value);
+  void setNewName(Constant value);
 
   /**
    * Returns the value of the '<em><b>New Value</b></em>' attribute.
@@ -87,12 +85,12 @@ public interface ConstantRenaming extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Old Name</em>' reference.
-   * @see #setOldName(ValuedObject)
+   * @see #setOldName(Constant)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantRenaming_OldName()
    * @model
    * @generated
    */
-  ValuedObject getOldName();
+  Constant getOldName();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getOldName <em>Old Name</em>}' reference.
@@ -102,6 +100,6 @@ public interface ConstantRenaming extends EObject
    * @see #getOldName()
    * @generated
    */
-  void setOldName(ValuedObject value);
+  void setOldName(Constant value);
 
 } // ConstantRenaming

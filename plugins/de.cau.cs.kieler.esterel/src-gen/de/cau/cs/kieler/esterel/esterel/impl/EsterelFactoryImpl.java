@@ -71,6 +71,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TYPE: return createType();
       case EsterelPackage.CONSTANT_DECLS: return createConstantDecls();
       case EsterelPackage.ONE_TYPE_CONSTANT_DECLS: return createOneTypeConstantDecls();
+      case EsterelPackage.CONSTANT: return createConstant();
       case EsterelPackage.FUNCTION_DECL: return createFunctionDecl();
       case EsterelPackage.FUNCTION: return createFunction();
       case EsterelPackage.PROCEDURE_DECL: return createProcedureDecl();
@@ -126,7 +127,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.DO: return createDo();
       case EsterelPackage.DELAY_EXPR: return createDelayExpr();
       case EsterelPackage.ESTEREL_TYPE: return createEsterelType();
-      case EsterelPackage.CONSTANT: return createConstant();
       case EsterelPackage.INPUT: return createInput();
       case EsterelPackage.OUTPUT: return createOutput();
       case EsterelPackage.INPUT_OUTPUT: return createInputOutput();
@@ -218,6 +218,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     OneTypeConstantDeclsImpl oneTypeConstantDecls = new OneTypeConstantDeclsImpl();
     return oneTypeConstantDecls;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Constant createConstant()
+  {
+    ConstantImpl constant = new ConstantImpl();
+    return constant;
   }
 
   /**
@@ -823,17 +834,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     EsterelTypeImpl esterelType = new EsterelTypeImpl();
     return esterelType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Constant createConstant()
-  {
-    ConstantImpl constant = new ConstantImpl();
-    return constant;
   }
 
   /**

@@ -7,21 +7,11 @@
     editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations Esterel.genmodel#//esterel platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions platform:/resource/de.cau.cs.kieler.scl/model/scl.genmodel#//scl">
   <genPackages prefix="Scest" basePackage="de.cau.cs.kieler.esterel.scest" disposableProviderFactory="true"
       ecorePackage="SCEst.ecore#/">
-    <genClasses ecoreClass="SCEst.ecore#//SCEstProgram">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstProgram/modules"/>
-    </genClasses>
+    <genClasses ecoreClass="SCEst.ecore#//SCEstProgram"/>
     <genClasses ecoreClass="SCEst.ecore#//SCEstModule">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCEst.ecore#//SCEstModule/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intSignalDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intTypeDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intSensorDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intConstantDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intRelationDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intTaskDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intFunctionDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/intProcedureDecls"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/declarations"/>
     </genClasses>
+    <genClasses ecoreClass="SCEst.ecore#//ModuleRenaming"/>
     <genClasses ecoreClass="SCEst.ecore#//UnEmit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCEst.ecore#//UnEmit/signal"/>
     </genClasses>

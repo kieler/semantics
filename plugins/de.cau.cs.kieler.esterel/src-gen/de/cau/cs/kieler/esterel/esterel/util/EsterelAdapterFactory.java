@@ -119,6 +119,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createOneTypeConstantDeclsAdapter();
       }
       @Override
+      public Adapter caseConstant(Constant object)
+      {
+        return createConstantAdapter();
+      }
+      @Override
       public Adapter caseFunctionDecl(FunctionDecl object)
       {
         return createFunctionDeclAdapter();
@@ -394,11 +399,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createEsterelTypeAdapter();
       }
       @Override
-      public Adapter caseConstant(Constant object)
-      {
-        return createConstantAdapter();
-      }
-      @Override
       public Adapter caseInput(Input object)
       {
         return createInputAdapter();
@@ -606,6 +606,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createOneTypeConstantDeclsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Constant <em>Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.Constant
+   * @generated
+   */
+  public Adapter createConstantAdapter()
   {
     return null;
   }
@@ -1431,21 +1446,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEsterelTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Constant <em>Constant</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Constant
-   * @generated
-   */
-  public Adapter createConstantAdapter()
   {
     return null;
   }

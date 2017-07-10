@@ -23077,7 +23077,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     otherlv_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_129); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		newLeafNode(otherlv_0, grammarAccess.getConstantRenamingAccess().getNewNameValuedObjectCrossReference_0_0_0()); 
+                      		newLeafNode(otherlv_0, grammarAccess.getConstantRenamingAccess().getNewNameConstantCrossReference_0_0_0()); 
                       	
                     }
 
@@ -23160,7 +23160,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             otherlv_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              		newLeafNode(otherlv_3, grammarAccess.getConstantRenamingAccess().getOldNameValuedObjectCrossReference_2_0()); 
+              		newLeafNode(otherlv_3, grammarAccess.getConstantRenamingAccess().getOldNameConstantCrossReference_2_0()); 
               	
             }
 

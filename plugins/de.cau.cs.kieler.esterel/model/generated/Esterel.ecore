@@ -49,10 +49,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OneTypeConstantDecls">
     <eStructuralFeatures xsi:type="ecore:EReference" name="constants" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"
-        containment="true"/>
+        eType="#//Constant" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//TypeIdentifier"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Constant" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDecl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
@@ -330,9 +332,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantRenaming">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Constant"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Constant"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionRenaming">
     <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Function"/>
@@ -372,9 +374,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EsterelType" eSuperTypes="#//TypeIdentifier">
     <eStructuralFeatures xsi:type="ecore:EReference" name="estType" eType="#//Type"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Constant" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Input" eSuperTypes="#//InterfaceSignalDecl"/>
   <eClassifiers xsi:type="ecore:EClass" name="Output" eSuperTypes="#//InterfaceSignalDecl"/>

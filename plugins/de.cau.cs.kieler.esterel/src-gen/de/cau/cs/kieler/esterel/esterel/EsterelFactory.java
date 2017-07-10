@@ -86,6 +86,15 @@ public interface EsterelFactory extends EFactory
   OneTypeConstantDecls createOneTypeConstantDecls();
 
   /**
+   * Returns a new object of class '<em>Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Constant</em>'.
+   * @generated
+   */
+  Constant createConstant();
+
+  /**
    * Returns a new object of class '<em>Function Decl</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -579,15 +588,6 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   EsterelType createEsterelType();
-
-  /**
-   * Returns a new object of class '<em>Constant</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Constant</em>'.
-   * @generated
-   */
-  Constant createConstant();
 
   /**
    * Returns a new object of class '<em>Input</em>'.

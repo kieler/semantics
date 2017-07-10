@@ -2,10 +2,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.esterel.esterel.Constant;
 import de.cau.cs.kieler.esterel.esterel.ConstantRenaming;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -40,7 +39,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * @generated
    * @ordered
    */
-  protected ValuedObject newName;
+  protected Constant newName;
 
   /**
    * The default value of the '{@link #getNewValue() <em>New Value</em>}' attribute.
@@ -70,7 +69,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * @generated
    * @ordered
    */
-  protected ValuedObject oldName;
+  protected Constant oldName;
 
   /**
    * <!-- begin-user-doc -->
@@ -98,12 +97,12 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getNewName()
+  public Constant getNewName()
   {
     if (newName != null && newName.eIsProxy())
     {
       InternalEObject oldNewName = (InternalEObject)newName;
-      newName = (ValuedObject)eResolveProxy(oldNewName);
+      newName = (Constant)eResolveProxy(oldNewName);
       if (newName != oldNewName)
       {
         if (eNotificationRequired())
@@ -118,7 +117,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject basicGetNewName()
+  public Constant basicGetNewName()
   {
     return newName;
   }
@@ -128,9 +127,9 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setNewName(ValuedObject newNewName)
+  public void setNewName(Constant newNewName)
   {
-    ValuedObject oldNewName = newName;
+    Constant oldNewName = newName;
     newName = newNewName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__NEW_NAME, oldNewName, newName));
@@ -164,12 +163,12 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getOldName()
+  public Constant getOldName()
   {
     if (oldName != null && oldName.eIsProxy())
     {
       InternalEObject oldOldName = (InternalEObject)oldName;
-      oldName = (ValuedObject)eResolveProxy(oldOldName);
+      oldName = (Constant)eResolveProxy(oldOldName);
       if (oldName != oldOldName)
       {
         if (eNotificationRequired())
@@ -184,7 +183,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject basicGetOldName()
+  public Constant basicGetOldName()
   {
     return oldName;
   }
@@ -194,9 +193,9 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOldName(ValuedObject newOldName)
+  public void setOldName(Constant newOldName)
   {
-    ValuedObject oldOldName = oldName;
+    Constant oldOldName = oldName;
     oldName = newOldName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__OLD_NAME, oldOldName, oldName));
@@ -235,13 +234,13 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
       case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
-        setNewName((ValuedObject)newValue);
+        setNewName((Constant)newValue);
         return;
       case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
         setNewValue((String)newValue);
         return;
       case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
-        setOldName((ValuedObject)newValue);
+        setOldName((Constant)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -258,13 +257,13 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
     switch (featureID)
     {
       case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
-        setNewName((ValuedObject)null);
+        setNewName((Constant)null);
         return;
       case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
         setNewValue(NEW_VALUE_EDEFAULT);
         return;
       case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
-        setOldName((ValuedObject)null);
+        setOldName((Constant)null);
         return;
     }
     super.eUnset(featureID);
