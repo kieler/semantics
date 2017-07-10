@@ -15,7 +15,7 @@ BuildConfiguration:
 ModelCompiler:
 	'model' 'compiler' name=ID '{'
         (attributes+=AttributeMapping)*
-        (simulationCompiler=SimulationTemplateProcessor)?
+        (simulationProcessor=SimulationTemplateProcessor)?
 	'}'
 ;
 

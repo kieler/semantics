@@ -398,13 +398,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 println("No simulation template found.")
             }
         }
-        var SimulationGenerator simGen
+        var SimulationTemplateProcessor simProcessor
         if(simTemplate != null) {
-            simGen = new SimulationGenerator(simTemplate, project)
+            simProcessor = new SimulationTemplateProcessor
         }
         
         // Add simulation generator to model compiler
-        kicoModelCompiler.simulationGenerator = simGen
+        kicoModelCompiler.simulationProcessor = simProcessor
     }
     
     private def void initializeConfiguration(IFile file) {
@@ -414,54 +414,60 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             this.updateConfigurableAttributes(model.attributes)
             
             // Create model compilers
-            for(compilerConfig : model.modelCompilers) {
-                val name = compilerConfig.name
+            for(config : model.modelCompilers) {
+                val name = config.name
                 val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
                 val extensions = ExtensionLookupUtil.getExtensions("de.cau.cs.kieler.prom.modelCompiler",
                                                                    requiredConfig)
                 if(!extensions.isNullOrEmpty) {
                     val ext = extensions.get(0)
                     val modelCompiler = ExtensionLookupUtil.instantiateClassFromExtension(ext) as ModelCompiler
-                    modelCompilers.add(modelCompiler)
+                    if(!modelCompilers.contains(modelCompiler)) {
+                        modelCompilers.add(modelCompiler)
+                    }
+                    modelCompiler.initialize(config)
                     modelCompiler.outputFolder = outputFolder.stringValue
                     modelCompiler.monitor = monitor
-                    modelCompiler.updateConfigurableAttributes(compilerConfig.attributes)
                 } else {
                     throw new Exception("Model compiler with name '"+name+"' could not be instantiated.")
                 }
             }
             
             // Create simulation compilers
-            for(compilerConfig : model.simulationCompilers) {
-                val name = compilerConfig.name
+            for(config : model.simulationCompilers) {
+                val name = config.name
                 val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
                 val extensions = ExtensionLookupUtil.getExtensions("de.cau.cs.kieler.prom.simulationCompiler",
                                                                    requiredConfig)
                 if(!extensions.isNullOrEmpty) {
                     val ext = extensions.get(0)
                     val simulationCompiler = ExtensionLookupUtil.instantiateClassFromExtension(ext) as SimulationCompiler
-                    simulationCompilers.add(simulationCompiler)
+                    if(!simulationCompilers.contains(simulationCompiler)) {
+                        simulationCompilers.add(simulationCompiler)
+                    }
                     simulationCompiler.monitor = monitor
-                    simulationCompiler.updateConfigurableAttributes(compilerConfig.attributes)
+                    simulationCompiler.initialize(config)
                 } else {
                     throw new Exception("Simulation compiler with name '"+name+"' could not be instantiated.")
                 }
             }
             
-            for(templateProcessorConfig : model.templateProcessors) {
+            for(config : model.templateProcessors) {
                 var TemplateProcessor processor
-                if(templateProcessorConfig instanceof NormalTemplateProcessor) {
+                if(config instanceof NormalTemplateProcessor) {
                     processor = new SimpleTemplateProcessor
-                } else if(templateProcessorConfig instanceof de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor) {
+                } else if(config instanceof de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor) {
                     processor = new WrapperCodeTemplateProcessor
-                } else if(templateProcessorConfig instanceof de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor) {
+                } else if(config instanceof de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor) {
                     processor = new SimulationTemplateProcessor
                 }
                 if(processor != null) {
-                    templateProcessors.add(processor)
+                    if(!templateProcessors.contains(processor)) {
+                        templateProcessors.add(processor)
+                    }
                     processor.monitor = monitor
                     processor.project = project
-                    processor.updateConfigurableAttributes(templateProcessorConfig.attributes)
+                    processor.initialize(config)
                 }
             }
         } else {

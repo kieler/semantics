@@ -20,7 +20,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-abstract class TemplateProcessor {
+abstract class TemplateProcessor extends Configurable {
     @Accessors
     protected IProgressMonitor monitor
     @Accessors
@@ -29,5 +29,10 @@ abstract class TemplateProcessor {
     abstract public def FileGenerationResult process()
     
     new() {
-    }    
+        super()
+    }
+
+    public def void initialize(de.cau.cs.kieler.prom.kibuild.TemplateProcessor config) {
+        this.updateConfigurableAttributes(config.attributes)
+    }
 }

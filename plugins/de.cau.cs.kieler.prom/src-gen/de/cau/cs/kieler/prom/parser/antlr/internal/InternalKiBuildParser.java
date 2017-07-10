@@ -456,7 +456,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModelCompiler"
-    // InternalKiBuild.g:176:1: ruleModelCompiler returns [EObject current=null] : (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' ) ;
+    // InternalKiBuild.g:176:1: ruleModelCompiler returns [EObject current=null] : (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' ) ;
     public final EObject ruleModelCompiler() throws RecognitionException {
         EObject current = null;
 
@@ -467,17 +467,17 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
         Token otherlv_6=null;
         EObject lv_attributes_4_0 = null;
 
-        EObject lv_simulationCompiler_5_0 = null;
+        EObject lv_simulationProcessor_5_0 = null;
 
 
          enterRule(); 
             
         try {
-            // InternalKiBuild.g:179:28: ( (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' ) )
-            // InternalKiBuild.g:180:1: (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' )
+            // InternalKiBuild.g:179:28: ( (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' ) )
+            // InternalKiBuild.g:180:1: (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' )
             {
-            // InternalKiBuild.g:180:1: (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' )
-            // InternalKiBuild.g:180:3: otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}'
+            // InternalKiBuild.g:180:1: (otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}' )
+            // InternalKiBuild.g:180:3: otherlv_0= 'model' otherlv_1= 'compiler' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_attributes_4_0= ruleAttributeMapping ) )* ( (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor ) )? otherlv_6= '}'
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -580,7 +580,7 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalKiBuild.g:228:3: ( (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor ) )?
+            // InternalKiBuild.g:228:3: ( (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor ) )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -589,18 +589,18 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalKiBuild.g:229:1: (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor )
+                    // InternalKiBuild.g:229:1: (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor )
                     {
-                    // InternalKiBuild.g:229:1: (lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor )
-                    // InternalKiBuild.g:230:3: lv_simulationCompiler_5_0= ruleSimulationTemplateProcessor
+                    // InternalKiBuild.g:229:1: (lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor )
+                    // InternalKiBuild.g:230:3: lv_simulationProcessor_5_0= ruleSimulationTemplateProcessor
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getModelCompilerAccess().getSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0()); 
+                      	        newCompositeNode(grammarAccess.getModelCompilerAccess().getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_11);
-                    lv_simulationCompiler_5_0=ruleSimulationTemplateProcessor();
+                    lv_simulationProcessor_5_0=ruleSimulationTemplateProcessor();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -611,8 +611,8 @@ public class InternalKiBuildParser extends AbstractInternalAntlrParser {
                       	        }
                              		set(
                              			current, 
-                             			"simulationCompiler",
-                              		lv_simulationCompiler_5_0, 
+                             			"simulationProcessor",
+                              		lv_simulationProcessor_5_0, 
                               		"de.cau.cs.kieler.prom.KiBuild.SimulationTemplateProcessor");
                       	        afterParserOrEnumRuleCall();
                       	    

@@ -273,7 +273,7 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModelCompiler_SimulationCompiler()
+  public EReference getModelCompiler_SimulationProcessor()
   {
     return (EReference)modelCompilerEClass.getEStructuralFeatures().get(2);
   }
@@ -557,7 +557,7 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
     modelCompilerEClass = createEClass(MODEL_COMPILER);
     createEAttribute(modelCompilerEClass, MODEL_COMPILER__NAME);
     createEReference(modelCompilerEClass, MODEL_COMPILER__ATTRIBUTES);
-    createEReference(modelCompilerEClass, MODEL_COMPILER__SIMULATION_COMPILER);
+    createEReference(modelCompilerEClass, MODEL_COMPILER__SIMULATION_PROCESSOR);
 
     simulationCompilerEClass = createEClass(SIMULATION_COMPILER);
     createEAttribute(simulationCompilerEClass, SIMULATION_COMPILER__NAME);
@@ -639,7 +639,7 @@ public class KibuildPackageImpl extends EPackageImpl implements KibuildPackage
     initEClass(modelCompilerEClass, ModelCompiler.class, "ModelCompiler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModelCompiler_Name(), ecorePackage.getEString(), "name", null, 0, 1, ModelCompiler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModelCompiler_Attributes(), this.getAttributeMapping(), null, "attributes", null, 0, -1, ModelCompiler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getModelCompiler_SimulationCompiler(), this.getTemplateProcessor(), null, "simulationCompiler", null, 0, 1, ModelCompiler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModelCompiler_SimulationProcessor(), this.getTemplateProcessor(), null, "simulationProcessor", null, 0, 1, ModelCompiler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(simulationCompilerEClass, SimulationCompiler.class, "SimulationCompiler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSimulationCompiler_Name(), ecorePackage.getEString(), "name", null, 0, 1, SimulationCompiler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -25,6 +25,7 @@ class SimpleTemplateProcessor extends TemplateProcessor {
     public val target = new ConfigurableAttribute("target")
     
     new() {
+        super()
     }
     
     override process() {

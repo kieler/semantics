@@ -141,13 +141,13 @@ public interface KibuildPackage extends EPackage
   int MODEL_COMPILER__ATTRIBUTES = 1;
 
   /**
-   * The feature id for the '<em><b>Simulation Compiler</b></em>' containment reference.
+   * The feature id for the '<em><b>Simulation Processor</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_COMPILER__SIMULATION_COMPILER = 2;
+  int MODEL_COMPILER__SIMULATION_PROCESSOR = 2;
 
   /**
    * The number of structural features of the '<em>Model Compiler</em>' class.
@@ -590,15 +590,15 @@ public interface KibuildPackage extends EPackage
   EReference getModelCompiler_Attributes();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationCompiler <em>Simulation Compiler</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationProcessor <em>Simulation Processor</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Simulation Compiler</em>'.
-   * @see de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationCompiler()
+   * @return the meta object for the containment reference '<em>Simulation Processor</em>'.
+   * @see de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationProcessor()
    * @see #getModelCompiler()
    * @generated
    */
-  EReference getModelCompiler_SimulationCompiler();
+  EReference getModelCompiler_SimulationProcessor();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.prom.kibuild.SimulationCompiler <em>Simulation Compiler</em>}'.
@@ -945,12 +945,12 @@ public interface KibuildPackage extends EPackage
     EReference MODEL_COMPILER__ATTRIBUTES = eINSTANCE.getModelCompiler_Attributes();
 
     /**
-     * The meta object literal for the '<em><b>Simulation Compiler</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Simulation Processor</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL_COMPILER__SIMULATION_COMPILER = eINSTANCE.getModelCompiler_SimulationCompiler();
+    EReference MODEL_COMPILER__SIMULATION_PROCESSOR = eINSTANCE.getModelCompiler_SimulationProcessor();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.prom.kibuild.impl.SimulationCompilerImpl <em>Simulation Compiler</em>}' class.

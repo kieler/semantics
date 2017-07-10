@@ -78,18 +78,18 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cAttributesAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cAttributesAttributeMappingParserRuleCall_4_0 = (RuleCall)cAttributesAssignment_4.eContents().get(0);
-		private final Assignment cSimulationCompilerAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0 = (RuleCall)cSimulationCompilerAssignment_5.eContents().get(0);
+		private final Assignment cSimulationProcessorAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0 = (RuleCall)cSimulationProcessorAssignment_5.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//ModelCompiler:
 		//	'model' 'compiler' name=ID '{'
 		//	attributes+=AttributeMapping*
-		//	simulationCompiler=SimulationTemplateProcessor?
+		//	simulationProcessor=SimulationTemplateProcessor?
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'model' 'compiler' name=ID '{' attributes+=AttributeMapping* simulationCompiler=SimulationTemplateProcessor? '}'
+		//'model' 'compiler' name=ID '{' attributes+=AttributeMapping* simulationProcessor=SimulationTemplateProcessor? '}'
 		public Group getGroup() { return cGroup; }
 
 		//'model'
@@ -113,11 +113,11 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 		//AttributeMapping
 		public RuleCall getAttributesAttributeMappingParserRuleCall_4_0() { return cAttributesAttributeMappingParserRuleCall_4_0; }
 
-		//simulationCompiler=SimulationTemplateProcessor?
-		public Assignment getSimulationCompilerAssignment_5() { return cSimulationCompilerAssignment_5; }
+		//simulationProcessor=SimulationTemplateProcessor?
+		public Assignment getSimulationProcessorAssignment_5() { return cSimulationProcessorAssignment_5; }
 
 		//SimulationTemplateProcessor
-		public RuleCall getSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0() { return cSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0; }
+		public RuleCall getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0() { return cSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0; }
 
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
@@ -670,7 +670,7 @@ public class KiBuildGrammarAccess extends AbstractGrammarElementFinder {
 	//ModelCompiler:
 	//	'model' 'compiler' name=ID '{'
 	//	attributes+=AttributeMapping*
-	//	simulationCompiler=SimulationTemplateProcessor?
+	//	simulationProcessor=SimulationTemplateProcessor?
 	//	'}';
 	public ModelCompilerElements getModelCompilerAccess() {
 		return pModelCompiler;

@@ -24,7 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-abstract class ModelCompiler {
+abstract class ModelCompiler extends Configurable {
     
     @Accessors(PUBLIC_SETTER)
     protected var String outputFolder = ""
@@ -33,10 +33,24 @@ abstract class ModelCompiler {
     protected var IProgressMonitor monitor
     
     @Accessors(PUBLIC_SETTER)
-    protected var SimulationGenerator simulationGenerator
+    protected var SimulationTemplateProcessor simulationProcessor
     
     public def ModelCompilationResult compile(IFile file, EObject model)
     public def void updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet)
+    
+    new() {
+        super()
+    }
+    
+    public def void initialize(de.cau.cs.kieler.prom.kibuild.ModelCompiler config) {
+        this.updateConfigurableAttributes(config.attributes)
+        // Add simulation template processor to model compiler
+        if(config.simulationProcessor != null) {
+            val processor = new SimulationTemplateProcessor
+            simulationProcessor = processor
+            processor.initialize(config.simulationProcessor)
+        }
+    }
     
     /**
      * Compile a model file via KiCo. 

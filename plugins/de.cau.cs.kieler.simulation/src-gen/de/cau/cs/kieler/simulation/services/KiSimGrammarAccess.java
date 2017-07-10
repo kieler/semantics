@@ -415,7 +415,7 @@ public class KiSimGrammarAccess extends AbstractGrammarElementFinder {
 	//ModelCompiler:
 	//	'model' 'compiler' name=ID '{'
 	//	attributes+=AttributeMapping*
-	//	simulationCompiler=SimulationTemplateProcessor?
+	//	simulationProcessor=SimulationTemplateProcessor?
 	//	'}';
 	public KiBuildGrammarAccess.ModelCompilerElements getModelCompilerAccess() {
 		return gaKiBuild.getModelCompilerAccess();

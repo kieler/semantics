@@ -8329,22 +8329,22 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ModelCompiler__Group__5__Impl"
-    // InternalKiBuild.g:2651:1: rule__ModelCompiler__Group__5__Impl : ( ( rule__ModelCompiler__SimulationCompilerAssignment_5 )? ) ;
+    // InternalKiBuild.g:2651:1: rule__ModelCompiler__Group__5__Impl : ( ( rule__ModelCompiler__SimulationProcessorAssignment_5 )? ) ;
     public final void rule__ModelCompiler__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKiBuild.g:2655:1: ( ( ( rule__ModelCompiler__SimulationCompilerAssignment_5 )? ) )
-            // InternalKiBuild.g:2656:1: ( ( rule__ModelCompiler__SimulationCompilerAssignment_5 )? )
+            // InternalKiBuild.g:2655:1: ( ( ( rule__ModelCompiler__SimulationProcessorAssignment_5 )? ) )
+            // InternalKiBuild.g:2656:1: ( ( rule__ModelCompiler__SimulationProcessorAssignment_5 )? )
             {
-            // InternalKiBuild.g:2656:1: ( ( rule__ModelCompiler__SimulationCompilerAssignment_5 )? )
-            // InternalKiBuild.g:2657:1: ( rule__ModelCompiler__SimulationCompilerAssignment_5 )?
+            // InternalKiBuild.g:2656:1: ( ( rule__ModelCompiler__SimulationProcessorAssignment_5 )? )
+            // InternalKiBuild.g:2657:1: ( rule__ModelCompiler__SimulationProcessorAssignment_5 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getModelCompilerAccess().getSimulationCompilerAssignment_5()); 
+               before(grammarAccess.getModelCompilerAccess().getSimulationProcessorAssignment_5()); 
             }
-            // InternalKiBuild.g:2658:1: ( rule__ModelCompiler__SimulationCompilerAssignment_5 )?
+            // InternalKiBuild.g:2658:1: ( rule__ModelCompiler__SimulationProcessorAssignment_5 )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -8353,10 +8353,10 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             }
             switch (alt23) {
                 case 1 :
-                    // InternalKiBuild.g:2658:2: rule__ModelCompiler__SimulationCompilerAssignment_5
+                    // InternalKiBuild.g:2658:2: rule__ModelCompiler__SimulationProcessorAssignment_5
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__ModelCompiler__SimulationCompilerAssignment_5();
+                    rule__ModelCompiler__SimulationProcessorAssignment_5();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -8367,7 +8367,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getModelCompilerAccess().getSimulationCompilerAssignment_5()); 
+               after(grammarAccess.getModelCompilerAccess().getSimulationProcessorAssignment_5()); 
             }
 
             }
@@ -27399,9 +27399,9 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ModelCompiler__AttributesAssignment_4"
 
 
-    // $ANTLR start "rule__ModelCompiler__SimulationCompilerAssignment_5"
-    // InternalKiBuild.g:9630:1: rule__ModelCompiler__SimulationCompilerAssignment_5 : ( ruleSimulationTemplateProcessor ) ;
-    public final void rule__ModelCompiler__SimulationCompilerAssignment_5() throws RecognitionException {
+    // $ANTLR start "rule__ModelCompiler__SimulationProcessorAssignment_5"
+    // InternalKiBuild.g:9630:1: rule__ModelCompiler__SimulationProcessorAssignment_5 : ( ruleSimulationTemplateProcessor ) ;
+    public final void rule__ModelCompiler__SimulationProcessorAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -27413,7 +27413,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             // InternalKiBuild.g:9636:1: ruleSimulationTemplateProcessor
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getModelCompilerAccess().getSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0()); 
+               before(grammarAccess.getModelCompilerAccess().getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleSimulationTemplateProcessor();
@@ -27421,7 +27421,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getModelCompilerAccess().getSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0()); 
+               after(grammarAccess.getModelCompilerAccess().getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0()); 
             }
 
             }
@@ -27441,7 +27441,7 @@ public class InternalKiBuildParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ModelCompiler__SimulationCompilerAssignment_5"
+    // $ANTLR end "rule__ModelCompiler__SimulationProcessorAssignment_5"
 
 
     // $ANTLR start "rule__SimulationCompiler__NameAssignment_2"

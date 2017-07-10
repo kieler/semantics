@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
+import org.eclipse.core.runtime.Path
+import org.eclipse.core.runtime.IPath
 
 /**
  * @author aas
@@ -119,11 +121,25 @@ class KiCoModelCompiler extends ModelCompiler {
                 result.addCreatedFile(targetFile)
                 
                 // Create simulation code
-                if(simulationGenerator != null) {
+                if(simulationProcessor != null) {
                     // TODO: use information of variables that has been created as part of compilation
                     // (e.g. guards, and internal variables)
-                    simulationGenerator.monitor = monitor
-                    result.simulationGenerationResult = simulationGenerator.generate(file, model)
+                    
+                    // Compute output file of simulation generation
+                    var IPath simulationTargetFolder = new Path("")
+                    if(!outputFolder.isNullOrEmpty) {
+                        simulationTargetFolder = new Path(outputFolder).append("sim").append("code")
+                    }
+                    val fileNameWithoutExtension = Files.getNameWithoutExtension(file.name)
+                    val simulationTarget = simulationTargetFolder.append(fileNameWithoutExtension + fileExt)
+                    // Set model specific variables of simulation template processor
+                    simulationProcessor.target.value = simulationTarget.toOSString
+                    simulationProcessor.modelPath.value = file.projectRelativePath.toOSString
+                    simulationProcessor.compiledModelPath.value = targetFile.projectRelativePath.toOSString
+                    simulationProcessor.monitor = monitor
+                    simulationProcessor.project = file.project
+                    // Run processor
+                    result.simulationGenerationResult = simulationProcessor.process
                 } 
             } else {
                 // Add build problem to result

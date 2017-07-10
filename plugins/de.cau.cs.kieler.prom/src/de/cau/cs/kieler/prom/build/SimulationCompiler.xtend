@@ -22,19 +22,24 @@ import org.eclipse.core.runtime.IProgressMonitor
  * @author aas
  *
  */
-abstract class SimulationCompiler {
+abstract class SimulationCompiler extends Configurable {
     
-    protected SimulationGenerationResult result
+    protected FileGenerationResult result
     protected var IProgressMonitor monitor
     
     public def String[] getSupportedFileExtensions()
-    public def SimulationGenerationResult compile(IFile file)
+    public def FileGenerationResult compile(IFile file)
     
     new() {
+        super()
     }
     
     new(IProgressMonitor monitor) {
         this.monitor = monitor
+    }
+    
+    public def void initialize(de.cau.cs.kieler.prom.kibuild.SimulationCompiler config) {
+        this.updateConfigurableAttributes(config.attributes)
     }
     
     public def boolean canCompile(IFile file) {

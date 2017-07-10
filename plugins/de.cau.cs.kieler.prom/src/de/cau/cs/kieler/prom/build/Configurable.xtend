@@ -16,6 +16,11 @@ package de.cau.cs.kieler.prom.build
  * @author aas
  *
  */
-class SimulationGenerationResult extends FileGenerationResult {
+abstract class Configurable {
     
+    protected extension AttributeExtensions attributeExtensions
+    
+    new() {
+        attributeExtensions = new AttributeExtensions
+    }
 }

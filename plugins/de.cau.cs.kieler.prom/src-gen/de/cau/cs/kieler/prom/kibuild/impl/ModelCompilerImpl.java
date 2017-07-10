@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.ModelCompilerImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.ModelCompilerImpl#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.ModelCompilerImpl#getSimulationCompiler <em>Simulation Compiler</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.prom.kibuild.impl.ModelCompilerImpl#getSimulationProcessor <em>Simulation Processor</em>}</li>
  * </ul>
  *
  * @generated
@@ -71,14 +71,14 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
   protected EList<AttributeMapping> attributes;
 
   /**
-   * The cached value of the '{@link #getSimulationCompiler() <em>Simulation Compiler</em>}' containment reference.
+   * The cached value of the '{@link #getSimulationProcessor() <em>Simulation Processor</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSimulationCompiler()
+   * @see #getSimulationProcessor()
    * @generated
    * @ordered
    */
-  protected TemplateProcessor simulationCompiler;
+  protected TemplateProcessor simulationProcessor;
 
   /**
    * <!-- begin-user-doc -->
@@ -143,9 +143,9 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
    * <!-- end-user-doc -->
    * @generated
    */
-  public TemplateProcessor getSimulationCompiler()
+  public TemplateProcessor getSimulationProcessor()
   {
-    return simulationCompiler;
+    return simulationProcessor;
   }
 
   /**
@@ -153,13 +153,13 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetSimulationCompiler(TemplateProcessor newSimulationCompiler, NotificationChain msgs)
+  public NotificationChain basicSetSimulationProcessor(TemplateProcessor newSimulationProcessor, NotificationChain msgs)
   {
-    TemplateProcessor oldSimulationCompiler = simulationCompiler;
-    simulationCompiler = newSimulationCompiler;
+    TemplateProcessor oldSimulationProcessor = simulationProcessor;
+    simulationProcessor = newSimulationProcessor;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER, oldSimulationCompiler, newSimulationCompiler);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR, oldSimulationProcessor, newSimulationProcessor);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -170,20 +170,20 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSimulationCompiler(TemplateProcessor newSimulationCompiler)
+  public void setSimulationProcessor(TemplateProcessor newSimulationProcessor)
   {
-    if (newSimulationCompiler != simulationCompiler)
+    if (newSimulationProcessor != simulationProcessor)
     {
       NotificationChain msgs = null;
-      if (simulationCompiler != null)
-        msgs = ((InternalEObject)simulationCompiler).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER, null, msgs);
-      if (newSimulationCompiler != null)
-        msgs = ((InternalEObject)newSimulationCompiler).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER, null, msgs);
-      msgs = basicSetSimulationCompiler(newSimulationCompiler, msgs);
+      if (simulationProcessor != null)
+        msgs = ((InternalEObject)simulationProcessor).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR, null, msgs);
+      if (newSimulationProcessor != null)
+        msgs = ((InternalEObject)newSimulationProcessor).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR, null, msgs);
+      msgs = basicSetSimulationProcessor(newSimulationProcessor, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER, newSimulationCompiler, newSimulationCompiler));
+      eNotify(new ENotificationImpl(this, Notification.SET, KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR, newSimulationProcessor, newSimulationProcessor));
   }
 
   /**
@@ -198,8 +198,8 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
     {
       case KibuildPackage.MODEL_COMPILER__ATTRIBUTES:
         return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
-      case KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER:
-        return basicSetSimulationCompiler(null, msgs);
+      case KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR:
+        return basicSetSimulationProcessor(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -218,8 +218,8 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
         return getName();
       case KibuildPackage.MODEL_COMPILER__ATTRIBUTES:
         return getAttributes();
-      case KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER:
-        return getSimulationCompiler();
+      case KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR:
+        return getSimulationProcessor();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -242,8 +242,8 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
         getAttributes().clear();
         getAttributes().addAll((Collection<? extends AttributeMapping>)newValue);
         return;
-      case KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER:
-        setSimulationCompiler((TemplateProcessor)newValue);
+      case KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR:
+        setSimulationProcessor((TemplateProcessor)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -265,8 +265,8 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
       case KibuildPackage.MODEL_COMPILER__ATTRIBUTES:
         getAttributes().clear();
         return;
-      case KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER:
-        setSimulationCompiler((TemplateProcessor)null);
+      case KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR:
+        setSimulationProcessor((TemplateProcessor)null);
         return;
     }
     super.eUnset(featureID);
@@ -286,8 +286,8 @@ public class ModelCompilerImpl extends MinimalEObjectImpl.Container implements M
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case KibuildPackage.MODEL_COMPILER__ATTRIBUTES:
         return attributes != null && !attributes.isEmpty();
-      case KibuildPackage.MODEL_COMPILER__SIMULATION_COMPILER:
-        return simulationCompiler != null;
+      case KibuildPackage.MODEL_COMPILER__SIMULATION_PROCESSOR:
+        return simulationProcessor != null;
     }
     return super.eIsSet(featureID);
   }

@@ -259,7 +259,7 @@ public abstract class AbstractKiBuildSemanticSequencer extends KExpressionsSeman
 	 *     ModelCompiler returns ModelCompiler
 	 *
 	 * Constraint:
-	 *     (name=ID attributes+=AttributeMapping* simulationCompiler=SimulationTemplateProcessor?)
+	 *     (name=ID attributes+=AttributeMapping* simulationProcessor=SimulationTemplateProcessor?)
 	 */
 	protected void sequence_ModelCompiler(ISerializationContext context, ModelCompiler semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

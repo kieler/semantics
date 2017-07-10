@@ -2654,9 +2654,9 @@ rule__ModelCompiler__Group__5__Impl
     }
 :
 (
-{ before(grammarAccess.getModelCompilerAccess().getSimulationCompilerAssignment_5()); }
-(rule__ModelCompiler__SimulationCompilerAssignment_5)?
-{ after(grammarAccess.getModelCompilerAccess().getSimulationCompilerAssignment_5()); }
+{ before(grammarAccess.getModelCompilerAccess().getSimulationProcessorAssignment_5()); }
+(rule__ModelCompiler__SimulationProcessorAssignment_5)?
+{ after(grammarAccess.getModelCompilerAccess().getSimulationProcessorAssignment_5()); }
 )
 
 ;
@@ -9627,14 +9627,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ModelCompiler__SimulationCompilerAssignment_5
+rule__ModelCompiler__SimulationProcessorAssignment_5
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getModelCompilerAccess().getSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0()); }
-	ruleSimulationTemplateProcessor{ after(grammarAccess.getModelCompilerAccess().getSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0()); }
+{ before(grammarAccess.getModelCompilerAccess().getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0()); }
+	ruleSimulationTemplateProcessor{ after(grammarAccess.getModelCompilerAccess().getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0()); }
 )
 
 ;

@@ -29,6 +29,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     public val snippetFolder = new ConfigurableAttribute("snippetFolder")
     
     new() {
+        super()
     }
     
     override process() {

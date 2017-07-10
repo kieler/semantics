@@ -228,16 +228,16 @@ ruleModelCompiler returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getModelCompilerAccess().getSimulationCompilerSimulationTemplateProcessorParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getModelCompilerAccess().getSimulationProcessorSimulationTemplateProcessorParserRuleCall_5_0()); 
 	    }
-		lv_simulationCompiler_5_0=ruleSimulationTemplateProcessor		{
+		lv_simulationProcessor_5_0=ruleSimulationTemplateProcessor		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getModelCompilerRule());
 	        }
        		set(
        			$current, 
-       			"simulationCompiler",
-        		lv_simulationCompiler_5_0, 
+       			"simulationProcessor",
+        		lv_simulationProcessor_5_0, 
         		"de.cau.cs.kieler.prom.KiBuild.SimulationTemplateProcessor");
 	        afterParserOrEnumRuleCall();
 	    }

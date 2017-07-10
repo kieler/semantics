@@ -164,7 +164,7 @@ public class KiSimParser extends AbstractContentAssistParser {
 					put(grammarAccess.getBuildConfigurationAccess().getTemplateProcessorsAssignment_3(), "rule__BuildConfiguration__TemplateProcessorsAssignment_3");
 					put(grammarAccess.getModelCompilerAccess().getNameAssignment_2(), "rule__ModelCompiler__NameAssignment_2");
 					put(grammarAccess.getModelCompilerAccess().getAttributesAssignment_4(), "rule__ModelCompiler__AttributesAssignment_4");
-					put(grammarAccess.getModelCompilerAccess().getSimulationCompilerAssignment_5(), "rule__ModelCompiler__SimulationCompilerAssignment_5");
+					put(grammarAccess.getModelCompilerAccess().getSimulationProcessorAssignment_5(), "rule__ModelCompiler__SimulationProcessorAssignment_5");
 					put(grammarAccess.getSimulationCompilerAccess().getNameAssignment_2(), "rule__SimulationCompiler__NameAssignment_2");
 					put(grammarAccess.getSimulationCompilerAccess().getAttributesAssignment_4(), "rule__SimulationCompiler__AttributesAssignment_4");
 					put(grammarAccess.getNormalTemplateProcessorAccess().getAttributesAssignment_4(), "rule__NormalTemplateProcessor__AttributesAssignment_4");

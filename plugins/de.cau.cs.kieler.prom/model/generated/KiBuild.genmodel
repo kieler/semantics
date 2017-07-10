@@ -28,6 +28,7 @@
     <genClasses ecoreClass="KiBuild.ecore#//ModelCompiler">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiBuild.ecore#//ModelCompiler/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//ModelCompiler/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//ModelCompiler/simulationProcessor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiBuild.ecore#//ModelCompiler/simulationCompiler"/>
     </genClasses>
     <genClasses ecoreClass="KiBuild.ecore#//SimulationCompiler">

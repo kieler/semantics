@@ -37,7 +37,7 @@ class JavaSimulationCompiler extends SimulationCompiler {
     
     override compile(IFile file) {
         if(result == null) {
-            result = new SimulationGenerationResult()
+            result = new FileGenerationResult
         }
         
         monitor.subTask("Compiling simulation jar file:" + file.name)

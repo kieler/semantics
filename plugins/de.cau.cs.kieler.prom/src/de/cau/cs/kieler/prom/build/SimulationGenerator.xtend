@@ -54,7 +54,7 @@ class SimulationGenerator {
      * Generate the code for simulation of a model file
      * 
      */
-    public def SimulationGenerationResult generate(IFile file, EObject model) {
+    public def FileGenerationResult generate(IFile file, EObject model) {
         //TODO: Hardcoded stuff
         val fileNameWithoutExtension = Files.getNameWithoutExtension(file.name)
         val simTargetDirectory = computeTargetPath("sim/code") as IFolder
@@ -74,8 +74,8 @@ class SimulationGenerator {
         return result
     }
     
-    public def SimulationGenerationResult generate(IFile target, List<WrapperCodeAnnotationData> datas, Map<String, String> additionalMappings) {
-        val result = new SimulationGenerationResult()
+    public def FileGenerationResult generate(IFile target, List<WrapperCodeAnnotationData> datas, Map<String, String> additionalMappings) {
+        val result = new FileGenerationResult
         // Remove old target
         KiCoBuilder.deleteMarkers(target)
         if(target.exists())

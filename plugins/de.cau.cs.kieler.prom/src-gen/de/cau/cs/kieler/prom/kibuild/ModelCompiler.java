@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationCompiler <em>Simulation Compiler</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationProcessor <em>Simulation Processor</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.prom.kibuild.KibuildPackage#getModelCompiler()
@@ -69,29 +69,29 @@ public interface ModelCompiler extends EObject
   EList<AttributeMapping> getAttributes();
 
   /**
-   * Returns the value of the '<em><b>Simulation Compiler</b></em>' containment reference.
+   * Returns the value of the '<em><b>Simulation Processor</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Simulation Compiler</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Simulation Processor</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Simulation Compiler</em>' containment reference.
-   * @see #setSimulationCompiler(TemplateProcessor)
-   * @see de.cau.cs.kieler.prom.kibuild.KibuildPackage#getModelCompiler_SimulationCompiler()
+   * @return the value of the '<em>Simulation Processor</em>' containment reference.
+   * @see #setSimulationProcessor(TemplateProcessor)
+   * @see de.cau.cs.kieler.prom.kibuild.KibuildPackage#getModelCompiler_SimulationProcessor()
    * @model containment="true"
    * @generated
    */
-  TemplateProcessor getSimulationCompiler();
+  TemplateProcessor getSimulationProcessor();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationCompiler <em>Simulation Compiler</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.prom.kibuild.ModelCompiler#getSimulationProcessor <em>Simulation Processor</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Simulation Compiler</em>' containment reference.
-   * @see #getSimulationCompiler()
+   * @param value the new value of the '<em>Simulation Processor</em>' containment reference.
+   * @see #getSimulationProcessor()
    * @generated
    */
-  void setSimulationCompiler(TemplateProcessor value);
+  void setSimulationProcessor(TemplateProcessor value);
 
 } // ModelCompiler

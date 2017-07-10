@@ -22,7 +22,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class ModelCompilationResult extends FileGenerationResult {
     @Accessors    
-    var SimulationGenerationResult simulationGenerationResult
+    var FileGenerationResult simulationGenerationResult
     
     public def List<IFile> getCreatedSimulationFiles() {
         if(simulationGenerationResult != null) {
