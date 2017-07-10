@@ -33,6 +33,9 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
+import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
+import org.eclipse.elk.alg.layered.properties.FixedAlignment
+import de.cau.cs.kieler.klighd.KlighdOptions
 
 /**
  * Main diagram synthesis for KiCool.
@@ -51,12 +54,20 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     override transform(System model) {
         val rootNode = model.createNode
         
-        rootNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-        rootNode.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
-        rootNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::SIMPLE);
+        rootNode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
+        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
+        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
         rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20d);
         rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d));
+        rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
+        rootNode.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+
+        // Workaround until we use the next version of ELK        
+        // val size = usedContext.getProperty(KlighdOptions.VIEWER).getControl.getSize
+//      val aspectRatio = size.x as double / size.y * 2
+        rootNode.setLayoutOption(LayeredOptions::ASPECT_RATIO, 10.0) 
         
         val source = sourceNode
         val processorNodes = model.processors.transform
