@@ -184,7 +184,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             val PREs = <ValuedObject> newHashSet      
             
             if (node instanceof Assignment) {
-                val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+                val incomingControlFlows = node.incoming.filter(ControlFlow).filter[ it.eContainer != null ].toList
                 if (incomingControlFlows.size>1) {
                     val conditional = conditionalStack.pop
                     
