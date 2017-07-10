@@ -141,7 +141,7 @@ public class PTC2SCCharts {
         src2id.clear
         var scchart = SCChartsFactory::eINSTANCE.createState;
         targetModel.add(scchart)
-        scchart.id = element.eClass.name.fixId;
+        scchart.id = element.name.fixId;
         println("CREATE STATEMACHINE '" + scchart.id + "' for " + element.hashCode)
         element.map(scchart)
         targetModel.transformGeneral(element)
@@ -315,71 +315,69 @@ public class PTC2SCCharts {
         //
     }
 
-    def void transformClass(List<State> targetModel, Element element) {
-        println("ENTERING CLASS '" + element.name + "'")
-        targetModel.transformGeneral(element)
-    }
-
-    def void transformPackage(List<State> targetModel, Element element) {
-        println("ENTERING PACKAGE '" + element.name + "'")
-        targetModel.transformGeneral(element)
-    }
+//    def void transformClass(List<State> targetModel, Element element) {
+//        println("ENTERING CLASS '" + element.name + "'")
+//        targetModel.transformGeneral(element)
+//    }
+//
+//    def void transformPackage(List<State> targetModel, Element element) {
+//        println("ENTERING PACKAGE '" + element.name + "'")
+//        targetModel.transformGeneral(element)
+//    }
 
     def transformGeneral(List<State> targetModel, Element element) {
 
         for (childElement : element.children) {
+            println("UML TYPE:" + childElement.umlType)
 
-            if (childElement.type.endsWith("Event")) {
+            if (childElement.id.endsWith("Event")) {
                 targetModel.transformEvent(childElement)
             }
-
-            if (childElement.type == "StateMachine") {
+            else if (childElement.umlType == "StateMachine") {
                 targetModel.transformStateMachine(childElement)
             }
-            if (childElement.type == "Region") {
+            else if (childElement.umlType == "Region") {
                 targetModel.transformRegion(childElement, element)
             }
-            if (childElement.type == "Pseudostate") {
+            else if (childElement.umlType == "Pseudostate") {
                 targetModel.transformPseudostate(childElement, element)
             }
-            if (childElement.type == "FinalState") {
+            else if (childElement.umlType == "FinalState") {
                 targetModel.transformFinalState(childElement, element)
             }
-            if (childElement.type == "State") {
+            else if (childElement.umlType == "State") {
                 targetModel.transformState(childElement, element)
             }
-            if (childElement.type == "Activity") {
+            else if (childElement.umlType == "Activity") {
                 targetModel.transformActivity(childElement)
             }
-            if (childElement.type == "Transition") {
+            else if (childElement.umlType == "Transition") {
                 targetModel.transformTransition(childElement)
             }
-            if (childElement.type == "Trigger") {
+            else if (childElement.umlType == "Trigger") {
                 targetModel.transformTrigger(childElement, element)
             }
-            if (childElement.type == "OpaqueBehavior") {
+            else if (childElement.umlType == "OpaqueBehavior") {
                 targetModel.transformOpaqueBehavior(childElement)
             }
-            if (childElement.type == "OpaqueExpression") {
+            else if (childElement.umlType == "OpaqueExpression") {
                 targetModel.transformOpaqueExpression(childElement)
             }
-            if (childElement.type == "Operation") {
+            else if (childElement.umlType == "Operation") {
                 targetModel.transformOperation(childElement)
             }
-            if (childElement.type == "Parameter") {
+            else if (childElement.umlType == "Parameter") {
                 targetModel.transformParameter(childElement)
             }
-            if (childElement.type == "Class") {
-                targetModel.transformClass(childElement)
-            }
-            if (childElement.type == "Package") {
-                targetModel.transformPackage(childElement)
-            }
-            if (childElement.type == "OpaqueBehavior") {
+            else if (childElement.umlType == "OpaqueBehavior") {
                 targetModel.transformOpaqueBehavior(childElement)
             }
-            if (childElement.type == "Property") {
+            else if (childElement.umlType == "Property") {
                 targetModel.transformProperty(childElement)
+            }
+            else if (childElement.children.size > 0) {
+                // A container
+                targetModel.transformGeneral(childElement) 
             }
 
         }

@@ -111,7 +111,7 @@ public class XMIModelParser {
             }
             // End of element </... 
             if (!skip && !value && character == '<' && nextCharacter == '/' && lastCharacter != '\\') {
-                if (contentPart.length() > 0) {
+                if (contentPart.length() > 0 && stack.peek().getChildren().size() == 0) {
                     // Some free part was entered as 'child'
                     stack.peek().setContent(contentPart.toString());
                     contentPart = new StringBuilder(); // Delete part for next time

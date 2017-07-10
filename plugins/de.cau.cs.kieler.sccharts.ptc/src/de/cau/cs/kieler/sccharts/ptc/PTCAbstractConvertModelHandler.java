@@ -287,16 +287,15 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
 
                             ResourceSet resSet = new ResourceSetImpl();
                             Resource saveRes = resSet.createResource(output);
-                            EObject transformedModel = (EObject) transformedObject;
-                            saveRes.getContents().add(transformedModel);
+                            saveRes.getContents().add((EObject)listObject);
                             saveRes.save(getSaveOptions());
                             setCharset(WorkspaceSynchronizer.getFile(saveRes));
 
                             // Open associated editor, if necessary
                             // Because this code is not execute in the ui thread, this must be done
                             // synchronously.
-                            if (doOpenEditor(transformedObject, event, selection)) {
-                                openEditorSync(transformedObject);
+                            if (doOpenEditor((EObject)listObject, event, selection)) {
+                                openEditorSync((EObject)listObject);
                             }
 
                             // Call post-processing

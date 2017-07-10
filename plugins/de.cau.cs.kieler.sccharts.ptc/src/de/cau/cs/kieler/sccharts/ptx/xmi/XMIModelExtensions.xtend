@@ -45,10 +45,18 @@ class XMIModelExtensions {
         for (attribute : content.attributes) {
             if (attribute.name == attributeName) {
                 return attribute.value as String
-            } else {
-//                println("  ATTRIB '"+attribute.EStructuralFeature.getName+"' = '" + attribute.value + "'" );
             }
         }
-        return null;
+        return "";
     }    
+    
+    def boolean exitstAttributeByName(Element content, String attributeName) {
+        for (attribute : content.attributes) {
+            if (attribute.name == attributeName) {
+                return true
+            }
+        }
+        return false
+    }    
+    
 }

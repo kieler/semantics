@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -18,90 +18,95 @@ import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
 
 /**
  * @author cmot
- *
+ * 
  */
 class PTCXMIUMLExtensions {
-    
+
     @Inject
     extension XMIModelExtensions
-    
+
     // ------------------------------------------------------------------------
-    
     // Getter for attributes
-    
-     def String getId(Element content) {
-        //return (content as EObject).eResource.getURIFragment(content);
+    def String getId(Element content) {
+        // return (content as EObject).eResource.getURIFragment(content);
         return content.attributeByName("xmi:id")
     }
-    
+
+    def String getUmlType(Element content) {
+        if (content.getXmiType.length > 3) {
+            // return (content as EObject).eResource.getURIFragment(content);
+            return content.getXmiType.substring(4)
+        } else {
+            return ""
+        }
+    }
+
     def String getVisibility(Element content) {
-        return content.attributeByName("visibility") 
+        return content.attributeByName("visibility")
     }
+
     def String getKind(Element content) {
-        return content.attributeByName("kind") 
+        return content.attributeByName("kind")
     }
+
     def String getSource(Element content) {
-        return content.attributeByName("source") 
+        return content.attributeByName("source")
     }
+
     def String getTarget(Element content) {
-        return content.attributeByName("target") 
+        return content.attributeByName("target")
     }
+
     def String getEvent(Element content) {
-        return content.attributeByName("event") 
+        return content.attributeByName("event")
     }
+
     def String getBody(Element content) {
-        return content.attributeByName("body") 
+        return content.attributeByName("body")
     }
+
     def String getConstrainedElement(Element content) {
-        return content.attributeByName("constrainedElement") 
+        return content.attributeByName("constrainedElement")
     }
+
     def String getGuard(Element content) {
-        return content.attributeByName("guard") 
+        return content.attributeByName("guard")
     }
+
     def String getRepresents(Element content) {
-        return content.attributeByName("represents") 
+        return content.attributeByName("represents")
     }
+
     def String getSendEvent(Element content) {
-        return content.attributeByName("sendEvent") 
+        return content.attributeByName("sendEvent")
     }
+
     def String getReceiveEvent(Element content) {
-        return content.attributeByName("receiveEvent") 
+        return content.attributeByName("receiveEvent")
     }
+
     def String getCovered(Element content) {
-        return content.attributeByName("covered") 
+        return content.attributeByName("covered")
     }
+
     def String getDefaultValue(Element content) {
-        return content.attributeByName("defaultValue") 
+        return content.attributeByName("defaultValue")
     }
+
     def String getAssociation(Element content) {
-        return content.attributeByName("association") 
+        return content.attributeByName("association")
     }
+
     def String getIsReadOnly(Element content) {
-        return content.attributeByName("isReadOnly") 
+        return content.attributeByName("isReadOnly")
     }
+
     def String getValueAttribute(Element content) {
-        return content.attributeByName("value") 
+        return content.attributeByName("value")
     }
+
     def String getTypeAttribute(Element content) {
-        return content.attributeByName("type") 
+        return content.attributeByName("type")
     }
-    
-    
-            
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 }
