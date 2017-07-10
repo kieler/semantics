@@ -27,10 +27,10 @@ import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 class PTime extends Metric<Object, Integer> {
     
     static val IProperty<Integer> METRIC_ENTITY = 
-        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.pTime.entity")
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.pTime.entity", 0)
 
     static val IProperty<Integer> METRIC_SOURCE_ENTITY = 
-        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.pTime.sourceEntity")    
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.pTime.sourceEntity", 0)    
     
     static val long MIN_TIME = 1;
     

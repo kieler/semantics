@@ -28,10 +28,10 @@ import de.cau.cs.kieler.kicool.compilation.Environment
 class EObjectCount extends Metric<EObject, Integer> {
 
     static val IProperty<Integer> METRIC_ENTITY = 
-        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.eObjectCount.entity")
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.eObjectCount.entity", 0)
 
     static val IProperty<Integer> METRIC_SOURCE_ENTITY = 
-        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.eObjectCount.sourceEntity")
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.eObjectCount.sourceEntity", 0)
     
     
     override getId() {

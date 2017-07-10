@@ -32,15 +32,12 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
     private static val long serialVersionUID = 4507851447415709893L
     
     /** map of property identifiers to their values. */
-    protected HashMap<IProperty<?>, Object> propertyMap
+    protected HashMap<IProperty<?>, Object> propertyMap = new HashMap<IProperty<?>, Object>()
     
     /**
      * {@inheritDoc}
      */
     override <T> MapPropertyHolder setProperty(IProperty<? super T> property, T value) {
-        if (propertyMap == null) {
-            propertyMap = new HashMap<IProperty<?>, Object>();
-        }
         if (value == null) {
             propertyMap.remove(property);
         } else {
@@ -88,11 +85,7 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
 
         val Map<IProperty<?>, Object> otherMap = other.getAllProperties()
         if (!otherMap.isEmpty()) {
-            if (this.propertyMap == null) {
-                propertyMap = new HashMap<IProperty<?>, Object>(otherMap)
-            } else {
-                this.propertyMap.putAll(otherMap)
-            }
+            this.propertyMap.putAll(otherMap)
         }
 
         return this
@@ -102,11 +95,7 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
      * {@inheritDoc}
      */
     override Map<IProperty<?>, Object> getAllProperties() {
-        if (propertyMap == null) {
-            return Collections.emptyMap()
-        } else {
-            return propertyMap
-        }
+        return propertyMap
     }
     
     /**
@@ -116,9 +105,6 @@ public class MapPropertyHolder implements IPropertyHolder, Serializable {
      * @param newProperties the properties that shall be checked
      */
     def void checkProperties(IProperty<?> ... newProperties) {
-        if (propertyMap == null) {
-            return;
-        }
         for (IProperty<?> property : newProperties) {
             val Object value = propertyMap.get(property);
             if (value != null) {
