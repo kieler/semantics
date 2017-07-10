@@ -904,6 +904,18 @@ class SCEstExtension {
     }
     
     /**
+     * Creates a new Annotation with a specific name
+     * 
+     * @param name The name of this annotation
+     * @return The newly created Annotation
+     */
+    def createAnnotation(String name) {
+        AnnotationsFactory::eINSTANCE.createAnnotation => [
+            it.name = name
+        ]
+    }
+    
+    /**
      * Check whether in an annotation list there is an annotation named "depth".
      * 
      * @param annotations

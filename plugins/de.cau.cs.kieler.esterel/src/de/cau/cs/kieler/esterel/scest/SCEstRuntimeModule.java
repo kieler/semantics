@@ -10,7 +10,7 @@ import de.cau.cs.kieler.esterel.scest.validation.SCEstValidator;
  */
 public class SCEstRuntimeModule extends de.cau.cs.kieler.esterel.scest.AbstractSCEstRuntimeModule {
     @org.eclipse.xtext.service.SingletonBinding(eager=true) public Class<? extends 
-            de.cau.cs.kieler.esterel.scest.validation.SCEstValidator> bindSctJavaValidator() {
+            de.cau.cs.kieler.esterel.scest.validation.SCEstValidator> bindSCEstValidator() {
         return SCEstValidator.class;
     }
 }
