@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import static extension org.eclipse.xtext.EcoreUtil2.* 
 
 /**
  * Main diagram synthesis for the source in KiCool.
@@ -31,10 +32,11 @@ class SourceSynthesis {
     @Inject extension KEdgeExtensions 
     @Inject extension ProcessorStyles    
     
-    private val SOURCE_KGT = "source.kgt"
+    static val SOURCE_KGT = "source.kgt"
+    static val SOURCE_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
     
     def KNode sourceNode() {
-        val sourceNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, SOURCE_KGT)
+        val sourceNode = SOURCE_NODE.copy
        
         sourceNode
     }

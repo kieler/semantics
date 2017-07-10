@@ -38,6 +38,7 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessor
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
+import static extension org.eclipse.xtext.EcoreUtil2.* 
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -55,10 +56,12 @@ class ProcessorSynthesis {
     @Inject extension ProcessorStyles 
     @Inject IResourceServiceProvider.Registry regXtext;      
     
-    static private val PROCESSOR_KGT = "processor.kgt"
-    static private val PROCESSOR_GROUP_KGT = "processor_group.kgt"
-    static private val COLLAPSED_ID = "collapsed"
-    static private val EXPANDED_ID = "expanded" 
+    static val PROCESSOR_KGT = "processor.kgt"
+    static val PROCESSOR_GROUP_KGT = "processor_group.kgt"
+    static val COLLAPSED_ID = "collapsed"
+    static val EXPANDED_ID = "expanded" 
+    
+    static val PROCESSOR_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
     
     private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
@@ -66,7 +69,7 @@ class ProcessorSynthesis {
     }
 
     dispatch def List<KNode> transform(Processor processor) {
-        val processorNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
+        val processorNode = PROCESSOR_NODE.copy
         val nodeId = processor.uniqueProcessorId
         processorNode.setId(nodeId)
         processor.populateProcessorData(processorNode)        

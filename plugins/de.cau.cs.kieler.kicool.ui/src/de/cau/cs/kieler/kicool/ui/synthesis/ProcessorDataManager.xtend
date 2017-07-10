@@ -85,6 +85,8 @@ class ProcessorDataManager {
     
     static val INTERMEDIATE_KGT = "intermediate.kgt"
     
+    static val INTERMEDIATE_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)
+    
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
         node.setProperty(PROCESSOR_IDENTIFIER, processor)
         
@@ -198,7 +200,7 @@ class ProcessorDataManager {
         
 
         val intermediateRootNode = NODE_INTERMEDIATE.findNode(nodeIdMap)
-        val intermediateKGT = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)
+        val intermediateKGT = INTERMEDIATE_NODE.copy
         intermediateRootNode.children.clear
         var intermediatePosX = 0.0f
         // Test for infos, warnings and errors
