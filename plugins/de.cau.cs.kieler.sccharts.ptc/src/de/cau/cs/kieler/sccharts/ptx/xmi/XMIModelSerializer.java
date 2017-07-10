@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.sccharts.ptx.xmi;
 
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute;
-import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container;
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element;
 
 /**
  * @author cmot
@@ -21,15 +21,15 @@ import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container;
  */
 public class XMIModelSerializer {
 
-    public static String serialize(Container model) {
+    public static String serialize(Element model) {
 
         long start = System.currentTimeMillis();
 
         StringBuilder serialized = new StringBuilder();
         serialized.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         
-        for (Container child : model.getChildren()) {
-            serializeContainer(child, serialized);
+        for (Element child : model.getChildren()) {
+            serializeElement(child, serialized);
         }
 
         long end = System.currentTimeMillis();
@@ -40,12 +40,12 @@ public class XMIModelSerializer {
     
     
     
-    public static void serializeContainer(Container container, StringBuilder serialized) {
+    public static void serializeElement(Element element, StringBuilder serialized) {
             // Serialize type
             serialized.append("<");
-            serialized.append(container.getType());
-            if (container.getAttributes() != null && container.getAttributes().size() > 0) {
-                for (Attribute attribute : container.getAttributes()) {
+            serialized.append(element.getType());
+            if (element.getAttributes() != null && element.getAttributes().size() > 0) {
+                for (Attribute attribute : element.getAttributes()) {
                     serialized.append(" ");
                     serialized.append(attribute.getName());
                     serialized.append("=\"");
@@ -54,21 +54,21 @@ public class XMIModelSerializer {
                 }
             }    
             // Serialize content or children
-            if (container.getChildren().size() == 0 && container.getContent() != null && container.getContent().length() > 0) {
+            if (element.getChildren().size() == 0 && element.getContent() != null && element.getContent().length() > 0) {
                 serialized.append(">");
                 // Content case
-                serialized.append(container.getContent());
+                serialized.append(element.getContent());
                 serialized.append("</");
-                serialized.append(container.getType());
+                serialized.append(element.getType());
                 serialized.append("> ");
-            } else if (container.getChildren().size() > 0) {
+            } else if (element.getChildren().size() > 0) {
                 serialized.append("> ");
                 // Children case
-                for (Container child : container.getChildren()) {
-                    serializeContainer(child, serialized);
+                for (Element child : element.getChildren()) {
+                    serializeElement(child, serialized);
                 }
                 serialized.append("</");
-                serialized.append(container.getType());
+                serialized.append(element.getType());
                 serialized.append("> ");
             } else {
                 // Single line case

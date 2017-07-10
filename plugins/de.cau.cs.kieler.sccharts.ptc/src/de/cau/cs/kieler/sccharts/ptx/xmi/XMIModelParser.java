@@ -16,7 +16,8 @@ import java.lang.reflect.Field;
 import java.util.Stack;
 
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute;
-import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container;
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element;
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element;
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelFactory;
 
 /**
@@ -26,7 +27,7 @@ import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelFactory;
 public class XMIModelParser {
 
     
-    public static Container parse(String text) {
+    public static Element parse(String text) {
         
         long start = System.currentTimeMillis();
         
@@ -38,11 +39,11 @@ public class XMIModelParser {
         }
         text = text.substring(i2 + 2);
 
-        Stack<Container> stack = new Stack<Container>();
+        Stack<Element> stack = new Stack<Element>();
         boolean type = false;
         boolean name = false;
         boolean value = false;  // is true after the first " 
-        boolean beforeValue = false; // is true before the first " 
+        boolean beforeValue = false; // is true before the first "
         
         StringBuilder typePart = new StringBuilder();
         StringBuilder namePart = new StringBuilder();
@@ -69,8 +70,8 @@ public class XMIModelParser {
                 break;
             }
         }
-        // Create surrounding dummy-container of type XMIModel
-        Container model = createContainer("XMIModel");
+        // Create surrounding dummy-element of type XMIModel
+        Element model = createElement("XMIModel");
         stack.push(model);
 
         int len = chars.length;
@@ -85,20 +86,22 @@ public class XMIModelParser {
                 lastCharacter = chars[i-1];
             }
             boolean skip = false;
-            // Start of container (expect start of container type)
+            // Start of element (expect start of element type)
             if (!skip && !type && !name && !value && character == '<' && nextCharacter != '/') {
                     type = true;
                     skip = true;
             }
-            // End of container type (' ') or whole container ('>')
+            // End of element type (' ') or whole element ('>')
             if (!skip && type && (character == ' ' || character == '>')) {
                 // End of type
                 type = false;
-                Container container = createContainer(typePart.toString());
+                Element element = createElement(typePart.toString());
                 typePart = new StringBuilder(); // Delete part for next time
-                // Put as child to stack-container element which is the parent
-                stack.peek().getChildren().add(container);
-                stack.push(container);
+                // Put as child to stack-element element which is the parent
+                stack.peek().getChildren().add(element);
+                // Remove any possible content
+                stack.peek().setContent(null);
+                stack.push(element);
                 if (character == ' ') {
                     name = true; // Next is an attribute name
                 } else {
@@ -106,8 +109,8 @@ public class XMIModelParser {
                 }
                 skip = true;
             }
-            // End of container </... 
-            if (!skip && !value && character == '<' && nextCharacter == '/') {
+            // End of element </... 
+            if (!skip && !value && character == '<' && nextCharacter == '/' && lastCharacter != '\\') {
                 if (contentPart.length() > 0) {
                     // Some free part was entered as 'child'
                     stack.peek().setContent(contentPart.toString());
@@ -116,13 +119,13 @@ public class XMIModelParser {
                 stack.pop();
                 skip = true;
             }
-            // End of container (single-lined)   ... />
+            // End of element (single-lined)   ... />
             if (!skip && !value && character == '/' && nextCharacter == '>') {
                 name = false; // Ended, no attribute name
                 stack.pop();
                 skip = true;
             }
-            // End of attributes in container decl (no further name gathering)
+            // End of attributes in element decl (no further name gathering)
             if (!skip && !value && name && character == '>') {
                 name = false;
                 contentPart = new StringBuilder(); // Delete part for next time
@@ -173,10 +176,10 @@ public class XMIModelParser {
     }
 
     // ------------------------------------------------------------------------
-    private static Container createContainer(String type) {
-        Container container = XMIModelFactory.eINSTANCE.createContainer();
-        container.setType(type);
-        return container;
+    private static Element createElement(String type) {
+        Element element = XMIModelFactory.eINSTANCE.createElement();
+        element.setType(type);
+        return element;
     }
 
     private static Attribute createAttribute(String name) {

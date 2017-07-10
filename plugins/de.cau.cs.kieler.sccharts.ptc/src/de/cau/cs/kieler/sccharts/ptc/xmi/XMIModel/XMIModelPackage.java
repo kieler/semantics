@@ -57,14 +57,14 @@ public interface XMIModelPackage extends EPackage {
     XMIModelPackage eINSTANCE = de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.XMIModelPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl <em>Container</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl <em>Element</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.XMIModelPackageImpl#getContainer()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.XMIModelPackageImpl#getElement()
      * @generated
      */
-    int CONTAINER = 0;
+    int ELEMENT = 0;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -73,7 +73,7 @@ public interface XMIModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONTAINER__TYPE = 0;
+    int ELEMENT__TYPE = 0;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' reference list.
@@ -82,7 +82,7 @@ public interface XMIModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONTAINER__CHILDREN = 1;
+    int ELEMENT__CHILDREN = 1;
 
     /**
      * The feature id for the '<em><b>Attributes</b></em>' reference list.
@@ -91,7 +91,7 @@ public interface XMIModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONTAINER__ATTRIBUTES = 2;
+    int ELEMENT__ATTRIBUTES = 2;
 
     /**
      * The feature id for the '<em><b>Content</b></em>' attribute.
@@ -100,25 +100,25 @@ public interface XMIModelPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONTAINER__CONTENT = 3;
+    int ELEMENT__CONTENT = 3;
 
     /**
-     * The number of structural features of the '<em>Container</em>' class.
+     * The number of structural features of the '<em>Element</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTAINER_FEATURE_COUNT = 4;
+    int ELEMENT_FEATURE_COUNT = 4;
 
     /**
-     * The number of operations of the '<em>Container</em>' class.
+     * The number of operations of the '<em>Element</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTAINER_OPERATION_COUNT = 0;
+    int ELEMENT_OPERATION_COUNT = 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.AttributeImpl <em>Attribute</em>}' class.
@@ -168,58 +168,58 @@ public interface XMIModelPackage extends EPackage {
 
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container <em>Container</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Container</em>'.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container
+     * @return the meta object for class '<em>Element</em>'.
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
      * @generated
      */
-    EClass getContainer();
+    EClass getElement();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getType <em>Type</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getType()
-     * @see #getContainer()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getType()
+     * @see #getElement()
      * @generated
      */
-    EAttribute getContainer_Type();
+    EAttribute getElement_Type();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getChildren <em>Children</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getChildren <em>Children</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Children</em>'.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getChildren()
-     * @see #getContainer()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getChildren()
+     * @see #getElement()
      * @generated
      */
-    EReference getContainer_Children();
+    EReference getElement_Children();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getAttributes <em>Attributes</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getAttributes <em>Attributes</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Attributes</em>'.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getAttributes()
-     * @see #getContainer()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getAttributes()
+     * @see #getElement()
      * @generated
      */
-    EReference getContainer_Attributes();
+    EReference getElement_Attributes();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getContent <em>Content</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getContent <em>Content</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Content</em>'.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getContent()
-     * @see #getContainer()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getContent()
+     * @see #getElement()
      * @generated
      */
-    EAttribute getContainer_Content();
+    EAttribute getElement_Content();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute <em>Attribute</em>}'.
@@ -277,14 +277,14 @@ public interface XMIModelPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl <em>Container</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl <em>Element</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl
-         * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.XMIModelPackageImpl#getContainer()
+         * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl
+         * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.XMIModelPackageImpl#getElement()
          * @generated
          */
-        EClass CONTAINER = eINSTANCE.getContainer();
+        EClass ELEMENT = eINSTANCE.getElement();
 
         /**
          * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
@@ -292,7 +292,7 @@ public interface XMIModelPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute CONTAINER__TYPE = eINSTANCE.getContainer_Type();
+        EAttribute ELEMENT__TYPE = eINSTANCE.getElement_Type();
 
         /**
          * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
@@ -300,7 +300,7 @@ public interface XMIModelPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference CONTAINER__CHILDREN = eINSTANCE.getContainer_Children();
+        EReference ELEMENT__CHILDREN = eINSTANCE.getElement_Children();
 
         /**
          * The meta object literal for the '<em><b>Attributes</b></em>' reference list feature.
@@ -308,7 +308,7 @@ public interface XMIModelPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference CONTAINER__ATTRIBUTES = eINSTANCE.getContainer_Attributes();
+        EReference ELEMENT__ATTRIBUTES = eINSTANCE.getElement_Attributes();
 
         /**
          * The meta object literal for the '<em><b>Content</b></em>' attribute feature.
@@ -316,7 +316,7 @@ public interface XMIModelPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute CONTAINER__CONTENT = eINSTANCE.getContainer_Content();
+        EAttribute ELEMENT__CONTENT = eINSTANCE.getElement_Content();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.AttributeImpl <em>Attribute</em>}' class.

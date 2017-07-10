@@ -56,7 +56,7 @@ public class XMIModelFactoryImpl extends EFactoryImpl implements XMIModelFactory
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case XMIModelPackage.CONTAINER: return createContainer();
+            case XMIModelPackage.ELEMENT: return createElement();
             case XMIModelPackage.ATTRIBUTE: return createAttribute();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -68,9 +68,9 @@ public class XMIModelFactoryImpl extends EFactoryImpl implements XMIModelFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container createContainer() {
-        ContainerImpl container = new ContainerImpl();
-        return container;
+    public Element createElement() {
+        ElementImpl element = new ElementImpl();
+        return element;
     }
 
     /**

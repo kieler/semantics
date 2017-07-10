@@ -68,8 +68,8 @@ public class XMIModelAdapterFactory extends AdapterFactoryImpl {
     protected XMIModelSwitch<Adapter> modelSwitch =
         new XMIModelSwitch<Adapter>() {
             @Override
-            public Adapter caseContainer(Container object) {
-                return createContainerAdapter();
+            public Adapter caseElement(Element object) {
+                return createElementAdapter();
             }
             @Override
             public Adapter caseAttribute(Attribute object) {
@@ -96,16 +96,16 @@ public class XMIModelAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container <em>Container</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
      * @generated
      */
-    public Adapter createContainerAdapter() {
+    public Adapter createElementAdapter() {
         return null;
     }
 

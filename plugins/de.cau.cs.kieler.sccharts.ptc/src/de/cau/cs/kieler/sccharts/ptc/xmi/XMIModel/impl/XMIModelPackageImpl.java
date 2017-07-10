@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl;
 
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute;
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element;
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelFactory;
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage;
 
@@ -25,7 +26,7 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass containerEClass = null;
+    private EClass elementEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -100,8 +101,8 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getContainer() {
-        return containerEClass;
+    public EClass getElement() {
+        return elementEClass;
     }
 
     /**
@@ -109,8 +110,8 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getContainer_Type() {
-        return (EAttribute)containerEClass.getEStructuralFeatures().get(0);
+    public EAttribute getElement_Type() {
+        return (EAttribute)elementEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -118,8 +119,8 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getContainer_Children() {
-        return (EReference)containerEClass.getEStructuralFeatures().get(1);
+    public EReference getElement_Children() {
+        return (EReference)elementEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -127,8 +128,8 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getContainer_Attributes() {
-        return (EReference)containerEClass.getEStructuralFeatures().get(2);
+    public EReference getElement_Attributes() {
+        return (EReference)elementEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -136,8 +137,8 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getContainer_Content() {
-        return (EAttribute)containerEClass.getEStructuralFeatures().get(3);
+    public EAttribute getElement_Content() {
+        return (EAttribute)elementEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -195,11 +196,11 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
         isCreated = true;
 
         // Create classes and their features
-        containerEClass = createEClass(CONTAINER);
-        createEAttribute(containerEClass, CONTAINER__TYPE);
-        createEReference(containerEClass, CONTAINER__CHILDREN);
-        createEReference(containerEClass, CONTAINER__ATTRIBUTES);
-        createEAttribute(containerEClass, CONTAINER__CONTENT);
+        elementEClass = createEClass(ELEMENT);
+        createEAttribute(elementEClass, ELEMENT__TYPE);
+        createEReference(elementEClass, ELEMENT__CHILDREN);
+        createEReference(elementEClass, ELEMENT__ATTRIBUTES);
+        createEAttribute(elementEClass, ELEMENT__CONTENT);
 
         attributeEClass = createEClass(ATTRIBUTE);
         createEAttribute(attributeEClass, ATTRIBUTE__NAME);
@@ -236,11 +237,11 @@ public class XMIModelPackageImpl extends EPackageImpl implements XMIModelPackage
         // Add supertypes to classes
 
         // Initialize classes, features, and operations; add parameters
-        initEClass(containerEClass, de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container.class, "Container", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getContainer_Type(), ecorePackage.getEString(), "Type", null, 0, 1, de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getContainer_Children(), this.getContainer(), null, "Children", null, 0, -1, de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getContainer_Attributes(), this.getAttribute(), null, "Attributes", null, 0, -1, de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getContainer_Content(), ecorePackage.getEString(), "Content", null, 0, 1, de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getElement_Type(), ecorePackage.getEString(), "Type", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getElement_Children(), this.getElement(), null, "Children", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getElement_Attributes(), this.getAttribute(), null, "Attributes", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getElement_Content(), ecorePackage.getEString(), "Content", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getAttribute_Name(), ecorePackage.getEString(), "Name", null, 0, 1, Attribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

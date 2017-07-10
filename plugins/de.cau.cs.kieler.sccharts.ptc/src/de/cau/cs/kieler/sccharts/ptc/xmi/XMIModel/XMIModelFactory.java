@@ -22,13 +22,13 @@ public interface XMIModelFactory extends EFactory {
     XMIModelFactory eINSTANCE = de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.XMIModelFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Container</em>'.
+     * Returns a new object of class '<em>Element</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Container</em>'.
+     * @return a new object of class '<em>Element</em>'.
      * @generated
      */
-    Container createContainer();
+    Element createElement();
 
     /**
      * Returns a new object of class '<em>Attribute</em>'.

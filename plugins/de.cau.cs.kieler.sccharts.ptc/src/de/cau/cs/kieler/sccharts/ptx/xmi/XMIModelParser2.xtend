@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.sccharts.ptx.xmi
 
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelFactory;
-import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container;
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element;
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute;
 import java.lang.reflect.Field
 import java.util.Stack
@@ -25,9 +25,9 @@ import java.util.ArrayList
  */
 class XMIModelParser2 {
     
-    private static Stack<Container> stack = new Stack()
+    private static Stack<Element> stack = new Stack()
     
-    def public static Container parse(String text) {
+    def public static Element parse(String text) {
         var boolean type = false
         var boolean name = false
         var boolean value = false  // is true after the first " 
@@ -54,8 +54,8 @@ class XMIModelParser2 {
                 }
             }
         }
-        // Create surrounding dummy-container of type XMIModel
-        var Container model = "XMIModel".createContainer;
+        // Create surrounding dummy-element of type XMIModel
+        var Element model = "XMIModel".createElement;
         stack.push(model)
 
         val len = chars.length;
@@ -70,31 +70,31 @@ class XMIModelParser2 {
                 lastCharacter = chars.get(i-1)
             }
             var skip = false
-            // Start of container (expect start of container type)
+            // Start of element (expect start of element type)
             if (!skip && !type && !name && !value) {
                 if (character.equals('<')) {
                     type = true
                     skip = true
                 }
             }
-            // End of container type 
+            // End of element type 
             if (!skip && type && character == ' ') {
                 // End of type
                 type = false
-                val container = typePart.toString.createContainer
+                val element = typePart.toString.createElement
                 typePart = new StringBuilder() // Delete part for next time
-                // Put as child to stack-container element which is the parent
-                stack.peek.addChild(container)
-                stack.push(container)
+                // Put as child to stack-element element which is the parent
+                stack.peek.addChild(element)
+                stack.push(element)
                 name = true // Next is an attribute name
                 skip = true
             }
-            // End of container </... 
+            // End of element </... 
             if (!skip && !value && character == '<' && nextCharacter == "/") {
                 stack.pop
                 skip = true
             }
-            // End of container (single-lined)   ... />
+            // End of element (single-lined)   ... />
             if (!skip && !value && character == '/' && nextCharacter == '>') {
                 stack.pop
                 skip = true
@@ -136,10 +136,10 @@ class XMIModelParser2 {
     }
 
     // ------------------------------------------------------------------------
-    def static Container createContainer(String type) {
-        val container = XMIModelFactory.eINSTANCE.createContainer
-        container.type = type
-        return container
+    def static Element createElement(String type) {
+        val element = XMIModelFactory.eINSTANCE.createElement
+        element.type = type
+        return element
     }
 
     def static Attribute createAttribute(String name) {
@@ -160,14 +160,14 @@ class XMIModelParser2 {
         return name.createAttribute().setValue2(value)
     }
 
-    def static Container addAttribute(Container container, Attribute attribute) {
-        container.attributes.add(attribute)
-        return container
+    def static Element addAttribute(Element element, Attribute attribute) {
+        element.attributes.add(attribute)
+        return element
     }
 
-    def static Container addChild(Container container, Container childContainer) {
-        container.children.add(childContainer)
-        return container
+    def static Element addChild(Element element, Element childElement) {
+        element.children.add(childElement)
+        return element
     }
 
 // ------------------------------------------------------------------------

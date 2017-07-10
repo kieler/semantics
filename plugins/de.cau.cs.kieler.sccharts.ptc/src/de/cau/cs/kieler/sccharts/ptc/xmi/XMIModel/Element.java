@@ -8,24 +8,24 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Container</b></em>'.
+ * A representation of the model object '<em><b>Element</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getChildren <em>Children</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getContent <em>Content</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getChildren <em>Children</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getContent <em>Content</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getContainer()
+ * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getElement()
  * @model
  * @generated
  */
-public interface Container extends EObject {
+public interface Element extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -36,14 +36,14 @@ public interface Container extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Type</em>' attribute.
      * @see #setType(String)
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getContainer_Type()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getElement_Type()
      * @model
      * @generated
      */
     String getType();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getType <em>Type</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getType <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Type</em>' attribute.
@@ -54,7 +54,7 @@ public interface Container extends EObject {
 
     /**
      * Returns the value of the '<em><b>Children</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container}.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Children</em>' reference list isn't clear,
@@ -62,11 +62,11 @@ public interface Container extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Children</em>' reference list.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getContainer_Children()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getElement_Children()
      * @model
      * @generated
      */
-    EList<Container> getChildren();
+    EList<Element> getChildren();
 
     /**
      * Returns the value of the '<em><b>Attributes</b></em>' reference list.
@@ -78,7 +78,7 @@ public interface Container extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Attributes</em>' reference list.
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getContainer_Attributes()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getElement_Attributes()
      * @model
      * @generated
      */
@@ -94,14 +94,14 @@ public interface Container extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Content</em>' attribute.
      * @see #setContent(String)
-     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getContainer_Content()
+     * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getElement_Content()
      * @model
      * @generated
      */
     String getContent();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container#getContent <em>Content</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getContent <em>Content</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Content</em>' attribute.
@@ -110,4 +110,4 @@ public interface Container extends EObject {
      */
     void setContent(String value);
 
-} // Container
+} // Element

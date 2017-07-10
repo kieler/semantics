@@ -66,9 +66,9 @@ public class XMIModelSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case XMIModelPackage.CONTAINER: {
-                Container container = (Container)theEObject;
-                T result = caseContainer(container);
+            case XMIModelPackage.ELEMENT: {
+                Element element = (Element)theEObject;
+                T result = caseElement(element);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -83,17 +83,17 @@ public class XMIModelSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Container</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Container</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Element</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseContainer(Container object) {
+    public T caseElement(Element object) {
         return null;
     }
 

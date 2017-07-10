@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl;
 
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute;
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element;
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage;
 
 import java.util.Collection;
@@ -20,21 +21,21 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Container</b></em>'.
+ * An implementation of the model object '<em><b>Element</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ContainerImpl#getContent <em>Content</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl.ElementImpl#getContent <em>Content</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ContainerImpl extends MinimalEObjectImpl.Container implements de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container {
+public class ElementImpl extends MinimalEObjectImpl.Container implements Element {
     /**
      * The default value of the '{@link #getType() <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -63,7 +64,7 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
      * @generated
      * @ordered
      */
-    protected EList<de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container> children;
+    protected EList<Element> children;
 
     /**
      * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' reference list.
@@ -100,7 +101,7 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ContainerImpl() {
+    protected ElementImpl() {
         super();
     }
 
@@ -111,7 +112,7 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
      */
     @Override
     protected EClass eStaticClass() {
-        return XMIModelPackage.Literals.CONTAINER;
+        return XMIModelPackage.Literals.ELEMENT;
     }
 
     /**
@@ -132,7 +133,7 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
         String oldType = type;
         type = newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, XMIModelPackage.CONTAINER__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, XMIModelPackage.ELEMENT__TYPE, oldType, type));
     }
 
     /**
@@ -140,9 +141,9 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container> getChildren() {
+    public EList<Element> getChildren() {
         if (children == null) {
-            children = new EObjectResolvingEList<de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container>(de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container.class, this, XMIModelPackage.CONTAINER__CHILDREN);
+            children = new EObjectResolvingEList<Element>(Element.class, this, XMIModelPackage.ELEMENT__CHILDREN);
         }
         return children;
     }
@@ -154,7 +155,7 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
      */
     public EList<Attribute> getAttributes() {
         if (attributes == null) {
-            attributes = new EObjectResolvingEList<Attribute>(Attribute.class, this, XMIModelPackage.CONTAINER__ATTRIBUTES);
+            attributes = new EObjectResolvingEList<Attribute>(Attribute.class, this, XMIModelPackage.ELEMENT__ATTRIBUTES);
         }
         return attributes;
     }
@@ -177,7 +178,7 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
         String oldContent = content;
         content = newContent;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, XMIModelPackage.CONTAINER__CONTENT, oldContent, content));
+            eNotify(new ENotificationImpl(this, Notification.SET, XMIModelPackage.ELEMENT__CONTENT, oldContent, content));
     }
 
     /**
@@ -188,13 +189,13 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case XMIModelPackage.CONTAINER__TYPE:
+            case XMIModelPackage.ELEMENT__TYPE:
                 return getType();
-            case XMIModelPackage.CONTAINER__CHILDREN:
+            case XMIModelPackage.ELEMENT__CHILDREN:
                 return getChildren();
-            case XMIModelPackage.CONTAINER__ATTRIBUTES:
+            case XMIModelPackage.ELEMENT__ATTRIBUTES:
                 return getAttributes();
-            case XMIModelPackage.CONTAINER__CONTENT:
+            case XMIModelPackage.ELEMENT__CONTENT:
                 return getContent();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -209,18 +210,18 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case XMIModelPackage.CONTAINER__TYPE:
+            case XMIModelPackage.ELEMENT__TYPE:
                 setType((String)newValue);
                 return;
-            case XMIModelPackage.CONTAINER__CHILDREN:
+            case XMIModelPackage.ELEMENT__CHILDREN:
                 getChildren().clear();
-                getChildren().addAll((Collection<? extends de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Container>)newValue);
+                getChildren().addAll((Collection<? extends Element>)newValue);
                 return;
-            case XMIModelPackage.CONTAINER__ATTRIBUTES:
+            case XMIModelPackage.ELEMENT__ATTRIBUTES:
                 getAttributes().clear();
                 getAttributes().addAll((Collection<? extends Attribute>)newValue);
                 return;
-            case XMIModelPackage.CONTAINER__CONTENT:
+            case XMIModelPackage.ELEMENT__CONTENT:
                 setContent((String)newValue);
                 return;
         }
@@ -235,16 +236,16 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case XMIModelPackage.CONTAINER__TYPE:
+            case XMIModelPackage.ELEMENT__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case XMIModelPackage.CONTAINER__CHILDREN:
+            case XMIModelPackage.ELEMENT__CHILDREN:
                 getChildren().clear();
                 return;
-            case XMIModelPackage.CONTAINER__ATTRIBUTES:
+            case XMIModelPackage.ELEMENT__ATTRIBUTES:
                 getAttributes().clear();
                 return;
-            case XMIModelPackage.CONTAINER__CONTENT:
+            case XMIModelPackage.ELEMENT__CONTENT:
                 setContent(CONTENT_EDEFAULT);
                 return;
         }
@@ -259,13 +260,13 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case XMIModelPackage.CONTAINER__TYPE:
+            case XMIModelPackage.ELEMENT__TYPE:
                 return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-            case XMIModelPackage.CONTAINER__CHILDREN:
+            case XMIModelPackage.ELEMENT__CHILDREN:
                 return children != null && !children.isEmpty();
-            case XMIModelPackage.CONTAINER__ATTRIBUTES:
+            case XMIModelPackage.ELEMENT__ATTRIBUTES:
                 return attributes != null && !attributes.isEmpty();
-            case XMIModelPackage.CONTAINER__CONTENT:
+            case XMIModelPackage.ELEMENT__CONTENT:
                 return CONTENT_EDEFAULT == null ? content != null : !CONTENT_EDEFAULT.equals(content);
         }
         return super.eIsSet(featureID);
@@ -289,4 +290,4 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements de.ca
         return result.toString();
     }
 
-} //ContainerImpl
+} //ElementImpl
