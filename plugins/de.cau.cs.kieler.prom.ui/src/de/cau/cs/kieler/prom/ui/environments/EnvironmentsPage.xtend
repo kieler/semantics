@@ -14,13 +14,14 @@
 package de.cau.cs.kieler.prom.ui.environments
 
 import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.CommandData
 import de.cau.cs.kieler.prom.data.EnvironmentData
 import de.cau.cs.kieler.prom.data.FileData
 import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
-import de.cau.cs.kieler.prom.ui.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.ui.UIExtensionLookupUtil
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.util.ArrayList
 import java.util.EnumSet
@@ -391,7 +392,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         
         // Fill combo
         combo.contentProvider = ArrayContentProvider.instance
-        val input = ExtensionLookupUtil.getWizardConfigurationElements(true)
+        val input = UIExtensionLookupUtil.getWizardConfigurationElements(true)
         combo.input = input
 
 //        Debug log, which wizards are currently installed 

@@ -28,6 +28,9 @@ import org.eclipse.core.runtime.Path
  */
 class JavaSimulationCompiler extends SimulationCompiler {
     
+    new() {
+    }
+    
     new(IProgressMonitor monitor) {
         super(monitor)
     }
@@ -56,6 +59,7 @@ class JavaSimulationCompiler extends SimulationCompiler {
         // Delete old executable
         val executableFile = project.getFile(directory.removeLastSegments(1).toOSString + File.separator + executableName)
         KiCoBuilder.deleteMarkers(executableFile)
+        KiCoBuilder.deleteMarkers(file)
         if(executableFile.exists)
             executableFile.delete(true, null)
         
@@ -103,5 +107,9 @@ class JavaSimulationCompiler extends SimulationCompiler {
     private def void createJavaJsonLibrary(IProject project, IPath simTargetPath) {
         val libPath = simTargetPath.removeLastSegments(1).append("org/json")
         PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/json")
+    }
+    
+    override toString() {
+        return "Java simulation compiler"
     }
 }

@@ -3,6 +3,8 @@
 <plugin>
    <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/de.cau.cs.kieler.prom.environmentInitializer.exsd"/>
    <extension-point id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer" schema="schema/de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer.exsd"/>
+   <extension-point id="modelCompiler" name="ModelCompiler" schema="schema/modelCompiler.exsd"/>
+   <extension-point id="simulationCompiler" name="SimulationCompiler" schema="schema/simulationCompiler.exsd"/>
    
    <extension point="org.eclipse.emf.ecore.generated_package">
      <package 
@@ -84,6 +86,24 @@
       <super
             type="org.eclipse.core.resources.problemmarker">
       </super>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.modelCompiler">
+      <modelCompiler
+            class="de.cau.cs.kieler.prom.build.KiCoModelCompiler"
+            name="kico">
+      </modelCompiler>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.simulationCompiler">
+      <simulationCompiler
+            class="de.cau.cs.kieler.prom.build.CSimulationCompiler"
+            name="c">
+      </simulationCompiler>
+      <simulationCompiler
+            class="de.cau.cs.kieler.prom.build.JavaSimulationCompiler"
+            name="java">
+      </simulationCompiler>
    </extension>
 
 </plugin>

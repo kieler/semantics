@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
@@ -22,8 +23,8 @@ import org.w3c.dom.svg.SVGLocatable
  *
  */
 class MoveAnimation extends AnimationHandler {
-    public val posX = new AnimationHandlerAttribute("x", 0)
-    public val posY = new AnimationHandlerAttribute("y", 0)
+    public val posX = new ConfigurableAttribute("x", 0)
+    public val posY = new ConfigurableAttribute("y", 0)
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)

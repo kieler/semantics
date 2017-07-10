@@ -13,10 +13,11 @@
  */
 package de.cau.cs.kieler.prom.ui.launch
 
+import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.CommandData
 import de.cau.cs.kieler.prom.data.KiCoLaunchData
-import de.cau.cs.kieler.prom.ui.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.ui.UIExtensionLookupUtil
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.util.ArrayList
 import java.util.List
@@ -192,7 +193,7 @@ class KiCoLaunchConfigExecuteTab extends AbstractKiCoLaunchConfigTab {
         var selected = false
         for(o : launchShortcuts.input as ArrayList<Object>) {
             if(o instanceof IConfigurationElement) {
-                val shortcutImplementation = o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)
+                val shortcutImplementation = o.getAttribute(UIExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)
                 if(shortcutImplementation == launchData.associatedLaunchShortcut) {
                     launchShortcuts.selection = new StructuredSelection(o)
                     selected = true

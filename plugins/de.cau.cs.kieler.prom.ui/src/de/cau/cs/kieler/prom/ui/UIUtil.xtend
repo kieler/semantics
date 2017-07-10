@@ -501,7 +501,7 @@ class UIUtil {
         
         val ArrayList<Object> input = new ArrayList<Object>()
         input.add(StructuredSelection.EMPTY)
-        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
+        input.addAll(UIExtensionLookupUtil.getLaunchShortcutConfigurationElements())
         viewer.input = input
         
         // Debug log, which launch shortcuts are currently installed 

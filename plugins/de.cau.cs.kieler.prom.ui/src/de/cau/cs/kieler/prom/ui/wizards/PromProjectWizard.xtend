@@ -15,7 +15,7 @@ package de.cau.cs.kieler.prom.ui.wizards
 
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.KiCoNature
-import de.cau.cs.kieler.prom.ui.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.ui.UIExtensionLookupUtil
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.io.File
 import java.io.InputStream
@@ -383,7 +383,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * @param fullyQualifiedClassName The fully qualified class name
      */
     private def void startWizard(String fullyQualifiedClassName) {
-        val wizard = ExtensionLookupUtil.getWizard(fullyQualifiedClassName)
+        val wizard = UIExtensionLookupUtil.getWizard(fullyQualifiedClassName)
         if (wizard != null) {
             // Open the wizard.
             wizard.init(workbench, selection)

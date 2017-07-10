@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kvis.extensions.KVisExtensions
 import de.cau.cs.kieler.kvis.kvis.Interaction
 import de.cau.cs.kieler.kvis.kvis.Interval
 import de.cau.cs.kieler.kvis.kvis.Mapping
+import de.cau.cs.kieler.prom.build.AttributeExtensions
 import org.eclipse.xtext.validation.Check
 
 /**
@@ -24,6 +25,8 @@ import org.eclipse.xtext.validation.Check
  * 
  */
 class KVisValidator extends KVisJavaValidator {
+    @Inject
+    extension AttributeExtensions attributeExtensions
     @Inject
     extension KVisExtensions kvisExtensions
     

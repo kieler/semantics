@@ -17,11 +17,12 @@ import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kvis.ui.views.KVisView
+import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import java.util.List
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
-import org.eclipse.xtext.xtext.SuperCallScope.ExplicitCallDescription
 
 /**
  * @author aas
@@ -29,9 +30,9 @@ import org.eclipse.xtext.xtext.SuperCallScope.ExplicitCallDescription
  */
 abstract class AnimationHandler {
     
-    public val recursive = new AnimationHandlerAttribute("recursive", false)
+    public val recursive = new ConfigurableAttribute("recursive", false)
     
-    protected val List<AnimationHandlerAttribute> attributes = newArrayList
+    protected val List<ConfigurableAttribute> attributes = newArrayList
     protected var String svgElementId
     protected var Animation animation
     protected var Object variableValue
@@ -39,6 +40,9 @@ abstract class AnimationHandler {
     
     abstract public def String getName()
     abstract protected def void doApply(DataPool pool, Element element)
+    
+    @Extension
+    protected AttributeExtensions attributeExtensions
     
     @Extension
     protected KVisExtensions kvisExtensions
@@ -65,8 +69,8 @@ abstract class AnimationHandler {
         // Collect attributes via reflection
         attributes.clear
         for(f : class.fields) {
-            if(f.type == typeof(AnimationHandlerAttribute)) {
-                val attr = f.get(this) as AnimationHandlerAttribute
+            if(f.type == typeof(ConfigurableAttribute)) {
+                val attr = f.get(this) as ConfigurableAttribute
                 if(attr != null) {
                     attributes.add(attr)
                 }
@@ -94,16 +98,16 @@ abstract class AnimationHandler {
                         attr.value = newValue    
                     }
                 } else {
-                    throw new IllegalArgumentException("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
-                                                     + "Handled attributes are:\n"
-                                                     +  attributes.map[it.name].toList())
+                    throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
+                                      + "Handled attributes are:\n"
+                                      +  attributes.map[it.name].toList())
                 }
             }
             // Check if all mandatory attributes have been set
             for(attr : attributes.filter[it.isMandatory]) {
                 if(attr.value == null) {
-                    throw new IllegalArgumentException("The attribute '" + attr.name+ "' "
-                                                 + "of the " + name + " animation must be set.")                                 
+                    throw new Exception("The attribute '" + attr.name+ "' "
+                                      + "of the " + name + " animation must be set.")                                 
                 }
             }
             // Apply
@@ -173,15 +177,15 @@ abstract class AnimationHandler {
         }
     }
     
+    protected def ConfigurableAttribute getAttribute(String name) {
+        return attributes.getAttribute(name)
+    }
+    
     protected def boolean isActive(DataPool pool) {
         if(animation.condition == null) {
             return true
         } else {
             return animation.condition.eval(pool)
         }
-    }
-    
-    protected def AnimationHandlerAttribute getAttribute(String name) {
-        return attributes.findFirst[it.name == name]
     }
 }

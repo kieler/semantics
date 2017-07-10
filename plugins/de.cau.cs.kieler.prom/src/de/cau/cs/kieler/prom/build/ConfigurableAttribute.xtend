@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kvis.ui.animations
+package de.cau.cs.kieler.prom.build
 
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -18,13 +18,13 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class AnimationHandlerAttribute {
+class ConfigurableAttribute {
     @Accessors
-    private var String name
+    protected var String name
     @Accessors
-    private var Object value
+    protected var Object value
     @Accessors
-    private var boolean mandatory
+    protected var boolean mandatory
     
     new(String name) {
         this.name = name

@@ -3,7 +3,7 @@
 <schema targetNamespace="de.cau.cs.kieler.prom" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.prom" id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer"/>
+         <meta.schema plugin="de.cau.cs.kieler.prom" id="wrapperCodeAnnotationAnalyzer" name="WrapperCodeAnnotationAnalyzer"/>
       </appinfo>
       <documentation>
          This extension point is used to add implementations which analyze an EObject and return the defined wrapper code annotations.

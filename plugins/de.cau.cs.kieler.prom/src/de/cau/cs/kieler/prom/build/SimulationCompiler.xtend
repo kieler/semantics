@@ -12,6 +12,9 @@
  */
 package de.cau.cs.kieler.prom.build
 
+import java.util.ArrayList
+import java.util.List
+import java.util.regex.Pattern
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IProgressMonitor
 
@@ -27,11 +30,33 @@ abstract class SimulationCompiler {
     public def String[] getSupportedFileExtensions()
     public def SimulationGenerationResult compile(IFile file)
     
+    new() {
+    }
+    
     new(IProgressMonitor monitor) {
         this.monitor = monitor
     }
     
     public def boolean canCompile(IFile file) {
         return supportedFileExtensions.contains(file.fileExtension)
+    }
+    
+    /**
+     * Split input string on spaces, except if between double quotes (e.g. "hello world" would be one token.)
+     * Surrounding double quotes are removed.
+     * 
+     * @param str The string to be splitted
+     * @return List<String> containing slices of the input string.
+     */
+    protected def List<String> splitStringOnWhitespace(String str) {
+        // Code from
+        // http://stackoverflow.com/questions/7804335/split-string-on-spaces-except-if-between-quotes-i-e-treat-hello-world-as
+        val list = new ArrayList<String>();
+        val m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(str);
+        while (m.find()) {
+            // .replace(...) is to remove surrounding qoutes
+            list.add(m.group(1).replace("\"", ""))
+        }
+        return list
     }
 }

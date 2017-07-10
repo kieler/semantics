@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 
@@ -21,9 +22,9 @@ import org.w3c.dom.Element
  *
  */
 class TextAnimation extends AnimationHandler {
-    public val text = new AnimationHandlerAttribute("text")
-    public val fontSize = new AnimationHandlerAttribute("fontSize", 0)
-    public val fontFamily = new AnimationHandlerAttribute("fontFamily")
+    public val text = new ConfigurableAttribute("text")
+    public val fontSize = new ConfigurableAttribute("fontSize", 0)
+    public val fontFamily = new ConfigurableAttribute("fontFamily")
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)

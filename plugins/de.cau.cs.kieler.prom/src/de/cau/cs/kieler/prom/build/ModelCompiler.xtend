@@ -27,9 +27,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 abstract class ModelCompiler {
     
     @Accessors(PUBLIC_SETTER)
-    public var String outputFolder = ""
-    @Accessors(PUBLIC_SETTER)
-    public var String fileExtension = ""
+    protected var String outputFolder = ""
     
     @Accessors(PUBLIC_SETTER)
     protected var IProgressMonitor monitor
@@ -39,8 +37,6 @@ abstract class ModelCompiler {
     
     public def ModelCompilationResult compile(IFile file, EObject model)
     public def void updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet)
-    
-    public def String getName()
     
     /**
      * Compile a model file via KiCo. 

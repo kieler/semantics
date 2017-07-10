@@ -12,12 +12,7 @@
  */
 package de.cau.cs.kieler.kvis.extensions
 
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.StringValue
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kvis.kvis.Action
 import de.cau.cs.kieler.kvis.kvis.AndExpression
 import de.cau.cs.kieler.kvis.kvis.Animation
@@ -25,26 +20,24 @@ import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.kvis.Comparison
 import de.cau.cs.kieler.kvis.kvis.Condition
 import de.cau.cs.kieler.kvis.kvis.Domain
-import de.cau.cs.kieler.kvis.kvis.Literal
 import de.cau.cs.kieler.kvis.kvis.Mapping
-import de.cau.cs.kieler.kvis.kvis.Sign
-import de.cau.cs.kieler.kvis.kvis.SignedFloat
-import de.cau.cs.kieler.kvis.kvis.SignedInt
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation
 import de.cau.cs.kieler.kvis.kvis.VariableReference
+import de.cau.cs.kieler.prom.build.AttributeExtensions
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 
 /**
  * @author aas
  *
  */
 class KVisExtensions {
+    extension var AttributeExtensions attributeExtensions
+    
     /**
      * The data pool for which the variables have been cached
      */
@@ -55,6 +48,10 @@ class KVisExtensions {
      * potentially appended with the index of an array element.
      */
     private static var Map<String, Object> variableValueCache = newHashMap
+    
+    new() {
+        attributeExtensions = new AttributeExtensions
+    }
     
     /**
      * Returns the fully qualified name of a variable in the simulation.
@@ -185,42 +182,7 @@ class KVisExtensions {
         return true
     }
     
-    public def Object getPrimitiveValue(SignedInt value) {
-        if(value.sign == Sign.NEGATIVE) {
-            return -value.value
-        } else {
-            return value.value
-        }
-    }
     
-    public def Object getPrimitiveValue(SignedFloat value) {
-        if(value.sign == Sign.NEGATIVE) {
-            return -value.value
-        } else {
-            return value.value
-        }
-    }
-    
-    public def Object getPrimitiveValue(EObject value) {
-        var EObject valueHolder = value
-        if(value instanceof Literal) {
-            valueHolder = value.value
-        }
-        if(valueHolder instanceof SignedFloat) {
-            return valueHolder.primitiveValue
-        } if(valueHolder instanceof SignedInt) {
-            return valueHolder.primitiveValue
-        } else if(valueHolder instanceof StringValue) {
-            return valueHolder.value
-        } else if(valueHolder instanceof FloatValue) {
-            return valueHolder.value
-        } else if(valueHolder instanceof IntValue) {
-            return valueHolder.value
-        } else if(valueHolder instanceof BoolValue) {
-            return valueHolder.value
-        }
-        return null
-    }
     
     public def Object apply(Mapping mapping, Object value) {
         if(mapping.attributeDomain.value != null) {
@@ -315,24 +277,6 @@ class KVisExtensions {
         }
     }
     
-    public def double getDoubleValue(Object value) {
-        var double doubleValue
-        if(value instanceof Double){
-            doubleValue = value as Double
-        } else if(value instanceof Float) {
-            doubleValue = value as Float
-        } else if(value instanceof Integer) {
-            doubleValue = value as Integer
-        } else if(value instanceof String) {
-            doubleValue = Double.valueOf((value as String).removeQuotes)
-        } else if (value != null) {
-            throw new Exception("Can't convert "+value.toString+" to Double")
-        } else {
-            throw new NullPointerException("Can't convert null to Double")
-        }
-        return doubleValue
-    }
-    
     public def boolean equalsValue(Object v1, Object v2) {
         if(v1 == null && v2 == null) {
             return true
@@ -346,12 +290,5 @@ class KVisExtensions {
             }
         }
         return false
-    }
-    
-    public def String removeQuotes(String txt) {
-        if(txt == null) {
-            return null    
-        }
-        return txt.replaceAll("\"", "")
     }
 }

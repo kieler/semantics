@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="dataHandler" name="DataHandler" schema="schema/dataHandler.exsd"/>
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
@@ -9,6 +10,25 @@
        class = "de.cau.cs.kieler.simulation.kisim.KisimPackage"
        genModel = "model/generated/KiSim.genmodel" /> 
 	
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.simulation.dataHandler">
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.ExecutableSimulator"
+           name="sim">
+     </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.Redirect"
+           name="redirect">
+     </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler"
+           name="simin">
+     </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.SimulationOutputFileHandler"
+           name="simout">
+     </dataHandler>
   </extension>
 
 

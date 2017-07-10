@@ -3,7 +3,7 @@
 <schema targetNamespace="de.cau.cs.kieler.prom" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.prom" id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer"/>
+         <meta.schema plugin="de.cau.cs.kieler.prom" id="environmentInitializer" name="EnvironmentInitializer"/>
       </appinfo>
       <documentation>
          This extension point can be used to add default environments to use for KiCo compilation and project creation.

@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.apache.batik.dom.svg.SVGOMPathElement
 import org.apache.batik.dom.svg.SVGOMPoint
@@ -25,17 +26,17 @@ import org.w3c.dom.svg.SVGPoint
  *
  */
 class WalkPathAnimation extends AnimationHandler {
-    public val pathName = new AnimationHandlerAttribute("path", null, true)
-    public val pathStart = new AnimationHandlerAttribute("start", 0)
-    public val pathEnd = new AnimationHandlerAttribute("end", 0)
-    public val pathLength = new AnimationHandlerAttribute("length", 0)
+    public val pathName = new ConfigurableAttribute("path", null, true)
+    public val pathStart = new ConfigurableAttribute("start", 0)
+    public val pathEnd = new ConfigurableAttribute("end", 0)
+    public val pathLength = new ConfigurableAttribute("length", 0)
     
-    public val autoOrientation = new AnimationHandlerAttribute("autoOrientation", false)
-    public val angleOffset = new AnimationHandlerAttribute("angleOffset", 0)
-    public val angleValue = new AnimationHandlerAttribute("angle", 0)
-    public val anchorX = new AnimationHandlerAttribute("anchorX", 0.5)
-    public val anchorY = new AnimationHandlerAttribute("anchorY", 0.5)
-    public val appendTransform = new AnimationHandlerAttribute("appendTransform", false)
+    public val autoOrientation = new ConfigurableAttribute("autoOrientation", false)
+    public val angleOffset = new ConfigurableAttribute("angleOffset", 0)
+    public val angleValue = new ConfigurableAttribute("angle", 0)
+    public val anchorX = new ConfigurableAttribute("anchorX", 0.5)
+    public val anchorY = new ConfigurableAttribute("anchorY", 0.5)
+    public val appendTransform = new ConfigurableAttribute("appendTransform", false)
     
     var String initialTransform
     var SVGPoint lastPoint

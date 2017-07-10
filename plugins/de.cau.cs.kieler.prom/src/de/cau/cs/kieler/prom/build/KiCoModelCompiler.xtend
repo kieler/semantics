@@ -37,14 +37,13 @@ import org.eclipse.xtext.util.StringInputStream
  *
  */
 class KiCoModelCompiler extends ModelCompiler {
-    public var String outputTemplate = ""
-    public var String compileChain = ""
+    public val outputTemplate = new ConfigurableAttribute("outputTemplate", "")
+    public val compileChain = new ConfigurableAttribute("compileChain", "")
+    public val whitelist = new ConfigurableAttribute("whitelist")
+    public val blacklist = new ConfigurableAttribute("blacklist")
+    public val fileExtension = new ConfigurableAttribute("fileExtension", ".c")
     
     private var ModelCompilationResult result
-    
-    override getName() {
-        return "KiCo"
-    }
     
     override updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet) {
         for(f : files) {
@@ -103,10 +102,15 @@ class KiCoModelCompiler extends ModelCompiler {
             
             // Save result if no errors and warnings
             if (kicoResult.allErrors.isNullOrEmpty() && kicoResult.allWarnings.isNullOrEmpty()) {
+                // If fileExtension starts with a letter, add a dot as prefix
+                var String fileExt = fileExtension.stringValue
+                if(fileExt.matches("^\\w.*")) {
+                    fileExt = "."+fileExt
+                }
                 // Flush compilation result to target
                 val targetResource = KiCoBuilder.computeTargetResource(file.projectRelativePath.toOSString,
                                                                        outputFolder,
-                                                                       fileExtension,
+                                                                       fileExt,
                                                                        file.project)
                 val targetFile = targetResource as IFile
                 saveCompilationResult(file, model, kicoResult, targetFile)
@@ -145,11 +149,11 @@ class KiCoModelCompiler extends ModelCompiler {
         // TODO: ABORTWTO often makes trouble and is not deterministicly choosen
         // TODO: scg.guards.ft and scg.scheduling.dc are experimental transformations and have issues (KISEMA-1188)
         var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO, !T_scg.guards.ft, !T_scg.scheduling.dc"
-        if(KiCoBuilder.isCompileChain(compileChain)) {
-            chain += ", " + compileChain
+        if(KiCoBuilder.isCompileChain(compileChain.stringValue)) {
+            chain += ", " + compileChain.stringValue
         } else {
             // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
-            chain += ", T_"+ compileChain
+            chain += ", T_"+ compileChain.stringValue
         }
         val context = new KielerCompilerContext(chain, model)
         context.inplace = false
@@ -174,7 +178,7 @@ class KiCoModelCompiler extends ModelCompiler {
             saveEObject(result.getEObject(), targetFile)
         } else {
             // Save generated code to file, possibly using a target template
-            val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate, file.project)
+            val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate.stringValue, file.project)
             if (resolvedTargetTemplate.isNullOrEmpty) {
                 val inputStream = new StringInputStream(result.string)
                 PromPlugin.createResource(targetFile, inputStream, true)
@@ -225,5 +229,9 @@ class KiCoModelCompiler extends ModelCompiler {
         } catch (IOException e) {
           e.printStackTrace();
         }
+    }
+    
+    override toString() {
+        return "KiCo model compiler"
     }
 }

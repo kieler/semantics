@@ -28,6 +28,11 @@ import org.eclipse.core.runtime.IProgressMonitor
  */
 class CSimulationCompiler extends SimulationCompiler {
     
+    public val command = new ConfigurableAttribute("command", null, true)
+    
+    new() {
+    }
+    
     new(IProgressMonitor monitor) {
         super(monitor)
     }
@@ -40,7 +45,6 @@ class CSimulationCompiler extends SimulationCompiler {
         
         val project = file.project
         val slash = File.separator
-        val currentDir = "." + slash
         val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
         // File name of the file to be compiled
         val codeFileName = file.projectRelativePath.lastSegment
@@ -61,18 +65,26 @@ class CSimulationCompiler extends SimulationCompiler {
         // Delete old executable
         val executableFile = project.getFile(executablePath.toOSString)
         KiCoBuilder.deleteMarkers(executableFile)
+        KiCoBuilder.deleteMarkers(file)
         if(executableFile.exists)
             executableFile.delete(true, null)
         
         // Create bin directory
-        PromPlugin.createResource(project.getFolder(executableDirectory))
+//        PromPlugin.createResource(project.getFolder(executableDirectory))
         
         // Run gcc on simulation code
         // Example command to compile simulation code: "gcc -std=c99 SimulationCode.c -o SimulationCode"
-        val pBuilder = new ProcessBuilder("gcc", "-std=c99",
-                                          currentDir + "code" + slash + codeFileName,
-                                          "-o", currentDir + executablePath.makeRelativeTo(simDirectory).toOSString)
-        pBuilder.directory(project.location.append(simDirectory).toFile)
+        val commandWithoutPlaceholders = command.stringValue.replacePlaceholder("file_path", file.projectRelativePath.toOSString)
+                                                            .replacePlaceholder("file_loc", file.location.toOSString)
+                                                            .replacePlaceholder("file_name", file.location.toOSString)
+                                                            .replacePlaceholder("executable_name", executableName)
+                                                            .replacePlaceholder("executable_loc", project.location.append(executablePath).toOSString)
+        val processArguments = splitStringOnWhitespace(commandWithoutPlaceholders)
+        val pBuilder = new ProcessBuilder(processArguments)
+//        val pBuilder = new ProcessBuilder("gcc", "-std=c99",
+//                                          ,
+//                                          "-o", currentDir + executablePath.makeRelativeTo(simDirectory).toOSString)
+        pBuilder.directory(project.location.toFile)
         pBuilder.redirectErrorStream(true)
         val p = pBuilder.start()
         // Wait until the process finished
@@ -106,6 +118,10 @@ class CSimulationCompiler extends SimulationCompiler {
         return #["c"]
     }
     
+    private def String replacePlaceholder(String text, String placeholder, String value) {
+        return text.replace("${"+placeholder+"}", '"'+value+'"')
+    }
+    
     /**
      * Copies the cJSON.c and cJSON.h files from the plugin to the directory.
      * @param projectRelativeDirectory the directory to copy the files into
@@ -117,5 +133,9 @@ class CSimulationCompiler extends SimulationCompiler {
             PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON")
             libFolder.parent.refreshLocal(1, null)
         }
+    }
+    
+    override toString() {
+        return "C Simulation compiler"
     }
 }
