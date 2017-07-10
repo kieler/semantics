@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +64,8 @@ import org.eclipse.ui.part.FileEditorInput;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
-
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelParser;
 
 /**
  * Changed AbstractConvertModelHandler to import uml models
@@ -71,10 +73,10 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
  * @author cmot
  */
 public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
-    
+
     /**
-     * Method to pre-process the file content before it is loaded. This allowes
-     * some raw modifications. 
+     * Method to pre-process the file content before it is loaded. This allowes some raw
+     * modifications.
      * 
      * @param content
      * @return
@@ -83,22 +85,26 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         return content;
     }
 
-    /** 
+    /**
      * @return target resource extension name
      */
-    protected abstract String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection);
+    protected abstract String getTargetExtension(EObject model, ExecutionEvent event,
+            ISelection selection);
 
     /**
-     * @return injector of a certain resource. 
+     * @return injector of a certain resource.
      */
     protected abstract Injector createResourceInjector();
 
     /**
      * Override this method with your transformation.
      * 
-     * @param model original model
-     * @param event command menu event
-     * @param selection resource selection
+     * @param model
+     *            original model
+     * @param event
+     *            command menu event
+     * @param selection
+     *            resource selection
      * @return transformed model or text object
      */
     protected abstract Object transform(EObject model, ExecutionEvent event, ISelection selection);
@@ -112,40 +118,45 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         return null;
     }
 
-// Deprecated GMF stuff
-//    /**
-//     * 
-//     * {@inheritDoc}
-//     * 
-//     * @return PreferencesHint
-//     */
-//    protected PreferencesHint getPreferencesHint() {
-//        return new PreferencesHint("");
-//    }
+    // Deprecated GMF stuff
+    // /**
+    // *
+    // * {@inheritDoc}
+    // *
+    // * @return PreferencesHint
+    // */
+    // protected PreferencesHint getPreferencesHint() {
+    // return new PreferencesHint("");
+    // }
 
     /**
-     * At each selected item this method decides if a diagram must be created. 
-     * By default, a diagram is created if diagram ID is not null.
+     * At each selected item this method decides if a diagram must be created. By default, a diagram
+     * is created if diagram ID is not null.
      * 
-     * @param model 
-     * @param event command menu event
-     * @param selection resource selection
+     * @param model
+     * @param event
+     *            command menu event
+     * @param selection
+     *            resource selection
      * @return Set to true if you want to create a diagram for this model.
      */
-    protected boolean doCreateDiagram(final EObject model, final ExecutionEvent event, 
+    protected boolean doCreateDiagram(final EObject model, final ExecutionEvent event,
             final ISelection selection) {
         return getDiagramEditorID() != null;
     }
 
     /**
-     * At each selected item this method decides if an associated editor must be opened. 
+     * At each selected item this method decides if an associated editor must be opened.
      * 
-     * @param modelObject model
-     * @param event command menu event
-     * @param selection resource selection
+     * @param modelObject
+     *            model
+     * @param event
+     *            command menu event
+     * @param selection
+     *            resource selection
      * @return Set to true if you want to open an editor for this model.
      */
-    protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event, 
+    protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event,
             final ISelection selection) {
         return false;
     }
@@ -153,7 +164,8 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
     /**
      * Override this method if you want to do any post-processing.
      * 
-     * @param modelObject the model
+     * @param modelObject
+     *            the model
      */
     protected void postProcess(final Object modelObject) {
 
@@ -163,7 +175,6 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         return originalExtension;
     }
 
-    
     /**
      * 
      * {@inheritDoc}
@@ -212,24 +223,28 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
      * This method loads the model, starts the transformation and saves the newly generated model.
      * If the derived class says so, a diagram is created and/or an editor is opened.
      * 
-     * @param event command menu event
-     * @param file resource file
-     * @param selection resource selection
-     * @throws ExecutionException read/write error
-     * @throws IOException 
+     * @param event
+     *            command menu event
+     * @param file
+     *            resource file
+     * @param selection
+     *            resource selection
+     * @throws ExecutionException
+     *             read/write error
+     * @throws IOException
      */
     protected void convert(final ExecutionEvent event, final IFile file, final ISelection selection)
             throws ExecutionException {
-        
+
         // TODO: Possible preprocessing!
-        //preprocessFile
-        
+        // preprocessFile
+
         URI originalInput = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 
         String fileExt = file.getFileExtension();
         // Give the chance to brute-force-override the file extension
         fileExt = getSourceExtension(fileExt);
-        
+
         System.out.println("== PREPROCESSING ==================================================");
         String fileInputSting = "";
         try {
@@ -242,138 +257,57 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
                 out.append(line + "\n");
             }
             fileInputSting = out.toString();
-            //System.out.println(out.toString());   //Prints the string content read from input stream        
+            // System.out.println(out.toString()); //Prints the string content read from input
+            // stream
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         String fileOutputSting = preprocessFile(fileInputSting);
-        EObject model = null;
-        
-        //InputStream in = new ByteArrayInputStream(fileOutputSting.getBytes());// StandardCharsets.UTF_8));
-        
-        File tmpFile = null;
-        try {
-            tmpFile = File.createTempFile("tempfile",  "." + fileExt);
-            FileWriter fileWriter = new FileWriter(tmpFile);
-            if (fileWriter != null) {
-                BufferedWriter out2 = new BufferedWriter(fileWriter);
-                if (out2 != null) {
-                    out2.write(fileOutputSting);
-                    out2.close();
-                }
-            }
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        
-//        
-//        
-//        XMIResourceImpl input = new XMIResourceImpl();
-//        try {
-//            input.load(in, new HashMap<Object, Object>());
-////            model = inputResource.getContents().get(0);
-//        } catch (Exception e) {
-//        }
 
-        // Create URIs and load the instance with our resource injector
-        URI input = null;
-        if (tmpFile != null) {
-            try {
-                input = URI.createFileURI(tmpFile.getCanonicalPath());
-                //input = URI.createPlatformResourceURI(tmpFile.getCanonicalPath(), true);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if (input == null) {
-            // FALLBACK TO ORIGINAL, NON-PREPROCESSED FILE
-           input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-        }
-        
-        URI output = URI.createURI("");
-        Injector rInjector = createResourceInjector();
-        if (rInjector != null) {
-            long start = System.currentTimeMillis();
-            ResourceSet resourceSet = rInjector.getInstance(ResourceSet.class);
-            Resource resourceLoad = resourceSet.getResource(input, true);
-            model = resourceLoad.getContents().get(0);
-            long end = System.currentTimeMillis();
-            System.out.println("XMIResourceImpl parsed in " + (end-start) + " Milliseconds.");
-        }
-        else {
-            // Try to load SCCharts model
-            PTCXMIResourceImpl inputResource = new PTCXMIResourceImpl(input);            
-            // Load SCCharts model
-            try {
-                inputResource.load(null);
-                model = inputResource.getContents().get(0);
-            } catch (IOException e) {
-                throw new ExecutionException("Could not load SCChart as an XMIResource.", e);
-            }
-
-        }
+        EObject model = XMIModelParser.parse(fileOutputSting);
 
         // Transform the model and unload the resource
         Object transformedObject = transform(model, event, selection);
-        model.eResource().unload();
 
-        // Set destination uri
-        System.out.println("INPUT: " +  originalInput.toString());
-        output = URI.createURI(originalInput.toString());
-        output = output.trimFragment();
-        output = output.trimFileExtension().appendFileExtension(getTargetExtension(model, event, selection));
+        if (transformedObject instanceof ArrayList) {
+            ArrayList<?> arrayList = (ArrayList<?>) transformedObject;
+            if (arrayList.size() > 0) {
+                for (Object listObject : arrayList) {
+                    if (listObject instanceof State) {
+                        try {
+                            // An SCChart ... save it to file!
+                            State sCChart = (State) listObject;
+                            URI output = URI.createURI(originalInput.toString());
+                            output = output.trimFragment();
+                            output = output.trimFileExtension().appendFileExtension(sCChart.getId()
+                                    + "." + getTargetExtension(model, event, selection));
 
-        try {
-            ResourceSet resSet = new ResourceSetImpl();
-            Resource saveRes = resSet.createResource(output);
+                            ResourceSet resSet = new ResourceSetImpl();
+                            Resource saveRes = resSet.createResource(output);
+                            EObject transformedModel = (EObject) transformedObject;
+                            saveRes.getContents().add(transformedModel);
+                            saveRes.save(getSaveOptions());
+                            setCharset(WorkspaceSynchronizer.getFile(saveRes));
 
-            if (transformedObject instanceof EObject) {
-                EObject transformedModel = (EObject) transformedObject;
+                            // Open associated editor, if necessary
+                            // Because this code is not execute in the ui thread, this must be done
+                            // synchronously.
+                            if (doOpenEditor(transformedObject, event, selection)) {
+                                openEditorSync(transformedObject);
+                            }
 
-                // Create Diagram, if necessary
-                // Note: Diagrams created this way are empty
-                
-                // Deprecated GMF diagram code
-                // Diagram diagram = null;
-                // if (doCreateDiagram(transformedModel, event, selection)) {
-                // diagram = ViewService.createDiagram(transformedModel, getDiagramEditorID(),
-                // getPreferencesHint());
-                //
-                // saveRes.getContents().add(transformedModel);
-                // if (diagram != null) {
-                // diagram.setElement(transformedModel);
-                // // Save both the model and the diagram in one resource
-                // saveRes.getContents().add(diagram);
-                // }
-                //
-                // } else {                
-                // Save only the model
-                saveRes.getContents().add(transformedModel);
-                // }
-                saveRes.save(getSaveOptions());
-                setCharset(WorkspaceSynchronizer.getFile(saveRes));
+                            // Call post-processing
+                            postProcess(transformedObject);
+                        } catch (IOException e) {
+                            throw new ExecutionException(
+                                    "Cannot write output SCChart file: " + e.getMessage());
+                        }
+                    }
+                }
             }
-
-            // Save text
-            if (transformedObject instanceof CharSequence) {
-                String text = ((CharSequence) transformedObject).toString();
-                saveToFile(output, text);
-            }
-
-            // Open associated editor, if necessary
-            // Because this code is not execute in the ui thread, this must be done synchronously.
-            if (doOpenEditor(transformedObject, event, selection)) {
-                openEditorSync(transformedObject);
-            }
-
-            // Call post-processing
-            postProcess(transformedObject);
-
-        } catch (IOException e) {
-            throw new ExecutionException("Cannot write output SCChart file: " + e.getMessage());
         }
 
         // Refresh the file explorer
@@ -385,7 +319,6 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
 
     }
 
-    
     protected void saveToFile(URI output, String text) throws IOException {
         IPath txtOutputPath = new Path(output.toPlatformString(false).replace("%20", " "));
         IFile txtOutputFile = ModelUtil.convertIPathToIFile(txtOutputPath);
@@ -404,12 +337,12 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
             }
         }
     }
-    
-    
+
     /**
      * This method calls the method to opens an editor for a model in the context of the ui thread.
      * 
-     * @param modelObject model
+     * @param modelObject
+     *            model
      */
     protected void openEditorSync(final Object modelObject) {
         Display.getDefault().syncExec(new Runnable() {
@@ -422,7 +355,8 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
     /**
      * Open an editor.
      * 
-     * @param modelObject model
+     * @param modelObject
+     *            model
      */
     protected void openEditor(final Object modelObject) {
         EObject transformedModel = (EObject) modelObject;
@@ -431,11 +365,11 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         IFile file2 = ResourcesPlugin.getWorkspace().getRoot()
                 .getFile(new Path(uri.toPlatformString(true)));
 
-        IEditorDescriptor desc = PlatformUI.getWorkbench().getEditorRegistry()
-                .getDefaultEditor(file2.getName());
+        IEditorDescriptor desc =
+                PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(file2.getName());
 
-        final IWorkbenchPage wbPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage();
+        final IWorkbenchPage wbPage =
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         FileEditorInput fileInput = new FileEditorInput(file2);
         try {
             wbPage.openEditor(fileInput, desc.getId());
@@ -461,7 +395,8 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
     /**
      * You can alter the charset here. By default, UTF-8 is chosen.
      * 
-     * @param file file
+     * @param file
+     *            file
      */
     protected void setCharset(final IFile file) {
         if (file == null) {

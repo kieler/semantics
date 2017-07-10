@@ -21,6 +21,8 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
+import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelExtensions
 
 /**
  * Import SCCharts from PTC
@@ -30,6 +32,12 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * @kieler.rating 2017-06-15 proposed yellow
  */
 public class PTC2SCCharts {
+
+    @Inject
+    extension XMIModelExtensions
+
+    @Inject
+    extension PTCXMIUMLExtensions
 
     @Inject
     extension KEffectsExtensions
@@ -70,16 +78,7 @@ public class PTC2SCCharts {
 //    def Object name(EObject content) {
 //        return "EObject:null";
 //    }
-    def String attributeByName(AnyType content, String attributeName) {
-        for (attribute : content.anyAttribute) {
-            if (attribute.EStructuralFeature.getName == attributeName) {
-                return attribute.value as String
-            } else {
-//                println("  ATTRIB '"+attribute.EStructuralFeature.getName+"' = '" + attribute.value + "'" );
-            }
-        }
-        return null;
-    }
+
 
     def State current(List<State> targetModel) {
         if (targetModel.nullOrEmpty) {
@@ -93,7 +92,7 @@ public class PTC2SCCharts {
         return targetModel.last
     }
 
-//    def TreeNode attributeReferenceByName(AnyType content, String attributeName) {
+//    def TreeNode attributeReferenceByName(Element content, String attributeName) {
 //        for (attribute : content.getMixed) {
 //            println("  MIXED '"+attribute.EStructuralFeature.getName+"' = '" + attribute.value + "'" );
 //            if (attribute.EStructuralFeature.getName == attributeName) {
@@ -105,45 +104,9 @@ public class PTC2SCCharts {
 //        println("");
 //        return null;
 //    }    
-    def String name(AnyType content) {
-        return content.attributeByName("name")
-    }
 
-    def String source(AnyType content) {
-        return content.attributeByName("source")
-    }
 
-    def String target(AnyType content) {
-        return content.attributeByName("target")
-    }
-
-    def String guard(AnyType content) {
-        return content.attributeByName("guard")
-    }
-
-    def String body(AnyType content) {
-        return content.attributeByName("body")
-    }
-
-    def String kind(AnyType content) {
-        return content.attributeByName("kind")
-    }
-
-    def String event(AnyType content) {
-        return content.attributeByName("event")
-    }
-
-//    def TreeNode source(AnyType content) {
-//        return content.attributeReferenceByName("source")
-//    }
-//    def TreeNode target(AnyType content) {
-//        return content.attributeReferenceByName("target")
-//    }
-    def String getId(AnyType content) {
-        return (content as EObject).eResource.getURIFragment(content);
-    }
-
-    def void map(AnyType element, EObject target) {
+    def void map(Element element, EObject target) {
         src2target.put(element, target);
         target2src.put(target, element);
 
@@ -171,7 +134,7 @@ public class PTC2SCCharts {
         return id2input.get(id)
     }
 
-    def void transformStateMachine(List<State> targetModel, AnyType element) {
+    def void transformStateMachine(List<State> targetModel, Element element) {
         src2target.clear
         target2src.clear
         id2src.clear
@@ -184,7 +147,7 @@ public class PTC2SCCharts {
         targetModel.transformGeneral(element)
     }
 
-    def void transformRegion(List<State> targetModel, AnyType element, EObject srcParent) {
+    def void transformRegion(List<State> targetModel, Element element, EObject srcParent) {
         println("CREATE REGION for parent " + srcParent.hashCode)
         val state = src2target.get(srcParent) as State;
         val region = state.createControlflowRegion("Region");
@@ -192,7 +155,7 @@ public class PTC2SCCharts {
         targetModel.transformGeneral(element)
     }
 
-    def void transformPseudostate(List<State> targetModel, AnyType element, EObject srcParent) {
+    def void transformPseudostate(List<State> targetModel, Element element, EObject srcParent) {
         println("CREATE INIT STATE '" + element.name + "' with id " + element.id)
         // if (element.name.startsWith("Initial")) {
         if (element.kind != "junction") {
@@ -208,27 +171,27 @@ public class PTC2SCCharts {
         }
     }
 
-    def void transformFinalState(List<State> targetModel, AnyType element, EObject srcParent) {
+    def void transformFinalState(List<State> targetModel, Element element, EObject srcParent) {
         println("CREATE FINAL STATE '" + element.name + "' with id " + element.id)
         val state = (src2target.get(srcParent) as ControlflowRegion).createFinalState(element.name.fixId).uniqueName;
         element.map(state)
         targetModel.transformGeneral(element)
     }
 
-    def void transformState(List<State> targetModel, AnyType element, EObject srcParent) {
+    def void transformState(List<State> targetModel, Element element, EObject srcParent) {
         println("CREATE STATE '" + element.name + "' with id " + element.id)
         val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
         element.map(state)
         targetModel.transformGeneral(element)
 
         for (child : element.eContents.toList) {
-            val childElement = child as AnyType
+            val childElement = child as Element
             if (childElement != null) {
                 println(
                     "STATE CHILD eAllContents XXXXXXXXXX: [" + childElement.eClass.name + "]  " + childElement.name +
                         " : " + childElement.id + " --- " + childElement.kind);
 
-//                if (child instanceof AnyType) {
+//                if (child instanceof Element) {
 //                    if (child.kind == "entry") {
 //                        val action = state.createEntryAction
 //                        action.addEffect(asHostcodeEffect(childElement.name))
@@ -252,11 +215,11 @@ public class PTC2SCCharts {
      */
     }
 
-    def transformActivity(List<State> targetModel, AnyType element) {
+    def transformActivity(List<State> targetModel, Element element) {
         //
     }
 
-    def transformEvent(List<State> targetModel, AnyType element) {
+    def transformEvent(List<State> targetModel, Element element) {
 //        val varName = element.name
 //        val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
 //        declaration.input = true
@@ -267,7 +230,7 @@ public class PTC2SCCharts {
 //        id2input.put(element.id, valuedObject)
     }
 
-    def transformProperty(List<State> targetModel, AnyType element) {
+    def transformProperty(List<State> targetModel, Element element) {
         if ((element == null) || (element.name == null)) {
             return
         }
@@ -291,7 +254,7 @@ public class PTC2SCCharts {
      *           <ownedAttribute xmi:type = "uml:Property" xmi:id = "_98368725-fe2c-11d2-a541-00104bb05af8" name = "flashes" type = "_bf9531dd-fd6d-429c-9c77-72c228475b8e" visibility = "private" aggregation = "composite">
      *           </ownedAttribute>
      */
-    def transformTransition(List<State> targetModel, AnyType element) {
+    def transformTransition(List<State> targetModel, Element element) {
 //        println(" --> TRANSITION: from " + element.source + " to " + element.target);
 //
 //        val src = element.source.id2src.src2target
@@ -309,7 +272,7 @@ public class PTC2SCCharts {
 //            for (child : element.eAllContents.toList) {
 //                println("TRANSITION XXXXXXXXXX: " + child.class.getName + " : " + child.id);
 //
-//                if (child instanceof AnyType)
+//                if (child instanceof Element)
 //                    if (child.event != null) {
 //                        targetModel.transformTrigger(child, element)
 //
@@ -321,7 +284,7 @@ public class PTC2SCCharts {
 //        }
     }
 
-    def transformTrigger(List<State> targetModel, AnyType element, AnyType parentElement) {
+    def transformTrigger(List<State> targetModel, Element element, Element parentElement) {
 //        val transition = parentElement.src2target as Transition
 //        println(" --> TRIGGER FOR TRANSITION: " + transition);
 //
@@ -332,92 +295,91 @@ public class PTC2SCCharts {
 //        }
     }
 
-    def transformOpaqueBehavior(List<State> targetModel, AnyType element) {
+    def transformOpaqueBehavior(List<State> targetModel, Element element) {
         //
     }
 
-    def transformConstraint(List<State> targetModel, AnyType element) {
+    def transformConstraint(List<State> targetModel, Element element) {
         //
     }
 
-    def transformOpaqueExpression(List<State> targetModel, AnyType element) {
+    def transformOpaqueExpression(List<State> targetModel, Element element) {
         //
     }
 
-    def transformOperation(List<State> targetModel, AnyType element) {
+    def transformOperation(List<State> targetModel, Element element) {
         //
     }
 
-    def transformParameter(List<State> targetModel, AnyType element) {
+    def transformParameter(List<State> targetModel, Element element) {
         //
     }
 
-    def void transformClass(List<State> targetModel, AnyType element) {
+    def void transformClass(List<State> targetModel, Element element) {
         println("ENTERING CLASS '" + element.name + "'")
         targetModel.transformGeneral(element)
     }
 
-    def void transformPackage(List<State> targetModel, AnyType element) {
+    def void transformPackage(List<State> targetModel, Element element) {
         println("ENTERING PACKAGE '" + element.name + "'")
         targetModel.transformGeneral(element)
     }
 
-    def transformGeneral(List<State> targetModel, AnyType element) {
+    def transformGeneral(List<State> targetModel, Element element) {
 
-        for (childElement : element.eContents.toList) {
-            println("XXXXXXXXXX: " + childElement.eClass.name + ":" + childElement.eContents.length);
+        for (childElement : element.children) {
 
-            if (childElement.eClass.name.endsWith("Event")) {
-                targetModel.transformEvent(childElement as AnyType)
+            if (childElement.type.endsWith("Event")) {
+                targetModel.transformEvent(childElement)
             }
 
-            if (childElement.eClass.name == "StateMachine") {
-                targetModel.transformStateMachine(childElement as AnyType)
+            if (childElement.type == "StateMachine") {
+                targetModel.transformStateMachine(childElement)
             }
-            if (childElement.eClass.name == "Region") {
-                targetModel.transformRegion(childElement as AnyType, element)
+            if (childElement.type == "Region") {
+                targetModel.transformRegion(childElement, element)
             }
-            if (childElement.eClass.name == "Pseudostate") {
-                targetModel.transformPseudostate(childElement as AnyType, element)
+            if (childElement.type == "Pseudostate") {
+                targetModel.transformPseudostate(childElement, element)
             }
-            if (childElement.eClass.name == "FinalState") {
-                targetModel.transformFinalState(childElement as AnyType, element)
+            if (childElement.type == "FinalState") {
+                targetModel.transformFinalState(childElement, element)
             }
-            if (childElement.eClass.name == "State") {
-                targetModel.transformState(childElement as AnyType, element)
+            if (childElement.type == "State") {
+                targetModel.transformState(childElement, element)
             }
-            if (childElement.eClass.name == "Activity") {
-                targetModel.transformActivity(childElement as AnyType)
+            if (childElement.type == "Activity") {
+                targetModel.transformActivity(childElement)
             }
-            if (childElement.eClass.name == "Transition") {
-                targetModel.transformTransition(childElement as AnyType)
+            if (childElement.type == "Transition") {
+                targetModel.transformTransition(childElement)
             }
-            if (childElement.eClass.name == "Trigger") {
-                targetModel.transformTrigger(childElement as AnyType, element)
+            if (childElement.type == "Trigger") {
+                targetModel.transformTrigger(childElement, element)
             }
-            if (childElement.eClass.name == "OpaqueBehavior") {
-                targetModel.transformOpaqueBehavior(childElement as AnyType)
+            if (childElement.type == "OpaqueBehavior") {
+                targetModel.transformOpaqueBehavior(childElement)
             }
-            if (childElement.eClass.name == "OpaqueExpression") {
-                targetModel.transformOpaqueExpression(childElement as AnyType)
+            if (childElement.type == "OpaqueExpression") {
+                targetModel.transformOpaqueExpression(childElement)
             }
-            if (childElement.eClass.name == "Operation") {
-                targetModel.transformOperation(childElement as AnyType)
+            if (childElement.type == "Operation") {
+                targetModel.transformOperation(childElement)
             }
-            if (childElement.eClass.name == "Parameter") {
-                targetModel.transformParameter(childElement as AnyType)
+            if (childElement.type == "Parameter") {
+                targetModel.transformParameter(childElement)
             }
-            if (childElement.eClass.name == "Class") {
-                targetModel.transformClass(childElement as AnyType)
+            if (childElement.type == "Class") {
+                targetModel.transformClass(childElement)
             }
-            if (childElement.eClass.name == "Package") {
-                targetModel.transformPackage(childElement as AnyType)
+            if (childElement.type == "Package") {
+                targetModel.transformPackage(childElement)
             }
-            if (childElement.eClass.name == "OpaqueBehavior") {
-                targetModel.transformOpaqueBehavior(childElement as AnyType)
+            if (childElement.type == "OpaqueBehavior") {
+                targetModel.transformOpaqueBehavior(childElement)
             }
-            if (childElement.eClass.name == "Property") {
-                targetModel.transformProperty(childElement as AnyType)
+            if (childElement.type == "Property") {
+                targetModel.transformProperty(childElement)
             }
 
         }
@@ -428,7 +390,7 @@ public class PTC2SCCharts {
         println("XXXXXX: " + model.eClass.name + ":" + model.eContents.length);
 
         var sccharts = newArrayList() // <State>;
-        sccharts.transformGeneral(model as AnyType)
+        sccharts.transformGeneral(model as Element)
 
         for (scchart : sccharts) {
             scchart.fixAllPriorities.fixAllTextualOrdersByPriorities
@@ -441,7 +403,7 @@ public class PTC2SCCharts {
 //             
 //             if (content.eClass.name == "StateMachine") {
 //             //if (content instanceof StateMachine) {
-//                 println("-----XXXXXXXXX STATEMACHINE '" + (content as AnyType).name + "'");
+//                 println("-----XXXXXXXXX STATEMACHINE '" + (content as Element).name + "'");
 //                 
 //             }
 //             

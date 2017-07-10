@@ -28,8 +28,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.workspace;bundle-version="1.5.1",
  org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel,
+Export-Package: de.cau.cs.kieler.sccharts.ptc,
+ de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel,
  de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl,
- de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.util
+ de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.util,
+ de.cau.cs.kieler.sccharts.ptx.xmi
 Bundle-ActivationPolicy: lazy
 
