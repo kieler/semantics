@@ -20,6 +20,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection
 import java.util.List
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import com.google.inject.Inject
+import de.cau.cs.kieler.cview.model.cViewModel.ComponentType
 
 /**
  * @author cmot
@@ -31,19 +32,26 @@ class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
     
     override createConnections(Component component, CViewModel model) {
         val List<Connection> returnList = newArrayList()
+        
+        if (component.type == ComponentType::FILE) {
+            //component.rawdata.contains("...")
+        }
+
+        if (component.name.equals("HWIO")) {
+            for (filteredComponents : model.findByName("DRV_LL.h", true, true)) {
+                returnList.add(component.connectTo(filteredComponents).setColor2("Blue"))
+            }
+        }
+
         if (component.name.contains("DRV_HL_CAN")) {
             for (filteredComponents : model.findByName("SYC_HWIO_pn", true, false)) {
                 returnList.add(component.connectTo(filteredComponents))
             }
         }
+
         if (component.name.equals("DRV_HL")) {
             for (filteredComponents : model.findByName("SYC_HWIO.c", true, false)) {
-                returnList.add(component.connectTo(filteredComponents).setColor2("Red"))
-            }
-        }
-        if (component.name.equals("HWIO")) {
-            for (filteredComponents : model.findByName("DRV_LL.h", true, true)) {
-                returnList.add(component.connectTo(filteredComponents).setColor2("Blue"))
+                returnList.add(component.connectTo(filteredComponents).setColor2("DarkGreen"))
             }
         }
         return returnList

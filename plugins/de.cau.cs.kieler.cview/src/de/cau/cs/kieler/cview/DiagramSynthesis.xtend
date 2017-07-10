@@ -77,6 +77,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
+    public static final String SELECTION_CONNECTION_COLOR = "Red"
+
     public static final int DEFAULT_EXPANDED_VALUE = 2;
     public static final int MAX_EXPANDED_VALUE = 4;
     public static final int MIN_EXPANDED_VALUE = 1;
@@ -253,21 +255,19 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         if (usePorts) {
             // Add the connection
-            val portId = connection.hashCode.toString // + srcNode.toString
-            println("$$$$ PORT ID '" + portId + "'")
-            
-//            val srcPort = srcNode.addPort(portId, 0, 0, 9, null, color)
-//            val dstPort = dstNode.addPort(portId, 0, 0, 9, null, color)
-            val srcPort = srcNode.addPort(portId, 0, 0, 9, PortSide::EAST, color)
-            val dstPort = dstNode.addPort(portId, 0, 0, 9, PortSide::WEST, color)
-//            srcPort.addOutsidePortLabel("S", 8, KlighdConstants.DEFAULT_FONT_NAME)
-//            srcPort.addOutsidePortLabel("D", 8, KlighdConstants.DEFAULT_FONT_NAME)
+            val portId = connection.hashCode.toString 
+            //val portId = (connection.hashCode + srcNode.hashCode).toString
+            val srcPort = srcNode.addPort(connection, portId, 0, 0, 9, PortSide::EAST, color)
+            val dstPort = dstNode.addPort(connection, portId, 0, 0, 9, PortSide::WEST, color)
             edge.sourcePort = srcPort
             edge.targetPort = dstPort
+            edge.line.selectionForeground = SELECTION_CONNECTION_COLOR.color
+            srcPort.associateWith(connection)
+            dstPort.associateWith(connection)
         }
     }
 
-    def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side, KColor color) {
+    def KPort addPort(KNode node,Connection connection, String mapping, float x, float y, int size, PortSide side, KColor color) {
         val returnPort = node.createPort(mapping);
         if (side != null) {
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
@@ -276,6 +276,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         val rect = returnPort.addRectangle
         rect.background = color.copy
         rect.foreground = color.copy
+        rect.selectionBackground = SELECTION_CONNECTION_COLOR.color
+        rect.selectionForeground = SELECTION_CONNECTION_COLOR.color
+            rect.associateWith(connection)
+            rect.associateWith(connection)
+        
         returnPort.setSize(size, size)
         returnPort.addRectangle.invisible = true;
         node.ports += returnPort
