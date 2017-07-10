@@ -93,29 +93,24 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
         
         
         val model = XMIModelParser.parse(content)
-        
         val serialized = XMIModelSerializer.serialize(model);        
-
         val output = URI.createURI("platform:/resource/SCCharts/test.xmi");
         saveToFile(output, serialized);
 
         
-//        val buh = "Hallo ich bin es doch".removeSection("ll", "i", false)
-//        
-//        val buh2 = "Hallo ichXbinXesXdoch".extractSection("ll", "es", "ch")
-//        
-//        // Only extraxt the first uml model
-//        val startIndex = content.indexOf("<uml:Model name");
-//        val endIndex = content.indexOf("</uml:Model>");
-//        var returnText = "";
-//        returnText = returnText + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-//        returnText = returnText +
-//            "<xmi:XMI xmlns:xmi = \"http://www.omg.org/spec/XMI/20110701\" xmlns:uml = \"http://www.omg.org/spec/UML/20110701\" >";
-//        returnText = returnText + content.substring(startIndex, endIndex);
-//        returnText = returnText + "</uml:Model></xmi:XMI>";
-//
-//        returnText = returnText.replace("<entry ", "<entry kind=\"entry\" ")
-//        returnText = returnText.replace("<exit ", "<exit kind=\"exit\" ")
+        val startIndex = content.indexOf("<uml:Model name");
+        val endIndex = content.indexOf("</uml:Model>");
+        var returnText = "";
+        returnText = returnText + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        returnText = returnText +
+            "<xmi:XMI xmlns:xmi = \"http://www.omg.org/spec/XMI/20110701\" xmlns:uml = \"http://www.omg.org/spec/UML/20110701\" >";
+        returnText = returnText + content.substring(startIndex, endIndex);
+        returnText = returnText + "</uml:Model></xmi:XMI>";
+        
+        
+        returnText = returnText.replace("<entry ", "<entry kind=\"entry\" ")
+        returnText = returnText.replace("<exit ", "<exit kind=\"exit\" ")
+        
 
         // Remove
         // <ownedBehavior xmi:type = "uml:Activity"
@@ -139,7 +134,7 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
 //
 //        return returnText;
 
-        return content
+        return returnText
     }
 
     override doOpenEditor(Object modelObject, ExecutionEvent event, ISelection selection) {

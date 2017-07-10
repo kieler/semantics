@@ -296,9 +296,12 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         URI output = URI.createURI("");
         Injector rInjector = createResourceInjector();
         if (rInjector != null) {
+            long start = System.currentTimeMillis();
             ResourceSet resourceSet = rInjector.getInstance(ResourceSet.class);
             Resource resourceLoad = resourceSet.getResource(input, true);
             model = resourceLoad.getContents().get(0);
+            long end = System.currentTimeMillis();
+            System.out.println("XMIResourceImpl parsed in " + (end-start) + " Milliseconds.");
         }
         else {
             // Try to load SCCharts model
@@ -310,6 +313,7 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
             } catch (IOException e) {
                 throw new ExecutionException("Could not load SCChart as an XMIResource.", e);
             }
+
         }
 
         // Transform the model and unload the resource
