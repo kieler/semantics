@@ -52,6 +52,7 @@ class Visualizer {
         "OC_LN_3", "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1", "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1",
         "OI_LN_2"}
 
+
         @Inject
         extension RailSLExtensions
 
@@ -71,15 +72,15 @@ class Visualizer {
 
             // Add tracks at speed 0
             for (constant : constants) {
-                model.addVariable(new Variable(constant, "0"))
-                model.addVariable(new Variable("S0_" + constant, "RED"))
-                model.addVariable(new Variable("S1_" + constant, "RED"))
+                model.addVariable(new Variable(constant, 0))
+                model.addVariable(new Variable("S0_" + constant, 4))
+                model.addVariable(new Variable("S1_" + constant, 4))
             }
 
             // Add points as straight
             for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
             }
-            pool.previousPool = pool.clone
+//            pool.previousPool = pool.clone
 
         }
 
@@ -123,8 +124,9 @@ class Visualizer {
         def void updatePool(EObject object) {
 
             // reset the pool to the last state
-            pool = pool.previousPool.clone
-            pool.previousPool = pool
+//            pool = pool.previousPool.clone
+//            pool.previousPool = pool
+            
             val model = pool.getModel("railway");
 //                case Block: return // TODO do something cool here
             if (object instanceof Statement) {
@@ -181,29 +183,37 @@ class Visualizer {
             val direction = statement.parseDirection
             val speed = statement.parseSpeed
             for (segment : statement.segments) {
+                
+                // Remove old variables
+                model.getVariables.remove(model.getVariable("S0_" + segment))
+                model.getVariables.remove(model.getVariable("S1_" + segment))
+                
+                model.getVariables.remove(model.getVariable(segment))
+                
+                //Add new variables
                 model.addVariable(new Variable(segment, speed))
-                // model.addVariable(new Variable(segment + "_direction", direction))
+                
                 if (direction == 0) {
                     if (speed == RailSLExtensions::SPEED_FULL) {
-                        model.addVariable(new Variable("S0_" + segment, "GREEN"))
+                        model.addVariable(new Variable("S0_" + segment, 1))
 
                     } else if (speed == RailSLExtensions::SPEED_SLOW) {
-                        model.addVariable(new Variable("S0_" + segment, "YELLOW"))
+                        model.addVariable(new Variable("S0_" + segment, 2))
                     } else {
-                        model.addVariable(new Variable("S0_" + segment, "RED"))
+                        model.addVariable(new Variable("S0_" + segment, 4))
                     }
-                    model.addVariable(new Variable("S1_" + segment, "RED"))
+                    model.addVariable(new Variable("S1_" + segment, 4))
 
                 } else {
                     if (speed == RailSLExtensions::SPEED_FULL) {
-                        model.addVariable(new Variable("S1_" + segment, "GREEN"))
+                        model.addVariable(new Variable("S1_" + segment, 1))
 
                     } else if (speed == RailSLExtensions::SPEED_SLOW) {
-                        model.addVariable(new Variable("S1_" + segment, "YELLOW"))
+                        model.addVariable(new Variable("S1_" + segment, 2))
                     } else {
-                        model.addVariable(new Variable("S1_" + segment, "RED"))
+                        model.addVariable(new Variable("S1_" + segment, 4))
                     }
-                    model.addVariable(new Variable("S0_" + segment, "RED"))
+                    model.addVariable(new Variable("S0_" + segment, 4))
                 }
             }
         }
