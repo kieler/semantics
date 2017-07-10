@@ -42,7 +42,7 @@ class ContextPopulation {
         }
         val env = new Environment()
         val envP = new Environment()
-        env.enabled = true
+        env.setProperty(Environment.ENABLED, true)
         
         processorCompilationUnit.setEnvironment(env, envP)
         

@@ -13,11 +13,13 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
-import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
-import static extension org.eclipse.xtext.EcoreUtil2.*
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kicool.classes.EnvironmentPair
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -26,10 +28,10 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-abstract class Processor implements IKiCoolCloneable {
+abstract class Processor<Source, Target> implements IKiCoolCloneable {
     
     /** A processor has two environments. */
-    protected var Pair<Environment, Environment> environments
+    protected var EnvironmentPair environments
     
     new() {
     }
@@ -43,25 +45,25 @@ abstract class Processor implements IKiCoolCloneable {
      * However, preserve the enabled flag.
      */
     public def setEnvironment(Environment environment, Environment environmentPrime) {
-        if (environments != null && environments.key != null) {
-            val enabledFlag = environments.key.enabled
-            environment.setEnabled(enabledFlag)
+        if (environments != null && environments.source != null) {
+            val enabledFlag = environments.source.getProperty(ENABLED)
+            environment.setProperty(ENABLED, enabledFlag)
         }
-        this.environments = new Pair<Environment, Environment>(environment, environmentPrime)
+        this.environments = new EnvironmentPair(environment, environmentPrime)
     }
     
     /**
      * Return the prime environment.
      */
     public def Environment getEnvironment() {
-        return environments.value
+        return environments.target
     }
     
     /**
      * Return the source environment.
      */
     public def Environment getSourceEnvironment() {
-        return environments.key
+        return environments.source
     }
     
     /**
@@ -82,14 +84,14 @@ abstract class Processor implements IKiCoolCloneable {
      * Directly return the compilation context of this processor.
      */
     protected def getCompilationContext() {
-        environments.key.getCompilationContext
+        environments.source.getProperty(COMPILATION_CONTEXT)
     }
     
     /**
      * Directly return the meta processor of this processor instance.
      */
-    protected def getMetaProcessor() {
-        environments.key.data.get(Environment.META_PROCESSOR) as de.cau.cs.kieler.kicool.Processor
+    protected def getProcessorReference() {
+        environments.source.getProperty(PROCESSOR_REFERENCE)
     }
     
     /**
@@ -97,13 +99,13 @@ abstract class Processor implements IKiCoolCloneable {
      */
     protected def void updateProgress(double progress) {
         // Set the actual pTime before triggering the notification.
-        val startTimestamp = (environments.value.getData(START_TIMESTAMP, 0.0d) as Long).longValue
+        val startTimestamp = environments.target.getProperty(START_TIMESTAMP).longValue
         val intermediateTimestamp = java.lang.System.nanoTime
-        environments.value.setData(PTIME, (intermediateTimestamp - startTimestamp) / 1000_000)
+        environments.target.setProperty(PTIME, (intermediateTimestamp - startTimestamp) / 1000_000)
         
         // Create the notification.
         compilationContext.notify(
-            new ProcessorProgress(progress, compilationContext, metaProcessor, this)
+            new ProcessorProgress(progress, compilationContext, processorReference, this)
         )
     }
     
@@ -112,7 +114,7 @@ abstract class Processor implements IKiCoolCloneable {
      */
     protected def void snapshot(Object model) {
         // Retrieve snapshots object.
-        val snapshots = environment.getData(Environment.SNAPSHOTS, null) as Snapshots
+        val snapshots = environment.getProperty(SNAPSHOTS)
         
         // Do a copy of the given model.
         var Object snapshotModel = model 
@@ -123,7 +125,7 @@ abstract class Processor implements IKiCoolCloneable {
         // Store the copy in the snapshot object and create a notification.         
         snapshots += snapshotModel
         compilationContext.notify(
-            new ProcessorSnapshot(snapshotModel, compilationContext, metaProcessor, this)
+            new ProcessorSnapshot(snapshotModel, compilationContext, processorReference, this)
         )
     }
     
@@ -131,8 +133,18 @@ abstract class Processor implements IKiCoolCloneable {
      * Protected convenient method to trigger a snapshot of the actual model.
      */
     protected def void snapshot() {
-        environment.model.snapshot
+        getModel.snapshot
     }
+    
+    
+    def Source getModel() {
+        environment.getProperty(MODEL) as Source
+    }
+    
+    def Target setModel(Target model) {
+        environment.setProperty(MODEL, model)
+        model
+    }    
     
     /**
      * ID of the processor.

@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.compilation.internal
 
-import de.cau.cs.kieler.kicool.compilation.IKiCoolCloneable
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import java.util.LinkedList
 
 /**

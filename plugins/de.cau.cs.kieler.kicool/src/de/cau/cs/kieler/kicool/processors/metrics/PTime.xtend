@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.kicool.processors.metrics
 
 import de.cau.cs.kieler.kicool.compilation.Metric
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 
 /**
@@ -22,7 +24,13 @@ import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class PTime extends Metric {
+class PTime extends Metric<Object, Integer> {
+    
+    static val IProperty<Integer> METRIC_ENTITY = 
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.pTime.entity")
+
+    static val IProperty<Integer> METRIC_SOURCE_ENTITY = 
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.pTime.sourceEntity")    
     
     static val long MIN_TIME = 1;
     
@@ -34,15 +42,23 @@ class PTime extends Metric {
         "PTime Metric"
     }
     
+    override protected getMetricEntityProperty() {
+        METRIC_ENTITY
+    }
+    
+    override protected getMetricSourceEntityProperty() {
+        METRIC_SOURCE_ENTITY
+    }    
+    
     override protected getMetricEntity() {
-        val pTime = environment.data.get(PTIME) as Long
+        val pTime = environment.getProperty(PTIME) 
         val value = if (pTime == null || pTime < MIN_TIME) MIN_TIME else pTime
-        value
+        value.longValue as int
     }
     
     override protected calculateMetricValue() {
-        val sourceEntity = environment.data.get(METRIC_SOURCE_ENTITY) as Long
-        val modelEntity = environment.data.get(METRIC_ENTITY) as Long
+        val sourceEntity = environment.getProperty(METRIC_SOURCE_ENTITY)
+        val modelEntity = environment.getProperty(METRIC_ENTITY) 
         if (sourceEntity != 0) 
             return (modelEntity.intValue as double) / (sourceEntity.intValue as double)
         else
@@ -50,7 +66,9 @@ class PTime extends Metric {
     }
     
     override setMetricSourceEntity() {
-        environment.data.put(METRIC_SOURCE_ENTITY, 1000 as long)
-    }    
+        environment.setProperty(METRIC_SOURCE_ENTITY, 1000)
+    }
+    
+
     
 }

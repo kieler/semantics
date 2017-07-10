@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractCompilationNotification
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import static extension de.cau.cs.kieler.kicool.compilation.Metric.*
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
 import de.cau.cs.kieler.klighd.krendering.Trigger
@@ -44,7 +45,7 @@ import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.TOGGLE_ON_OFF_DATA
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.PROCESSOR_IDENTIFIER
-import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager.*
+import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KLabel
@@ -61,7 +62,6 @@ import static extension de.cau.cs.kieler.kicool.compilation.Metric.METRIC
 import java.util.Locale
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.kicool.ui.synthesis.feedback.PostUpdateMetricCollector
 
 /**
  * The data manager handles all synthesis updates.
@@ -190,9 +190,9 @@ class ProcessorDataManager {
             NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
         }
         
-        val pTime = processorUnit.environment.getData(PTIME, 0)
+        val pTime = processorUnit.environment.getProperty(PTIME)
         var envText = "pTime: " + pTime + "ms"
-        val mMetric = processorUnit.environment.getData(METRIC, null)
+        val mMetric = processorUnit.environment.getProperty(METRIC)
         if (mMetric != null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
         NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel(envText)
         
@@ -203,7 +203,7 @@ class ProcessorDataManager {
         var intermediatePosX = 0.0f
         // Test for infos, warnings and errors
         // Test for snapshots
-        val snapshots = processorUnit.environment.getData(SNAPSHOTS, null) as Snapshots
+        val snapshots = processorUnit.environment.getProperty(SNAPSHOTS) as Snapshots
         if (snapshots!= null) {
             for(snapshot : snapshots) {
                 val intermediateNode = intermediateKGT.copy
@@ -222,12 +222,12 @@ class ProcessorDataManager {
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
         finalResultNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.environment.getModel, view))
+            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.getModel, view))
 
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         processorBodyNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.environment.getModel, view))
+            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.getModel, view))
 
         
         if (processorNotification instanceof ProcessorProgress) {

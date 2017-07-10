@@ -14,12 +14,14 @@ package de.cau.cs.kieler.kicool.compilation.internal
 
 import de.cau.cs.kieler.kicool.compilation.Environment
 import org.eclipse.emf.ecore.EObject
-
-import static extension org.eclipse.xtext.EcoreUtil2.*
 import java.util.List
 import java.util.LinkedList
-import de.cau.cs.kieler.kicool.compilation.IKiCoolCloneable
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.KVPair
+
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
 
 /**
  * Internal class for handling the processor environments.
@@ -28,71 +30,50 @@ import de.cau.cs.kieler.kicool.KVPair
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class EnvironmentManager {
-    
-    public static val ENVIRONMENT_SOURCEMODEL = "sourceModel"
-    public static val ENVIRONMENT_INPLACE = "inplace"
-    
-    static def setSourceModel(Environment environment, Object model) {
-        environment.data.put(ENVIRONMENT_SOURCEMODEL, model)
-    }
-    
-    static def getSourceModel(Environment environment) {
-        environment.data.get(ENVIRONMENT_SOURCEMODEL)
-    }
-    
-    static def setInplaceCompilation(Environment environment, boolean inplace) {
-        environment.data.put(ENVIRONMENT_INPLACE, inplace)
-    }
-    
-    static def boolean getInplaceCompilation(Environment environment) {
-        environment.data.get(ENVIRONMENT_INPLACE) as Boolean
-    }
+class EnvironmentPropertyHolder extends MapPropertyHolder {
     
  
     static def Environment preparePrimeEnvironment(Environment environment) {
         val prime = new Environment()
-        prime.copyFromEnvironment(environment)
-        
-        prime
+        environment.copyEnvironment(prime)
     }   
     
-    static def void copyFromEnvironment(Environment prime, Environment environment) {
-        val inplace = environment.inplaceCompilation
+    static def <T extends EnvironmentPropertyHolder> T copyEnvironment(T source, T target) {
+        val inplace = source.getProperty(INPLACE)
      
-        for(k : environment.data.keySet) {
-            val v = environment.data.get(k)
+        for(k : source.propertyMap.keySet) {
+            val v = source.propertyMap.get(k)
             if (v instanceof EObject) {
                 if (inplace) {
-                    prime.data.put(k, v)
+                    target.propertyMap.put(k, v)
                 } else {
-                    prime.data.put(k, v.copy)
+                    target.propertyMap.put(k, v.copy)
                 }
             } else {
                 if (v instanceof Integer) {
-                    prime.data.put(k, new Integer(v))
+                    target.propertyMap.put(k, new Integer(v))
                 } else if (v instanceof Boolean) {
-                    prime.data.put(k, new Boolean(v))
+                    target.propertyMap.put(k, new Boolean(v))
                 } else if (v instanceof Double) {
-                    prime.data.put(k, new Double(v))
+                    target.propertyMap.put(k, new Double(v))
                 } else if (v instanceof Long) {
-                    prime.data.put(k, new Long(v))
+                    target.propertyMap.put(k, new Long(v))
                 } else if (v instanceof String) {
-                    prime.data.put(k, new String(v))
+                    target.propertyMap.put(k, new String(v))
                 } else if (v instanceof IKiCoolCloneable) {
                     if (!v.volatile) {
                         if (inplace) {
-                            prime.data.put(k, v)
+                            target.propertyMap.put(k, v)
                         } else {
-                            prime.data.put(k, v.cloneObject)
+                            target.propertyMap.put(k, v.cloneObject)
                         }
                     }
                 } else if (v instanceof List<?>) {
                     if (k.equals(Environment.ERRORS)) {
-                        prime.data.put(k, new LinkedList<String>(v as List<String>))
+                        target.propertyMap.put(k, new LinkedList<String>(v as List<String>))
                     }
                 } else {
-                    prime.data.put(k, v)
+                    target.propertyMap.put(k, v)
                     if (!inplace) {
                         System.err.println("Prime environment wants to copy value of key \"" + k + "\", but the value "+ 
                             "does not seem to be cloneable. This might be ok, but you should resolve this.");
@@ -100,6 +81,8 @@ class EnvironmentManager {
                 }
             }
         }   
+        
+        target
     }
     
     static def processEnvironmentSetter(Environment environment, List<KVPair> kvPairList) {
@@ -107,7 +90,7 @@ class EnvironmentManager {
             var Object setTo = null
             
             if (pair.isIsKeyValue) {
-                setTo = environment.data.get(pair.value)
+                setTo = environment.propertyMap.get(pair.value)
             } else {
                 val v = pair.value
                 try {
@@ -125,7 +108,7 @@ class EnvironmentManager {
                 } 
             }
             
-            environment.data.put(pair.key, setTo)
+            environment.setPropertyById(pair.key, setTo)
         }
     }
 }

@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ui.view.actions
 
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import de.cau.cs.kieler.kicool.compilation.Environment
 
 /**
  * @author ssm
@@ -26,7 +27,7 @@ class CompilationActionSimSalabim {
     
     static def void simSalabim(AbstractContextNotification arg) {
         if (arg instanceof CompilationFinished) {
-            val model = arg.environment.model
+            val model = arg.environment.getProperty(Environment.MODEL)
             if (model instanceof String) {
                 if (model.equals(CompilationActionSimSalabim.SIM_MODEL)) {
                     println(CompilationActionSimSalabim.SIM_ANSWER)

@@ -12,12 +12,11 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
-import java.util.Map
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.emf.ecore.EObject
-import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -26,77 +25,60 @@ import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class Environment {
+class Environment extends EnvironmentPropertyHolder {
     
-    /* Environment keys */
-    public static val MODEL = "model"
-    public static val CONTEXT = "context"
-    public static val META_PROCESSOR = "metaProcessor"
-    public static val COMPILATION_UNIT = "compilationUnit"
-    public static val ERRORS = "errors"     
-    public static val START_TIMESTAMP = "startTimestamp"
-    public static val STOP_TIMESTAMP = "stopTimestamp"
-    public static val OVERALL_TIMESTAMP = "overallTimestamp"
-    public static val PTIME = "pTime"
-    public static val PTIME_OVERALL = "pTimeOverall"   
-    public static val SNAPSHOTS = "snapshots"
-    public static val ENABLED = "enabled"
+    
+    public static val IProperty<Object> SOURCE_MODEL = 
+        new Property<Object>("de.cau.cs.kieler.kicool.sourceModel")
         
-    /** Environment storage */
-    @Accessors Map<String, Object> data
+    public static val IProperty<Boolean> INPLACE = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.inplace", false)
     
+    public static val IProperty<Object> MODEL = 
+        new Property<Object>("de.cau.cs.kieler.kicool.model")
+    
+    public static val IProperty<CompilationContext> COMPILATION_CONTEXT = 
+        new Property<CompilationContext>("de.cau.cs.kieler.kicool.compilationContext")
+    
+    public static val IProperty<de.cau.cs.kieler.kicool.Processor>PROCESSOR_REFERENCE = 
+        new Property<de.cau.cs.kieler.kicool.Processor>("de.cau.cs.kieler.kicool.processorReference")
+
+    public static val IProperty<Processor<?,?>> PROCESSOR_INSTANCE = 
+        new Property<Processor<?,?>>("de.cau.cs.kieler.kicool.processorInstance")
+        
+    public static val IProperty<List<String>> ERRORS = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.errors", <String> newLinkedList)
+        
+    public static val IProperty<Long> START_TIMESTAMP = 
+        new Property<Long>("de.cau.cs.kieler.kicool.startTimestamp", new Long(0))
+        
+    public static val IProperty<Long> STOP_TIMESTAMP = 
+        new Property<Long>("de.cau.cs.kieler.kicool.stopTimestamp", new Long(0))
+
+    public static val IProperty<Long> OVERALL_TIMESTAMP = 
+        new Property<Long>("de.cau.cs.kieler.kicool.overallTimestamp", new Long(0))
+
+    public static val IProperty<Long> PTIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.pTime", new Long(0))
+
+    public static val IProperty<Long> OVERALL_PTIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.overallPTime", new Long(0))
+
+    public static val IProperty<Snapshots> SNAPSHOTS = 
+        new Property<Snapshots>("de.cau.cs.kieler.kicool.snapshots", new Snapshots)
+        
+    public static val IProperty<Boolean> ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.enabled", true)
+             
     new() {
-        data = new HashMap<String, Object>()
-        data.put(ERRORS, <String> newLinkedList)
-        data.put(SNAPSHOTS, new Snapshots)
     }
     
-    def setData(String key, Object data) {
-        this.data.put(key, data)
-    }
-    
-    def Object getData(String key, Object ^default) {
-        val obj = data.get(key)
-        if (obj != null) obj else ^default
-    }        
-    
-    def getModel() {
-        data.get(MODEL)
-    }
-    
-    def getEModel() {
-        data.get(MODEL) as EObject
-    }
-    
-    def setModel(Object model) {
-        data.put(MODEL, model)
-    }
-    
-    def setCompilationContext(CompilationContext cc) {
-        data.put(CONTEXT, cc)
-    }
-    
-    def getCompilationContext() {
-        data.get(CONTEXT) as CompilationContext
-    }    
-    
-    def getErrors() {
-        data.get(ERRORS) as List<String>    
-    }
-    
-    def setError(String msg) {
-        errors += msg
+    def addError(String msg) {
+        getProperty(ERRORS) += msg
     }
     
     def getStatus() {
-        if (errors.size == 0) ProcessorStatus.OK else ProcessorStatus.ERRORS
+        if (getProperty(ERRORS).size == 0) ProcessorStatus.OK else ProcessorStatus.ERRORS
     }
     
-    def boolean getEnabled() {
-        data.get(ENABLED) as Boolean
-    }
-    
-    def setEnabled(boolean enabled) {
-        data.put(ENABLED, enabled)
-    }
 }

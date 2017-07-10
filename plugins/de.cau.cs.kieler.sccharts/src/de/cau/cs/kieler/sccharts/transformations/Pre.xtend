@@ -43,6 +43,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Pre Transformation.
@@ -274,6 +275,10 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         for(valuedObject : lastPreVariablesOfNestedPre) {
             valuedObject.initialValue = null
         }
+    }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

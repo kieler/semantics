@@ -15,9 +15,9 @@ package de.cau.cs.kieler.scg.processors.transformators
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kicool.compilation.TypeSafeProcessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.transformations.c.SCG2CTransformation
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -28,7 +28,7 @@ import de.cau.cs.kieler.scg.transformations.c.SCG2CTransformation
  * @kieler.design 2017-06-16 proposed
  * @kieler.rating 2017-06-16 proposed yellow  
  */
-class SCG2CWrapper extends TypeSafeProcessor<SCGraph, String> {
+class SCG2CWrapper extends Processor<SCGraph, String> {
     
     @Inject Injector injector
     

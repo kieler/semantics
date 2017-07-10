@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Reference Transformation.
@@ -100,6 +101,11 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
     //--                        R E F E R E N C E                            --
     //-------------------------------------------------------------------------
     // ...
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
+        
     def State transform(State rootState) {
         callCounter = 0
         

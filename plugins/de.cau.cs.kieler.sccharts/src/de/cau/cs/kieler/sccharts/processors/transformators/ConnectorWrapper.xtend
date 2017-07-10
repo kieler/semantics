@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2017 by
@@ -14,10 +14,8 @@ package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.transformations.Connector
 
 /**
@@ -29,30 +27,25 @@ import de.cau.cs.kieler.sccharts.transformations.Connector
  * @kieler.design 2017-07-09 proposed
  * @kieler.rating 2017-07-09 proposed yellow  
  */
-class ConnectorWrapper extends Processor {
-    
+class ConnectorWrapper extends SCChartsProcessor {
+
     @Inject Injector injector
-    
+
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.transformators.connector"
     }
-    
+
     override getName() {
         "Connector"
     }
-    
+
     override process() {
-        val model = environment.model
         val wrappedTransformation = injector.getInstance(Connector)
-        switch (model) {
-            State: environment.model = wrappedTransformation.transform(model)
-            SCCharts: environment.model = wrappedTransformation.transform(model)
-        }
+        setModel(wrappedTransformation.transform(getModel))
     }
-    
+
     override getType() {
         ProcessorType.TRANSFORMATOR
     }
-    
 
 }

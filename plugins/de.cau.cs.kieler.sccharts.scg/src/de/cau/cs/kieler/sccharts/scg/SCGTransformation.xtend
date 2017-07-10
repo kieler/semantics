@@ -213,7 +213,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------
     // --             T R A N S F O R M      T O    S C G                     --
     // -------------------------------------------------------------------------
-    override transform(EObject eObject, KielerCompilerContext context) {
+    override SCGraph transform(EObject eObject, KielerCompilerContext context) {
         if (eObject instanceof SCGraph) {
             return (eObject as SCGraph).processSCG(context)
         } else {

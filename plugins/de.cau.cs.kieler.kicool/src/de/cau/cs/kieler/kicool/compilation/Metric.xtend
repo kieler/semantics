@@ -13,6 +13,9 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.classes.EnvironmentPair
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 
 /**
  * A Metric is a specialized processor. 
@@ -23,33 +26,31 @@ import de.cau.cs.kieler.kicool.compilation.Processor
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-abstract class Metric extends Processor {
+abstract class Metric<Source, Type> extends Processor<Source, Source> {
     
-    /* Environment keys */
-    public static val METRIC = "metric"
-    protected static val METRIC_ENTITY = "metricEntity"
-    protected static val METRIC_SOURCE_ENTITY = "metricSourceEntity"
+    public static val IProperty<Double> METRIC = 
+        new Property<Double>("de.cau.cs.kieler.kicool.metric")    
     
     /**
      * Override to environment setter to be able to set the processor environments
      * regardless of any pre or post processing.
      */
     override setEnvironment(Environment environment, Environment environmentPrime) {
-        this.environments = new Pair<Environment, Environment>(environment, environmentPrime)
+        this.environments = new EnvironmentPair(environment, environmentPrime)
     }    
     
     /**
      * Set the metric value now.
      */
     def void setMetric() {
-        environment.data.put(METRIC, calculateMetricValue)
+        environment.setProperty(METRIC, calculateMetricValue)
     }
     
     /** 
      * Retrieve the metric value.
      */
     def double getMetric() {
-        environment.data.get(METRIC) as Double
+        environment.getProperty(METRIC)
     }
     
     /**
@@ -62,20 +63,26 @@ abstract class Metric extends Processor {
     /**
      * Override this method to retrieve the specific metric object (e.g. eObjectCount).
      */
-    abstract protected def Object getMetricEntity()
+    abstract protected def Type getMetricEntity()
+    
+    abstract protected def IProperty<Type> getMetricEntityProperty()
+    
+    abstract protected def IProperty<Type> getMetricSourceEntityProperty()
     
     /**
      * Set the specific metric object. 
      */
-    def setMetricEntity() {
-        environment.data.put(METRIC_ENTITY, getMetricEntity)
+    def void setMetricEntity() {
+        val property = getMetricEntityProperty 
+        environment.setProperty(property, getMetricEntity)
     }
     
     /** 
      * Set the specific metric object for the source model.
      */
-    def setMetricSourceEntity() {
-        environment.data.put(METRIC_SOURCE_ENTITY, getMetricEntity)
+    def void setMetricSourceEntity() {
+        val property = getMetricEntityProperty
+        environment.setProperty(property, getMetricEntity)
     }
 
     /**

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.compilation
+package de.cau.cs.kieler.kicool.classes
 
 /**
  * Interface for objects that will be pu tin an environment.
