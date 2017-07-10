@@ -26,6 +26,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 abstract class ModelCompiler extends Configurable {
     
+    public val whitelist = new ConfigurableAttribute("whitelist", null)
+    public val blacklist = new ConfigurableAttribute("blacklist", null)
+    
     @Accessors(PUBLIC_SETTER)
     protected var String outputFolder = ""
     
@@ -35,7 +38,21 @@ abstract class ModelCompiler extends Configurable {
     @Accessors(PUBLIC_SETTER)
     protected var SimulationTemplateProcessor simulationProcessor
     
-    public def ModelCompilationResult compile(IFile file, EObject model)
+    abstract protected def ModelCompilationResult doCompile(IFile file, EObject model)
+    
+    public def ModelCompilationResult compile(IFile file, EObject model) {
+        val whiteListRegex = whitelist.stringValue
+        val blackListRegex = blacklist.stringValue
+        if(!whiteListRegex.isNullOrEmpty && !file.location.toOSString.matches(".*"+whiteListRegex+".*")) {
+            return new ModelCompilationResult
+        }
+        if(!blackListRegex.isNullOrEmpty && file.location.toOSString.matches(".*"+blackListRegex+".*")) {
+            return new ModelCompilationResult
+        }
+        
+        return doCompile(file, model)
+    }
+    
     public def void updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet)
     
     new() {
@@ -44,6 +61,7 @@ abstract class ModelCompiler extends Configurable {
     
     public def void initialize(de.cau.cs.kieler.prom.kibuild.ModelCompiler config) {
         this.updateConfigurableAttributes(config.attributes)
+        
         // Add simulation template processor to model compiler
         if(config.simulationProcessor != null) {
             val processor = new SimulationTemplateProcessor

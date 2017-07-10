@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.simulation.handlers
 
 import com.google.common.util.concurrent.SimpleTimeLimiter
+import com.google.common.util.concurrent.UncheckedTimeoutException
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import de.cau.cs.kieler.simulation.core.Model
@@ -25,8 +27,8 @@ import java.io.PrintStream
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.util.concurrent.UncheckedTimeoutException
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -37,9 +39,10 @@ import com.google.common.util.concurrent.UncheckedTimeoutException
  */
 class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     
-    @Accessors
-    private var IFile executable
+    public val executablePath = new ConfigurableAttribute("executable", null, true)
     
+    @Accessors
+    private var IFile executableFile
     private var String modelName
     
     private var Process process
@@ -105,6 +108,10 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         }
     }
     
+    override getName() {
+        return "sim"
+    }
+    
     /**
      * Returns the name of the executable.
      */
@@ -142,10 +149,25 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         return line
     }
     
+    private def IFile getExecutable() {
+        if(executableFile == null) {
+            if(executablePath.stringValue.isNullOrEmpty) {
+                throw new Exception("Executable of simulator cannot be null")
+            }
+            val path = new Path(executablePath.stringValue)
+            executableFile = getFile(path)
+        }
+        return executableFile
+    }
+
     /**
      * {@inheritDoc}
      */
     override String toString() {
-        return "Simulator for "+modelName
+        if(executableFile != null) {
+            return "Simulator for "+executableFile.name
+        } else {
+            return "Simulator for "+executablePath.stringValue
+        }
     }
 }

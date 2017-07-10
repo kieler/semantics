@@ -71,17 +71,6 @@ class ExtensionLookupUtil {
 
         return null
     }
-    
-    static def Object instantiateClassFromExtension(IExtension ext) {
-        val elements = ext.getConfigurationElements
-        for (configElement : elements) {
-            // Check if a class is defined
-            if (!configElement.getAttribute(CLASS_ATTRIBUTE_NAME).isNullOrEmpty) {
-                return instantiateClassFromConfiguration(configElement)
-            }
-        }
-        return null
-    }
 
     static def Object instantiateClassFromConfiguration(IConfigurationElement configElement) {
         try {
@@ -99,10 +88,10 @@ class ExtensionLookupUtil {
      * @param xmlElementName The name of the xml element that represents the configuration element 
      * @return a list with the configuration elements
      */
-    static def ArrayList<IConfigurationElement> getConfigurationElements(String extensionPointId, String xmlElementName) {
+    static def List<IConfigurationElement> getConfigurationElements(String extensionPointId, String xmlElementName) {
         val extensions = getExtensions(extensionPointId)
 
-        val elements = new ArrayList<IConfigurationElement>()
+        val List<IConfigurationElement> elements = newArrayList()
         for (ext : extensions) {
             val configElements = ext.getConfigurationElements();
             elements.addAll(configElements.filter[it.name == xmlElementName])
@@ -129,8 +118,12 @@ class ExtensionLookupUtil {
      * @param extensionPointId The extension point id
      * @param configurationConstraint A constraint that at least one configuration element must match (such as a special name or type) 
      */
-    static def IExtension[] getExtensions(String extensionPointId, (IConfigurationElement)=>boolean configurationConstraint) {
+    static def IConfigurationElement[] getConfigurationElements(String extensionPointId, (IConfigurationElement)=>boolean configurationConstraint) {
         val extensions = getExtensions(extensionPointId)
-        return extensions.filter[ext | ext.configurationElements.findFirst[configurationConstraint.apply(it)] != null]
+        val List<IConfigurationElement> allConfigurationElements = newArrayList
+        for(ext : extensions) {
+            allConfigurationElements.addAll(ext.configurationElements)
+        }
+        return allConfigurationElements.filter[configurationConstraint.apply(it)]
     }
 }

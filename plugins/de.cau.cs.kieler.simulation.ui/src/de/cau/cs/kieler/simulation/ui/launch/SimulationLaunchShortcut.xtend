@@ -12,15 +12,17 @@
  */
 package de.cau.cs.kieler.simulation.ui.launch
 
+import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.SimulationPlugin
+import de.cau.cs.kieler.simulation.core.DataHandler
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Simulator
 import de.cau.cs.kieler.simulation.core.StepAction
 import de.cau.cs.kieler.simulation.handlers.ExecutableSimulator
-import de.cau.cs.kieler.simulation.handlers.Redirect
 import de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler
 import de.cau.cs.kieler.simulation.handlers.SimulationOutputFileHandler
+import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 import java.util.List
@@ -114,74 +116,71 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
             PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().bringToTop(DataPoolView.instance);
         }
         
-        // TODO: Hard coded stuff
+        // Create simulation based on selection
         if(files.size == 1) {
             val file = files.get(0)
             var Simulator simulator
-            if(file.fileExtension == "simin") {
+            var simMan = SimulationManager.instance
+            if(file.fileExtension == "kisim") {
+                // Create simulation based on configuration
+                val model = ModelImporter.load(file)
+                if(model instanceof SimulationConfiguration) {
+                    simMan = new SimulationManager(model)
+                    simMan.initializeSimulation
+                }
+            } else if(file.fileExtension == "simout") {
+                 // Create simulation output handler
+                val outputFileHandler = new SimulationOutputFileHandler
+                outputFileHandler.file = file
+                if(simMan != null && !simMan.isStopped) {
+                    simMan.appendAction(StepAction.Method.WRITE, outputFileHandler)
+                }
+            } else if(file.fileExtension == "simin") {
+                // Create simulation input handler
                 val inputFileHandler = new SimulationInputFileHandler
                 simulator = inputFileHandler
-                inputFileHandler.fileLocation = file.location.toOSString
-            } else if(file.fileExtension == "simout") {
-                val outputFileHandler = new SimulationOutputFileHandler
-                outputFileHandler.fileLocation = file.location.toOSString
-                val simMan = SimulationManager.instance
-                if(simMan != null && !simMan.isStopped) {
-                    simMan.addAction(StepAction.Method.WRITE, outputFileHandler)
-                }
-            } else {
+                inputFileHandler.file = file
+            } else if(file.fileExtension == "exe" || file.fileExtension.isNullOrEmpty){
+                // Create simulation from executable
                 val exeSimulator = new ExecutableSimulator
                 simulator = exeSimulator
-                exeSimulator.executable = files.get(0)
+                exeSimulator.executableFile = file
             }
+            // Create simulation with the simulator
+            // or append the simulator to a running simulation
             if(simulator != null) {
-                addSimulatorToSimulation(simulator)
+                if(simMan == null || simMan.isStopped) {
+                    // Create new simulation
+                    simMan = new SimulationManager()
+                    simMan.addAction(StepAction.Method.WRITE, simulator)
+                    simMan.initializeSimulation
+                } else {
+                    // Append to runnning simulation
+                    simMan.appendSimulator(simulator)
+                }
             }
-        } else if(files.size == 2) {
-            val simMan = new SimulationManager()
-            
-            val simulatorModel = new ExecutableSimulator()
-            simulatorModel.executable = files.get(0)
-            
-            val simulatorEnv = new ExecutableSimulator()
-            simulatorEnv.executable = files.get(1)
-            
-            val redirectEnvToModel = new Redirect()
-            redirectEnvToModel.from = simulatorEnv.modelName
-            redirectEnvToModel.to = simulatorModel.modelName
-            
-            val redirectModelToEnv = new Redirect()
-            redirectModelToEnv.from = simulatorModel.modelName
-            redirectModelToEnv.to = simulatorEnv.modelName
-            
-            simMan.addAction(StepAction.Method.WRITE, simulatorEnv)
-            simMan.addAction(StepAction.Method.WRITE, redirectEnvToModel)
-            simMan.addAction(StepAction.Method.WRITE, simulatorModel)
-            simMan.addAction(StepAction.Method.WRITE, redirectModelToEnv)
-            
-            simMan.initialize()
-            
-            PromConsole.print("\n\nNew simulation")
-            PromConsole.print("Initial pool:"+simMan.currentPool)
+        } else {
+            throw new Exception("Only a single file can be used to start a simulation.\n"
+                              + "For complex simulation configurations, please run a kisim file.")
         }
     }
     
-    private def void addSimulatorToSimulation(Simulator simulator) {
-        var simMan = SimulationManager.instance
-        if(simMan == null || simMan.isStopped) {
-            simMan = new SimulationManager()
-            simMan.addAction(StepAction.Method.WRITE, simulator)
-            simMan.initialize()
-            
-            PromConsole.print("\n\nNew simulation")
-            PromConsole.print("Initial pool:"+simMan.currentPool)
-        } else {
-            simMan.addAction(StepAction.Method.WRITE, simulator)
-            simMan.append(simulator)
-            
-            PromConsole.print("Appended simulator")
-            PromConsole.print("New pool:"+simMan.currentPool)
-        }
+    private def void initializeSimulation(SimulationManager simMan) {
+        simMan.initialize()
+        PromConsole.print("\n\nNew simulation")
+        PromConsole.print("Initial pool:"+simMan.currentPool)
+    }
+    
+    private def void appendAction(SimulationManager simMan, StepAction.Method method, DataHandler handler) {
+        simMan.addAction(method, handler)
+        PromConsole.print("Appended "+handler)
+    }
+    
+    private def void appendSimulator(SimulationManager simMan, Simulator simulator) {
+        simMan.addAction(StepAction.Method.WRITE, simulator)
+        simMan.append(simulator)
+        PromConsole.print("Appended "+simulator)
+        PromConsole.print("New pool:"+simMan.currentPool)
     }
     
     private def List<IFile> loadLaunchSelection() {

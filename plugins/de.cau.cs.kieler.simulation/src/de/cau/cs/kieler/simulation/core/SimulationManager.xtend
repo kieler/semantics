@@ -12,11 +12,19 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.build.Configurable
+import de.cau.cs.kieler.simulation.kisim.ActionOperation
+import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
 import java.util.List
+import java.util.Map
+import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.kisim.Action
+import java.util.Set
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -35,7 +43,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class SimulationManager {
+class SimulationManager extends Configurable {
     
     /**
      * Singleton instance.
@@ -94,6 +102,12 @@ class SimulationManager {
     private var int maxHistoryLength = 10;
     
     /**
+     * The configuration that has been used to create the simulation.
+     */
+    @Accessors
+    private var SimulationConfiguration usedConfiguration
+    
+    /**
      * Instances of the data handlers in the step actions without duplicates.
      */
     // TODO: make private
@@ -115,13 +129,95 @@ class SimulationManager {
     private var List<StepState> history = newArrayList()
     
     /**
+     * Id's of the data handlers used. There may be multiple handlers with the same id.
+     */
+    val Map<DataHandler, String> idForDataHandler = newHashMap
+    
+    val Set<DataHandler> initializedHandlers = newHashSet
+    
+    /**
      * Constructor
      */
     new() {
+        super()
         if(instance != null) {
             instance.stop()
         }
         instance = this
+        
+        // Save initial state
+        val pool = new DataPool
+        currentState = new StepState(pool, 0)
+    }
+    
+    /**
+     * Constructor with initial configuration.
+     */
+    new(SimulationConfiguration config) {
+        this()
+        usedConfiguration = config
+        // Load attributes
+        this.updateConfigurableAttributes(config.attributes)
+        // Load data handlers
+        val List<DataHandler> loadedHandlers = newArrayList
+        for(handlerConfig : config.handlers) {
+            // Instantiate matching data handler
+            val name = handlerConfig.name
+            val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
+            val configurationElements = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.simulation.dataHandler",
+                                                                                      requiredConfig)
+            if(!configurationElements.isNullOrEmpty) {
+                val element = configurationElements.get(0)
+                val handler = ExtensionLookupUtil.instantiateClassFromConfiguration(element) as DataHandler
+                handler.updateConfigurableAttributes(handlerConfig.attributes)
+                // Remember the id for this handler
+                if(handlerConfig.id != null) {
+                    idForDataHandler.put(handler, handlerConfig.id)
+                }
+                // Remember to initialize this handler,
+                // even if it is not added to the macro tick actions
+                loadedHandlers.add(handler)
+            } else {
+                throw new Exception("Data handler name '"+name+"' could not be instantiated.")
+            }
+        }
+        // Initialize loaded handlers
+        initializeHandlers(loadedHandlers)
+        
+        // Add actions that make up a macro tick
+        if(config.execution != null) {
+            for(action : config.execution.actions) {
+                val handler = action.findDataHandler
+                // Add step action with the corresponding method
+                switch(action.operation) {
+                    case ActionOperation.WRITE : {
+                        addAction(StepAction.Method.WRITE, handler)
+                    }
+                    case ActionOperation.READ : {
+                        addAction(StepAction.Method.READ, handler)
+                    }
+                }
+            }
+        }
+    }
+    
+    private def findDataHandler(Action action) {
+        // Find handler that matches the id and name of the action
+        val handlersMatchingId = newArrayList
+        if(action.id != null) {
+            for(entry : idForDataHandler.entrySet) {
+                if(entry.value == action.id) {
+                    handlersMatchingId.add(entry.key)
+                }
+            }
+        } else {
+            handlersMatchingId.addAll(dataHandlers)
+        }
+        val handler = handlersMatchingId.findFirst[it.name == action.handler]
+        if(handler == null) {
+            throw new Exception(action.handler+" data handler with id '"+action.id+"' has not been configured.")
+        }
+        return handler
     }
     
     /**
@@ -140,7 +236,11 @@ class SimulationManager {
      */
     public def int getCurrentMacroTickNumber() {
         if(currentState != null) {
-            return currentState.actionIndex / actions.size
+            if(actions.size > 0) {
+                return currentState.actionIndex / actions.size
+            } else {
+                return currentState.actionIndex
+            }
         } else {
             return 0
         }
@@ -179,18 +279,44 @@ class SimulationManager {
      * All simulators are initilized to create the initial data pool.
      */
     public def void initialize() {
-        val pool = new DataPool()
-        for(handler : dataHandlers) {
-            if(handler instanceof Simulator) {
-                handler.initialize(pool)
+        // Initialize handlers
+        initializeHandlers(dataHandlers)
+        
+        // Perform actions from initialization part of configuration
+        if(usedConfiguration != null && usedConfiguration.initialization != null) {
+            for(action : usedConfiguration.initialization.actions) {
+                val handler = action.findDataHandler
+                // Add step action with the corresponding method
+                switch(action.operation) {
+                    case ActionOperation.WRITE : {
+                        val stepAction = new StepAction(StepAction.Method.WRITE, handler)
+                        stepAction.apply(currentPool)
+                    }
+                    case ActionOperation.READ : {
+                        val stepAction = new StepAction(StepAction.Method.READ, handler)
+                        stepAction.apply(currentPool)
+                    }
+                }
             }
         }
         
-        // Save initial state
-        currentState = new StepState(pool, 0)
-        
 //        println("Initilized simulation")
         notifyListeners(SimulationEventType.INITIALIZED)
+    }
+    
+    /**
+     * Initializes all data handlers that have not been initialized yet
+     */
+    private def void initializeHandlers(List<DataHandler> handlers) {
+        // Initialize simulators
+        for(handler : handlers) {
+            if(handler instanceof Simulator) {
+                if(!initializedHandlers.contains(handler)) {
+                    initializedHandlers.add(handler)           
+                    handler.initialize(currentPool)
+                }
+            }
+        }
     }
     
     /**
@@ -418,15 +544,18 @@ class SimulationManager {
      */
     private def int applyMacroTickActions(DataPool pool) {
         // Round action index up to next fully done macro tick
-        val macroTickActionCount = actions.size()
+        val macroTickActionCount = actions.size
         val currentActionIndex = currentState.actionIndex
-        val nextActionIndex = ((currentActionIndex + macroTickActionCount) / macroTickActionCount) * macroTickActionCount
-        // Apply all data handlers up to next fully done macro tick
-        for(var i = currentActionIndex; i < nextActionIndex; i++) {
-            getActionStep(i).apply(pool)
+        if(macroTickActionCount > 0) {
+            val nextActionIndex = ((currentActionIndex + macroTickActionCount) / macroTickActionCount) * macroTickActionCount
+            // Apply all data handlers up to next fully done macro tick
+            for(var i = currentActionIndex; i < nextActionIndex; i++) {
+                getActionStep(i).apply(pool)
+            }
+            return nextActionIndex
+        } else {
+            return currentState.actionIndex+1
         }
-        
-        return nextActionIndex
     }
     
     /**

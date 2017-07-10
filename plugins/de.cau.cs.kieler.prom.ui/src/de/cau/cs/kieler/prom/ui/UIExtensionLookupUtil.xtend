@@ -18,6 +18,7 @@ import java.util.ArrayList
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.ui.IWorkbenchWizard
+import java.util.List
 
 /**
  * @author aas
@@ -79,7 +80,7 @@ class UIExtensionLookupUtil extends ExtensionLookupUtil {
      * 
      * @return a list with all configurations that contribute to the launch shortcut extension point.
      */
-    static def ArrayList<IConfigurationElement> getLaunchShortcutConfigurationElements() {
+    static def List<IConfigurationElement> getLaunchShortcutConfigurationElements() {
         return getConfigurationElements(LAUNCH_SHORTCUT_EXTENSION_ID, LAUNCH_SHORTCUT_ELEMENT_NAME)
     }
 
@@ -89,7 +90,7 @@ class UIExtensionLookupUtil extends ExtensionLookupUtil {
      * @param onlyProjectWizards Specifies if file wizards should be excluded in the search.
      * @return a list with all configurations that contribute to the 'org.eclipse.ui.newWizards' extension point.
      */
-    static def ArrayList<IConfigurationElement> getWizardConfigurationElements(boolean onlyProjectWizards) {
+    static def List<IConfigurationElement> getWizardConfigurationElements(boolean onlyProjectWizards) {
          
          
          val iterable = getConfigurationElements(WIZARD_EXTENSION_ID, WIZARD_ELEMENT_NAME).filter[

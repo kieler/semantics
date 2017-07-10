@@ -12,13 +12,18 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.IPath
+import de.cau.cs.kieler.prom.ModelImporter
+
 /**
  * Default implementation for a data handler.
  * 
  * @author aas
  *
  */
-class DefaultDataHandler implements DataHandler {
+abstract class DefaultDataHandler implements DataHandler {
     
     override read(DataPool pool) {
     }
@@ -27,5 +32,19 @@ class DefaultDataHandler implements DataHandler {
     }
     
     override stop() {
+    }
+    
+    protected def IFile getFile(IPath path) {
+        var IFile file
+        if(path.isAbsolute) {
+            file = ResourcesPlugin.workspace.root.getFile(path)
+        } else {
+            val simMan = SimulationManager.instance
+            if(simMan != null && simMan.usedConfiguration != null) {
+                val configurationFile = ModelImporter.toPlatformResource(simMan.usedConfiguration.eResource) as IFile
+                file = configurationFile?.project.getFile(path)
+            }
+        }
+        return file
     }
 }

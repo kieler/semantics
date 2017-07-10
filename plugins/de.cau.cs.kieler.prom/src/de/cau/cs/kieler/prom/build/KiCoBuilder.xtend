@@ -417,11 +417,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             for(config : model.modelCompilers) {
                 val name = config.name
                 val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
-                val extensions = ExtensionLookupUtil.getExtensions("de.cau.cs.kieler.prom.modelCompiler",
-                                                                   requiredConfig)
-                if(!extensions.isNullOrEmpty) {
-                    val ext = extensions.get(0)
-                    val modelCompiler = ExtensionLookupUtil.instantiateClassFromExtension(ext) as ModelCompiler
+                val configurations = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.prom.modelCompiler",
+                                                                                  requiredConfig)
+                if(!configurations.isNullOrEmpty) {
+                    val element = configurations.get(0)
+                    val modelCompiler = ExtensionLookupUtil.instantiateClassFromConfiguration(element) as ModelCompiler
                     if(!modelCompilers.contains(modelCompiler)) {
                         modelCompilers.add(modelCompiler)
                     }
@@ -437,11 +437,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             for(config : model.simulationCompilers) {
                 val name = config.name
                 val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
-                val extensions = ExtensionLookupUtil.getExtensions("de.cau.cs.kieler.prom.simulationCompiler",
-                                                                   requiredConfig)
-                if(!extensions.isNullOrEmpty) {
-                    val ext = extensions.get(0)
-                    val simulationCompiler = ExtensionLookupUtil.instantiateClassFromExtension(ext) as SimulationCompiler
+                val configurations = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.prom.simulationCompiler",
+                                                                                  requiredConfig)
+                if(!configurations.isNullOrEmpty) {
+                    val element = configurations.get(0)
+                    val simulationCompiler = ExtensionLookupUtil.instantiateClassFromConfiguration(element) as SimulationCompiler
                     if(!simulationCompilers.contains(simulationCompiler)) {
                         simulationCompilers.add(simulationCompiler)
                     }

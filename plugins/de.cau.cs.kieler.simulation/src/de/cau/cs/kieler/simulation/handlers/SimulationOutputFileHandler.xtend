@@ -12,12 +12,14 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import com.google.common.base.Charsets
 import com.google.common.io.Files
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DefaultDataHandler
-import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.base.Charsets
 import java.io.File
+import org.eclipse.core.resources.IFile
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -25,8 +27,10 @@ import java.io.File
  */
 class SimulationOutputFileHandler extends DefaultDataHandler {
     
+    public val location = new ConfigurableAttribute("fileLocation", null, true)
+    
     @Accessors
-    private var String fileLocation
+    private var IFile file
     
     private var String modelName
     
@@ -51,6 +55,17 @@ class SimulationOutputFileHandler extends DefaultDataHandler {
         }
     }
     
+    private def String getFileLocation() {
+        if(file != null) {
+            return file.location.toOSString
+        } else {
+            return location.stringValue
+        }
+    }
+    
+    override getName() {
+        return "simout"
+    }
     
     override toString() {
         return "OutputFileHandler '"+fileLocation+"'"

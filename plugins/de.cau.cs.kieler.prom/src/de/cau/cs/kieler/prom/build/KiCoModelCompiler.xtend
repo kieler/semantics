@@ -41,8 +41,6 @@ import org.eclipse.core.runtime.IPath
 class KiCoModelCompiler extends ModelCompiler {
     public val outputTemplate = new ConfigurableAttribute("outputTemplate", "")
     public val compileChain = new ConfigurableAttribute("compileChain", "")
-    public val whitelist = new ConfigurableAttribute("whitelist")
-    public val blacklist = new ConfigurableAttribute("blacklist")
     public val fileExtension = new ConfigurableAttribute("fileExtension", ".c")
     
     private var ModelCompilationResult result
@@ -78,7 +76,7 @@ class KiCoModelCompiler extends ModelCompiler {
      * @param file the file of the model to be built
      * @param model model to be built
      */
-    override compile(IFile file, EObject model) {
+    override doCompile(IFile file, EObject model) {
         // Prepare result
         result = new ModelCompilationResult()
         
