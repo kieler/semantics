@@ -571,7 +571,7 @@ TypeRenaming:
     (newName=[Type|ID] | newType=Esterel_ValueType) "/" oldName=[Type|ID];
 
 ConstantRenaming:
-    (newName=[kexpressions::ValuedObject|ID] | newValue=ConstantValue) "/" oldName=[kexpressions::ValuedObject|ID];
+    (newName=[Constant|ID] | newValue=ConstantValue) "/" oldName=[Constant|ID];
 
 FunctionRenaming:
     (newName=[Function|ID] | newFunc=BuildInFunction) "/" oldName=[Function|ID];

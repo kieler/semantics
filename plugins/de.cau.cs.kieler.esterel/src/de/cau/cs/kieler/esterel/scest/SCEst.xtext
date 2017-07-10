@@ -13,6 +13,8 @@ import "http://www.cau.de/cs/kieler/esterel/Esterel" as esterel
 SCEstProgram hidden(SL_COMMENT, ML_COMMENT, WS):
     (modules+=SCEstModule)*;
 
+ProgramInterface returns esterel::Program:
+    SCEstProgram;
 
 /* ###################################################
  * ###                 7.2 Modules                 ###
@@ -46,6 +48,9 @@ SCEstModule:
         ( (statements+=SCEstStatement ";" | statements+=MetaStatement)* statements+=SCEstStatement? )
         '}' 
     );
+    
+ModuleInterface returns esterel::Module:
+    SCEstModule;
 
 /* ###################################################
  * ###               7.5 Statements                ###
@@ -301,6 +306,10 @@ LocalVariable returns esterel::LocalVariable:
     "in" 
     ( (statements+=SCEstStatement ";" | statements+=MetaStatement)* statements+=SCEstStatement? ) 
     "end" "var"?;
+    
+ModuleRenaming:
+       module=[SCEstModule|ID] 
+    | (newName=ID "/" module=[SCEstModule|ID]);    
     
 /* ###################################################
  * ###               7.6 Old Syntax                ###
