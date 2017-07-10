@@ -40,6 +40,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
     
     static def <T extends EnvironmentPropertyHolder> T copyEnvironment(T source, T target) {
         val inplace = source.getProperty(INPLACE)
+        val ongoingWorkingCopy = source.getProperty(ONGOING_WORKING_COPY)
      
         for(k : source.propertyMap.keySet) {
             val v = source.propertyMap.get(k)
@@ -47,7 +48,12 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                 if (inplace) {
                     target.propertyMap.put(k, v)
                 } else {
-                    target.propertyMap.put(k, v.copy)
+                    if (ongoingWorkingCopy) {
+                        source.propertyMap.put(k, v.copy)
+                        target.propertyMap.put(k, v)    
+                    } else {
+                        target.propertyMap.put(k, v.copy)
+                    }
                 }
             } else {
                 if (v instanceof Integer) {

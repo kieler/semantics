@@ -24,9 +24,11 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import java.util.Observer
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
-import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -41,10 +43,17 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors Map<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor<?,?>> processorMap
     @Accessors Map<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext> subContexts
     @Accessors CompilationContext parentContext = null
+    @Accessors Environment startEnvironment
     
     new() {
         processorMap = new HashMap<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor<?,?>>()
         subContexts = new HashMap<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext>()
+        
+        startEnvironment = new Environment
+        startEnvironment.setProperty(SOURCE_MODEL, sourceModel)
+        startEnvironment.setProperty(COMPILATION_CONTEXT, this)
+        startEnvironment.setProperty(INPLACE, false)        
+        startEnvironment.setProperty(ONGOING_WORKING_COPY, true)
     }
     
     def getProcessorInstances() {
@@ -75,22 +84,22 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     def void compile() {
-        val environment = new Environment
-        environment.setProperty(SOURCE_MODEL, sourceModel)
-        environment.setProperty(MODEL, sourceModel)
-        environment.setProperty(COMPILATION_CONTEXT, this)
+        if (startEnvironment.getProperty(ONGOING_WORKING_COPY) && sourceModel instanceof EObject) {
+            startEnvironment.setProperty(MODEL, (sourceModel as EObject).copy)
+        } else {
+            startEnvironment.setProperty(MODEL, sourceModel)
+        }
         
         val metric = getSourceMetric
         if (metric != null) {
-            metric.setEnvironment(environment, environment)
+            metric.setEnvironment(startEnvironment, startEnvironment)
             metric.setMetricSourceEntity
             metric.setMetricEntity
             metric.setMetric
         }
         
-        environment.setProperty(INPLACE, false)
         
-        environment.compile        
+        startEnvironment.compile        
     }
     
     // Protected is important. Should not be accessible from the outside.
