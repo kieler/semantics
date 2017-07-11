@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.classes.EnvironmentPair
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 
@@ -26,18 +24,10 @@ import de.cau.cs.kieler.core.model.properties.Property
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-abstract class Metric<Source, Type> extends Processor<Source, Source> {
+abstract class Metric<Source, Type> extends IntermediateProcessor<Source> {
     
     public static val IProperty<Double> METRIC = 
         new Property<Double>("de.cau.cs.kieler.kicool.metric")    
-    
-    /**
-     * Override to environment setter to be able to set the processor environments
-     * regardless of any pre or post processing.
-     */
-    override setEnvironment(Environment environment, Environment environmentPrime) {
-        this.environments = new EnvironmentPair(environment, environmentPrime)
-    }    
     
     /**
      * Set the metric value now.
@@ -93,5 +83,9 @@ abstract class Metric<Source, Type> extends Processor<Source, Source> {
     /**
      * Besides calculating the metric values, a metric does not have much to do.
      */
-    override process() {}
+    override process() {
+        setMetricEntity
+        setMetric        
+    }
+    
 }
