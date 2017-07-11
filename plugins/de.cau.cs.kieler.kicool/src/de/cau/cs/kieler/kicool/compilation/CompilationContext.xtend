@@ -91,8 +91,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         for(intermediateProcessor : getIntermediateProcessors) {
             intermediateProcessor.setEnvironment(startEnvironment, startEnvironment)
-            if (intermediateProcessor instanceof Metric<?,?>) intermediateProcessor.setMetricSourceEntity
-            intermediateProcessor.process
+            if (intermediateProcessor.validateType) {
+                if (intermediateProcessor instanceof Metric<?,?>) intermediateProcessor.setMetricSourceEntity
+                intermediateProcessor.process
+            }
         }
         
         startEnvironment.compile        
@@ -114,6 +116,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         val processorInstance = processorMap.get(processorReference)
         environment.setProperty(PROCESSOR_REFERENCE, processorReference)
         environment.setProperty(PROCESSOR_INSTANCE, processorInstance)
+        if (processorInstance == null) {
+            java.lang.System.err.println("An instance for processor reference " + processorReference + " was not found!")
+            return environment;    
+        }
+        
+        environment.setProperty(INPLACE_VALID, processorInstance.validateInplaceType)
         val environmentPrime = environment.preparePrimeEnvironment
         
         processorInstance.setEnvironment(environment, environmentPrime)
@@ -138,8 +146,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setProperty(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
         
         for(intermediateProcessor : getIntermediateProcessors(processorReference)) {
-            intermediateProcessor.setEnvironment(startEnvironment, startEnvironment)
-            intermediateProcessor.process
+            intermediateProcessor.setEnvironment(environmentPrime, environmentPrime)
+            if (intermediateProcessor.validateType) intermediateProcessor.process
         }
         
         val overallTimestamp = java.lang.System.nanoTime

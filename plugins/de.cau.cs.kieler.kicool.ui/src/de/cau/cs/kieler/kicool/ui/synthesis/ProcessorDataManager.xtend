@@ -189,8 +189,9 @@ class ProcessorDataManager {
         }
         val nodeIdMap = processorNode.createNodeIdMap
         
-        if (processorInstance.environment.status == ProcessorStatus.ERRORS) {
-            NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
+        switch(processorInstance.environment.status) {
+            case ERRORS: NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
+            case WARNINGS: NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(WARNING)
         }
         
         val pTime = processorInstance.environment.getProperty(PTIME)

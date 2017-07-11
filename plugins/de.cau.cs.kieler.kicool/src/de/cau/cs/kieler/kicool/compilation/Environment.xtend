@@ -36,6 +36,9 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Boolean> ONGOING_WORKING_COPY = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.ongoingWorkingCopy", true)
+        
+    public static val IProperty<Boolean> INPLACE_VALID = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.inplaceValid", true) 
     
     public static val IProperty<Object> MODEL = 
         new Property<Object>("de.cau.cs.kieler.kicool.model")
@@ -51,6 +54,9 @@ class Environment extends EnvironmentPropertyHolder {
         
     public static val IProperty<List<String>> ERRORS = 
         new Property<List<String>>("de.cau.cs.kieler.kicool.errors", <String> newLinkedList)
+
+    public static val IProperty<List<String>> WARNINGS = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.warnings", <String> newLinkedList)
         
     public static val IProperty<Long> START_TIMESTAMP = 
         new Property<Long>("de.cau.cs.kieler.kicool.startTimestamp", new Long(0))
@@ -80,8 +86,14 @@ class Environment extends EnvironmentPropertyHolder {
         getProperty(ERRORS) += msg
     }
     
+    def addWarning(String msg) {
+        getProperty(WARNINGS) += msg
+    }
+    
     def getStatus() {
-        if (getProperty(ERRORS).size == 0) ProcessorStatus.OK else ProcessorStatus.ERRORS
+        if (getProperty(ERRORS).size > 0) return ProcessorStatus.ERRORS
+        if (getProperty(WARNINGS).size > 0) return ProcessorStatus.WARNINGS
+        return ProcessorStatus.OK
     }
     
 }

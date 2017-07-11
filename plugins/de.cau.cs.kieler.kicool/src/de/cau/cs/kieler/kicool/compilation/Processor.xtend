@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import java.lang.reflect.ParameterizedType
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -138,13 +139,42 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     
     
     def Source getModel() {
-        environment.getProperty(MODEL) as Source
+        try {
+            val model = environment.getProperty(MODEL) as Source
+            return model
+        } catch (ClassCastException e) {
+            return null
+        }
     }
     
     def Target setModel(Target model) {
         environment.setProperty(MODEL, model)
         model
     }    
+    
+    def boolean validateType() {
+        val ParameterizedType pt = this.getClass.getGenericSuperclass as ParameterizedType;
+        val c = pt.getActualTypeArguments.get(0) as Class<?>
+        val model = environment.getProperty(MODEL)
+        val castable = c.isInstance(model)
+        castable
+    }
+    
+    def boolean validateInplaceType() {
+        val myC = getProcessorSubClass
+        val ParameterizedType pt = myC.getGenericSuperclass as ParameterizedType;
+        val c1 = pt.getActualTypeArguments.get(0)
+        val c2 = pt.getActualTypeArguments.get(1)
+        c1 == c2
+    }
+    
+    private def Class<?> getProcessorSubClass() {
+        var Class<?> c = this.getClass
+        while(!c.superclass.name.equals("de.cau.cs.kieler.kicool.compilation.Processor")) {
+            c = c.superclass
+        }
+        c
+    }
     
     /**
      * ID of the processor.
