@@ -12,19 +12,15 @@
  */
 package de.cau.cs.kieler.kicool.environments
 
-import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import java.util.LinkedList
+import de.cau.cs.kieler.core.model.Pair
 
 /**
- * Data storage for snapshots.
- * 
  * @author ssm
- * @kieler.design 2017-06-12 proposed
- * @kieler.rating 2017-06-12 proposed yellow  
+ * @kieler.design 2017-07-11 proposed 
+ * @kieler.rating 2017-07-11 proposed yellow
+ *
  */
-class Warnings extends MessageObjectReferences<Object> implements IKiCoolCloneable {
-    
-    override isMutable() { false }
-    override cloneObject() { null }
-    override isVolatile() { true }
+class MessageObjectReferences<T> extends LinkedList<Pair<String, T>> {
     
 }

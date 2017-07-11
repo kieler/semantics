@@ -62,6 +62,9 @@ import java.util.Locale
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.kicool.ProcessorReference
+import org.eclipse.emf.ecore.EObject
+import com.google.inject.Injector
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 
 /**
  * The data manager handles all synthesis updates.
@@ -72,7 +75,8 @@ import de.cau.cs.kieler.kicool.ProcessorReference
  */
 class ProcessorDataManager {
     
-    @Inject extension KNodeExtensions
+    private static Injector injector =
+            new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration();    
     
     static val NODE_PROCESSOR_BODY = "processorbody"
     static val NODE_ACTIVITY_STATUS = "status"
@@ -239,8 +243,19 @@ class ProcessorDataManager {
             warningNode.xpos = intermediatePosX
             warningNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             intermediateRootNode.children += warningNode 
-            warningNode.setProperty(INTERMEDIATE_DATA, 
-                new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
+            
+            val model = processorInstance.getModel
+            if (model instanceof EObject) {
+               val warningModel = model.copy
+               val MORManager = injector.getInstance(MessageObjectReferencesManager)
+               MORManager.annotateModel(warningModel, warnings, WARNING, view)
+                warningNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, warningModel, view))
+            } else {
+                warningNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
+            }
+                
             warningNode.container.setFBColor(WARNING)
             intermediatePosX += 3.5f
         }       
