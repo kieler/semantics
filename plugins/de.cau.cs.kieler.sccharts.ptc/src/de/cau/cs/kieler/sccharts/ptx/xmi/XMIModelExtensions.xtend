@@ -20,6 +20,13 @@ import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
  */
 class XMIModelExtensions {
     
+    def Element root(Element element) {
+        if (element.parent == null) {
+            return element
+        }
+        return element.parent.root
+    }
+    
     def Element parent(Element element) {
         if (element.eContainer != null) {
             return (element.eContainer as Element)

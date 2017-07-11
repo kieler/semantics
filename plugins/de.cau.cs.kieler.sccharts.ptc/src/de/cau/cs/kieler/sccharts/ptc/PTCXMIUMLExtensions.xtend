@@ -42,6 +42,21 @@ class PTCXMIUMLExtensions {
     }
 
     // -----------------------------------------------------------------
+    /**
+     * Get the parent state machine recursively
+     */
+    def Element getParentStateMachine(Element element) {
+        if (element.parent == null) {
+            return null
+        }
+        if(element.parent.isUMLStateMachine) {
+            return element.parent
+        }
+        return element.parent.parentAnyState
+        
+    }
+
+    // -----------------------------------------------------------------
 
     /**
      *  Get the parent state recursively
@@ -63,6 +78,10 @@ class PTCXMIUMLExtensions {
     }
 
     // -----------------------------------------------------------------
+
+    def boolean isUMLSignalEvent(Element element) { 
+        return (element.umlType == "SignalEvent")
+    }
 
     def boolean isUMLStateMachine(Element element) { 
         return (element.umlType == "StateMachine")
@@ -92,7 +111,7 @@ class PTCXMIUMLExtensions {
         return (element.umlType == "Transition")
     }
 
-    def boolean isUMLTrigger(Element element) { 
+    def boolean isUMLTrigger(Element element) {
         return (element.umlType == "Trigger")
     }
 
@@ -102,6 +121,10 @@ class PTCXMIUMLExtensions {
 
     def boolean isUMLOpaqueExpression(Element element) { 
         return (element.umlType == "OpaqueExpression")
+    }
+
+    def boolean isUMLCallEvent(Element element) { 
+        return (element.umlType == "CallEvent")
     }
 
     def boolean isUMLOperation(Element element) { 
@@ -135,6 +158,10 @@ class PTCXMIUMLExtensions {
 
     def String getEvent(Element content) {
         return content.attributeByName("event")
+    }
+
+    def String getOperation(Element content) {
+        return content.attributeByName("operation")
     }
 
     def String getBody(Element content) {

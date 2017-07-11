@@ -59,6 +59,7 @@ public class PTC2SCCharts {
     HashMap<EObject, String> src2id = new HashMap();
 
     HashMap<String, ValuedObject> id2input = new HashMap();
+    HashMap<String, String> Operation2Name = new HashMap();
 
     /** Create an injector to load the transformation via guice. */
     private static Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
@@ -84,6 +85,8 @@ public class PTC2SCCharts {
             target2src.clear
             id2src.clear
             src2id.clear
+            id2input.clear
+            Operation2Name.clear
             var scchart = SCChartsFactory::eINSTANCE.createState;
             targetModel.add(scchart)
         }
@@ -114,8 +117,74 @@ public class PTC2SCCharts {
         return src2id.get(src)
     }
 
-    def ValuedObject id2input(String id) {
-        return id2input.get(id)
+    def ValuedObject id2input(List<State> targetModel, Element element, String id) {
+        val returnValue = id2input.get(id)
+        if (returnValue != null) {
+            return returnValue
+        } else {
+            // Not yet declared, declare it newly
+            val rootElement = element.root
+            val varName = id.searchInputName(rootElement);
+
+            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
+            declaration.input = (element.visibility == "public")
+            declaration.type = ValueType::BOOL
+            targetModel.current.declarations.add(declaration)
+            val valuedObject = createValuedObject(targetModel.current, varName, declaration)
+            element.map(valuedObject)
+            println("EVENT PUT:" + id + " (" + valuedObject.name + ")");
+            id2input.put(id, valuedObject)
+            return valuedObject
+        }
+    }
+
+    /**
+     *       <trigger xmi:type = "uml:Trigger" xmi:id = "_95069729-de3a-46ae-a522-d8c12a976b7ctrigger" event = "_95069729-de3a-46ae-a522-d8c12a976b7cCall">
+     *       <packagedElement xmi:type = "uml:CallEvent" xmi:id = "_95069729-de3a-46ae-a522-d8c12a976b7cCall" operation = "_6f19a978-401b-4faa-adec-a586db001883">
+     *       <ownedOperation xmi:type = "uml:Operation" xmi:id = "_6f19a978-401b-4faa-adec-a586db001883" name = "ReqAllowed" visibility = "public">
+
+     */
+    static var int inputCounter = 0
+
+    def String searchInputName(String eventid, Element element) {
+        for (child : element.eAllContents.toList) {
+            if (child instanceof Element) {
+                if (child.isUMLSignalEvent) {
+                    println("element.id = " + child.id + " == " + eventid + " = eventid");
+                    if (child.id == eventid) {
+                        return "I_" + child.name
+                    }
+                }
+            }
+
+        }
+        return eventid.searchInputNameFallback(element)
+    }
+
+    def String searchInputNameFallback(String eventid, Element element) {
+        for (child : element.eAllContents.toList) {
+            if (child instanceof Element) {
+                if (child.isUMLOperation) {
+                    Operation2Name.put(child.id, child.name)
+                }
+            }
+        }
+        for (child : element.eAllContents.toList) {
+            if (child instanceof Element) {
+                if (child.isUMLCallEvent) {
+                    if (eventid == child.id) {
+                        val operationId = child.operation
+                        val inputName = "I_" + Operation2Name.get(operationId) 
+                        if (inputName != null) {
+                            return inputName
+                        }
+                    }
+                }
+            }
+
+        }
+        inputCounter++
+        return "I_" + inputCounter
     }
 
     def void transformStateMachine(List<State> targetModel, Element element) {
@@ -123,6 +192,8 @@ public class PTC2SCCharts {
         target2src.clear
         id2src.clear
         src2id.clear
+        id2input.clear
+        Operation2Name.clear
         var scchart = SCChartsFactory::eINSTANCE.createState;
         targetModel.add(scchart)
         scchart.id = element.name.fixId;
@@ -167,27 +238,6 @@ public class PTC2SCCharts {
         val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
         element.map(state)
         targetModel.transformGeneral(element)
-
-//        for (child : element.eContents.toList) {
-//            val childElement = child as Element
-//            if (childElement != null) {
-//                println(
-//                    "STATE CHILD eAllContents XXXXXXXXXX: [" + childElement.eClass.name + "]  " + childElement.name +
-//                        " : " + childElement.id + " --- " + childElement.kind);
-//
-//                if (child instanceof Element) {
-//                }
-//            }
-//        }
-
-// TODO: Entry & Exit
-    /*
-     *                       <subvertex xmi:type = "uml:State" xmi:id = "_b1665af3-fe27-11d2-a541-00104bb05af8" name = "FlashOn">
-     *                         <entry xmi:id = "_b1665afe-fe27-11d2-a541-00104bb05af8Activ" xmi:type = "uml:Activity" name = "Lights::Amber(1);">
-     *                         </entry>
-     *                         <exit xmi:id = "_98368722-fe2c-11d2-a541-00104bb05af8Activ" xmi:type = "uml:Activity" name = "Lights::Amber(0);">
-     *                         </exit>
-     */
     }
 
     def transformActivity(List<State> targetModel, Element element) {
@@ -195,19 +245,17 @@ public class PTC2SCCharts {
             return
         }
         if (element.type == "entry" || element.umlType == "exit") {
-        val parentState = element.parentAnyState
-        if (parentState != null) {
-                 if (element.type == "entry") {
-                        val action = (parentState.src2target as State).createEntryAction
-                        action.addEffect(asHostcodeEffect(element.name))
-                 }
-                 if (element.umlType == "exit") {
-                        val action = (parentState.src2target as State).createExitAction
-                        action.addEffect(asHostcodeEffect(element.name))
-                 }
-        }
-            
-            
+            val parentState = element.parentAnyState
+            if (parentState != null) {
+                if (element.type == "entry") {
+                    val action = (parentState.src2target as State).createEntryAction
+                    action.addEffect(asHostcodeEffect(element.name))
+                }
+                if (element.umlType == "exit") {
+                    val action = (parentState.src2target as State).createExitAction
+                    action.addEffect(asHostcodeEffect(element.name))
+                }
+            }
         }
     }
 
@@ -246,45 +294,49 @@ public class PTC2SCCharts {
      *           <ownedAttribute xmi:type = "uml:Property" xmi:id = "_98368725-fe2c-11d2-a541-00104bb05af8" name = "flashes" type = "_bf9531dd-fd6d-429c-9c77-72c228475b8e" visibility = "private" aggregation = "composite">
      *           </ownedAttribute>
      */
-    def transformTransition(List<State> targetModel, Element element) {
+    def void transformTransition(List<State> targetModel, Element element) {
         println(" --> TRANSITION: from " + element.source + " to " + element.target);
-
         val src = element.source.id2src.src2target
         val dst = element.target.id2src.src2target
 
         if ((src instanceof State) && (dst instanceof State)) {
             val transition = (src as State).createTransitionTo(dst as State)
+            element.map(transition)
+
             if ((src as State).isInitial) {
                 transition.immediate = true
             }
 
-            for (attribute : element.attributes.toList) {
-                println("TRANSITION XXXXXXXXXX: " + attribute.name + " = " + attribute.value);
-            }
-            for (child : element.eAllContents.toList) {
-                println("TRANSITION XXXXXXXXXX: " + child.class.getName + " : " + child.id);
-
-                if (child instanceof Element)
-                    if (child.event != null) {
-                        targetModel.transformTrigger(child, element)
-
-                    } else if (child.body != null) {
-                        transition.label = child.body
-                    }
-            }
-
+//            for (attribute : element.attributes.toList) {
+//                println("TRANSITION XXXXXXXXXX: " + attribute.name + " = " + attribute.value);
+//            }
+//            for (child : element.eAllContents.toList) {
+//                println("TRANSITION XXXXXXXXXX: " + child.class.getName + " : " + child.id);
+//
+//                if (child instanceof Element)
+//                    if (child.event != null) {
+//                        targetModel.transformTrigger(child)
+//
+//                    } else if (child.body != null) {
+//                        transition.label = child.body
+//                    }
+//            }
         }
+        targetModel.transformGeneral(element)
     }
 
-    def transformTrigger(List<State> targetModel, Element element, Element parentElement) {
-//        val transition = parentElement.src2target as Transition
-//        println(" --> TRIGGER FOR TRANSITION: " + transition);
-//
-//        if (transition != null) {
-//            val valuedObject = element.event.id2input
-//            println(" --> TRIGGER ValuedObject: " + valuedObject.name);
-//            transition.trigger = valuedObject.reference
-//        }
+    def transformTrigger(List<State> targetModel, Element element) {
+        val transition = element.parent.src2target as Transition
+        println(" --> TRIGGER FOR TRANSITION: " + transition);
+        if (transition != null) {
+            val event = element.event
+            println("EVENT GET:" + event);
+            val valuedObject = targetModel.id2input(element, event)
+            if (valuedObject != null) {
+                println(" --> TRIGGER ValuedObject: " + valuedObject.name);
+                transition.trigger = valuedObject.reference
+            }
+        }
     }
 
     def transformOpaqueBehavior(List<State> targetModel, Element element) {
@@ -307,9 +359,22 @@ public class PTC2SCCharts {
         //
     }
 
+    def transformSignalEvent(List<State> targetModel, Element element) {
+//        val varName = element.name
+//
+//        val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
+//        declaration.input = (element.visibility == "public")
+//        declaration.type = ValueType::BOOL
+//        targetModel.current.declarations.add(declaration)
+//        val valuedObject = createValuedObject(targetModel.current, varName, declaration)
+//        element.map(valuedObject)
+//        println("EVENT PUT:" + element.id);
+//        id2input.put(element.id, valuedObject)
+    }
+
     def transformGeneral(List<State> targetModel, Element element) {
         for (childElement : element.children) {
-            println("UML TYPE:" + childElement.umlType)
+            // println("UML TYPE:" + childElement.umlType)
             if (childElement.id.endsWith("Event")) {
                 targetModel.transformEvent(childElement)
             } else if (childElement.isUMLStateMachine) {
@@ -327,7 +392,7 @@ public class PTC2SCCharts {
             } else if (childElement.isUMLTransition) {
                 targetModel.transformTransition(childElement)
             } else if (childElement.isUMLTrigger) {
-                targetModel.transformTrigger(childElement, element)
+                targetModel.transformTrigger(childElement)
             } else if (childElement.isUMLOpaqueBehavior) {
                 targetModel.transformOpaqueBehavior(childElement)
             } else if (childElement.isUMLOpaqueExpression) {
@@ -340,6 +405,8 @@ public class PTC2SCCharts {
                 targetModel.transformOpaqueBehavior(childElement)
             } else if (childElement.isUMLProperty) {
                 targetModel.transformProperty(childElement)
+            } else if (childElement.isUMLSignalEvent) {
+                targetModel.transformSignalEvent(childElement)
             } else if (childElement.children.size > 0) {
                 // A container
                 targetModel.transformGeneral(childElement)
