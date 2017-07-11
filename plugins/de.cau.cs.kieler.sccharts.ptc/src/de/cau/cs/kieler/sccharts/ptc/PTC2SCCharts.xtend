@@ -78,8 +78,6 @@ public class PTC2SCCharts {
 //    def Object name(EObject content) {
 //        return "EObject:null";
 //    }
-
-
     def State current(List<State> targetModel) {
         if (targetModel.nullOrEmpty) {
             src2target.clear
@@ -91,20 +89,6 @@ public class PTC2SCCharts {
         }
         return targetModel.last
     }
-
-//    def TreeNode attributeReferenceByName(Element content, String attributeName) {
-//        for (attribute : content.getMixed) {
-//            println("  MIXED '"+attribute.EStructuralFeature.getName+"' = '" + attribute.value + "'" );
-//            if (attribute.EStructuralFeature.getName == attributeName) {
-//                if (attribute instanceof EReference) {
-//                    return attribute.value as TreeNode
-//                }
-//            }
-//        }
-//        println("");
-//        return null;
-//    }    
-
 
     def void map(Element element, EObject target) {
         src2target.put(element, target);
@@ -191,17 +175,17 @@ public class PTC2SCCharts {
                     "STATE CHILD eAllContents XXXXXXXXXX: [" + childElement.eClass.name + "]  " + childElement.name +
                         " : " + childElement.id + " --- " + childElement.kind);
 
-//                if (child instanceof Element) {
-//                    if (child.kind == "entry") {
-//                        val action = state.createEntryAction
-//                        action.addEffect(asHostcodeEffect(childElement.name))
-//                    } else if (child.kind == "exit") {
-//                        val action = state.createExitAction
-//                        action.addEffect(asHostcodeEffect(childElement.name))
-//                    } else if (child.body != null) {
-//                        // transition.label = child.body
-//                    }
-//                }
+                if (child instanceof Element) {
+                    if (child.kind == "entry") {
+                        val action = state.createEntryAction
+                        action.addEffect(asHostcodeEffect(childElement.name))
+                    } else if (child.kind == "exit") {
+                        val action = state.createExitAction
+                        action.addEffect(asHostcodeEffect(childElement.name))
+                    } else if (child.body != null) {
+                        // transition.label = child.body
+                    }
+                }
             }
         }
 
@@ -231,11 +215,11 @@ public class PTC2SCCharts {
     }
 
     def transformProperty(List<State> targetModel, Element element) {
-        if ((element == null) || (element.name == null)) {
-            return
-        }
-        val varName = element.name.replace(" ", "")
-
+//        if ((element == null) || (element.name == null)) {
+//            return
+//        }
+//        val varName = element.name.replace(" ", "")
+//
 //        println(" $$$ ADDING PROPERTY: '" + varName + "'");
 //        val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
 //        // declaration.input = true
@@ -255,33 +239,33 @@ public class PTC2SCCharts {
      *           </ownedAttribute>
      */
     def transformTransition(List<State> targetModel, Element element) {
-//        println(" --> TRANSITION: from " + element.source + " to " + element.target);
-//
-//        val src = element.source.id2src.src2target
-//        val dst = element.target.id2src.src2target
-//
-//        if ((src instanceof State) && (dst instanceof State)) {
-//            val transition = (src as State).createTransitionTo(dst as State)
-//            if ((src as State).isInitial) {
-//                transition.immediate = true
-//            }
-//
-//            for (attribute : element.anyAttribute.toList) {
-//                println("TRANSITION XXXXXXXXXX: " + attribute.EStructuralFeature.getName + " = " + attribute.value);
-//            }
-//            for (child : element.eAllContents.toList) {
-//                println("TRANSITION XXXXXXXXXX: " + child.class.getName + " : " + child.id);
-//
-//                if (child instanceof Element)
-//                    if (child.event != null) {
-//                        targetModel.transformTrigger(child, element)
-//
-//                    } else if (child.body != null) {
-//                        transition.label = child.body
-//                    }
-//            }
-//
-//        }
+        println(" --> TRANSITION: from " + element.source + " to " + element.target);
+
+        val src = element.source.id2src.src2target
+        val dst = element.target.id2src.src2target
+
+        if ((src instanceof State) && (dst instanceof State)) {
+            val transition = (src as State).createTransitionTo(dst as State)
+            if ((src as State).isInitial) {
+                transition.immediate = true
+            }
+
+            for (attribute : element.attributes.toList) {
+                println("TRANSITION XXXXXXXXXX: " + attribute.name + " = " + attribute.value);
+            }
+            for (child : element.eAllContents.toList) {
+                println("TRANSITION XXXXXXXXXX: " + child.class.getName + " : " + child.id);
+
+                if (child instanceof Element)
+                    if (child.event != null) {
+                        targetModel.transformTrigger(child, element)
+
+                    } else if (child.body != null) {
+                        transition.label = child.body
+                    }
+            }
+
+        }
     }
 
     def transformTrigger(List<State> targetModel, Element element, Element parentElement) {
@@ -315,16 +299,6 @@ public class PTC2SCCharts {
         //
     }
 
-//    def void transformClass(List<State> targetModel, Element element) {
-//        println("ENTERING CLASS '" + element.name + "'")
-//        targetModel.transformGeneral(element)
-//    }
-//
-//    def void transformPackage(List<State> targetModel, Element element) {
-//        println("ENTERING PACKAGE '" + element.name + "'")
-//        targetModel.transformGeneral(element)
-//    }
-
     def transformGeneral(List<State> targetModel, Element element) {
 
         for (childElement : element.children) {
@@ -332,52 +306,37 @@ public class PTC2SCCharts {
 
             if (childElement.id.endsWith("Event")) {
                 targetModel.transformEvent(childElement)
-            }
-            else if (childElement.umlType == "StateMachine") {
+            } else if (childElement.umlType == "StateMachine") {
                 targetModel.transformStateMachine(childElement)
-            }
-            else if (childElement.umlType == "Region") {
+            } else if (childElement.umlType == "Region") {
                 targetModel.transformRegion(childElement, element)
-            }
-            else if (childElement.umlType == "Pseudostate") {
+            } else if (childElement.umlType == "Pseudostate") {
                 targetModel.transformPseudostate(childElement, element)
-            }
-            else if (childElement.umlType == "FinalState") {
+            } else if (childElement.umlType == "FinalState") {
                 targetModel.transformFinalState(childElement, element)
-            }
-            else if (childElement.umlType == "State") {
+            } else if (childElement.umlType == "State") {
                 targetModel.transformState(childElement, element)
-            }
-            else if (childElement.umlType == "Activity") {
+            } else if (childElement.umlType == "Activity") {
                 targetModel.transformActivity(childElement)
-            }
-            else if (childElement.umlType == "Transition") {
+            } else if (childElement.umlType == "Transition") {
                 targetModel.transformTransition(childElement)
-            }
-            else if (childElement.umlType == "Trigger") {
+            } else if (childElement.umlType == "Trigger") {
                 targetModel.transformTrigger(childElement, element)
-            }
-            else if (childElement.umlType == "OpaqueBehavior") {
+            } else if (childElement.umlType == "OpaqueBehavior") {
                 targetModel.transformOpaqueBehavior(childElement)
-            }
-            else if (childElement.umlType == "OpaqueExpression") {
+            } else if (childElement.umlType == "OpaqueExpression") {
                 targetModel.transformOpaqueExpression(childElement)
-            }
-            else if (childElement.umlType == "Operation") {
+            } else if (childElement.umlType == "Operation") {
                 targetModel.transformOperation(childElement)
-            }
-            else if (childElement.umlType == "Parameter") {
+            } else if (childElement.umlType == "Parameter") {
                 targetModel.transformParameter(childElement)
-            }
-            else if (childElement.umlType == "OpaqueBehavior") {
+            } else if (childElement.umlType == "OpaqueBehavior") {
                 targetModel.transformOpaqueBehavior(childElement)
-            }
-            else if (childElement.umlType == "Property") {
+            } else if (childElement.umlType == "Property") {
                 targetModel.transformProperty(childElement)
-            }
-            else if (childElement.children.size > 0) {
+            } else if (childElement.children.size > 0) {
                 // A container
-                targetModel.transformGeneral(childElement) 
+                targetModel.transformGeneral(childElement)
             }
 
         }
