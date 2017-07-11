@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier#getTypeID <em>Type ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier#getEstType <em>Est Type</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTypeIdentifier()
@@ -110,5 +111,31 @@ public interface TypeIdentifier extends EObject
    * @generated
    */
   void setOperator(CombineOperator value);
+
+  /**
+   * Returns the value of the '<em><b>Est Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Est Type</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Est Type</em>' reference.
+   * @see #setEstType(Type)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTypeIdentifier_EstType()
+   * @model
+   * @generated
+   */
+  Type getEstType();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier#getEstType <em>Est Type</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Est Type</em>' reference.
+   * @see #getEstType()
+   * @generated
+   */
+  void setEstType(Type value);
 
 } // TypeIdentifier

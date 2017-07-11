@@ -183,6 +183,7 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getAnnotationsAssignment_0(), "rule__Assignment__AnnotationsAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_1(), "rule__Assignment__ValuedObjectAssignment_1");
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_2_1(), "rule__Assignment__IndicesAssignment_2_1");
+					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_3(), "rule__Assignment__OperatorAssignment_3");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_4(), "rule__Assignment__ExpressionAssignment_4");
 					put(grammarAccess.getConditionalAccess().getAnnotationsAssignment_0(), "rule__Conditional__AnnotationsAssignment_0");
 					put(grammarAccess.getConditionalAccess().getExpressionAssignment_2(), "rule__Conditional__ExpressionAssignment_2");

@@ -394,11 +394,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createDelayExprAdapter();
       }
       @Override
-      public Adapter caseEsterelType(EsterelType object)
-      {
-        return createEsterelTypeAdapter();
-      }
-      @Override
       public Adapter caseInput(Input object)
       {
         return createInputAdapter();
@@ -1431,21 +1426,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDelayExprAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.EsterelType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelType
-   * @generated
-   */
-  public Adapter createEsterelTypeAdapter()
   {
     return null;
   }

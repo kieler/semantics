@@ -28,7 +28,6 @@ import de.cau.cs.kieler.esterel.esterel.EsterelAssignment;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel;
 import de.cau.cs.kieler.esterel.esterel.EsterelThread;
-import de.cau.cs.kieler.esterel.esterel.EsterelType;
 import de.cau.cs.kieler.esterel.esterel.EveryDo;
 import de.cau.cs.kieler.esterel.esterel.Exec;
 import de.cau.cs.kieler.esterel.esterel.ExecCase;
@@ -227,9 +226,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case EsterelPackage.ESTEREL_THREAD:
 				sequence_EsterelThread(context, (EsterelThread) semanticObject); 
-				return; 
-			case EsterelPackage.ESTEREL_TYPE:
-				sequence_TypeIdentifier(context, (EsterelType) semanticObject); 
 				return; 
 			case EsterelPackage.EVERY_DO:
 				sequence_EveryDo(context, (EveryDo) semanticObject); 
@@ -2026,28 +2022,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     TypeIdentifier returns EsterelType
-	 *
-	 * Constraint:
-	 *     estType=[Type|ID]
-	 */
-	protected void sequence_TypeIdentifier(ISerializationContext context, EsterelType semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.ESTEREL_TYPE__EST_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.ESTEREL_TYPE__EST_TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeIdentifierAccess().getEstTypeTypeIDTerminalRuleCall_3_1_0_1(), semanticObject.getEstType());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     TypeIdentifier returns TypeIdentifier
 	 *
 	 * Constraint:
-	 *     (type=Esterel_ValueType | typeID=ID | ((type=Esterel_ValueType | typeID=ID) operator=Esterel_CombineOperator))
+	 *     (type=Esterel_ValueType | ((type=Esterel_ValueType | typeID=ID) operator=Esterel_CombineOperator) | estType=[Type|ID] | typeID=ID)
 	 */
 	protected void sequence_TypeIdentifier(ISerializationContext context, TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -77,7 +77,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExecCaseAccess().getAlternatives_11_1_0(), "rule__ExecCase__Alternatives_11_1_0");
 					put(grammarAccess.getLocalSignalDeclAccess().getAlternatives_5_0(), "rule__LocalSignalDecl__Alternatives_5_0");
 					put(grammarAccess.getLocalVariableAccess().getAlternatives_5_0(), "rule__LocalVariable__Alternatives_5_0");
-					put(grammarAccess.getModuleRenamingAccess().getAlternatives(), "rule__ModuleRenaming__Alternatives");
 					put(grammarAccess.getDoAccess().getAlternatives_2_0(), "rule__Do__Alternatives_2_0");
 					put(grammarAccess.getDoAccess().getAlternatives_3(), "rule__Do__Alternatives_3");
 					put(grammarAccess.getDoAccess().getAlternatives_3_1_3_1_0(), "rule__Do__Alternatives_3_1_3_1_0");
@@ -93,7 +92,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModuleAccess().getAlternatives_4(), "rule__Module__Alternatives_4");
 					put(grammarAccess.getModuleAccess().getAlternatives_6(), "rule__Module__Alternatives_6");
 					put(grammarAccess.getTypeIdentifierAccess().getAlternatives(), "rule__TypeIdentifier__Alternatives");
-					put(grammarAccess.getTypeIdentifierAccess().getAlternatives_2_1(), "rule__TypeIdentifier__Alternatives_2_1");
+					put(grammarAccess.getTypeIdentifierAccess().getAlternatives_1_1(), "rule__TypeIdentifier__Alternatives_1_1");
 					put(grammarAccess.getConstantValueAccess().getAlternatives(), "rule__ConstantValue__Alternatives");
 					put(grammarAccess.getInterfaceSignalDeclAccess().getAlternatives(), "rule__InterfaceSignalDecl__Alternatives");
 					put(grammarAccess.getISignalAccess().getAlternatives_2(), "rule__ISignal__Alternatives_2");
@@ -121,6 +120,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTrapSignalAccess().getAlternatives_2_2_3_2_1(), "rule__TrapSignal__Alternatives_2_2_3_2_1");
 					put(grammarAccess.getTrapSignalAccess().getAlternatives_2_2_3_2_3(), "rule__TrapSignal__Alternatives_2_2_3_2_3");
 					put(grammarAccess.getRunAccess().getAlternatives_1(), "rule__Run__Alternatives_1");
+					put(grammarAccess.getModuleRenamingAccess().getAlternatives(), "rule__ModuleRenaming__Alternatives");
 					put(grammarAccess.getRenamingAccess().getAlternatives_1(), "rule__Renaming__Alternatives_1");
 					put(grammarAccess.getTypeRenamingAccess().getAlternatives_0(), "rule__TypeRenaming__Alternatives_0");
 					put(grammarAccess.getConstantRenamingAccess().getAlternatives_0(), "rule__ConstantRenaming__Alternatives_0");
@@ -273,7 +273,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocalVariableAccess().getGroup_3(), "rule__LocalVariable__Group_3__0");
 					put(grammarAccess.getLocalVariableAccess().getGroup_5(), "rule__LocalVariable__Group_5__0");
 					put(grammarAccess.getLocalVariableAccess().getGroup_5_0_0(), "rule__LocalVariable__Group_5_0_0__0");
-					put(grammarAccess.getModuleRenamingAccess().getGroup_1(), "rule__ModuleRenaming__Group_1__0");
 					put(grammarAccess.getDoAccess().getGroup(), "rule__Do__Group__0");
 					put(grammarAccess.getDoAccess().getGroup_2(), "rule__Do__Group_2__0");
 					put(grammarAccess.getDoAccess().getGroup_2_0_0(), "rule__Do__Group_2_0_0__0");
@@ -310,8 +309,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModuleAccess().getGroup_5(), "rule__Module__Group_5__0");
 					put(grammarAccess.getModuleAccess().getGroup_5_0(), "rule__Module__Group_5_0__0");
 					put(grammarAccess.getModuleAccess().getGroup_6_0(), "rule__Module__Group_6_0__0");
-					put(grammarAccess.getTypeIdentifierAccess().getGroup_2(), "rule__TypeIdentifier__Group_2__0");
-					put(grammarAccess.getTypeIdentifierAccess().getGroup_3(), "rule__TypeIdentifier__Group_3__0");
+					put(grammarAccess.getTypeIdentifierAccess().getGroup_1(), "rule__TypeIdentifier__Group_1__0");
 					put(grammarAccess.getTypeDeclAccess().getGroup(), "rule__TypeDecl__Group__0");
 					put(grammarAccess.getTypeDeclAccess().getGroup_3(), "rule__TypeDecl__Group_3__0");
 					put(grammarAccess.getConstantDeclsAccess().getGroup(), "rule__ConstantDecls__Group__0");
@@ -396,6 +394,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRunAccess().getGroup_1_1(), "rule__Run__Group_1_1__0");
 					put(grammarAccess.getRunAccess().getGroup_1_1_2(), "rule__Run__Group_1_1_2__0");
 					put(grammarAccess.getRunAccess().getGroup_1_1_2_2(), "rule__Run__Group_1_1_2_2__0");
+					put(grammarAccess.getModuleRenamingAccess().getGroup_1(), "rule__ModuleRenaming__Group_1__0");
 					put(grammarAccess.getRenamingAccess().getGroup(), "rule__Renaming__Group__0");
 					put(grammarAccess.getRenamingAccess().getGroup_1_0(), "rule__Renaming__Group_1_0__0");
 					put(grammarAccess.getRenamingAccess().getGroup_1_0_2(), "rule__Renaming__Group_1_0_2__0");
@@ -677,9 +676,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocalVariableAccess().getStatementsAssignment_5_0_0_0(), "rule__LocalVariable__StatementsAssignment_5_0_0_0");
 					put(grammarAccess.getLocalVariableAccess().getStatementsAssignment_5_0_1(), "rule__LocalVariable__StatementsAssignment_5_0_1");
 					put(grammarAccess.getLocalVariableAccess().getStatementsAssignment_5_1(), "rule__LocalVariable__StatementsAssignment_5_1");
-					put(grammarAccess.getModuleRenamingAccess().getModuleAssignment_0(), "rule__ModuleRenaming__ModuleAssignment_0");
-					put(grammarAccess.getModuleRenamingAccess().getNewNameAssignment_1_0(), "rule__ModuleRenaming__NewNameAssignment_1_0");
-					put(grammarAccess.getModuleRenamingAccess().getModuleAssignment_1_2(), "rule__ModuleRenaming__ModuleAssignment_1_2");
 					put(grammarAccess.getDoAccess().getAnnotationsAssignment_0(), "rule__Do__AnnotationsAssignment_0");
 					put(grammarAccess.getDoAccess().getStatementsAssignment_2_0_0_0(), "rule__Do__StatementsAssignment_2_0_0_0");
 					put(grammarAccess.getDoAccess().getStatementsAssignment_2_0_1(), "rule__Do__StatementsAssignment_2_0_1");
@@ -738,11 +734,11 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModuleAccess().getStatementsAssignment_5_0_0(), "rule__Module__StatementsAssignment_5_0_0");
 					put(grammarAccess.getModuleAccess().getStatementsAssignment_5_1(), "rule__Module__StatementsAssignment_5_1");
 					put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_0(), "rule__TypeIdentifier__TypeAssignment_0");
-					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_1(), "rule__TypeIdentifier__TypeIDAssignment_1");
-					put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_2_1_0(), "rule__TypeIdentifier__TypeAssignment_2_1_0");
-					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_2_1_1(), "rule__TypeIdentifier__TypeIDAssignment_2_1_1");
-					put(grammarAccess.getTypeIdentifierAccess().getOperatorAssignment_2_3(), "rule__TypeIdentifier__OperatorAssignment_2_3");
-					put(grammarAccess.getTypeIdentifierAccess().getEstTypeAssignment_3_1(), "rule__TypeIdentifier__EstTypeAssignment_3_1");
+					put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_1_1_0(), "rule__TypeIdentifier__TypeAssignment_1_1_0");
+					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_1_1_1(), "rule__TypeIdentifier__TypeIDAssignment_1_1_1");
+					put(grammarAccess.getTypeIdentifierAccess().getOperatorAssignment_1_3(), "rule__TypeIdentifier__OperatorAssignment_1_3");
+					put(grammarAccess.getTypeIdentifierAccess().getEstTypeAssignment_2(), "rule__TypeIdentifier__EstTypeAssignment_2");
+					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_3(), "rule__TypeIdentifier__TypeIDAssignment_3");
 					put(grammarAccess.getTypeDeclAccess().getAnnotationsAssignment_0(), "rule__TypeDecl__AnnotationsAssignment_0");
 					put(grammarAccess.getTypeDeclAccess().getTypesAssignment_2(), "rule__TypeDecl__TypesAssignment_2");
 					put(grammarAccess.getTypeDeclAccess().getTypesAssignment_3_1(), "rule__TypeDecl__TypesAssignment_3_1");
@@ -878,6 +874,9 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRunAccess().getModuleAssignment_1_1_1(), "rule__Run__ModuleAssignment_1_1_1");
 					put(grammarAccess.getRunAccess().getListAssignment_1_1_2_1(), "rule__Run__ListAssignment_1_1_2_1");
 					put(grammarAccess.getRunAccess().getListAssignment_1_1_2_2_1(), "rule__Run__ListAssignment_1_1_2_2_1");
+					put(grammarAccess.getModuleRenamingAccess().getModuleAssignment_0(), "rule__ModuleRenaming__ModuleAssignment_0");
+					put(grammarAccess.getModuleRenamingAccess().getNewNameAssignment_1_0(), "rule__ModuleRenaming__NewNameAssignment_1_0");
+					put(grammarAccess.getModuleRenamingAccess().getModuleAssignment_1_2(), "rule__ModuleRenaming__ModuleAssignment_1_2");
 					put(grammarAccess.getRenamingAccess().getAnnotationsAssignment_0(), "rule__Renaming__AnnotationsAssignment_0");
 					put(grammarAccess.getRenamingAccess().getRenamingsAssignment_1_0_1(), "rule__Renaming__RenamingsAssignment_1_0_1");
 					put(grammarAccess.getRenamingAccess().getRenamingsAssignment_1_0_2_1(), "rule__Renaming__RenamingsAssignment_1_0_2_1");
@@ -969,6 +968,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getAnnotationsAssignment_0(), "rule__Assignment__AnnotationsAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_1(), "rule__Assignment__ValuedObjectAssignment_1");
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_2_1(), "rule__Assignment__IndicesAssignment_2_1");
+					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_3(), "rule__Assignment__OperatorAssignment_3");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_4(), "rule__Assignment__ExpressionAssignment_4");
 					put(grammarAccess.getKextAccess().getDeclarationsAssignment_0(), "rule__Kext__DeclarationsAssignment_0");
 					put(grammarAccess.getKextAccess().getEntitiesAssignment_1(), "rule__Kext__EntitiesAssignment_1");

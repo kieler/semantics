@@ -93,11 +93,6 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
         return createSCEstModuleAdapter();
       }
       @Override
-      public Adapter caseModuleRenaming(ModuleRenaming object)
-      {
-        return createModuleRenamingAdapter();
-      }
-      @Override
       public Adapter caseUnEmit(UnEmit object)
       {
         return createUnEmitAdapter();
@@ -126,11 +121,6 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
       public Adapter caseModule(Module object)
       {
         return createModuleAdapter();
-      }
-      @Override
-      public Adapter caseEsterel_ModuleRenaming(de.cau.cs.kieler.esterel.esterel.ModuleRenaming object)
-      {
-        return createEsterel_ModuleRenamingAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -185,21 +175,6 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSCEstModuleAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.scest.scest.ModuleRenaming <em>Module Renaming</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.scest.scest.ModuleRenaming
-   * @generated
-   */
-  public Adapter createModuleRenamingAdapter()
   {
     return null;
   }
@@ -290,21 +265,6 @@ public class ScestAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModuleAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ModuleRenaming <em>Module Renaming</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.ModuleRenaming
-   * @generated
-   */
-  public Adapter createEsterel_ModuleRenamingAdapter()
   {
     return null;
   }

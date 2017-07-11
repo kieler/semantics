@@ -175,7 +175,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage {
         isInited = true;
 
         // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
         KEffectsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSclPackage.createPackageContents();

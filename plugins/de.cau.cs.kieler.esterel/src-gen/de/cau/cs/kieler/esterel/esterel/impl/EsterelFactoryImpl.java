@@ -126,7 +126,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
       case EsterelPackage.DO: return createDo();
       case EsterelPackage.DELAY_EXPR: return createDelayExpr();
-      case EsterelPackage.ESTEREL_TYPE: return createEsterelType();
       case EsterelPackage.INPUT: return createInput();
       case EsterelPackage.OUTPUT: return createOutput();
       case EsterelPackage.INPUT_OUTPUT: return createInputOutput();
@@ -823,17 +822,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     DelayExprImpl delayExpr = new DelayExprImpl();
     return delayExpr;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EsterelType createEsterelType()
-  {
-    EsterelTypeImpl esterelType = new EsterelTypeImpl();
-    return esterelType;
   }
 
   /**

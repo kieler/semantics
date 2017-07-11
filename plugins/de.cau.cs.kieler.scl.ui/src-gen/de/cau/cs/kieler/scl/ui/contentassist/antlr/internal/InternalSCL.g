@@ -1888,6 +1888,26 @@ finally {
 
 
 
+// Rule SCLAssignOperator
+ruleSCLAssignOperator
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getSCLAssignOperatorAccess().getASSIGNEnumLiteralDeclaration()); }
+(	'=' 
+)
+{ after(grammarAccess.getSCLAssignOperatorAccess().getASSIGNEnumLiteralDeclaration()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 
 
 // Rule PostfixOperator
@@ -3826,11 +3846,9 @@ rule__Assignment__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_3()); }
-
-	'=' 
-
-{ after(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_3()); }
+{ before(grammarAccess.getAssignmentAccess().getOperatorAssignment_3()); }
+(rule__Assignment__OperatorAssignment_3)
+{ after(grammarAccess.getAssignmentAccess().getOperatorAssignment_3()); }
 )
 
 ;
@@ -12218,6 +12236,21 @@ rule__Assignment__IndicesAssignment_2_1
 (
 { before(grammarAccess.getAssignmentAccess().getIndicesExpressionParserRuleCall_2_1_0()); }
 	ruleExpression{ after(grammarAccess.getAssignmentAccess().getIndicesExpressionParserRuleCall_2_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Assignment__OperatorAssignment_3
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getAssignmentAccess().getOperatorSCLAssignOperatorEnumRuleCall_3_0()); }
+	ruleSCLAssignOperator{ after(grammarAccess.getAssignmentAccess().getOperatorSCLAssignOperatorEnumRuleCall_3_0()); }
 )
 
 ;

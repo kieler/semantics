@@ -215,43 +215,6 @@ public interface ScestPackage extends EPackage
   int SC_EST_MODULE_FEATURE_COUNT = EsterelPackage.MODULE_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.ModuleRenamingImpl <em>Module Renaming</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.esterel.scest.scest.impl.ModuleRenamingImpl
-   * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getModuleRenaming()
-   * @generated
-   */
-  int MODULE_RENAMING = 2;
-
-  /**
-   * The feature id for the '<em><b>Module</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODULE_RENAMING__MODULE = EsterelPackage.MODULE_RENAMING__MODULE;
-
-  /**
-   * The feature id for the '<em><b>New Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODULE_RENAMING__NEW_NAME = EsterelPackage.MODULE_RENAMING__NEW_NAME;
-
-  /**
-   * The number of structural features of the '<em>Module Renaming</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODULE_RENAMING_FEATURE_COUNT = EsterelPackage.MODULE_RENAMING_FEATURE_COUNT + 0;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.UnEmitImpl <em>Un Emit</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -259,7 +222,7 @@ public interface ScestPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getUnEmit()
    * @generated
    */
-  int UN_EMIT = 3;
+  int UN_EMIT = 2;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -296,7 +259,7 @@ public interface ScestPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getSet()
    * @generated
    */
-  int SET = 4;
+  int SET = 3;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -365,16 +328,6 @@ public interface ScestPackage extends EPackage
    * @generated
    */
   EReference getSCEstModule_Declarations();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.scest.scest.ModuleRenaming <em>Module Renaming</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Module Renaming</em>'.
-   * @see de.cau.cs.kieler.esterel.scest.scest.ModuleRenaming
-   * @generated
-   */
-  EClass getModuleRenaming();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.scest.scest.UnEmit <em>Un Emit</em>}'.
@@ -479,16 +432,6 @@ public interface ScestPackage extends EPackage
      * @generated
      */
     EReference SC_EST_MODULE__DECLARATIONS = eINSTANCE.getSCEstModule_Declarations();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.ModuleRenamingImpl <em>Module Renaming</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.esterel.scest.scest.impl.ModuleRenamingImpl
-     * @see de.cau.cs.kieler.esterel.scest.scest.impl.ScestPackageImpl#getModuleRenaming()
-     * @generated
-     */
-    EClass MODULE_RENAMING = eINSTANCE.getModuleRenaming();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.scest.scest.impl.UnEmitImpl <em>Un Emit</em>}' class.

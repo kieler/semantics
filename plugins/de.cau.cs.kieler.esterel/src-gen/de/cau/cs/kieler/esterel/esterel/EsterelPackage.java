@@ -244,13 +244,22 @@ public interface EsterelPackage extends EPackage
   int TYPE_IDENTIFIER__OPERATOR = 2;
 
   /**
+   * The feature id for the '<em><b>Est Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_IDENTIFIER__EST_TYPE = 3;
+
+  /**
    * The number of structural features of the '<em>Type Identifier</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE_IDENTIFIER_FEATURE_COUNT = 3;
+  int TYPE_IDENTIFIER_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TypeDeclImpl <em>Type Decl</em>}' class.
@@ -3039,61 +3048,6 @@ public interface EsterelPackage extends EPackage
   int DELAY_EXPR_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelTypeImpl <em>Type</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelTypeImpl
-   * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getEsterelType()
-   * @generated
-   */
-  int ESTEREL_TYPE = 62;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ESTEREL_TYPE__TYPE = TYPE_IDENTIFIER__TYPE;
-
-  /**
-   * The feature id for the '<em><b>Type ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ESTEREL_TYPE__TYPE_ID = TYPE_IDENTIFIER__TYPE_ID;
-
-  /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ESTEREL_TYPE__OPERATOR = TYPE_IDENTIFIER__OPERATOR;
-
-  /**
-   * The feature id for the '<em><b>Est Type</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ESTEREL_TYPE__EST_TYPE = TYPE_IDENTIFIER_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Type</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ESTEREL_TYPE_FEATURE_COUNT = TYPE_IDENTIFIER_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.InputImpl <em>Input</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3101,7 +3055,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getInput()
    * @generated
    */
-  int INPUT = 63;
+  int INPUT = 62;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3138,7 +3092,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getOutput()
    * @generated
    */
-  int OUTPUT = 64;
+  int OUTPUT = 63;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3175,7 +3129,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getInputOutput()
    * @generated
    */
-  int INPUT_OUTPUT = 65;
+  int INPUT_OUTPUT = 64;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3212,7 +3166,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getReturn()
    * @generated
    */
-  int RETURN = 66;
+  int RETURN = 65;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3249,7 +3203,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getRelation()
    * @generated
    */
-  int RELATION = 67;
+  int RELATION = 66;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3286,7 +3240,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getTrapSignal()
    * @generated
    */
-  int TRAP_SIGNAL = 68;
+  int TRAP_SIGNAL = 67;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3386,7 +3340,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getTrapExpression()
    * @generated
    */
-  int TRAP_EXPRESSION = 69;
+  int TRAP_EXPRESSION = 68;
 
   /**
    * The feature id for the '<em><b>Trap</b></em>' reference.
@@ -3414,7 +3368,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getFunctionExpression()
    * @generated
    */
-  int FUNCTION_EXPRESSION = 70;
+  int FUNCTION_EXPRESSION = 69;
 
   /**
    * The feature id for the '<em><b>Function</b></em>' reference.
@@ -3451,7 +3405,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getConstantExpression()
    * @generated
    */
-  int CONSTANT_EXPRESSION = 71;
+  int CONSTANT_EXPRESSION = 70;
 
   /**
    * The feature id for the '<em><b>Constant</b></em>' reference.
@@ -3488,7 +3442,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getTrapReferenceExpr()
    * @generated
    */
-  int TRAP_REFERENCE_EXPR = 72;
+  int TRAP_REFERENCE_EXPR = 71;
 
   /**
    * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -3525,7 +3479,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignalReferenceExpr()
    * @generated
    */
-  int SIGNAL_REFERENCE_EXPR = 73;
+  int SIGNAL_REFERENCE_EXPR = 72;
 
   /**
    * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -3727,6 +3681,17 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EAttribute getTypeIdentifier_Operator();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier#getEstType <em>Est Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Est Type</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.TypeIdentifier#getEstType()
+   * @see #getTypeIdentifier()
+   * @generated
+   */
+  EReference getTypeIdentifier_EstType();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.TypeDecl <em>Type Decl</em>}'.
@@ -5672,27 +5637,6 @@ public interface EsterelPackage extends EPackage
   EReference getDelayExpr_SignalExpr();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.EsterelType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Type</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelType
-   * @generated
-   */
-  EClass getEsterelType();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.esterel.EsterelType#getEstType <em>Est Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Est Type</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelType#getEstType()
-   * @see #getEsterelType()
-   * @generated
-   */
-  EReference getEsterelType_EstType();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.Input <em>Input</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6035,6 +5979,14 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EAttribute TYPE_IDENTIFIER__OPERATOR = eINSTANCE.getTypeIdentifier_Operator();
+
+    /**
+     * The meta object literal for the '<em><b>Est Type</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TYPE_IDENTIFIER__EST_TYPE = eINSTANCE.getTypeIdentifier_EstType();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TypeDeclImpl <em>Type Decl</em>}' class.
@@ -7609,24 +7561,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference DELAY_EXPR__SIGNAL_EXPR = eINSTANCE.getDelayExpr_SignalExpr();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EsterelTypeImpl <em>Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelTypeImpl
-     * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getEsterelType()
-     * @generated
-     */
-    EClass ESTEREL_TYPE = eINSTANCE.getEsterelType();
-
-    /**
-     * The meta object literal for the '<em><b>Est Type</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ESTEREL_TYPE__EST_TYPE = eINSTANCE.getEsterelType_EstType();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.InputImpl <em>Input</em>}' class.

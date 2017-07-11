@@ -41,15 +41,6 @@ public interface ScestFactory extends EFactory
   SCEstModule createSCEstModule();
 
   /**
-   * Returns a new object of class '<em>Module Renaming</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Module Renaming</em>'.
-   * @generated
-   */
-  ModuleRenaming createModuleRenaming();
-
-  /**
    * Returns a new object of class '<em>Un Emit</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

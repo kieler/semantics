@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.Type;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
 
 import de.cau.cs.kieler.kexpressions.CombineOperator;
@@ -11,6 +12,7 @@ import de.cau.cs.kieler.kexpressions.ValueType;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeIdentifierImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeIdentifierImpl#getTypeID <em>Type ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeIdentifierImpl#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeIdentifierImpl#getEstType <em>Est Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -91,6 +94,16 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected CombineOperator operator = OPERATOR_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getEstType() <em>Est Type</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEstType()
+   * @generated
+   * @ordered
+   */
+  protected Type estType;
 
   /**
    * <!-- begin-user-doc -->
@@ -187,6 +200,49 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  public Type getEstType()
+  {
+    if (estType != null && estType.eIsProxy())
+    {
+      InternalEObject oldEstType = (InternalEObject)estType;
+      estType = (Type)eResolveProxy(oldEstType);
+      if (estType != oldEstType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TYPE_IDENTIFIER__EST_TYPE, oldEstType, estType));
+      }
+    }
+    return estType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Type basicGetEstType()
+  {
+    return estType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEstType(Type newEstType)
+  {
+    Type oldEstType = estType;
+    estType = newEstType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_IDENTIFIER__EST_TYPE, oldEstType, estType));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -198,6 +254,9 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
         return getTypeID();
       case EsterelPackage.TYPE_IDENTIFIER__OPERATOR:
         return getOperator();
+      case EsterelPackage.TYPE_IDENTIFIER__EST_TYPE:
+        if (resolve) return getEstType();
+        return basicGetEstType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -220,6 +279,9 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
         return;
       case EsterelPackage.TYPE_IDENTIFIER__OPERATOR:
         setOperator((CombineOperator)newValue);
+        return;
+      case EsterelPackage.TYPE_IDENTIFIER__EST_TYPE:
+        setEstType((Type)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -244,6 +306,9 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
       case EsterelPackage.TYPE_IDENTIFIER__OPERATOR:
         setOperator(OPERATOR_EDEFAULT);
         return;
+      case EsterelPackage.TYPE_IDENTIFIER__EST_TYPE:
+        setEstType((Type)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -264,6 +329,8 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
         return TYPE_ID_EDEFAULT == null ? typeID != null : !TYPE_ID_EDEFAULT.equals(typeID);
       case EsterelPackage.TYPE_IDENTIFIER__OPERATOR:
         return operator != OPERATOR_EDEFAULT;
+      case EsterelPackage.TYPE_IDENTIFIER__EST_TYPE:
+        return estType != null;
     }
     return super.eIsSet(featureID);
   }

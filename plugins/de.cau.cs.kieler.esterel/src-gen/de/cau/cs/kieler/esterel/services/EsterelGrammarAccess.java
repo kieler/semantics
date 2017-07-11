@@ -229,23 +229,21 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
 		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_1_0 = (RuleCall)cTypeIDAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Keyword cCombineKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Alternatives cAlternatives_2_1 = (Alternatives)cGroup_2.eContents().get(1);
-		private final Assignment cTypeAssignment_2_1_0 = (Assignment)cAlternatives_2_1.eContents().get(0);
-		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_2_1_0_0 = (RuleCall)cTypeAssignment_2_1_0.eContents().get(0);
-		private final Assignment cTypeIDAssignment_2_1_1 = (Assignment)cAlternatives_2_1.eContents().get(1);
-		private final RuleCall cTypeIDIDTerminalRuleCall_2_1_1_0 = (RuleCall)cTypeIDAssignment_2_1_1.eContents().get(0);
-		private final Keyword cWithKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final Assignment cOperatorAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
-		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_2_3_0 = (RuleCall)cOperatorAssignment_2_3.eContents().get(0);
-		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Action cEsterelTypeAction_3_0 = (Action)cGroup_3.eContents().get(0);
-		private final Assignment cEstTypeAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final CrossReference cEstTypeTypeCrossReference_3_1_0 = (CrossReference)cEstTypeAssignment_3_1.eContents().get(0);
-		private final RuleCall cEstTypeTypeIDTerminalRuleCall_3_1_0_1 = (RuleCall)cEstTypeTypeCrossReference_3_1_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cCombineKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Alternatives cAlternatives_1_1 = (Alternatives)cGroup_1.eContents().get(1);
+		private final Assignment cTypeAssignment_1_1_0 = (Assignment)cAlternatives_1_1.eContents().get(0);
+		private final RuleCall cTypeEsterel_ValueTypeEnumRuleCall_1_1_0_0 = (RuleCall)cTypeAssignment_1_1_0.eContents().get(0);
+		private final Assignment cTypeIDAssignment_1_1_1 = (Assignment)cAlternatives_1_1.eContents().get(1);
+		private final RuleCall cTypeIDIDTerminalRuleCall_1_1_1_0 = (RuleCall)cTypeIDAssignment_1_1_1.eContents().get(0);
+		private final Keyword cWithKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cOperatorAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cOperatorEsterel_CombineOperatorEnumRuleCall_1_3_0 = (RuleCall)cOperatorAssignment_1_3.eContents().get(0);
+		private final Assignment cEstTypeAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final CrossReference cEstTypeTypeCrossReference_2_0 = (CrossReference)cEstTypeAssignment_2.eContents().get(0);
+		private final RuleCall cEstTypeTypeIDTerminalRuleCall_2_0_1 = (RuleCall)cEstTypeTypeCrossReference_2_0.eContents().get(1);
+		private final Assignment cTypeIDAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
+		private final RuleCall cTypeIDIDTerminalRuleCall_3_0 = (RuleCall)cTypeIDAssignment_3.eContents().get(0);
 		
 		/// * ###################################################
 		// * ###        7.3 Interface Declaration            ###
@@ -255,13 +253,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//// overwrite to allow type definitions in a specific module
 		//TypeIdentifier:
 		//	type=Esterel_ValueType
-		//	| typeID=ID
-		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator | {EsterelType}
-		//	estType=[Type];
+		//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator | estType=[Type] | typeID=ID;
 		@Override public ParserRule getRule() { return rule; }
 
-		//type=Esterel_ValueType | typeID=ID | "combine" (type=Esterel_ValueType | typeID=ID) "with"
-		//operator=Esterel_CombineOperator | {EsterelType} estType=[Type]
+		//type=Esterel_ValueType | "combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator |
+		//estType=[Type] | typeID=ID
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//type=Esterel_ValueType
@@ -270,56 +266,50 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Esterel_ValueType
 		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_0_0; }
 
-		//typeID=ID
-		public Assignment getTypeIDAssignment_1() { return cTypeIDAssignment_1; }
-
-		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_1_0() { return cTypeIDIDTerminalRuleCall_1_0; }
-
 		//"combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_1() { return cGroup_1; }
 
 		//"combine"
-		public Keyword getCombineKeyword_2_0() { return cCombineKeyword_2_0; }
+		public Keyword getCombineKeyword_1_0() { return cCombineKeyword_1_0; }
 
 		//(type=Esterel_ValueType | typeID=ID)
-		public Alternatives getAlternatives_2_1() { return cAlternatives_2_1; }
+		public Alternatives getAlternatives_1_1() { return cAlternatives_1_1; }
 
 		//type=Esterel_ValueType
-		public Assignment getTypeAssignment_2_1_0() { return cTypeAssignment_2_1_0; }
+		public Assignment getTypeAssignment_1_1_0() { return cTypeAssignment_1_1_0; }
 
 		//Esterel_ValueType
-		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_2_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_2_1_0_0; }
+		public RuleCall getTypeEsterel_ValueTypeEnumRuleCall_1_1_0_0() { return cTypeEsterel_ValueTypeEnumRuleCall_1_1_0_0; }
 
 		//typeID=ID
-		public Assignment getTypeIDAssignment_2_1_1() { return cTypeIDAssignment_2_1_1; }
+		public Assignment getTypeIDAssignment_1_1_1() { return cTypeIDAssignment_1_1_1; }
 
 		//ID
-		public RuleCall getTypeIDIDTerminalRuleCall_2_1_1_0() { return cTypeIDIDTerminalRuleCall_2_1_1_0; }
+		public RuleCall getTypeIDIDTerminalRuleCall_1_1_1_0() { return cTypeIDIDTerminalRuleCall_1_1_1_0; }
 
 		//"with"
-		public Keyword getWithKeyword_2_2() { return cWithKeyword_2_2; }
+		public Keyword getWithKeyword_1_2() { return cWithKeyword_1_2; }
 
 		//operator=Esterel_CombineOperator
-		public Assignment getOperatorAssignment_2_3() { return cOperatorAssignment_2_3; }
+		public Assignment getOperatorAssignment_1_3() { return cOperatorAssignment_1_3; }
 
 		//Esterel_CombineOperator
-		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_2_3_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_2_3_0; }
-
-		//{EsterelType} estType=[Type]
-		public Group getGroup_3() { return cGroup_3; }
-
-		//{EsterelType}
-		public Action getEsterelTypeAction_3_0() { return cEsterelTypeAction_3_0; }
+		public RuleCall getOperatorEsterel_CombineOperatorEnumRuleCall_1_3_0() { return cOperatorEsterel_CombineOperatorEnumRuleCall_1_3_0; }
 
 		//estType=[Type]
-		public Assignment getEstTypeAssignment_3_1() { return cEstTypeAssignment_3_1; }
+		public Assignment getEstTypeAssignment_2() { return cEstTypeAssignment_2; }
 
 		//[Type]
-		public CrossReference getEstTypeTypeCrossReference_3_1_0() { return cEstTypeTypeCrossReference_3_1_0; }
+		public CrossReference getEstTypeTypeCrossReference_2_0() { return cEstTypeTypeCrossReference_2_0; }
 
 		//ID
-		public RuleCall getEstTypeTypeIDTerminalRuleCall_3_1_0_1() { return cEstTypeTypeIDTerminalRuleCall_3_1_0_1; }
+		public RuleCall getEstTypeTypeIDTerminalRuleCall_2_0_1() { return cEstTypeTypeIDTerminalRuleCall_2_0_1; }
+
+		//typeID=ID
+		public Assignment getTypeIDAssignment_3() { return cTypeIDAssignment_3; }
+
+		//ID
+		public RuleCall getTypeIDIDTerminalRuleCall_3_0() { return cTypeIDIDTerminalRuleCall_3_0; }
 	}
 
 	public class TypeDeclElements extends AbstractParserRuleElementFinder {
@@ -336,7 +326,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypesTypeParserRuleCall_3_1_0 = (RuleCall)cTypesAssignment_3_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//// doesn't work, should be before typeID=ID
 		//// ==> 7.3.1 Type Declarations
 		//// -------------------------------------
 		//TypeDecl:
@@ -8106,9 +8095,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// overwrite to allow type definitions in a specific module
 	//TypeIdentifier:
 	//	type=Esterel_ValueType
-	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator | {EsterelType}
-	//	estType=[Type];
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator | estType=[Type] | typeID=ID;
 	public TypeIdentifierElements getTypeIdentifierAccess() {
 		return pTypeIdentifier;
 	}
@@ -8117,7 +8104,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeIdentifierAccess().getRule();
 	}
 
-	//// doesn't work, should be before typeID=ID
 	//// ==> 7.3.1 Type Declarations
 	//// -------------------------------------
 	//TypeDecl:
@@ -9633,13 +9619,25 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Assignment:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')* "=" expression=super::Expression;
+	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')*
+	//	operator=SCLAssignOperator
+	//	expression=super::Expression;
 	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaSCL.getAssignmentAccess();
 	}
 	
 	public ParserRule getAssignmentRule() {
 		return getAssignmentAccess().getRule();
+	}
+
+	//enum SCLAssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=";
+	public SCLGrammarAccess.SCLAssignOperatorElements getSCLAssignOperatorAccess() {
+		return gaSCL.getSCLAssignOperatorAccess();
+	}
+	
+	public EnumRule getSCLAssignOperatorRule() {
+		return getSCLAssignOperatorAccess().getRule();
 	}
 
 	//Conditional:

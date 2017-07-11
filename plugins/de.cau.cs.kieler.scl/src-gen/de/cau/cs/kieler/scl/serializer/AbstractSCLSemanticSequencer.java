@@ -252,7 +252,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     Effect returns Assignment
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* expression=Expression)
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=SCLAssignOperator expression=Expression)
 	 */
 	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

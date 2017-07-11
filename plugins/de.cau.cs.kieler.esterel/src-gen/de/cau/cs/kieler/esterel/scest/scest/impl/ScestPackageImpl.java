@@ -4,7 +4,6 @@ package de.cau.cs.kieler.esterel.scest.scest.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
-import de.cau.cs.kieler.esterel.scest.scest.ModuleRenaming;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstModule;
 import de.cau.cs.kieler.esterel.scest.scest.SCEstProgram;
 import de.cau.cs.kieler.esterel.scest.scest.ScestFactory;
@@ -43,13 +42,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * @generated
    */
   private EClass scEstModuleEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass moduleRenamingEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -166,16 +158,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getModuleRenaming()
-  {
-    return moduleRenamingEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getUnEmit()
   {
     return unEmitEClass;
@@ -256,8 +238,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     scEstModuleEClass = createEClass(SC_EST_MODULE);
     createEReference(scEstModuleEClass, SC_EST_MODULE__DECLARATIONS);
 
-    moduleRenamingEClass = createEClass(MODULE_RENAMING);
-
     unEmitEClass = createEClass(UN_EMIT);
     createEReference(unEmitEClass, UN_EMIT__SIGNAL);
 
@@ -302,7 +282,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
     // Add supertypes to classes
     scEstProgramEClass.getESuperTypes().add(theEsterelPackage.getProgram());
     scEstModuleEClass.getESuperTypes().add(theEsterelPackage.getModule());
-    moduleRenamingEClass.getESuperTypes().add(theEsterelPackage.getModuleRenaming());
     unEmitEClass.getESuperTypes().add(theSclPackage.getStatement());
     setEClass.getESuperTypes().add(theSclPackage.getStatement());
 
@@ -311,8 +290,6 @@ public class ScestPackageImpl extends EPackageImpl implements ScestPackage
 
     initEClass(scEstModuleEClass, SCEstModule.class, "SCEstModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSCEstModule_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, SCEstModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(moduleRenamingEClass, ModuleRenaming.class, "ModuleRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(unEmitEClass, UnEmit.class, "UnEmit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getUnEmit_Signal(), theEsterelPackage.getISignal(), null, "signal", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

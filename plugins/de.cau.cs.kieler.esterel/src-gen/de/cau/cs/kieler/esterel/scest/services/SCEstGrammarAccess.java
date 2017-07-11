@@ -2952,58 +2952,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getVarKeyword_7() { return cVarKeyword_7; }
 	}
 
-	public class ModuleRenamingElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.ModuleRenaming");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cModuleAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final CrossReference cModuleSCEstModuleCrossReference_0_0 = (CrossReference)cModuleAssignment_0.eContents().get(0);
-		private final RuleCall cModuleSCEstModuleIDTerminalRuleCall_0_0_1 = (RuleCall)cModuleSCEstModuleCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Assignment cNewNameAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cNewNameIDTerminalRuleCall_1_0_0 = (RuleCall)cNewNameAssignment_1_0.eContents().get(0);
-		private final Keyword cSolidusKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cModuleAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final CrossReference cModuleSCEstModuleCrossReference_1_2_0 = (CrossReference)cModuleAssignment_1_2.eContents().get(0);
-		private final RuleCall cModuleSCEstModuleIDTerminalRuleCall_1_2_0_1 = (RuleCall)cModuleSCEstModuleCrossReference_1_2_0.eContents().get(1);
-		
-		//ModuleRenaming:
-		//	module=[SCEstModule] | newName=ID "/" module=[SCEstModule];
-		@Override public ParserRule getRule() { return rule; }
-
-		//module=[SCEstModule] | newName=ID "/" module=[SCEstModule]
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//module=[SCEstModule]
-		public Assignment getModuleAssignment_0() { return cModuleAssignment_0; }
-
-		//[SCEstModule]
-		public CrossReference getModuleSCEstModuleCrossReference_0_0() { return cModuleSCEstModuleCrossReference_0_0; }
-
-		//ID
-		public RuleCall getModuleSCEstModuleIDTerminalRuleCall_0_0_1() { return cModuleSCEstModuleIDTerminalRuleCall_0_0_1; }
-
-		//newName=ID "/" module=[SCEstModule]
-		public Group getGroup_1() { return cGroup_1; }
-
-		//newName=ID
-		public Assignment getNewNameAssignment_1_0() { return cNewNameAssignment_1_0; }
-
-		//ID
-		public RuleCall getNewNameIDTerminalRuleCall_1_0_0() { return cNewNameIDTerminalRuleCall_1_0_0; }
-
-		//"/"
-		public Keyword getSolidusKeyword_1_1() { return cSolidusKeyword_1_1; }
-
-		//module=[SCEstModule]
-		public Assignment getModuleAssignment_1_2() { return cModuleAssignment_1_2; }
-
-		//[SCEstModule]
-		public CrossReference getModuleSCEstModuleCrossReference_1_2_0() { return cModuleSCEstModuleCrossReference_1_2_0; }
-
-		//ID
-		public RuleCall getModuleSCEstModuleIDTerminalRuleCall_1_2_0_1() { return cModuleSCEstModuleIDTerminalRuleCall_1_2_0_1; }
-	}
-
 	public class DoElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.scest.SCEst.Do");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -3944,7 +3892,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	private final ExecCaseElements pExecCase;
 	private final LocalSignalDeclElements pLocalSignalDecl;
 	private final LocalVariableElements pLocalVariable;
-	private final ModuleRenamingElements pModuleRenaming;
 	private final DoElements pDo;
 	private final UnEmitElements pUnEmit;
 	private final SetElements pSet;
@@ -4019,7 +3966,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		this.pExecCase = new ExecCaseElements();
 		this.pLocalSignalDecl = new LocalSignalDeclElements();
 		this.pLocalVariable = new LocalVariableElements();
-		this.pModuleRenaming = new ModuleRenamingElements();
 		this.pDo = new DoElements();
 		this.pUnEmit = new UnEmitElements();
 		this.pSet = new SetElements();
@@ -4493,16 +4439,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getLocalVariableAccess().getRule();
 	}
 
-	//ModuleRenaming:
-	//	module=[SCEstModule] | newName=ID "/" module=[SCEstModule];
-	public ModuleRenamingElements getModuleRenamingAccess() {
-		return pModuleRenaming;
-	}
-	
-	public ParserRule getModuleRenamingRule() {
-		return getModuleRenamingAccess().getRule();
-	}
-
 	/// * ###################################################
 	// * ###               7.6 Old Syntax                ###
 	// * ###################################################
@@ -4684,7 +4620,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
 
-	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.esterel.scest.SCEst'.rules[38]->TerminalRule'SL_COMMENT'
+	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.esterel.scest.SCEst'.rules[37]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.esterel.Esterel'.rules[0]->ParserRule'Program'
 	//URI: file:/home/mrb/kieler-semantics-master/git/semantics/plugins/de.cau.cs.kieler.esterel/bin/de/cau/cs/kieler/esterel/Esterel.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
@@ -4741,9 +4677,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// overwrite to allow type definitions in a specific module
 	//TypeIdentifier:
 	//	type=Esterel_ValueType
-	//	| typeID=ID
-	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator | {EsterelType}
-	//	estType=[Type];
+	//	| "combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator | estType=[Type] | typeID=ID;
 	public EsterelGrammarAccess.TypeIdentifierElements getTypeIdentifierAccess() {
 		return gaEsterel.getTypeIdentifierAccess();
 	}
@@ -4752,7 +4686,6 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypeIdentifierAccess().getRule();
 	}
 
-	//// doesn't work, should be before typeID=ID
 	//// ==> 7.3.1 Type Declarations
 	//// -------------------------------------
 	//TypeDecl:
@@ -5180,15 +5113,26 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// -------------------------------------
 	//Run:
 	//	annotations+=Annotation* ("run"
-	//	module=super::ModuleRenaming ("[" list+=Renaming (";" list+=Renaming)* "]")?
+	//	module=ModuleRenaming ("[" list+=Renaming (";" list+=Renaming)* "]")?
 	//	| "copymodule"
-	//	module=super::ModuleRenaming ("[" list+=Renaming (";" list+=Renaming)* "]")?);
+	//	module=ModuleRenaming ("[" list+=Renaming (";" list+=Renaming)* "]")?);
 	public EsterelGrammarAccess.RunElements getRunAccess() {
 		return gaEsterel.getRunAccess();
 	}
 	
 	public ParserRule getRunRule() {
 		return getRunAccess().getRule();
+	}
+
+	////deprecated
+	//ModuleRenaming:
+	//	module=[Module] | newName=ID "/" module=[Module];
+	public EsterelGrammarAccess.ModuleRenamingElements getModuleRenamingAccess() {
+		return gaEsterel.getModuleRenamingAccess();
+	}
+	
+	public ParserRule getModuleRenamingRule() {
+		return getModuleRenamingAccess().getRule();
 	}
 
 	//Renaming:
@@ -5868,13 +5812,25 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Assignment:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')* "=" expression=super::Expression;
+	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')*
+	//	operator=SCLAssignOperator
+	//	expression=super::Expression;
 	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaSCL.getAssignmentAccess();
 	}
 	
 	public ParserRule getAssignmentRule() {
 		return getAssignmentAccess().getRule();
+	}
+
+	//enum SCLAssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=";
+	public SCLGrammarAccess.SCLAssignOperatorElements getSCLAssignOperatorAccess() {
+		return gaSCL.getSCLAssignOperatorAccess();
+	}
+	
+	public EnumRule getSCLAssignOperatorRule() {
+		return getSCLAssignOperatorAccess().getRule();
 	}
 
 	/// **

@@ -21,7 +21,6 @@ import de.cau.cs.kieler.esterel.esterel.EsterelFactory;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel;
 import de.cau.cs.kieler.esterel.esterel.EsterelThread;
-import de.cau.cs.kieler.esterel.esterel.EsterelType;
 import de.cau.cs.kieler.esterel.esterel.EveryDo;
 import de.cau.cs.kieler.esterel.esterel.Exec;
 import de.cau.cs.kieler.esterel.esterel.ExecCase;
@@ -539,13 +538,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass esterelTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass inputEClass = null;
 
   /**
@@ -842,6 +834,16 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EAttribute getTypeIdentifier_Operator()
   {
     return (EAttribute)typeIdentifierEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeIdentifier_EstType()
+  {
+    return (EReference)typeIdentifierEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -2669,26 +2671,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getEsterelType()
-  {
-    return esterelTypeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEsterelType_EstType()
-  {
-    return (EReference)esterelTypeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getInput()
   {
     return inputEClass;
@@ -2912,6 +2894,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEAttribute(typeIdentifierEClass, TYPE_IDENTIFIER__TYPE);
     createEAttribute(typeIdentifierEClass, TYPE_IDENTIFIER__TYPE_ID);
     createEAttribute(typeIdentifierEClass, TYPE_IDENTIFIER__OPERATOR);
+    createEReference(typeIdentifierEClass, TYPE_IDENTIFIER__EST_TYPE);
 
     typeDeclEClass = createEClass(TYPE_DECL);
     createEReference(typeDeclEClass, TYPE_DECL__ANNOTATIONS);
@@ -3154,9 +3137,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEAttribute(delayExprEClass, DELAY_EXPR__IS_IMMEDIATE);
     createEReference(delayExprEClass, DELAY_EXPR__SIGNAL_EXPR);
 
-    esterelTypeEClass = createEClass(ESTEREL_TYPE);
-    createEReference(esterelTypeEClass, ESTEREL_TYPE__EST_TYPE);
-
     inputEClass = createEClass(INPUT);
 
     outputEClass = createEClass(OUTPUT);
@@ -3267,7 +3247,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     runEClass.getESuperTypes().add(theSclPackage.getStatement());
     doEClass.getESuperTypes().add(theSclPackage.getStatementContainer());
     doEClass.getESuperTypes().add(theSclPackage.getStatement());
-    esterelTypeEClass.getESuperTypes().add(this.getTypeIdentifier());
     inputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
     outputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
     inputOutputEClass.getESuperTypes().add(this.getInterfaceSignalDecl());
@@ -3299,6 +3278,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEAttribute(getTypeIdentifier_Type(), theKExpressionsPackage.getValueType(), "type", null, 0, 1, TypeIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTypeIdentifier_TypeID(), ecorePackage.getEString(), "typeID", null, 0, 1, TypeIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTypeIdentifier_Operator(), theKExpressionsPackage.getCombineOperator(), "operator", null, 0, 1, TypeIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeIdentifier_EstType(), this.getType(), null, "estType", null, 0, 1, TypeIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeDeclEClass, TypeDecl.class, "TypeDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTypeDecl_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, TypeDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3540,9 +3520,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getDelayExpr_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDelayExpr_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDelayExpr_SignalExpr(), theKExpressionsPackage.getExpression(), null, "signalExpr", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(esterelTypeEClass, EsterelType.class, "EsterelType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEsterelType_EstType(), this.getType(), null, "estType", null, 0, 1, EsterelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputEClass, Input.class, "Input", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -40,7 +40,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModuleAccess().getAlternatives_4(), "rule__Module__Alternatives_4");
 					put(grammarAccess.getModuleAccess().getAlternatives_6(), "rule__Module__Alternatives_6");
 					put(grammarAccess.getTypeIdentifierAccess().getAlternatives(), "rule__TypeIdentifier__Alternatives");
-					put(grammarAccess.getTypeIdentifierAccess().getAlternatives_2_1(), "rule__TypeIdentifier__Alternatives_2_1");
+					put(grammarAccess.getTypeIdentifierAccess().getAlternatives_1_1(), "rule__TypeIdentifier__Alternatives_1_1");
 					put(grammarAccess.getConstantValueAccess().getAlternatives(), "rule__ConstantValue__Alternatives");
 					put(grammarAccess.getInterfaceSignalDeclAccess().getAlternatives(), "rule__InterfaceSignalDecl__Alternatives");
 					put(grammarAccess.getISignalAccess().getAlternatives_2(), "rule__ISignal__Alternatives_2");
@@ -135,8 +135,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModuleAccess().getGroup_5(), "rule__Module__Group_5__0");
 					put(grammarAccess.getModuleAccess().getGroup_5_0(), "rule__Module__Group_5_0__0");
 					put(grammarAccess.getModuleAccess().getGroup_6_0(), "rule__Module__Group_6_0__0");
-					put(grammarAccess.getTypeIdentifierAccess().getGroup_2(), "rule__TypeIdentifier__Group_2__0");
-					put(grammarAccess.getTypeIdentifierAccess().getGroup_3(), "rule__TypeIdentifier__Group_3__0");
+					put(grammarAccess.getTypeIdentifierAccess().getGroup_1(), "rule__TypeIdentifier__Group_1__0");
 					put(grammarAccess.getTypeDeclAccess().getGroup(), "rule__TypeDecl__Group__0");
 					put(grammarAccess.getTypeDeclAccess().getGroup_3(), "rule__TypeDecl__Group_3__0");
 					put(grammarAccess.getConstantDeclsAccess().getGroup(), "rule__ConstantDecls__Group__0");
@@ -495,11 +494,11 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModuleAccess().getStatementsAssignment_5_0_0(), "rule__Module__StatementsAssignment_5_0_0");
 					put(grammarAccess.getModuleAccess().getStatementsAssignment_5_1(), "rule__Module__StatementsAssignment_5_1");
 					put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_0(), "rule__TypeIdentifier__TypeAssignment_0");
-					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_1(), "rule__TypeIdentifier__TypeIDAssignment_1");
-					put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_2_1_0(), "rule__TypeIdentifier__TypeAssignment_2_1_0");
-					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_2_1_1(), "rule__TypeIdentifier__TypeIDAssignment_2_1_1");
-					put(grammarAccess.getTypeIdentifierAccess().getOperatorAssignment_2_3(), "rule__TypeIdentifier__OperatorAssignment_2_3");
-					put(grammarAccess.getTypeIdentifierAccess().getEstTypeAssignment_3_1(), "rule__TypeIdentifier__EstTypeAssignment_3_1");
+					put(grammarAccess.getTypeIdentifierAccess().getTypeAssignment_1_1_0(), "rule__TypeIdentifier__TypeAssignment_1_1_0");
+					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_1_1_1(), "rule__TypeIdentifier__TypeIDAssignment_1_1_1");
+					put(grammarAccess.getTypeIdentifierAccess().getOperatorAssignment_1_3(), "rule__TypeIdentifier__OperatorAssignment_1_3");
+					put(grammarAccess.getTypeIdentifierAccess().getEstTypeAssignment_2(), "rule__TypeIdentifier__EstTypeAssignment_2");
+					put(grammarAccess.getTypeIdentifierAccess().getTypeIDAssignment_3(), "rule__TypeIdentifier__TypeIDAssignment_3");
 					put(grammarAccess.getTypeDeclAccess().getAnnotationsAssignment_0(), "rule__TypeDecl__AnnotationsAssignment_0");
 					put(grammarAccess.getTypeDeclAccess().getTypesAssignment_2(), "rule__TypeDecl__TypesAssignment_2");
 					put(grammarAccess.getTypeDeclAccess().getTypesAssignment_3_1(), "rule__TypeDecl__TypesAssignment_3_1");
@@ -848,6 +847,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getAnnotationsAssignment_0(), "rule__Assignment__AnnotationsAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_1(), "rule__Assignment__ValuedObjectAssignment_1");
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_2_1(), "rule__Assignment__IndicesAssignment_2_1");
+					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_3(), "rule__Assignment__OperatorAssignment_3");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_4(), "rule__Assignment__ExpressionAssignment_4");
 					put(grammarAccess.getConditionalAccess().getAnnotationsAssignment_0(), "rule__Conditional__AnnotationsAssignment_0");
 					put(grammarAccess.getConditionalAccess().getExpressionAssignment_2(), "rule__Conditional__ExpressionAssignment_2");

@@ -581,15 +581,6 @@ public interface EsterelFactory extends EFactory
   DelayExpr createDelayExpr();
 
   /**
-   * Returns a new object of class '<em>Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type</em>'.
-   * @generated
-   */
-  EsterelType createEsterelType();
-
-  /**
    * Returns a new object of class '<em>Input</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

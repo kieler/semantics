@@ -98,14 +98,6 @@ public class ScestSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case ScestPackage.MODULE_RENAMING:
-      {
-        ModuleRenaming moduleRenaming = (ModuleRenaming)theEObject;
-        T result = caseModuleRenaming(moduleRenaming);
-        if (result == null) result = caseEsterel_ModuleRenaming(moduleRenaming);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case ScestPackage.UN_EMIT:
       {
         UnEmit unEmit = (UnEmit)theEObject;
@@ -156,22 +148,6 @@ public class ScestSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseSCEstModule(SCEstModule object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Module Renaming</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Module Renaming</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseModuleRenaming(ModuleRenaming object)
   {
     return null;
   }
@@ -268,22 +244,6 @@ public class ScestSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseModule(Module object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Module Renaming</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Module Renaming</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEsterel_ModuleRenaming(de.cau.cs.kieler.esterel.esterel.ModuleRenaming object)
   {
     return null;
   }
