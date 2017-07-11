@@ -69,7 +69,10 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
     @Inject
     extension SCEstExtension
     
+    var SCEstProgram scestProgram
+    
     def SCEstProgram transform(SCEstProgram prog) {
+        scestProgram = prog
         resetLabelSuffix
         resetConstantSuffix
         resetVariableSuffix
@@ -78,10 +81,14 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
         resetDepthFlagSuffix 
         resetTrapSuffix 
         resetSignalSuffix 
+        resetModuleSuffix
         clearNewSignalsMap
-        prog.modules.forEach [ m | 
-            transformStatements(m.statements, 1)
-        ]
+        for (var i=0; i<prog.modules.length; i++) {
+            var m = prog.modules.get(i)
+            if (!m.annotations.isGeneratedModule) {
+                transformStatements(m.statements, 1)
+            }
+        } 
         return prog
     }
     
@@ -166,11 +173,18 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
             transformStatements((statement as IfTest).elseStatements, depth+1)
         }
         else if (statement instanceof Run) {
+            // create a copy of the referenced module
+            // so that the original module will not be modified
+            // and update the renamings
             var statements = statement.containingList
             var pos = statements.indexOf(statement)
-            var runCopy = EcoreUtil.copy(statement)
-            transformStatements(runCopy.module.module.statements, depth+1)
-            statements.set(pos, runCopy)
+            var moduleCopy = EcoreUtil.copy(statement.module.module)
+            statement.module.module = moduleCopy
+            moduleCopy.name = moduleCopy.name.createNewUniqueModuleName
+            moduleCopy.annotations.add(createModuleAnnotation)
+            statement.transformRenamingsAfterModuleCopy
+            scestProgram.modules.add(moduleCopy)
+            transformStatements(statement.module.module.statements, depth+1)
         }
         return statement
     }

@@ -39,6 +39,30 @@ import de.cau.cs.kieler.esterel.esterel.Constant
 import de.cau.cs.kieler.esterel.esterel.Module
 import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
 import de.cau.cs.kieler.esterel.esterel.SensorWithType
+import de.cau.cs.kieler.esterel.esterel.Type
+import de.cau.cs.kieler.esterel.esterel.TypeIdentifier
+import de.cau.cs.kieler.esterel.esterel.Function
+import de.cau.cs.kieler.esterel.esterel.Procedure
+import de.cau.cs.kieler.esterel.esterel.Task
+import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
+import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
+import de.cau.cs.kieler.esterel.esterel.TypeRenaming
+import de.cau.cs.kieler.esterel.esterel.TaskRenaming
+import de.cau.cs.kieler.esterel.esterel.EsterelType
+import de.cau.cs.kieler.esterel.esterel.FunctionExpression
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementContainer
+import de.cau.cs.kieler.esterel.esterel.Trap
+import de.cau.cs.kieler.esterel.esterel.Abort
+import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Do
+import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.esterel.esterel.Present
+import de.cau.cs.kieler.esterel.esterel.IfTest
+import de.cau.cs.kieler.esterel.esterel.EsterelParallel
+import de.cau.cs.kieler.scl.scl.Parallel
+
 //import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
 //import de.cau.cs.kieler.esterel.esterel.TypeRenaming
 //import de.cau.cs.kieler.esterel.esterel.TaskRenaming
@@ -80,10 +104,10 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         
     var signalRenamings = new HashMap<ISignal, ISignal>
     var constantRenamings = new HashMap<Constant, ConstantRenaming>
-//    var functionRenamings = new HashMap<Function, Function>
-//    var procedureRenamings = new HashMap<Procedure, Procedure>
-//    var typeRenamings = new HashMap<Type, Type>
-//    var taskRenamings = new HashMap<Task, Task> 
+    var functionRenamings = new HashMap<Function, Function>
+    var procedureRenamings = new HashMap<Procedure, Procedure>
+    var typeRenamings = new HashMap<Type, Type>
+    var taskRenamings = new HashMap<Task, Task> 
     var parentSignals = new HashMap<String, ISignal>
     var parentConstants = new HashMap<String, Constant>
     var parentSensors = new HashMap<String, ISignal>
@@ -93,14 +117,20 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     var unemits = new LinkedList<UnEmit>
     var sets = new LinkedList<Set>
     var execs = new LinkedList<Exec>
+    var typeIdentifiers = new LinkedList<TypeIdentifier>
+    var functionExpressions = new LinkedList<FunctionExpression>
+    var signals = new LinkedList<ISignal>
     
     def SCEstProgram transform(SCEstProgram prog) {
-        prog.modules.forEach [ m | 
-            m.getSignals
-            m.getConstants
-            m.findRunStatements
-            clearMapsLists
-        ]
+        for (var i=0; i<prog.modules.length; i++) {
+            var m = prog.modules.get(i)
+            if (!m.annotations.generatedModule) {
+                m.getSignals
+                m.getConstants
+                m.statements.transformStatements(m)
+                clearMapsLists
+            }
+        }
         return prog
     }
     
@@ -122,11 +152,63 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         }
     }
     
-    def findRunStatements(Module parentModule) {
-        var runStatements = parentModule.eAllContents.filter(Run).toList
-        for (r : runStatements) {
-            transformRunStatement(r, parentModule)
+    def EList<Statement> transformStatements(EList<Statement> statements, Module parentModule) {
+        for (var i=0; i<statements.length; i++) {
+            statements.get(i).transformStatement(parentModule)
         }
+        return statements
+    }
+    
+    def Statement transformStatement(Statement statement, Module parentModule) {
+        if (statement instanceof Run) {
+            statement.module.module.statements.transformStatements(parentModule)
+            transformRunStatement(statement, parentModule)
+        }
+        else if (statement instanceof StatementContainer) {
+            
+            transformStatements((statement as StatementContainer).statements, parentModule)
+            
+            if (statement instanceof Trap) {
+                (statement as Trap).trapHandler?.forEach[h | transformStatements(h.statements, parentModule)]
+            }
+            else if (statement instanceof Abort) {
+                transformStatements((statement as Abort).doStatements, parentModule)
+                (statement as Abort).cases?.forEach[ c | transformStatements(c.statements, parentModule)]
+            }
+            else if (statement instanceof Await) {
+                (statement as Await).cases?.forEach[ c | transformStatements(c.statements, parentModule)]
+            }
+            else if (statement instanceof Exec) {
+                (statement as Exec).execCaseList?.forEach[ c | transformStatements(c.statements, parentModule)]
+            }
+            else if (statement instanceof Do) {
+                transformStatements((statement as Do).watchingStatements, parentModule)
+            }
+            else if (statement instanceof Conditional) {
+                transformStatements((statement as Conditional).getElse()?.statements, parentModule)
+            }
+        }
+        else if (statement instanceof Present) {
+            transformStatements((statement as Present).thenStatements, parentModule)
+            (statement as Present).cases?.forEach[ c | transformStatements(c.statements, parentModule)]
+            transformStatements((statement as Present).elseStatements, parentModule)
+        }
+        else if (statement instanceof IfTest) {
+            transformStatements((statement as IfTest).thenStatements, parentModule)
+            (statement as IfTest).elseif?.forEach [ elsif | transformStatements(elsif.thenStatements, parentModule)]
+            transformStatements((statement as IfTest).elseStatements, parentModule)
+        }
+        else if (statement instanceof EsterelParallel) {
+            (statement as EsterelParallel).threads.forEach [ t |
+                transformStatements(t.statements, parentModule)
+            ]
+        }
+        else if (statement instanceof Parallel) {
+            (statement as Parallel).threads.forEach [ t |
+                transformStatements(t.statements, parentModule)
+            ]
+        }
+        return statement
     }
     
     def transformRunStatement(Run run, Module parentModule) {
@@ -154,14 +236,19 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         moduleRenaming = transformConstants(moduleRenaming, parentModule)
         // SENSORS
         moduleRenaming = transformSensors(moduleRenaming, parentModule)
+        // TYPES
+        moduleRenaming = transformTypes(moduleRenaming, parentModule)
+        // FUNCTIONS
+        moduleRenaming = transformFunctions(moduleRenaming, parentModule)
         
         scope.statements.add(moduleRenaming.module.statements)
         statementList.set(pos, scope)        
+        var moduleContainingList = moduleRenaming.module.getContainingList
+        moduleContainingList.remove(moduleRenaming.module)
         
-        // TYPES, FUNCTIONS, PROCEDURES, TASKS will not be transformed
-        // because they get thrown away anyway
-        // they do not matter to a transformation to SCL
-        // TODO feel free to implement it, a few things (e.g. Maps) are already prepared but commented
+        // TODO 
+        // PROCEDURES and TASKS will not be transformed at the moment
+        // and Functions only check their ValueTypes
         
             
     }
@@ -169,10 +256,10 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     def clearMapsLists() {
         signalRenamings.clear
         constantRenamings.clear
-//        functionRenamings.clear
-//        procedureRenamings.clear
-//        typeRenamings.clear
-//        taskRenamings.clear
+        functionRenamings.clear
+        procedureRenamings.clear
+        typeRenamings.clear
+        taskRenamings.clear
         parentSignals.clear
         parentConstants.clear
         parentSensors.clear
@@ -181,6 +268,9 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         unemits.clear
         sets.clear
         execs.clear
+        typeIdentifiers.clear
+        functionExpressions.clear
+        signals.clear
     }
     
     /**
@@ -199,18 +289,18 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                         ConstantRenaming: {
                             constantRenamings.put(renaming.oldName, renaming)
                         }
-//                        FunctionRenaming: {
-//                            functionRenamings.put(renaming.oldName, renaming.newName)
-//                        }
-//                        ProcedureRenaming: {
-//                            procedureRenamings.put(renaming.oldName, renaming.newName)
-//                        }
-//                        TypeRenaming: {
-//                            typeRenamings.put(renaming.oldName, renaming.newName)
-//                        }
-//                        TaskRenaming: {
-//                            taskRenamings.put(renaming.oldName, renaming.newName)
-//                        }
+                        FunctionRenaming: {
+                            functionRenamings.put(renaming.oldName, renaming.newName)
+                        }
+                        ProcedureRenaming: {
+                            procedureRenamings.put(renaming.oldName, renaming.newName)
+                        }
+                        TypeRenaming: {
+                            typeRenamings.put(renaming.oldName, renaming.newName)
+                        }
+                        TaskRenaming: {
+                            taskRenamings.put(renaming.oldName, renaming.newName)
+                        }
                     }
                     
                 }
@@ -280,7 +370,16 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                 Exec: {
                     execs.add(o)
                 }
-                // TODO RelationImplication/Incompatibility for ISignal reference
+                TypeIdentifier: {
+                    typeIdentifiers.add(o)
+                }
+                FunctionExpression: {
+                    functionExpressions.add(o)
+                }
+                ISignal: {
+                    signals.add(o)
+                }
+                // TODO Relation-Implication/-Incompatibility for ISignal reference
             }
         }
     }
@@ -406,11 +505,126 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                     }
                 }
                 else {
+                    sensorWType.sensor.name = sensorWType.sensor.name.createNewUniqueSensorName
                     parentModule.intSensorDecls.add(createSensorDecl(sensorWType))
+                    i--
                 }
             }
         }
         return moduleRenaming
+    }
+    
+    /**
+     * Transform all references from the old to the new types or just copy types to parent module
+     * 
+     * @param moduleRenaming ModuleRenaming of a run statement
+     * @param parentModule The parent module where the types will be copied to
+     */
+    def transformTypes(ModuleRenaming moduleRenaming, Module parentModule) {
+        for (decl : moduleRenaming.module.intTypeDecls) {
+            for (var i=0; i<decl.types.length; i++) {
+                var oldType = decl.types.get(i)
+                var type = checkIfTypeExistsByName(oldType.name, parentModule)
+                if (type instanceof Type) {
+                    for (typeIdent : typeIdentifiers) {
+                        if (typeIdent instanceof EsterelType) {
+                            if (typeIdent.estType == oldType) {
+                                typeIdent.estType = type
+                            }
+                        }
+                    }
+                } 
+                else {
+                    oldType.name = oldType.name.createNewUniqueTypeName
+                    parentModule.intTypeDecls += createTypeDecl(oldType)
+                    i--
+                }
+            }
+        }
+        
+        return moduleRenaming
+    }
+    
+    /**
+     * Checks if a given type exists in the parent module
+     * 
+     * @param name The name of the type
+     * @param parentModule The parent module
+     */
+    def checkIfTypeExistsByName(String name, Module parentModule) {
+        for (decl : parentModule.intTypeDecls) {
+            for (t : decl.types) {
+                if (t.name.equals(name)) {
+                    return t
+                }
+            }
+        }
+        return null
+    }
+    
+    /**
+     * Transform all references from the old to the new functions or just copy functions to parent module
+     * 
+     * @param moduleRenaming ModuleRenaming of a run statement
+     * @param parentModule The parent module where the functions will be copied to
+     */
+    def transformFunctions(ModuleRenaming moduleRenaming, Module parentModule) {
+        for (decl : moduleRenaming.module.intFunctionDecls) {
+            for (var i=0; i<decl.functions.length; i++) {
+                var oldFunction = decl.functions.get(i)
+                var function = checkIfFunctionExists(oldFunction, parentModule)
+                if (function instanceof Function) {
+                    for (expr : functionExpressions) {
+                        if (expr.function == oldFunction) {
+                            expr.function = function
+                        }
+                    }
+                    for (signal : signals) {
+                        if (signal.func == oldFunction) {
+                            signal.func = function
+                        }
+                    }
+                    
+                }
+                else {
+                    parentModule.intFunctionDecls += createFunctionDecl(oldFunction)
+                    i--
+                }
+            }
+        }
+        return moduleRenaming
+    }
+    
+    /**
+     * Checks if a given function exists in the parent module
+     * 
+     * @param oldFunction The old function
+     * @param parentModule The parent module
+     */
+    def checkIfFunctionExists(Function oldFunction, Module parentModule) {
+        for (decl : parentModule.intFunctionDecls) {
+            for (f : decl.functions) {
+                if (f.name.equals(name)) {
+                    var same = true
+                    for (var i=0; i<f.idList.length; i++) {
+                        var typeIdent = f.idList.get(i)
+                        // TODO just the type field of the TypeIdentifier is checked at the moment
+                        if (i<oldFunction.idList.length) {
+                            if (typeIdent.type == null || typeIdent.type != oldFunction.idList.get(i).type) {
+                                same =  false
+                            }
+                        }
+                        else {
+                            same = false 
+                        }
+                    }
+                    if (same) {
+                        return f
+                    }
+                }
+            }
+        }
+        return null
     }
     
 }

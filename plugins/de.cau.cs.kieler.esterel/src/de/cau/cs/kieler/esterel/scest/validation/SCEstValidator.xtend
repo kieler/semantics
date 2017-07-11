@@ -45,6 +45,7 @@ import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.esterel.scest.scest.Set
+import de.cau.cs.kieler.esterel.esterel.FunctionExpression
 
 /**
  * @author mrb
@@ -81,8 +82,8 @@ class SCEstValidator extends SCEstJavaValidator{
     
     @Check
     def void annotation(Annotation annotation) {
-        if (annotation.isGenerated || annotation.isInterfaceAnnotation) {
-            error("Annotations of name '" + interfaceScope + "' or '" + generatedAnnotation + "' are forbidden!", annotation, null, -1)
+        if (annotation.isGenerated || annotation.isInterfaceAnnotation || annotation.isGeneratedModuleAnnotation) {
+            error("Annotations of name '" + interfaceScope + "', '" + generatedModule + "' or '" + generatedAnnotation + "' are forbidden!", annotation, null, -1)
         }
     }
     
@@ -329,6 +330,9 @@ class SCEstValidator extends SCEstJavaValidator{
             ValuedObjectReference: {
                 return expr.isCalculationValuedObject
             }
+            FunctionExpression: {
+                return expr.function.type.type.isCalculationType
+            }
             case null: {
                 return true
             }
@@ -370,7 +374,10 @@ class SCEstValidator extends SCEstJavaValidator{
                 return true
             }
             ValuedObjectReference: {
-                return expr.isBoolValuedObject
+                return expr.justReferenceIsBoolValuedObject
+            }
+            FunctionExpression: {
+                return expr.function.type.type.isBool
             }
             case null: {
                 return true
@@ -378,6 +385,20 @@ class SCEstValidator extends SCEstJavaValidator{
             default: {
                 return false
             }
+        }
+    }
+    
+    /**
+     * Checks if the ValuedObjectReference references a valued object of type pure or boolean
+     * 
+     * @param voRef The ValuedObjectReference in question
+     */
+    def boolean justReferenceIsBoolValuedObject(ValuedObjectReference voRef) {
+        if (voRef.valuedObject instanceof ISignal) {
+            return true
+        }
+        else {
+            return voRef.isBoolValuedObject
         }
     }
     

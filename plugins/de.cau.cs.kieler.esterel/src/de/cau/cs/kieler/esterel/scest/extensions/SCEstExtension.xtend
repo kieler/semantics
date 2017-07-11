@@ -69,6 +69,18 @@ import de.cau.cs.kieler.esterel.esterel.Constant
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier
 import de.cau.cs.kieler.esterel.esterel.SensorWithType
 import de.cau.cs.kieler.esterel.esterel.Module
+import de.cau.cs.kieler.esterel.esterel.Run
+import java.util.LinkedList
+import de.cau.cs.kieler.esterel.esterel.Function
+import de.cau.cs.kieler.esterel.esterel.Procedure
+import de.cau.cs.kieler.esterel.esterel.Type
+import de.cau.cs.kieler.esterel.esterel.Task
+import de.cau.cs.kieler.esterel.esterel.SignalRenaming
+import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
+import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
+import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
+import de.cau.cs.kieler.esterel.esterel.TypeRenaming
+import de.cau.cs.kieler.esterel.esterel.TaskRenaming
 
 /**
  * Methods and static variables which are used by the transformations which
@@ -98,9 +110,13 @@ class SCEstExtension {
     
     var static signalSuffix = 0;
     
+    var static moduleSuffix = 0;
+    
     final private static String generatedAnnotation = "depth"
     
     final private static String interfaceScope = "IScope"
+    
+    final private static String generatedModule = "generatedModuleForRun"
     
     // for valued singals: signal S will be transformed to s, s_set, s_cur, s_val => new NewSignals(s, s_set, s_cur, s_val)
     var static HashMap<ISignal, NewSignals> newSignals = new HashMap<ISignal, NewSignals>()
@@ -115,6 +131,10 @@ class SCEstExtension {
     
     def getInterfaceScope() {
         interfaceScope
+    }
+    
+    def getGeneratedModule() {
+        generatedModule
     }
 
     /**
@@ -207,6 +227,13 @@ class SCEstExtension {
      */
     def resetSignalSuffix() {
         signalSuffix = 0;
+    }
+    
+    /**
+     * Resets the module count, should be called before a transformation.
+     */
+    def resetModuleSuffix() {
+        moduleSuffix = 0;
     }
     
     /**
@@ -433,11 +460,41 @@ class SCEstExtension {
     /**
      * Returns an unused constant name. String: ( name + "_" + "C" + counter )
      * @param name The name of the previous constant
-     * @return Returns an unused constant name. String: ( name + "_" + C" + counter )
+     * @return Returns an unused constant name. String: ( name + "_" + "C" + counter )
      */
     def createNewUniqueConstantName(String name) {
         constantSuffix++
         name + "_" + "C" + constantSuffix 
+    }
+    
+    /**
+     * Returns an unused sensor name. String: ( name + "_S" + counter )
+     * @param name The name of the previous sensor
+     * @return Returns an unused sensor name. String: ( name + "_S" + counter )
+     */
+    def createNewUniqueSensorName(String name) {
+        signalSuffix++
+        name + "_S" + signalSuffix
+    }
+    
+    /**
+     * Returns an unused module name. String: ( name + "_" + counter )
+     * @param name The name of the previous module
+     * @return Returns an unused module name. String: ( name + "_" + counter )
+     */
+    def createNewUniqueModuleName(String name) {
+        moduleSuffix++
+        name + "_" + moduleSuffix
+    }
+    
+    /**
+     * Returns an unused type name. String: ( name + "_" + counter )
+     * @param name The name of the previous type
+     * @return Returns an unused type name. String: ( name + "_" + counter )
+     */
+    def createNewUniqueTypeName(String name) {
+        moduleSuffix++
+        name + "_type" + moduleSuffix
     }
 
     /**
@@ -743,6 +800,16 @@ class SCEstExtension {
     }
     
     /**
+     * Returns the list in which the given Module is contained.
+     * 
+     * @param module A Module which is in the returned list 
+     * @return The Module list which includes the given Module
+     */
+    def getContainingList(Module module) {
+        module.eContainer.eGet(module.eContainingFeature) as EList<Module>
+    }
+    
+    /**
      * Returns the list in which the given Annotation is contained.
      * 
      * @param annotation An annotation which is in the returned list 
@@ -926,6 +993,17 @@ class SCEstExtension {
     def createAnnotation(String name) {
         AnnotationsFactory::eINSTANCE.createAnnotation => [
             it.name = name
+        ]
+    }
+    
+    /**
+     * Creates a new Annotation with says that the module was generated
+     * 
+     * @return The newly created Annotation
+     */
+    def createModuleAnnotation() {
+        AnnotationsFactory::eINSTANCE.createAnnotation => [
+            it.name = generatedModule
         ]
     }
     
@@ -1244,6 +1322,9 @@ class SCEstExtension {
             (statement as Parallel).threads.forEach [ t |
                 checkGotos(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module.module.statements.checkGotos
         }
     }
     
@@ -1610,6 +1691,154 @@ class SCEstExtension {
     def createSensorDecl(SensorWithType swt) {
         EsterelFactory::eINSTANCE.createSensorDecl => [
             it.sensors.add(swt)
+        ]
+    }
+    
+    /**
+     * Checks if the given annotation is named "generatedModuleForRun"
+     * 
+     * @param annotation The annotation in question
+     */
+    def isGeneratedModuleAnnotation(Annotation annotation) {
+        annotation.name.equals(generatedModule)
+    } 
+    
+    /**
+     * Check whether in an annotation list there is an annotation named "generatedModuleForRun".
+     * 
+     * @param annotations
+     * @return Is there an annotation which is named "generatedModuleForRun"?
+     */
+    def isGeneratedModule(EList<Annotation> annotations) {
+        var generated = false
+        for (a : annotations) {
+            generated = generated || a.name.equals(generatedModule) 
+        }
+        return generated
+    }
+    
+    /**
+     * Update the renamings of the run statement since a copy of the module was created
+     * 
+     * @run The run statement 
+     */
+    def transformRenamingsAfterModuleCopy(Run run) {
+        // SIGNALS
+        var signalList = new LinkedList<ISignal>
+        for (d : run.module.module.intSignalDecls) {
+            signalList.addAll(d.eAllContents.filter(ISignal).toList)
+        }
+        
+        // CONSTANTS
+        var constantList = new LinkedList<Constant>
+        for (d : run.module.module.intSensorDecls) {
+            constantList.addAll(d.eAllContents.filter(Constant).toList)
+        }
+        // FUNCTIONS
+        var functionList = new LinkedList<Function>
+        for (d : run.module.module.intFunctionDecls) {
+            functionList.addAll(d.eAllContents.filter(Function).toList)
+        }
+        // PROCEDURE
+        var procedureList = new LinkedList<Procedure>
+        for (d : run.module.module.intFunctionDecls) {
+            procedureList.addAll(d.eAllContents.filter(Procedure).toList)
+        }
+        // TYPES
+        var typeList = new LinkedList<Type>
+        for (d : run.module.module.intTypeDecls) {
+            typeList.addAll(d.eAllContents.filter(Type).toList)
+        }
+        // TASKS
+        var taskList = new LinkedList<Task>
+        for (d : run.module.module.intTaskDecls) {
+            taskList.addAll(d.eAllContents.filter(Task).toList)
+        }
+        // update references of the renamings
+        if (run.list != null && !run.list.empty) {
+            for (oneTypeRenaming : run.list) {
+                for (renaming : oneTypeRenaming.renamings) {
+                    switch renaming {
+                        SignalRenaming: {
+                            for (var i=0; i<signalList.length; i++) {
+                                var s = signalList.get(i)
+                                if (s.name.equals(renaming.oldName.name)) {
+                                    renaming.oldName = s
+                                    i = signalList.length
+                                }
+                            }
+                        }
+                        ConstantRenaming: {
+                            for (var i=0; i<constantList.length; i++) {
+                                var c = constantList.get(i)
+                                if (c.name.equals(renaming.oldName.name)) {
+                                    renaming.oldName = c
+                                    i = constantList.length
+                                }
+                            }
+                        }
+                        FunctionRenaming: {
+                            for (var i=0; i<functionList.length; i++) {
+                                var f = functionList.get(i)
+                                if (f.name.equals(renaming.oldName.name)) {
+                                    renaming.oldName = f
+                                    i = functionList.length
+                                }
+                            }
+                        }
+                        ProcedureRenaming: {
+                            for (var i=0; i<procedureList.length; i++) {
+                                var p = procedureList.get(i)
+                                if (p.name.equals(renaming.oldName.name)) {
+                                    renaming.oldName = p
+                                    i = procedureList.length
+                                }
+                            }
+                        }
+                        TypeRenaming: {
+                            for (var i=0; i<typeList.length; i++) {
+                                var t = typeList.get(i)
+                                if (t.name.equals(renaming.oldName.name)) {
+                                    renaming.oldName = t
+                                    i = typeList.length
+                                }
+                            }
+                        }
+                        TaskRenaming: {
+                            for (var i=0; i<taskList.length; i++) {
+                                var t = taskList.get(i)
+                                if (t.name.equals(renaming.oldName.name)) {
+                                    renaming.oldName = t
+                                    i = taskList.length
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    /**
+     * Creates a new TypeDecl with a given type
+     * 
+     * @param type The already existing type
+     */
+    def createTypeDecl(Type type) {
+        EsterelFactory::eINSTANCE.createTypeDecl => [
+            it.types += type
+        ]
+    }
+    
+    /**
+     * Creates a new FunctionDecl with a given function
+     * 
+     * @param function The already existing function
+     */
+    def createFunctionDecl(Function function) {
+        EsterelFactory::eINSTANCE.createFunctionDecl => [
+            it.functions += function
         ]
     }
  
