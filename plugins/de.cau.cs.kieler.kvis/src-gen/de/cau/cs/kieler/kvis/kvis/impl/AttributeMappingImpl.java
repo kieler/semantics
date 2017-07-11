@@ -4,8 +4,9 @@ package de.cau.cs.kieler.kvis.kvis.impl;
 
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
-import de.cau.cs.kieler.kvis.kvis.Literal;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
+
+import de.cau.cs.kieler.prom.kibuild.Literal;
 
 import java.util.Collection;
 
@@ -18,7 +19,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class AttributeMappingImpl extends MinimalEObjectImpl.Container implements AttributeMapping
+public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.AttributeMappingImpl implements AttributeMapping
 {
   /**
    * The default value of the '{@link #getAttribute() <em>Attribute</em>}' attribute.

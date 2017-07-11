@@ -16,17 +16,18 @@ import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
+import org.eclipse.core.runtime.Assert
 
 /**
  * @author aas
  *
  */
 class SimulationTemplateProcessor extends TemplateProcessor {
-    public val template = new ConfigurableAttribute("file")
+    public val template = new ConfigurableAttribute("file", "Simulation.ftl")
     public val target = new ConfigurableAttribute("target")
     public val modelPath = new ConfigurableAttribute("modelFile")
     public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "")
-    public val snippetFolder = new ConfigurableAttribute("snippetFolder")
+    public val snippetFolder = new ConfigurableAttribute("snippetFolder", "snippets")
     
     new() {
         super()
@@ -36,6 +37,10 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         if(monitor != null) {
             monitor.subTask("Processing simulation template '"+template.stringValue+"'")
         }
+        Assert.isNotNull(template.stringValue)
+        Assert.isNotNull(target.stringValue)
+        Assert.isNotNull(modelPath.stringValue)
+        Assert.isNotNull(compiledModelPath.stringValue)
         
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)

@@ -54,6 +54,7 @@ abstract class AnimationHandler {
         this.svgElementId = svgElementId
         this.animation = animation
         // Initialize extension methods
+        attributeExtensions = new AttributeExtensions
         kvisExtensions = new KVisExtensions
         svgExtensions = new SVGExtensions
     }

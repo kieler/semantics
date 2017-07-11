@@ -12,6 +12,7 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
+import de.cau.cs.kieler.prom.services.KiBuildGrammarAccess;
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
@@ -743,42 +744,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
 	}
 
-	public class LiteralElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Literal");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cValueSignedIntParserRuleCall_0_0 = (RuleCall)cValueAssignment_0.eContents().get(0);
-		private final Assignment cValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cValueSignedFloatParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
-		private final Assignment cValueAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
-		private final RuleCall cValueAnyValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		
-		//Literal:
-		//	value=SignedInt | value=SignedFloat | value=AnyValue;
-		@Override public ParserRule getRule() { return rule; }
-
-		//value=SignedInt | value=SignedFloat | value=AnyValue
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//value=SignedInt
-		public Assignment getValueAssignment_0() { return cValueAssignment_0; }
-
-		//SignedInt
-		public RuleCall getValueSignedIntParserRuleCall_0_0() { return cValueSignedIntParserRuleCall_0_0; }
-
-		//value=SignedFloat
-		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
-		//SignedFloat
-		public RuleCall getValueSignedFloatParserRuleCall_1_0() { return cValueSignedFloatParserRuleCall_1_0; }
-
-		//value=AnyValue
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
-
-		//AnyValue
-		public RuleCall getValueAnyValueParserRuleCall_2_0() { return cValueAnyValueParserRuleCall_2_0; }
-	}
-
 	public class RangeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Range");
 		private final Keyword cHyphenMinusKeyword = (Keyword)rule.eContents().get(1);
@@ -790,64 +755,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 		//'-'
 		public Keyword getHyphenMinusKeyword() { return cHyphenMinusKeyword; }
-	}
-
-	public class SignedFloatElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.SignedFloat");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cSignAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cSignSignEnumRuleCall_0_0 = (RuleCall)cSignAssignment_0.eContents().get(0);
-		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cValueFLOATTerminalRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
-		
-		//SignedFloat:
-		//	sign=Sign?
-		//	value=FLOAT;
-		@Override public ParserRule getRule() { return rule; }
-
-		//sign=Sign? value=FLOAT
-		public Group getGroup() { return cGroup; }
-
-		//sign=Sign?
-		public Assignment getSignAssignment_0() { return cSignAssignment_0; }
-
-		//Sign
-		public RuleCall getSignSignEnumRuleCall_0_0() { return cSignSignEnumRuleCall_0_0; }
-
-		//value=FLOAT
-		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
-		//FLOAT
-		public RuleCall getValueFLOATTerminalRuleCall_1_0() { return cValueFLOATTerminalRuleCall_1_0; }
-	}
-
-	public class SignedIntElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.SignedInt");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cSignAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cSignSignEnumRuleCall_0_0 = (RuleCall)cSignAssignment_0.eContents().get(0);
-		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cValueINTTerminalRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
-		
-		//SignedInt:
-		//	sign=Sign?
-		//	value=INT;
-		@Override public ParserRule getRule() { return rule; }
-
-		//sign=Sign? value=INT
-		public Group getGroup() { return cGroup; }
-
-		//sign=Sign?
-		public Assignment getSignAssignment_0() { return cSignAssignment_0; }
-
-		//Sign
-		public RuleCall getSignSignEnumRuleCall_0_0() { return cSignSignEnumRuleCall_0_0; }
-
-		//value=INT
-		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
-
-		//INT
-		public RuleCall getValueINTTerminalRuleCall_1_0() { return cValueINTTerminalRuleCall_1_0; }
 	}
 	
 	
@@ -945,34 +852,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'play'
 		public Keyword getPLAYPlayKeyword_3_0() { return cPLAYPlayKeyword_3_0; }
 	}
-
-	public class SignElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kvis.KVis.Sign");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cPOSITIVEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cPOSITIVEPlusSignKeyword_0_0 = (Keyword)cPOSITIVEEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cNEGATIVEEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cNEGATIVEHyphenMinusKeyword_1_0 = (Keyword)cNEGATIVEEnumLiteralDeclaration_1.eContents().get(0);
-		
-		//enum Sign:
-		//	POSITIVE='+' | NEGATIVE='-';
-		public EnumRule getRule() { return rule; }
-
-		//POSITIVE='+' | NEGATIVE='-'
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//POSITIVE='+'
-		public EnumLiteralDeclaration getPOSITIVEEnumLiteralDeclaration_0() { return cPOSITIVEEnumLiteralDeclaration_0; }
-
-		//'+'
-		public Keyword getPOSITIVEPlusSignKeyword_0_0() { return cPOSITIVEPlusSignKeyword_0_0; }
-
-		//NEGATIVE='-'
-		public EnumLiteralDeclaration getNEGATIVEEnumLiteralDeclaration_1() { return cNEGATIVEEnumLiteralDeclaration_1; }
-
-		//'-'
-		public Keyword getNEGATIVEHyphenMinusKeyword_1_0() { return cNEGATIVEHyphenMinusKeyword_1_0; }
-	}
 	
 	private final VisualizationConfigurationElements pVisualizationConfiguration;
 	private final ElementElements pElement;
@@ -992,15 +871,13 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final VariableReferenceElements pVariableReference;
 	private final ModelReferenceElements pModelReference;
 	private final AndOperatorElements pAndOperator;
-	private final LiteralElements pLiteral;
 	private final DOMEventElements eDOMEvent;
 	private final SimulationOperationElements eSimulationOperation;
-	private final SignElements eSign;
 	private final RangeElements pRange;
-	private final SignedFloatElements pSignedFloat;
-	private final SignedIntElements pSignedInt;
 	
 	private final Grammar grammar;
+
+	private final KiBuildGrammarAccess gaKiBuild;
 
 	private final KExpressionsGrammarAccess gaKExpressions;
 
@@ -1010,10 +887,12 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	@Inject
 	public KVisGrammarAccess(GrammarProvider grammarProvider,
+		KiBuildGrammarAccess gaKiBuild,
 		KExpressionsGrammarAccess gaKExpressions,
 		AnnotationsGrammarAccess gaAnnotations,
 		TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
+		this.gaKiBuild = gaKiBuild;
 		this.gaKExpressions = gaKExpressions;
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
@@ -1035,13 +914,9 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.pVariableReference = new VariableReferenceElements();
 		this.pModelReference = new ModelReferenceElements();
 		this.pAndOperator = new AndOperatorElements();
-		this.pLiteral = new LiteralElements();
 		this.eDOMEvent = new DOMEventElements();
 		this.eSimulationOperation = new SimulationOperationElements();
-		this.eSign = new SignElements();
 		this.pRange = new RangeElements();
-		this.pSignedFloat = new SignedFloatElements();
-		this.pSignedInt = new SignedIntElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1065,6 +940,10 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return grammar;
 	}
 	
+
+	public KiBuildGrammarAccess getKiBuildGrammarAccess() {
+		return gaKiBuild;
+	}
 
 	public KExpressionsGrammarAccess getKExpressionsGrammarAccess() {
 		return gaKExpressions;
@@ -1269,16 +1148,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getAndOperatorAccess().getRule();
 	}
 
-	//Literal:
-	//	value=SignedInt | value=SignedFloat | value=AnyValue;
-	public LiteralElements getLiteralAccess() {
-		return pLiteral;
-	}
-	
-	public ParserRule getLiteralRule() {
-		return getLiteralAccess().getRule();
-	}
-
 	//enum DOMEvent:
 	//	CLICK='click'
 	//	| MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
@@ -1306,16 +1175,6 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getSimulationOperationAccess().getRule();
 	}
 
-	//enum Sign:
-	//	POSITIVE='+' | NEGATIVE='-';
-	public SignElements getSignAccess() {
-		return eSign;
-	}
-	
-	public EnumRule getSignRule() {
-		return getSignAccess().getRule();
-	}
-
 	//Range:
 	//	'-' // Alternative would be '..'
 	//;
@@ -1327,11 +1186,114 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getRangeAccess().getRule();
 	}
 
+	//BuildConfiguration:
+	//	attributes+=super::AttributeMapping*
+	//	modelCompilers+=ModelCompiler*
+	//	simulationCompilers+=SimulationCompiler*
+	//	templateProcessors+=TemplateProcessor*;
+	public KiBuildGrammarAccess.BuildConfigurationElements getBuildConfigurationAccess() {
+		return gaKiBuild.getBuildConfigurationAccess();
+	}
+	
+	public ParserRule getBuildConfigurationRule() {
+		return getBuildConfigurationAccess().getRule();
+	}
+
+	//ModelCompiler:
+	//	'model' 'compiler' name=ID '{'
+	//	attributes+=super::AttributeMapping*
+	//	simulationProcessor=SimulationTemplateProcessor?
+	//	'}';
+	public KiBuildGrammarAccess.ModelCompilerElements getModelCompilerAccess() {
+		return gaKiBuild.getModelCompilerAccess();
+	}
+	
+	public ParserRule getModelCompilerRule() {
+		return getModelCompilerAccess().getRule();
+	}
+
+	//SimulationCompiler:
+	//	'simulation' 'compiler' name=ID '{'
+	//	attributes+=super::AttributeMapping*
+	//	'}';
+	public KiBuildGrammarAccess.SimulationCompilerElements getSimulationCompilerAccess() {
+		return gaKiBuild.getSimulationCompilerAccess();
+	}
+	
+	public ParserRule getSimulationCompilerRule() {
+		return getSimulationCompilerAccess().getRule();
+	}
+
+	//TemplateProcessor:
+	//	NormalTemplateProcessor
+	//	| SimulationTemplateProcessor
+	//	| WrapperCodeTemplateProcessor;
+	public KiBuildGrammarAccess.TemplateProcessorElements getTemplateProcessorAccess() {
+		return gaKiBuild.getTemplateProcessorAccess();
+	}
+	
+	public ParserRule getTemplateProcessorRule() {
+		return getTemplateProcessorAccess().getRule();
+	}
+
+	//NormalTemplateProcessor TemplateProcessor:
+	//	'process' 'template' '{' {NormalTemplateProcessor} attributes+=super::AttributeMapping*
+	//	'}'
+	public KiBuildGrammarAccess.NormalTemplateProcessorElements getNormalTemplateProcessorAccess() {
+		return gaKiBuild.getNormalTemplateProcessorAccess();
+	}
+	
+	public ParserRule getNormalTemplateProcessorRule() {
+		return getNormalTemplateProcessorAccess().getRule();
+	}
+
+	//SimulationTemplateProcessor TemplateProcessor:
+	//	'process' 'simulation' 'template' '{' {SimulationTemplateProcessor} attributes+=super::AttributeMapping*
+	//	'}'
+	public KiBuildGrammarAccess.SimulationTemplateProcessorElements getSimulationTemplateProcessorAccess() {
+		return gaKiBuild.getSimulationTemplateProcessorAccess();
+	}
+	
+	public ParserRule getSimulationTemplateProcessorRule() {
+		return getSimulationTemplateProcessorAccess().getRule();
+	}
+
+	//WrapperCodeTemplateProcessor TemplateProcessor:
+	//	'process' 'wrapper' 'template' '{' {WrapperCodeTemplateProcessor} attributes+=super::AttributeMapping*
+	//	'}'
+	public KiBuildGrammarAccess.WrapperCodeTemplateProcessorElements getWrapperCodeTemplateProcessorAccess() {
+		return gaKiBuild.getWrapperCodeTemplateProcessorAccess();
+	}
+	
+	public ParserRule getWrapperCodeTemplateProcessorRule() {
+		return getWrapperCodeTemplateProcessorAccess().getRule();
+	}
+
+	//Literal:
+	//	value=TextValue | value=SignedInt | value=SignedFloat | value=AnyValue;
+	public KiBuildGrammarAccess.LiteralElements getLiteralAccess() {
+		return gaKiBuild.getLiteralAccess();
+	}
+	
+	public ParserRule getLiteralRule() {
+		return getLiteralAccess().getRule();
+	}
+
+	//enum Sign:
+	//	POSITIVE='+' | NEGATIVE='-';
+	public KiBuildGrammarAccess.SignElements getSignAccess() {
+		return gaKiBuild.getSignAccess();
+	}
+	
+	public EnumRule getSignRule() {
+		return getSignAccess().getRule();
+	}
+
 	//SignedFloat:
 	//	sign=Sign?
 	//	value=FLOAT;
-	public SignedFloatElements getSignedFloatAccess() {
-		return pSignedFloat;
+	public KiBuildGrammarAccess.SignedFloatElements getSignedFloatAccess() {
+		return gaKiBuild.getSignedFloatAccess();
 	}
 	
 	public ParserRule getSignedFloatRule() {
@@ -1341,13 +1303,35 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	//SignedInt:
 	//	sign=Sign?
 	//	value=INT;
-	public SignedIntElements getSignedIntAccess() {
-		return pSignedInt;
+	public KiBuildGrammarAccess.SignedIntElements getSignedIntAccess() {
+		return gaKiBuild.getSignedIntAccess();
 	}
 	
 	public ParserRule getSignedIntRule() {
 		return getSignedIntAccess().getRule();
 	}
+
+	//TextValue:
+	//	value=ID;
+	public KiBuildGrammarAccess.TextValueElements getTextValueAccess() {
+		return gaKiBuild.getTextValueAccess();
+	}
+	
+	public ParserRule getTextValueRule() {
+		return getTextValueAccess().getRule();
+	}
+
+	//terminal BOOLEAN returns ecore::EBooleanObject:
+	//	'true' | 'false';
+	public TerminalRule getBOOLEANRule() {
+		return gaKiBuild.getBOOLEANRule();
+	} 
+
+	//terminal ID:
+	//	'^'? ('a'..'z' | 'A'..'Z' | '_' | '/' | '\\') ('a'..'z' | 'A'..'Z' | '_' | '-' | '.' | '/' | '\\' | '0'..'9')*;
+	public TerminalRule getIDRule() {
+		return gaKiBuild.getIDRule();
+	} 
 
 	/// **
 	// * @author ssm
@@ -1753,7 +1737,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Bool Value Rule
 	//BoolValue:
-	//	value=BOOLEAN;
+	//	value=super::BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
 		return gaKExpressions.getBoolValueAccess();
 	}
@@ -1777,7 +1761,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	//// Data type rule allowing any kind of value to be accepted,
 	//// e.g. as initialValues of valued objects used in Kits.xtext. 
 	//AnyType:
-	//	BOOLEAN | INT | FLOAT | ID | STRING;
+	//	super::BOOLEAN | INT | FLOAT | super::ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaKExpressions.getAnyTypeAccess();
 	}
@@ -2114,7 +2098,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	//// KeyBooleanValueAnnotation    
 	//// e.g.: @visible true;
 	//KeyBooleanValueAnnotation BooleanAnnotation:
-	//	'@' name=ExtendedID value=BOOLEAN
+	//	'@' name=ExtendedID value=super::BOOLEAN
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaAnnotations.getKeyBooleanValueAnnotationAccess();
 	}
@@ -2161,7 +2145,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//EStringBoolean:
-	//	STRING | ExtendedID | BOOLEAN;
+	//	STRING | ExtendedID | super::BOOLEAN;
 	public AnnotationsGrammarAccess.EStringBooleanElements getEStringBooleanAccess() {
 		return gaAnnotations.getEStringBooleanAccess();
 	}
@@ -2174,7 +2158,7 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID ("." ID)* ("#" INT)?;
+	//	super::ID ("." super::ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -2237,22 +2221,10 @@ public class KVisGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getFLOATRule();
 	} 
 
-	//terminal BOOLEAN returns ecore::EBooleanObject:
-	//	'true' | 'false';
-	public TerminalRule getBOOLEANRule() {
-		return gaAnnotations.getBOOLEANRule();
-	} 
-
 	//terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return gaAnnotations.getSTRINGRule();
-	} 
-
-	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
-	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
 	} 
 
 	//terminal SL_COMMENT:

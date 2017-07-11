@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.kvis.editor/src" modelPluginID="de.cau.cs.kieler.kvis"
     forceOverwrite="true" modelName="KVis" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.kvis.edit"
-    editorPluginID="de.cau.cs.kieler.kvis.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.kvis.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.genmodel#//kibuild">
   <genPackages prefix="Kvis" basePackage="de.cau.cs.kieler.kvis" disposableProviderFactory="true"
       ecorePackage="KVis.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//DOMEvent">
@@ -124,6 +124,11 @@
     <genClasses ecoreClass="KVis.ecore#//BooleanOperator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//BooleanOperator/AND"/>
     </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//AndExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AndExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/right"/>
+    </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Literal">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Literal/value"/>
     </genClasses>
@@ -134,11 +139,6 @@
     <genClasses ecoreClass="KVis.ecore#//SignedInt">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//SignedInt/sign"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//SignedInt/value"/>
-    </genClasses>
-    <genClasses ecoreClass="KVis.ecore#//AndExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/left"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AndExpression/operator"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/right"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Visualization">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/image"/>

@@ -45,17 +45,17 @@ class LabelContribution extends ControlContribution {
 
     public def void setText(String value) {
         text = value
-        if(label != null) {
-            label.text = value            
+        if(label != null && !label.isDisposed) {
+            label.text = value
+            label.pack
+            parent.update(true)
         }
-        label.pack
-        parent.update(true)
     }
     
     public def void setTooltip(String value) {
         toolTip = value
-        if(label != null) {
-            label.toolTipText = value    
+        if(label != null && !label.isDisposed) {
+            label.toolTipText = value
         }
     }
     

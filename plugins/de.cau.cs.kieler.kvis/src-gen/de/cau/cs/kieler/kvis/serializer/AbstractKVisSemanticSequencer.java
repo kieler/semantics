@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.kvis.kvis.AndExpression;
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
@@ -33,14 +32,23 @@ import de.cau.cs.kieler.kvis.kvis.Event;
 import de.cau.cs.kieler.kvis.kvis.Interaction;
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
-import de.cau.cs.kieler.kvis.kvis.Literal;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
 import de.cau.cs.kieler.kvis.kvis.ModelReference;
-import de.cau.cs.kieler.kvis.kvis.SignedFloat;
-import de.cau.cs.kieler.kvis.kvis.SignedInt;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
 import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration;
 import de.cau.cs.kieler.kvis.services.KVisGrammarAccess;
+import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
+import de.cau.cs.kieler.prom.kibuild.Literal;
+import de.cau.cs.kieler.prom.kibuild.ModelCompiler;
+import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor;
+import de.cau.cs.kieler.prom.kibuild.SignedFloat;
+import de.cau.cs.kieler.prom.kibuild.SignedInt;
+import de.cau.cs.kieler.prom.kibuild.SimulationCompiler;
+import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
+import de.cau.cs.kieler.prom.kibuild.TextValue;
+import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
+import de.cau.cs.kieler.prom.serializer.KiBuildSemanticSequencer;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -52,7 +60,7 @@ import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemanticSequencer {
+public abstract class AbstractKVisSemanticSequencer extends KiBuildSemanticSequencer {
 
 	@Inject
 	private KVisGrammarAccess grammarAccess;
@@ -172,6 +180,39 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			}
+		else if (epackage == KibuildPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KibuildPackage.BUILD_CONFIGURATION:
+				sequence_BuildConfiguration(context, (BuildConfiguration) semanticObject); 
+				return; 
+			case KibuildPackage.LITERAL:
+				sequence_Literal(context, (Literal) semanticObject); 
+				return; 
+			case KibuildPackage.MODEL_COMPILER:
+				sequence_ModelCompiler(context, (ModelCompiler) semanticObject); 
+				return; 
+			case KibuildPackage.NORMAL_TEMPLATE_PROCESSOR:
+				sequence_NormalTemplateProcessor(context, (NormalTemplateProcessor) semanticObject); 
+				return; 
+			case KibuildPackage.SIGNED_FLOAT:
+				sequence_SignedFloat(context, (SignedFloat) semanticObject); 
+				return; 
+			case KibuildPackage.SIGNED_INT:
+				sequence_SignedInt(context, (SignedInt) semanticObject); 
+				return; 
+			case KibuildPackage.SIMULATION_COMPILER:
+				sequence_SimulationCompiler(context, (SimulationCompiler) semanticObject); 
+				return; 
+			case KibuildPackage.SIMULATION_TEMPLATE_PROCESSOR:
+				sequence_SimulationTemplateProcessor(context, (SimulationTemplateProcessor) semanticObject); 
+				return; 
+			case KibuildPackage.TEXT_VALUE:
+				sequence_TextValue(context, (TextValue) semanticObject); 
+				return; 
+			case KibuildPackage.WRAPPER_CODE_TEMPLATE_PROCESSOR:
+				sequence_WrapperCodeTemplateProcessor(context, (WrapperCodeTemplateProcessor) semanticObject); 
+				return; 
+			}
 		else if (epackage == KvisPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KvisPackage.ACTION:
@@ -218,20 +259,11 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 			case KvisPackage.INTERVAL:
 				sequence_Interval(context, (Interval) semanticObject); 
 				return; 
-			case KvisPackage.LITERAL:
-				sequence_Literal(context, (Literal) semanticObject); 
-				return; 
 			case KvisPackage.MAPPING:
 				sequence_Mapping(context, (Mapping) semanticObject); 
 				return; 
 			case KvisPackage.MODEL_REFERENCE:
 				sequence_ModelReference(context, (ModelReference) semanticObject); 
-				return; 
-			case KvisPackage.SIGNED_FLOAT:
-				sequence_SignedFloat(context, (SignedFloat) semanticObject); 
-				return; 
-			case KvisPackage.SIGNED_INT:
-				sequence_SignedInt(context, (SignedInt) semanticObject); 
 				return; 
 			case KvisPackage.VARIABLE_REFERENCE:
 				sequence_VariableReference(context, (VariableReference) semanticObject); 
@@ -384,18 +416,6 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
-	 *     Literal returns Literal
-	 *
-	 * Constraint:
-	 *     (value=SignedInt | value=SignedFloat | value=AnyValue)
-	 */
-	protected void sequence_Literal(ISerializationContext context, Literal semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Mapping returns Mapping
 	 *
 	 * Constraint:
@@ -430,30 +450,6 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getModelReferenceAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     SignedFloat returns SignedFloat
-	 *
-	 * Constraint:
-	 *     (sign=Sign? value=FLOAT)
-	 */
-	protected void sequence_SignedFloat(ISerializationContext context, SignedFloat semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     SignedInt returns SignedInt
-	 *
-	 * Constraint:
-	 *     (sign=Sign? value=INT)
-	 */
-	protected void sequence_SignedInt(ISerializationContext context, SignedInt semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

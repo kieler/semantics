@@ -104,7 +104,7 @@ class WalkPathAnimation extends AnimationHandler {
             }
         } else if(autoOrientation.boolValue && lastPoint != null){
             // Calculate rotation based on last position
-            angleValue.value = computeAngle(currentPoint, lastPoint)
+            angleValue.value = computeAngle(lastPoint, currentPoint)
             if(angleOffset.floatValue != 0) {
                 angleValue.value = angleValue.floatValue angleOffset.floatValue
             }
@@ -134,7 +134,7 @@ class WalkPathAnimation extends AnimationHandler {
             val yValue = currentPoint.y - pos.y - pivotY
             var translate = "translate(" + xValue + "," + yValue + ")"
             if (autoOrientation.boolValue) {
-                translate += "rotate(" + angleValue + "," + (pos.x + pivotX) + "," + (pos.y + pivotY) + ")";
+                translate += "rotate(" + angleValue.floatValue + "," + (pos.x + pivotX) + "," + (pos.y + pivotY) + ")";
             }
             val newTransform = initialTransform + translate
             elem.setAttribute("transform", newTransform)

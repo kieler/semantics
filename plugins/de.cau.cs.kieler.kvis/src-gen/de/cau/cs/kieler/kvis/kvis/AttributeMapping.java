@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
-import org.eclipse.emf.common.util.EList;
+import de.cau.cs.kieler.prom.kibuild.Literal;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface AttributeMapping extends EObject
+public interface AttributeMapping extends de.cau.cs.kieler.prom.kibuild.AttributeMapping
 {
   /**
    * Returns the value of the '<em><b>Attribute</b></em>' attribute.

@@ -158,33 +158,6 @@ public interface KvisFactory extends EFactory
   BooleanOperator createBooleanOperator();
 
   /**
-   * Returns a new object of class '<em>Literal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Literal</em>'.
-   * @generated
-   */
-  Literal createLiteral();
-
-  /**
-   * Returns a new object of class '<em>Signed Float</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signed Float</em>'.
-   * @generated
-   */
-  SignedFloat createSignedFloat();
-
-  /**
-   * Returns a new object of class '<em>Signed Int</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signed Int</em>'.
-   * @generated
-   */
-  SignedInt createSignedInt();
-
-  /**
    * Returns a new object of class '<em>And Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -27,7 +27,9 @@ import org.eclipse.core.runtime.Path
  */
 class CSimulationCompiler extends SimulationCompiler {
     
-    public val command = new ConfigurableAttribute("command", null, true)
+    private static val DEFAULT_GCC_COMMAND = "gcc ${file_path} -std=c99 -o \"./${outputFolder}/${executable_name}\""
+    
+    public val command = new ConfigurableAttribute("command", DEFAULT_GCC_COMMAND, true)
     public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin")
     public val libFolder = new ConfigurableAttribute("libFolder", "kieler-gen/sim/lib")
     
@@ -69,7 +71,7 @@ class CSimulationCompiler extends SimulationCompiler {
             .replacePlaceholder("executable_name", executableFile.name)
             .replacePlaceholder("executable_path", executableFile.projectRelativePath.toOSString)
             .replacePlaceholder("executable_loc", executableFile.location.toOSString)
-            .replacePlaceholder("outputFolder", executableFile.parent.projectRelativePath.toOSString)
+            .replacePlaceholder("outputFolder", executableFile.parent.projectRelativePath.toOSString, false)
         val processArguments = splitStringOnWhitespace(commandWithoutPlaceholders)
         val pBuilder = new ProcessBuilder(processArguments)
         pBuilder.directory(project.location.toFile)
@@ -107,7 +109,19 @@ class CSimulationCompiler extends SimulationCompiler {
     }
     
     private def String replacePlaceholder(String text, String placeholder, String value) {
-        return text.replace("${"+placeholder+"}", '"'+value+'"')
+        if(value.contains(' ')) {
+            return text.replacePlaceholder(placeholder, value, true)
+        } else {
+            return text.replacePlaceholder(placeholder, value, false)    
+        }
+    }
+    
+    private def String replacePlaceholder(String text, String placeholder, String value, boolean quoted) {
+        var String replacement = value
+        if(quoted) {
+            replacement = '"'+replacement+'"'
+        }
+        return text.replace("${"+placeholder+"}", replacement)    
     }
     
     /**

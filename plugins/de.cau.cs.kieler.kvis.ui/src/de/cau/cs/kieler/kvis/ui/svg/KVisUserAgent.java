@@ -23,6 +23,7 @@ import org.apache.batik.util.ParsedURL;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.w3c.dom.Element;
 
@@ -55,7 +56,7 @@ public class KVisUserAgent implements SVGUserAgent {
      */
     public void displayError(String message) {
         final String fMessage = message;
-        getShell().getDisplay().syncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 Exception ex = new Exception(fMessage);
                 ex.printStackTrace();
@@ -71,7 +72,7 @@ public class KVisUserAgent implements SVGUserAgent {
      */
     public void displayError(Exception ex) {
         final Exception fex = ex;
-        getShell().getDisplay().syncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 String msg = fex.getMessage();
                 if (msg == null) {
@@ -90,7 +91,7 @@ public class KVisUserAgent implements SVGUserAgent {
      */
     public void displayMessage(String message) {
         final String fMessage = message;
-        getShell().getDisplay().syncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 MessageDialog.openInformation(getShell(), "Message", fMessage);
             }
@@ -102,7 +103,7 @@ public class KVisUserAgent implements SVGUserAgent {
      */
     public void showAlert(String message) {
         final String fMessage = message;
-        getShell().getDisplay().syncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 KVisCanvas.log(fMessage);
                 //MessageDialog.openWarning(shell, Messages.getString("SVGView.40"), fMessage); //$NON-NLS-1$

@@ -4,9 +4,10 @@ package de.cau.cs.kieler.kvis.kvis.impl;
 
 import de.cau.cs.kieler.kvis.kvis.Action;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
-import de.cau.cs.kieler.kvis.kvis.Literal;
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
+
+import de.cau.cs.kieler.prom.kibuild.Literal;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

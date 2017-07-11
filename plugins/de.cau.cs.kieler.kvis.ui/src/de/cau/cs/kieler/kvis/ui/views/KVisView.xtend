@@ -139,7 +139,6 @@ class KVisView extends ViewPart {
                 if (model instanceof VisualizationConfiguration) {
                     kvisConfig = model
                     kvisFile = file
-                    currentFileLabel.text = kvisFile.name
                     saveUsedKvisFile(kvisFile)
                     updateAfterRendering = true
                     isImageUnchanged = true
@@ -156,6 +155,9 @@ class KVisView extends ViewPart {
                     
                     // Register resource change listener for the files
                     registerResourceChangeListener(file, svgImage)
+                    
+                    // Set label of currently loaded file
+                    PromUIPlugin.asyncExecInUI[currentFileLabel.text = kvisFile.name]
                 }
             } else {
                 throw new IllegalArgumentException("Could not load kvis file. Please check if the file contains errors.")

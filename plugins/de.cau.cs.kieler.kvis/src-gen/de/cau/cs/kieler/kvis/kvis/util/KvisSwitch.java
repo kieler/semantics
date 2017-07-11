@@ -118,6 +118,7 @@ public class KvisSwitch<T> extends Switch<T>
       {
         AttributeMapping attributeMapping = (AttributeMapping)theEObject;
         T result = caseAttributeMapping(attributeMapping);
+        if (result == null) result = caseKibuild_AttributeMapping(attributeMapping);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -175,27 +176,6 @@ public class KvisSwitch<T> extends Switch<T>
       {
         BooleanOperator booleanOperator = (BooleanOperator)theEObject;
         T result = caseBooleanOperator(booleanOperator);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KvisPackage.LITERAL:
-      {
-        Literal literal = (Literal)theEObject;
-        T result = caseLiteral(literal);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KvisPackage.SIGNED_FLOAT:
-      {
-        SignedFloat signedFloat = (SignedFloat)theEObject;
-        T result = caseSignedFloat(signedFloat);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KvisPackage.SIGNED_INT:
-      {
-        SignedInt signedInt = (SignedInt)theEObject;
-        T result = caseSignedInt(signedInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -452,54 +432,6 @@ public class KvisSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Literal</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Literal</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseLiteral(Literal object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signed Float</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signed Float</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignedFloat(SignedFloat object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signed Int</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signed Int</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignedInt(SignedInt object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>And Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -511,6 +443,22 @@ public class KvisSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAndExpression(AndExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Attribute Mapping</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Attribute Mapping</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseKibuild_AttributeMapping(de.cau.cs.kieler.prom.kibuild.AttributeMapping object)
   {
     return null;
   }

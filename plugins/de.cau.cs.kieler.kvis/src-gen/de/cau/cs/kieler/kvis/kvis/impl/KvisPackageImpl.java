@@ -19,15 +19,13 @@ import de.cau.cs.kieler.kvis.kvis.Interaction;
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisFactory;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
-import de.cau.cs.kieler.kvis.kvis.Literal;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
 import de.cau.cs.kieler.kvis.kvis.ModelReference;
-import de.cau.cs.kieler.kvis.kvis.Sign;
-import de.cau.cs.kieler.kvis.kvis.SignedFloat;
-import de.cau.cs.kieler.kvis.kvis.SignedInt;
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
 import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration;
+
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -155,27 +153,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass literalEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass signedFloatEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass signedIntEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass andExpressionEClass = null;
 
   /**
@@ -191,13 +168,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * @generated
    */
   private EEnum simulationOperationEEnum = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EEnum signEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -249,6 +219,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     // Initialize simple dependencies
     KExpressionsPackage.eINSTANCE.eClass();
+    KibuildPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theKvisPackage.createPackageContents();
@@ -760,86 +731,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getLiteral()
-  {
-    return literalEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getLiteral_Value()
-  {
-    return (EReference)literalEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getSignedFloat()
-  {
-    return signedFloatEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSignedFloat_Sign()
-  {
-    return (EAttribute)signedFloatEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSignedFloat_Value()
-  {
-    return (EAttribute)signedFloatEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getSignedInt()
-  {
-    return signedIntEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSignedInt_Sign()
-  {
-    return (EAttribute)signedIntEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSignedInt_Value()
-  {
-    return (EAttribute)signedIntEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getAndExpression()
   {
     return andExpressionEClass;
@@ -893,16 +784,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
   public EEnum getSimulationOperation()
   {
     return simulationOperationEEnum;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EEnum getSign()
-  {
-    return signEEnum;
   }
 
   /**
@@ -999,17 +880,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     booleanOperatorEClass = createEClass(BOOLEAN_OPERATOR);
     createEAttribute(booleanOperatorEClass, BOOLEAN_OPERATOR__AND);
 
-    literalEClass = createEClass(LITERAL);
-    createEReference(literalEClass, LITERAL__VALUE);
-
-    signedFloatEClass = createEClass(SIGNED_FLOAT);
-    createEAttribute(signedFloatEClass, SIGNED_FLOAT__SIGN);
-    createEAttribute(signedFloatEClass, SIGNED_FLOAT__VALUE);
-
-    signedIntEClass = createEClass(SIGNED_INT);
-    createEAttribute(signedIntEClass, SIGNED_INT__SIGN);
-    createEAttribute(signedIntEClass, SIGNED_INT__VALUE);
-
     andExpressionEClass = createEClass(AND_EXPRESSION);
     createEReference(andExpressionEClass, AND_EXPRESSION__LEFT);
     createEAttribute(andExpressionEClass, AND_EXPRESSION__OPERATOR);
@@ -1018,7 +888,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     // Create enums
     domEventEEnum = createEEnum(DOM_EVENT);
     simulationOperationEEnum = createEEnum(SIMULATION_OPERATION);
-    signEEnum = createEEnum(SIGN);
   }
 
   /**
@@ -1046,6 +915,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
+    KibuildPackage theKibuildPackage = (KibuildPackage)EPackage.Registry.INSTANCE.getEPackage(KibuildPackage.eNS_URI);
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
     // Create type parameters
@@ -1053,6 +923,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    attributeMappingEClass.getESuperTypes().add(theKibuildPackage.getAttributeMapping());
     comparisonEClass.getESuperTypes().add(this.getCondition());
     andExpressionEClass.getESuperTypes().add(this.getCondition());
 
@@ -1077,7 +948,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAction_Variable(), this.getVariableReference(), null, "variable", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAction_Value(), this.getLiteral(), null, "value", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_Value(), theKibuildPackage.getLiteral(), null, "value", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Operation(), this.getSimulationOperation(), "operation", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(animationEClass, Animation.class, "Animation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1088,7 +959,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     initEClass(attributeMappingEClass, AttributeMapping.class, "AttributeMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttributeMapping_Attribute(), ecorePackage.getEString(), "attribute", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributeMapping_Literal(), this.getLiteral(), null, "literal", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAttributeMapping_Literal(), theKibuildPackage.getLiteral(), null, "literal", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttributeMapping_Mappings(), this.getMapping(), null, "mappings", null, 0, -1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(mappingEClass, Mapping.class, "Mapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1103,7 +974,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     initEReference(getComparison_Right(), ecorePackage.getEObject(), null, "right", null, 0, 1, Comparison.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(domainEClass, Domain.class, "Domain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDomain_Value(), this.getLiteral(), null, "value", null, 0, 1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDomain_Value(), theKibuildPackage.getLiteral(), null, "value", null, 0, 1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDomain_Range(), this.getInterval(), null, "range", null, 0, 1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(intervalEClass, Interval.class, "Interval", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1120,17 +991,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     initEClass(booleanOperatorEClass, BooleanOperator.class, "BooleanOperator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBooleanOperator_AND(), ecorePackage.getEString(), "AND", null, 0, 1, BooleanOperator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(literalEClass, Literal.class, "Literal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLiteral_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, Literal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(signedFloatEClass, SignedFloat.class, "SignedFloat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSignedFloat_Sign(), this.getSign(), "sign", null, 0, 1, SignedFloat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSignedFloat_Value(), ecorePackage.getEFloatObject(), "value", null, 0, 1, SignedFloat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(signedIntEClass, SignedInt.class, "SignedInt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSignedInt_Sign(), this.getSign(), "sign", null, 0, 1, SignedInt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSignedInt_Value(), ecorePackage.getEInt(), "value", null, 0, 1, SignedInt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(andExpressionEClass, AndExpression.class, "AndExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAndExpression_Left(), this.getCondition(), null, "left", null, 0, 1, AndExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1149,10 +1009,6 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     addEEnumLiteral(simulationOperationEEnum, SimulationOperation.STOP);
     addEEnumLiteral(simulationOperationEEnum, SimulationOperation.PAUSE);
     addEEnumLiteral(simulationOperationEEnum, SimulationOperation.PLAY);
-
-    initEEnum(signEEnum, Sign.class, "Sign");
-    addEEnumLiteral(signEEnum, Sign.POSITIVE);
-    addEEnumLiteral(signEEnum, Sign.NEGATIVE);
 
     // Create resource
     createResource(eNS_URI);
