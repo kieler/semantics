@@ -19,6 +19,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.getContainer
 import static de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.setFBColor
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
+import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * Class that handles on/off requests of users.
@@ -32,19 +33,19 @@ class ToggleProcessorOnOffAction implements IAction {
     
     public static val ID = "de.cau.cs.kieler.kicool.ui.synthesis.actions.toggleProcessorOnOffAction"
     
-    @Accessors static val deactivatedProcessors = <de.cau.cs.kieler.kicool.Processor> newHashSet 
+    @Accessors static val deactivatedProcessors = <ProcessorReference> newHashSet 
     
     override execute(ActionContext context) {
         val kNode = context.KNode
         
         val toggleOnOffData = kNode.getProperty(TOGGLE_ON_OFF_DATA)
-        val processor = toggleOnOffData.metaProcessor
+        val processorReference = toggleOnOffData.processorReference
         
-        if (deactivatedProcessors.contains(processor)) {
-            deactivatedProcessors -= processor
+        if (deactivatedProcessors.contains(processorReference)) {
+            deactivatedProcessors -= processorReference
             setFBColor(getContainer(kNode), ON)
         } else {
-            deactivatedProcessors += processor
+            deactivatedProcessors += processorReference
             setFBColor(getContainer(kNode), OFF)
         }
         

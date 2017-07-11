@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -26,7 +27,6 @@ import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
  * @kieler.rating 2017-02-19 proposed yellow  
  */
 class Environment extends EnvironmentPropertyHolder {
-    
     
     public static val IProperty<Object> SOURCE_MODEL = 
         new Property<Object>("de.cau.cs.kieler.kicool.sourceModel")
@@ -43,8 +43,8 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<CompilationContext> COMPILATION_CONTEXT = 
         new Property<CompilationContext>("de.cau.cs.kieler.kicool.compilationContext")
     
-    public static val IProperty<de.cau.cs.kieler.kicool.Processor>PROCESSOR_REFERENCE = 
-        new Property<de.cau.cs.kieler.kicool.Processor>("de.cau.cs.kieler.kicool.processorReference")
+    public static val IProperty<ProcessorReference> PROCESSOR_REFERENCE = 
+        new Property<ProcessorReference>("de.cau.cs.kieler.kicool.processorReference")
 
     public static val IProperty<Processor<?,?>> PROCESSOR_INSTANCE = 
         new Property<Processor<?,?>>("de.cau.cs.kieler.kicool.processorInstance")

@@ -2,8 +2,8 @@
  */
 package de.cau.cs.kieler.kicool.impl;
 
+import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.Metric;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -13,18 +13,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Metric</b></em>'.
+ * An implementation of the model object '<em><b>Intermediate Reference</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.MetricImpl#getAlias <em>Alias</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.IntermediateReferenceImpl#getAlias <em>Alias</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MetricImpl extends ProcessorEntryImpl implements Metric {
+public class IntermediateReferenceImpl extends ProcessorEntryImpl implements IntermediateReference {
     /**
      * The default value of the '{@link #getAlias() <em>Alias</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -50,7 +50,7 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected MetricImpl() {
+    protected IntermediateReferenceImpl() {
         super();
     }
 
@@ -61,7 +61,7 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
      */
     @Override
     protected EClass eStaticClass() {
-        return KiCoolPackage.Literals.METRIC;
+        return KiCoolPackage.Literals.INTERMEDIATE_REFERENCE;
     }
 
     /**
@@ -82,7 +82,7 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
         String oldAlias = alias;
         alias = newAlias;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.METRIC__ALIAS, oldAlias, alias));
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.INTERMEDIATE_REFERENCE__ALIAS, oldAlias, alias));
     }
 
     /**
@@ -93,7 +93,7 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KiCoolPackage.METRIC__ALIAS:
+            case KiCoolPackage.INTERMEDIATE_REFERENCE__ALIAS:
                 return getAlias();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -107,7 +107,7 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KiCoolPackage.METRIC__ALIAS:
+            case KiCoolPackage.INTERMEDIATE_REFERENCE__ALIAS:
                 setAlias((String)newValue);
                 return;
         }
@@ -122,7 +122,7 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.METRIC__ALIAS:
+            case KiCoolPackage.INTERMEDIATE_REFERENCE__ALIAS:
                 setAlias(ALIAS_EDEFAULT);
                 return;
         }
@@ -137,7 +137,7 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KiCoolPackage.METRIC__ALIAS:
+            case KiCoolPackage.INTERMEDIATE_REFERENCE__ALIAS:
                 return ALIAS_EDEFAULT == null ? alias != null : !ALIAS_EDEFAULT.equals(alias);
         }
         return super.eIsSet(featureID);
@@ -159,4 +159,4 @@ public class MetricImpl extends ProcessorEntryImpl implements Metric {
         return result.toString();
     }
 
-} //MetricImpl
+} //IntermediateReferenceImpl

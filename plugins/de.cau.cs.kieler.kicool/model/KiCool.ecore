@@ -7,19 +7,19 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="processors" eType="#//ProcessorEntry"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="metrics" upperBound="-1"
-        eType="#//Metric" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intermediates" upperBound="-1"
+        eType="#//IntermediateReference" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="inputClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorEntry" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Processor" eSuperTypes="#//ProcessorEntry">
+  <eClassifiers xsi:type="ecore:EClass" name="ProcessorReference" eSuperTypes="#//ProcessorEntry">
     <eStructuralFeatures xsi:type="ecore:EReference" name="presets" upperBound="-1"
         eType="#//KVPair" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="postsets" upperBound="-1"
         eType="#//KVPair" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="metric" eType="#//Metric"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metric" eType="#//IntermediateReference"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//ProcessorContext"
         containment="true"/>
   </eClassifiers>
@@ -30,7 +30,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorAlternativeGroup" eSuperTypes="#//ProcessorGroup"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Metric" eSuperTypes="#//ProcessorEntry">
+  <eClassifiers xsi:type="ecore:EClass" name="IntermediateReference" eSuperTypes="#//ProcessorEntry">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="alias" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorContext">

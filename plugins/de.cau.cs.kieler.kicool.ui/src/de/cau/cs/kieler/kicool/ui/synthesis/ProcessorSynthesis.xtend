@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.Processor
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorSystem
@@ -38,7 +37,7 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessor
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
-import static extension org.eclipse.xtext.EcoreUtil2.* 
+import static extension org.eclipse.xtext.EcoreUtil2.* import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -68,11 +67,11 @@ class ProcessorSynthesis {
         node
     }
 
-    dispatch def List<KNode> transform(Processor processor) {
+    dispatch def List<KNode> transform(ProcessorReference processorReference) {
         val processorNode = PROCESSOR_NODE.copy
-        val nodeId = processor.uniqueProcessorId
+        val nodeId = processorReference.uniqueProcessorId
         processorNode.setId(nodeId)
-        processor.populateProcessorData(processorNode)        
+        processorReference.populateProcessorData(processorNode)        
         
         newArrayList(processorNode)
     }

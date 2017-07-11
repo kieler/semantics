@@ -16,6 +16,7 @@ import java.util.HashMap
 import de.cau.cs.kieler.kicool.System
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * Storage class for runtime systems.
@@ -45,14 +46,14 @@ class RuntimeSystems {
     }
     
     /** Retrieve a specific processor instance for a meta processor. */
-    static def de.cau.cs.kieler.kicool.compilation.Processor getProcessorInstance(de.cau.cs.kieler.kicool.Processor processor) {
-        val system = processor.getSystem
+    static def de.cau.cs.kieler.kicool.compilation.Processor getProcessorInstance(ProcessorReference processorReference) {
+        val system = processorReference.getSystem
         val cc = systems.get(system)
         if (cc == null) {
             // There is no running instance of this processor, return a new instance
-            return KiCoolRegistration.getProcessorInstance(processor.id)
+            return KiCoolRegistration.getProcessorInstance(processorReference.id)
         } else {
-            return cc.getCompilationUnit(processor)    
+            return cc.getProcessorInstance(processorReference)    
         }
     }
 }

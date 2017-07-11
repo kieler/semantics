@@ -13,7 +13,8 @@
 package de.cau.cs.kieler.kicool.compilation.observer
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.Processor
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
  * 
@@ -25,8 +26,8 @@ import de.cau.cs.kieler.kicool.Processor
  */
 class ProcessorStart extends AbstractProcessorNotification {
     
-    new(CompilationContext compilationContext, Processor processorEntry, de.cau.cs.kieler.kicool.compilation.Processor processorUnit) {
-        super(compilationContext, processorEntry, processorUnit)
+    new(CompilationContext compilationContext, ProcessorReference processorReference, Processor<?,?> processorInstance) {
+        super(compilationContext, processorReference, processorInstance)
     }
     
 }

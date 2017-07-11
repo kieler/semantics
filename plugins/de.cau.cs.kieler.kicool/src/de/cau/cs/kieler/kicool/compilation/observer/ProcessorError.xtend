@@ -13,8 +13,9 @@
 package de.cau.cs.kieler.kicool.compilation.observer
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.Processor
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
  * 
@@ -28,8 +29,8 @@ class ProcessorError extends AbstractProcessorNotification {
     
     @Accessors String error
     
-    new(String error, CompilationContext compilationContext, Processor processorEntry, de.cau.cs.kieler.kicool.compilation.Processor processorUnit) {
-        super(compilationContext, processorEntry, processorUnit)
+    new(String error, CompilationContext compilationContext, ProcessorReference processorReference, Processor<?,?> processorInstance) {
+        super(compilationContext, processorReference, processorInstance)
         this.error = error
     }
     

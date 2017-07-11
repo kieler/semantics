@@ -174,17 +174,17 @@ ruleSystem returns [EObject current=null]
 ))?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getMetricsMetricParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_7_0()); 
 	    }
-		lv_metrics_8_0=ruleMetric		{
+		lv_intermediates_8_0=ruleIntermediateReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		add(
        			$current, 
-       			"metrics",
-        		lv_metrics_8_0, 
-        		"de.cau.cs.kieler.kicool.KiCool.Metric");
+       			"intermediates",
+        		lv_intermediates_8_0, 
+        		"de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -214,32 +214,32 @@ ruleSystem returns [EObject current=null]
 
 
 
-// Entry rule entryRuleMetric
-entryRuleMetric returns [EObject current=null] 
+// Entry rule entryRuleIntermediateReference
+entryRuleIntermediateReference returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getMetricRule()); }
-	 iv_ruleMetric=ruleMetric 
-	 { $current=$iv_ruleMetric.current; } 
+	{ newCompositeNode(grammarAccess.getIntermediateReferenceRule()); }
+	 iv_ruleIntermediateReference=ruleIntermediateReference 
+	 { $current=$iv_ruleIntermediateReference.current; } 
 	 EOF 
 ;
 
-// Rule Metric
-ruleMetric returns [EObject current=null] 
+// Rule IntermediateReference
+ruleIntermediateReference returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='metric' 
+(	otherlv_0='intermediate' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getMetricAccess().getMetricKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getIntermediateReferenceAccess().getIntermediateKeyword_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMetricAccess().getIdQualifiedIDParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getIntermediateReferenceAccess().getIdQualifiedIDParserRuleCall_1_0()); 
 	    }
 		lv_id_1_0=ruleQualifiedID		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getMetricRule());
+	            $current = createModelElementForParent(grammarAccess.getIntermediateReferenceRule());
 	        }
        		set(
        			$current, 
@@ -252,16 +252,16 @@ ruleMetric returns [EObject current=null]
 )
 )(	otherlv_2='alias' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getMetricAccess().getAliasKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getIntermediateReferenceAccess().getAliasKeyword_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMetricAccess().getAliasEStringParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getIntermediateReferenceAccess().getAliasEStringParserRuleCall_2_1_0()); 
 	    }
 		lv_alias_3_0=ruleEString		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getMetricRule());
+	            $current = createModelElementForParent(grammarAccess.getIntermediateReferenceRule());
 	        }
        		set(
        			$current, 
@@ -475,9 +475,9 @@ ruleProcessor returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_4='metric' 
+)(	otherlv_4='intermediate' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getMetricKeyword_2_0());
+    	newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getIntermediateKeyword_2_0());
     }
 (
 (
@@ -490,7 +490,7 @@ ruleProcessor returns [EObject current=null]
 	        }
         }
 		{ 
-	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricMetricCrossReference_2_1_0()); 
+	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricIntermediateReferenceCrossReference_2_1_0()); 
 	    }
 		ruleQualifiedID		{ 
 	        afterParserOrEnumRuleCall();

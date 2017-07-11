@@ -62,6 +62,7 @@ import static extension de.cau.cs.kieler.kicool.compilation.Metric.METRIC
 import java.util.Locale
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * The data manager handles all synthesis updates.
@@ -87,16 +88,16 @@ class ProcessorDataManager {
     
     static val INTERMEDIATE_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, INTERMEDIATE_KGT)
     
-    static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
-        node.setProperty(PROCESSOR_IDENTIFIER, processor)
+    static def void populateProcessorData(ProcessorReference processorReference, KNode node) {
+        node.setProperty(PROCESSOR_IDENTIFIER, processorReference)
         
-        val rtProcessor = RuntimeSystems.getProcessorInstance(processor)
+        val rtProcessor = RuntimeSystems.getProcessorInstance(processorReference)
         
         val nodeIdMap = node.createNodeIdMap
         
         if (rtProcessor == null) {
             nodeIdMap.findNode(NODE_PROCESSOR_BODY).setFrameErrorColor
-            nodeIdMap.findNode(NODE_NAME).label.text = processor.id.split("\\.").last
+            nodeIdMap.findNode(NODE_NAME).label.text = processorReference.id.split("\\.").last
             return;
         }
         
@@ -106,8 +107,8 @@ class ProcessorDataManager {
         val toggleOnOffNode = nodeIdMap.findNode(NODE_ACTIVE)
         if (toggleOnOffNode != null) {
             toggleOnOffNode.container.addAction(Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
-            toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processor))
-            if (ToggleProcessorOnOffAction.deactivatedProcessors.contains(processor)) {
+            toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processorReference))
+            if (ToggleProcessorOnOffAction.deactivatedProcessors.contains(processorReference)) {
                 setFBColor(getContainer(toggleOnOffNode), OFF)
             } else {
                 setFBColor(getContainer(toggleOnOffNode), ON)
@@ -141,11 +142,11 @@ class ProcessorDataManager {
     }
     
     static def void resetProcessor(AbstractProcessorNotification processorNotification, KNode node) {
-        val processorEntry = processorNotification.processorEntry
-        val processorUnit = processorNotification.processorUnit
-        val processorNode = node.findNode(processorEntry.uniqueProcessorId)
+        val processorReference = processorNotification.processorReference
+        val processorInstance = processorNotification.processorInstance
+        val processorNode = node.findNode(processorReference.uniqueProcessorId)
         if (processorNode == null) {
-            System.err.println("There was an update notification for an non-existing processor (" + processorEntry.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor (" + processorReference.uniqueProcessorId + 
                 "). This should not happen. I'm very sorry.")
             return
         }
@@ -157,7 +158,7 @@ class ProcessorDataManager {
             val procId = edge.source.getProperty(PROCESSOR_IDENTIFIER)
             if (procId != null) {
                 val proc = processorNotification.compilationContext.processorMap.get(procId)
-                if (processorUnit.sourceEnvironment != proc.environment) {
+                if (processorInstance.sourceEnvironment != proc.environment) {
                     edge.container.setFBColors(INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color)
                     edge.container.children.filter(KPolygon).head.setFBColors(INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color, INACTIVE_ENVIRONMENT.color)
                 } else {
@@ -178,23 +179,23 @@ class ProcessorDataManager {
     } 
     
     static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node, CompilerView view) {
-        val processorEntry = processorNotification.processorEntry
-        val processorUnit = processorNotification.processorUnit
-        val processorNode = node.findNode(processorEntry.uniqueProcessorId)
+        val processorReference = processorNotification.processorReference
+        val processorInstance = processorNotification.processorInstance
+        val processorNode = node.findNode(processorReference.uniqueProcessorId)
         if (processorNode == null) {
-            System.err.println("There was an update notification for an non-existing processor system (" + processorEntry.uniqueProcessorId + 
+            System.err.println("There was an update notification for an non-existing processor system (" + processorReference.uniqueProcessorId + 
                 "). This should not happen. I'm sorry.")
             return
         }
         val nodeIdMap = processorNode.createNodeIdMap
         
-        if (processorUnit.environment.status == ProcessorStatus.ERRORS) {
+        if (processorInstance.environment.status == ProcessorStatus.ERRORS) {
             NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
         }
         
-        val pTime = processorUnit.environment.getProperty(PTIME)
+        val pTime = processorInstance.environment.getProperty(PTIME)
         var envText = "pTime: " + pTime + "ms"
-        val mMetric = processorUnit.environment.getProperty(METRIC)
+        val mMetric = processorInstance.environment.getProperty(METRIC)
         if (mMetric != null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
         NODE_ENVIRONMENT.findNode(nodeIdMap).setLabel(envText)
         
@@ -205,7 +206,7 @@ class ProcessorDataManager {
         var intermediatePosX = 0.0f
         // Test for infos, warnings and errors
         // Test for snapshots
-        val snapshots = processorUnit.environment.getProperty(SNAPSHOTS) as Snapshots
+        val snapshots = processorInstance.environment.getProperty(SNAPSHOTS) as Snapshots
         if (snapshots!= null) {
             for(snapshot : snapshots) {
                 val intermediateNode = intermediateKGT.copy
@@ -213,7 +214,7 @@ class ProcessorDataManager {
                 intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                 intermediateRootNode.children += intermediateNode
                 intermediateNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorUnit, processorNotification.compilationContext, snapshot, view))
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot, view))
                 intermediatePosX += 3.5f
             }
         }
@@ -224,19 +225,19 @@ class ProcessorDataManager {
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
         finalResultNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.getModel, view))
+            new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
 
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         processorBodyNode.setProperty(INTERMEDIATE_DATA, 
-            new IntermediateData(processorUnit, processorNotification.compilationContext, processorUnit.getModel, view))
+            new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
 
         
         if (processorNotification instanceof ProcessorProgress) {
             updateProgressbar((processorNotification.progress * 100) as int, nodeIdMap)
         } else if (processorNotification instanceof ProcessorFinished) {
             updateProgressbar(100, nodeIdMap)
-            if (processorUnit.environment.status == ProcessorStatus.OK) {
+            if (processorInstance.environment.status == ProcessorStatus.OK) {
                 NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(OK)
             }        
         }
@@ -262,7 +263,7 @@ class ProcessorDataManager {
             if (processorNode == null) {
                 // This can happen because metrics are also listed in the processor map.
             } else {
-                val compilationUnit = contextNotification.compilationContext.getCompilationUnit(processor)
+                val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)
                 postUpdateCollector.addProcessor(compilationUnit)
             }
         }
@@ -273,7 +274,7 @@ class ProcessorDataManager {
             if (processorNode == null) {
                 // This can happen because metrics are also listed in the processor map.
             } else {
-                val compilationUnit = contextNotification.compilationContext.getCompilationUnit(processor)
+                val compilationUnit = contextNotification.compilationContext.getProcessorInstance(processor)
                 val perc = postUpdateCollector.getPercentile(compilationUnit)
                 processorNode.setProperty(CoreOptions.SCALE_FACTOR, perc)
             }

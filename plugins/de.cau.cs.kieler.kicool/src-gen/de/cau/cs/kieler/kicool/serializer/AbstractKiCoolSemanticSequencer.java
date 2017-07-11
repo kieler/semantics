@@ -12,12 +12,12 @@ import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
+import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.Metric;
-import de.cau.cs.kieler.kicool.Processor;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
+import de.cau.cs.kieler.kicool.ProcessorReference;
 import de.cau.cs.kieler.kicool.ProcessorSystem;
 import de.cau.cs.kieler.kicool.services.KiCoolGrammarAccess;
 import java.util.Set;
@@ -95,20 +95,20 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 			}
 		else if (epackage == KiCoolPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case KiCoolPackage.INTERMEDIATE_REFERENCE:
+				sequence_IntermediateReference(context, (IntermediateReference) semanticObject); 
+				return; 
 			case KiCoolPackage.KV_PAIR:
 				sequence_KVPair(context, (KVPair) semanticObject); 
-				return; 
-			case KiCoolPackage.METRIC:
-				sequence_Metric(context, (Metric) semanticObject); 
-				return; 
-			case KiCoolPackage.PROCESSOR:
-				sequence_Processor(context, (Processor) semanticObject); 
 				return; 
 			case KiCoolPackage.PROCESSOR_ALTERNATIVE_GROUP:
 				sequence_ProcessorAlternativeGroup(context, (ProcessorAlternativeGroup) semanticObject); 
 				return; 
 			case KiCoolPackage.PROCESSOR_GROUP:
 				sequence_ProcessorGroup(context, (ProcessorGroup) semanticObject); 
+				return; 
+			case KiCoolPackage.PROCESSOR_REFERENCE:
+				sequence_Processor(context, (ProcessorReference) semanticObject); 
 				return; 
 			case KiCoolPackage.PROCESSOR_SYSTEM:
 				sequence_ProcessorSystem(context, (ProcessorSystem) semanticObject); 
@@ -123,24 +123,24 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	
 	/**
 	 * Contexts:
-	 *     KVPair returns KVPair
+	 *     IntermediateReference returns IntermediateReference
 	 *
 	 * Constraint:
-	 *     (key=EString isKeyValue?='key'? value=EStringAllTypes)
+	 *     (id=QualifiedID alias=EString?)
 	 */
-	protected void sequence_KVPair(ISerializationContext context, KVPair semanticObject) {
+	protected void sequence_IntermediateReference(ISerializationContext context, IntermediateReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Metric returns Metric
+	 *     KVPair returns KVPair
 	 *
 	 * Constraint:
-	 *     (id=QualifiedID alias=EString?)
+	 *     (key=EString isKeyValue?='key'? value=EStringAllTypes)
 	 */
-	protected void sequence_Metric(ISerializationContext context, Metric semanticObject) {
+	protected void sequence_KVPair(ISerializationContext context, KVPair semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -189,12 +189,12 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	
 	/**
 	 * Contexts:
-	 *     Processor returns Processor
+	 *     Processor returns ProcessorReference
 	 *
 	 * Constraint:
-	 *     (presets+=KVPair* id=QualifiedID metric=[Metric|QualifiedID]? postsets+=KVPair*)
+	 *     (presets+=KVPair* id=QualifiedID metric=[IntermediateReference|QualifiedID]? postsets+=KVPair*)
 	 */
-	protected void sequence_Processor(ISerializationContext context, Processor semanticObject) {
+	protected void sequence_Processor(ISerializationContext context, ProcessorReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -209,7 +209,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends AnnotationsSemanti
 	 *         version=INT 
 	 *         label=EString 
 	 *         inputClass=ID? 
-	 *         metrics+=Metric* 
+	 *         intermediates+=IntermediateReference* 
 	 *         processors=ProcessorGroup
 	 *     )
 	 */

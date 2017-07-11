@@ -29,6 +29,8 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 import static extension org.eclipse.xtext.EcoreUtil2.*
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
 
 /**
  * @author ssm
@@ -40,14 +42,14 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     // Minimal requirements for compilation
     @Accessors System system
     @Accessors Object sourceModel
-    @Accessors Map<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor<?,?>> processorMap
-    @Accessors Map<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext> subContexts
+    @Accessors Map<ProcessorReference, Processor<?,?>> processorMap
+    @Accessors Map<ProcessorSystem, CompilationContext> subContexts
     @Accessors CompilationContext parentContext = null
     @Accessors Environment startEnvironment
     
     new() {
-        processorMap = new HashMap<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor<?,?>>()
-        subContexts = new HashMap<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext>()
+        processorMap = new HashMap<ProcessorReference, Processor<?,?>>()
+        subContexts = new HashMap<ProcessorSystem, CompilationContext>()
         
         startEnvironment = new Environment
         startEnvironment.setProperty(SOURCE_MODEL, sourceModel)
@@ -60,8 +62,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         processorMap.values.toList
     }
     
-    def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getCompilationUnit(de.cau.cs.kieler.kicool.ProcessorEntry entry) {
-        processorMap.get(entry)
+    def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getProcessorInstance(ProcessorReference processorReference) {
+        processorMap.get(processorReference)
     }
     
     def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getFirstProcessorInstance() {
@@ -114,27 +116,27 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     
-    protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.Processor processor, Environment environment) {
-        val compilationUnit = processorMap.get(processor)
-        environment.setProperty(PROCESSOR_REFERENCE, processor)
-        environment.setProperty(PROCESSOR_INSTANCE, compilationUnit)
+    protected dispatch def Environment compileEntry(ProcessorReference processorReference, Environment environment) {
+        val processorInstance = processorMap.get(processorReference)
+        environment.setProperty(PROCESSOR_REFERENCE, processorReference)
+        environment.setProperty(PROCESSOR_INSTANCE, processorInstance)
         val environmentPrime = environment.preparePrimeEnvironment
         
-        compilationUnit.setEnvironment(environment, environmentPrime)
+        processorInstance.setEnvironment(environment, environmentPrime)
         
-        environment.processEnvironmentSetter(processor.presets)
+        environment.processEnvironmentSetter(processorReference.presets)
         
-        notify(new ProcessorStart(this, processor, compilationUnit))
+        notify(new ProcessorStart(this, processorReference, processorInstance))
         val startTimestamp = java.lang.System.nanoTime
         environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
         try {
-            if (compilationUnit.sourceEnvironment.getProperty(ENABLED)) { 
-                compilationUnit.process
+            if (processorInstance.sourceEnvironment.getProperty(ENABLED)) { 
+                processorInstance.process
             }
         } catch (Exception e) {
-            compilationUnit.environment.addError(e.toString)
-            notify(new ProcessorError(e.message, this, processor, compilationUnit))
-            java.lang.System.err.println("Error in processor " + processor)
+            processorInstance.environment.addError(e.toString)
+            notify(new ProcessorError(e.message, this, processorReference, processorInstance))
+            java.lang.System.err.println("Error in processor " + processorReference)
             e.printStackTrace
         }
         val stopTimestamp = java.lang.System.nanoTime
@@ -142,7 +144,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setProperty(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
         
         // Add Metric code
-        val metric = getMetric(processor)
+        val metric = getMetric(processorReference)
         if (metric != null) {
             metric.setEnvironment(environment, environmentPrime)
             metric.setMetricEntity
@@ -153,9 +155,9 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         environmentPrime.setProperty(OVERALL_TIMESTAMP, overallTimestamp)
         environmentPrime.setProperty(OVERALL_PTIME, (overallTimestamp - startTimestamp) / 1000_000)
         
-        environmentPrime.processEnvironmentSetter(processor.postsets)
+        environmentPrime.processEnvironmentSetter(processorReference.postsets)
         
-        notify(new ProcessorFinished(this, processor, compilationUnit))
+        notify(new ProcessorFinished(this, processorReference, processorInstance))
         
         environmentPrime
     }
@@ -213,11 +215,11 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     protected def Metric<?,?> getSourceMetric() {
-        processorMap.get(system.metrics.head) as Metric<?,?>
+        processorMap.get(system.intermediates.filter(Metric).head) as Metric<?,?>
     }
     
-    protected def Metric<?,?> getMetric(de.cau.cs.kieler.kicool.Processor processor) {
-        processorMap.get(system.metrics.head) as Metric<?,?>
+    protected def Metric<?,?> getMetric(ProcessorReference processorReference) {
+        processorMap.get(processorReference) as Metric<?,?>
     }
         
 }

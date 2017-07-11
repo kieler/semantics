@@ -2,8 +2,8 @@
  */
 package de.cau.cs.kieler.kicool.impl;
 
+import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.Metric;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
 
 import java.util.Collection;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getProcessors <em>Processors</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getMetrics <em>Metrics</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getIntermediates <em>Intermediates</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getInputClass <em>Input Class</em>}</li>
  * </ul>
  *
@@ -109,14 +109,14 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
     protected ProcessorEntry processors;
 
     /**
-     * The cached value of the '{@link #getMetrics() <em>Metrics</em>}' containment reference list.
+     * The cached value of the '{@link #getIntermediates() <em>Intermediates</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getMetrics()
+     * @see #getIntermediates()
      * @generated
      * @ordered
      */
-    protected EList<Metric> metrics;
+    protected EList<IntermediateReference> intermediates;
 
     /**
      * The default value of the '{@link #getInputClass() <em>Input Class</em>}' attribute.
@@ -268,11 +268,11 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Metric> getMetrics() {
-        if (metrics == null) {
-            metrics = new EObjectContainmentEList<Metric>(Metric.class, this, KiCoolPackage.SYSTEM__METRICS);
+    public EList<IntermediateReference> getIntermediates() {
+        if (intermediates == null) {
+            intermediates = new EObjectContainmentEList<IntermediateReference>(IntermediateReference.class, this, KiCoolPackage.SYSTEM__INTERMEDIATES);
         }
-        return metrics;
+        return intermediates;
     }
 
     /**
@@ -306,8 +306,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
         switch (featureID) {
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 return basicSetProcessors(null, msgs);
-            case KiCoolPackage.SYSTEM__METRICS:
-                return ((InternalEList<?>)getMetrics()).basicRemove(otherEnd, msgs);
+            case KiCoolPackage.SYSTEM__INTERMEDIATES:
+                return ((InternalEList<?>)getIntermediates()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -328,8 +328,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return getLabel();
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 return getProcessors();
-            case KiCoolPackage.SYSTEM__METRICS:
-                return getMetrics();
+            case KiCoolPackage.SYSTEM__INTERMEDIATES:
+                return getIntermediates();
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 return getInputClass();
         }
@@ -357,9 +357,9 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 setProcessors((ProcessorEntry)newValue);
                 return;
-            case KiCoolPackage.SYSTEM__METRICS:
-                getMetrics().clear();
-                getMetrics().addAll((Collection<? extends Metric>)newValue);
+            case KiCoolPackage.SYSTEM__INTERMEDIATES:
+                getIntermediates().clear();
+                getIntermediates().addAll((Collection<? extends IntermediateReference>)newValue);
                 return;
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 setInputClass((String)newValue);
@@ -388,8 +388,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 setProcessors((ProcessorEntry)null);
                 return;
-            case KiCoolPackage.SYSTEM__METRICS:
-                getMetrics().clear();
+            case KiCoolPackage.SYSTEM__INTERMEDIATES:
+                getIntermediates().clear();
                 return;
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 setInputClass(INPUT_CLASS_EDEFAULT);
@@ -414,8 +414,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.cau.c
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case KiCoolPackage.SYSTEM__PROCESSORS:
                 return processors != null;
-            case KiCoolPackage.SYSTEM__METRICS:
-                return metrics != null && !metrics.isEmpty();
+            case KiCoolPackage.SYSTEM__INTERMEDIATES:
+                return intermediates != null && !intermediates.isEmpty();
             case KiCoolPackage.SYSTEM__INPUT_CLASS:
                 return INPUT_CLASS_EDEFAULT == null ? inputClass != null : !INPUT_CLASS_EDEFAULT.equals(inputClass);
         }

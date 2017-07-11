@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.kicool.System#getVersion <em>Version</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getProcessors <em>Processors</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.System#getMetrics <em>Metrics</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.System#getIntermediates <em>Intermediates</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getInputClass <em>Input Class</em>}</li>
  * </ul>
  *
@@ -132,20 +132,20 @@ public interface System extends EObject {
     void setProcessors(ProcessorEntry value);
 
     /**
-     * Returns the value of the '<em><b>Metrics</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kicool.Metric}.
+     * Returns the value of the '<em><b>Intermediates</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kicool.IntermediateReference}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Metrics</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Intermediates</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Metrics</em>' containment reference list.
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Metrics()
+     * @return the value of the '<em>Intermediates</em>' containment reference list.
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_Intermediates()
      * @model containment="true"
      * @generated
      */
-    EList<Metric> getMetrics();
+    EList<IntermediateReference> getIntermediates();
 
     /**
      * Returns the value of the '<em><b>Input Class</b></em>' attribute.

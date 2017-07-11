@@ -22,7 +22,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_COMMENT_ANNOTATION", "RULE_STRING", "RULE_BOOLEAN", "RULE_FLOAT", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'system'", "'version'", "'label'", "'input'", "'metric'", "'alias'", "'['", "']'", "'pre'", "'set'", "'post'", "'|'", "'key'", "'@'", "'#'", "','", "'.'", "'-'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_COMMENT_ANNOTATION", "RULE_STRING", "RULE_BOOLEAN", "RULE_FLOAT", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'system'", "'version'", "'label'", "'input'", "'intermediate'", "'alias'", "'['", "']'", "'pre'", "'set'", "'post'", "'|'", "'key'", "'@'", "'#'", "','", "'.'", "'-'"
     };
     public static final int RULE_COMMENT_ANNOTATION=6;
     public static final int RULE_BOOLEAN=8;
@@ -139,7 +139,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSystem"
-    // InternalKiCool.g:82:1: ruleSystem returns [EObject current=null] : (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_metrics_8_0= ruleMetric ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) ) ;
+    // InternalKiCool.g:82:1: ruleSystem returns [EObject current=null] : (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_intermediates_8_0= ruleIntermediateReference ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) ) ;
     public final EObject ruleSystem() throws RecognitionException {
         EObject current = null;
 
@@ -153,7 +153,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
         AntlrDatatypeRuleToken lv_label_5_0 = null;
 
-        EObject lv_metrics_8_0 = null;
+        EObject lv_intermediates_8_0 = null;
 
         EObject lv_processors_9_0 = null;
 
@@ -161,11 +161,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiCool.g:85:28: ( (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_metrics_8_0= ruleMetric ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) ) )
-            // InternalKiCool.g:86:1: (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_metrics_8_0= ruleMetric ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) )
+            // InternalKiCool.g:85:28: ( (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_intermediates_8_0= ruleIntermediateReference ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) ) )
+            // InternalKiCool.g:86:1: (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_intermediates_8_0= ruleIntermediateReference ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) )
             {
-            // InternalKiCool.g:86:1: (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_metrics_8_0= ruleMetric ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) )
-            // InternalKiCool.g:86:3: otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_metrics_8_0= ruleMetric ) )* ( (lv_processors_9_0= ruleProcessorGroup ) )
+            // InternalKiCool.g:86:1: (otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_intermediates_8_0= ruleIntermediateReference ) )* ( (lv_processors_9_0= ruleProcessorGroup ) ) )
+            // InternalKiCool.g:86:3: otherlv_0= 'system' ( (lv_id_1_0= ruleQualifiedID ) ) otherlv_2= 'version' ( (lv_version_3_0= RULE_INT ) ) otherlv_4= 'label' ( (lv_label_5_0= ruleEString ) ) (otherlv_6= 'input' ( (lv_inputClass_7_0= RULE_ID ) ) )? ( (lv_intermediates_8_0= ruleIntermediateReference ) )* ( (lv_processors_9_0= ruleProcessorGroup ) )
             {
             otherlv_0=(Token)match(input,15,FollowSets000.FOLLOW_3); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -338,7 +338,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiCool.g:174:4: ( (lv_metrics_8_0= ruleMetric ) )*
+            // InternalKiCool.g:174:4: ( (lv_intermediates_8_0= ruleIntermediateReference ) )*
             loop2:
             do {
                 int alt2=2;
@@ -351,18 +351,18 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalKiCool.g:175:1: (lv_metrics_8_0= ruleMetric )
+            	    // InternalKiCool.g:175:1: (lv_intermediates_8_0= ruleIntermediateReference )
             	    {
-            	    // InternalKiCool.g:175:1: (lv_metrics_8_0= ruleMetric )
-            	    // InternalKiCool.g:176:3: lv_metrics_8_0= ruleMetric
+            	    // InternalKiCool.g:175:1: (lv_intermediates_8_0= ruleIntermediateReference )
+            	    // InternalKiCool.g:176:3: lv_intermediates_8_0= ruleIntermediateReference
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getSystemAccess().getMetricsMetricParserRuleCall_7_0()); 
+            	      	        newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_7_0()); 
             	      	    
             	    }
             	    pushFollow(FollowSets000.FOLLOW_8);
-            	    lv_metrics_8_0=ruleMetric();
+            	    lv_intermediates_8_0=ruleIntermediateReference();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -373,9 +373,9 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"metrics",
-            	              		lv_metrics_8_0, 
-            	              		"de.cau.cs.kieler.kicool.KiCool.Metric");
+            	             			"intermediates",
+            	              		lv_intermediates_8_0, 
+            	              		"de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -448,28 +448,28 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleSystem"
 
 
-    // $ANTLR start "entryRuleMetric"
-    // InternalKiCool.g:218:1: entryRuleMetric returns [EObject current=null] : iv_ruleMetric= ruleMetric EOF ;
-    public final EObject entryRuleMetric() throws RecognitionException {
+    // $ANTLR start "entryRuleIntermediateReference"
+    // InternalKiCool.g:218:1: entryRuleIntermediateReference returns [EObject current=null] : iv_ruleIntermediateReference= ruleIntermediateReference EOF ;
+    public final EObject entryRuleIntermediateReference() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleMetric = null;
+        EObject iv_ruleIntermediateReference = null;
 
 
         try {
-            // InternalKiCool.g:219:2: (iv_ruleMetric= ruleMetric EOF )
-            // InternalKiCool.g:220:2: iv_ruleMetric= ruleMetric EOF
+            // InternalKiCool.g:219:2: (iv_ruleIntermediateReference= ruleIntermediateReference EOF )
+            // InternalKiCool.g:220:2: iv_ruleIntermediateReference= ruleIntermediateReference EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getMetricRule()); 
+               newCompositeNode(grammarAccess.getIntermediateReferenceRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleMetric=ruleMetric();
+            iv_ruleIntermediateReference=ruleIntermediateReference();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleMetric; 
+               current =iv_ruleIntermediateReference; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -485,12 +485,12 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleMetric"
+    // $ANTLR end "entryRuleIntermediateReference"
 
 
-    // $ANTLR start "ruleMetric"
-    // InternalKiCool.g:227:1: ruleMetric returns [EObject current=null] : (otherlv_0= 'metric' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? ) ;
-    public final EObject ruleMetric() throws RecognitionException {
+    // $ANTLR start "ruleIntermediateReference"
+    // InternalKiCool.g:227:1: ruleIntermediateReference returns [EObject current=null] : (otherlv_0= 'intermediate' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? ) ;
+    public final EObject ruleIntermediateReference() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
@@ -503,16 +503,16 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiCool.g:230:28: ( (otherlv_0= 'metric' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? ) )
-            // InternalKiCool.g:231:1: (otherlv_0= 'metric' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? )
+            // InternalKiCool.g:230:28: ( (otherlv_0= 'intermediate' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? ) )
+            // InternalKiCool.g:231:1: (otherlv_0= 'intermediate' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? )
             {
-            // InternalKiCool.g:231:1: (otherlv_0= 'metric' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? )
-            // InternalKiCool.g:231:3: otherlv_0= 'metric' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )?
+            // InternalKiCool.g:231:1: (otherlv_0= 'intermediate' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )? )
+            // InternalKiCool.g:231:3: otherlv_0= 'intermediate' ( (lv_id_1_0= ruleQualifiedID ) ) (otherlv_2= 'alias' ( (lv_alias_3_0= ruleEString ) ) )?
             {
             otherlv_0=(Token)match(input,19,FollowSets000.FOLLOW_3); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getMetricAccess().getMetricKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getIntermediateReferenceAccess().getIntermediateKeyword_0());
                   
             }
             // InternalKiCool.g:235:1: ( (lv_id_1_0= ruleQualifiedID ) )
@@ -523,7 +523,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getMetricAccess().getIdQualifiedIDParserRuleCall_1_0()); 
+              	        newCompositeNode(grammarAccess.getIntermediateReferenceAccess().getIdQualifiedIDParserRuleCall_1_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_9);
@@ -534,7 +534,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElementForParent(grammarAccess.getMetricRule());
+              	            current = createModelElementForParent(grammarAccess.getIntermediateReferenceRule());
               	        }
                      		set(
                      			current, 
@@ -564,7 +564,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     otherlv_2=(Token)match(input,20,FollowSets000.FOLLOW_7); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_2, grammarAccess.getMetricAccess().getAliasKeyword_2_0());
+                          	newLeafNode(otherlv_2, grammarAccess.getIntermediateReferenceAccess().getAliasKeyword_2_0());
                           
                     }
                     // InternalKiCool.g:257:1: ( (lv_alias_3_0= ruleEString ) )
@@ -575,7 +575,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getMetricAccess().getAliasEStringParserRuleCall_2_1_0()); 
+                      	        newCompositeNode(grammarAccess.getIntermediateReferenceAccess().getAliasEStringParserRuleCall_2_1_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -586,7 +586,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getMetricRule());
+                      	            current = createModelElementForParent(grammarAccess.getIntermediateReferenceRule());
                       	        }
                              		set(
                              			current, 
@@ -627,7 +627,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleMetric"
+    // $ANTLR end "ruleIntermediateReference"
 
 
     // $ANTLR start "entryRuleProcessorGroup"
@@ -1052,7 +1052,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleProcessor"
-    // InternalKiCool.g:430:1: ruleProcessor returns [EObject current=null] : ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'metric' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? ) ;
+    // InternalKiCool.g:430:1: ruleProcessor returns [EObject current=null] : ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'intermediate' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? ) ;
     public final EObject ruleProcessor() throws RecognitionException {
         EObject current = null;
 
@@ -1071,11 +1071,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiCool.g:433:28: ( ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'metric' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? ) )
-            // InternalKiCool.g:434:1: ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'metric' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? )
+            // InternalKiCool.g:433:28: ( ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'intermediate' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? ) )
+            // InternalKiCool.g:434:1: ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'intermediate' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? )
             {
-            // InternalKiCool.g:434:1: ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'metric' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? )
-            // InternalKiCool.g:434:2: (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'metric' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )?
+            // InternalKiCool.g:434:1: ( (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'intermediate' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )? )
+            // InternalKiCool.g:434:2: (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )? ( (lv_id_3_0= ruleQualifiedID ) ) (otherlv_4= 'intermediate' ( ( ruleQualifiedID ) ) )? (otherlv_6= 'post' (otherlv_7= 'set' ( (lv_postsets_8_0= ruleKVPair ) ) )+ )?
             {
             // InternalKiCool.g:434:2: (otherlv_0= 'pre' (otherlv_1= 'set' ( (lv_presets_2_0= ruleKVPair ) ) )+ )?
             int alt7=2;
@@ -1206,7 +1206,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalKiCool.g:478:2: (otherlv_4= 'metric' ( ( ruleQualifiedID ) ) )?
+            // InternalKiCool.g:478:2: (otherlv_4= 'intermediate' ( ( ruleQualifiedID ) ) )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1215,12 +1215,12 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
             switch (alt8) {
                 case 1 :
-                    // InternalKiCool.g:478:4: otherlv_4= 'metric' ( ( ruleQualifiedID ) )
+                    // InternalKiCool.g:478:4: otherlv_4= 'intermediate' ( ( ruleQualifiedID ) )
                     {
                     otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_3); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getMetricKeyword_2_0());
+                          	newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getIntermediateKeyword_2_0());
                           
                     }
                     // InternalKiCool.g:482:1: ( ( ruleQualifiedID ) )
@@ -1243,7 +1243,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricMetricCrossReference_2_1_0()); 
+                      	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricIntermediateReferenceCrossReference_2_1_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_16);

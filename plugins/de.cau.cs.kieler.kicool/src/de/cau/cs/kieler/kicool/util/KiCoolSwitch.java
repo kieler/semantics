@@ -2,15 +2,15 @@
  */
 package de.cau.cs.kieler.kicool.util;
 
+import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.Metric;
-import de.cau.cs.kieler.kicool.Processor;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
 import de.cau.cs.kieler.kicool.ProcessorContext;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
 
+import de.cau.cs.kieler.kicool.ProcessorReference;
 import de.cau.cs.kieler.kicool.ProcessorSystem;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -86,10 +86,10 @@ public class KiCoolSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KiCoolPackage.PROCESSOR: {
-                Processor processor = (Processor)theEObject;
-                T result = caseProcessor(processor);
-                if (result == null) result = caseProcessorEntry(processor);
+            case KiCoolPackage.PROCESSOR_REFERENCE: {
+                ProcessorReference processorReference = (ProcessorReference)theEObject;
+                T result = caseProcessorReference(processorReference);
+                if (result == null) result = caseProcessorEntry(processorReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -115,10 +115,10 @@ public class KiCoolSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KiCoolPackage.METRIC: {
-                Metric metric = (Metric)theEObject;
-                T result = caseMetric(metric);
-                if (result == null) result = caseProcessorEntry(metric);
+            case KiCoolPackage.INTERMEDIATE_REFERENCE: {
+                IntermediateReference intermediateReference = (IntermediateReference)theEObject;
+                T result = caseIntermediateReference(intermediateReference);
+                if (result == null) result = caseProcessorEntry(intermediateReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -169,17 +169,17 @@ public class KiCoolSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Processor</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Processor Reference</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Processor</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Processor Reference</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseProcessor(Processor object) {
+    public T caseProcessorReference(ProcessorReference object) {
         return null;
     }
 
@@ -229,17 +229,17 @@ public class KiCoolSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Metric</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Intermediate Reference</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Metric</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Intermediate Reference</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseMetric(Metric object) {
+    public T caseIntermediateReference(IntermediateReference object) {
         return null;
     }
 

@@ -3,17 +3,16 @@
 package de.cau.cs.kieler.kicool.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
+import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolFactory;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.Metric;
-import de.cau.cs.kieler.kicool.Processor;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
 import de.cau.cs.kieler.kicool.ProcessorContext;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
 
+import de.cau.cs.kieler.kicool.ProcessorReference;
 import de.cau.cs.kieler.kicool.ProcessorSystem;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -49,7 +48,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass processorEClass = null;
+    private EClass processorReferenceEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -77,7 +76,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass metricEClass = null;
+    private EClass intermediateReferenceEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -207,7 +206,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSystem_Metrics() {
+    public EReference getSystem_Intermediates() {
         return (EReference)systemEClass.getEStructuralFeatures().get(4);
     }
 
@@ -243,8 +242,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getProcessor() {
-        return processorEClass;
+    public EClass getProcessorReference() {
+        return processorReferenceEClass;
     }
 
     /**
@@ -252,8 +251,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProcessor_Presets() {
-        return (EReference)processorEClass.getEStructuralFeatures().get(0);
+    public EReference getProcessorReference_Presets() {
+        return (EReference)processorReferenceEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -261,8 +260,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProcessor_Postsets() {
-        return (EReference)processorEClass.getEStructuralFeatures().get(1);
+    public EReference getProcessorReference_Postsets() {
+        return (EReference)processorReferenceEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -270,8 +269,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProcessor_Metric() {
-        return (EReference)processorEClass.getEStructuralFeatures().get(2);
+    public EReference getProcessorReference_Metric() {
+        return (EReference)processorReferenceEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -279,8 +278,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getProcessor_Context() {
-        return (EReference)processorEClass.getEStructuralFeatures().get(3);
+    public EReference getProcessorReference_Context() {
+        return (EReference)processorReferenceEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -333,8 +332,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getMetric() {
-        return metricEClass;
+    public EClass getIntermediateReference() {
+        return intermediateReferenceEClass;
     }
 
     /**
@@ -342,8 +341,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getMetric_Alias() {
-        return (EAttribute)metricEClass.getEStructuralFeatures().get(0);
+    public EAttribute getIntermediateReference_Alias() {
+        return (EAttribute)intermediateReferenceEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -451,17 +450,17 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         createEAttribute(systemEClass, SYSTEM__VERSION);
         createEAttribute(systemEClass, SYSTEM__LABEL);
         createEReference(systemEClass, SYSTEM__PROCESSORS);
-        createEReference(systemEClass, SYSTEM__METRICS);
+        createEReference(systemEClass, SYSTEM__INTERMEDIATES);
         createEAttribute(systemEClass, SYSTEM__INPUT_CLASS);
 
         processorEntryEClass = createEClass(PROCESSOR_ENTRY);
         createEAttribute(processorEntryEClass, PROCESSOR_ENTRY__ID);
 
-        processorEClass = createEClass(PROCESSOR);
-        createEReference(processorEClass, PROCESSOR__PRESETS);
-        createEReference(processorEClass, PROCESSOR__POSTSETS);
-        createEReference(processorEClass, PROCESSOR__METRIC);
-        createEReference(processorEClass, PROCESSOR__CONTEXT);
+        processorReferenceEClass = createEClass(PROCESSOR_REFERENCE);
+        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__PRESETS);
+        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__POSTSETS);
+        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__METRIC);
+        createEReference(processorReferenceEClass, PROCESSOR_REFERENCE__CONTEXT);
 
         processorSystemEClass = createEClass(PROCESSOR_SYSTEM);
 
@@ -471,8 +470,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
 
         processorAlternativeGroupEClass = createEClass(PROCESSOR_ALTERNATIVE_GROUP);
 
-        metricEClass = createEClass(METRIC);
-        createEAttribute(metricEClass, METRIC__ALIAS);
+        intermediateReferenceEClass = createEClass(INTERMEDIATE_REFERENCE);
+        createEAttribute(intermediateReferenceEClass, INTERMEDIATE_REFERENCE__ALIAS);
 
         processorContextEClass = createEClass(PROCESSOR_CONTEXT);
         createEAttribute(processorContextEClass, PROCESSOR_CONTEXT__ENVIRONMENT);
@@ -513,11 +512,11 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        processorEClass.getESuperTypes().add(this.getProcessorEntry());
+        processorReferenceEClass.getESuperTypes().add(this.getProcessorEntry());
         processorSystemEClass.getESuperTypes().add(this.getProcessorEntry());
         processorGroupEClass.getESuperTypes().add(this.getProcessorEntry());
         processorAlternativeGroupEClass.getESuperTypes().add(this.getProcessorGroup());
-        metricEClass.getESuperTypes().add(this.getProcessorEntry());
+        intermediateReferenceEClass.getESuperTypes().add(this.getProcessorEntry());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(systemEClass, de.cau.cs.kieler.kicool.System.class, "System", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -525,17 +524,17 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         initEAttribute(getSystem_Version(), ecorePackage.getEInt(), "version", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Label(), ecorePackage.getEString(), "label", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSystem_Processors(), this.getProcessorEntry(), null, "processors", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSystem_Metrics(), this.getMetric(), null, "metrics", null, 0, -1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSystem_Intermediates(), this.getIntermediateReference(), null, "intermediates", null, 0, -1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_InputClass(), ecorePackage.getEString(), "inputClass", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(processorEntryEClass, ProcessorEntry.class, "ProcessorEntry", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getProcessorEntry_Id(), ecorePackage.getEString(), "id", null, 0, 1, ProcessorEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(processorEClass, Processor.class, "Processor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getProcessor_Presets(), this.getKVPair(), null, "presets", null, 0, -1, Processor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessor_Postsets(), this.getKVPair(), null, "postsets", null, 0, -1, Processor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessor_Metric(), this.getMetric(), null, "metric", null, 0, 1, Processor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getProcessor_Context(), this.getProcessorContext(), null, "context", null, 0, 1, Processor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(processorReferenceEClass, ProcessorReference.class, "ProcessorReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getProcessorReference_Presets(), this.getKVPair(), null, "presets", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getProcessorReference_Postsets(), this.getKVPair(), null, "postsets", null, 0, -1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getProcessorReference_Metric(), this.getIntermediateReference(), null, "metric", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getProcessorReference_Context(), this.getProcessorContext(), null, "context", null, 0, 1, ProcessorReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(processorSystemEClass, ProcessorSystem.class, "ProcessorSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -545,8 +544,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
 
         initEClass(processorAlternativeGroupEClass, ProcessorAlternativeGroup.class, "ProcessorAlternativeGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(metricEClass, Metric.class, "Metric", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMetric_Alias(), ecorePackage.getEString(), "alias", null, 0, 1, Metric.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(intermediateReferenceEClass, IntermediateReference.class, "IntermediateReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateReference_Alias(), ecorePackage.getEString(), "alias", null, 0, 1, IntermediateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(processorContextEClass, ProcessorContext.class, "ProcessorContext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         EGenericType g1 = createEGenericType(ecorePackage.getEMap());

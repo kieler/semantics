@@ -48,8 +48,8 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
 					put(grammarAccess.getSystemAccess().getGroup(), "rule__System__Group__0");
 					put(grammarAccess.getSystemAccess().getGroup_6(), "rule__System__Group_6__0");
-					put(grammarAccess.getMetricAccess().getGroup(), "rule__Metric__Group__0");
-					put(grammarAccess.getMetricAccess().getGroup_2(), "rule__Metric__Group_2__0");
+					put(grammarAccess.getIntermediateReferenceAccess().getGroup(), "rule__IntermediateReference__Group__0");
+					put(grammarAccess.getIntermediateReferenceAccess().getGroup_2(), "rule__IntermediateReference__Group_2__0");
 					put(grammarAccess.getProcessorGroupAccess().getGroup(), "rule__ProcessorGroup__Group__0");
 					put(grammarAccess.getProcessorGroupAccess().getGroup_0(), "rule__ProcessorGroup__Group_0__0");
 					put(grammarAccess.getProcessorGroupAccess().getGroup_1_1(), "rule__ProcessorGroup__Group_1_1__0");
@@ -93,10 +93,10 @@ public class KiCoolParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSystemAccess().getVersionAssignment_3(), "rule__System__VersionAssignment_3");
 					put(grammarAccess.getSystemAccess().getLabelAssignment_5(), "rule__System__LabelAssignment_5");
 					put(grammarAccess.getSystemAccess().getInputClassAssignment_6_1(), "rule__System__InputClassAssignment_6_1");
-					put(grammarAccess.getSystemAccess().getMetricsAssignment_7(), "rule__System__MetricsAssignment_7");
+					put(grammarAccess.getSystemAccess().getIntermediatesAssignment_7(), "rule__System__IntermediatesAssignment_7");
 					put(grammarAccess.getSystemAccess().getProcessorsAssignment_8(), "rule__System__ProcessorsAssignment_8");
-					put(grammarAccess.getMetricAccess().getIdAssignment_1(), "rule__Metric__IdAssignment_1");
-					put(grammarAccess.getMetricAccess().getAliasAssignment_2_1(), "rule__Metric__AliasAssignment_2_1");
+					put(grammarAccess.getIntermediateReferenceAccess().getIdAssignment_1(), "rule__IntermediateReference__IdAssignment_1");
+					put(grammarAccess.getIntermediateReferenceAccess().getAliasAssignment_2_1(), "rule__IntermediateReference__AliasAssignment_2_1");
 					put(grammarAccess.getProcessorGroupAccess().getLabelAssignment_0_1(), "rule__ProcessorGroup__LabelAssignment_0_1");
 					put(grammarAccess.getProcessorGroupAccess().getProcessorsAssignment_1_0(), "rule__ProcessorGroup__ProcessorsAssignment_1_0");
 					put(grammarAccess.getProcessorGroupAccess().getProcessorsAssignment_1_1_1(), "rule__ProcessorGroup__ProcessorsAssignment_1_1_1");
