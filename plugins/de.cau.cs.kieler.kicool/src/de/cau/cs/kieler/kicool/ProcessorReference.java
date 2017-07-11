@@ -16,7 +16,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPresets <em>Presets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getPostsets <em>Postsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getMetric <em>Metric</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.ProcessorReference#getContext <em>Context</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference()
@@ -81,31 +80,5 @@ public interface ProcessorReference extends ProcessorEntry {
      * @generated
      */
     void setMetric(IntermediateReference value);
-
-    /**
-     * Returns the value of the '<em><b>Context</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Context</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Context</em>' containment reference.
-     * @see #setContext(ProcessorContext)
-     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getProcessorReference_Context()
-     * @model containment="true"
-     * @generated
-     */
-    ProcessorContext getContext();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kicool.ProcessorReference#getContext <em>Context</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Context</em>' containment reference.
-     * @see #getContext()
-     * @generated
-     */
-    void setContext(ProcessorContext value);
 
 } // ProcessorReference

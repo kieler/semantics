@@ -6,7 +6,6 @@ import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
-import de.cau.cs.kieler.kicool.ProcessorContext;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
 
@@ -118,13 +117,8 @@ public class KiCoolSwitch<T> extends Switch<T> {
             case KiCoolPackage.INTERMEDIATE_REFERENCE: {
                 IntermediateReference intermediateReference = (IntermediateReference)theEObject;
                 T result = caseIntermediateReference(intermediateReference);
+                if (result == null) result = caseProcessorReference(intermediateReference);
                 if (result == null) result = caseProcessorEntry(intermediateReference);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KiCoolPackage.PROCESSOR_CONTEXT: {
-                ProcessorContext processorContext = (ProcessorContext)theEObject;
-                T result = caseProcessorContext(processorContext);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -240,21 +234,6 @@ public class KiCoolSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIntermediateReference(IntermediateReference object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Processor Context</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Processor Context</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseProcessorContext(ProcessorContext object) {
         return null;
     }
 

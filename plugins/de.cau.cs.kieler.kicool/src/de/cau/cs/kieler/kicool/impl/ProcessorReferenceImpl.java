@@ -5,7 +5,6 @@ package de.cau.cs.kieler.kicool.impl;
 import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.ProcessorContext;
 import de.cau.cs.kieler.kicool.ProcessorReference;
 
 import java.util.Collection;
@@ -34,7 +33,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPresets <em>Presets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getPostsets <em>Postsets</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getMetric <em>Metric</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kicool.impl.ProcessorReferenceImpl#getContext <em>Context</em>}</li>
  * </ul>
  *
  * @generated
@@ -69,16 +67,6 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * @ordered
      */
     protected IntermediateReference metric;
-
-    /**
-     * The cached value of the '{@link #getContext() <em>Context</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getContext()
-     * @generated
-     * @ordered
-     */
-    protected ProcessorContext context;
 
     /**
      * <!-- begin-user-doc -->
@@ -166,49 +154,6 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
-    public ProcessorContext getContext() {
-        return context;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetContext(ProcessorContext newContext, NotificationChain msgs) {
-        ProcessorContext oldContext = context;
-        context = newContext;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT, oldContext, newContext);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setContext(ProcessorContext newContext) {
-        if (newContext != context) {
-            NotificationChain msgs = null;
-            if (context != null)
-                msgs = ((InternalEObject)context).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT, null, msgs);
-            if (newContext != null)
-                msgs = ((InternalEObject)newContext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT, null, msgs);
-            msgs = basicSetContext(newContext, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT, newContext, newContext));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -216,8 +161,6 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
                 return ((InternalEList<?>)getPresets()).basicRemove(otherEnd, msgs);
             case KiCoolPackage.PROCESSOR_REFERENCE__POSTSETS:
                 return ((InternalEList<?>)getPostsets()).basicRemove(otherEnd, msgs);
-            case KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT:
-                return basicSetContext(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -237,8 +180,6 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 if (resolve) return getMetric();
                 return basicGetMetric();
-            case KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT:
-                return getContext();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -263,9 +204,6 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 setMetric((IntermediateReference)newValue);
                 return;
-            case KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT:
-                setContext((ProcessorContext)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -287,9 +225,6 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 setMetric((IntermediateReference)null);
                 return;
-            case KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT:
-                setContext((ProcessorContext)null);
-                return;
         }
         super.eUnset(featureID);
     }
@@ -308,8 +243,6 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
                 return postsets != null && !postsets.isEmpty();
             case KiCoolPackage.PROCESSOR_REFERENCE__METRIC:
                 return metric != null;
-            case KiCoolPackage.PROCESSOR_REFERENCE__CONTEXT:
-                return context != null;
         }
         return super.eIsSet(featureID);
     }

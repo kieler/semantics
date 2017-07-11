@@ -222,22 +222,13 @@ public interface KiCoolPackage extends EPackage {
     int PROCESSOR_REFERENCE__METRIC = PROCESSOR_ENTRY_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Context</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_REFERENCE__CONTEXT = PROCESSOR_ENTRY_FEATURE_COUNT + 3;
-
-    /**
      * The number of structural features of the '<em>Processor Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 4;
+    int PROCESSOR_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 3;
 
     /**
      * The number of operations of the '<em>Processor Reference</em>' class.
@@ -412,7 +403,34 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_REFERENCE__ID = PROCESSOR_ENTRY__ID;
+    int INTERMEDIATE_REFERENCE__ID = PROCESSOR_REFERENCE__ID;
+
+    /**
+     * The feature id for the '<em><b>Presets</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_REFERENCE__PRESETS = PROCESSOR_REFERENCE__PRESETS;
+
+    /**
+     * The feature id for the '<em><b>Postsets</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_REFERENCE__POSTSETS = PROCESSOR_REFERENCE__POSTSETS;
+
+    /**
+     * The feature id for the '<em><b>Metric</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_REFERENCE__METRIC = PROCESSOR_REFERENCE__METRIC;
 
     /**
      * The feature id for the '<em><b>Alias</b></em>' attribute.
@@ -421,7 +439,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_REFERENCE__ALIAS = PROCESSOR_ENTRY_FEATURE_COUNT + 0;
+    int INTERMEDIATE_REFERENCE__ALIAS = PROCESSOR_REFERENCE_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Intermediate Reference</em>' class.
@@ -430,7 +448,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_REFERENCE_FEATURE_COUNT = PROCESSOR_ENTRY_FEATURE_COUNT + 1;
+    int INTERMEDIATE_REFERENCE_FEATURE_COUNT = PROCESSOR_REFERENCE_FEATURE_COUNT + 1;
 
     /**
      * The number of operations of the '<em>Intermediate Reference</em>' class.
@@ -439,63 +457,7 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_REFERENCE_OPERATION_COUNT = PROCESSOR_ENTRY_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorContextImpl <em>Processor Context</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kicool.impl.ProcessorContextImpl
-     * @see de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl#getProcessorContext()
-     * @generated
-     */
-    int PROCESSOR_CONTEXT = 7;
-
-    /**
-     * The feature id for the '<em><b>Environment</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_CONTEXT__ENVIRONMENT = 0;
-
-    /**
-     * The feature id for the '<em><b>Source Model</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_CONTEXT__SOURCE_MODEL = 1;
-
-    /**
-     * The feature id for the '<em><b>Targets</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_CONTEXT__TARGETS = 2;
-
-    /**
-     * The number of structural features of the '<em>Processor Context</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_CONTEXT_FEATURE_COUNT = 3;
-
-    /**
-     * The number of operations of the '<em>Processor Context</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PROCESSOR_CONTEXT_OPERATION_COUNT = 0;
-
+    int INTERMEDIATE_REFERENCE_OPERATION_COUNT = PROCESSOR_REFERENCE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kicool.impl.KVPairImpl <em>KV Pair</em>}' class.
@@ -505,7 +467,7 @@ public interface KiCoolPackage extends EPackage {
      * @see de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl#getKVPair()
      * @generated
      */
-    int KV_PAIR = 8;
+    int KV_PAIR = 7;
 
     /**
      * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -694,17 +656,6 @@ public interface KiCoolPackage extends EPackage {
     EReference getProcessorReference_Metric();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kicool.ProcessorReference#getContext <em>Context</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Context</em>'.
-     * @see de.cau.cs.kieler.kicool.ProcessorReference#getContext()
-     * @see #getProcessorReference()
-     * @generated
-     */
-    EReference getProcessorReference_Context();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.ProcessorSystem <em>Processor System</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -776,49 +727,6 @@ public interface KiCoolPackage extends EPackage {
      * @generated
      */
     EAttribute getIntermediateReference_Alias();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.ProcessorContext <em>Processor Context</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Processor Context</em>'.
-     * @see de.cau.cs.kieler.kicool.ProcessorContext
-     * @generated
-     */
-    EClass getProcessorContext();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kicool.ProcessorContext#getEnvironment <em>Environment</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Environment</em>'.
-     * @see de.cau.cs.kieler.kicool.ProcessorContext#getEnvironment()
-     * @see #getProcessorContext()
-     * @generated
-     */
-    EAttribute getProcessorContext_Environment();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kicool.ProcessorContext#getSourceModel <em>Source Model</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Source Model</em>'.
-     * @see de.cau.cs.kieler.kicool.ProcessorContext#getSourceModel()
-     * @see #getProcessorContext()
-     * @generated
-     */
-    EReference getProcessorContext_SourceModel();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kicool.ProcessorContext#getTargets <em>Targets</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Targets</em>'.
-     * @see de.cau.cs.kieler.kicool.ProcessorContext#getTargets()
-     * @see #getProcessorContext()
-     * @generated
-     */
-    EReference getProcessorContext_Targets();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kicool.KVPair <em>KV Pair</em>}'.
@@ -997,14 +905,6 @@ public interface KiCoolPackage extends EPackage {
         EReference PROCESSOR_REFERENCE__METRIC = eINSTANCE.getProcessorReference_Metric();
 
         /**
-         * The meta object literal for the '<em><b>Context</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference PROCESSOR_REFERENCE__CONTEXT = eINSTANCE.getProcessorReference_Context();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorSystemImpl <em>Processor System</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1067,40 +967,6 @@ public interface KiCoolPackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_REFERENCE__ALIAS = eINSTANCE.getIntermediateReference_Alias();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.ProcessorContextImpl <em>Processor Context</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kicool.impl.ProcessorContextImpl
-         * @see de.cau.cs.kieler.kicool.impl.KiCoolPackageImpl#getProcessorContext()
-         * @generated
-         */
-        EClass PROCESSOR_CONTEXT = eINSTANCE.getProcessorContext();
-
-        /**
-         * The meta object literal for the '<em><b>Environment</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute PROCESSOR_CONTEXT__ENVIRONMENT = eINSTANCE.getProcessorContext_Environment();
-
-        /**
-         * The meta object literal for the '<em><b>Source Model</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference PROCESSOR_CONTEXT__SOURCE_MODEL = eINSTANCE.getProcessorContext_SourceModel();
-
-        /**
-         * The meta object literal for the '<em><b>Targets</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference PROCESSOR_CONTEXT__TARGETS = eINSTANCE.getProcessorContext_Targets();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kicool.impl.KVPairImpl <em>KV Pair</em>}' class.

@@ -20,8 +20,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="postsets" upperBound="-1"
         eType="#//KVPair" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="metric" eType="#//IntermediateReference"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//ProcessorContext"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorSystem" eSuperTypes="#//ProcessorEntry"/>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorGroup" eSuperTypes="#//ProcessorEntry">
@@ -30,20 +28,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessorAlternativeGroup" eSuperTypes="#//ProcessorGroup"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IntermediateReference" eSuperTypes="#//ProcessorEntry">
+  <eClassifiers xsi:type="ecore:EClass" name="IntermediateReference" eSuperTypes="#//ProcessorReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="alias" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProcessorContext">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="environment" transient="true">
-      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
-        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      </eGenericType>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceModel" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="targets" upperBound="-1"
-        eType="#//ProcessorContext" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KVPair">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

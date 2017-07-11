@@ -7,7 +7,6 @@ import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolFactory;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
-import de.cau.cs.kieler.kicool.ProcessorContext;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
 
 import de.cau.cs.kieler.kicool.ProcessorReference;
@@ -70,7 +69,6 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
             case KiCoolPackage.PROCESSOR_GROUP: return createProcessorGroup();
             case KiCoolPackage.PROCESSOR_ALTERNATIVE_GROUP: return createProcessorAlternativeGroup();
             case KiCoolPackage.INTERMEDIATE_REFERENCE: return createIntermediateReference();
-            case KiCoolPackage.PROCESSOR_CONTEXT: return createProcessorContext();
             case KiCoolPackage.KV_PAIR: return createKVPair();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -135,16 +133,6 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
     public IntermediateReference createIntermediateReference() {
         IntermediateReferenceImpl intermediateReference = new IntermediateReferenceImpl();
         return intermediateReference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ProcessorContext createProcessorContext() {
-        ProcessorContextImpl processorContext = new ProcessorContextImpl();
-        return processorContext;
     }
 
     /**

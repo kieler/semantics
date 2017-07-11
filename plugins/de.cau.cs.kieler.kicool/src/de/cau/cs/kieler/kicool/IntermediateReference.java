@@ -19,7 +19,7 @@ package de.cau.cs.kieler.kicool;
  * @model
  * @generated
  */
-public interface IntermediateReference extends ProcessorEntry {
+public interface IntermediateReference extends ProcessorReference {
     /**
      * Returns the value of the '<em><b>Alias</b></em>' attribute.
      * <!-- begin-user-doc -->

@@ -76,15 +76,6 @@ public interface KiCoolFactory extends EFactory {
     IntermediateReference createIntermediateReference();
 
     /**
-     * Returns a new object of class '<em>Processor Context</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Processor Context</em>'.
-     * @generated
-     */
-    ProcessorContext createProcessorContext();
-
-    /**
      * Returns a new object of class '<em>KV Pair</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

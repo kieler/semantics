@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class IntermediateReferenceImpl extends ProcessorEntryImpl implements IntermediateReference {
+public class IntermediateReferenceImpl extends ProcessorReferenceImpl implements IntermediateReference {
     /**
      * The default value of the '{@link #getAlias() <em>Alias</em>}' attribute.
      * <!-- begin-user-doc -->
