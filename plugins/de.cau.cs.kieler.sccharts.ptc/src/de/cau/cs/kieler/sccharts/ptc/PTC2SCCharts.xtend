@@ -168,28 +168,19 @@ public class PTC2SCCharts {
         element.map(state)
         targetModel.transformGeneral(element)
 
-        for (child : element.eContents.toList) {
-            val childElement = child as Element
-            if (childElement != null) {
-                println(
-                    "STATE CHILD eAllContents XXXXXXXXXX: [" + childElement.eClass.name + "]  " + childElement.name +
-                        " : " + childElement.id + " --- " + childElement.kind);
+//        for (child : element.eContents.toList) {
+//            val childElement = child as Element
+//            if (childElement != null) {
+//                println(
+//                    "STATE CHILD eAllContents XXXXXXXXXX: [" + childElement.eClass.name + "]  " + childElement.name +
+//                        " : " + childElement.id + " --- " + childElement.kind);
+//
+//                if (child instanceof Element) {
+//                }
+//            }
+//        }
 
-                if (child instanceof Element) {
-                    if (child.kind == "entry") {
-                        val action = state.createEntryAction
-                        action.addEffect(asHostcodeEffect(childElement.name))
-                    } else if (child.kind == "exit") {
-                        val action = state.createExitAction
-                        action.addEffect(asHostcodeEffect(childElement.name))
-                    } else if (child.body != null) {
-                        // transition.label = child.body
-                    }
-                }
-            }
-        }
-
-    // TODO: Entry & Exit
+// TODO: Entry & Exit
     /*
      *                       <subvertex xmi:type = "uml:State" xmi:id = "_b1665af3-fe27-11d2-a541-00104bb05af8" name = "FlashOn">
      *                         <entry xmi:id = "_b1665afe-fe27-11d2-a541-00104bb05af8Activ" xmi:type = "uml:Activity" name = "Lights::Amber(1);">
@@ -200,7 +191,24 @@ public class PTC2SCCharts {
     }
 
     def transformActivity(List<State> targetModel, Element element) {
-        //
+        if (element.umlType != "Activity") {
+            return
+        }
+        if (element.type == "entry" || element.umlType == "exit") {
+        val parentState = element.parentAnyState
+        if (parentState != null) {
+                 if (element.type == "entry") {
+                        val action = (parentState.src2target as State).createEntryAction
+                        action.addEffect(asHostcodeEffect(element.name))
+                 }
+                 if (element.umlType == "exit") {
+                        val action = (parentState.src2target as State).createExitAction
+                        action.addEffect(asHostcodeEffect(element.name))
+                 }
+        }
+            
+            
+        }
     }
 
     def transformEvent(List<State> targetModel, Element element) {
@@ -300,39 +308,37 @@ public class PTC2SCCharts {
     }
 
     def transformGeneral(List<State> targetModel, Element element) {
-
         for (childElement : element.children) {
             println("UML TYPE:" + childElement.umlType)
-
             if (childElement.id.endsWith("Event")) {
                 targetModel.transformEvent(childElement)
-            } else if (childElement.umlType == "StateMachine") {
+            } else if (childElement.isUMLStateMachine) {
                 targetModel.transformStateMachine(childElement)
-            } else if (childElement.umlType == "Region") {
+            } else if (childElement.isUMLRegion) {
                 targetModel.transformRegion(childElement, element)
-            } else if (childElement.umlType == "Pseudostate") {
+            } else if (childElement.isUMLPseudostate) {
                 targetModel.transformPseudostate(childElement, element)
-            } else if (childElement.umlType == "FinalState") {
+            } else if (childElement.isUMLFinalState) {
                 targetModel.transformFinalState(childElement, element)
-            } else if (childElement.umlType == "State") {
+            } else if (childElement.isUMLState) {
                 targetModel.transformState(childElement, element)
-            } else if (childElement.umlType == "Activity") {
+            } else if (childElement.isUMLActivity) {
                 targetModel.transformActivity(childElement)
-            } else if (childElement.umlType == "Transition") {
+            } else if (childElement.isUMLTransition) {
                 targetModel.transformTransition(childElement)
-            } else if (childElement.umlType == "Trigger") {
+            } else if (childElement.isUMLTrigger) {
                 targetModel.transformTrigger(childElement, element)
-            } else if (childElement.umlType == "OpaqueBehavior") {
+            } else if (childElement.isUMLOpaqueBehavior) {
                 targetModel.transformOpaqueBehavior(childElement)
-            } else if (childElement.umlType == "OpaqueExpression") {
+            } else if (childElement.isUMLOpaqueExpression) {
                 targetModel.transformOpaqueExpression(childElement)
-            } else if (childElement.umlType == "Operation") {
+            } else if (childElement.isUMLOperation) {
                 targetModel.transformOperation(childElement)
-            } else if (childElement.umlType == "Parameter") {
+            } else if (childElement.isUMLParameter) {
                 targetModel.transformParameter(childElement)
-            } else if (childElement.umlType == "OpaqueBehavior") {
+            } else if (childElement.isUMLOpaqueBehavior) {
                 targetModel.transformOpaqueBehavior(childElement)
-            } else if (childElement.umlType == "Property") {
+            } else if (childElement.isUMLProperty) {
                 targetModel.transformProperty(childElement)
             } else if (childElement.children.size > 0) {
                 // A container
@@ -340,7 +346,6 @@ public class PTC2SCCharts {
             }
 
         }
-
     }
 
     def transform(EObject model) {

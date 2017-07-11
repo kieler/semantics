@@ -41,6 +41,82 @@ class PTCXMIUMLExtensions {
         }
     }
 
+    // -----------------------------------------------------------------
+
+    /**
+     *  Get the parent state recursively
+     */
+    def Element getParentAnyState(Element element) {
+        if (element.parent == null) {
+            return null
+        }
+        if(element.parent.isUMLAnyState) {
+            return element.parent
+        }
+        return element.parent.parentAnyState
+    }
+
+    // -----------------------------------------------------------------
+    
+    def boolean isUMLAnyState(Element element) {
+        return (element.isUMLState || element.isUMLFinalState || element.isUMLPseudostate)
+    }
+
+    // -----------------------------------------------------------------
+
+    def boolean isUMLStateMachine(Element element) { 
+        return (element.umlType == "StateMachine")
+    }
+
+    def boolean isUMLRegion(Element element) { 
+        return (element.umlType == "Region")
+    }
+
+    def boolean isUMLPseudostate(Element element) { 
+        return (element.umlType == "Pseudostate")
+    }
+
+    def boolean isUMLFinalState(Element element) { 
+        return (element.umlType == "FinalState")
+    }
+
+    def boolean isUMLState(Element element) { 
+        return (element.umlType == "State")
+    }
+
+    def boolean isUMLActivity(Element element) { 
+        return (element.umlType == "Activity")
+    }
+
+    def boolean isUMLTransition(Element element) { 
+        return (element.umlType == "Transition")
+    }
+
+    def boolean isUMLTrigger(Element element) { 
+        return (element.umlType == "Trigger")
+    }
+
+    def boolean isUMLOpaqueBehavior(Element element) { 
+        return (element.umlType == "OpaqueBehavior")
+    }
+
+    def boolean isUMLOpaqueExpression(Element element) { 
+        return (element.umlType == "OpaqueExpression")
+    }
+
+    def boolean isUMLOperation(Element element) { 
+        return (element.umlType == "Operation")
+    }
+
+    def boolean isUMLParameter(Element element) { 
+        return (element.umlType == "Parameter")
+    }
+
+    def boolean isUMLProperty(Element element) { 
+        return (element.umlType == "Property")
+    }
+
+    // -----------------------------------------------------------------
     def String getVisibility(Element content) {
         return content.attributeByName("visibility")
     }

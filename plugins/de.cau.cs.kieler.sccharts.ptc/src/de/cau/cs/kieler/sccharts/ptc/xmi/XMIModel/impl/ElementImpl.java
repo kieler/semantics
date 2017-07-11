@@ -10,14 +10,17 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -57,7 +60,7 @@ public class ElementImpl extends MinimalEObjectImpl.Container implements Element
     protected String type = TYPE_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
+     * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getChildren()
@@ -67,7 +70,7 @@ public class ElementImpl extends MinimalEObjectImpl.Container implements Element
     protected EList<Element> children;
 
     /**
-     * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' reference list.
+     * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getAttributes()
@@ -143,7 +146,7 @@ public class ElementImpl extends MinimalEObjectImpl.Container implements Element
      */
     public EList<Element> getChildren() {
         if (children == null) {
-            children = new EObjectResolvingEList<Element>(Element.class, this, XMIModelPackage.ELEMENT__CHILDREN);
+            children = new EObjectContainmentEList<Element>(Element.class, this, XMIModelPackage.ELEMENT__CHILDREN);
         }
         return children;
     }
@@ -155,7 +158,7 @@ public class ElementImpl extends MinimalEObjectImpl.Container implements Element
      */
     public EList<Attribute> getAttributes() {
         if (attributes == null) {
-            attributes = new EObjectResolvingEList<Attribute>(Attribute.class, this, XMIModelPackage.ELEMENT__ATTRIBUTES);
+            attributes = new EObjectContainmentEList<Attribute>(Attribute.class, this, XMIModelPackage.ELEMENT__ATTRIBUTES);
         }
         return attributes;
     }
@@ -179,6 +182,22 @@ public class ElementImpl extends MinimalEObjectImpl.Container implements Element
         content = newContent;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, XMIModelPackage.ELEMENT__CONTENT, oldContent, content));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case XMIModelPackage.ELEMENT__CHILDREN:
+                return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
+            case XMIModelPackage.ELEMENT__ATTRIBUTES:
+                return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**

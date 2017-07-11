@@ -53,7 +53,7 @@ public interface Element extends EObject {
     void setType(String value);
 
     /**
-     * Returns the value of the '<em><b>Children</b></em>' reference list.
+     * Returns the value of the '<em><b>Children</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element}.
      * <!-- begin-user-doc -->
      * <p>
@@ -61,15 +61,15 @@ public interface Element extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Children</em>' reference list.
+     * @return the value of the '<em>Children</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getElement_Children()
-     * @model
+     * @model containment="true"
      * @generated
      */
     EList<Element> getChildren();
 
     /**
-     * Returns the value of the '<em><b>Attributes</b></em>' reference list.
+     * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute}.
      * <!-- begin-user-doc -->
      * <p>
@@ -77,9 +77,9 @@ public interface Element extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Attributes</em>' reference list.
+     * @return the value of the '<em>Attributes</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.XMIModelPackage#getElement_Attributes()
-     * @model
+     * @model containment="true"
      * @generated
      */
     EList<Attribute> getAttributes();

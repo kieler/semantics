@@ -76,7 +76,7 @@ public interface XMIModelPackage extends EPackage {
     int ELEMENT__TYPE = 0;
 
     /**
-     * The feature id for the '<em><b>Children</b></em>' reference list.
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -85,7 +85,7 @@ public interface XMIModelPackage extends EPackage {
     int ELEMENT__CHILDREN = 1;
 
     /**
-     * The feature id for the '<em><b>Attributes</b></em>' reference list.
+     * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -189,10 +189,10 @@ public interface XMIModelPackage extends EPackage {
     EAttribute getElement_Type();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getChildren <em>Children</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getChildren <em>Children</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Children</em>'.
+     * @return the meta object for the containment reference list '<em>Children</em>'.
      * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getChildren()
      * @see #getElement()
      * @generated
@@ -200,10 +200,10 @@ public interface XMIModelPackage extends EPackage {
     EReference getElement_Children();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getAttributes <em>Attributes</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getAttributes <em>Attributes</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Attributes</em>'.
+     * @return the meta object for the containment reference list '<em>Attributes</em>'.
      * @see de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element#getAttributes()
      * @see #getElement()
      * @generated
@@ -295,7 +295,7 @@ public interface XMIModelPackage extends EPackage {
         EAttribute ELEMENT__TYPE = eINSTANCE.getElement_Type();
 
         /**
-         * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -303,7 +303,7 @@ public interface XMIModelPackage extends EPackage {
         EReference ELEMENT__CHILDREN = eINSTANCE.getElement_Children();
 
         /**
-         * The meta object literal for the '<em><b>Attributes</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
