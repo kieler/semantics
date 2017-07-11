@@ -31,6 +31,8 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
+import java.util.List
+import java.util.ArrayList
 
 /**
  * @author ssm
@@ -43,12 +45,14 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors System system
     @Accessors Object sourceModel
     @Accessors Map<ProcessorReference, Processor<?,?>> processorMap
+    @Accessors List<Processor<?,?>> processorInstancesSequence 
     @Accessors Map<ProcessorSystem, CompilationContext> subContexts
     @Accessors CompilationContext parentContext = null
     @Accessors Environment startEnvironment
     
     new() {
         processorMap = new HashMap<ProcessorReference, Processor<?,?>>()
+        processorInstancesSequence = new ArrayList<Processor<?,?>>()
         subContexts = new HashMap<ProcessorSystem, CompilationContext>()
         
         startEnvironment = new Environment
@@ -67,13 +71,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getFirstProcessorInstance() {
-        val processor = (system.processors as ProcessorGroup).processors.head
-        if (processor instanceof ProcessorGroup) {
-            val groupProcessor = processor.processors.head
-            return processorMap.get(groupProcessor)
-        } else {
-            return processorMap.get(processor)
-        }
+        processorInstancesSequence.head
     }
     
     public def notify(Object arg) {

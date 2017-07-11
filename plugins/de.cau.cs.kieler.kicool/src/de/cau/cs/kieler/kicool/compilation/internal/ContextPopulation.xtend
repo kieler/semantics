@@ -37,8 +37,8 @@ class ContextPopulation {
     }
     
     static dispatch def void populate(ProcessorReference processorReference, CompilationContext cc) {
-        val processorCompilationUnit = KiCoolRegistration.getProcessorInstance(processorReference.id)
-        if (processorCompilationUnit == null) {
+        val processorInstance = KiCoolRegistration.getProcessorInstance(processorReference.id)
+        if (processorInstance == null) {
             System.err.println("The context cannot find a compilation unit for the processor " + processorReference)
             return
         }
@@ -46,23 +46,24 @@ class ContextPopulation {
         val envP = new Environment()
         env.setProperty(Environment.ENABLED, true)
         
-        processorCompilationUnit.setEnvironment(env, envP)
+        processorInstance.setEnvironment(env, envP)
         
-        cc.processorMap.put(processorReference, processorCompilationUnit)
+        cc.processorMap.put(processorReference, processorInstance)
+        cc.processorInstancesSequence.add(processorInstance)
     }
 
     static dispatch def void populate(IntermediateReference intermediateReference, CompilationContext cc) {
-        val processorCompilationUnit = KiCoolRegistration.getProcessorInstance(intermediateReference.id)
-        if (processorCompilationUnit == null) {
+        val processorInstance = KiCoolRegistration.getProcessorInstance(intermediateReference.id)
+        if (processorInstance == null) {
             System.err.println("The context cannot find a compilation unit for the metric " + intermediateReference)
             return
         }
         val env = new Environment()
         val envP = new Environment()
         
-        processorCompilationUnit.setEnvironment(env, envP)
+        processorInstance.setEnvironment(env, envP)
         
-        cc.processorMap.put(intermediateReference, processorCompilationUnit)
+        cc.processorMap.put(intermediateReference, processorInstance)
     }
     
     static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorGroup processorGroup, CompilationContext cc) {
