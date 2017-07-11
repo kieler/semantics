@@ -96,9 +96,10 @@ class Visualizer {
             // Add points as straight
             for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
                 model.addVariable(new Variable("point_" + i, 0))
-                
             }
-
+            
+            addedVars.clear()
+            
         }
 
         /**
@@ -156,7 +157,7 @@ class Visualizer {
             val modelVars = model.variables
 
             for (variable : addedVars) {
-                modelVars.remove(variable)
+                System.out.println(modelVars.remove(variable))
             }
             
             addedVars.clear   
@@ -248,9 +249,9 @@ class Visualizer {
                 }
                 
                 // Add the new variables to the DataPool and log them as newly added 
-                model.addVariable(forwardSignal)
-                model.addVariable(reverseSignal)
-                model.addVariable(speedVar)
+                model.variables.add(0, forwardSignal)
+                model.variables.add(0, reverseSignal)
+                model.variables.add(0, speedVar)
                 
                 addedVars.add(forwardSignal)
                 addedVars.add(reverseSignal)
