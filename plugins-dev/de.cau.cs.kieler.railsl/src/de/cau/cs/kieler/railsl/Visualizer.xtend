@@ -95,6 +95,8 @@ class Visualizer {
 
             // Add points as straight
             for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
+                model.addVariable(new Variable("point_" + i, 0))
+                
             }
 
         }
