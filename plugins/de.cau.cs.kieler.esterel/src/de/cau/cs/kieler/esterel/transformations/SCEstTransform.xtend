@@ -72,18 +72,9 @@ class SCEstTransform extends AbstractExpansionTransformation {
     @Inject
     extension SCEstExtension
     
-    var moduleReferences = new HashMap<Module, Run>
     var SCEstProgram scestProgram
     
     def SCEstProgram transform(Program prog) {
-//        for (var i=0; i<prog.modules.length; i++) {
-//            prog.modules.set(i, prog.modules.get(i) as SCEstModule)
-//        }
-//        return prog
-//        var scestProgram = createSCEstProgram
-//        for (m : prog.modules) {
-//            scestProgram.modules.add(m.copyModule)
-//        }
         scestProgram = createSCEstProgram
         for (var i=0; i<prog.modules.length; i++) {
             var m = prog.modules.get(i)
@@ -122,8 +113,6 @@ class SCEstTransform extends AbstractExpansionTransformation {
             // create a copy of the referenced module
             // so that the original module will not be modified
             // and update the renamings
-            var statements = statement.containingList
-            var pos = statements.indexOf(statement)
             var moduleCopy = EcoreUtil.copy(statement.module.module)
             var moduleCopy2 = moduleCopy.copyModule
             statement.module.module = moduleCopy2

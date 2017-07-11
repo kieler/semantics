@@ -142,7 +142,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     }
     
     def EList<Statement> transformStatements(EList<Statement> statements, Module parentModule) {
-        for (var i=0; i<statements.length; i++) {
+        for (var i=0; i<statements?.length; i++) {
             statements.get(i).transformStatement(parentModule)
         }
         return statements
