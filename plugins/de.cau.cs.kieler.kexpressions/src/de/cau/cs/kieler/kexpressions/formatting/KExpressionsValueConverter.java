@@ -124,7 +124,7 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
                 if (value == null)
                     throw new ValueConverterException(
                             "HOSTCODE may not be 'null'.", null, null);
-                return "'" + value.toString() + "'";
+                return "`" + value.toString() + "`";
             }
         };
     }
