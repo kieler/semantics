@@ -25,6 +25,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeIdentifier/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeIdentifier/typeID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeIdentifier/operator"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeIdentifier/estType"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//TypeDecl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeDecl/annotations"/>
@@ -261,9 +262,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/expression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayExpr/isImmediate"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/signalExpr"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//EsterelType">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelType/estType"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Input"/>
     <genClasses ecoreClass="Esterel.ecore#//Output"/>

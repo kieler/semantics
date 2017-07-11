@@ -37,7 +37,6 @@ import de.cau.cs.kieler.esterel.esterel.IVariable
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.esterel.EsterelType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
 import de.cau.cs.kieler.scl.scl.Assignment
@@ -193,7 +192,7 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             }
             else {
                  throw new UnsupportedOperationException(
-                        "The type is not supported! " + decl.type.typeID + "|" + (decl.type as EsterelType)?.estType)
+                        "The type is not supported! " + decl.type.typeID + "|" + decl.type.estType)
             }
                 
         }

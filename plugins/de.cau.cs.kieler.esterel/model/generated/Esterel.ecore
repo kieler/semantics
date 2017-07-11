@@ -29,6 +29,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//CombineOperator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estType" eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeDecl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
@@ -371,9 +372,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signalExpr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EsterelType" eSuperTypes="#//TypeIdentifier">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="estType" eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Input" eSuperTypes="#//InterfaceSignalDecl"/>
   <eClassifiers xsi:type="ecore:EClass" name="Output" eSuperTypes="#//InterfaceSignalDecl"/>

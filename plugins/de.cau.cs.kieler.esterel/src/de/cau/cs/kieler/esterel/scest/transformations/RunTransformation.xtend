@@ -48,7 +48,6 @@ import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
 import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming
 import de.cau.cs.kieler.esterel.esterel.TaskRenaming
-import de.cau.cs.kieler.esterel.esterel.EsterelType
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scl.scl.Statement
@@ -517,7 +516,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                 var type = checkIfTypeExistsByName(oldType.name, parentModule)
                 if (type instanceof Type) {
                     for (typeIdent : typeIdentifiers) {
-                        if (typeIdent instanceof EsterelType) {
+                        if (typeIdent.estType != null) {
                             if (typeIdent.estType == oldType) {
                                 typeIdent.estType = type
                             }

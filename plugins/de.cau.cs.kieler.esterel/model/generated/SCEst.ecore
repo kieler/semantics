@@ -8,7 +8,6 @@
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ModuleRenaming" eSuperTypes="Esterel.ecore#//ModuleRenaming"/>
   <eClassifiers xsi:type="ecore:EClass" name="UnEmit" eSuperTypes="platform:/resource/de.cau.cs.kieler.scl/model/scl.ecore#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass Esterel.ecore#//ISignal"/>
   </eClassifiers>

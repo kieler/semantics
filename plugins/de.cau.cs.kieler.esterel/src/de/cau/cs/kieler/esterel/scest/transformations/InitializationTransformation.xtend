@@ -176,14 +176,16 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
             // create a copy of the referenced module
             // so that the original module will not be modified
             // and update the renamings
-            var statements = statement.containingList
-            var pos = statements.indexOf(statement)
-            var moduleCopy = EcoreUtil.copy(statement.module.module)
-            statement.module.module = moduleCopy
-            moduleCopy.name = moduleCopy.name.createNewUniqueModuleName
-            moduleCopy.annotations.add(createModuleAnnotation)
-            statement.transformRenamingsAfterModuleCopy
-            scestProgram.modules.add(moduleCopy)
+//            var statements = statement.containingList
+//            var pos = statements.indexOf(statement)
+            if (!statement.module.module.annotations.isGeneratedModule) {
+                var moduleCopy = EcoreUtil.copy(statement.module.module)
+                statement.module.module = moduleCopy
+                moduleCopy.name = moduleCopy.name.createNewUniqueModuleName
+                moduleCopy.annotations.add(createModuleAnnotation)
+                statement.transformRenamingsAfterModuleCopy
+                scestProgram.modules.add(moduleCopy)
+            }
             transformStatements(statement.module.module.statements, depth+1)
         }
         return statement

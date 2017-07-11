@@ -11,7 +11,6 @@
     <genClasses ecoreClass="SCEst.ecore#//SCEstModule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCEst.ecore#//SCEstModule/declarations"/>
     </genClasses>
-    <genClasses ecoreClass="SCEst.ecore#//ModuleRenaming"/>
     <genClasses ecoreClass="SCEst.ecore#//UnEmit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCEst.ecore#//UnEmit/signal"/>
     </genClasses>

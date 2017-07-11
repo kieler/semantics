@@ -61,9 +61,9 @@ Module:
 // overwrite to allow type definitions in a specific module
 TypeIdentifier: 
       type=Esterel_ValueType
-    | typeID=ID
     | ("combine" (type=Esterel_ValueType | typeID=ID) "with" operator=Esterel_CombineOperator)
-    | {EsterelType} estType=[Type|ID]; // doesn't work, should be before typeID=ID
+    | estType=[Type|ID]
+    | typeID=ID; 
     
 // ==> 7.3.1 Type Declarations
 // -------------------------------------
