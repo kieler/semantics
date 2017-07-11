@@ -39,15 +39,18 @@ class LegacySCTConverterUI extends AbstractHandler {
         val selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
         if (selection instanceof IStructuredSelection) {
             val files = <IFile>newLinkedList
+            // Collect
             for (element : selection.iterator.toIterable) {
                 files.addAll(collect(element as IResource))
             }
+            
             if (!files.empty) {
                 val job = new Job("Converting legacy SCCharts") {
 
                     override protected run(IProgressMonitor monitor) {
                         monitor.beginTask("Converting legacy SCCharts", files.size)
                         
+                        // Process
                         for (file : files) {
                             monitor.subTask("Converting: " + file.projectRelativePath.toString)
 
@@ -61,6 +64,15 @@ class LegacySCTConverterUI extends AbstractHandler {
                             }
 
                             monitor.worked(1)
+                        }
+                        
+                        // Refresh
+                        for (element : selection.iterator.filter(IResource).toIterable) {
+                            if (element instanceof IFile) {
+                                element.parent.refreshLocal(IResource.DEPTH_INFINITE, monitor)
+                            } else {
+                                element.refreshLocal(IResource.DEPTH_INFINITE, monitor)
+                            }
                         }
 
                         return Status.OK_STATUS
