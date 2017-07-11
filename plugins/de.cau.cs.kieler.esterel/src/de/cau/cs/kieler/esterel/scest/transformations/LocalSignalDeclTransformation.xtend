@@ -39,6 +39,7 @@ import java.util.HashMap
 import de.cau.cs.kieler.esterel.scest.extensions.NewSignals
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -141,6 +142,9 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
     }
     

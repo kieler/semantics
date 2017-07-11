@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.scest.scest.UnEmit
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -128,6 +129,9 @@ class UnEmitTransformation extends AbstractExpansionTransformation implements Tr
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
     }
     

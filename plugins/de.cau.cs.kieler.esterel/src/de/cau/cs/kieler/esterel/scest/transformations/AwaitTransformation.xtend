@@ -35,6 +35,7 @@ import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scl.scl.Label
 import java.util.LinkedList
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -282,6 +283,9 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
         return statement
     }

@@ -43,6 +43,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelAssignment
 import de.cau.cs.kieler.scl.scl.Assignment
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -138,6 +139,9 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
     }
     

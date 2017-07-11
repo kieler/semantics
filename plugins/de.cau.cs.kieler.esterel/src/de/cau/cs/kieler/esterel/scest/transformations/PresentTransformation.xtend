@@ -32,6 +32,7 @@ import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -167,6 +168,9 @@ class PresentTransformation extends AbstractExpansionTransformation implements T
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
         return statement
     }

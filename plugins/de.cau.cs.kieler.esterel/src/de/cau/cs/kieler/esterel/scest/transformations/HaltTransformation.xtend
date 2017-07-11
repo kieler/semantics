@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.Halt
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -145,6 +146,9 @@ class HaltTransformation extends AbstractExpansionTransformation implements Trac
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
         return statement
     }

@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -222,6 +223,9 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                 transformStatements(t.statements)
             ]
         }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
+        }
     }
     
     def boolean transformPausesJoins(EList<Statement> statements, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
@@ -237,6 +241,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
     
     def Pair<Integer, Boolean> transformPauseJoin(Statement statement, Conditional conditional, Label label, Map<ISignal, Pair<ValuedObject, ValuedObject>> exitVariables, boolean criedWolf) {
         
+        // 'cryingWolf' stands for "transforming first pauses even if it is not necessary"
         var cryingWolf = criedWolf
         
         if (statement instanceof Pause) {
@@ -315,6 +320,10 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
             }
             cryingWolf = transformPausesJoins((statement as IfTest).elseStatements, conditional, label, exitVariables, criedWolf) && cryingWolf
         }
+        else if (statement instanceof Run) {
+            cryingWolf = statement.module?.module?.statements.transformPausesJoins(conditional, label, exitVariables, criedWolf)    
+        }
+        
         return new Pair(0, cryingWolf)
     }
     
@@ -434,6 +443,7 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
     
     def Pair<Boolean, Boolean> checkStatement(Statement statement) {
         
+        // 'criedWolf' stands for "transforming first pauses even if it is not necessary"
         // the key stands for 'found a trap or pause' and the value stands for ' !(is potentially instantaneous) '
         var criedWolf = new Pair(false, true)
         
@@ -543,6 +553,9 @@ class TrapTransformation extends AbstractExpansionTransformation implements Trac
                     criedWolf = new Pair(true, criedWolf.value && temp.value)
                 }
             }
+        }
+        else if (statement instanceof Run) {
+            criedWolf = checkPotentiallyInstantaneous(statement.module?.module?.statements)    
         }
         return criedWolf
     }

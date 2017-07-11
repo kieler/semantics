@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -197,6 +198,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
                 transformStatements(t.statements)
             ]
         }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
+        }
         return statement
     }
     
@@ -277,6 +281,9 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
             (statement as Parallel).threads?.forEach [ t |
                 transformPauses(t.statements, depth, delay, variable)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformPauses(depth, delay, variable)    
         }
         return statement
     }

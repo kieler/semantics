@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -159,6 +160,9 @@ class RepeatTransformation extends AbstractExpansionTransformation implements Tr
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
         return statement
     }

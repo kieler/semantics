@@ -63,16 +63,6 @@ import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
 
-//import de.cau.cs.kieler.esterel.esterel.FunctionRenaming
-//import de.cau.cs.kieler.esterel.esterel.TypeRenaming
-//import de.cau.cs.kieler.esterel.esterel.TaskRenaming
-//import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming
-//import de.cau.cs.kieler.kexpressions.ValuedObject
-//import de.cau.cs.kieler.esterel.esterel.Function
-//import de.cau.cs.kieler.esterel.esterel.Procedure
-//import de.cau.cs.kieler.esterel.esterel.Type
-//import de.cau.cs.kieler.esterel.esterel.Task
-
 
 /**
  * @author mrb

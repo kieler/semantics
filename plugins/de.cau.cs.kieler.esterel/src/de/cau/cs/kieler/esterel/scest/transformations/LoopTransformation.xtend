@@ -34,6 +34,7 @@ import de.cau.cs.kieler.esterel.esterel.Loop
 import com.google.common.collect.Sets
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -166,6 +167,9 @@ class LoopTransformation extends AbstractExpansionTransformation implements Trac
             (statement as Parallel).threads.forEach [ t |
                 transformStatements(t.statements)
             ]
+        }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
         }
         return statement
     }

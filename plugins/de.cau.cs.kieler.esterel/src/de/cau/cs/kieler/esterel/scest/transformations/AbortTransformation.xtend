@@ -39,6 +39,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.LinkedList
 import java.util.List
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author mrb
@@ -345,6 +346,9 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
                 transformStatements(t.statements)
             ]
         }
+        else if (statement instanceof Run) {
+            statement.module?.module?.statements.transformStatements    
+        }
         return statement
     }
     
@@ -493,6 +497,9 @@ class AbortTransformation extends AbstractExpansionTransformation implements Tra
             transformPauses((statement as IfTest).thenStatements, abort, label, abortFlag, depthFlag, countingVariables)
             (statement as IfTest).elseif?.forEach [ elsif | transformPauses(elsif.thenStatements, abort, label, abortFlag, depthFlag, countingVariables)]
             transformPauses((statement as IfTest).elseStatements, abort, label, abortFlag, depthFlag, countingVariables)
+        }
+        else if (statement instanceof Run) {
+            transformPauses(statement.module?.module?.statements, abort, label, abortFlag, depthFlag, countingVariables)    
         }
         return 0
     }
