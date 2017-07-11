@@ -36,6 +36,7 @@ import org.eclipse.xtext.resource.EObjectAtOffsetHelper
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.ui.IWorkbenchWindow
+import java.util.ArrayList
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -60,6 +61,8 @@ class Visualizer {
         EObjectAtOffsetHelper eObjectAtOffsetHelper = new EObjectAtOffsetHelper();
 
         private var DataPool pool
+        
+        private val addedVars = new ArrayList<Variable>()
 
         new() {
             pool = new DataPool()
@@ -122,17 +125,22 @@ class Visualizer {
         }
 
         def void updatePool(EObject object) {
-
-            // reset the pool to the last state
-//            pool = pool.previousPool.clone
-//            pool.previousPool = pool
             
+            // delete previously added variables
             val model = pool.getModel("railway");
-//                case Block: return // TODO do something cool here
+            val modelVars = model.variables
+
+            for (variable : addedVars) {
+                modelVars.remove(variable)
+            }
+            
+            addedVars.clear   
+                
             if (object instanceof Statement) {
                 model.addValues(object as Statement)
-
-            }
+            }// else if (object instanceof Block) {
+             // TODO how do we display blocks? 
+             //}
         }
 
 //    public def void assembleModel(Program program) {
@@ -163,8 +171,6 @@ class Visualizer {
             } else if (statement instanceof LightStatement) {
                 model.addLightValues(statement as LightStatement)
             }
-
-
         }
 
         def addLightValues(Model model, LightStatement statement) {
@@ -184,39 +190,41 @@ class Visualizer {
             val speed = statement.parseSpeed
             for (segment : statement.segments) {
                 
-                // Remove old variables
-                model.getVariables.remove(model.getVariable("S0_" + segment))
-                model.getVariables.remove(model.getVariable("S1_" + segment))
+                var Variable forwardSignal 
+                var Variable reverseSignal
                 
-                model.getVariables.remove(model.getVariable(segment))
+                var speedVar = new Variable(segment, speed)
                 
-                //Add new variables
-                model.addVariable(new Variable(segment, speed))
-                
+                // Determine setting for signals
                 if (direction == 0) {
                     if (speed == RailSLExtensions::SPEED_FULL) {
-                        model.addVariable(new Variable("S0_" + segment, 1))
-
+                        forwardSignal = new Variable("S0_" + segment, 1)
                     } else if (speed == RailSLExtensions::SPEED_SLOW) {
-                        model.addVariable(new Variable("S0_" + segment, 2))
+                        forwardSignal = new Variable("S0_" + segment, 2)
                     } else {
-                        model.addVariable(new Variable("S0_" + segment, 4))
+                        forwardSignal = new Variable("S0_" + segment, 4)
                     }
-                    model.addVariable(new Variable("S1_" + segment, 4))
-
+                    reverseSignal = new Variable("S1_" + segment, 4)
                 } else {
                     if (speed == RailSLExtensions::SPEED_FULL) {
-                        model.addVariable(new Variable("S1_" + segment, 1))
-
+                        reverseSignal = new Variable("S1_" + segment, 1)
                     } else if (speed == RailSLExtensions::SPEED_SLOW) {
-                        model.addVariable(new Variable("S1_" + segment, 2))
+                        reverseSignal = new Variable("S1_" + segment, 2)
                     } else {
-                        model.addVariable(new Variable("S1_" + segment, 4))
+                        reverseSignal = new Variable("S1_" + segment, 4)
                     }
-                    model.addVariable(new Variable("S0_" + segment, 4))
+                    forwardSignal = new Variable("S0_" + segment, 4)
                 }
+                
+                // Add the new variables to the DataPool and log them as newly added 
+                model.addVariable(forwardSignal)
+                model.addVariable(reverseSignal)
+                model.addVariable(speedVar)
+                
+                addedVars.add(forwardSignal)
+                addedVars.add(reverseSignal)
+                addedVars.add(speedVar)
             }
         }
-
     }
     
