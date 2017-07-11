@@ -25,13 +25,14 @@ import java.util.Observer
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import static extension org.eclipse.xtext.EcoreUtil2.*
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
 import java.util.List
 import java.util.ArrayList
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author ssm

@@ -10,9 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.classes
+package de.cau.cs.kieler.kicool.environments
 
-import de.cau.cs.kieler.kicool.compilation.Environment
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 
 /**
  * @author ssm

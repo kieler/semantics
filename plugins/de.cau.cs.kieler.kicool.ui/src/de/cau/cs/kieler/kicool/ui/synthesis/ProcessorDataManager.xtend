@@ -32,7 +32,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractCompilationNotification
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import static extension de.cau.cs.kieler.kicool.compilation.Metric.*
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectIntermediateAction
@@ -41,11 +41,10 @@ import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
-import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
+import de.cau.cs.kieler.kicool.environments.Snapshots
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.TOGGLE_ON_OFF_DATA
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.PROCESSOR_IDENTIFIER
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import de.cau.cs.kieler.klighd.kgraph.KLabel
@@ -227,12 +226,36 @@ class ProcessorDataManager {
         intermediateRootNode.children += finalResultNode 
         finalResultNode.setProperty(INTERMEDIATE_DATA, 
             new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
+        intermediatePosX += 3.5f            
 
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         processorBodyNode.setProperty(INTERMEDIATE_DATA, 
             new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
-
+            
+        val warnings = processorInstance.environment.getProperty(WARNINGS)
+        if (warnings.size > 0) {
+            val warningNode = intermediateKGT.copy
+            warningNode.xpos = intermediatePosX
+            warningNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+            intermediateRootNode.children += warningNode 
+            warningNode.setProperty(INTERMEDIATE_DATA, 
+                new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
+            warningNode.container.setFBColor(WARNING)
+            intermediatePosX += 3.5f
+        }       
+        
+        val errors = processorInstance.environment.getProperty(ERRORS)
+        if (errors.size > 0) {
+            val errorNode = intermediateKGT.copy
+            errorNode.xpos = intermediatePosX
+            errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+            intermediateRootNode.children += errorNode 
+            errorNode.setProperty(INTERMEDIATE_DATA, 
+                new IntermediateData(processorInstance, processorNotification.compilationContext, errors, view))
+            errorNode.container.setFBColor(ERROR)
+            intermediatePosX += 3.5f
+        }                
         
         if (processorNotification instanceof ProcessorProgress) {
             updateProgressbar((processorNotification.progress * 100) as int, nodeIdMap)

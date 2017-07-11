@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.compilation.internal
 
-import de.cau.cs.kieler.kicool.compilation.Environment
 import org.eclipse.emf.ecore.EObject
 import java.util.List
 import java.util.LinkedList
@@ -20,8 +19,9 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.KVPair
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Internal class for handling the processor environments.

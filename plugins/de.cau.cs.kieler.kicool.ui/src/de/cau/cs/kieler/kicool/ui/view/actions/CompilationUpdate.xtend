@@ -30,7 +30,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder
-import de.cau.cs.kieler.kicool.compilation.Environment
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author ssm

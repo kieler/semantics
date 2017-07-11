@@ -14,7 +14,7 @@ package de.cau.cs.kieler.kicool.ui.view.actions
 
 import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
-import de.cau.cs.kieler.kicool.compilation.Environment
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author ssm

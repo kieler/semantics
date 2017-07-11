@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.XtextResource
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction
-import de.cau.cs.kieler.kicool.compilation.Environment
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author ssm

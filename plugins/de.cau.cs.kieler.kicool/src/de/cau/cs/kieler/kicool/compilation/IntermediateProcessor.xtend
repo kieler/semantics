@@ -13,7 +13,8 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.classes.EnvironmentPair
+import de.cau.cs.kieler.kicool.environments.EnvironmentPair
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * An intermediate processor is a specialized processor. 

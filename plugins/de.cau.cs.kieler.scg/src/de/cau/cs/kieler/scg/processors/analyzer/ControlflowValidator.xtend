@@ -15,11 +15,8 @@ package de.cau.cs.kieler.scg.processors.analyzer
 import de.cau.cs.kieler.kicool.compilation.IntermediateProcessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kicool.compilation.Environment
-import de.cau.cs.kieler.scg.ControlFlow
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.Node
 
 /**
  * @author ssm
@@ -47,10 +44,11 @@ class ControlflowValidator extends IntermediateProcessor<SCGraph> {
         val model = getModel
         
         for(node : model.nodes) {
-            val corrupt = node.getAllPrevious.filter[ it.eContainer == null].toList   
+            val corrupt = node.getAllPrevious.filter[ it.eContainer == null ].toList   
             if (corrupt.size > 0) {
                 System.err.println("Corrupt control flow found!")
                 environment.addWarning(this.getClass.name + " Corrupt control flow detected: " + node.toString + "!")
+                environment.addError("This is an error!")
             }
         }
     }

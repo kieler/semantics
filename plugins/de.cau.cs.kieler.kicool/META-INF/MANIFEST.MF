@@ -21,10 +21,13 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.kicool.classes,
  de.cau.cs.kieler.kicool.compilation,
  de.cau.cs.kieler.kicool.compilation.internal,
  de.cau.cs.kieler.kicool.compilation.observer,
+ de.cau.cs.kieler.kicool.environments,
  de.cau.cs.kieler.kicool.formatting,
+ de.cau.cs.kieler.kicool.formatting2,
  de.cau.cs.kieler.kicool.impl,
  de.cau.cs.kieler.kicool.parser.antlr,
  de.cau.cs.kieler.kicool.parser.antlr.internal,

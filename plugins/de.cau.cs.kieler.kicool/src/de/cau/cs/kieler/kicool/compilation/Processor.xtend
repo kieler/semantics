@@ -15,12 +15,13 @@ package de.cau.cs.kieler.kicool.compilation
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kicool.classes.EnvironmentPair
+import de.cau.cs.kieler.kicool.environments.EnvironmentPair
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import java.lang.reflect.ParameterizedType
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.

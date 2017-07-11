@@ -14,10 +14,10 @@ package de.cau.cs.kieler.kicool.compilation.internal
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.compilation.Environment
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.IntermediateReference
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Internal class that creates all necessary instances of a compilation context.

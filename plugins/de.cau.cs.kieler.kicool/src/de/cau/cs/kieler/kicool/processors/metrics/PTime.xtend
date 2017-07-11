@@ -15,7 +15,7 @@ package de.cau.cs.kieler.kicool.processors.metrics
 import de.cau.cs.kieler.kicool.compilation.Metric
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
+import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 
 /**
  * PTime metric

@@ -10,14 +10,16 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.compilation
+package de.cau.cs.kieler.kicool.environments
 
 import java.util.List
-import de.cau.cs.kieler.kicool.compilation.internal.Snapshots
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.core.model.properties.Property
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -52,11 +54,11 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Processor<?,?>> PROCESSOR_INSTANCE = 
         new Property<Processor<?,?>>("de.cau.cs.kieler.kicool.processorInstance")
         
-    public static val IProperty<List<String>> ERRORS = 
-        new Property<List<String>>("de.cau.cs.kieler.kicool.errors", <String> newLinkedList)
+    public static val IProperty<Errors> ERRORS = 
+        new Property<Errors>("de.cau.cs.kieler.kicool.errors", new Errors)
 
-    public static val IProperty<List<String>> WARNINGS = 
-        new Property<List<String>>("de.cau.cs.kieler.kicool.warnings", <String> newLinkedList)
+    public static val IProperty<Warnings> WARNINGS = 
+        new Property<Warnings>("de.cau.cs.kieler.kicool.warnings", new Warnings)
         
     public static val IProperty<Long> START_TIMESTAMP = 
         new Property<Long>("de.cau.cs.kieler.kicool.startTimestamp", new Long(0))
