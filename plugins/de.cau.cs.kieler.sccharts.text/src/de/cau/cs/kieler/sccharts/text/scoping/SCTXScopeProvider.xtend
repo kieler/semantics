@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * This class contains custom scoping description.
@@ -60,7 +61,19 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
     
     protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
         if (reference.name.equals("scope")) {
-            return super.getScope(scopeCall as EObject, reference)
+            val eResource = scopeCall.eResource
+            if (eResource != null) {
+                val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
+                val eResourceSet = eResource.resourceSet
+                if (eResourceSet !== null) {
+                    eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
+                        scchartsInScope += it
+                    ]
+                }
+                return SCTScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+            }
+            
+            return IScope.NULLSCOPE
         }
         
         return super.getScope(scopeCall as EObject, reference)
