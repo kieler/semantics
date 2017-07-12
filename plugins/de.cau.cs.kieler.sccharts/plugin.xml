@@ -28,8 +28,8 @@
            point="de.cau.cs.kieler.kico.extension">
         <ExtensionInformation
               ePackageName="sccharts"
-              editor_id="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
-              extensionName="sct"
+              editor_id="de.cau.cs.kieler.sccharts.text.SCTX"
+              extensionName="sctx"
               isXMI="true">
         </ExtensionInformation>
      </extension>
