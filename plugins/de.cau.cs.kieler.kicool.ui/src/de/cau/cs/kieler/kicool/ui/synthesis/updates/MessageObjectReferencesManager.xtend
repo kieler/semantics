@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ui.synthesis
+package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import com.google.inject.Inject
@@ -30,6 +30,7 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem
 
 /**
  * @author ssm
@@ -47,12 +48,12 @@ class MessageObjectReferencesManager {
     def annotateModel(Object model, MessageObjectReferences<Object> references, ColorSystem colorSystem, CompilerView view) {
         val context = view.getViewContext
         
-        for(reference : references.filter[ second != null && second instanceof EObject ]) {
-            val nodes = context.getTargetElements(reference.second)
+        for(reference : references.filter[ object != null && object instanceof EObject ]) {
+            val nodes = context.getTargetElements(reference.object)
             for (node : nodes) {
                 if (node instanceof KNode) {
                     val parentNode = node.eContainer as KNode
-                    val commentNode = reference.createCommentBox(reference.first, node, colorSystem)
+                    val commentNode = reference.createCommentBox(reference.message, node, colorSystem)
                     parentNode.children += commentNode
             }
             }

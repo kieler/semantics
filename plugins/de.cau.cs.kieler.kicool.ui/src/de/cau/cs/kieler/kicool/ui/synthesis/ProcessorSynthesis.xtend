@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier

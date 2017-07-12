@@ -12,14 +12,11 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis;
 
-import java.util.HashMap;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import de.cau.cs.kieler.klighd.krendering.Colors;
 import de.cau.cs.kieler.klighd.krendering.KColor;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
-import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 
 /**
  * The KiCool colors.
@@ -28,7 +25,6 @@ import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
  * @kieler.design 2015-10-27 proposed
  * @kieler.rating 2015-10-27 proposed yellow
  */
-@ViewSynthesisShared
 public class ColorStore {
 
     public enum Color {

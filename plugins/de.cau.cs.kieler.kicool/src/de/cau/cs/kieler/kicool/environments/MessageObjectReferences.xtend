@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.kicool.environments
 
 import java.util.LinkedList
-import de.cau.cs.kieler.core.model.Pair
+import de.cau.cs.kieler.kicool.classes.IColorSystem
 
 /**
  * @author ssm
@@ -21,6 +21,22 @@ import de.cau.cs.kieler.core.model.Pair
  * @kieler.rating 2017-07-11 proposed yellow
  *
  */
-class MessageObjectReferences<T> extends LinkedList<Pair<String, T>> {
+class MessageObjectReferences<T> extends LinkedList<MessageObjectLink> {
+    
+    def add(String msg) {
+        add(new MessageObjectLink(msg, null, true, null))
+    }
+    
+    def add(String msg, Object object) {
+        add(new MessageObjectLink(msg, object, true, null))
+    }
+    
+    def add(String msg, Object object, boolean annotate) {
+        add(new MessageObjectLink(msg, object, annotate, null))
+    }
+    
+    def add(String msg, Object object, boolean annotate, IColorSystem colorSystem) {
+        add(new MessageObjectLink(msg, object, annotate, colorSystem))
+    }
     
 }

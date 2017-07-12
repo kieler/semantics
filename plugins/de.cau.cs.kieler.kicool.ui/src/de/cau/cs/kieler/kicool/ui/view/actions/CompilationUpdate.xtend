@@ -19,10 +19,10 @@ import de.cau.cs.kieler.kicool.ui.KiCoolUIObserver
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetSystem
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetProcessor
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.postUpdateProcessors
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetSystem
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.updateProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.postUpdateProcessors
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished

@@ -15,11 +15,13 @@ package de.cau.cs.kieler.kicool.ui.synthesis;
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*;
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*;
 
+import de.cau.cs.kieler.kicool.classes.IColorSystem;
+
 /**
  * @author ssm
  *
  */
-public enum ColorSystem {
+public enum ColorSystem implements IColorSystem {
     
     BUSY(BUSY_FOREGROUND, BUSY_BACKGROUND, BUSY_BACKGROUND_TARGET),
     OK(OK_FOREGROUND, OK_BACKGROUND, OK_BACKGROUND_TARGET),

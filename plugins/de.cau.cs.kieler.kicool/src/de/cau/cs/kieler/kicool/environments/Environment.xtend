@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
-import de.cau.cs.kieler.core.model.Pair
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -88,12 +87,8 @@ class Environment extends EnvironmentPropertyHolder {
         getProperty(ERRORS) += msg
     }
     
-    def addWarning(String msg) {
-        getProperty(WARNINGS).add(new Pair(msg, null))
-    }
-    
-    def addWarning(String msg, Object object) {
-        getProperty(WARNINGS).add(new Pair(msg, object))
+    def getWarnings() {
+        getProperty(WARNINGS)
     }
     
     def getStatus() {

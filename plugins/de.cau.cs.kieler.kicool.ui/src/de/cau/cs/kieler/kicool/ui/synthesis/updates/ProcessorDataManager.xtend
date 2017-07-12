@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ui.synthesis
+package de.cau.cs.kieler.kicool.ui.synthesis.updates
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
@@ -65,6 +65,8 @@ import de.cau.cs.kieler.kicool.ProcessorReference
 import org.eclipse.emf.ecore.EObject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
+import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
+import de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem
 
 /**
  * The data manager handles all synthesis updates.
