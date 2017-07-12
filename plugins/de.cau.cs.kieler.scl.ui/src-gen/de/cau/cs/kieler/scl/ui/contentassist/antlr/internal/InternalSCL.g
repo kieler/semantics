@@ -1888,25 +1888,22 @@ finally {
 
 
 
-// Rule SCLAssignOperator
-ruleSCLAssignOperator
+// Rule AssignOperator
+ruleAssignOperator
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getSCLAssignOperatorAccess().getASSIGNEnumLiteralDeclaration()); }
-(	'=' 
-)
-{ after(grammarAccess.getSCLAssignOperatorAccess().getASSIGNEnumLiteralDeclaration()); }
+{ before(grammarAccess.getAssignOperatorAccess().getAlternatives()); }
+(rule__AssignOperator__Alternatives)
+{ after(grammarAccess.getAssignOperatorAccess().getAlternatives()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
-
-
 
 
 
@@ -2971,6 +2968,50 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__AssignOperator__Alternatives
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNEnumLiteralDeclaration_0()); }
+(	'=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNEnumLiteralDeclaration_0()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNADDEnumLiteralDeclaration_1()); }
+(	'+=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNADDEnumLiteralDeclaration_1()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNSUBEnumLiteralDeclaration_2()); }
+(	'-=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNSUBEnumLiteralDeclaration_2()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNMULEnumLiteralDeclaration_3()); }
+(	'*=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNMULEnumLiteralDeclaration_3()); }
+)
+
+    |(
+{ before(grammarAccess.getAssignOperatorAccess().getASSIGNDIVEnumLiteralDeclaration_4()); }
+(	'/=' 
+)
+{ after(grammarAccess.getAssignOperatorAccess().getASSIGNDIVEnumLiteralDeclaration_4()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 rule__PostfixOperator__Alternatives
     @init {
@@ -12249,8 +12290,8 @@ rule__Assignment__OperatorAssignment_3
     }
 :
 (
-{ before(grammarAccess.getAssignmentAccess().getOperatorSCLAssignOperatorEnumRuleCall_3_0()); }
-	ruleSCLAssignOperator{ after(grammarAccess.getAssignmentAccess().getOperatorSCLAssignOperatorEnumRuleCall_3_0()); }
+{ before(grammarAccess.getAssignmentAccess().getOperatorAssignOperatorEnumRuleCall_3_0()); }
+	ruleAssignOperator{ after(grammarAccess.getAssignmentAccess().getOperatorAssignOperatorEnumRuleCall_3_0()); }
 )
 
 ;

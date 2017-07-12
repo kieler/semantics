@@ -284,19 +284,19 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIndicesExpressionParserRuleCall_2_1_0 = (RuleCall)cIndicesAssignment_2_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		private final Assignment cOperatorAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cOperatorSCLAssignOperatorEnumRuleCall_3_0 = (RuleCall)cOperatorAssignment_3.eContents().get(0);
+		private final RuleCall cOperatorAssignOperatorEnumRuleCall_3_0 = (RuleCall)cOperatorAssignment_3.eContents().get(0);
 		private final Assignment cExpressionAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cExpressionExpressionParserRuleCall_4_0 = (RuleCall)cExpressionAssignment_4.eContents().get(0);
 		
 		//Assignment:
 		//	annotations+=Annotation*
 		//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
-		//	operator=SCLAssignOperator
+		//	operator=AssignOperator
 		//	expression=Expression;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
-		//operator=SCLAssignOperator expression=Expression
+		//operator=AssignOperator expression=Expression
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -329,11 +329,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//']'
 		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
 
-		//operator=SCLAssignOperator
+		//operator=AssignOperator
 		public Assignment getOperatorAssignment_3() { return cOperatorAssignment_3; }
 
-		//SCLAssignOperator
-		public RuleCall getOperatorSCLAssignOperatorEnumRuleCall_3_0() { return cOperatorSCLAssignOperatorEnumRuleCall_3_0; }
+		//AssignOperator
+		public RuleCall getOperatorAssignOperatorEnumRuleCall_3_0() { return cOperatorAssignOperatorEnumRuleCall_3_0; }
 
 		//expression=Expression
 		public Assignment getExpressionAssignment_4() { return cExpressionAssignment_4; }
@@ -795,22 +795,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	public class SCLAssignOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.SCLAssignOperator");
-		private final EnumLiteralDeclaration cASSIGNEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cASSIGNEqualsSignKeyword_0 = (Keyword)cASSIGNEnumLiteralDeclaration.eContents().get(0);
-		
-		//enum SCLAssignOperator returns keffects::AssignOperator:
-		//	ASSIGN="=";
-		public EnumRule getRule() { return rule; }
-
-		//ASSIGN="="
-		public EnumLiteralDeclaration getASSIGNEnumLiteralDeclaration() { return cASSIGNEnumLiteralDeclaration; }
-
-		//"="
-		public Keyword getASSIGNEqualsSignKeyword_0() { return cASSIGNEqualsSignKeyword_0; }
-	}
-	
 	private final SCLProgramElements pSCLProgram;
 	private final StatementElements pStatement;
 	private final InstructionStatementElements pInstructionStatement;
@@ -819,7 +803,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private final LabelElements pLabel;
 	private final GotoElements pGoto;
 	private final AssignmentElements pAssignment;
-	private final SCLAssignOperatorElements eSCLAssignOperator;
 	private final ConditionalElements pConditional;
 	private final ElseScopeElements pElseScope;
 	private final ThreadElements pThread;
@@ -859,7 +842,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pLabel = new LabelElements();
 		this.pGoto = new GotoElements();
 		this.pAssignment = new AssignmentElements();
-		this.eSCLAssignOperator = new SCLAssignOperatorElements();
 		this.pConditional = new ConditionalElements();
 		this.pElseScope = new ElseScopeElements();
 		this.pThread = new ThreadElements();
@@ -986,7 +968,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
-	//	operator=SCLAssignOperator
+	//	operator=AssignOperator
 	//	expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
@@ -994,16 +976,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAssignmentRule() {
 		return getAssignmentAccess().getRule();
-	}
-
-	//enum SCLAssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=";
-	public SCLAssignOperatorElements getSCLAssignOperatorAccess() {
-		return eSCLAssignOperator;
-	}
-	
-	public EnumRule getSCLAssignOperatorRule() {
-		return getSCLAssignOperatorAccess().getRule();
 	}
 
 	//Conditional:

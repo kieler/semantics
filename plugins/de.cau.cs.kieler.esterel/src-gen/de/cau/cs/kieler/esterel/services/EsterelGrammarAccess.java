@@ -9620,7 +9620,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=super::Expression ']')*
-	//	operator=SCLAssignOperator
+	//	operator=AssignOperator
 	//	expression=super::Expression;
 	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaSCL.getAssignmentAccess();
@@ -9628,16 +9628,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAssignmentRule() {
 		return getAssignmentAccess().getRule();
-	}
-
-	//enum SCLAssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=";
-	public SCLGrammarAccess.SCLAssignOperatorElements getSCLAssignOperatorAccess() {
-		return gaSCL.getSCLAssignOperatorAccess();
-	}
-	
-	public EnumRule getSCLAssignOperatorRule() {
-		return getSCLAssignOperatorAccess().getRule();
 	}
 
 	//Conditional:
