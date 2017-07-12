@@ -147,6 +147,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.core.netlist.simple.kico">
+      </TransformationSystem>
    </extension>
 
 
