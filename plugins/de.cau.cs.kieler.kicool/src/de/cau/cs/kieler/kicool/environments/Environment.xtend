@@ -83,8 +83,8 @@ class Environment extends EnvironmentPropertyHolder {
     new() {
     }
     
-    def addError(String msg) {
-        getProperty(ERRORS) += msg
+    def getErrors() {
+        getProperty(ERRORS)
     }
     
     def getWarnings() {

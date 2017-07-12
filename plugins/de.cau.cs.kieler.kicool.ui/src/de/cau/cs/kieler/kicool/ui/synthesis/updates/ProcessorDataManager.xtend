@@ -270,11 +270,20 @@ class ProcessorDataManager {
             errorNode.xpos = intermediatePosX
             errorNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
             intermediateRootNode.children += errorNode 
-            errorNode.setProperty(INTERMEDIATE_DATA, 
-                new IntermediateData(processorInstance, processorNotification.compilationContext, errors, view))
+            
+            val model = processorInstance.getModel
+            if (model instanceof EObject) {
+                val morModel = new MessageObjectReferencePair(errors.fillUndefinedColors(ERROR), model)
+                errorNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+            } else {
+                errorNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))
+            }
+                
             errorNode.container.setFBColor(ERROR)
             intermediatePosX += 3.5f
-        }                
+        }               
         
         if (processorNotification instanceof ProcessorProgress) {
             updateProgressbar((processorNotification.progress * 100) as int, nodeIdMap)

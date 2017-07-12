@@ -15,7 +15,7 @@ package de.cau.cs.kieler.kicool.environments
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 
 /**
- * Data storage for snapshots.
+ * Data storage for warnings.
  * 
  * @author ssm
  * @kieler.design 2017-06-12 proposed

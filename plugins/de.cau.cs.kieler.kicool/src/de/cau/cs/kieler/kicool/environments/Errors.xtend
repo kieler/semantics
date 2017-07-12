@@ -16,13 +16,13 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import java.util.ArrayList
 
 /**
- * Data storage for snapshots.
+ * Data storage for errors.
  * 
  * @author ssm
  * @kieler.design 2017-06-12 proposed
  * @kieler.rating 2017-06-12 proposed yellow  
  */
-class Errors extends ArrayList<String> implements IKiCoolCloneable {
+class Errors extends MessageObjectReferences implements IKiCoolCloneable {
     
     override isMutable() { false }
     override cloneObject() { null }

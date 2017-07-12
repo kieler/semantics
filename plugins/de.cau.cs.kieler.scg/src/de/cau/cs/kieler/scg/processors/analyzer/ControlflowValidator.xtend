@@ -47,7 +47,7 @@ class ControlflowValidator extends IntermediateProcessor<SCGraph> {
             val corrupt = node.getAllPrevious.filter[ it.eContainer == null ].toList   
             if (corrupt.size > 0) {
                 environment.warnings.add("Corrupt control flow detected!", node)
-                environment.addError("This is an error!")
+                environment.errors.add("This is an error!", node)
             }
         }
     }
