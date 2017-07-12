@@ -21,7 +21,7 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
  * @kieler.design 2017-06-12 proposed
  * @kieler.rating 2017-06-12 proposed yellow  
  */
-class Warnings extends MessageObjectReferences<Object> implements IKiCoolCloneable {
+class Warnings extends MessageObjectReferences implements IKiCoolCloneable {
     
     override isMutable() { false }
     override cloneObject() { null }

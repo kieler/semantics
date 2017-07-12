@@ -67,6 +67,10 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem
+import de.cau.cs.kieler.core.model.Pair
+import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
+import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencePair
 
 /**
  * The data manager handles all synthesis updates.
@@ -248,11 +252,9 @@ class ProcessorDataManager {
             
             val model = processorInstance.getModel
             if (model instanceof EObject) {
-               val warningModel = model.copy
-               val MORManager = injector.getInstance(MessageObjectReferencesManager)
-               MORManager.annotateModel(warningModel, warnings, WARNING, view)
+                val morModel = new MessageObjectReferencePair(warnings.fillUndefinedColors(WARNING), model)
                 warningNode.setProperty(INTERMEDIATE_DATA, 
-                    new IntermediateData(processorInstance, processorNotification.compilationContext, warningModel, view))
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
             } else {
                 warningNode.setProperty(INTERMEDIATE_DATA, 
                     new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, view))

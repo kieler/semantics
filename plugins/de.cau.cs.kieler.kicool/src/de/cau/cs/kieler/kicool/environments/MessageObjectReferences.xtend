@@ -21,7 +21,7 @@ import de.cau.cs.kieler.kicool.classes.IColorSystem
  * @kieler.rating 2017-07-11 proposed yellow
  *
  */
-class MessageObjectReferences<T> extends LinkedList<MessageObjectLink> {
+class MessageObjectReferences extends LinkedList<MessageObjectLink> {
     
     def add(String msg) {
         add(new MessageObjectLink(msg, null, true, null))

@@ -42,7 +42,7 @@ import java.util.Map.Entry;
  *            type of second contained object
  * @author msp
  */
-public final class Pair<F, S> implements Iterable<Object> {
+public class Pair<F, S> implements Iterable<Object> {
     
     /**
      * Constructs a pair with {@code null} elements.

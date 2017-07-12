@@ -31,6 +31,9 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem
+import de.cau.cs.kieler.kicool.classes.IColorSystem
+import de.cau.cs.kieler.kicool.environments.MessageObjectLink
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 
 /**
  * @author ssm
@@ -45,17 +48,19 @@ class MessageObjectReferencesManager {
     @Inject extension KRenderingExtensions  
     @Inject extension KContainerRenderingExtensions
         
-    def annotateModel(Object model, MessageObjectReferences<Object> references, ColorSystem colorSystem, CompilerView view) {
-        val context = view.getViewContext
+    def annotateModelNodes(MessageObjectReferences references, KNode node) {
+        val trackingAdapter = new SourceModelTrackingAdapter
+        node.eAdapters.add(trackingAdapter)
         
         for(reference : references.filter[ object != null && object instanceof EObject ]) {
-            val nodes = context.getTargetElements(reference.object)
-            for (node : nodes) {
-                if (node instanceof KNode) {
-                    val parentNode = node.eContainer as KNode
-                    val commentNode = reference.createCommentBox(reference.message, node, colorSystem)
-                    parentNode.children += commentNode
-            }
+            val nodes = trackingAdapter.getTargetElements(reference.object)
+            for (n : nodes) {
+                if (n instanceof KNode) {
+                    val parentNode = n.eContainer as KNode
+                    val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem)
+                    println("LIST: "+  parentNode.children.add(commentNode))
+                    println("")
+                }
             }
         }
     } 
@@ -98,6 +103,16 @@ class MessageObjectReferencesManager {
             lineWidth = 1;
             foreground = colorSystem.foreground.color
         ]
+    }
+    
+    
+    static def fillUndefinedColors(MessageObjectReferences references, ColorSystem colorSystem) {
+        val newReferences = new MessageObjectReferences
+        for(reference : references) {
+            val IColorSystem cs = if (reference.colorSystem != null) reference.colorSystem else colorSystem
+            newReferences.add(new MessageObjectLink(reference.message, reference.object, reference.annotate, cs))
+        }
+        newReferences
     }     
     
 }
