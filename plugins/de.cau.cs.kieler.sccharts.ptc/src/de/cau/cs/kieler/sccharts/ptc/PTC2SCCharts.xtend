@@ -60,12 +60,20 @@ public class PTC2SCCharts {
 
     HashMap<String, ValuedObject> id2input = new HashMap();
     HashMap<String, String> Operation2Name = new HashMap();
+    HashMap<String, ValuedObject> id2output = new HashMap();
 
     /** Create an injector to load the transformation via guice. */
     private static Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
 
     def String fixId(String name) {
+        if (name == null) {
+            return "Empty"
+        }
         var returnName = name
+        returnName = returnName.replace(">", "")
+        returnName = returnName.replace("<", "")
+        returnName = returnName.replace(":", "")
+        returnName = returnName.replace(";", "")
         returnName = returnName.replace(" ", "")
         returnName = returnName.replace("-", "")
         returnName = returnName.replace("*", "")
@@ -73,6 +81,7 @@ public class PTC2SCCharts {
         returnName = returnName.replace("\\", "")
         returnName = returnName.replace("\"", "")
         returnName = returnName.replace("'", "")
+        returnName = returnName.replace("=", "Equals")
         return returnName
     }
 
@@ -86,6 +95,7 @@ public class PTC2SCCharts {
             id2src.clear
             src2id.clear
             id2input.clear
+            id2output.clear
             Operation2Name.clear
             var scchart = SCChartsFactory::eINSTANCE.createState;
             targetModel.add(scchart)
@@ -125,17 +135,50 @@ public class PTC2SCCharts {
             // Not yet declared, declare it newly
             val rootElement = element.root
             val varName = id.searchInputName(rootElement);
+            println("INPUT EXTRAXT from '"+ id + "' ==> '"+varName+"'")
 
             val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-            declaration.input = (element.visibility == "public")
+            declaration.input = true
             declaration.type = ValueType::BOOL
             targetModel.current.declarations.add(declaration)
             val valuedObject = createValuedObject(targetModel.current, varName, declaration)
             element.map(valuedObject)
-            println("EVENT PUT:" + id + " (" + valuedObject.name + ")");
+            println("EVENT IN PUT:" + id + " (" + valuedObject.name + ")");
             id2input.put(id, valuedObject)
             return valuedObject
         }
+    }
+
+    def ValuedObject body2output(List<State> targetModel, Element element, String body) {
+        val outputName = body.extractOutputName
+        val signalName = outputName.fixId
+
+        var valuedObject = id2output.get(body)
+        if (valuedObject != null) {
+            return valuedObject
+        } else {
+            // Not yet declared, declare it newly
+            //val rootElement = element.root
+            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
+            declaration.output = true
+            declaration.type = ValueType::PURE
+            declaration.signal = true
+            //(rootElement.src2target as State).declarations.add(declaration)
+            targetModel.current.declarations.add(declaration)
+            valuedObject = createValuedObject(targetModel.current, signalName, declaration)
+            element.map(valuedObject)
+            println("EVENT OUT PUT:" + body + " (" + valuedObject.name + ")");
+            id2input.put(signalName, valuedObject)
+            return valuedObject
+        }
+    }
+
+    def String extractOutputName(String actionBody) {
+        val i = actionBody.indexOf("(")
+        if (i > 0) {
+            return "O_" + actionBody.substring(0, i)
+        }
+        return actionBody
     }
 
     /**
@@ -174,8 +217,9 @@ public class PTC2SCCharts {
                 if (child.isUMLCallEvent) {
                     if (eventid == child.id) {
                         val operationId = child.operation
-                        val inputName = "I_" + Operation2Name.get(operationId) 
-                        if (inputName != null) {
+                        val operationName = Operation2Name.get(operationId)
+                        if (operationName != null) {
+                            val inputName = "I_" + operationName
                             return inputName
                         }
                     }
@@ -193,6 +237,7 @@ public class PTC2SCCharts {
         id2src.clear
         src2id.clear
         id2input.clear
+        id2output.clear
         Operation2Name.clear
         var scchart = SCChartsFactory::eINSTANCE.createState;
         targetModel.add(scchart)
@@ -247,13 +292,18 @@ public class PTC2SCCharts {
         if (element.type == "entry" || element.umlType == "exit") {
             val parentState = element.parentAnyState
             if (parentState != null) {
-                if (element.type == "entry") {
-                    val action = (parentState.src2target as State).createEntryAction
-                    action.addEffect(asHostcodeEffect(element.name))
-                }
-                if (element.umlType == "exit") {
-                    val action = (parentState.src2target as State).createExitAction
-                    action.addEffect(asHostcodeEffect(element.name))
+                if (element.type == "entry" || element.type == "exit") {
+                    val outputSignal = body2output(targetModel, element, element.name)
+                    if (element.type == "entry") {
+                        val action = (parentState.src2target as State).createEntryAction
+                        // action.addEffect(asHostcodeEffect(element.name))
+                        action.addEffect(outputSignal.emit)
+                    }
+                    if (element.umlType == "exit") {
+                        val action = (parentState.src2target as State).createExitAction
+                        // action.addEffect(asHostcodeEffect(element.name))
+                        action.addEffect(outputSignal.emit)
+                    }
                 }
             }
         }
@@ -340,7 +390,19 @@ public class PTC2SCCharts {
     }
 
     def transformOpaqueBehavior(List<State> targetModel, Element element) {
-        //
+        // Parent shall be a transition
+        val parent = element.parent
+        if (parent != null && parent.UMLTransition) {
+            val outputSignal = body2output(targetModel, element, element.body)
+            val umlTransition = parent.id.id2src
+            if (umlTransition != null) {
+                val eobject = (umlTransition.src2target)
+                if (eobject instanceof Transition) {
+                    val transition = eobject as Transition
+                    transition.addEffect(outputSignal.emit)
+                }
+            }
+        }
     }
 
     def transformConstraint(List<State> targetModel, Element element) {
