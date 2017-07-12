@@ -3,18 +3,18 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.formatting2;
 
-import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.Parameter;
-import de.cau.cs.kieler.kexpressions.formatting2.KExpressionsFormatter;
-import de.cau.cs.kieler.kexpressions.keffects.Assignment;
-import de.cau.cs.kieler.kexpressions.keffects.Emission;
-import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
-import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
-import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
-import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
-import org.eclipse.xtext.formatting2.IFormattableDocument;
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.formatting2.KExpressionsFormatter
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess
+import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class KEffectsFormatter extends KExpressionsFormatter {
 	
@@ -33,9 +33,14 @@ class KEffectsFormatter extends KExpressionsFormatter {
 		for (Annotation annotations : assignment.getAnnotations()) {
 			format(annotations, document);
 		}
+		
+		assignment.regionFor.keyword(assignmentAccess.leftSquareBracketKeyword_2_0)?.prepend[ noSpace ].append[ noSpace ]
+        assignment.regionFor.keyword(assignmentAccess.rightSquareBracketKeyword_2_2)?.prepend[ noSpace ]
+		
 		for (Expression indices : assignment.getIndices()) {
 			format(indices, document);
 		}
+		
 		format(assignment.getExpression(), document);
 		format(assignment.getSubReference(), document);
 	}
@@ -52,6 +57,10 @@ class KEffectsFormatter extends KExpressionsFormatter {
 		for (Annotation annotations : referencecalleffect.getAnnotations()) {
 			format(annotations, document);
 		}
+		
+        referencecalleffect.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_1_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        referencecalleffect.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_1_0_3)?.prepend[ noSpace ]
+		
 		for (Parameter parameters : referencecalleffect.getParameters()) {
 			format(parameters, document);
 		}
@@ -62,6 +71,14 @@ class KEffectsFormatter extends KExpressionsFormatter {
 		for (Annotation annotations : functioncalleffect.getAnnotations()) {
 			format(annotations, document);
 		}
+		
+		functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_0_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_1_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_0_2_0_3)?.prepend[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_1_2_0_3)?.prepend[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_0_2_1)?.prepend[ noSpace ]
+        functioncalleffect.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_1_2_1)?.prepend[ noSpace ]
+		
 		for (Parameter parameters : functioncalleffect.getParameters()) {
 			format(parameters, document);
 		}

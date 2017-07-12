@@ -114,10 +114,11 @@ class SCChartsLegacyConverter {
         
         // Find Reference States
         val references = <de.cau.cs.kieler.sccharts.legacy.sccharts.State, String>newHashMap
-        val bindings = <de.cau.cs.kieler.sccharts.legacy.sccharts.State, Pair<ValuedObject, String>>newHashMap
+        val bindings = <de.cau.cs.kieler.sccharts.legacy.sccharts.State, List<Pair<Binding, String>>>newHashMap
         val grammar = sctInjector.getInstance(SctGrammarAccess)
         val refKeyword = grammar.stateAccess.referencesKeyword_6_0_0
         val bindKeyword = grammar.stateAccess.bindKeyword_6_0_2_0
+        val toKeyword = grammar.bindingAccess.toKeyword_2
         val parserNodes = resource.parseResult.rootNode
         for (referenceState : parserNodes.asTreeIterable.filter[
             semanticElement instanceof de.cau.cs.kieler.sccharts.legacy.sccharts.State 
@@ -138,6 +139,28 @@ class SCChartsLegacyConverter {
             }
             references.put(state, referencedState)
             
+            // Bindings
+            if (bindingStartNode != null) {
+                val binds = newLinkedList
+                for (var nextNode = bindingStartNode.nextSibling; nextNode != null && (nextNode.semanticElement instanceof Binding || nextNode.semanticElement == state); nextNode = nextNode.nextSibling) {
+                    if (nextNode.semanticElement instanceof Binding && nextNode instanceof CompositeNodeWithSemanticElement) {
+                        val bind = nextNode.semanticElement as Binding
+                        val node = nextNode as CompositeNodeWithSemanticElement
+                        var to = false
+                        var String boundName = null
+                        for (child : node.children) {
+                            if (child.grammarElement.eClass.equals(toKeyword.eClass) && (child.grammarElement as Keyword).value == toKeyword.value) {
+                                to = true
+                            }
+                            if (to && child.grammarElement instanceof CrossReference) {
+                                boundName = child.text
+                            }
+                        }
+                        binds += new Pair(bind, boundName)
+                    }
+                }
+                bindings.put(state, binds)
+            }
         }
         
         // Create fake SCCharts
@@ -194,13 +217,20 @@ class SCChartsLegacyConverter {
         }
     }
     
-    def createReferencedSCCharts(HashMap<de.cau.cs.kieler.sccharts.legacy.sccharts.State, String> references, HashMap<de.cau.cs.kieler.sccharts.legacy.sccharts.State, Pair<ValuedObject, String>> bindings) {
+    def createReferencedSCCharts(HashMap<de.cau.cs.kieler.sccharts.legacy.sccharts.State, String> references, HashMap<de.cau.cs.kieler.sccharts.legacy.sccharts.State, List<Pair<Binding, String>>> bindings) {
         val referenced = <String, State>newHashMap
         for (entry : references.entrySet) {
             val state = if (referenced.containsKey(entry.value)) {
                 referenced.get(entry.value)
             } else {
                 val s = createState
+                s.declarations += createVariableDeclaration => [
+                    type = ValueType.BOOL
+                    input = true
+                    valuedObjects += createValuedObject => [
+                        name = "DUMMY"
+                    ]
+                ]
                 s.id = entry.value
                 referencedSCCharts.rootStates += s
                 referenced.put(entry.value, s)
@@ -208,6 +238,23 @@ class SCChartsLegacyConverter {
             }
             referenceCalls.put(entry.key, createScopeCall => [
                 scope = state
+                if (bindings.containsKey(entry.key)) {
+                    for (bind : bindings.get(entry.key)) {
+                        parameters += createParameter => [
+                            if (bind.key.value != null) {
+                                expression = bind.key.value.convert as de.cau.cs.kieler.kexpressions.Value
+                            } else {
+                                expression = createValuedObjectReference => [
+                                    valuedObject = (bind.key.actual?:(bind.key.formal)).convert as de.cau.cs.kieler.kexpressions.ValuedObject
+                                ]
+                            }
+                            explicitBinding = createValuedObject => [
+                                name = bind.value
+                                state.declarations.head.valuedObjects += it
+                            ]
+                        ]
+                    }
+                }
             ])
         }
     }
