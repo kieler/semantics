@@ -43,12 +43,11 @@ Goto returns Goto:
 
 Assignment returns Assignment:    
     (annotations += Annotation)*
-    valuedObject = [kexpressions::ValuedObject] ('[' indices += Expression ']')* 
-    operator=SCLAssignOperator
-    expression = Expression;
-    
-enum SCLAssignOperator returns keffects::AssignOperator:
-    ASSIGN="=";
+    valuedObject = [kexpressions::ValuedObject] 
+    ('[' indices += Expression ']')* 
+    operator=AssignOperator
+    expression = Expression
+;
 
 Conditional returns Conditional: 
     (annotations += Annotation)*
