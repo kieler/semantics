@@ -92,15 +92,20 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     @Inject
     extension SCEstExtension
         
+    // sorted renamings    
     var signalRenamings = new HashMap<ISignal, ISignal>
     var constantRenamings = new HashMap<Constant, ConstantRenaming>
     var functionRenamings = new HashMap<Function, Function>
     var procedureRenamings = new HashMap<Procedure, Procedure>
     var typeRenamings = new HashMap<Type, Type>
     var taskRenamings = new HashMap<Task, Task> 
+    
+    // parent interface declarations
     var parentSignals = new HashMap<String, ISignal>
     var parentConstants = new HashMap<String, Constant>
     var parentSensors = new HashMap<String, ISignal>
+    
+    // references
     var valuedObjectReferences = new LinkedList<ValuedObjectReference>
     var constantExpressions = new LinkedList<ConstantExpression>
     var emits = new LinkedList<Emit>
@@ -114,18 +119,53 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     var relationIncompatibilities = new LinkedList<RelationIncompatibility>
     
     def SCEstProgram transform(SCEstProgram prog) {
+        prog.moveGeneratedModulesToEnd
         for (var i=0; i<prog.modules.length; i++) {
             var m = prog.modules.get(i)
             if (!m.annotations.generatedModule) {
-                m.getSignals
-                m.getConstants
-                m.statements.transformStatements(m)
-                clearMapsLists
+                m.startTransformation
             }
         }
         return prog
     }
     
+    /**
+     * Move all generated modules to the end of the module list of a program
+     * to avoid problems in "transform(SCEstProgram prog)" when a run 
+     * transformation is completed and the used generated modules are deleted 
+     * of the module list.
+     * 
+     * @param prog The program
+     */
+    def moveGeneratedModulesToEnd(SCEstProgram prog) {
+        var notGeneratedModuleList = new LinkedList<Module>
+        for (var i=0; i<prog.modules.length; i++) {
+            var m = prog.modules.get(i)
+            if (!m.annotations.generatedModule) {
+                notGeneratedModuleList.add(m)
+                prog.modules.remove(m)
+                i--
+            }
+        }
+        prog.modules.addAll(0, notGeneratedModuleList)
+    }
+    
+    /**
+     * Start looking for run statements.
+     * This method is used on the module of a ModuleRenaming every time a run statement is found
+     * 
+     * @param parentModule The closest surrounding module
+     */
+    def startTransformation(Module parentModule) {
+        parentModule.statements.transformStatements(parentModule)
+        clearMapsLists
+    }
+    
+    /**
+     * Get the interface signals of the surrounding module
+     * 
+     * @param parentModule The surrounding module
+     */
     def void getSignals(Module parentModule) {
         for (signalDecl : parentModule.intSignalDecls) {
             for (signal : signalDecl.signals) {
@@ -134,6 +174,24 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         }
     }
     
+    /**
+     * Get the interface sensors of the surrounding module
+     * 
+     * @param parentModule The surrounding module
+     */
+    def void getSensors(Module parentModule) {
+        for (decl : parentModule.intSensorDecls) {
+            for (swt : decl.sensors) {
+                parentSensors.put(swt.sensor.name, swt.sensor)
+            }
+        }
+    }
+    
+    /**
+     * Get the constants of the surrounding module
+     * 
+     * @param parentModule The surrounding module
+     */
     def void getConstants(Module parentModule) {
         for (decls : parentModule.intConstantDecls) {
             for (oneTypeDecl : decls.constants) {
@@ -144,6 +202,12 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         }
     }
     
+    /**
+     * Search for run statements
+     * 
+     * @param statements The list of statements in which the search takes place
+     * @param parentModule The surrounding module
+     */
     def EList<Statement> transformStatements(EList<Statement> statements, Module parentModule) {
         for (var i=0; i<statements?.length; i++) {
             statements.get(i).transformStatement(parentModule)
@@ -151,9 +215,15 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         return statements
     }
     
+    /**
+     * Find out if a specific statement is a run statement and if it is, transform it.
+     * 
+     * @param statement A specific statement
+     * @param parentModule The surrounding module
+     */
     def Statement transformStatement(Statement statement, Module parentModule) {
         if (statement instanceof Run) {
-            statement.module.module.statements.transformStatements(parentModule)
+            startTransformation(statement.module.module)
             transformRunStatement(statement, parentModule)
         }
         else if (statement instanceof StatementContainer) {
@@ -203,7 +273,16 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         return statement
     }
     
+    /**
+     * Set up a specific run statement transformation and then start transforming
+     * 
+     * @param run The run statement
+     * @param parentModule The surrounding Module
+     */
     def transformRunStatement(Run run, Module parentModule) {
+        parentModule.getSignals
+        parentModule.getConstants
+        parentModule.getSensors
         var statementList = run.containingList
         var pos = statementList.indexOf(run)
         var runCopy = EcoreUtil.copy(run)
@@ -241,6 +320,9 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         // TODO PROCEDURES and TASKS will not be transformed at the moment
     }
     
+    /**
+     * Clear all maps and lists
+     */
     def clearMapsLists() {
         signalRenamings.clear
         constantRenamings.clear
@@ -325,7 +407,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
      * @param type The type of the sensor
      */
     def ISignal checkIfSensorExistsByNameAndType(String name, TypeIdentifier typeIdent) {
-        var correspondingSensor = parentConstants.get(name)
+        var correspondingSensor = parentSensors.get(name)
         if (correspondingSensor instanceof ISignal) {
             var swt = correspondingSensor.eContainer as SensorWithType
             if (typeIdent.type != null && swt.type?.type == typeIdent.type) {
@@ -554,7 +636,6 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                     }
                 } 
                 else {
-                    oldType.name = oldType.name.createNewUniqueTypeName
                     parentModule.intTypeDecls += createTypeDecl(oldType)
                     i-- // because the old type was removed of "decl.types"
                 }
@@ -623,7 +704,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     def checkIfFunctionExists(Function oldFunction, Module parentModule) {
         for (decl : parentModule.intFunctionDecls) {
             for (f : decl.functions) {
-                if (f.name.equals(name)) {
+                if (f.name.equals(oldFunction.name)) {
                     var same = true
                     for (var i=0; i<f.idList.length; i++) {
                         var typeIdent = f.idList.get(i)
