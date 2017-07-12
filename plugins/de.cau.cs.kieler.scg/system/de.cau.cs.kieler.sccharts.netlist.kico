@@ -1,7 +1,8 @@
 system de.cau.cs.kieler.sccharts.netlist 
 	version 1 
 	label "Netlist-based Compilation"
-	metric de.cau.cs.kieler.kicool.processors.metrics.eObjectCount [ label "SyncCharts"	
+	
+[ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.transformators.signal
 	de.cau.cs.kieler.sccharts.processors.transformators.^pre
 	de.cau.cs.kieler.sccharts.processors.transformators.suspend

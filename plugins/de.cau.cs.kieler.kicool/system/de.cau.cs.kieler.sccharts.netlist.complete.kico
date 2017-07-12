@@ -2,8 +2,6 @@ system de.cau.cs.kieler.sccharts.extended.statecharts
 	version 1 
 	label "SCCharts to C"
 	
-metric de.cau.cs.kieler.sccharts.metrics.objectCount	
-
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.extended.synccharts.signal
 	de.cau.cs.kieler.sccharts.extended.synccharts.pre

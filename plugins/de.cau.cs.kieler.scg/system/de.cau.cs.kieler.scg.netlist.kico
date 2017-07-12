@@ -1,7 +1,6 @@
 system de.cau.cs.kieler.scg.netlist
 	version 1 
 	label "SCG Netlist-based"
-	metric de.cau.cs.kieler.kicool.processors.metrics.eObjectCount
 
 de.cau.cs.kieler.scg.processors.transformators.dependency
 de.cau.cs.kieler.scg.processors.transformators.basicBlocks

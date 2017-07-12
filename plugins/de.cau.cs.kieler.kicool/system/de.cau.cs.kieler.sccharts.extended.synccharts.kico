@@ -2,8 +2,6 @@ system de.cau.cs.kieler.sccharts.extended.synccharts
 	version 1 
 	label "SyncCharts"
 	
-metric de.cau.cs.kieler.sccharts.metrics.objectCount	
-	
 de.cau.cs.kieler.sccharts.extended.synccharts.signal
 de.cau.cs.kieler.sccharts.extended.synccharts.pre
 de.cau.cs.kieler.sccharts.extended.synccharts.suspend
