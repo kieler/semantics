@@ -52,15 +52,19 @@ class MessageObjectReferencesManager {
         val trackingAdapter = new SourceModelTrackingAdapter
         node.eAdapters.add(trackingAdapter)
         
-        for(reference : references.filter[ object != null && object instanceof EObject ]) {
-            val nodes = trackingAdapter.getTargetElements(reference.object)
-            for (n : nodes) {
-                if (n instanceof KNode) {
-                    val parentNode = n.eContainer as KNode
-                    val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem)
-                    println("LIST: "+  parentNode.children.add(commentNode))
-                    println("")
+        for(reference : references) {
+            if (reference.object != null) {
+                val nodes = trackingAdapter.getTargetElements(reference.object)
+                for (n : nodes) {
+                    if (n instanceof KNode) {
+                        val parentNode = n.eContainer as KNode
+                        val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem)
+                        parentNode.children.add(commentNode)
+                    }
                 }
+            } else {
+                val commentNode = reference.createCommentBox(reference.message, null, reference.colorSystem as ColorSystem)
+                node.children += commentNode
             }
         }
     } 
