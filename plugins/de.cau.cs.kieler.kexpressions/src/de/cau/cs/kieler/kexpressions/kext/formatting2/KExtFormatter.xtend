@@ -3,20 +3,20 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.formatting2;
 
-import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.Annotation;
-import de.cau.cs.kieler.kexpressions.Declaration;
-import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.kexpressions.VariableDeclaration;
-import de.cau.cs.kieler.kexpressions.keffects.formatting2.KEffectsFormatter;
-import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
-import de.cau.cs.kieler.kexpressions.kext.KExtScope;
-import de.cau.cs.kieler.kexpressions.kext.Kext;
-import de.cau.cs.kieler.kexpressions.kext.TestEntity;
-import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
-import org.eclipse.xtext.formatting2.IFormattableDocument;
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.formatting2.KEffectsFormatter
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression
+import de.cau.cs.kieler.kexpressions.kext.KExtScope
+import de.cau.cs.kieler.kexpressions.kext.Kext
+import de.cau.cs.kieler.kexpressions.kext.TestEntity
+import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess
+import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class KExtFormatter extends KEffectsFormatter {
 	
@@ -61,6 +61,7 @@ class KExtFormatter extends KEffectsFormatter {
 		for (Annotation annotations : variabledeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
+		
 		for (ValuedObject valuedObjects : variabledeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
 			valuedObjects.append[ noSpace ]
@@ -74,6 +75,7 @@ class KExtFormatter extends KEffectsFormatter {
 		for (Annotation annotations : referencedeclaration.getAnnotations()) {
 			format(annotations, document);
 		}
+		
 		for (ValuedObject valuedObjects : referencedeclaration.getValuedObjects()) {
 			format(valuedObjects, document);
 			valuedObjects.append[ noSpace ]
@@ -87,6 +89,10 @@ class KExtFormatter extends KEffectsFormatter {
 		for (Annotation annotations : valuedobject.getAnnotations()) {
 			format(annotations, document);
 		}
+		
+		valuedobject.regionFor.keyword(valuedObjectAccess.leftSquareBracketKeyword_2_0)?.prepend[ noSpace ].append[ noSpace ]
+        valuedobject.regionFor.keyword(valuedObjectAccess.rightSquareBracketKeyword_2_2)?.prepend[ noSpace ]
+		
 		for (Expression cardinalities : valuedobject.getCardinalities()) {
 			format(cardinalities, document);
 		}

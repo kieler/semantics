@@ -3,16 +3,16 @@
  */
 package de.cau.cs.kieler.kexpressions.formatting2;
 
-import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.formatting2.AnnotationsFormatter;
-import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.FunctionCall;
-import de.cau.cs.kieler.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.kexpressions.Parameter;
-import de.cau.cs.kieler.kexpressions.ReferenceCall;
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
-import org.eclipse.xtext.formatting2.IFormattableDocument;
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.formatting2.AnnotationsFormatter
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess
+import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class KExpressionsFormatter extends AnnotationsFormatter {
 	
@@ -27,14 +27,25 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 
 	def dispatch void format(ValuedObjectReference valuedobjectreference, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		
+		valuedobjectreference.regionFor.keyword(valuedObjectReferenceAccess.leftSquareBracketKeyword_1_0)?.prepend[ noSpace ].append[ noSpace ]
+        valuedobjectreference.regionFor.keyword(valuedObjectReferenceAccess.rightSquareBracketKeyword_1_2)?.prepend[ noSpace ]
+        
 		for (Expression indices : valuedobjectreference.getIndices()) {
 			format(indices, document);
 		}
+		
+		valuedobjectreference.regionFor.keyword(valuedObjectReferenceAccess.fullStopKeyword_2_0)?.prepend[ noSpace ].append[ noSpace ]
+		
 		format(valuedobjectreference.getSubReference(), document);
 	}
 
 	def dispatch void format(ReferenceCall referencecall, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		
+        referencecall.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_1_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        referencecall.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_1_0_3)?.prepend[ noSpace ]
+		
 		for (Parameter parameters : referencecall.getParameters()) {
 			format(parameters, document);
 		}
@@ -42,6 +53,16 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 
 	def dispatch void format(FunctionCall functioncall, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		
+        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_0_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_1_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_0_2_0_3)?.prepend[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_1_2_0_3)?.prepend[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_0_2_1)?.prepend[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_1_2_1)?.prepend[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.lessThanSignKeyword_1_0)?.prepend[ noSpace ].append[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.greaterThanSignKeyword_1_3)?.prepend[ noSpace ]
+        		
 		for (Parameter parameters : functioncall.getParameters()) {
 			format(parameters, document);
 		}
