@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import de.cau.cs.kieler.kexpressions.keffects.formatting2.KEffectsFormatter
 
 class SCTXFormatter extends KExtFormatter {
 	
@@ -51,7 +52,7 @@ class SCTXFormatter extends KExtFormatter {
 			format(annotations, document)
 		}
 		
-        format(state.reference, document);
+        format(state.reference, document)
 		
         state.regionFor.keyword("{")?.prepend[ oneSpace ].append[ newLine ]
         state.regionFor.keywordPairs("{", "}").head?.interior[ indent ]
@@ -67,7 +68,7 @@ class SCTXFormatter extends KExtFormatter {
 		if (lastObject != null && !state.actions.empty) lastObject.append[ newLine ]
 		for (idxAction : state.actions.indexed) {
 			format(idxAction.value, document);
-            if (idxAction.key < state.declarations.size - 1) idxAction.value.append[ newLine ]
+            if (idxAction.key < state.actions.size - 1) idxAction.value.append[ newLine ]
 			lastObject = idxAction.value
 		}
 		
@@ -112,10 +113,10 @@ class SCTXFormatter extends KExtFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(entryaction.getTrigger(), document);
 		if (!entryaction.effects.empty) {
-    		for (Effect effects : entryaction.getEffects().take(entryaction.effects.size - 1)) {
-    			format(effects, document);
-    			effects.append[ noSpace ]
-    		}
+            for (idxEffect : entryaction.effects.indexed) {
+                format(idxEffect.value, document)
+                if (idxEffect.key < entryaction.effects.size - 1) idxEffect.value.append[ noSpace ]
+            }
 		}
 	}
 
@@ -123,9 +124,9 @@ class SCTXFormatter extends KExtFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(duringaction.getTrigger(), document);
         if (!duringaction.effects.empty) {
-            for (Effect effects : duringaction.getEffects().take(duringaction.effects.size - 1)) {
-			    format(effects, document);
-			    effects.append[ noSpace ]
+            for (idxEffect : duringaction.effects.indexed) {
+			    format(idxEffect.value, document)
+			    if (idxEffect.key < duringaction.effects.size - 1) idxEffect.value.append[ noSpace ]
 			}
 		}
 	}
@@ -134,10 +135,10 @@ class SCTXFormatter extends KExtFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(exitaction.getTrigger(), document);
         if (!exitaction.effects.empty) {
-            for (Effect effects : exitaction.getEffects().take(exitaction.effects.size - 1)) {
-			    format(effects, document);
-			    effects.append[ noSpace ]
-			}
+            for (idxEffect : exitaction.effects.indexed) {
+                format(idxEffect.value, document)
+                if (idxEffect.key < exitaction.effects.size - 1) idxEffect.value.append[ noSpace ]
+            }
 		}
 	}
 
@@ -150,10 +151,10 @@ class SCTXFormatter extends KExtFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(precedingaction.getTrigger(), document);
         if (!precedingaction.effects.empty) {
-            for (Effect effects : precedingaction.getEffects().take(precedingaction.effects.size - 1)) {
-			    format(effects, document);
-			    effects.append[ noSpace ]
-			}
+            for (idxEffect : precedingaction.effects.indexed) {
+                format(idxEffect.value, document)
+                if (idxEffect.key < precedingaction.effects.size - 1) idxEffect.value.append[ noSpace ]
+            }
 		}
 	}
 
@@ -161,10 +162,10 @@ class SCTXFormatter extends KExtFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(succeedingaction.getTrigger(), document);
         if (!succeedingaction.effects.empty) {
-            for (Effect effects : succeedingaction.getEffects().take(succeedingaction.effects.size - 1)) {
-			    format(effects, document);
-			    effects.append[ noSpace ]
-			}
+            for (idxEffect : succeedingaction.effects.indexed) {
+                format(idxEffect.value, document)
+                if (idxEffect.key < succeedingaction.effects.size - 1) idxEffect.value.append[ noSpace ]
+            }
 		}
 	}
 
@@ -186,7 +187,7 @@ class SCTXFormatter extends KExtFormatter {
         if (lastObject != null && !controlflowregion.actions.empty) lastObject.append[ newLine ]
         for (idxAction : controlflowregion.actions.indexed) {
             format(idxAction.value, document);
-            if (idxAction.key < controlflowregion.declarations.size - 1) idxAction.value.append[ newLine ]
+            if (idxAction.key < controlflowregion.actions.size - 1) idxAction.value.append[ newLine ]
             lastObject = idxAction.value
         }
         
@@ -214,24 +215,20 @@ class SCTXFormatter extends KExtFormatter {
         if (lastObject != null && !dataflowregion.actions.empty) lastObject.append[ newLine ]
         for (idxAction : dataflowregion.actions.indexed) {
             format(idxAction.value, document);
-            if (idxAction.key < dataflowregion.declarations.size - 1) idxAction.value.append[ newLine ]
+            if (idxAction.key < dataflowregion.actions.size - 1) idxAction.value.append[ newLine ]
             lastObject = idxAction.value
         }
+        
+        for (asm : dataflowregion.equations) {
+            asm.prepend[ setNewLines(2) highPriority ]
+            format(asm, document);
+        }        
 	}
 
 	override dispatch void format(Assignment assignment, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Annotation annotations : assignment.getAnnotations()) {
-			format(annotations, document);
-		}
 		
-        assignment.regionFor.keyword(assignmentAccess.leftSquareBracketKeyword_2_0)?.prepend[ noSpace ].append[ noSpace ]
-        assignment.regionFor.keyword(assignmentAccess.rightSquareBracketKeyword_2_2)?.prepend[ noSpace ]
-		
-		for (Expression indices : assignment.getIndices()) {
-			format(indices, document);
-		}
-		
-		format(assignment.getExpression(), document);
+		// Delegate to KEffects formatter
+		super._format(assignment, document)
 	}
 }

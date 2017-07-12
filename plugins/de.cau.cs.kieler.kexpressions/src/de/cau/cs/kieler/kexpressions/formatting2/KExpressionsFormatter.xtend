@@ -20,8 +20,31 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 
 	def dispatch void format(OperatorExpression operatorexpression, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		
+		switch(operatorexpression.operator) {
+            case SUB: {
+                if (operatorexpression.subExpressions.size == 1) {
+                    operatorexpression.regionFor.ruleCall(negExpressionAccess.operatorSubOperatorEnumRuleCall_0_1_0)?.append[ noSpace ]
+                }
+            }
+            case NOT: {
+                operatorexpression.regionFor.ruleCall(notExpressionAccess.operatorNotOperatorEnumRuleCall_0_1_0)?.append[ noSpace ]
+            }
+            case PRE,
+            case VAL: {
+        		operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.leftParenthesisKeyword_0_2)?.prepend[ noSpace ].append[ noSpace ]
+                operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.rightParenthesisKeyword_0_4)?.prepend[ noSpace ] 
+            }
+            default: {
+                // Nothing
+            }
+        }
+        
+        operatorexpression.regionFor.keyword("(")?.append[ noSpace ]
+        operatorexpression.regionFor.keyword(")")?.prepend[ noSpace ]
+        
 		for (Expression subExpressions : operatorexpression.getSubExpressions()) {
-			format(subExpressions, document);
+			format(subExpressions, document)
 		}
 	}
 
