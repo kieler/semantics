@@ -23,25 +23,23 @@ import org.eclipse.core.runtime.Assert
  *
  */
 class SimulationTemplateProcessor extends TemplateProcessor {
-    public val template = new ConfigurableAttribute("file", "Simulation.ftl")
-    public val target = new ConfigurableAttribute("target")
     public val modelPath = new ConfigurableAttribute("modelFile")
-    public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "")
     public val snippetFolder = new ConfigurableAttribute("snippetFolder", "snippets")
+    public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "")
     
     new() {
         super()
     }
     
     override process() {
-        if(monitor != null) {
-            monitor.subTask("Processing simulation template '"+template.stringValue+"'")
-        }
         Assert.isNotNull(template.stringValue)
         Assert.isNotNull(target.stringValue)
         Assert.isNotNull(modelPath.stringValue)
         Assert.isNotNull(compiledModelPath.stringValue)
         
+        if(monitor != null) {
+            monitor.subTask("Processing simulation template '"+template.stringValue+"'")
+        }
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
         val modelFile = project.getFile(modelPath.stringValue)
@@ -52,10 +50,12 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         WrapperCodeGenerator.getSimulationInterfaceData(model, annotationDatas)
         
         // Create wrapper code
-        val name = Files.getNameWithoutExtension(templateFile.name)
+        val targetName = Files.getNameWithoutExtension(targetFile.name)
+        val modelName = Files.getNameWithoutExtension(modelFile.name)
         val generator = new WrapperCodeGenerator(project, snippetFolder.stringValue)
         val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, annotationDatas,
-            #{WrapperCodeGenerator.MODEL_NAME_VARIABLE -> name,
+            #{WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
+              WrapperCodeGenerator.FILE_NAME_VARIABLE -> targetName, 
               "compiled_model_loc" -> compiledModelFile.location} )
         
         // Save output

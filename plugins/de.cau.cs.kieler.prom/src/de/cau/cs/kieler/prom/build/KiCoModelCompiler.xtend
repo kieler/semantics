@@ -40,35 +40,10 @@ import org.eclipse.core.runtime.IPath
  */
 class KiCoModelCompiler extends ModelCompiler {
     public val outputTemplate = new ConfigurableAttribute("outputTemplate", "")
-    public val compileChain = new ConfigurableAttribute("compileChain", "")
+    public val compileChain = new ConfigurableAttribute("compileChain", "s.c")
     public val fileExtension = new ConfigurableAttribute("fileExtension", ".c")
     
     private var ModelCompilationResult result
-    
-    override updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet) {
-        for(f : files) {
-            if(f.fileExtension.equalsIgnoreCase("sct")) {
-                val node = dependencies.getOrCreate(f)
-                // Remove old dependencies
-                node.removeAllDependencies()
-                // Add new dependencies
-                val model = ModelImporter.getEObject(f, resourceSet)
-                if(model instanceof State && model != null) {
-                    val state = model as State
-                    val iter = StateIterator.sccAllStates(state)
-                    while(iter.hasNext) {
-                        val s = iter.next
-                        if(s.referencedScope != null) {
-                            val refResource = s.referencedScope.eResource
-                            val refFile = ModelImporter.toPlatformResource(refResource)
-                            val refNode = dependencies.getOrCreate(refFile)
-                            node.addDependency(refNode)
-                        }
-                    }
-                }
-            }
-        }
-    }
     
     /**
      * Compile a model file via KiCo. 
@@ -82,21 +57,6 @@ class KiCoModelCompiler extends ModelCompiler {
         
         // Compile model
         if (model != null) {
-            // Skip compilation of models
-            // TODO: Remove this if the black- and whitelist compilation configuration works
-            var ignore = false
-            if(model instanceof State) {
-                for(ann : model.annotations) {
-                    if(ann.name == "SkipCompilation") {
-                        ignore = true
-                    }
-                }
-            }
-            // Don't compiles files that should be ignored
-            if(ignore) {
-                return result
-            }
-            
             // Compile
             val kicoResult = compileWithKiCo(model)
             
@@ -129,7 +89,8 @@ class KiCoModelCompiler extends ModelCompiler {
                         simulationTargetFolder = new Path(outputFolder).append("sim").append("code")
                     }
                     val fileNameWithoutExtension = Files.getNameWithoutExtension(file.name)
-                    val simulationTarget = simulationTargetFolder.append(fileNameWithoutExtension + fileExt)
+                    val simulationFileName = "Sim_" + fileNameWithoutExtension + fileExt
+                    val simulationTarget = simulationTargetFolder.append(simulationFileName)
                     // Set model specific variables of simulation template processor
                     simulationProcessor.target.value = simulationTarget.toOSString
                     simulationProcessor.modelPath.value = file.projectRelativePath.toOSString
@@ -155,6 +116,31 @@ class KiCoModelCompiler extends ModelCompiler {
         return result
     }
     
+    override updateDependencies(DependencyGraph dependencies, List<IFile> files, ResourceSet resourceSet) {
+        for(f : files) {
+            if(f.fileExtension.equalsIgnoreCase("sct")) {
+                val node = dependencies.getOrCreate(f)
+                // Remove old dependencies
+                node.removeAllDependencies()
+                // Add new dependencies
+                val model = ModelImporter.getEObject(f, resourceSet)
+                if(model instanceof State && model != null) {
+                    val state = model as State
+                    val iter = StateIterator.sccAllStates(state)
+                    while(iter.hasNext) {
+                        val s = iter.next
+                        if(s.referencedScope != null) {
+                            val refResource = s.referencedScope.eResource
+                            val refFile = ModelImporter.toPlatformResource(refResource)
+                            val refNode = dependencies.getOrCreate(refFile)
+                            node.addDependency(refNode)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private def CompilationResult compileWithKiCo(EObject model) {
         // Get compiler context with settings for KiCo
         // TODO: There are several transformations that do not work correctly or throw exceptions, so we explicitly disable them.
@@ -170,7 +156,7 @@ class KiCoModelCompiler extends ModelCompiler {
             chain += ", T_"+ compileChain.stringValue
         }
         val context = new KielerCompilerContext(chain, model)
-        context.inplace = false
+        context.inplace = true
         context.advancedSelect = true
         context.progressMonitor = monitor
         
@@ -199,17 +185,13 @@ class KiCoModelCompiler extends ModelCompiler {
             } else {
                 // Inject compilation result into target template
                 val modelName = Files.getNameWithoutExtension(file.name)
-                val annotationDatas = newArrayList()
-                
-                WrapperCodeGenerator.getWrapperCodeAnnotationData(model, annotationDatas)
                 val generator = new WrapperCodeGenerator(file.project, null)
-                val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate, annotationDatas, 
+                val wrapperCode = generator.processTemplate(resolvedTargetTemplate, 
                     #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string,
-                      WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
-                      WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]})
+                      WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName})
                 // Save output
                 val inputStream = new StringInputStream(wrapperCode)
-                PromPlugin.createResource(targetFile.parent, inputStream, true)
+                PromPlugin.createResource(targetFile, inputStream, true)
             }
         }
     }

@@ -16,9 +16,8 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.DefaultDataHandler
+import de.cau.cs.kieler.simulation.core.DefaultSimulator
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.Simulator
 import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -27,18 +26,16 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class SimulationInputFileHandler extends DefaultDataHandler implements Simulator {
+class SimulationInputFileHandler extends DefaultSimulator {
     
     public val location = new ConfigurableAttribute("fileLocation", null, true)
     
     @Accessors
     private var IFile file
-    
     private var String modelName
     
     override initialize(DataPool pool) {
-        val fileName = Files.getNameWithoutExtension(fileLocation)
-        modelName = pool.getUniqueModelName(fileName, 0)
+        modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(fileLocation))
         var Model model
         val lines = Files.readLines(new File(fileLocation), Charsets.UTF_8)
         if(lines.isNullOrEmpty) {

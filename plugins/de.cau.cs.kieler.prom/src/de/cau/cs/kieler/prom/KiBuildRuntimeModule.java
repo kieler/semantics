@@ -7,5 +7,9 @@ package de.cau.cs.kieler.prom;
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class KiBuildRuntimeModule extends de.cau.cs.kieler.prom.AbstractKiBuildRuntimeModule {
-
+    // contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
+    @org.eclipse.xtext.service.SingletonBinding(eager=true)
+    public Class<? extends de.cau.cs.kieler.prom.validation.KiBuildJavaValidator> bindKiBuildJavaValidator() {
+        return de.cau.cs.kieler.prom.validation.KiBuildValidator.class;
+    }
 }

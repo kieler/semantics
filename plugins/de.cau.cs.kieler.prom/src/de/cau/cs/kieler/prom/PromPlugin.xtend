@@ -130,6 +130,13 @@ class PromPlugin implements BundleActivator  {
     }
     
     /**
+     * Determines is a project is a java project 
+     */
+    public static def boolean isJavaProject(IProject project) {
+        return project.hasNature(JavaCore.NATURE_ID)
+    }
+    
+    /**
      * Returns an input stream for a file loaded from either a file path or an url path.
      * It is only loaded from an url if the url uses the platform protocol from Eclipse.
      * The contents of the returned input stream optionally may have placeholders which can be directly replaced in this method.

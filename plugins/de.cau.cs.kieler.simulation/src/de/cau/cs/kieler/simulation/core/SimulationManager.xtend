@@ -173,7 +173,12 @@ class SimulationManager extends Configurable {
                 // Remember the id for this handler
                 if(handlerConfig.id != null) {
                     idForDataHandler.put(handler, handlerConfig.id)
+                    // Set model name of simulators to id from configuration
+                    if(handler instanceof Simulator) {
+                        handler.baseModelName = handlerConfig.id
+                    }
                 }
+                
                 // Remember to initialize this handler,
                 // even if it is not added to the macro tick actions
                 loadedHandlers.add(handler)

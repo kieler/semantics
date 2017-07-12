@@ -140,11 +140,15 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
                 val inputFileHandler = new SimulationInputFileHandler
                 simulator = inputFileHandler
                 inputFileHandler.file = file
-            } else if(file.fileExtension == "exe" || file.fileExtension.isNullOrEmpty){
+            } else if(file.fileExtension == "exe"
+                || file.fileExtension == "jar"
+                || file.fileExtension.isNullOrEmpty){
                 // Create simulation from executable
                 val exeSimulator = new ExecutableSimulator
                 simulator = exeSimulator
                 exeSimulator.executableFile = file
+            } else {
+                throw new Exception("The file '"+file.name+"' cannot be simulated.")
             }
             // Create simulation with the simulator
             // or append the simulator to a running simulation

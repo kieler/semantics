@@ -21,6 +21,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  *
  */
 abstract class TemplateProcessor extends Configurable {
+    public val template = new ConfigurableAttribute("file")
+    public val target = new ConfigurableAttribute("target")
+    
     @Accessors
     protected IProgressMonitor monitor
     @Accessors

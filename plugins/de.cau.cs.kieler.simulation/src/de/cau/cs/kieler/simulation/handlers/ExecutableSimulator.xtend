@@ -16,9 +16,8 @@ import com.google.common.util.concurrent.SimpleTimeLimiter
 import com.google.common.util.concurrent.UncheckedTimeoutException
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.DefaultDataHandler
+import de.cau.cs.kieler.simulation.core.DefaultSimulator
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.Simulator
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -29,6 +28,7 @@ import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.common.io.Files
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -37,13 +37,13 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class ExecutableSimulator extends DefaultDataHandler implements Simulator {
+class ExecutableSimulator extends DefaultSimulator {
     
     public val executablePath = new ConfigurableAttribute("executable", null, true)
     
     @Accessors
     private var IFile executableFile
-    private var String modelName
+    protected var String modelName
     
     private var Process process
     private var BufferedReader processReader
@@ -57,10 +57,11 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         val currentDir = "." + File.separator
         // Execute jar file or binary
         var ProcessBuilder pBuilder
-        if(executable.name.endsWith(".jar"))
+        if(executable.name.endsWith(".jar")) {
             pBuilder = new ProcessBuilder(#["java", "-jar", currentDir+executable.name])
-        else
-            pBuilder = new ProcessBuilder(#[executable.location.toOSString])
+        } else {
+            pBuilder = new ProcessBuilder(#[executable.location.toOSString])    
+        }
         pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
         process = pBuilder.start()
         
@@ -71,8 +72,8 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         
         // Read json data
         var String line = waitForJSONOutput(processReader)
-
-        modelName = pool.getUniqueModelName(executable.name, 0)
+    
+        modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(executableFile.name))
         val model = Model.createFromJson(modelName, line)
         pool.addModel(model)
     }
@@ -110,13 +111,6 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     
     override getName() {
         return "sim"
-    }
-    
-    /**
-     * Returns the name of the executable.
-     */
-    public def String getModelName() {
-        return executable.name
     }
     
     /**
@@ -159,7 +153,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         }
         return executableFile
     }
-
+    
     /**
      * {@inheritDoc}
      */

@@ -190,7 +190,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             case INCREMENTAL_BUILD : {
                 val delta = getDelta(project);
                 if (delta == null) {
-                   fullBuild();
+                   fullBuild;
                 } else {
                    incrementalBuild(delta);
                 }
@@ -205,16 +205,21 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private def void fullBuild() {
         // Re-initialize
         isInitialized = false
-        // Find all model files
-        val modelFiles = findModelFilesInProject()
-        build(modelFiles)
+        initialize
+        // Build all model files
+        val modelFiles = findModelFilesInProject
+        buildModels(modelFiles)
+        // Process all templates
+        processAllTemplates
     }
     
     private def void incrementalBuild(IResourceDelta delta) {
+        // Initialize
+        initialize
         // Find changed files
-        monitor.subTask("Searching files")
-        
-        val ArrayList<IFile> modelsToBeBuilt = newArrayList()
+        monitor.subTask("Searching changed files")
+        val ArrayList<IFile> changedModels = newArrayList()
+        val ArrayList<IFile> changedTemplates = newArrayList()
         try {
             delta.accept(new IResourceDeltaVisitor() {
                 override visit(IResourceDelta delta) throws CoreException {
@@ -224,7 +229,18 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                         // Only take care of files with the following extensions
                         switch(file.fileExtension.toLowerCase) {
                             case "sct",
-                            case "strl": modelsToBeBuilt.add(file)
+                            case "strl": {
+                                changedModels.add(file)    
+                            }
+                            case "ftl": {
+                                changedTemplates.add(file)
+                            }
+                            case "kibuild": {
+                                // The configuration changed: Do a full build
+                                fullBuild
+                                // No need to check further files, because we do a full build
+                                return false
+                            }
                         }
                     } else if(res.type == IResource.FOLDER) {
                         // Ignore files that were copied to bin folder by eclipse 
@@ -238,28 +254,38 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         } catch (CoreException e) {
             e.printStackTrace();
         }
-
         // Build the changed models
-        monitor.subTask("Building files")
-        build(modelsToBeBuilt)
+        buildModels(changedModels)
+        // Process templates
+        processTemplates(changedTemplates)
     }
     
-    /**
-     * Build a list of files
-     * @param resources The list of files to build 
-     */
-    private def void build(List<IFile> files) {
-        // Compile the found resources
-        if(!files.isNullOrEmpty) {
-            // Init 
-            monitor.subTask("Initializing build")
-            initialize()
-            
-            // Collection of all created simulation files
-            val List<IFile> createdSimulationFiles = newArrayList
-            
-            // Process templates
-            for(templateProcessor : templateProcessors) {
+    private def void processAllTemplates() {
+        processTemplates(null, false)
+    }
+    
+    private def void processTemplates(List<IFile> files) {
+        processTemplates(files, true)
+    }
+    
+    private def void processTemplates(List<IFile> files, boolean onlyBuildChangedFiles) {
+        // Collection of all created simulation files
+        val List<IFile> createdSimulationFiles = newArrayList
+        
+        monitor.subTask("Processing templates")
+        for(templateProcessor : templateProcessors) {
+            var templateForChangedFile = false
+            if(onlyBuildChangedFiles) {
+                // Check if the template of this processor changed
+                for(changedTemplate : files) {
+                    // Is this processor for this template?
+                    if(templateProcessor.template.stringValue == changedTemplate.projectRelativePath.toOSString) {
+                        templateForChangedFile = true
+                    }
+                }
+            }
+            // Process the template
+            if(!onlyBuildChangedFiles || templateForChangedFile) {
                 val result = templateProcessor.process
                 showBuildProblems(result.problems)
                 // Remember to compile simulation code
@@ -267,7 +293,24 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                     createdSimulationFiles.addAll(result.createdFiles)
                 }
             }
-            
+        }
+        
+        // Compile created simulation files
+        for(f : createdSimulationFiles) {
+            compileSimulationCode(f)
+        }
+    }
+    
+    /**
+     * Build a list of files
+     * @param resources The list of files to build 
+     */
+    private def void buildModels(List<IFile> files) {
+        // Collection of all created simulation files
+        val List<IFile> createdSimulationFiles = newArrayList
+        
+        // Compile the model files
+        if(!files.isNullOrEmpty) {
             // Load changed models into resource set.
             // But only if this is not a full build because in a full build this is done in the initialization.
             if(kind != FULL_BUILD) {
@@ -285,7 +328,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             } 
 
             // Compile via KiCo
-            var boolean isFirstModel = true
             for(file : files) {
                 // Compile, generate simulation code, fetch wrapper code annotations
                 if(!monitor.isCanceled) {
@@ -312,18 +354,17 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                         }
                     }
                 }
-                isFirstModel = false
             }
-            
-            // Compile created simulation files
-            for(f : createdSimulationFiles) {
-                compileSimulationCode(f)
-            }
-            
-            // Refresh output in workspace
-            monitor.subTask("Refreshing output directory")
-            refreshOutput(files)
         }
+        
+        // Compile created simulation files
+        for(f : createdSimulationFiles) {
+            compileSimulationCode(f)
+        }
+        
+        // Refresh output in workspace
+//        monitor.subTask("Refreshing output directory")
+//        refreshOutput(files)
     }
 
     /**
@@ -343,6 +384,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Initialize this builder
      */
     private def void initialize() {
+        monitor.subTask("Initializing build")
         // Clear last configuration
         modelCompilers.clear
         simulationCompilers.clear
@@ -376,35 +418,59 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     }
     
     private def void initializeDefaultConfiguration() {
-        // Create C simulation compilers
+        if(PromPlugin.isJavaProject(project)) {
+            initializeDefaultJavaConfiguration
+        } else {
+            initializeDefaultCConfiguration
+        }
+    }
+    
+    private def void initializeDefaultCConfiguration() {
+        // Create Simulation compilers
         val cCompiler = new CSimulationCompiler(monitor)
-        val javaCompiler = new JavaSimulationCompiler(monitor)
+        cCompiler.monitor = monitor
         simulationCompilers.add(cCompiler)
-        simulationCompilers.add(javaCompiler)
         
-        // Create KiCo model compiler that compiles to C code
+        // Create KiCo model compiler
         val kicoModelCompiler = new KiCoModelCompiler()
         modelCompilers.add(kicoModelCompiler)
         kicoModelCompiler.outputFolder = outputFolder.stringValue
-        kicoModelCompiler.outputTemplate.value = ""
-        kicoModelCompiler.compileChain.value = "s.c"
         kicoModelCompiler.monitor = monitor
+        kicoModelCompiler.compileChain.value = "s.c"
         
-        // Create C simulation generator
-        var simTemplate = project.getFile("Simulation.ftl")
-        if(!simTemplate.exists) {
-            simTemplate = project.getFile("src/JavaSimulation.ftl")
-            if(!simTemplate.exists) {
-                println("No simulation template found.")
-            }
+        // Create simulation template processor
+        val simTemplate = project.getFile("Simulation.ftl")
+        if(simTemplate.exists) {
+            val simProcessor = new SimulationTemplateProcessor
+            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
+            // Add simulation generator to model compiler
+            kicoModelCompiler.simulationProcessor = simProcessor
         }
-        var SimulationTemplateProcessor simProcessor
-        if(simTemplate != null) {
-            simProcessor = new SimulationTemplateProcessor
-        }
+    }
+    
+    private def void initializeDefaultJavaConfiguration() {
+        // Create Simulation compilers
+        val javaCompiler = new JavaSimulationCompiler(monitor)
+        javaCompiler.monitor = monitor
+        simulationCompilers.add(javaCompiler)
         
-        // Add simulation generator to model compiler
-        kicoModelCompiler.simulationProcessor = simProcessor
+        // Create KiCo model compiler
+        val kicoModelCompiler = new KiCoModelCompiler()
+        modelCompilers.add(kicoModelCompiler)
+        kicoModelCompiler.outputFolder = outputFolder.stringValue
+        kicoModelCompiler.monitor = monitor
+        kicoModelCompiler.fileExtension.value = "java"
+        kicoModelCompiler.compileChain.value = "s.java"
+        kicoModelCompiler.outputTemplate.value = "src/TargetTemplate.ftl"
+        
+        // Create simulation template processor
+        val simTemplate = project.getFile("src/JavaSimulation.ftl")
+        if(simTemplate.exists) {
+            val simProcessor = new SimulationTemplateProcessor
+            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
+            // Add simulation generator to model compiler
+            kicoModelCompiler.simulationProcessor = simProcessor
+        }
     }
     
     private def void initializeConfiguration(IFile file) {
@@ -553,7 +619,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             if(!folder.exists) {
                 folder.create(false, true, null)
                 // Add folder to java class path if it is a java project
-                if (project.hasNature(JavaCore.NATURE_ID)) {
+                if (PromPlugin.isJavaProject(project)) {
                     val javaProject = JavaCore.create(project);
                     PromPlugin.addFolderToJavaClasspath(javaProject, folder)
                 }                

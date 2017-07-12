@@ -18,6 +18,7 @@ import de.cau.cs.kieler.prom.console.PromConsole
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 
@@ -27,9 +28,9 @@ import org.eclipse.core.runtime.Path
  */
 class CSimulationCompiler extends SimulationCompiler {
     
-    private static val DEFAULT_GCC_COMMAND = "gcc ${file_path} -std=c99 -o \"./${outputFolder}/${executable_name}\""
+    private static val DEFAULT_COMMAND = "gcc -std=c99 -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\""
     
-    public val command = new ConfigurableAttribute("command", DEFAULT_GCC_COMMAND, true)
+    public val command = new ConfigurableAttribute("command", DEFAULT_COMMAND)
     public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin")
     public val libFolder = new ConfigurableAttribute("libFolder", "kieler-gen/sim/lib")
     
@@ -41,17 +42,19 @@ class CSimulationCompiler extends SimulationCompiler {
     }
     
     override compile(IFile file) {
-        result = new FileGenerationResult
+        Assert.isNotNull(command.stringValue)
+        Assert.isNotNull(outputFolder.stringValue)
+        Assert.isNotNull(libFolder.stringValue)
         
+        if(monitor != null) {
+            monitor.subTask("Compiling simulation via gcc:" + file.name)
+        }
         // Compile this file
-        monitor.subTask("Compiling simulation via gcc:" + file.name)
-        
+        result = new FileGenerationResult
         val project = file.project
         val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
-        // File name of the file to be compiled
-        val codeFileName = file.name
         // The exectuable to be created
-        val executableName = Files.getNameWithoutExtension(codeFileName) + if(isWindows) ".exe" else ""
+        val executableName = Files.getNameWithoutExtension(file.name) + if(isWindows) ".exe" else ""
         val executablePath = new Path(outputFolder.stringValue).append(executableName)
         val executableFile = project.getFile(executablePath)
         
@@ -60,7 +63,6 @@ class CSimulationCompiler extends SimulationCompiler {
         
         // Remove markers from old simulation file
         KiCoBuilder.deleteMarkers(file)
-        KiCoBuilder.deleteMarkers(executableFile)
         
         // Run gcc on simulation code
         // Example command to compile simulation code: "gcc -std=c99 SimulationCode.c -o SimulationCode"
@@ -73,7 +75,7 @@ class CSimulationCompiler extends SimulationCompiler {
             .replacePlaceholder("executable_loc", executableFile.location.toOSString)
             .replacePlaceholder("outputFolder", executableFile.parent.projectRelativePath.toOSString, false)
         val processArguments = splitStringOnWhitespace(commandWithoutPlaceholders)
-        val pBuilder = new ProcessBuilder(processArguments)
+        val pBuilder = new ProcessBuilder(processArguments + #[file.location.toOSString])
         pBuilder.directory(project.location.toFile)
         pBuilder.redirectErrorStream(true)
         val p = pBuilder.start()
@@ -85,7 +87,7 @@ class CSimulationCompiler extends SimulationCompiler {
         }
         // Check that there was no error
         if(exception == null && p.exitValue != 0) {
-            exception = new Exception("GCC has issues:" + p.exitValue + " (" + pBuilder.command + " in " + pBuilder.directory + ")\n\n"
+            exception = new Exception("GCC had issues:" + p.exitValue + " (" + pBuilder.command + " in " + pBuilder.directory + ")\n\n"
                               + "Please check the KIELER Console output.")
         }
         if(p.inputStream.available > 0) {
@@ -108,25 +110,9 @@ class CSimulationCompiler extends SimulationCompiler {
         return #["c"]
     }
     
-    private def String replacePlaceholder(String text, String placeholder, String value) {
-        if(value.contains(' ')) {
-            return text.replacePlaceholder(placeholder, value, true)
-        } else {
-            return text.replacePlaceholder(placeholder, value, false)    
-        }
-    }
-    
-    private def String replacePlaceholder(String text, String placeholder, String value, boolean quoted) {
-        var String replacement = value
-        if(quoted) {
-            replacement = '"'+replacement+'"'
-        }
-        return text.replace("${"+placeholder+"}", replacement)    
-    }
-    
     /**
      * Copies the cJSON.c and cJSON.h files from the plugin to the directory.
-     * @param projectRelativeDirectory the directory to copy the files into
+     * @param project the project to copy the files into
      */
     private def void createCJsonLibrary(IProject project) {
         val libPath = new Path(libFolder.stringValue)

@@ -21,9 +21,6 @@ import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
  *
  */
 class SimpleTemplateProcessor extends TemplateProcessor {
-    public val template = new ConfigurableAttribute("file")
-    public val target = new ConfigurableAttribute("target")
-    
     new() {
         super()
     }

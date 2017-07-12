@@ -17,6 +17,7 @@ import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -24,11 +25,13 @@ import org.eclipse.core.runtime.IProgressMonitor
  */
 abstract class SimulationCompiler extends Configurable {
     
+    @Accessors(PUBLIC_GETTER)
     protected FileGenerationResult result
+    @Accessors(PUBLIC_SETTER)
     protected var IProgressMonitor monitor
     
-    public def String[] getSupportedFileExtensions()
-    public def FileGenerationResult compile(IFile file)
+    abstract public def String[] getSupportedFileExtensions()
+    abstract public def FileGenerationResult compile(IFile file)
     
     new() {
         super()
@@ -63,5 +66,21 @@ abstract class SimulationCompiler extends Configurable {
             list.add(m.group(1).replace("\"", ""))
         }
         return list
+    }
+    
+    protected def String replacePlaceholder(String text, String placeholder, String value) {
+        if(value.contains(' ')) {
+            return text.replacePlaceholder(placeholder, value, true)
+        } else {
+            return text.replacePlaceholder(placeholder, value, false)    
+        }
+    }
+    
+    protected def String replacePlaceholder(String text, String placeholder, String value, boolean quoted) {
+        var String replacement = value
+        if(quoted) {
+            replacement = '"'+replacement+'"'
+        }
+        return text.replace("${"+placeholder+"}", replacement)    
     }
 }

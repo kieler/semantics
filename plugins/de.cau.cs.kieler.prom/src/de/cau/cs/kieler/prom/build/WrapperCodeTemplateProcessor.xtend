@@ -22,10 +22,8 @@ import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
  *
  */
 class WrapperCodeTemplateProcessor extends TemplateProcessor {
-    public val template = new ConfigurableAttribute("file")
-    public val target = new ConfigurableAttribute("target")
     public val modelPath = new ConfigurableAttribute("modelFile")
-    public val snippetFolder = new ConfigurableAttribute("snippetFolder")
+    public val snippetFolder = new ConfigurableAttribute("snippetFolder", "snippets")
     
     new() {
         super()
