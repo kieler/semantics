@@ -30,7 +30,7 @@ abstract class ModelCompiler extends Configurable {
     public val blacklist = new ConfigurableAttribute("blacklist", null)
     
     @Accessors(PUBLIC_SETTER)
-    protected var String outputFolder = ""
+    protected var String outputFolder = "kieler-gen"
     
     @Accessors(PUBLIC_SETTER)
     protected var IProgressMonitor monitor
@@ -77,6 +77,16 @@ abstract class ModelCompiler extends Configurable {
      */
     public def ModelCompilationResult compile(EObject model) {
         val file = ModelImporter.toPlatformResource(model.eResource)
+        return compile(file, model)
+    }
+    
+     /**
+     * Compile a model file via KiCo. 
+     * 
+     * @param file file holding the model to be built
+     */
+    public def ModelCompilationResult compile(IFile file) {
+        val model = ModelImporter.load(file)
         return compile(file, model)
     }
 }

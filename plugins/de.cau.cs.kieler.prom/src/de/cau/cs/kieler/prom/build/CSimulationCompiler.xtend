@@ -61,6 +61,12 @@ class CSimulationCompiler extends SimulationCompiler {
         // Copy cJSON.c and cJSON.h to output directory of simulation
         createCJsonLibrary(project)
         
+        // Create output folder
+        if(!outputFolder.stringValue.isNullOrEmpty) {
+            val outputFolderResource = project.getFolder(outputFolder.stringValue)
+            PromPlugin.createResource(outputFolderResource)
+        }
+        
         // Remove markers from old simulation file
         KiCoBuilder.deleteMarkers(file)
         

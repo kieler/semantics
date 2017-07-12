@@ -529,8 +529,8 @@ class PromPlugin implements BundleActivator  {
      * @param projectRelativePath The project relative path of the resource to create
      * @param origin Optional path to initial content for the new file
      */
-    public static def void initializeFile(IProject project, String projectRelativePath, String origin) {
-        val resource = project.getFile(projectRelativePath)
+    public static def IFile initializeFile(IProject project, String projectRelativePath, String origin) {
+       val resource = project.getFile(projectRelativePath)
        // Create empty file
        if(origin.trim.isNullOrEmpty) {
            PromPlugin.createResource(resource)
@@ -539,6 +539,7 @@ class PromPlugin implements BundleActivator  {
            val initialContentStream = PromPlugin.getInputStream(origin, null)
            PromPlugin.createResource(resource, initialContentStream)
        }
+       return resource
     }
 
     /**

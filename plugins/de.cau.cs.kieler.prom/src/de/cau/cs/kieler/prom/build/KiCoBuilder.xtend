@@ -427,16 +427,17 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def void initializeDefaultCConfiguration() {
         // Create Simulation compilers
-        val cCompiler = new CSimulationCompiler(monitor)
+        val cCompiler = new CSimulationCompiler
         cCompiler.monitor = monitor
         simulationCompilers.add(cCompiler)
         
         // Create KiCo model compiler
-        val kicoModelCompiler = new KiCoModelCompiler()
+        val kicoModelCompiler = new KiCoModelCompiler
         modelCompilers.add(kicoModelCompiler)
         kicoModelCompiler.outputFolder = outputFolder.stringValue
         kicoModelCompiler.monitor = monitor
         kicoModelCompiler.compileChain.value = "s.c"
+        kicoModelCompiler.fileExtension.value = "c"
         
         // Create simulation template processor
         val simTemplate = project.getFile("Simulation.ftl")
@@ -450,12 +451,12 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def void initializeDefaultJavaConfiguration() {
         // Create Simulation compilers
-        val javaCompiler = new JavaSimulationCompiler(monitor)
+        val javaCompiler = new JavaSimulationCompiler
         javaCompiler.monitor = monitor
         simulationCompilers.add(javaCompiler)
         
         // Create KiCo model compiler
-        val kicoModelCompiler = new KiCoModelCompiler()
+        val kicoModelCompiler = new KiCoModelCompiler
         modelCompilers.add(kicoModelCompiler)
         kicoModelCompiler.outputFolder = outputFolder.stringValue
         kicoModelCompiler.monitor = monitor
