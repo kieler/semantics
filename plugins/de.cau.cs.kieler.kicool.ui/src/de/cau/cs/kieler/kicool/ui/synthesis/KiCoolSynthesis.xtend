@@ -36,6 +36,7 @@ import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
 import de.cau.cs.kieler.klighd.KlighdOptions
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 
 /**
  * Main diagram synthesis for KiCool.

@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kicool.ui.synthesis.Container
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.INTERMEDIATE_DATA
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder
 import de.cau.cs.kieler.kicool.environments.Warnings
+import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 
 /**
  * Class that handles the intermediate model requests.
@@ -43,7 +44,7 @@ class SelectIntermediateAction implements IAction {
         if (model instanceof String) {
 //            model = new Container<String>(model)
             model = new CodePlaceHolder(editor.title + ".c", model)
-        } else if (model instanceof Warnings) {
+        } else if (model instanceof MessageObjectReferences) {
             model = new Container<String>(model.join("\n"))
         }
         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)        

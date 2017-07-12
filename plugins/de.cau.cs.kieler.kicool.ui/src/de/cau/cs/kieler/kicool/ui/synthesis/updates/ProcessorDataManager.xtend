@@ -25,9 +25,9 @@ import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotificatio
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KColoring
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
@@ -66,7 +66,7 @@ import org.eclipse.emf.ecore.EObject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
-import de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
@@ -201,6 +201,8 @@ class ProcessorDataManager {
         switch(processorInstance.environment.status) {
             case ERRORS: NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
             case WARNINGS: NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(WARNING)
+            default: {
+            }
         }
         
         val pTime = processorInstance.environment.getProperty(PTIME)
@@ -237,11 +239,33 @@ class ProcessorDataManager {
         finalResultNode.setProperty(INTERMEDIATE_DATA, 
             new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
         intermediatePosX += 3.5f            
+        finalResultNode.container.setFBColor(INTERMEDIATE_FINAL_RESULT)        
 
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         processorBodyNode.setProperty(INTERMEDIATE_DATA, 
             new IntermediateData(processorInstance, processorNotification.compilationContext, processorInstance.getModel, view))
+            
+        val infos = processorInstance.environment.getProperty(INFOS)
+        if (infos.size > 0) {
+            val infoNode = intermediateKGT.copy
+            infoNode.xpos = intermediatePosX
+            infoNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+            intermediateRootNode.children += infoNode 
+            
+            val model = processorInstance.getModel
+            if (model instanceof EObject) {
+                val morModel = new MessageObjectReferencePair(infos.fillUndefinedColors(INFO), model)
+                infoNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, view))
+            } else {
+                infoNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, infos, view))
+            }
+                
+            infoNode.container.setFBColor(INFO)
+            intermediatePosX += 3.5f
+        }            
             
         val warnings = processorInstance.environment.getProperty(WARNINGS)
         if (warnings.size > 0) {

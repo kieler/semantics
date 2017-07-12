@@ -15,8 +15,8 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KPolyline

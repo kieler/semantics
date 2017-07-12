@@ -10,10 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ui.synthesis;
+package de.cau.cs.kieler.kicool.ui.synthesis.styles;
 
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*;
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*;
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*;
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*;
 
 import de.cau.cs.kieler.kicool.classes.IColorSystem;
 
@@ -27,9 +27,11 @@ public enum ColorSystem implements IColorSystem {
     OK(OK_FOREGROUND, OK_BACKGROUND, OK_BACKGROUND_TARGET),
     WARNING(WARNING_FOREGROUND, WARNING_BACKGROUND, WARNING_BACKGROUND_TARGET),
     ERROR(ERROR_FOREGROUND, ERROR_BACKGROUND, ERROR_BACKGROUND_TARGET),
+    INFO(INFO_FOREGROUND, INFO_BACKGROUND, INFO_BACKGROUND_TARGET),
     PROGRESSBAR(PROGRESSBAR_FOREGROUND, PROGRESSBAR_BACKGROUND, PROGRESSBAR_BACKGROUND),
     ON(OK_FOREGROUND, OK_BACKGROUND, OK_BACKGROUND_TARGET),
-    OFF(ERROR_FOREGROUND, ERROR_BACKGROUND, ERROR_BACKGROUND_TARGET);
+    OFF(ERROR_FOREGROUND, ERROR_BACKGROUND, ERROR_BACKGROUND_TARGET),
+    INTERMEDIATE_FINAL_RESULT(INTERMEDIATE_FINAL_RESULT_FOREGROUND, INTERMEDIATE_FINAL_RESULT_BACKGROUND, INTERMEDIATE_FINAL_RESULT_BACKGROUND_TARGET);
     
     private Color foreground = null;
     private Color background = null;

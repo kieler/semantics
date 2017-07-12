@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ui.synthesis
+package de.cau.cs.kieler.kicool.ui.synthesis.styles
 
 import org.eclipse.xtend.lib.annotations.Accessors
 

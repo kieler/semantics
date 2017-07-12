@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kicool.ui.synthesis.updates
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
@@ -25,12 +24,12 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem
 import de.cau.cs.kieler.kicool.classes.IColorSystem
 import de.cau.cs.kieler.kicool.environments.MessageObjectLink
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
@@ -55,11 +54,16 @@ class MessageObjectReferencesManager {
         for(reference : references) {
             if (reference.object != null) {
                 val nodes = trackingAdapter.getTargetElements(reference.object)
-                for (n : nodes) {
-                    if (n instanceof KNode) {
-                        val parentNode = n.eContainer as KNode
-                        val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem)
-                        parentNode.children.add(commentNode)
+                if (nodes.empty) {
+                    val commentNode = reference.createCommentBox(reference.message, null, reference.colorSystem as ColorSystem)
+                    node.children += commentNode
+                } else {
+                    for (n : nodes) {
+                        if (n instanceof KNode) {
+                            val parentNode = n.eContainer as KNode
+                            val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem)
+                            parentNode.children.add(commentNode)
+                        }
                     }
                 }
             } else {

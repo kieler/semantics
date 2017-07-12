@@ -40,6 +40,7 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.synthesis,
  de.cau.cs.kieler.kicool.ui.synthesis.actions,
  de.cau.cs.kieler.kicool.ui.synthesis.feedback,
+ de.cau.cs.kieler.kicool.ui.synthesis.styles,
  de.cau.cs.kieler.kicool.ui.synthesis.updates,
  de.cau.cs.kieler.kicool.ui.view,
  de.cau.cs.kieler.kicool.ui.view.actions

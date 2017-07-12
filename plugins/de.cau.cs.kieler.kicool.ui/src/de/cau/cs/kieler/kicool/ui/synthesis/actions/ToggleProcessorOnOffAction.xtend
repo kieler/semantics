@@ -18,7 +18,7 @@ import static de.cau.cs.kieler.kicool.ui.synthesis.KNodeProperties.*
 import org.eclipse.xtend.lib.annotations.Accessors
 import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.getContainer
 import static de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.setFBColor
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorSystem.*
 import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**

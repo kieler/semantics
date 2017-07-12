@@ -17,7 +17,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import java.util.List
 import org.eclipse.jface.action.IAction
-import de.cau.cs.kieler.kicool.ui.synthesis.SkinSelector
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
 
 /**
  * @author ssm

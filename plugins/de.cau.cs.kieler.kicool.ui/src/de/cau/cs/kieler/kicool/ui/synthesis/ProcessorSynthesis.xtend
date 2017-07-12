@@ -34,9 +34,9 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
 import static extension org.eclipse.xtext.EcoreUtil2.* import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**

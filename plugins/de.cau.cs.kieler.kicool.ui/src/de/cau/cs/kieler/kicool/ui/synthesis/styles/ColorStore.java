@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.ui.synthesis;
+package de.cau.cs.kieler.kicool.ui.synthesis.styles;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -47,13 +47,21 @@ public class ColorStore {
         
         ERROR_FOREGROUND(200, 0, 0),
         ERROR_BACKGROUND(255, 177, 177),
-        ERROR_BACKGROUND_TARGET(222, 120, 120),      
+        ERROR_BACKGROUND_TARGET(222, 120, 120),
+        
+        INFO_FOREGROUND(144, 144, 144),
+        INFO_BACKGROUND(255, 255, 255),
+        INFO_BACKGROUND_TARGET(120, 120, 120),
         
         PROGRESSBAR_FOREGROUND(200, 200, 200),
         PROGRESSBAR_BACKGROUND(120, 120, 200),
         
         ACTIVE_ENVIRONMENT(0, 0, 0),
-        INACTIVE_ENVIRONMENT(160, 160, 160);
+        INACTIVE_ENVIRONMENT(160, 160, 160),
+        
+        INTERMEDIATE_FINAL_RESULT_FOREGROUND(100 ,100 ,255),
+        INTERMEDIATE_FINAL_RESULT_BACKGROUND(100 ,100 ,255),
+        INTERMEDIATE_FINAL_RESULT_BACKGROUND_TARGET(128 ,128 ,255);
 
         private final KColor color = KRenderingFactory.eINSTANCE.createKColor();
 
