@@ -106,7 +106,7 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getConditionalLineAccess().getContactContactIndexParserRuleCall_1_0(), semanticObject.getContact());
-		feeder.accept(grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMEParserRuleCall_3_0(), semanticObject.getSegName());
+		feeder.accept(grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMETerminalRuleCall_3_0(), semanticObject.getSegName());
 		feeder.accept(grammarAccess.getConditionalLineAccess().getBlockBlockParserRuleCall_5_0(), semanticObject.getBlock());
 		feeder.finish();
 	}

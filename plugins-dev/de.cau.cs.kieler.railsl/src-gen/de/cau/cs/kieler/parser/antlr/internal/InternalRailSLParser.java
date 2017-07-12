@@ -21,96 +21,49 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalRailSLParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Start:'", "'End.'", "'Loop.'", "'Set track'", "','", "'and'", "', and'", "'to'", "'.'", "'full'", "'slow'", "'reverse'", "'stop'", "'Set point'", "'straight'", "'branch'", "'Wait for'", "'seconds.'", "'Reach'", "'Pass'", "'contact of'", "'Open'", "'Close'", "'crossing.'", "'Turn light'", "'on'", "'off'", "'Branch:'", "'If'", "'is reached first, do'", "'first'", "'second'", "'KH_ST_0'", "'KH_ST_1'", "'KH_ST_2'", "'KH_ST_3'", "'KH_ST_4'", "'KH_ST_5'", "'KH_ST_6'", "'KH_LN_0'", "'KH_LN_1'", "'KH_LN_2'", "'KH_LN_3'", "'KH_LN_4'", "'KH_LN_5'", "'KH_LN_6'", "'KH_LN_7'", "'KH_LN_8'", "'KIO_LN_0'", "'KIO_LN_1'", "'OC_ST_0'", "'OC_ST_1'", "'OC_ST_2'", "'OC_ST_3'", "'OC_ST_4'", "'OC_LN_0'", "'OC_LN_1'", "'OC_LN_2'", "'OC_LN_3'", "'OC_LN_4'", "'OC_LN_5'", "'IC_ST_0'", "'IC_ST_1'", "'IC_ST_2'", "'IC_ST_3'", "'IC_ST_4'", "'IC_LN_0'", "'IC_LN_1'", "'IC_LN_2'", "'IC_LN_3'", "'IC_LN_4'", "'IC_LN_5'", "'OC_JCT_0'", "'IC_JCT_0'", "'OI_LN_0'", "'OI_LN_1'", "'OI_LN_2'", "'IO_LN_0'", "'IO_LN_1'", "'IO_LN_2'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_SEG_NAME", "RULE_INT", "RULE_ID", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Start:'", "'End.'", "'Loop.'", "'Set track'", "', '", "'and'", "', and'", "'to'", "'.'", "'full'", "'slow'", "'reverse'", "'stop'", "'Set point'", "'straight'", "'branch'", "'Wait for'", "'seconds.'", "'Reach'", "'Pass'", "'contact of'", "'Open'", "'Close'", "'crossing.'", "'Turn light'", "'on'", "'off'", "'Branch:'", "'If'", "'is reached first, do'", "'first'", "'second'"
     };
-    public static final int T__50=50;
-    public static final int T__90=90;
     public static final int T__19=19;
     public static final int T__15=15;
-    public static final int T__59=59;
     public static final int T__16=16;
     public static final int T__17=17;
     public static final int T__18=18;
-    public static final int T__11=11;
-    public static final int T__55=55;
+    public static final int RULE_SEG_NAME=4;
     public static final int T__12=12;
-    public static final int T__56=56;
     public static final int T__13=13;
-    public static final int T__57=57;
     public static final int T__14=14;
-    public static final int T__58=58;
-    public static final int T__51=51;
-    public static final int T__52=52;
-    public static final int T__53=53;
-    public static final int T__54=54;
-    public static final int T__60=60;
-    public static final int T__61=61;
-    public static final int RULE_ID=5;
+    public static final int RULE_ID=6;
     public static final int T__26=26;
     public static final int T__27=27;
     public static final int T__28=28;
-    public static final int RULE_INT=4;
+    public static final int RULE_INT=5;
     public static final int T__29=29;
     public static final int T__22=22;
-    public static final int T__66=66;
-    public static final int RULE_ML_COMMENT=7;
+    public static final int RULE_ML_COMMENT=8;
     public static final int T__23=23;
-    public static final int T__67=67;
     public static final int T__24=24;
-    public static final int T__68=68;
     public static final int T__25=25;
-    public static final int T__69=69;
-    public static final int T__62=62;
-    public static final int T__63=63;
     public static final int T__20=20;
-    public static final int T__64=64;
     public static final int T__21=21;
-    public static final int T__65=65;
-    public static final int T__70=70;
-    public static final int T__71=71;
-    public static final int T__72=72;
-    public static final int RULE_STRING=6;
-    public static final int RULE_SL_COMMENT=8;
+    public static final int RULE_STRING=7;
+    public static final int RULE_SL_COMMENT=9;
     public static final int T__37=37;
     public static final int T__38=38;
     public static final int T__39=39;
     public static final int T__33=33;
-    public static final int T__77=77;
     public static final int T__34=34;
-    public static final int T__78=78;
     public static final int T__35=35;
-    public static final int T__79=79;
     public static final int T__36=36;
-    public static final int T__73=73;
     public static final int EOF=-1;
     public static final int T__30=30;
-    public static final int T__74=74;
     public static final int T__31=31;
-    public static final int T__75=75;
     public static final int T__32=32;
-    public static final int T__76=76;
-    public static final int T__80=80;
-    public static final int T__81=81;
-    public static final int T__82=82;
-    public static final int T__83=83;
-    public static final int RULE_WS=9;
-    public static final int RULE_ANY_OTHER=10;
-    public static final int T__48=48;
-    public static final int T__49=49;
-    public static final int T__44=44;
-    public static final int T__88=88;
-    public static final int T__45=45;
-    public static final int T__89=89;
-    public static final int T__46=46;
-    public static final int T__47=47;
+    public static final int RULE_WS=10;
+    public static final int RULE_ANY_OTHER=11;
     public static final int T__40=40;
-    public static final int T__84=84;
     public static final int T__41=41;
-    public static final int T__85=85;
     public static final int T__42=42;
-    public static final int T__86=86;
     public static final int T__43=43;
-    public static final int T__87=87;
 
     // delegates
     // delegators
@@ -208,7 +161,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==11) ) {
+                if ( (LA1_0==12) ) {
                     alt1=1;
                 }
 
@@ -327,7 +280,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             // InternalRailSL.g:114:2: (otherlv_0= 'Start:' ( (lv_statements_1_0= ruleStatement ) )+ ( (lv_end_2_0= ruleBLOCK_END ) ) )
             // InternalRailSL.g:115:3: otherlv_0= 'Start:' ( (lv_statements_1_0= ruleStatement ) )+ ( (lv_end_2_0= ruleBLOCK_END ) )
             {
-            otherlv_0=(Token)match(input,11,FOLLOW_4); 
+            otherlv_0=(Token)match(input,12,FOLLOW_4); 
 
             			newLeafNode(otherlv_0, grammarAccess.getBlockAccess().getStartKeyword_0());
             		
@@ -338,7 +291,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( (LA2_0==14||LA2_0==24||LA2_0==27||(LA2_0>=29 && LA2_0<=30)||(LA2_0>=32 && LA2_0<=33)||LA2_0==35||LA2_0==38) ) {
+                if ( (LA2_0==15||LA2_0==25||LA2_0==28||(LA2_0>=30 && LA2_0<=31)||(LA2_0>=33 && LA2_0<=34)||LA2_0==36||LA2_0==39) ) {
                     alt2=1;
                 }
 
@@ -492,10 +445,10 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( (LA3_0==12) ) {
+            if ( (LA3_0==13) ) {
                 alt3=1;
             }
-            else if ( (LA3_0==13) ) {
+            else if ( (LA3_0==14) ) {
                 alt3=2;
             }
             else {
@@ -508,7 +461,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalRailSL.g:176:3: kw= 'End.'
                     {
-                    kw=(Token)match(input,12,FOLLOW_2); 
+                    kw=(Token)match(input,13,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getBLOCK_ENDAccess().getEndKeyword_0());
@@ -519,7 +472,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // InternalRailSL.g:182:3: kw= 'Loop.'
                     {
-                    kw=(Token)match(input,13,FOLLOW_2); 
+                    kw=(Token)match(input,14,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getBLOCK_ENDAccess().getLoopKeyword_1());
@@ -609,27 +562,27 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             // InternalRailSL.g:205:2: (this_SetStatement_0= ruleSetStatement | this_WaitStatement_1= ruleWaitStatement | this_OpStatement_2= ruleOpStatement | this_ConditionalStatement_3= ruleConditionalStatement )
             int alt4=4;
             switch ( input.LA(1) ) {
-            case 14:
-            case 24:
+            case 15:
+            case 25:
                 {
                 alt4=1;
                 }
                 break;
-            case 27:
-            case 29:
+            case 28:
             case 30:
+            case 31:
                 {
                 alt4=2;
                 }
                 break;
-            case 32:
             case 33:
-            case 35:
+            case 34:
+            case 36:
                 {
                 alt4=3;
                 }
                 break;
-            case 38:
+            case 39:
                 {
                 alt4=4;
                 }
@@ -793,10 +746,10 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==14) ) {
+            if ( (LA5_0==15) ) {
                 alt5=1;
             }
-            else if ( (LA5_0==24) ) {
+            else if ( (LA5_0==25) ) {
                 alt5=2;
             }
             else {
@@ -901,24 +854,20 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSetTrackStatement"
-    // InternalRailSL.g:288:1: ruleSetTrackStatement returns [EObject current=null] : (otherlv_0= 'Set track' ( (lv_segments_1_0= ruleSEG_NAME ) ) (otherlv_2= ',' ( (lv_segments_3_0= ruleSEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' ) ;
+    // InternalRailSL.g:288:1: ruleSetTrackStatement returns [EObject current=null] : (otherlv_0= 'Set track' ( (lv_segments_1_0= RULE_SEG_NAME ) ) (otherlv_2= ', ' ( (lv_segments_3_0= RULE_SEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' ) ;
     public final EObject ruleSetTrackStatement() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
+        Token lv_segments_1_0=null;
         Token otherlv_2=null;
+        Token lv_segments_3_0=null;
         Token otherlv_4=null;
+        Token lv_segments_5_0=null;
         Token otherlv_6=null;
+        Token lv_segments_7_0=null;
         Token otherlv_8=null;
         Token otherlv_10=null;
-        AntlrDatatypeRuleToken lv_segments_1_0 = null;
-
-        AntlrDatatypeRuleToken lv_segments_3_0 = null;
-
-        AntlrDatatypeRuleToken lv_segments_5_0 = null;
-
-        AntlrDatatypeRuleToken lv_segments_7_0 = null;
-
         AntlrDatatypeRuleToken lv_mode_9_0 = null;
 
 
@@ -926,40 +875,35 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:294:2: ( (otherlv_0= 'Set track' ( (lv_segments_1_0= ruleSEG_NAME ) ) (otherlv_2= ',' ( (lv_segments_3_0= ruleSEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' ) )
-            // InternalRailSL.g:295:2: (otherlv_0= 'Set track' ( (lv_segments_1_0= ruleSEG_NAME ) ) (otherlv_2= ',' ( (lv_segments_3_0= ruleSEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' )
+            // InternalRailSL.g:294:2: ( (otherlv_0= 'Set track' ( (lv_segments_1_0= RULE_SEG_NAME ) ) (otherlv_2= ', ' ( (lv_segments_3_0= RULE_SEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' ) )
+            // InternalRailSL.g:295:2: (otherlv_0= 'Set track' ( (lv_segments_1_0= RULE_SEG_NAME ) ) (otherlv_2= ', ' ( (lv_segments_3_0= RULE_SEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' )
             {
-            // InternalRailSL.g:295:2: (otherlv_0= 'Set track' ( (lv_segments_1_0= ruleSEG_NAME ) ) (otherlv_2= ',' ( (lv_segments_3_0= ruleSEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' )
-            // InternalRailSL.g:296:3: otherlv_0= 'Set track' ( (lv_segments_1_0= ruleSEG_NAME ) ) (otherlv_2= ',' ( (lv_segments_3_0= ruleSEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.'
+            // InternalRailSL.g:295:2: (otherlv_0= 'Set track' ( (lv_segments_1_0= RULE_SEG_NAME ) ) (otherlv_2= ', ' ( (lv_segments_3_0= RULE_SEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.' )
+            // InternalRailSL.g:296:3: otherlv_0= 'Set track' ( (lv_segments_1_0= RULE_SEG_NAME ) ) (otherlv_2= ', ' ( (lv_segments_3_0= RULE_SEG_NAME ) ) )* ( (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) ) )? otherlv_8= 'to' ( (lv_mode_9_0= ruleTrackSetting ) ) otherlv_10= '.'
             {
-            otherlv_0=(Token)match(input,14,FOLLOW_6); 
+            otherlv_0=(Token)match(input,15,FOLLOW_6); 
 
             			newLeafNode(otherlv_0, grammarAccess.getSetTrackStatementAccess().getSetTrackKeyword_0());
             		
-            // InternalRailSL.g:300:3: ( (lv_segments_1_0= ruleSEG_NAME ) )
-            // InternalRailSL.g:301:4: (lv_segments_1_0= ruleSEG_NAME )
+            // InternalRailSL.g:300:3: ( (lv_segments_1_0= RULE_SEG_NAME ) )
+            // InternalRailSL.g:301:4: (lv_segments_1_0= RULE_SEG_NAME )
             {
-            // InternalRailSL.g:301:4: (lv_segments_1_0= ruleSEG_NAME )
-            // InternalRailSL.g:302:5: lv_segments_1_0= ruleSEG_NAME
+            // InternalRailSL.g:301:4: (lv_segments_1_0= RULE_SEG_NAME )
+            // InternalRailSL.g:302:5: lv_segments_1_0= RULE_SEG_NAME
             {
+            lv_segments_1_0=(Token)match(input,RULE_SEG_NAME,FOLLOW_7); 
 
-            					newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_1_0());
+            					newLeafNode(lv_segments_1_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0());
             				
-            pushFollow(FOLLOW_7);
-            lv_segments_1_0=ruleSEG_NAME();
-
-            state._fsp--;
-
 
             					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+            						current = createModelElement(grammarAccess.getSetTrackStatementRule());
             					}
-            					add(
+            					addWithLastConsumed(
             						current,
             						"segments",
             						lv_segments_1_0,
             						"de.cau.cs.kieler.RailSL.SEG_NAME");
-            					afterParserOrEnumRuleCall();
             				
 
             }
@@ -967,49 +911,44 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalRailSL.g:319:3: (otherlv_2= ',' ( (lv_segments_3_0= ruleSEG_NAME ) ) )*
+            // InternalRailSL.g:318:3: (otherlv_2= ', ' ( (lv_segments_3_0= RULE_SEG_NAME ) ) )*
             loop6:
             do {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==15) ) {
+                if ( (LA6_0==16) ) {
                     alt6=1;
                 }
 
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalRailSL.g:320:4: otherlv_2= ',' ( (lv_segments_3_0= ruleSEG_NAME ) )
+            	    // InternalRailSL.g:319:4: otherlv_2= ', ' ( (lv_segments_3_0= RULE_SEG_NAME ) )
             	    {
-            	    otherlv_2=(Token)match(input,15,FOLLOW_6); 
+            	    otherlv_2=(Token)match(input,16,FOLLOW_6); 
 
-            	    				newLeafNode(otherlv_2, grammarAccess.getSetTrackStatementAccess().getCommaKeyword_2_0());
+            	    				newLeafNode(otherlv_2, grammarAccess.getSetTrackStatementAccess().getCommaSpaceKeyword_2_0());
             	    			
-            	    // InternalRailSL.g:324:4: ( (lv_segments_3_0= ruleSEG_NAME ) )
-            	    // InternalRailSL.g:325:5: (lv_segments_3_0= ruleSEG_NAME )
+            	    // InternalRailSL.g:323:4: ( (lv_segments_3_0= RULE_SEG_NAME ) )
+            	    // InternalRailSL.g:324:5: (lv_segments_3_0= RULE_SEG_NAME )
             	    {
-            	    // InternalRailSL.g:325:5: (lv_segments_3_0= ruleSEG_NAME )
-            	    // InternalRailSL.g:326:6: lv_segments_3_0= ruleSEG_NAME
+            	    // InternalRailSL.g:324:5: (lv_segments_3_0= RULE_SEG_NAME )
+            	    // InternalRailSL.g:325:6: lv_segments_3_0= RULE_SEG_NAME
             	    {
+            	    lv_segments_3_0=(Token)match(input,RULE_SEG_NAME,FOLLOW_7); 
 
-            	    						newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_2_1_0());
+            	    						newLeafNode(lv_segments_3_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0());
             	    					
-            	    pushFollow(FOLLOW_7);
-            	    lv_segments_3_0=ruleSEG_NAME();
-
-            	    state._fsp--;
-
 
             	    						if (current==null) {
-            	    							current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+            	    							current = createModelElement(grammarAccess.getSetTrackStatementRule());
             	    						}
-            	    						add(
+            	    						addWithLastConsumed(
             	    							current,
             	    							"segments",
             	    							lv_segments_3_0,
             	    							"de.cau.cs.kieler.RailSL.SEG_NAME");
-            	    						afterParserOrEnumRuleCall();
             	    					
 
             	    }
@@ -1026,51 +965,46 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalRailSL.g:344:3: ( (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) ) )?
+            // InternalRailSL.g:342:3: ( (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) ) | (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) ) )?
             int alt7=3;
             int LA7_0 = input.LA(1);
 
-            if ( (LA7_0==16) ) {
+            if ( (LA7_0==17) ) {
                 alt7=1;
             }
-            else if ( (LA7_0==17) ) {
+            else if ( (LA7_0==18) ) {
                 alt7=2;
             }
             switch (alt7) {
                 case 1 :
-                    // InternalRailSL.g:345:4: (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) )
+                    // InternalRailSL.g:343:4: (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) )
                     {
-                    // InternalRailSL.g:345:4: (otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) ) )
-                    // InternalRailSL.g:346:5: otherlv_4= 'and' ( (lv_segments_5_0= ruleSEG_NAME ) )
+                    // InternalRailSL.g:343:4: (otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) ) )
+                    // InternalRailSL.g:344:5: otherlv_4= 'and' ( (lv_segments_5_0= RULE_SEG_NAME ) )
                     {
-                    otherlv_4=(Token)match(input,16,FOLLOW_6); 
+                    otherlv_4=(Token)match(input,17,FOLLOW_6); 
 
                     					newLeafNode(otherlv_4, grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_0_0());
                     				
-                    // InternalRailSL.g:350:5: ( (lv_segments_5_0= ruleSEG_NAME ) )
-                    // InternalRailSL.g:351:6: (lv_segments_5_0= ruleSEG_NAME )
+                    // InternalRailSL.g:348:5: ( (lv_segments_5_0= RULE_SEG_NAME ) )
+                    // InternalRailSL.g:349:6: (lv_segments_5_0= RULE_SEG_NAME )
                     {
-                    // InternalRailSL.g:351:6: (lv_segments_5_0= ruleSEG_NAME )
-                    // InternalRailSL.g:352:7: lv_segments_5_0= ruleSEG_NAME
+                    // InternalRailSL.g:349:6: (lv_segments_5_0= RULE_SEG_NAME )
+                    // InternalRailSL.g:350:7: lv_segments_5_0= RULE_SEG_NAME
                     {
+                    lv_segments_5_0=(Token)match(input,RULE_SEG_NAME,FOLLOW_8); 
 
-                    							newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_3_0_1_0());
+                    							newLeafNode(lv_segments_5_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0());
                     						
-                    pushFollow(FOLLOW_8);
-                    lv_segments_5_0=ruleSEG_NAME();
-
-                    state._fsp--;
-
 
                     							if (current==null) {
-                    								current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+                    								current = createModelElement(grammarAccess.getSetTrackStatementRule());
                     							}
-                    							add(
+                    							addWithLastConsumed(
                     								current,
                     								"segments",
                     								lv_segments_5_0,
                     								"de.cau.cs.kieler.RailSL.SEG_NAME");
-                    							afterParserOrEnumRuleCall();
                     						
 
                     }
@@ -1085,39 +1019,34 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:371:4: (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) )
+                    // InternalRailSL.g:368:4: (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) )
                     {
-                    // InternalRailSL.g:371:4: (otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) ) )
-                    // InternalRailSL.g:372:5: otherlv_6= ', and' ( (lv_segments_7_0= ruleSEG_NAME ) )
+                    // InternalRailSL.g:368:4: (otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) ) )
+                    // InternalRailSL.g:369:5: otherlv_6= ', and' ( (lv_segments_7_0= RULE_SEG_NAME ) )
                     {
-                    otherlv_6=(Token)match(input,17,FOLLOW_6); 
+                    otherlv_6=(Token)match(input,18,FOLLOW_6); 
 
                     					newLeafNode(otherlv_6, grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_1_0());
                     				
-                    // InternalRailSL.g:376:5: ( (lv_segments_7_0= ruleSEG_NAME ) )
-                    // InternalRailSL.g:377:6: (lv_segments_7_0= ruleSEG_NAME )
+                    // InternalRailSL.g:373:5: ( (lv_segments_7_0= RULE_SEG_NAME ) )
+                    // InternalRailSL.g:374:6: (lv_segments_7_0= RULE_SEG_NAME )
                     {
-                    // InternalRailSL.g:377:6: (lv_segments_7_0= ruleSEG_NAME )
-                    // InternalRailSL.g:378:7: lv_segments_7_0= ruleSEG_NAME
+                    // InternalRailSL.g:374:6: (lv_segments_7_0= RULE_SEG_NAME )
+                    // InternalRailSL.g:375:7: lv_segments_7_0= RULE_SEG_NAME
                     {
+                    lv_segments_7_0=(Token)match(input,RULE_SEG_NAME,FOLLOW_8); 
 
-                    							newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_3_1_1_0());
+                    							newLeafNode(lv_segments_7_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0());
                     						
-                    pushFollow(FOLLOW_8);
-                    lv_segments_7_0=ruleSEG_NAME();
-
-                    state._fsp--;
-
 
                     							if (current==null) {
-                    								current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+                    								current = createModelElement(grammarAccess.getSetTrackStatementRule());
                     							}
-                    							add(
+                    							addWithLastConsumed(
                     								current,
                     								"segments",
                     								lv_segments_7_0,
                     								"de.cau.cs.kieler.RailSL.SEG_NAME");
-                    							afterParserOrEnumRuleCall();
                     						
 
                     }
@@ -1134,15 +1063,15 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_8=(Token)match(input,18,FOLLOW_9); 
+            otherlv_8=(Token)match(input,19,FOLLOW_9); 
 
             			newLeafNode(otherlv_8, grammarAccess.getSetTrackStatementAccess().getToKeyword_4());
             		
-            // InternalRailSL.g:401:3: ( (lv_mode_9_0= ruleTrackSetting ) )
-            // InternalRailSL.g:402:4: (lv_mode_9_0= ruleTrackSetting )
+            // InternalRailSL.g:397:3: ( (lv_mode_9_0= ruleTrackSetting ) )
+            // InternalRailSL.g:398:4: (lv_mode_9_0= ruleTrackSetting )
             {
-            // InternalRailSL.g:402:4: (lv_mode_9_0= ruleTrackSetting )
-            // InternalRailSL.g:403:5: lv_mode_9_0= ruleTrackSetting
+            // InternalRailSL.g:398:4: (lv_mode_9_0= ruleTrackSetting )
+            // InternalRailSL.g:399:5: lv_mode_9_0= ruleTrackSetting
             {
 
             					newCompositeNode(grammarAccess.getSetTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0());
@@ -1169,7 +1098,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_10=(Token)match(input,19,FOLLOW_2); 
+            otherlv_10=(Token)match(input,20,FOLLOW_2); 
 
             			newLeafNode(otherlv_10, grammarAccess.getSetTrackStatementAccess().getFullStopKeyword_6());
             		
@@ -1196,7 +1125,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTrackSetting"
-    // InternalRailSL.g:428:1: entryRuleTrackSetting returns [String current=null] : iv_ruleTrackSetting= ruleTrackSetting EOF ;
+    // InternalRailSL.g:424:1: entryRuleTrackSetting returns [String current=null] : iv_ruleTrackSetting= ruleTrackSetting EOF ;
     public final String entryRuleTrackSetting() throws RecognitionException {
         String current = null;
 
@@ -1204,8 +1133,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:428:52: (iv_ruleTrackSetting= ruleTrackSetting EOF )
-            // InternalRailSL.g:429:2: iv_ruleTrackSetting= ruleTrackSetting EOF
+            // InternalRailSL.g:424:52: (iv_ruleTrackSetting= ruleTrackSetting EOF )
+            // InternalRailSL.g:425:2: iv_ruleTrackSetting= ruleTrackSetting EOF
             {
              newCompositeNode(grammarAccess.getTrackSettingRule()); 
             pushFollow(FOLLOW_1);
@@ -1232,7 +1161,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTrackSetting"
-    // InternalRailSL.g:435:1: ruleTrackSetting returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' ) ;
+    // InternalRailSL.g:431:1: ruleTrackSetting returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' ) ;
     public final AntlrDatatypeRuleToken ruleTrackSetting() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -1242,17 +1171,17 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:441:2: ( ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' ) )
-            // InternalRailSL.g:442:2: ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' )
+            // InternalRailSL.g:437:2: ( ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' ) )
+            // InternalRailSL.g:438:2: ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' )
             {
-            // InternalRailSL.g:442:2: ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' )
+            // InternalRailSL.g:438:2: ( ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? ) | kw= 'stop' )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( ((LA10_0>=20 && LA10_0<=21)) ) {
+            if ( ((LA10_0>=21 && LA10_0<=22)) ) {
                 alt10=1;
             }
-            else if ( (LA10_0==23) ) {
+            else if ( (LA10_0==24) ) {
                 alt10=2;
             }
             else {
@@ -1263,19 +1192,19 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             }
             switch (alt10) {
                 case 1 :
-                    // InternalRailSL.g:443:3: ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? )
+                    // InternalRailSL.g:439:3: ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? )
                     {
-                    // InternalRailSL.g:443:3: ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? )
-                    // InternalRailSL.g:444:4: (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )?
+                    // InternalRailSL.g:439:3: ( (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )? )
+                    // InternalRailSL.g:440:4: (kw= 'full' | kw= 'slow' ) (kw= 'reverse' )?
                     {
-                    // InternalRailSL.g:444:4: (kw= 'full' | kw= 'slow' )
+                    // InternalRailSL.g:440:4: (kw= 'full' | kw= 'slow' )
                     int alt8=2;
                     int LA8_0 = input.LA(1);
 
-                    if ( (LA8_0==20) ) {
+                    if ( (LA8_0==21) ) {
                         alt8=1;
                     }
-                    else if ( (LA8_0==21) ) {
+                    else if ( (LA8_0==22) ) {
                         alt8=2;
                     }
                     else {
@@ -1286,9 +1215,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt8) {
                         case 1 :
-                            // InternalRailSL.g:445:5: kw= 'full'
+                            // InternalRailSL.g:441:5: kw= 'full'
                             {
-                            kw=(Token)match(input,20,FOLLOW_11); 
+                            kw=(Token)match(input,21,FOLLOW_11); 
 
                             					current.merge(kw);
                             					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getFullKeyword_0_0_0());
@@ -1297,9 +1226,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // InternalRailSL.g:451:5: kw= 'slow'
+                            // InternalRailSL.g:447:5: kw= 'slow'
                             {
-                            kw=(Token)match(input,21,FOLLOW_11); 
+                            kw=(Token)match(input,22,FOLLOW_11); 
 
                             					current.merge(kw);
                             					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getSlowKeyword_0_0_1());
@@ -1310,18 +1239,18 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalRailSL.g:457:4: (kw= 'reverse' )?
+                    // InternalRailSL.g:453:4: (kw= 'reverse' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
-                    if ( (LA9_0==22) ) {
+                    if ( (LA9_0==23) ) {
                         alt9=1;
                     }
                     switch (alt9) {
                         case 1 :
-                            // InternalRailSL.g:458:5: kw= 'reverse'
+                            // InternalRailSL.g:454:5: kw= 'reverse'
                             {
-                            kw=(Token)match(input,22,FOLLOW_2); 
+                            kw=(Token)match(input,23,FOLLOW_2); 
 
                             					current.merge(kw);
                             					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getReverseKeyword_0_1());
@@ -1339,9 +1268,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:466:3: kw= 'stop'
+                    // InternalRailSL.g:462:3: kw= 'stop'
                     {
-                    kw=(Token)match(input,23,FOLLOW_2); 
+                    kw=(Token)match(input,24,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getTrackSettingAccess().getStopKeyword_1());
@@ -1372,7 +1301,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSetPointStatement"
-    // InternalRailSL.g:475:1: entryRuleSetPointStatement returns [EObject current=null] : iv_ruleSetPointStatement= ruleSetPointStatement EOF ;
+    // InternalRailSL.g:471:1: entryRuleSetPointStatement returns [EObject current=null] : iv_ruleSetPointStatement= ruleSetPointStatement EOF ;
     public final EObject entryRuleSetPointStatement() throws RecognitionException {
         EObject current = null;
 
@@ -1380,8 +1309,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:475:58: (iv_ruleSetPointStatement= ruleSetPointStatement EOF )
-            // InternalRailSL.g:476:2: iv_ruleSetPointStatement= ruleSetPointStatement EOF
+            // InternalRailSL.g:471:58: (iv_ruleSetPointStatement= ruleSetPointStatement EOF )
+            // InternalRailSL.g:472:2: iv_ruleSetPointStatement= ruleSetPointStatement EOF
             {
              newCompositeNode(grammarAccess.getSetPointStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -1408,7 +1337,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSetPointStatement"
-    // InternalRailSL.g:482:1: ruleSetPointStatement returns [EObject current=null] : (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' ) ;
+    // InternalRailSL.g:478:1: ruleSetPointStatement returns [EObject current=null] : (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' ) ;
     public final EObject ruleSetPointStatement() throws RecognitionException {
         EObject current = null;
 
@@ -1429,21 +1358,21 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:488:2: ( (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' ) )
-            // InternalRailSL.g:489:2: (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' )
+            // InternalRailSL.g:484:2: ( (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' ) )
+            // InternalRailSL.g:485:2: (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' )
             {
-            // InternalRailSL.g:489:2: (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' )
-            // InternalRailSL.g:490:3: otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.'
+            // InternalRailSL.g:485:2: (otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.' )
+            // InternalRailSL.g:486:3: otherlv_0= 'Set point' ( (lv_points_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_points_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )? otherlv_8= 'to' ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) ) otherlv_10= '.'
             {
-            otherlv_0=(Token)match(input,24,FOLLOW_12); 
+            otherlv_0=(Token)match(input,25,FOLLOW_12); 
 
             			newLeafNode(otherlv_0, grammarAccess.getSetPointStatementAccess().getSetPointKeyword_0());
             		
-            // InternalRailSL.g:494:3: ( (lv_points_1_0= RULE_INT ) )
-            // InternalRailSL.g:495:4: (lv_points_1_0= RULE_INT )
+            // InternalRailSL.g:490:3: ( (lv_points_1_0= RULE_INT ) )
+            // InternalRailSL.g:491:4: (lv_points_1_0= RULE_INT )
             {
-            // InternalRailSL.g:495:4: (lv_points_1_0= RULE_INT )
-            // InternalRailSL.g:496:5: lv_points_1_0= RULE_INT
+            // InternalRailSL.g:491:4: (lv_points_1_0= RULE_INT )
+            // InternalRailSL.g:492:5: lv_points_1_0= RULE_INT
             {
             lv_points_1_0=(Token)match(input,RULE_INT,FOLLOW_7); 
 
@@ -1465,30 +1394,30 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalRailSL.g:512:3: (otherlv_2= ',' ( (lv_points_3_0= RULE_INT ) ) )*
+            // InternalRailSL.g:508:3: (otherlv_2= ', ' ( (lv_points_3_0= RULE_INT ) ) )*
             loop11:
             do {
                 int alt11=2;
                 int LA11_0 = input.LA(1);
 
-                if ( (LA11_0==15) ) {
+                if ( (LA11_0==16) ) {
                     alt11=1;
                 }
 
 
                 switch (alt11) {
             	case 1 :
-            	    // InternalRailSL.g:513:4: otherlv_2= ',' ( (lv_points_3_0= RULE_INT ) )
+            	    // InternalRailSL.g:509:4: otherlv_2= ', ' ( (lv_points_3_0= RULE_INT ) )
             	    {
-            	    otherlv_2=(Token)match(input,15,FOLLOW_12); 
+            	    otherlv_2=(Token)match(input,16,FOLLOW_12); 
 
-            	    				newLeafNode(otherlv_2, grammarAccess.getSetPointStatementAccess().getCommaKeyword_2_0());
+            	    				newLeafNode(otherlv_2, grammarAccess.getSetPointStatementAccess().getCommaSpaceKeyword_2_0());
             	    			
-            	    // InternalRailSL.g:517:4: ( (lv_points_3_0= RULE_INT ) )
-            	    // InternalRailSL.g:518:5: (lv_points_3_0= RULE_INT )
+            	    // InternalRailSL.g:513:4: ( (lv_points_3_0= RULE_INT ) )
+            	    // InternalRailSL.g:514:5: (lv_points_3_0= RULE_INT )
             	    {
-            	    // InternalRailSL.g:518:5: (lv_points_3_0= RULE_INT )
-            	    // InternalRailSL.g:519:6: lv_points_3_0= RULE_INT
+            	    // InternalRailSL.g:514:5: (lv_points_3_0= RULE_INT )
+            	    // InternalRailSL.g:515:6: lv_points_3_0= RULE_INT
             	    {
             	    lv_points_3_0=(Token)match(input,RULE_INT,FOLLOW_7); 
 
@@ -1519,32 +1448,32 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalRailSL.g:536:3: ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )?
+            // InternalRailSL.g:532:3: ( (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) ) )?
             int alt12=3;
             int LA12_0 = input.LA(1);
 
-            if ( (LA12_0==16) ) {
+            if ( (LA12_0==17) ) {
                 alt12=1;
             }
-            else if ( (LA12_0==17) ) {
+            else if ( (LA12_0==18) ) {
                 alt12=2;
             }
             switch (alt12) {
                 case 1 :
-                    // InternalRailSL.g:537:4: (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) )
+                    // InternalRailSL.g:533:4: (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) )
                     {
-                    // InternalRailSL.g:537:4: (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) )
-                    // InternalRailSL.g:538:5: otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) )
+                    // InternalRailSL.g:533:4: (otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) ) )
+                    // InternalRailSL.g:534:5: otherlv_4= 'and' ( (lv_points_5_0= RULE_INT ) )
                     {
-                    otherlv_4=(Token)match(input,16,FOLLOW_12); 
+                    otherlv_4=(Token)match(input,17,FOLLOW_12); 
 
                     					newLeafNode(otherlv_4, grammarAccess.getSetPointStatementAccess().getAndKeyword_3_0_0());
                     				
-                    // InternalRailSL.g:542:5: ( (lv_points_5_0= RULE_INT ) )
-                    // InternalRailSL.g:543:6: (lv_points_5_0= RULE_INT )
+                    // InternalRailSL.g:538:5: ( (lv_points_5_0= RULE_INT ) )
+                    // InternalRailSL.g:539:6: (lv_points_5_0= RULE_INT )
                     {
-                    // InternalRailSL.g:543:6: (lv_points_5_0= RULE_INT )
-                    // InternalRailSL.g:544:7: lv_points_5_0= RULE_INT
+                    // InternalRailSL.g:539:6: (lv_points_5_0= RULE_INT )
+                    // InternalRailSL.g:540:7: lv_points_5_0= RULE_INT
                     {
                     lv_points_5_0=(Token)match(input,RULE_INT,FOLLOW_8); 
 
@@ -1573,20 +1502,20 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:562:4: (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) )
+                    // InternalRailSL.g:558:4: (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) )
                     {
-                    // InternalRailSL.g:562:4: (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) )
-                    // InternalRailSL.g:563:5: otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) )
+                    // InternalRailSL.g:558:4: (otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) ) )
+                    // InternalRailSL.g:559:5: otherlv_6= ', and' ( (lv_points_7_0= RULE_INT ) )
                     {
-                    otherlv_6=(Token)match(input,17,FOLLOW_12); 
+                    otherlv_6=(Token)match(input,18,FOLLOW_12); 
 
                     					newLeafNode(otherlv_6, grammarAccess.getSetPointStatementAccess().getAndKeyword_3_1_0());
                     				
-                    // InternalRailSL.g:567:5: ( (lv_points_7_0= RULE_INT ) )
-                    // InternalRailSL.g:568:6: (lv_points_7_0= RULE_INT )
+                    // InternalRailSL.g:563:5: ( (lv_points_7_0= RULE_INT ) )
+                    // InternalRailSL.g:564:6: (lv_points_7_0= RULE_INT )
                     {
-                    // InternalRailSL.g:568:6: (lv_points_7_0= RULE_INT )
-                    // InternalRailSL.g:569:7: lv_points_7_0= RULE_INT
+                    // InternalRailSL.g:564:6: (lv_points_7_0= RULE_INT )
+                    // InternalRailSL.g:565:7: lv_points_7_0= RULE_INT
                     {
                     lv_points_7_0=(Token)match(input,RULE_INT,FOLLOW_8); 
 
@@ -1617,24 +1546,24 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_8=(Token)match(input,18,FOLLOW_13); 
+            otherlv_8=(Token)match(input,19,FOLLOW_13); 
 
             			newLeafNode(otherlv_8, grammarAccess.getSetPointStatementAccess().getToKeyword_4());
             		
-            // InternalRailSL.g:591:3: ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) )
-            // InternalRailSL.g:592:4: ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) )
+            // InternalRailSL.g:587:3: ( ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) ) )
+            // InternalRailSL.g:588:4: ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) )
             {
-            // InternalRailSL.g:592:4: ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) )
-            // InternalRailSL.g:593:5: (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' )
+            // InternalRailSL.g:588:4: ( (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' ) )
+            // InternalRailSL.g:589:5: (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' )
             {
-            // InternalRailSL.g:593:5: (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' )
+            // InternalRailSL.g:589:5: (lv_orientation_9_1= 'straight' | lv_orientation_9_2= 'branch' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
-            if ( (LA13_0==25) ) {
+            if ( (LA13_0==26) ) {
                 alt13=1;
             }
-            else if ( (LA13_0==26) ) {
+            else if ( (LA13_0==27) ) {
                 alt13=2;
             }
             else {
@@ -1645,9 +1574,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalRailSL.g:594:6: lv_orientation_9_1= 'straight'
+                    // InternalRailSL.g:590:6: lv_orientation_9_1= 'straight'
                     {
-                    lv_orientation_9_1=(Token)match(input,25,FOLLOW_10); 
+                    lv_orientation_9_1=(Token)match(input,26,FOLLOW_10); 
 
                     						newLeafNode(lv_orientation_9_1, grammarAccess.getSetPointStatementAccess().getOrientationStraightKeyword_5_0_0());
                     					
@@ -1661,9 +1590,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:605:6: lv_orientation_9_2= 'branch'
+                    // InternalRailSL.g:601:6: lv_orientation_9_2= 'branch'
                     {
-                    lv_orientation_9_2=(Token)match(input,26,FOLLOW_10); 
+                    lv_orientation_9_2=(Token)match(input,27,FOLLOW_10); 
 
                     						newLeafNode(lv_orientation_9_2, grammarAccess.getSetPointStatementAccess().getOrientationBranchKeyword_5_0_1());
                     					
@@ -1685,7 +1614,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_10=(Token)match(input,19,FOLLOW_2); 
+            otherlv_10=(Token)match(input,20,FOLLOW_2); 
 
             			newLeafNode(otherlv_10, grammarAccess.getSetPointStatementAccess().getFullStopKeyword_6());
             		
@@ -1712,7 +1641,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleWaitStatement"
-    // InternalRailSL.g:626:1: entryRuleWaitStatement returns [EObject current=null] : iv_ruleWaitStatement= ruleWaitStatement EOF ;
+    // InternalRailSL.g:622:1: entryRuleWaitStatement returns [EObject current=null] : iv_ruleWaitStatement= ruleWaitStatement EOF ;
     public final EObject entryRuleWaitStatement() throws RecognitionException {
         EObject current = null;
 
@@ -1720,8 +1649,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:626:54: (iv_ruleWaitStatement= ruleWaitStatement EOF )
-            // InternalRailSL.g:627:2: iv_ruleWaitStatement= ruleWaitStatement EOF
+            // InternalRailSL.g:622:54: (iv_ruleWaitStatement= ruleWaitStatement EOF )
+            // InternalRailSL.g:623:2: iv_ruleWaitStatement= ruleWaitStatement EOF
             {
              newCompositeNode(grammarAccess.getWaitStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -1748,7 +1677,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWaitStatement"
-    // InternalRailSL.g:633:1: ruleWaitStatement returns [EObject current=null] : (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement ) ;
+    // InternalRailSL.g:629:1: ruleWaitStatement returns [EObject current=null] : (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement ) ;
     public final EObject ruleWaitStatement() throws RecognitionException {
         EObject current = null;
 
@@ -1761,17 +1690,17 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:639:2: ( (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement ) )
-            // InternalRailSL.g:640:2: (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement )
+            // InternalRailSL.g:635:2: ( (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement ) )
+            // InternalRailSL.g:636:2: (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement )
             {
-            // InternalRailSL.g:640:2: (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement )
+            // InternalRailSL.g:636:2: (this_TimeWaitStatement_0= ruleTimeWaitStatement | this_ContactWaitStatement_1= ruleContactWaitStatement )
             int alt14=2;
             int LA14_0 = input.LA(1);
 
-            if ( (LA14_0==27) ) {
+            if ( (LA14_0==28) ) {
                 alt14=1;
             }
-            else if ( ((LA14_0>=29 && LA14_0<=30)) ) {
+            else if ( ((LA14_0>=30 && LA14_0<=31)) ) {
                 alt14=2;
             }
             else {
@@ -1782,7 +1711,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             }
             switch (alt14) {
                 case 1 :
-                    // InternalRailSL.g:641:3: this_TimeWaitStatement_0= ruleTimeWaitStatement
+                    // InternalRailSL.g:637:3: this_TimeWaitStatement_0= ruleTimeWaitStatement
                     {
 
                     			newCompositeNode(grammarAccess.getWaitStatementAccess().getTimeWaitStatementParserRuleCall_0());
@@ -1800,7 +1729,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:650:3: this_ContactWaitStatement_1= ruleContactWaitStatement
+                    // InternalRailSL.g:646:3: this_ContactWaitStatement_1= ruleContactWaitStatement
                     {
 
                     			newCompositeNode(grammarAccess.getWaitStatementAccess().getContactWaitStatementParserRuleCall_1());
@@ -1840,7 +1769,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTimeWaitStatement"
-    // InternalRailSL.g:662:1: entryRuleTimeWaitStatement returns [EObject current=null] : iv_ruleTimeWaitStatement= ruleTimeWaitStatement EOF ;
+    // InternalRailSL.g:658:1: entryRuleTimeWaitStatement returns [EObject current=null] : iv_ruleTimeWaitStatement= ruleTimeWaitStatement EOF ;
     public final EObject entryRuleTimeWaitStatement() throws RecognitionException {
         EObject current = null;
 
@@ -1848,8 +1777,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:662:58: (iv_ruleTimeWaitStatement= ruleTimeWaitStatement EOF )
-            // InternalRailSL.g:663:2: iv_ruleTimeWaitStatement= ruleTimeWaitStatement EOF
+            // InternalRailSL.g:658:58: (iv_ruleTimeWaitStatement= ruleTimeWaitStatement EOF )
+            // InternalRailSL.g:659:2: iv_ruleTimeWaitStatement= ruleTimeWaitStatement EOF
             {
              newCompositeNode(grammarAccess.getTimeWaitStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -1876,7 +1805,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeWaitStatement"
-    // InternalRailSL.g:669:1: ruleTimeWaitStatement returns [EObject current=null] : ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' ) ;
+    // InternalRailSL.g:665:1: ruleTimeWaitStatement returns [EObject current=null] : ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' ) ;
     public final EObject ruleTimeWaitStatement() throws RecognitionException {
         EObject current = null;
 
@@ -1888,29 +1817,29 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:675:2: ( ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' ) )
-            // InternalRailSL.g:676:2: ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' )
+            // InternalRailSL.g:671:2: ( ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' ) )
+            // InternalRailSL.g:672:2: ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' )
             {
-            // InternalRailSL.g:676:2: ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' )
-            // InternalRailSL.g:677:3: (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.'
+            // InternalRailSL.g:672:2: ( (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.' )
+            // InternalRailSL.g:673:3: (otherlv_0= 'Wait for' )+ ( (lv_time_1_0= RULE_INT ) )+ otherlv_2= 'seconds.'
             {
-            // InternalRailSL.g:677:3: (otherlv_0= 'Wait for' )+
+            // InternalRailSL.g:673:3: (otherlv_0= 'Wait for' )+
             int cnt15=0;
             loop15:
             do {
                 int alt15=2;
                 int LA15_0 = input.LA(1);
 
-                if ( (LA15_0==27) ) {
+                if ( (LA15_0==28) ) {
                     alt15=1;
                 }
 
 
                 switch (alt15) {
             	case 1 :
-            	    // InternalRailSL.g:678:4: otherlv_0= 'Wait for'
+            	    // InternalRailSL.g:674:4: otherlv_0= 'Wait for'
             	    {
-            	    otherlv_0=(Token)match(input,27,FOLLOW_14); 
+            	    otherlv_0=(Token)match(input,28,FOLLOW_14); 
 
             	    				newLeafNode(otherlv_0, grammarAccess.getTimeWaitStatementAccess().getWaitForKeyword_0());
             	    			
@@ -1927,7 +1856,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 cnt15++;
             } while (true);
 
-            // InternalRailSL.g:683:3: ( (lv_time_1_0= RULE_INT ) )+
+            // InternalRailSL.g:679:3: ( (lv_time_1_0= RULE_INT ) )+
             int cnt16=0;
             loop16:
             do {
@@ -1941,10 +1870,10 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
                 switch (alt16) {
             	case 1 :
-            	    // InternalRailSL.g:684:4: (lv_time_1_0= RULE_INT )
+            	    // InternalRailSL.g:680:4: (lv_time_1_0= RULE_INT )
             	    {
-            	    // InternalRailSL.g:684:4: (lv_time_1_0= RULE_INT )
-            	    // InternalRailSL.g:685:5: lv_time_1_0= RULE_INT
+            	    // InternalRailSL.g:680:4: (lv_time_1_0= RULE_INT )
+            	    // InternalRailSL.g:681:5: lv_time_1_0= RULE_INT
             	    {
             	    lv_time_1_0=(Token)match(input,RULE_INT,FOLLOW_15); 
 
@@ -1976,7 +1905,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 cnt16++;
             } while (true);
 
-            otherlv_2=(Token)match(input,28,FOLLOW_2); 
+            otherlv_2=(Token)match(input,29,FOLLOW_2); 
 
             			newLeafNode(otherlv_2, grammarAccess.getTimeWaitStatementAccess().getSecondsKeyword_2());
             		
@@ -2003,7 +1932,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleContactWaitStatement"
-    // InternalRailSL.g:709:1: entryRuleContactWaitStatement returns [EObject current=null] : iv_ruleContactWaitStatement= ruleContactWaitStatement EOF ;
+    // InternalRailSL.g:705:1: entryRuleContactWaitStatement returns [EObject current=null] : iv_ruleContactWaitStatement= ruleContactWaitStatement EOF ;
     public final EObject entryRuleContactWaitStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2011,8 +1940,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:709:61: (iv_ruleContactWaitStatement= ruleContactWaitStatement EOF )
-            // InternalRailSL.g:710:2: iv_ruleContactWaitStatement= ruleContactWaitStatement EOF
+            // InternalRailSL.g:705:61: (iv_ruleContactWaitStatement= ruleContactWaitStatement EOF )
+            // InternalRailSL.g:706:2: iv_ruleContactWaitStatement= ruleContactWaitStatement EOF
             {
              newCompositeNode(grammarAccess.getContactWaitStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -2039,43 +1968,42 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleContactWaitStatement"
-    // InternalRailSL.g:716:1: ruleContactWaitStatement returns [EObject current=null] : ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= ruleSEG_NAME ) ) otherlv_4= '.' ) ;
+    // InternalRailSL.g:712:1: ruleContactWaitStatement returns [EObject current=null] : ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) otherlv_4= '.' ) ;
     public final EObject ruleContactWaitStatement() throws RecognitionException {
         EObject current = null;
 
         Token lv_event_0_1=null;
         Token lv_event_0_2=null;
         Token otherlv_2=null;
+        Token lv_segName_3_0=null;
         Token otherlv_4=null;
         AntlrDatatypeRuleToken lv_contactIndex_1_0 = null;
-
-        AntlrDatatypeRuleToken lv_segName_3_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalRailSL.g:722:2: ( ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= ruleSEG_NAME ) ) otherlv_4= '.' ) )
-            // InternalRailSL.g:723:2: ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= ruleSEG_NAME ) ) otherlv_4= '.' )
+            // InternalRailSL.g:718:2: ( ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) otherlv_4= '.' ) )
+            // InternalRailSL.g:719:2: ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) otherlv_4= '.' )
             {
-            // InternalRailSL.g:723:2: ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= ruleSEG_NAME ) ) otherlv_4= '.' )
-            // InternalRailSL.g:724:3: ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= ruleSEG_NAME ) ) otherlv_4= '.'
+            // InternalRailSL.g:719:2: ( ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) otherlv_4= '.' )
+            // InternalRailSL.g:720:3: ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) ) ( (lv_contactIndex_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) otherlv_4= '.'
             {
-            // InternalRailSL.g:724:3: ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) )
-            // InternalRailSL.g:725:4: ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) )
+            // InternalRailSL.g:720:3: ( ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) ) )
+            // InternalRailSL.g:721:4: ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) )
             {
-            // InternalRailSL.g:725:4: ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) )
-            // InternalRailSL.g:726:5: (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' )
+            // InternalRailSL.g:721:4: ( (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' ) )
+            // InternalRailSL.g:722:5: (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' )
             {
-            // InternalRailSL.g:726:5: (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' )
+            // InternalRailSL.g:722:5: (lv_event_0_1= 'Reach' | lv_event_0_2= 'Pass' )
             int alt17=2;
             int LA17_0 = input.LA(1);
 
-            if ( (LA17_0==29) ) {
+            if ( (LA17_0==30) ) {
                 alt17=1;
             }
-            else if ( (LA17_0==30) ) {
+            else if ( (LA17_0==31) ) {
                 alt17=2;
             }
             else {
@@ -2086,9 +2014,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             }
             switch (alt17) {
                 case 1 :
-                    // InternalRailSL.g:727:6: lv_event_0_1= 'Reach'
+                    // InternalRailSL.g:723:6: lv_event_0_1= 'Reach'
                     {
-                    lv_event_0_1=(Token)match(input,29,FOLLOW_16); 
+                    lv_event_0_1=(Token)match(input,30,FOLLOW_16); 
 
                     						newLeafNode(lv_event_0_1, grammarAccess.getContactWaitStatementAccess().getEventReachKeyword_0_0_0());
                     					
@@ -2102,9 +2030,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:738:6: lv_event_0_2= 'Pass'
+                    // InternalRailSL.g:734:6: lv_event_0_2= 'Pass'
                     {
-                    lv_event_0_2=(Token)match(input,30,FOLLOW_16); 
+                    lv_event_0_2=(Token)match(input,31,FOLLOW_16); 
 
                     						newLeafNode(lv_event_0_2, grammarAccess.getContactWaitStatementAccess().getEventPassKeyword_0_0_1());
                     					
@@ -2126,11 +2054,11 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalRailSL.g:751:3: ( (lv_contactIndex_1_0= ruleContactIndex ) )
-            // InternalRailSL.g:752:4: (lv_contactIndex_1_0= ruleContactIndex )
+            // InternalRailSL.g:747:3: ( (lv_contactIndex_1_0= ruleContactIndex ) )
+            // InternalRailSL.g:748:4: (lv_contactIndex_1_0= ruleContactIndex )
             {
-            // InternalRailSL.g:752:4: (lv_contactIndex_1_0= ruleContactIndex )
-            // InternalRailSL.g:753:5: lv_contactIndex_1_0= ruleContactIndex
+            // InternalRailSL.g:748:4: (lv_contactIndex_1_0= ruleContactIndex )
+            // InternalRailSL.g:749:5: lv_contactIndex_1_0= ruleContactIndex
             {
 
             					newCompositeNode(grammarAccess.getContactWaitStatementAccess().getContactIndexContactIndexParserRuleCall_1_0());
@@ -2157,34 +2085,29 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,31,FOLLOW_6); 
+            otherlv_2=(Token)match(input,32,FOLLOW_6); 
 
             			newLeafNode(otherlv_2, grammarAccess.getContactWaitStatementAccess().getContactOfKeyword_2());
             		
-            // InternalRailSL.g:774:3: ( (lv_segName_3_0= ruleSEG_NAME ) )
-            // InternalRailSL.g:775:4: (lv_segName_3_0= ruleSEG_NAME )
+            // InternalRailSL.g:770:3: ( (lv_segName_3_0= RULE_SEG_NAME ) )
+            // InternalRailSL.g:771:4: (lv_segName_3_0= RULE_SEG_NAME )
             {
-            // InternalRailSL.g:775:4: (lv_segName_3_0= ruleSEG_NAME )
-            // InternalRailSL.g:776:5: lv_segName_3_0= ruleSEG_NAME
+            // InternalRailSL.g:771:4: (lv_segName_3_0= RULE_SEG_NAME )
+            // InternalRailSL.g:772:5: lv_segName_3_0= RULE_SEG_NAME
             {
+            lv_segName_3_0=(Token)match(input,RULE_SEG_NAME,FOLLOW_10); 
 
-            					newCompositeNode(grammarAccess.getContactWaitStatementAccess().getSegNameSEG_NAMEParserRuleCall_3_0());
+            					newLeafNode(lv_segName_3_0, grammarAccess.getContactWaitStatementAccess().getSegNameSEG_NAMETerminalRuleCall_3_0());
             				
-            pushFollow(FOLLOW_10);
-            lv_segName_3_0=ruleSEG_NAME();
-
-            state._fsp--;
-
 
             					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getContactWaitStatementRule());
+            						current = createModelElement(grammarAccess.getContactWaitStatementRule());
             					}
-            					set(
+            					setWithLastConsumed(
             						current,
             						"segName",
             						lv_segName_3_0,
             						"de.cau.cs.kieler.RailSL.SEG_NAME");
-            					afterParserOrEnumRuleCall();
             				
 
             }
@@ -2192,7 +2115,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,19,FOLLOW_2); 
+            otherlv_4=(Token)match(input,20,FOLLOW_2); 
 
             			newLeafNode(otherlv_4, grammarAccess.getContactWaitStatementAccess().getFullStopKeyword_4());
             		
@@ -2219,7 +2142,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOpStatement"
-    // InternalRailSL.g:801:1: entryRuleOpStatement returns [EObject current=null] : iv_ruleOpStatement= ruleOpStatement EOF ;
+    // InternalRailSL.g:796:1: entryRuleOpStatement returns [EObject current=null] : iv_ruleOpStatement= ruleOpStatement EOF ;
     public final EObject entryRuleOpStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2227,8 +2150,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:801:52: (iv_ruleOpStatement= ruleOpStatement EOF )
-            // InternalRailSL.g:802:2: iv_ruleOpStatement= ruleOpStatement EOF
+            // InternalRailSL.g:796:52: (iv_ruleOpStatement= ruleOpStatement EOF )
+            // InternalRailSL.g:797:2: iv_ruleOpStatement= ruleOpStatement EOF
             {
              newCompositeNode(grammarAccess.getOpStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -2255,7 +2178,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOpStatement"
-    // InternalRailSL.g:808:1: ruleOpStatement returns [EObject current=null] : (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement ) ;
+    // InternalRailSL.g:803:1: ruleOpStatement returns [EObject current=null] : (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement ) ;
     public final EObject ruleOpStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2268,17 +2191,17 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:814:2: ( (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement ) )
-            // InternalRailSL.g:815:2: (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement )
+            // InternalRailSL.g:809:2: ( (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement ) )
+            // InternalRailSL.g:810:2: (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement )
             {
-            // InternalRailSL.g:815:2: (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement )
+            // InternalRailSL.g:810:2: (this_CrossingStatement_0= ruleCrossingStatement | this_LightStatement_1= ruleLightStatement )
             int alt18=2;
             int LA18_0 = input.LA(1);
 
-            if ( ((LA18_0>=32 && LA18_0<=33)) ) {
+            if ( ((LA18_0>=33 && LA18_0<=34)) ) {
                 alt18=1;
             }
-            else if ( (LA18_0==35) ) {
+            else if ( (LA18_0==36) ) {
                 alt18=2;
             }
             else {
@@ -2289,7 +2212,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             }
             switch (alt18) {
                 case 1 :
-                    // InternalRailSL.g:816:3: this_CrossingStatement_0= ruleCrossingStatement
+                    // InternalRailSL.g:811:3: this_CrossingStatement_0= ruleCrossingStatement
                     {
 
                     			newCompositeNode(grammarAccess.getOpStatementAccess().getCrossingStatementParserRuleCall_0());
@@ -2307,7 +2230,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:825:3: this_LightStatement_1= ruleLightStatement
+                    // InternalRailSL.g:820:3: this_LightStatement_1= ruleLightStatement
                     {
 
                     			newCompositeNode(grammarAccess.getOpStatementAccess().getLightStatementParserRuleCall_1());
@@ -2347,7 +2270,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCrossingStatement"
-    // InternalRailSL.g:837:1: entryRuleCrossingStatement returns [EObject current=null] : iv_ruleCrossingStatement= ruleCrossingStatement EOF ;
+    // InternalRailSL.g:832:1: entryRuleCrossingStatement returns [EObject current=null] : iv_ruleCrossingStatement= ruleCrossingStatement EOF ;
     public final EObject entryRuleCrossingStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2355,8 +2278,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:837:58: (iv_ruleCrossingStatement= ruleCrossingStatement EOF )
-            // InternalRailSL.g:838:2: iv_ruleCrossingStatement= ruleCrossingStatement EOF
+            // InternalRailSL.g:832:58: (iv_ruleCrossingStatement= ruleCrossingStatement EOF )
+            // InternalRailSL.g:833:2: iv_ruleCrossingStatement= ruleCrossingStatement EOF
             {
              newCompositeNode(grammarAccess.getCrossingStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -2383,7 +2306,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCrossingStatement"
-    // InternalRailSL.g:844:1: ruleCrossingStatement returns [EObject current=null] : ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' ) ;
+    // InternalRailSL.g:839:1: ruleCrossingStatement returns [EObject current=null] : ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' ) ;
     public final EObject ruleCrossingStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2395,26 +2318,26 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:850:2: ( ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' ) )
-            // InternalRailSL.g:851:2: ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' )
+            // InternalRailSL.g:845:2: ( ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' ) )
+            // InternalRailSL.g:846:2: ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' )
             {
-            // InternalRailSL.g:851:2: ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' )
-            // InternalRailSL.g:852:3: ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.'
+            // InternalRailSL.g:846:2: ( ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.' )
+            // InternalRailSL.g:847:3: ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) ) otherlv_1= 'crossing.'
             {
-            // InternalRailSL.g:852:3: ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) )
-            // InternalRailSL.g:853:4: ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) )
+            // InternalRailSL.g:847:3: ( ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) ) )
+            // InternalRailSL.g:848:4: ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) )
             {
-            // InternalRailSL.g:853:4: ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) )
-            // InternalRailSL.g:854:5: (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' )
+            // InternalRailSL.g:848:4: ( (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' ) )
+            // InternalRailSL.g:849:5: (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' )
             {
-            // InternalRailSL.g:854:5: (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' )
+            // InternalRailSL.g:849:5: (lv_mode_0_1= 'Open' | lv_mode_0_2= 'Close' )
             int alt19=2;
             int LA19_0 = input.LA(1);
 
-            if ( (LA19_0==32) ) {
+            if ( (LA19_0==33) ) {
                 alt19=1;
             }
-            else if ( (LA19_0==33) ) {
+            else if ( (LA19_0==34) ) {
                 alt19=2;
             }
             else {
@@ -2425,9 +2348,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalRailSL.g:855:6: lv_mode_0_1= 'Open'
+                    // InternalRailSL.g:850:6: lv_mode_0_1= 'Open'
                     {
-                    lv_mode_0_1=(Token)match(input,32,FOLLOW_18); 
+                    lv_mode_0_1=(Token)match(input,33,FOLLOW_18); 
 
                     						newLeafNode(lv_mode_0_1, grammarAccess.getCrossingStatementAccess().getModeOpenKeyword_0_0_0());
                     					
@@ -2441,9 +2364,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:866:6: lv_mode_0_2= 'Close'
+                    // InternalRailSL.g:861:6: lv_mode_0_2= 'Close'
                     {
-                    lv_mode_0_2=(Token)match(input,33,FOLLOW_18); 
+                    lv_mode_0_2=(Token)match(input,34,FOLLOW_18); 
 
                     						newLeafNode(lv_mode_0_2, grammarAccess.getCrossingStatementAccess().getModeCloseKeyword_0_0_1());
                     					
@@ -2465,7 +2388,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,34,FOLLOW_2); 
+            otherlv_1=(Token)match(input,35,FOLLOW_2); 
 
             			newLeafNode(otherlv_1, grammarAccess.getCrossingStatementAccess().getCrossingKeyword_1());
             		
@@ -2492,7 +2415,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLightStatement"
-    // InternalRailSL.g:887:1: entryRuleLightStatement returns [EObject current=null] : iv_ruleLightStatement= ruleLightStatement EOF ;
+    // InternalRailSL.g:882:1: entryRuleLightStatement returns [EObject current=null] : iv_ruleLightStatement= ruleLightStatement EOF ;
     public final EObject entryRuleLightStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2500,8 +2423,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:887:55: (iv_ruleLightStatement= ruleLightStatement EOF )
-            // InternalRailSL.g:888:2: iv_ruleLightStatement= ruleLightStatement EOF
+            // InternalRailSL.g:882:55: (iv_ruleLightStatement= ruleLightStatement EOF )
+            // InternalRailSL.g:883:2: iv_ruleLightStatement= ruleLightStatement EOF
             {
              newCompositeNode(grammarAccess.getLightStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -2528,7 +2451,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLightStatement"
-    // InternalRailSL.g:894:1: ruleLightStatement returns [EObject current=null] : (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' ) ;
+    // InternalRailSL.g:889:1: ruleLightStatement returns [EObject current=null] : (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' ) ;
     public final EObject ruleLightStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2548,21 +2471,21 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:900:2: ( (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' ) )
-            // InternalRailSL.g:901:2: (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' )
+            // InternalRailSL.g:895:2: ( (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' ) )
+            // InternalRailSL.g:896:2: (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' )
             {
-            // InternalRailSL.g:901:2: (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' )
-            // InternalRailSL.g:902:3: otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ',' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.'
+            // InternalRailSL.g:896:2: (otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.' )
+            // InternalRailSL.g:897:3: otherlv_0= 'Turn light' ( (lv_lights_1_0= RULE_INT ) ) (otherlv_2= ', ' ( (lv_lights_3_0= RULE_INT ) ) )* ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )? ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) ) otherlv_9= '.'
             {
-            otherlv_0=(Token)match(input,35,FOLLOW_12); 
+            otherlv_0=(Token)match(input,36,FOLLOW_12); 
 
             			newLeafNode(otherlv_0, grammarAccess.getLightStatementAccess().getTurnLightKeyword_0());
             		
-            // InternalRailSL.g:906:3: ( (lv_lights_1_0= RULE_INT ) )
-            // InternalRailSL.g:907:4: (lv_lights_1_0= RULE_INT )
+            // InternalRailSL.g:901:3: ( (lv_lights_1_0= RULE_INT ) )
+            // InternalRailSL.g:902:4: (lv_lights_1_0= RULE_INT )
             {
-            // InternalRailSL.g:907:4: (lv_lights_1_0= RULE_INT )
-            // InternalRailSL.g:908:5: lv_lights_1_0= RULE_INT
+            // InternalRailSL.g:902:4: (lv_lights_1_0= RULE_INT )
+            // InternalRailSL.g:903:5: lv_lights_1_0= RULE_INT
             {
             lv_lights_1_0=(Token)match(input,RULE_INT,FOLLOW_19); 
 
@@ -2584,30 +2507,30 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalRailSL.g:924:3: (otherlv_2= ',' ( (lv_lights_3_0= RULE_INT ) ) )*
+            // InternalRailSL.g:919:3: (otherlv_2= ', ' ( (lv_lights_3_0= RULE_INT ) ) )*
             loop20:
             do {
                 int alt20=2;
                 int LA20_0 = input.LA(1);
 
-                if ( (LA20_0==15) ) {
+                if ( (LA20_0==16) ) {
                     alt20=1;
                 }
 
 
                 switch (alt20) {
             	case 1 :
-            	    // InternalRailSL.g:925:4: otherlv_2= ',' ( (lv_lights_3_0= RULE_INT ) )
+            	    // InternalRailSL.g:920:4: otherlv_2= ', ' ( (lv_lights_3_0= RULE_INT ) )
             	    {
-            	    otherlv_2=(Token)match(input,15,FOLLOW_12); 
+            	    otherlv_2=(Token)match(input,16,FOLLOW_12); 
 
-            	    				newLeafNode(otherlv_2, grammarAccess.getLightStatementAccess().getCommaKeyword_2_0());
+            	    				newLeafNode(otherlv_2, grammarAccess.getLightStatementAccess().getCommaSpaceKeyword_2_0());
             	    			
-            	    // InternalRailSL.g:929:4: ( (lv_lights_3_0= RULE_INT ) )
-            	    // InternalRailSL.g:930:5: (lv_lights_3_0= RULE_INT )
+            	    // InternalRailSL.g:924:4: ( (lv_lights_3_0= RULE_INT ) )
+            	    // InternalRailSL.g:925:5: (lv_lights_3_0= RULE_INT )
             	    {
-            	    // InternalRailSL.g:930:5: (lv_lights_3_0= RULE_INT )
-            	    // InternalRailSL.g:931:6: lv_lights_3_0= RULE_INT
+            	    // InternalRailSL.g:925:5: (lv_lights_3_0= RULE_INT )
+            	    // InternalRailSL.g:926:6: lv_lights_3_0= RULE_INT
             	    {
             	    lv_lights_3_0=(Token)match(input,RULE_INT,FOLLOW_19); 
 
@@ -2638,32 +2561,32 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalRailSL.g:948:3: ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )?
+            // InternalRailSL.g:943:3: ( (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) ) | (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) ) )?
             int alt21=3;
             int LA21_0 = input.LA(1);
 
-            if ( (LA21_0==16) ) {
+            if ( (LA21_0==17) ) {
                 alt21=1;
             }
-            else if ( (LA21_0==17) ) {
+            else if ( (LA21_0==18) ) {
                 alt21=2;
             }
             switch (alt21) {
                 case 1 :
-                    // InternalRailSL.g:949:4: (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) )
+                    // InternalRailSL.g:944:4: (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) )
                     {
-                    // InternalRailSL.g:949:4: (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) )
-                    // InternalRailSL.g:950:5: otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) )
+                    // InternalRailSL.g:944:4: (otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) ) )
+                    // InternalRailSL.g:945:5: otherlv_4= 'and' ( (lv_lights_5_0= RULE_INT ) )
                     {
-                    otherlv_4=(Token)match(input,16,FOLLOW_12); 
+                    otherlv_4=(Token)match(input,17,FOLLOW_12); 
 
                     					newLeafNode(otherlv_4, grammarAccess.getLightStatementAccess().getAndKeyword_3_0_0());
                     				
-                    // InternalRailSL.g:954:5: ( (lv_lights_5_0= RULE_INT ) )
-                    // InternalRailSL.g:955:6: (lv_lights_5_0= RULE_INT )
+                    // InternalRailSL.g:949:5: ( (lv_lights_5_0= RULE_INT ) )
+                    // InternalRailSL.g:950:6: (lv_lights_5_0= RULE_INT )
                     {
-                    // InternalRailSL.g:955:6: (lv_lights_5_0= RULE_INT )
-                    // InternalRailSL.g:956:7: lv_lights_5_0= RULE_INT
+                    // InternalRailSL.g:950:6: (lv_lights_5_0= RULE_INT )
+                    // InternalRailSL.g:951:7: lv_lights_5_0= RULE_INT
                     {
                     lv_lights_5_0=(Token)match(input,RULE_INT,FOLLOW_20); 
 
@@ -2692,20 +2615,20 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:974:4: (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) )
+                    // InternalRailSL.g:969:4: (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) )
                     {
-                    // InternalRailSL.g:974:4: (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) )
-                    // InternalRailSL.g:975:5: otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) )
+                    // InternalRailSL.g:969:4: (otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) ) )
+                    // InternalRailSL.g:970:5: otherlv_6= ', and' ( (lv_lights_7_0= RULE_INT ) )
                     {
-                    otherlv_6=(Token)match(input,17,FOLLOW_12); 
+                    otherlv_6=(Token)match(input,18,FOLLOW_12); 
 
                     					newLeafNode(otherlv_6, grammarAccess.getLightStatementAccess().getAndKeyword_3_1_0());
                     				
-                    // InternalRailSL.g:979:5: ( (lv_lights_7_0= RULE_INT ) )
-                    // InternalRailSL.g:980:6: (lv_lights_7_0= RULE_INT )
+                    // InternalRailSL.g:974:5: ( (lv_lights_7_0= RULE_INT ) )
+                    // InternalRailSL.g:975:6: (lv_lights_7_0= RULE_INT )
                     {
-                    // InternalRailSL.g:980:6: (lv_lights_7_0= RULE_INT )
-                    // InternalRailSL.g:981:7: lv_lights_7_0= RULE_INT
+                    // InternalRailSL.g:975:6: (lv_lights_7_0= RULE_INT )
+                    // InternalRailSL.g:976:7: lv_lights_7_0= RULE_INT
                     {
                     lv_lights_7_0=(Token)match(input,RULE_INT,FOLLOW_20); 
 
@@ -2736,20 +2659,20 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalRailSL.g:999:3: ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) )
-            // InternalRailSL.g:1000:4: ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) )
+            // InternalRailSL.g:994:3: ( ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) ) )
+            // InternalRailSL.g:995:4: ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) )
             {
-            // InternalRailSL.g:1000:4: ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) )
-            // InternalRailSL.g:1001:5: (lv_state_8_1= 'on' | lv_state_8_2= 'off' )
+            // InternalRailSL.g:995:4: ( (lv_state_8_1= 'on' | lv_state_8_2= 'off' ) )
+            // InternalRailSL.g:996:5: (lv_state_8_1= 'on' | lv_state_8_2= 'off' )
             {
-            // InternalRailSL.g:1001:5: (lv_state_8_1= 'on' | lv_state_8_2= 'off' )
+            // InternalRailSL.g:996:5: (lv_state_8_1= 'on' | lv_state_8_2= 'off' )
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==36) ) {
+            if ( (LA22_0==37) ) {
                 alt22=1;
             }
-            else if ( (LA22_0==37) ) {
+            else if ( (LA22_0==38) ) {
                 alt22=2;
             }
             else {
@@ -2760,9 +2683,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
             }
             switch (alt22) {
                 case 1 :
-                    // InternalRailSL.g:1002:6: lv_state_8_1= 'on'
+                    // InternalRailSL.g:997:6: lv_state_8_1= 'on'
                     {
-                    lv_state_8_1=(Token)match(input,36,FOLLOW_10); 
+                    lv_state_8_1=(Token)match(input,37,FOLLOW_10); 
 
                     						newLeafNode(lv_state_8_1, grammarAccess.getLightStatementAccess().getStateOnKeyword_4_0_0());
                     					
@@ -2776,9 +2699,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:1013:6: lv_state_8_2= 'off'
+                    // InternalRailSL.g:1008:6: lv_state_8_2= 'off'
                     {
-                    lv_state_8_2=(Token)match(input,37,FOLLOW_10); 
+                    lv_state_8_2=(Token)match(input,38,FOLLOW_10); 
 
                     						newLeafNode(lv_state_8_2, grammarAccess.getLightStatementAccess().getStateOffKeyword_4_0_1());
                     					
@@ -2800,7 +2723,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_9=(Token)match(input,19,FOLLOW_2); 
+            otherlv_9=(Token)match(input,20,FOLLOW_2); 
 
             			newLeafNode(otherlv_9, grammarAccess.getLightStatementAccess().getFullStopKeyword_5());
             		
@@ -2827,7 +2750,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConditionalStatement"
-    // InternalRailSL.g:1034:1: entryRuleConditionalStatement returns [EObject current=null] : iv_ruleConditionalStatement= ruleConditionalStatement EOF ;
+    // InternalRailSL.g:1029:1: entryRuleConditionalStatement returns [EObject current=null] : iv_ruleConditionalStatement= ruleConditionalStatement EOF ;
     public final EObject entryRuleConditionalStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2835,8 +2758,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:1034:61: (iv_ruleConditionalStatement= ruleConditionalStatement EOF )
-            // InternalRailSL.g:1035:2: iv_ruleConditionalStatement= ruleConditionalStatement EOF
+            // InternalRailSL.g:1029:61: (iv_ruleConditionalStatement= ruleConditionalStatement EOF )
+            // InternalRailSL.g:1030:2: iv_ruleConditionalStatement= ruleConditionalStatement EOF
             {
              newCompositeNode(grammarAccess.getConditionalStatementRule()); 
             pushFollow(FOLLOW_1);
@@ -2863,7 +2786,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalStatement"
-    // InternalRailSL.g:1041:1: ruleConditionalStatement returns [EObject current=null] : (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ ) ;
+    // InternalRailSL.g:1036:1: ruleConditionalStatement returns [EObject current=null] : (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ ) ;
     public final EObject ruleConditionalStatement() throws RecognitionException {
         EObject current = null;
 
@@ -2877,21 +2800,21 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:1047:2: ( (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ ) )
-            // InternalRailSL.g:1048:2: (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ )
+            // InternalRailSL.g:1042:2: ( (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ ) )
+            // InternalRailSL.g:1043:2: (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ )
             {
-            // InternalRailSL.g:1048:2: (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ )
-            // InternalRailSL.g:1049:3: otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+
+            // InternalRailSL.g:1043:2: (otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+ )
+            // InternalRailSL.g:1044:3: otherlv_0= 'Branch:' ( (lv_lines_1_0= ruleConditionalLine ) ) ( (lv_lines_2_0= ruleConditionalLine ) )+
             {
-            otherlv_0=(Token)match(input,38,FOLLOW_21); 
+            otherlv_0=(Token)match(input,39,FOLLOW_21); 
 
             			newLeafNode(otherlv_0, grammarAccess.getConditionalStatementAccess().getBranchKeyword_0());
             		
-            // InternalRailSL.g:1053:3: ( (lv_lines_1_0= ruleConditionalLine ) )
-            // InternalRailSL.g:1054:4: (lv_lines_1_0= ruleConditionalLine )
+            // InternalRailSL.g:1048:3: ( (lv_lines_1_0= ruleConditionalLine ) )
+            // InternalRailSL.g:1049:4: (lv_lines_1_0= ruleConditionalLine )
             {
-            // InternalRailSL.g:1054:4: (lv_lines_1_0= ruleConditionalLine )
-            // InternalRailSL.g:1055:5: lv_lines_1_0= ruleConditionalLine
+            // InternalRailSL.g:1049:4: (lv_lines_1_0= ruleConditionalLine )
+            // InternalRailSL.g:1050:5: lv_lines_1_0= ruleConditionalLine
             {
 
             					newCompositeNode(grammarAccess.getConditionalStatementAccess().getLinesConditionalLineParserRuleCall_1_0());
@@ -2918,24 +2841,24 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalRailSL.g:1072:3: ( (lv_lines_2_0= ruleConditionalLine ) )+
+            // InternalRailSL.g:1067:3: ( (lv_lines_2_0= ruleConditionalLine ) )+
             int cnt23=0;
             loop23:
             do {
                 int alt23=2;
                 int LA23_0 = input.LA(1);
 
-                if ( (LA23_0==39) ) {
+                if ( (LA23_0==40) ) {
                     alt23=1;
                 }
 
 
                 switch (alt23) {
             	case 1 :
-            	    // InternalRailSL.g:1073:4: (lv_lines_2_0= ruleConditionalLine )
+            	    // InternalRailSL.g:1068:4: (lv_lines_2_0= ruleConditionalLine )
             	    {
-            	    // InternalRailSL.g:1073:4: (lv_lines_2_0= ruleConditionalLine )
-            	    // InternalRailSL.g:1074:5: lv_lines_2_0= ruleConditionalLine
+            	    // InternalRailSL.g:1068:4: (lv_lines_2_0= ruleConditionalLine )
+            	    // InternalRailSL.g:1069:5: lv_lines_2_0= ruleConditionalLine
             	    {
 
             	    					newCompositeNode(grammarAccess.getConditionalStatementAccess().getLinesConditionalLineParserRuleCall_2_0());
@@ -2995,7 +2918,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConditionalLine"
-    // InternalRailSL.g:1095:1: entryRuleConditionalLine returns [EObject current=null] : iv_ruleConditionalLine= ruleConditionalLine EOF ;
+    // InternalRailSL.g:1090:1: entryRuleConditionalLine returns [EObject current=null] : iv_ruleConditionalLine= ruleConditionalLine EOF ;
     public final EObject entryRuleConditionalLine() throws RecognitionException {
         EObject current = null;
 
@@ -3003,8 +2926,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:1095:56: (iv_ruleConditionalLine= ruleConditionalLine EOF )
-            // InternalRailSL.g:1096:2: iv_ruleConditionalLine= ruleConditionalLine EOF
+            // InternalRailSL.g:1090:56: (iv_ruleConditionalLine= ruleConditionalLine EOF )
+            // InternalRailSL.g:1091:2: iv_ruleConditionalLine= ruleConditionalLine EOF
             {
              newCompositeNode(grammarAccess.getConditionalLineRule()); 
             pushFollow(FOLLOW_1);
@@ -3031,16 +2954,15 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalLine"
-    // InternalRailSL.g:1102:1: ruleConditionalLine returns [EObject current=null] : (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) (otherlv_2= 'contact of' )+ ( (lv_segName_3_0= ruleSEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) ) ;
+    // InternalRailSL.g:1097:1: ruleConditionalLine returns [EObject current=null] : (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) ) ;
     public final EObject ruleConditionalLine() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_2=null;
+        Token lv_segName_3_0=null;
         Token otherlv_4=null;
         AntlrDatatypeRuleToken lv_contact_1_0 = null;
-
-        AntlrDatatypeRuleToken lv_segName_3_0 = null;
 
         EObject lv_block_5_0 = null;
 
@@ -3049,21 +2971,21 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:1108:2: ( (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) (otherlv_2= 'contact of' )+ ( (lv_segName_3_0= ruleSEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) ) )
-            // InternalRailSL.g:1109:2: (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) (otherlv_2= 'contact of' )+ ( (lv_segName_3_0= ruleSEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) )
+            // InternalRailSL.g:1103:2: ( (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) ) )
+            // InternalRailSL.g:1104:2: (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) )
             {
-            // InternalRailSL.g:1109:2: (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) (otherlv_2= 'contact of' )+ ( (lv_segName_3_0= ruleSEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) )
-            // InternalRailSL.g:1110:3: otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) (otherlv_2= 'contact of' )+ ( (lv_segName_3_0= ruleSEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) )
+            // InternalRailSL.g:1104:2: (otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) ) )
+            // InternalRailSL.g:1105:3: otherlv_0= 'If' ( (lv_contact_1_0= ruleContactIndex ) ) otherlv_2= 'contact of' ( (lv_segName_3_0= RULE_SEG_NAME ) ) (otherlv_4= 'is reached first, do' )+ ( (lv_block_5_0= ruleBlock ) )
             {
-            otherlv_0=(Token)match(input,39,FOLLOW_16); 
+            otherlv_0=(Token)match(input,40,FOLLOW_16); 
 
             			newLeafNode(otherlv_0, grammarAccess.getConditionalLineAccess().getIfKeyword_0());
             		
-            // InternalRailSL.g:1114:3: ( (lv_contact_1_0= ruleContactIndex ) )
-            // InternalRailSL.g:1115:4: (lv_contact_1_0= ruleContactIndex )
+            // InternalRailSL.g:1109:3: ( (lv_contact_1_0= ruleContactIndex ) )
+            // InternalRailSL.g:1110:4: (lv_contact_1_0= ruleContactIndex )
             {
-            // InternalRailSL.g:1115:4: (lv_contact_1_0= ruleContactIndex )
-            // InternalRailSL.g:1116:5: lv_contact_1_0= ruleContactIndex
+            // InternalRailSL.g:1110:4: (lv_contact_1_0= ruleContactIndex )
+            // InternalRailSL.g:1111:5: lv_contact_1_0= ruleContactIndex
             {
 
             					newCompositeNode(grammarAccess.getConditionalLineAccess().getContactContactIndexParserRuleCall_1_0());
@@ -3090,25 +3012,55 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalRailSL.g:1133:3: (otherlv_2= 'contact of' )+
+            otherlv_2=(Token)match(input,32,FOLLOW_6); 
+
+            			newLeafNode(otherlv_2, grammarAccess.getConditionalLineAccess().getContactOfKeyword_2());
+            		
+            // InternalRailSL.g:1132:3: ( (lv_segName_3_0= RULE_SEG_NAME ) )
+            // InternalRailSL.g:1133:4: (lv_segName_3_0= RULE_SEG_NAME )
+            {
+            // InternalRailSL.g:1133:4: (lv_segName_3_0= RULE_SEG_NAME )
+            // InternalRailSL.g:1134:5: lv_segName_3_0= RULE_SEG_NAME
+            {
+            lv_segName_3_0=(Token)match(input,RULE_SEG_NAME,FOLLOW_23); 
+
+            					newLeafNode(lv_segName_3_0, grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMETerminalRuleCall_3_0());
+            				
+
+            					if (current==null) {
+            						current = createModelElement(grammarAccess.getConditionalLineRule());
+            					}
+            					setWithLastConsumed(
+            						current,
+            						"segName",
+            						lv_segName_3_0,
+            						"de.cau.cs.kieler.RailSL.SEG_NAME");
+            				
+
+            }
+
+
+            }
+
+            // InternalRailSL.g:1150:3: (otherlv_4= 'is reached first, do' )+
             int cnt24=0;
             loop24:
             do {
                 int alt24=2;
                 int LA24_0 = input.LA(1);
 
-                if ( (LA24_0==31) ) {
+                if ( (LA24_0==41) ) {
                     alt24=1;
                 }
 
 
                 switch (alt24) {
             	case 1 :
-            	    // InternalRailSL.g:1134:4: otherlv_2= 'contact of'
+            	    // InternalRailSL.g:1151:4: otherlv_4= 'is reached first, do'
             	    {
-            	    otherlv_2=(Token)match(input,31,FOLLOW_23); 
+            	    otherlv_4=(Token)match(input,41,FOLLOW_24); 
 
-            	    				newLeafNode(otherlv_2, grammarAccess.getConditionalLineAccess().getContactOfKeyword_2());
+            	    				newLeafNode(otherlv_4, grammarAccess.getConditionalLineAccess().getIsReachedFirstDoKeyword_4());
             	    			
 
             	    }
@@ -3123,75 +3075,11 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                 cnt24++;
             } while (true);
 
-            // InternalRailSL.g:1139:3: ( (lv_segName_3_0= ruleSEG_NAME ) )
-            // InternalRailSL.g:1140:4: (lv_segName_3_0= ruleSEG_NAME )
+            // InternalRailSL.g:1156:3: ( (lv_block_5_0= ruleBlock ) )
+            // InternalRailSL.g:1157:4: (lv_block_5_0= ruleBlock )
             {
-            // InternalRailSL.g:1140:4: (lv_segName_3_0= ruleSEG_NAME )
-            // InternalRailSL.g:1141:5: lv_segName_3_0= ruleSEG_NAME
-            {
-
-            					newCompositeNode(grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMEParserRuleCall_3_0());
-            				
-            pushFollow(FOLLOW_24);
-            lv_segName_3_0=ruleSEG_NAME();
-
-            state._fsp--;
-
-
-            					if (current==null) {
-            						current = createModelElementForParent(grammarAccess.getConditionalLineRule());
-            					}
-            					set(
-            						current,
-            						"segName",
-            						lv_segName_3_0,
-            						"de.cau.cs.kieler.RailSL.SEG_NAME");
-            					afterParserOrEnumRuleCall();
-            				
-
-            }
-
-
-            }
-
-            // InternalRailSL.g:1158:3: (otherlv_4= 'is reached first, do' )+
-            int cnt25=0;
-            loop25:
-            do {
-                int alt25=2;
-                int LA25_0 = input.LA(1);
-
-                if ( (LA25_0==40) ) {
-                    alt25=1;
-                }
-
-
-                switch (alt25) {
-            	case 1 :
-            	    // InternalRailSL.g:1159:4: otherlv_4= 'is reached first, do'
-            	    {
-            	    otherlv_4=(Token)match(input,40,FOLLOW_25); 
-
-            	    				newLeafNode(otherlv_4, grammarAccess.getConditionalLineAccess().getIsReachedFirstDoKeyword_4());
-            	    			
-
-            	    }
-            	    break;
-
-            	default :
-            	    if ( cnt25 >= 1 ) break loop25;
-                        EarlyExitException eee =
-                            new EarlyExitException(25, input);
-                        throw eee;
-                }
-                cnt25++;
-            } while (true);
-
-            // InternalRailSL.g:1164:3: ( (lv_block_5_0= ruleBlock ) )
-            // InternalRailSL.g:1165:4: (lv_block_5_0= ruleBlock )
-            {
-            // InternalRailSL.g:1165:4: (lv_block_5_0= ruleBlock )
-            // InternalRailSL.g:1166:5: lv_block_5_0= ruleBlock
+            // InternalRailSL.g:1157:4: (lv_block_5_0= ruleBlock )
+            // InternalRailSL.g:1158:5: lv_block_5_0= ruleBlock
             {
 
             					newCompositeNode(grammarAccess.getConditionalLineAccess().getBlockBlockParserRuleCall_5_0());
@@ -3241,7 +3129,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleContactIndex"
-    // InternalRailSL.g:1187:1: entryRuleContactIndex returns [String current=null] : iv_ruleContactIndex= ruleContactIndex EOF ;
+    // InternalRailSL.g:1179:1: entryRuleContactIndex returns [String current=null] : iv_ruleContactIndex= ruleContactIndex EOF ;
     public final String entryRuleContactIndex() throws RecognitionException {
         String current = null;
 
@@ -3249,8 +3137,8 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalRailSL.g:1187:52: (iv_ruleContactIndex= ruleContactIndex EOF )
-            // InternalRailSL.g:1188:2: iv_ruleContactIndex= ruleContactIndex EOF
+            // InternalRailSL.g:1179:52: (iv_ruleContactIndex= ruleContactIndex EOF )
+            // InternalRailSL.g:1180:2: iv_ruleContactIndex= ruleContactIndex EOF
             {
              newCompositeNode(grammarAccess.getContactIndexRule()); 
             pushFollow(FOLLOW_1);
@@ -3277,7 +3165,7 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleContactIndex"
-    // InternalRailSL.g:1194:1: ruleContactIndex returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'first' | kw= 'second' ) ;
+    // InternalRailSL.g:1186:1: ruleContactIndex returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'first' | kw= 'second' ) ;
     public final AntlrDatatypeRuleToken ruleContactIndex() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -3287,30 +3175,30 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalRailSL.g:1200:2: ( (kw= 'first' | kw= 'second' ) )
-            // InternalRailSL.g:1201:2: (kw= 'first' | kw= 'second' )
+            // InternalRailSL.g:1192:2: ( (kw= 'first' | kw= 'second' ) )
+            // InternalRailSL.g:1193:2: (kw= 'first' | kw= 'second' )
             {
-            // InternalRailSL.g:1201:2: (kw= 'first' | kw= 'second' )
-            int alt26=2;
-            int LA26_0 = input.LA(1);
+            // InternalRailSL.g:1193:2: (kw= 'first' | kw= 'second' )
+            int alt25=2;
+            int LA25_0 = input.LA(1);
 
-            if ( (LA26_0==41) ) {
-                alt26=1;
+            if ( (LA25_0==42) ) {
+                alt25=1;
             }
-            else if ( (LA26_0==42) ) {
-                alt26=2;
+            else if ( (LA25_0==43) ) {
+                alt25=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 26, 0, input);
+                    new NoViableAltException("", 25, 0, input);
 
                 throw nvae;
             }
-            switch (alt26) {
+            switch (alt25) {
                 case 1 :
-                    // InternalRailSL.g:1202:3: kw= 'first'
+                    // InternalRailSL.g:1194:3: kw= 'first'
                     {
-                    kw=(Token)match(input,41,FOLLOW_2); 
+                    kw=(Token)match(input,42,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContactIndexAccess().getFirstKeyword_0());
@@ -3319,9 +3207,9 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:1208:3: kw= 'second'
+                    // InternalRailSL.g:1200:3: kw= 'second'
                     {
-                    kw=(Token)match(input,42,FOLLOW_2); 
+                    kw=(Token)match(input,43,FOLLOW_2); 
 
                     			current.merge(kw);
                     			newLeafNode(kw, grammarAccess.getContactIndexAccess().getSecondKeyword_1());
@@ -3350,857 +3238,6 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end "ruleContactIndex"
 
-
-    // $ANTLR start "entryRuleSEG_NAME"
-    // InternalRailSL.g:1217:1: entryRuleSEG_NAME returns [String current=null] : iv_ruleSEG_NAME= ruleSEG_NAME EOF ;
-    public final String entryRuleSEG_NAME() throws RecognitionException {
-        String current = null;
-
-        AntlrDatatypeRuleToken iv_ruleSEG_NAME = null;
-
-
-        try {
-            // InternalRailSL.g:1217:48: (iv_ruleSEG_NAME= ruleSEG_NAME EOF )
-            // InternalRailSL.g:1218:2: iv_ruleSEG_NAME= ruleSEG_NAME EOF
-            {
-             newCompositeNode(grammarAccess.getSEG_NAMERule()); 
-            pushFollow(FOLLOW_1);
-            iv_ruleSEG_NAME=ruleSEG_NAME();
-
-            state._fsp--;
-
-             current =iv_ruleSEG_NAME.getText(); 
-            match(input,EOF,FOLLOW_2); 
-
-            }
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleSEG_NAME"
-
-
-    // $ANTLR start "ruleSEG_NAME"
-    // InternalRailSL.g:1224:1: ruleSEG_NAME returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'KH_ST_0' | kw= 'KH_ST_1' | kw= 'KH_ST_2' | kw= 'KH_ST_3' | kw= 'KH_ST_4' | kw= 'KH_ST_5' | kw= 'KH_ST_6' | kw= 'KH_LN_0' | kw= 'KH_LN_1' | kw= 'KH_LN_2' | kw= 'KH_LN_3' | kw= 'KH_LN_4' | kw= 'KH_LN_5' | kw= 'KH_LN_6' | kw= 'KH_LN_7' | kw= 'KH_LN_8' | kw= 'KIO_LN_0' | kw= 'KIO_LN_1' | kw= 'OC_ST_0' | kw= 'OC_ST_1' | kw= 'OC_ST_2' | kw= 'OC_ST_3' | kw= 'OC_ST_4' | kw= 'OC_LN_0' | kw= 'OC_LN_1' | kw= 'OC_LN_2' | kw= 'OC_LN_3' | kw= 'OC_LN_4' | kw= 'OC_LN_5' | kw= 'IC_ST_0' | kw= 'IC_ST_1' | kw= 'IC_ST_2' | kw= 'IC_ST_3' | kw= 'IC_ST_4' | kw= 'IC_LN_0' | kw= 'IC_LN_1' | kw= 'IC_LN_2' | kw= 'IC_LN_3' | kw= 'IC_LN_4' | kw= 'IC_LN_5' | kw= 'OC_JCT_0' | kw= 'IC_JCT_0' | kw= 'OI_LN_0' | kw= 'OI_LN_1' | kw= 'OI_LN_2' | kw= 'IO_LN_0' | kw= 'IO_LN_1' | kw= 'IO_LN_2' ) ;
-    public final AntlrDatatypeRuleToken ruleSEG_NAME() throws RecognitionException {
-        AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
-
-        Token kw=null;
-
-
-        	enterRule();
-
-        try {
-            // InternalRailSL.g:1230:2: ( (kw= 'KH_ST_0' | kw= 'KH_ST_1' | kw= 'KH_ST_2' | kw= 'KH_ST_3' | kw= 'KH_ST_4' | kw= 'KH_ST_5' | kw= 'KH_ST_6' | kw= 'KH_LN_0' | kw= 'KH_LN_1' | kw= 'KH_LN_2' | kw= 'KH_LN_3' | kw= 'KH_LN_4' | kw= 'KH_LN_5' | kw= 'KH_LN_6' | kw= 'KH_LN_7' | kw= 'KH_LN_8' | kw= 'KIO_LN_0' | kw= 'KIO_LN_1' | kw= 'OC_ST_0' | kw= 'OC_ST_1' | kw= 'OC_ST_2' | kw= 'OC_ST_3' | kw= 'OC_ST_4' | kw= 'OC_LN_0' | kw= 'OC_LN_1' | kw= 'OC_LN_2' | kw= 'OC_LN_3' | kw= 'OC_LN_4' | kw= 'OC_LN_5' | kw= 'IC_ST_0' | kw= 'IC_ST_1' | kw= 'IC_ST_2' | kw= 'IC_ST_3' | kw= 'IC_ST_4' | kw= 'IC_LN_0' | kw= 'IC_LN_1' | kw= 'IC_LN_2' | kw= 'IC_LN_3' | kw= 'IC_LN_4' | kw= 'IC_LN_5' | kw= 'OC_JCT_0' | kw= 'IC_JCT_0' | kw= 'OI_LN_0' | kw= 'OI_LN_1' | kw= 'OI_LN_2' | kw= 'IO_LN_0' | kw= 'IO_LN_1' | kw= 'IO_LN_2' ) )
-            // InternalRailSL.g:1231:2: (kw= 'KH_ST_0' | kw= 'KH_ST_1' | kw= 'KH_ST_2' | kw= 'KH_ST_3' | kw= 'KH_ST_4' | kw= 'KH_ST_5' | kw= 'KH_ST_6' | kw= 'KH_LN_0' | kw= 'KH_LN_1' | kw= 'KH_LN_2' | kw= 'KH_LN_3' | kw= 'KH_LN_4' | kw= 'KH_LN_5' | kw= 'KH_LN_6' | kw= 'KH_LN_7' | kw= 'KH_LN_8' | kw= 'KIO_LN_0' | kw= 'KIO_LN_1' | kw= 'OC_ST_0' | kw= 'OC_ST_1' | kw= 'OC_ST_2' | kw= 'OC_ST_3' | kw= 'OC_ST_4' | kw= 'OC_LN_0' | kw= 'OC_LN_1' | kw= 'OC_LN_2' | kw= 'OC_LN_3' | kw= 'OC_LN_4' | kw= 'OC_LN_5' | kw= 'IC_ST_0' | kw= 'IC_ST_1' | kw= 'IC_ST_2' | kw= 'IC_ST_3' | kw= 'IC_ST_4' | kw= 'IC_LN_0' | kw= 'IC_LN_1' | kw= 'IC_LN_2' | kw= 'IC_LN_3' | kw= 'IC_LN_4' | kw= 'IC_LN_5' | kw= 'OC_JCT_0' | kw= 'IC_JCT_0' | kw= 'OI_LN_0' | kw= 'OI_LN_1' | kw= 'OI_LN_2' | kw= 'IO_LN_0' | kw= 'IO_LN_1' | kw= 'IO_LN_2' )
-            {
-            // InternalRailSL.g:1231:2: (kw= 'KH_ST_0' | kw= 'KH_ST_1' | kw= 'KH_ST_2' | kw= 'KH_ST_3' | kw= 'KH_ST_4' | kw= 'KH_ST_5' | kw= 'KH_ST_6' | kw= 'KH_LN_0' | kw= 'KH_LN_1' | kw= 'KH_LN_2' | kw= 'KH_LN_3' | kw= 'KH_LN_4' | kw= 'KH_LN_5' | kw= 'KH_LN_6' | kw= 'KH_LN_7' | kw= 'KH_LN_8' | kw= 'KIO_LN_0' | kw= 'KIO_LN_1' | kw= 'OC_ST_0' | kw= 'OC_ST_1' | kw= 'OC_ST_2' | kw= 'OC_ST_3' | kw= 'OC_ST_4' | kw= 'OC_LN_0' | kw= 'OC_LN_1' | kw= 'OC_LN_2' | kw= 'OC_LN_3' | kw= 'OC_LN_4' | kw= 'OC_LN_5' | kw= 'IC_ST_0' | kw= 'IC_ST_1' | kw= 'IC_ST_2' | kw= 'IC_ST_3' | kw= 'IC_ST_4' | kw= 'IC_LN_0' | kw= 'IC_LN_1' | kw= 'IC_LN_2' | kw= 'IC_LN_3' | kw= 'IC_LN_4' | kw= 'IC_LN_5' | kw= 'OC_JCT_0' | kw= 'IC_JCT_0' | kw= 'OI_LN_0' | kw= 'OI_LN_1' | kw= 'OI_LN_2' | kw= 'IO_LN_0' | kw= 'IO_LN_1' | kw= 'IO_LN_2' )
-            int alt27=48;
-            switch ( input.LA(1) ) {
-            case 43:
-                {
-                alt27=1;
-                }
-                break;
-            case 44:
-                {
-                alt27=2;
-                }
-                break;
-            case 45:
-                {
-                alt27=3;
-                }
-                break;
-            case 46:
-                {
-                alt27=4;
-                }
-                break;
-            case 47:
-                {
-                alt27=5;
-                }
-                break;
-            case 48:
-                {
-                alt27=6;
-                }
-                break;
-            case 49:
-                {
-                alt27=7;
-                }
-                break;
-            case 50:
-                {
-                alt27=8;
-                }
-                break;
-            case 51:
-                {
-                alt27=9;
-                }
-                break;
-            case 52:
-                {
-                alt27=10;
-                }
-                break;
-            case 53:
-                {
-                alt27=11;
-                }
-                break;
-            case 54:
-                {
-                alt27=12;
-                }
-                break;
-            case 55:
-                {
-                alt27=13;
-                }
-                break;
-            case 56:
-                {
-                alt27=14;
-                }
-                break;
-            case 57:
-                {
-                alt27=15;
-                }
-                break;
-            case 58:
-                {
-                alt27=16;
-                }
-                break;
-            case 59:
-                {
-                alt27=17;
-                }
-                break;
-            case 60:
-                {
-                alt27=18;
-                }
-                break;
-            case 61:
-                {
-                alt27=19;
-                }
-                break;
-            case 62:
-                {
-                alt27=20;
-                }
-                break;
-            case 63:
-                {
-                alt27=21;
-                }
-                break;
-            case 64:
-                {
-                alt27=22;
-                }
-                break;
-            case 65:
-                {
-                alt27=23;
-                }
-                break;
-            case 66:
-                {
-                alt27=24;
-                }
-                break;
-            case 67:
-                {
-                alt27=25;
-                }
-                break;
-            case 68:
-                {
-                alt27=26;
-                }
-                break;
-            case 69:
-                {
-                alt27=27;
-                }
-                break;
-            case 70:
-                {
-                alt27=28;
-                }
-                break;
-            case 71:
-                {
-                alt27=29;
-                }
-                break;
-            case 72:
-                {
-                alt27=30;
-                }
-                break;
-            case 73:
-                {
-                alt27=31;
-                }
-                break;
-            case 74:
-                {
-                alt27=32;
-                }
-                break;
-            case 75:
-                {
-                alt27=33;
-                }
-                break;
-            case 76:
-                {
-                alt27=34;
-                }
-                break;
-            case 77:
-                {
-                alt27=35;
-                }
-                break;
-            case 78:
-                {
-                alt27=36;
-                }
-                break;
-            case 79:
-                {
-                alt27=37;
-                }
-                break;
-            case 80:
-                {
-                alt27=38;
-                }
-                break;
-            case 81:
-                {
-                alt27=39;
-                }
-                break;
-            case 82:
-                {
-                alt27=40;
-                }
-                break;
-            case 83:
-                {
-                alt27=41;
-                }
-                break;
-            case 84:
-                {
-                alt27=42;
-                }
-                break;
-            case 85:
-                {
-                alt27=43;
-                }
-                break;
-            case 86:
-                {
-                alt27=44;
-                }
-                break;
-            case 87:
-                {
-                alt27=45;
-                }
-                break;
-            case 88:
-                {
-                alt27=46;
-                }
-                break;
-            case 89:
-                {
-                alt27=47;
-                }
-                break;
-            case 90:
-                {
-                alt27=48;
-                }
-                break;
-            default:
-                NoViableAltException nvae =
-                    new NoViableAltException("", 27, 0, input);
-
-                throw nvae;
-            }
-
-            switch (alt27) {
-                case 1 :
-                    // InternalRailSL.g:1232:3: kw= 'KH_ST_0'
-                    {
-                    kw=(Token)match(input,43,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_0Keyword_0());
-                    		
-
-                    }
-                    break;
-                case 2 :
-                    // InternalRailSL.g:1238:3: kw= 'KH_ST_1'
-                    {
-                    kw=(Token)match(input,44,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_1Keyword_1());
-                    		
-
-                    }
-                    break;
-                case 3 :
-                    // InternalRailSL.g:1244:3: kw= 'KH_ST_2'
-                    {
-                    kw=(Token)match(input,45,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_2Keyword_2());
-                    		
-
-                    }
-                    break;
-                case 4 :
-                    // InternalRailSL.g:1250:3: kw= 'KH_ST_3'
-                    {
-                    kw=(Token)match(input,46,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_3Keyword_3());
-                    		
-
-                    }
-                    break;
-                case 5 :
-                    // InternalRailSL.g:1256:3: kw= 'KH_ST_4'
-                    {
-                    kw=(Token)match(input,47,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_4Keyword_4());
-                    		
-
-                    }
-                    break;
-                case 6 :
-                    // InternalRailSL.g:1262:3: kw= 'KH_ST_5'
-                    {
-                    kw=(Token)match(input,48,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_5Keyword_5());
-                    		
-
-                    }
-                    break;
-                case 7 :
-                    // InternalRailSL.g:1268:3: kw= 'KH_ST_6'
-                    {
-                    kw=(Token)match(input,49,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_6Keyword_6());
-                    		
-
-                    }
-                    break;
-                case 8 :
-                    // InternalRailSL.g:1274:3: kw= 'KH_LN_0'
-                    {
-                    kw=(Token)match(input,50,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_0Keyword_7());
-                    		
-
-                    }
-                    break;
-                case 9 :
-                    // InternalRailSL.g:1280:3: kw= 'KH_LN_1'
-                    {
-                    kw=(Token)match(input,51,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_1Keyword_8());
-                    		
-
-                    }
-                    break;
-                case 10 :
-                    // InternalRailSL.g:1286:3: kw= 'KH_LN_2'
-                    {
-                    kw=(Token)match(input,52,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_2Keyword_9());
-                    		
-
-                    }
-                    break;
-                case 11 :
-                    // InternalRailSL.g:1292:3: kw= 'KH_LN_3'
-                    {
-                    kw=(Token)match(input,53,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_3Keyword_10());
-                    		
-
-                    }
-                    break;
-                case 12 :
-                    // InternalRailSL.g:1298:3: kw= 'KH_LN_4'
-                    {
-                    kw=(Token)match(input,54,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_4Keyword_11());
-                    		
-
-                    }
-                    break;
-                case 13 :
-                    // InternalRailSL.g:1304:3: kw= 'KH_LN_5'
-                    {
-                    kw=(Token)match(input,55,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_5Keyword_12());
-                    		
-
-                    }
-                    break;
-                case 14 :
-                    // InternalRailSL.g:1310:3: kw= 'KH_LN_6'
-                    {
-                    kw=(Token)match(input,56,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_6Keyword_13());
-                    		
-
-                    }
-                    break;
-                case 15 :
-                    // InternalRailSL.g:1316:3: kw= 'KH_LN_7'
-                    {
-                    kw=(Token)match(input,57,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_7Keyword_14());
-                    		
-
-                    }
-                    break;
-                case 16 :
-                    // InternalRailSL.g:1322:3: kw= 'KH_LN_8'
-                    {
-                    kw=(Token)match(input,58,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_8Keyword_15());
-                    		
-
-                    }
-                    break;
-                case 17 :
-                    // InternalRailSL.g:1328:3: kw= 'KIO_LN_0'
-                    {
-                    kw=(Token)match(input,59,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKIO_LN_0Keyword_16());
-                    		
-
-                    }
-                    break;
-                case 18 :
-                    // InternalRailSL.g:1334:3: kw= 'KIO_LN_1'
-                    {
-                    kw=(Token)match(input,60,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKIO_LN_1Keyword_17());
-                    		
-
-                    }
-                    break;
-                case 19 :
-                    // InternalRailSL.g:1340:3: kw= 'OC_ST_0'
-                    {
-                    kw=(Token)match(input,61,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_0Keyword_18());
-                    		
-
-                    }
-                    break;
-                case 20 :
-                    // InternalRailSL.g:1346:3: kw= 'OC_ST_1'
-                    {
-                    kw=(Token)match(input,62,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_1Keyword_19());
-                    		
-
-                    }
-                    break;
-                case 21 :
-                    // InternalRailSL.g:1352:3: kw= 'OC_ST_2'
-                    {
-                    kw=(Token)match(input,63,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_2Keyword_20());
-                    		
-
-                    }
-                    break;
-                case 22 :
-                    // InternalRailSL.g:1358:3: kw= 'OC_ST_3'
-                    {
-                    kw=(Token)match(input,64,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_3Keyword_21());
-                    		
-
-                    }
-                    break;
-                case 23 :
-                    // InternalRailSL.g:1364:3: kw= 'OC_ST_4'
-                    {
-                    kw=(Token)match(input,65,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_4Keyword_22());
-                    		
-
-                    }
-                    break;
-                case 24 :
-                    // InternalRailSL.g:1370:3: kw= 'OC_LN_0'
-                    {
-                    kw=(Token)match(input,66,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_0Keyword_23());
-                    		
-
-                    }
-                    break;
-                case 25 :
-                    // InternalRailSL.g:1376:3: kw= 'OC_LN_1'
-                    {
-                    kw=(Token)match(input,67,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_1Keyword_24());
-                    		
-
-                    }
-                    break;
-                case 26 :
-                    // InternalRailSL.g:1382:3: kw= 'OC_LN_2'
-                    {
-                    kw=(Token)match(input,68,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_2Keyword_25());
-                    		
-
-                    }
-                    break;
-                case 27 :
-                    // InternalRailSL.g:1388:3: kw= 'OC_LN_3'
-                    {
-                    kw=(Token)match(input,69,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_3Keyword_26());
-                    		
-
-                    }
-                    break;
-                case 28 :
-                    // InternalRailSL.g:1394:3: kw= 'OC_LN_4'
-                    {
-                    kw=(Token)match(input,70,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_4Keyword_27());
-                    		
-
-                    }
-                    break;
-                case 29 :
-                    // InternalRailSL.g:1400:3: kw= 'OC_LN_5'
-                    {
-                    kw=(Token)match(input,71,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_5Keyword_28());
-                    		
-
-                    }
-                    break;
-                case 30 :
-                    // InternalRailSL.g:1406:3: kw= 'IC_ST_0'
-                    {
-                    kw=(Token)match(input,72,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_0Keyword_29());
-                    		
-
-                    }
-                    break;
-                case 31 :
-                    // InternalRailSL.g:1412:3: kw= 'IC_ST_1'
-                    {
-                    kw=(Token)match(input,73,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_1Keyword_30());
-                    		
-
-                    }
-                    break;
-                case 32 :
-                    // InternalRailSL.g:1418:3: kw= 'IC_ST_2'
-                    {
-                    kw=(Token)match(input,74,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_2Keyword_31());
-                    		
-
-                    }
-                    break;
-                case 33 :
-                    // InternalRailSL.g:1424:3: kw= 'IC_ST_3'
-                    {
-                    kw=(Token)match(input,75,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_3Keyword_32());
-                    		
-
-                    }
-                    break;
-                case 34 :
-                    // InternalRailSL.g:1430:3: kw= 'IC_ST_4'
-                    {
-                    kw=(Token)match(input,76,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_4Keyword_33());
-                    		
-
-                    }
-                    break;
-                case 35 :
-                    // InternalRailSL.g:1436:3: kw= 'IC_LN_0'
-                    {
-                    kw=(Token)match(input,77,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_0Keyword_34());
-                    		
-
-                    }
-                    break;
-                case 36 :
-                    // InternalRailSL.g:1442:3: kw= 'IC_LN_1'
-                    {
-                    kw=(Token)match(input,78,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_1Keyword_35());
-                    		
-
-                    }
-                    break;
-                case 37 :
-                    // InternalRailSL.g:1448:3: kw= 'IC_LN_2'
-                    {
-                    kw=(Token)match(input,79,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_2Keyword_36());
-                    		
-
-                    }
-                    break;
-                case 38 :
-                    // InternalRailSL.g:1454:3: kw= 'IC_LN_3'
-                    {
-                    kw=(Token)match(input,80,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_3Keyword_37());
-                    		
-
-                    }
-                    break;
-                case 39 :
-                    // InternalRailSL.g:1460:3: kw= 'IC_LN_4'
-                    {
-                    kw=(Token)match(input,81,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_4Keyword_38());
-                    		
-
-                    }
-                    break;
-                case 40 :
-                    // InternalRailSL.g:1466:3: kw= 'IC_LN_5'
-                    {
-                    kw=(Token)match(input,82,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_5Keyword_39());
-                    		
-
-                    }
-                    break;
-                case 41 :
-                    // InternalRailSL.g:1472:3: kw= 'OC_JCT_0'
-                    {
-                    kw=(Token)match(input,83,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_JCT_0Keyword_40());
-                    		
-
-                    }
-                    break;
-                case 42 :
-                    // InternalRailSL.g:1478:3: kw= 'IC_JCT_0'
-                    {
-                    kw=(Token)match(input,84,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_JCT_0Keyword_41());
-                    		
-
-                    }
-                    break;
-                case 43 :
-                    // InternalRailSL.g:1484:3: kw= 'OI_LN_0'
-                    {
-                    kw=(Token)match(input,85,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOI_LN_0Keyword_42());
-                    		
-
-                    }
-                    break;
-                case 44 :
-                    // InternalRailSL.g:1490:3: kw= 'OI_LN_1'
-                    {
-                    kw=(Token)match(input,86,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOI_LN_1Keyword_43());
-                    		
-
-                    }
-                    break;
-                case 45 :
-                    // InternalRailSL.g:1496:3: kw= 'OI_LN_2'
-                    {
-                    kw=(Token)match(input,87,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOI_LN_2Keyword_44());
-                    		
-
-                    }
-                    break;
-                case 46 :
-                    // InternalRailSL.g:1502:3: kw= 'IO_LN_0'
-                    {
-                    kw=(Token)match(input,88,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIO_LN_0Keyword_45());
-                    		
-
-                    }
-                    break;
-                case 47 :
-                    // InternalRailSL.g:1508:3: kw= 'IO_LN_1'
-                    {
-                    kw=(Token)match(input,89,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIO_LN_1Keyword_46());
-                    		
-
-                    }
-                    break;
-                case 48 :
-                    // InternalRailSL.g:1514:3: kw= 'IO_LN_2'
-                    {
-                    kw=(Token)match(input,90,FOLLOW_2); 
-
-                    			current.merge(kw);
-                    			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIO_LN_2Keyword_47());
-                    		
-
-                    }
-                    break;
-
-            }
-
-
-            }
-
-
-            	leaveRule();
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleSEG_NAME"
-
     // Delegated rules
 
 
@@ -4208,28 +3245,27 @@ public class InternalRailSLParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000802L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000004B69004000L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000004B69007000L});
-    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0xFFFFF80000000000L,0x0000000007FFFFFFL});
-    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000078000L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000B00000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000006000000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000008000010L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000010000010L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000060000000000L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000003000038000L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000003000000000L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000008000000002L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0xFFFFF80080000000L,0x0000000007FFFFFFL});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000010000000000L});
-    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000010000000800L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000001002L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00000096D2008000L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x00000096D200E000L});
+    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x00000000000F0000L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000001600000L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000800002L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x000000000C000000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000010000020L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000020000020L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x00000C0000000000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000006000070000L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000006000000000L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000010000000000L});
+    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000010000000002L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000020000001000L});
 
 }

@@ -299,44 +299,42 @@ ruleSetTrackStatement returns [EObject current=null]
 		}
 		(
 			(
+				lv_segments_1_0=RULE_SEG_NAME
 				{
-					newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_1_0());
+					newLeafNode(lv_segments_1_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0());
 				}
-				lv_segments_1_0=ruleSEG_NAME
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+						$current = createModelElement(grammarAccess.getSetTrackStatementRule());
 					}
-					add(
+					addWithLastConsumed(
 						$current,
 						"segments",
 						lv_segments_1_0,
 						"de.cau.cs.kieler.RailSL.SEG_NAME");
-					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_2=','
+			otherlv_2=', '
 			{
-				newLeafNode(otherlv_2, grammarAccess.getSetTrackStatementAccess().getCommaKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getSetTrackStatementAccess().getCommaSpaceKeyword_2_0());
 			}
 			(
 				(
+					lv_segments_3_0=RULE_SEG_NAME
 					{
-						newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_2_1_0());
+						newLeafNode(lv_segments_3_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0());
 					}
-					lv_segments_3_0=ruleSEG_NAME
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+							$current = createModelElement(grammarAccess.getSetTrackStatementRule());
 						}
-						add(
+						addWithLastConsumed(
 							$current,
 							"segments",
 							lv_segments_3_0,
 							"de.cau.cs.kieler.RailSL.SEG_NAME");
-						afterParserOrEnumRuleCall();
 					}
 				)
 			)
@@ -349,20 +347,19 @@ ruleSetTrackStatement returns [EObject current=null]
 				}
 				(
 					(
+						lv_segments_5_0=RULE_SEG_NAME
 						{
-							newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_3_0_1_0());
+							newLeafNode(lv_segments_5_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0());
 						}
-						lv_segments_5_0=ruleSEG_NAME
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+								$current = createModelElement(grammarAccess.getSetTrackStatementRule());
 							}
-							add(
+							addWithLastConsumed(
 								$current,
 								"segments",
 								lv_segments_5_0,
 								"de.cau.cs.kieler.RailSL.SEG_NAME");
-							afterParserOrEnumRuleCall();
 						}
 					)
 				)
@@ -375,20 +372,19 @@ ruleSetTrackStatement returns [EObject current=null]
 				}
 				(
 					(
+						lv_segments_7_0=RULE_SEG_NAME
 						{
-							newCompositeNode(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_3_1_1_0());
+							newLeafNode(lv_segments_7_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0());
 						}
-						lv_segments_7_0=ruleSEG_NAME
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+								$current = createModelElement(grammarAccess.getSetTrackStatementRule());
 							}
-							add(
+							addWithLastConsumed(
 								$current,
 								"segments",
 								lv_segments_7_0,
 								"de.cau.cs.kieler.RailSL.SEG_NAME");
-							afterParserOrEnumRuleCall();
 						}
 					)
 				)
@@ -510,9 +506,9 @@ ruleSetPointStatement returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_2=','
+			otherlv_2=', '
 			{
-				newLeafNode(otherlv_2, grammarAccess.getSetPointStatementAccess().getCommaKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getSetPointStatementAccess().getCommaSpaceKeyword_2_0());
 			}
 			(
 				(
@@ -773,20 +769,19 @@ ruleContactWaitStatement returns [EObject current=null]
 		}
 		(
 			(
+				lv_segName_3_0=RULE_SEG_NAME
 				{
-					newCompositeNode(grammarAccess.getContactWaitStatementAccess().getSegNameSEG_NAMEParserRuleCall_3_0());
+					newLeafNode(lv_segName_3_0, grammarAccess.getContactWaitStatementAccess().getSegNameSEG_NAMETerminalRuleCall_3_0());
 				}
-				lv_segName_3_0=ruleSEG_NAME
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getContactWaitStatementRule());
+						$current = createModelElement(grammarAccess.getContactWaitStatementRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"segName",
 						lv_segName_3_0,
 						"de.cau.cs.kieler.RailSL.SEG_NAME");
-					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -922,9 +917,9 @@ ruleLightStatement returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_2=','
+			otherlv_2=', '
 			{
-				newLeafNode(otherlv_2, grammarAccess.getLightStatementAccess().getCommaKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getLightStatementAccess().getCommaSpaceKeyword_2_0());
 			}
 			(
 				(
@@ -1130,28 +1125,25 @@ ruleConditionalLine returns [EObject current=null]
 				}
 			)
 		)
-		(
-			otherlv_2='contact of'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getConditionalLineAccess().getContactOfKeyword_2());
-			}
-		)+
+		otherlv_2='contact of'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getConditionalLineAccess().getContactOfKeyword_2());
+		}
 		(
 			(
+				lv_segName_3_0=RULE_SEG_NAME
 				{
-					newCompositeNode(grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMEParserRuleCall_3_0());
+					newLeafNode(lv_segName_3_0, grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMETerminalRuleCall_3_0());
 				}
-				lv_segName_3_0=ruleSEG_NAME
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getConditionalLineRule());
+						$current = createModelElement(grammarAccess.getConditionalLineRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"segName",
 						lv_segName_3_0,
 						"de.cau.cs.kieler.RailSL.SEG_NAME");
-					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -1213,311 +1205,7 @@ ruleContactIndex returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTo
 	)
 ;
 
-// Entry rule entryRuleSEG_NAME
-entryRuleSEG_NAME returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getSEG_NAMERule()); }
-	iv_ruleSEG_NAME=ruleSEG_NAME
-	{ $current=$iv_ruleSEG_NAME.current.getText(); }
-	EOF;
-
-// Rule SEG_NAME
-ruleSEG_NAME returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		kw='KH_ST_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_0Keyword_0());
-		}
-		    |
-		kw='KH_ST_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_1Keyword_1());
-		}
-		    |
-		kw='KH_ST_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_2Keyword_2());
-		}
-		    |
-		kw='KH_ST_3'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_3Keyword_3());
-		}
-		    |
-		kw='KH_ST_4'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_4Keyword_4());
-		}
-		    |
-		kw='KH_ST_5'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_5Keyword_5());
-		}
-		    |
-		kw='KH_ST_6'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_ST_6Keyword_6());
-		}
-		    |
-		kw='KH_LN_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_0Keyword_7());
-		}
-		    |
-		kw='KH_LN_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_1Keyword_8());
-		}
-		    |
-		kw='KH_LN_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_2Keyword_9());
-		}
-		    |
-		kw='KH_LN_3'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_3Keyword_10());
-		}
-		    |
-		kw='KH_LN_4'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_4Keyword_11());
-		}
-		    |
-		kw='KH_LN_5'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_5Keyword_12());
-		}
-		    |
-		kw='KH_LN_6'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_6Keyword_13());
-		}
-		    |
-		kw='KH_LN_7'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_7Keyword_14());
-		}
-		    |
-		kw='KH_LN_8'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKH_LN_8Keyword_15());
-		}
-		    |
-		kw='KIO_LN_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKIO_LN_0Keyword_16());
-		}
-		    |
-		kw='KIO_LN_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getKIO_LN_1Keyword_17());
-		}
-		    |
-		kw='OC_ST_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_0Keyword_18());
-		}
-		    |
-		kw='OC_ST_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_1Keyword_19());
-		}
-		    |
-		kw='OC_ST_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_2Keyword_20());
-		}
-		    |
-		kw='OC_ST_3'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_3Keyword_21());
-		}
-		    |
-		kw='OC_ST_4'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_ST_4Keyword_22());
-		}
-		    |
-		kw='OC_LN_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_0Keyword_23());
-		}
-		    |
-		kw='OC_LN_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_1Keyword_24());
-		}
-		    |
-		kw='OC_LN_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_2Keyword_25());
-		}
-		    |
-		kw='OC_LN_3'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_3Keyword_26());
-		}
-		    |
-		kw='OC_LN_4'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_4Keyword_27());
-		}
-		    |
-		kw='OC_LN_5'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_LN_5Keyword_28());
-		}
-		    |
-		kw='IC_ST_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_0Keyword_29());
-		}
-		    |
-		kw='IC_ST_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_1Keyword_30());
-		}
-		    |
-		kw='IC_ST_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_2Keyword_31());
-		}
-		    |
-		kw='IC_ST_3'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_3Keyword_32());
-		}
-		    |
-		kw='IC_ST_4'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_ST_4Keyword_33());
-		}
-		    |
-		kw='IC_LN_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_0Keyword_34());
-		}
-		    |
-		kw='IC_LN_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_1Keyword_35());
-		}
-		    |
-		kw='IC_LN_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_2Keyword_36());
-		}
-		    |
-		kw='IC_LN_3'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_3Keyword_37());
-		}
-		    |
-		kw='IC_LN_4'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_4Keyword_38());
-		}
-		    |
-		kw='IC_LN_5'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_LN_5Keyword_39());
-		}
-		    |
-		kw='OC_JCT_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOC_JCT_0Keyword_40());
-		}
-		    |
-		kw='IC_JCT_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIC_JCT_0Keyword_41());
-		}
-		    |
-		kw='OI_LN_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOI_LN_0Keyword_42());
-		}
-		    |
-		kw='OI_LN_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOI_LN_1Keyword_43());
-		}
-		    |
-		kw='OI_LN_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getOI_LN_2Keyword_44());
-		}
-		    |
-		kw='IO_LN_0'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIO_LN_0Keyword_45());
-		}
-		    |
-		kw='IO_LN_1'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIO_LN_1Keyword_46());
-		}
-		    |
-		kw='IO_LN_2'
-		{
-			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getSEG_NAMEAccess().getIO_LN_2Keyword_47());
-		}
-	)
-;
+RULE_SEG_NAME : ('KH_ST_0'|'KH_ST_1'|'KH_ST_2'|'KH_ST_3'|'KH_ST_4'|'KH_ST_5'|'KH_ST_6'|'KH_LN_0'|'KH_LN_1'|'KH_LN_2'|'KH_LN_3'|'KH_LN_4'|'KH_LN_5'|'KH_LN_6'|'KH_LN_7'|'KH_LN_8'|'KIO_LN_0'|'KIO_LN_1'|'OC_ST_0'|'OC_ST_1'|'OC_ST_2'|'OC_ST_3'|'OC_ST_4'|'OC_LN_0'|'OC_LN_1'|'OC_LN_2'|'OC_LN_3'|'OC_LN_4'|'OC_LN_5'|'IC_ST_0'|'IC_ST_1'|'IC_ST_2'|'IC_ST_3'|'IC_ST_4'|'IC_LN_0'|'IC_LN_1'|'IC_LN_2'|'IC_LN_3'|'IC_LN_4'|'IC_LN_5'|'OC_JCT_0'|'IC_JCT_0'|'OI_LN_0'|'OI_LN_1'|'OI_LN_2'|'IO_LN_0'|'IO_LN_1'|'IO_LN_2');
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

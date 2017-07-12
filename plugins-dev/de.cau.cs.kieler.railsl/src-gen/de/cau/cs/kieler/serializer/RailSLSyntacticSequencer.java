@@ -20,14 +20,12 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class RailSLSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected RailSLGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_ConditionalLine_ContactOfKeyword_2_p;
 	protected AbstractElementAlias match_ConditionalLine_IsReachedFirstDoKeyword_4_p;
 	protected AbstractElementAlias match_TimeWaitStatement_WaitForKeyword_0_p;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (RailSLGrammarAccess) access;
-		match_ConditionalLine_ContactOfKeyword_2_p = new TokenAlias(true, false, grammarAccess.getConditionalLineAccess().getContactOfKeyword_2());
 		match_ConditionalLine_IsReachedFirstDoKeyword_4_p = new TokenAlias(true, false, grammarAccess.getConditionalLineAccess().getIsReachedFirstDoKeyword_4());
 		match_TimeWaitStatement_WaitForKeyword_0_p = new TokenAlias(true, false, grammarAccess.getTimeWaitStatementAccess().getWaitForKeyword_0());
 	}
@@ -44,9 +42,7 @@ public class RailSLSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_ConditionalLine_ContactOfKeyword_2_p.equals(syntax))
-				emit_ConditionalLine_ContactOfKeyword_2_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ConditionalLine_IsReachedFirstDoKeyword_4_p.equals(syntax))
+			if (match_ConditionalLine_IsReachedFirstDoKeyword_4_p.equals(syntax))
 				emit_ConditionalLine_IsReachedFirstDoKeyword_4_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TimeWaitStatement_WaitForKeyword_0_p.equals(syntax))
 				emit_TimeWaitStatement_WaitForKeyword_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
@@ -54,17 +50,6 @@ public class RailSLSyntacticSequencer extends AbstractSyntacticSequencer {
 		}
 	}
 
-	/**
-	 * Ambiguous syntax:
-	 *     'contact of'+
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     contact=ContactIndex (ambiguity) segName=SEG_NAME
-	 */
-	protected void emit_ConditionalLine_ContactOfKeyword_2_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
 	/**
 	 * Ambiguous syntax:
 	 *     'is reached first, do'+
