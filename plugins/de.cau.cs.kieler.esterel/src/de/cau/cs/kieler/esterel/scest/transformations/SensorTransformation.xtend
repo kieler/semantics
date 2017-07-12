@@ -77,9 +77,10 @@ class SensorTransformation extends AbstractExpansionTransformation implements Tr
                     }
                     else {
                         throw new UnsupportedOperationException(
-                        "The following sensor is of type PURE which is not a valid type! " + s.sensor.name)
+                        "The following sensor doesn't have a valid type for SCL! " + s.sensor.name)
                     }
                     var newDecl = createDeclaration(newType, variable)
+                    newDecl.valuedObjects.add(variable)
                     scope.declarations.add(newDecl)
                 }
                 else { 

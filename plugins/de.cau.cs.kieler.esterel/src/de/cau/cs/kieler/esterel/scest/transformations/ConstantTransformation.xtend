@@ -78,13 +78,14 @@ class ConstantTransformation extends AbstractExpansionTransformation implements 
                     }
                     else {
                         throw new UnsupportedOperationException(
-                        "The following constants are of type PURE which is not a valid type! " + constants)
+                        "The following constant doesn't have a valid type for SCL! " + constants)
                     }
                     var newDecl = createDeclaration(newType, null)
                     for (v : constants.constants) {
                         var c = v as Constant
-                        var variable = createNewUniqueVariable(createStringValue(c.value))
+                        var variable = createNewUniqueVariable(if (c.value!=null) createStringValue(c.value) else null)
                         newVariables.put(c, variable)
+                        newDecl.valuedObjects.add(variable)
                     }
                     scope.declarations.add(newDecl)
                 }
