@@ -58,12 +58,8 @@ class ProcCallTransformation extends AbstractExpansionTransformation implements 
         return SCEstFeature::PROCCALL_ID
     }
         
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
-//
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

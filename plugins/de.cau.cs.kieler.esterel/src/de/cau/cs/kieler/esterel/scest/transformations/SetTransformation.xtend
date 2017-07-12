@@ -56,13 +56,9 @@ class SetTransformation extends AbstractExpansionTransformation implements Trace
         return SCEstFeature::SET_ID
     }
         
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
-//
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID, 
-                                SCEstTransformation::LOCALSIGNALDECL_ID)
+                                SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

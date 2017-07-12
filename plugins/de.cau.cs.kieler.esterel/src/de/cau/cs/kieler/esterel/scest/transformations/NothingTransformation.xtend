@@ -57,10 +57,10 @@ class NothingTransformation extends AbstractExpansionTransformation implements T
     }
         
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
     }
 
-        @Inject
+    @Inject
     extension SCEstExtension
     
     def SCEstProgram transform(SCEstProgram prog) {

@@ -56,14 +56,10 @@ class EmitTransformation extends AbstractExpansionTransformation implements Trac
     override getExpandsFeatureId() {
         return SCEstFeature::EMIT_ID
     }
-        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
-//
+
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID, 
-                                SCEstTransformation::LOCALSIGNALDECL_ID)
+                                SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

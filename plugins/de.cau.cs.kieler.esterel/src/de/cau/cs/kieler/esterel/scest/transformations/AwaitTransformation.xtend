@@ -57,13 +57,9 @@ class AwaitTransformation extends AbstractExpansionTransformation implements Tra
     override getExpandsFeatureId() {
         return SCEstFeature::AWAIT_ID
     }
-        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

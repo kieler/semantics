@@ -69,7 +69,7 @@ class SuspendTransformation extends AbstractExpansionTransformation implements T
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::HALT_ID,
             SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::LOCALVARIABLE_ID,
             SCEstTransformation::AWAIT_ID, SCEstTransformation::SUSTAIN_ID,
-            SCEstTransformation::DO_ID)
+            SCEstTransformation::DO_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

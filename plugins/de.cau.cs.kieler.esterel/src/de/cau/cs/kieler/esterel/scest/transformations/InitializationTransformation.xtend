@@ -57,14 +57,6 @@ class InitializationTransformation extends AbstractExpansionTransformation imple
     override getExpandsFeatureId() {
         return SCEstFeature::INITIALIZATION_ID
     }
-        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
 
     @Inject
     extension SCEstExtension

@@ -64,16 +64,11 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
     override getExpandsFeatureId() {
         return SCEstFeature::LOCALVARIABLE_ID
     }
-        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
-//    }
-//
+     
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet( SCEstTransformation::INITIALIZATION_ID, 
-                                SCEstTransformation::PROCCALL_ID, SCEstTransformation::EXEC_ID
-        )
+                                SCEstTransformation::PROCCALL_ID, SCEstTransformation::EXEC_ID,
+                                SCEstTransformation::RUN_ID)
     }
 
     @Inject

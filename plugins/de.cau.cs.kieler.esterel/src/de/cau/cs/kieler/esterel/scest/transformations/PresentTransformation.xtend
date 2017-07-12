@@ -54,14 +54,9 @@ class PresentTransformation extends AbstractExpansionTransformation implements T
     override getExpandsFeatureId() {
         return SCEstFeature::PRESENT_ID
     }
-        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::ENTRY_ID,
-//            SCEstTransformation::CONNECTOR_ID)
-//    }
-
+     
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

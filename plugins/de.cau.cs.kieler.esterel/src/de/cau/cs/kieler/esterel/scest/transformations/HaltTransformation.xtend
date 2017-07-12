@@ -57,7 +57,7 @@ class HaltTransformation extends AbstractExpansionTransformation implements Trac
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID)
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

@@ -55,14 +55,10 @@ class UnEmitTransformation extends AbstractExpansionTransformation implements Tr
     override getExpandsFeatureId() {
         return SCEstFeature::UNEMIT_ID
     }
-        
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
-//
+    
     override getNotHandlesFeatureIds() {
         return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID, 
-                                SCEstTransformation::LOCALSIGNALDECL_ID)
+                                SCEstTransformation::LOCALSIGNALDECL_ID, SCEstTransformation::RUN_ID)
     }
 
     @Inject

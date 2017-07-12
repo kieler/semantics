@@ -61,7 +61,8 @@ import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.EsterelParallel
 import de.cau.cs.kieler.scl.scl.Parallel
-
+import de.cau.cs.kieler.esterel.esterel.RelationImplication
+import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility
 
 /**
  * @author mrb
@@ -109,6 +110,8 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
     var typeIdentifiers = new LinkedList<TypeIdentifier>
     var functionExpressions = new LinkedList<FunctionExpression>
     var signals = new LinkedList<ISignal>
+    var relationImplications = new LinkedList<RelationImplication>
+    var relationIncompatibilities = new LinkedList<RelationIncompatibility>
     
     def SCEstProgram transform(SCEstProgram prog) {
         for (var i=0; i<prog.modules.length; i++) {
@@ -235,11 +238,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         var moduleContainingList = moduleRenaming.module.getContainingList
         moduleContainingList.remove(moduleRenaming.module)
         
-        // TODO 
-        // PROCEDURES and TASKS will not be transformed at the moment
-        // and Functions only check their ValueTypes
-        
-            
+        // TODO PROCEDURES and TASKS will not be transformed at the moment
     }
     
     def clearMapsLists() {
@@ -260,6 +259,8 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         typeIdentifiers.clear
         functionExpressions.clear
         signals.clear
+        relationImplications.clear
+        relationIncompatibilities.clear
     }
     
     /**
@@ -304,10 +305,13 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
      * @param type The ValueType of the signal
      * @return The signal if found, otherwise null
      */
-    def ISignal checkIfSignalExistsByNameAndType(String name, ValueType type) {
+    def ISignal checkIfSignalExistsByNameAndType(String name, ValueType type, String typeID) {
         var correspondingSignal = parentSignals.get(name)
         if (correspondingSignal instanceof ISignal) {
-            if (correspondingSignal.type == type) {
+            if (type != null && correspondingSignal.type == type) {
+                return correspondingSignal
+            }
+            else if (typeID != null && correspondingSignal.typeID == typeID) {
                 return correspondingSignal
             }
         }
@@ -320,10 +324,17 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
      * @param name The name of the sensor
      * @param type The type of the sensor
      */
-    def ISignal checkIfSensorExistsByNameAndType(String name, ValueType type) {
+    def ISignal checkIfSensorExistsByNameAndType(String name, TypeIdentifier typeIdent) {
         var correspondingSensor = parentConstants.get(name)
         if (correspondingSensor instanceof ISignal) {
-            if ((correspondingSensor.eContainer as SensorWithType).type?.type == type) {
+            var swt = correspondingSensor.eContainer as SensorWithType
+            if (typeIdent.type != null && swt.type?.type == typeIdent.type) {
+                return correspondingSensor
+            }
+            else if (typeIdent.typeID != null && swt.type?.typeID == typeIdent.typeID) {
+                return correspondingSensor
+            }
+            else if (typeIdent.estType != null && swt.type?.estType.name == typeIdent.estType.name) {
                 return correspondingSensor
             }
         }
@@ -368,7 +379,12 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                 ISignal: {
                     signals.add(o)
                 }
-                // TODO Relation-Implication/-Incompatibility for ISignal reference
+                RelationImplication: {
+                    relationImplications.add(o)
+                }
+                RelationIncompatibility: {
+                    relationIncompatibilities.add(o)
+                }
             }
         }
     }
@@ -387,8 +403,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                     relatedSignal = signalRenamings.get(signal)
                 }
                 else {
-                    // TODO check is just for 'type' not for 'typeID'
-                    relatedSignal = checkIfSignalExistsByNameAndType(signal.name, signal.type)
+                    relatedSignal = checkIfSignalExistsByNameAndType(signal.name, signal.type, signal.typeID)
                 }
                 // transform all references
                 if (relatedSignal instanceof ISignal) {
@@ -415,6 +430,21 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                     for (exec : execs) {
                         if (exec.retSignal == signal) {
                             exec.retSignal = relatedSignal
+                        }
+                    }
+                    for (ri : relationImplications) {
+                        if (ri.first == signal) {
+                            ri.first = relatedSignal
+                        }
+                        if (ri.second == signal) {
+                            ri.second = relatedSignal
+                        }
+                    }
+                    for (ri : relationIncompatibilities) {
+                        for (var i=0; i<ri.incomp.length; i++) {
+                            if (ri.incomp.get(i) == signal) {
+                                ri.incomp.set(i, relatedSignal)
+                            }
                         }
                     }
                 }
@@ -485,7 +515,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
         for (decl : moduleRenaming.module.intSensorDecls) {
             for (var i=0; i<decl.sensors.length; i++) {
                 var sensorWType = decl.sensors.get(i)
-                var sensor = checkIfSensorExistsByNameAndType(sensorWType.sensor.name, sensorWType.type?.type)
+                var sensor = checkIfSensorExistsByNameAndType(sensorWType.sensor.name, sensorWType.type)
                 if (sensor instanceof ISignal) {
                     for (voRef : valuedObjectReferences) {
                         if (voRef.valuedObject == sensorWType.sensor) {
@@ -496,7 +526,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                 else {
                     sensorWType.sensor.name = sensorWType.sensor.name.createNewUniqueSensorName
                     parentModule.intSensorDecls.add(createSensorDecl(sensorWType))
-                    i--
+                    i-- // because the old sensor with type was removed of "decl.sensors"
                 }
             }
         }
@@ -526,7 +556,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                 else {
                     oldType.name = oldType.name.createNewUniqueTypeName
                     parentModule.intTypeDecls += createTypeDecl(oldType)
-                    i--
+                    i-- // because the old type was removed of "decl.types"
                 }
             }
         }
@@ -577,7 +607,7 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                 }
                 else {
                     parentModule.intFunctionDecls += createFunctionDecl(oldFunction)
-                    i--
+                    i-- // because the old function was removed of "decl.functions"
                 }
             }
         }
@@ -597,11 +627,16 @@ class RunTransformation extends AbstractExpansionTransformation implements Trace
                     var same = true
                     for (var i=0; i<f.idList.length; i++) {
                         var typeIdent = f.idList.get(i)
-                        // TODO just the type field of the TypeIdentifier is checked at the moment
                         if (i<oldFunction.idList.length) {
-                            if (typeIdent.type == null || typeIdent.type != oldFunction.idList.get(i).type) {
+                            var oldTypeIdent = oldFunction.idList.get(i)
+                            // if one of type, typeID or estType is equal, "same" stays true
+                            if (!(     (typeIdent.type != null && oldTypeIdent.type == typeIdent.type)
+                                    || (typeIdent.typeID != null && oldTypeIdent.typeID == typeIdent.typeID)
+                                    || (typeIdent.estType != null && oldTypeIdent.estType.name == typeIdent.estType.name) 
+                               )) {
                                 same =  false
                             }
+                            
                         }
                         else {
                             same = false 

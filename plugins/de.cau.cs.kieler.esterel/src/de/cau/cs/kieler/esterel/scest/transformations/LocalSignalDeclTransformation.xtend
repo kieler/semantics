@@ -62,14 +62,9 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
         return SCEstFeature::LOCALSIGNALDECL_ID
     }
         
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
-//
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID
-            
-        )
+        return Sets.newHashSet(SCEstTransformation::INITIALIZATION_ID, SCEstTransformation::SIGNAL_ID,
+                               SCEstTransformation::RUN_ID)
     }
 
     @Inject
