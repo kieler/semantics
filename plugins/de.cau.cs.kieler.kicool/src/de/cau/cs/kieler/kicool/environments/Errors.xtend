@@ -12,9 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.environments
 
-import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
-import java.util.ArrayList
-
 /**
  * Data storage for errors.
  * 
@@ -22,10 +19,6 @@ import java.util.ArrayList
  * @kieler.design 2017-06-12 proposed
  * @kieler.rating 2017-06-12 proposed yellow  
  */
-class Errors extends MessageObjectReferences implements IKiCoolCloneable {
-    
-    override isMutable() { false }
-    override cloneObject() { null }
-    override isVolatile() { true }
+class Errors extends MessageObjectReferences {
     
 }

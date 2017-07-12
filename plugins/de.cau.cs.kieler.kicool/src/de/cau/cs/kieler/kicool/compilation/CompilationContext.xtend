@@ -59,7 +59,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         startEnvironment.setProperty(SOURCE_MODEL, sourceModel)
         startEnvironment.setProperty(COMPILATION_CONTEXT, this)
         startEnvironment.setProperty(INPLACE, false)        
-        startEnvironment.setProperty(ONGOING_WORKING_COPY, false)
+        startEnvironment.setProperty(ONGOING_WORKING_COPY, true)
     }
     
     def getProcessorInstances() {

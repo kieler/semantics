@@ -14,6 +14,9 @@ package de.cau.cs.kieler.kicool.environments
 
 import java.util.LinkedList
 import de.cau.cs.kieler.kicool.classes.IColorSystem
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -21,7 +24,19 @@ import de.cau.cs.kieler.kicool.classes.IColorSystem
  * @kieler.rating 2017-07-11 proposed yellow
  *
  */
-class MessageObjectReferences extends LinkedList<MessageObjectLink> {
+class MessageObjectReferences extends LinkedList<MessageObjectLink> implements IKiCoolCloneable {
+    
+    override isMutable() { false }
+    override cloneObject() { null }
+    override isVolatile() { true }
+    
+    override resolveCopiedObjects(Copier copier) {
+        for(reference : listIterator.toIterable.filter[ object != null && object instanceof EObject ]) {
+            if (copier.containsKey(reference.object)) {
+                reference.object = copier.get(reference.object)
+            }
+        }
+    }    
     
     def add(String msg) {
         add(new MessageObjectLink(msg, null, true, null))

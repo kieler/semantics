@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.environments
 
-import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
-
 /**
  * Data storage for infos.
  * 
@@ -21,10 +19,6 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
  * @kieler.design 2017-06-12 proposed
  * @kieler.rating 2017-06-12 proposed yellow  
  */
-class Infos extends MessageObjectReferences implements IKiCoolCloneable {
-    
-    override isMutable() { false }
-    override cloneObject() { null }
-    override isVolatile() { true }
+class Infos extends MessageObjectReferences {
     
 }

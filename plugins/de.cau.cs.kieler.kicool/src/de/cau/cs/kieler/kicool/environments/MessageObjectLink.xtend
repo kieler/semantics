@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.environments
 
 import de.cau.cs.kieler.kicool.classes.IColorSystem
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -20,10 +21,17 @@ import de.cau.cs.kieler.kicool.classes.IColorSystem
  * @kieler.rating 2017-07-12 proposed yellow
  *
  */
-@Data
+
 class MessageObjectLink {
-    val String message
-    val Object object
-    val boolean annotate
-    val IColorSystem colorSystem
+    @Accessors String message
+    @Accessors Object object
+    @Accessors boolean annotate
+    @Accessors IColorSystem colorSystem
+    
+    new(String message, Object object, boolean annotate, IColorSystem colorSystem) {
+        this.message = message
+        this.object = object
+        this.annotate = annotate
+        this.colorSystem = colorSystem
+    }
 }

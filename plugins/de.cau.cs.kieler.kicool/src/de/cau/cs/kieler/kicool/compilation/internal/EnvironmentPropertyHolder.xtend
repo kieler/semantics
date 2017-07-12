@@ -22,6 +22,9 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
 import static extension de.cau.cs.kieler.kicool.environments.Environment.*
 import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
 import de.cau.cs.kieler.kicool.environments.Environment
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.Pair
 
 /**
  * Internal class for handling the processor environments.
@@ -43,53 +46,79 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
         val ongoingWorkingCopy = source.getProperty(ONGOING_WORKING_COPY)
         val inplaceValid = source.getProperty(INPLACE_VALID)
      
-        for(k : source.propertyMap.keySet.immutableCopy) {
-            val v = source.propertyMap.get(k)
-            if (v instanceof EObject) {
-                if (inplace && inplaceValid) {
-                    target.propertyMap.put(k, v)
-                } else {
-                    if (ongoingWorkingCopy && inplaceValid) {
-                        source.propertyMap.put(k, v.copy)
-                        target.propertyMap.put(k, v)    
-                    } else {
-                        target.propertyMap.put(k, v.copy)
-                    }
-                }
+        val model = source.getProperty(MODEL)
+        var Copier modelCopier = null
+        if (model instanceof EObject) {
+            if (inplace && inplaceValid) {
+                target.propertyMap.put(MODEL, model)
             } else {
-                if (v instanceof Integer) {
-                    target.propertyMap.put(k, new Integer(v))
-                } else if (v instanceof Boolean) {
-                    target.propertyMap.put(k, new Boolean(v))
-                } else if (v instanceof Double) {
-                    target.propertyMap.put(k, new Double(v))
-                } else if (v instanceof Long) {
-                    target.propertyMap.put(k, new Long(v))
-                } else if (v instanceof String) {
-                    target.propertyMap.put(k, new String(v))
-                } else if (v instanceof IKiCoolCloneable) {
-                    if (!v.volatile) {
-                        if (inplace) {
-                            target.propertyMap.put(k, v)
-                        } else {
-                            target.propertyMap.put(k, v.cloneObject)
-                        }
-                    }
-                } else if (v instanceof List<?>) {
-                    if (k.equals(Environment.ERRORS)) {
-                        target.propertyMap.put(k, new LinkedList<String>(v as List<String>))
-                    }
+                if (ongoingWorkingCopy && inplaceValid) {
+                    val copyResult = model.copyAndReturnCopier
+                    modelCopier = copyResult.second
+                    source.propertyMap.put(MODEL, copyResult.first)
+                    target.propertyMap.put(MODEL, model)    
                 } else {
-                    target.propertyMap.put(k, v)
-                    if (!inplace) {
-                        System.err.println("Prime environment wants to copy value of key \"" + k + "\", but the value "+ 
-                            "does not seem to be cloneable. This might be ok, but you should resolve this.");
-                    }
+                    val copyResult = model.copyAndReturnCopier
+                    modelCopier = copyResult.second
+                    target.propertyMap.put(MODEL, copyResult.first)
                 }
             }
-        }   
+        } else {
+            copyValue(target, MODEL, model)
+        }
+
+        for(k : source.propertyMap.keySet.immutableCopy) {
+            if (k != MODEL) {
+                val v = source.propertyMap.get(k)
+                
+                copyValue(target, k, v)
+                
+                if (modelCopier != null) {
+                    if (v instanceof IKiCoolCloneable) {
+                        if (ongoingWorkingCopy && inplaceValid) {
+                            (source.getProperty(k) as IKiCoolCloneable).resolveCopiedObjects(modelCopier)    
+                        } else {
+                            if (!v.volatile) {
+                                // Should use the reversed map
+//                                (target.getProperty(k) as IKiCoolCloneable).resolveCopiedObjects(v, copyResult.second)
+                            }
+                        }
+                }
+                }
+            }
+        }
         
         target
+    }
+    
+    static def <T extends EnvironmentPropertyHolder> copyValue(T target, IProperty<?> k, Object v) {
+        if (v instanceof EObject) {
+            target.propertyMap.put(k, v.copy)
+        } else {
+            if (v instanceof Integer) {
+                target.propertyMap.put(k, new Integer(v))
+            } else if (v instanceof Boolean) {
+                target.propertyMap.put(k, new Boolean(v))
+            } else if (v instanceof Double) {
+                target.propertyMap.put(k, new Double(v))
+            } else if (v instanceof Long) {
+                target.propertyMap.put(k, new Long(v))
+            } else if (v instanceof String) {
+                target.propertyMap.put(k, new String(v))
+            } else if (v instanceof IKiCoolCloneable) {
+                if (!v.volatile) {
+                    target.propertyMap.put(k, v.cloneObject)
+                }
+            } else if (v instanceof List<?>) {
+                if (k.equals(Environment.ERRORS)) {
+                    target.propertyMap.put(k, new LinkedList<String>(v as List<String>))
+                }
+            } else {
+                target.propertyMap.put(k, v)
+                    System.err.println("Prime environment wants to copy value of key \"" + k + "\", but the value "+ 
+                        "does not seem to be cloneable. This might be ok, but you should resolve this.");
+            }
+        }  
     }
     
     static def processEnvironmentSetter(Environment environment, List<KVPair> kvPairList) {
@@ -117,5 +146,12 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             
             environment.setPropertyById(pair.key, setTo)
         }
+    }
+    
+    static def <T extends EObject> Pair<T, Copier> copyAndReturnCopier(T eObject) {
+        val copier = new Copier();
+        val EObject result = copier.copy(eObject);
+        copier.copyReferences();
+        new Pair(result as T, copier)
     }
 }
