@@ -59,7 +59,7 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
         rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED)
-        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20d);
+        rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d);
         rootNode.setLayoutOption(CoreOptions::PADDING, new ElkPadding(8d));
         rootNode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
         rootNode.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)

@@ -87,7 +87,9 @@ class ProcessorSynthesis {
         collapsedRendering.eContents.filter(KText).head.text = label
         expandedRendering.eContents.filter(KText).head.text = label        
         
-        groupNode.addLayoutParam(KlighdProperties::EXPAND, false);
+        groupNode.addLayoutParam(KlighdProperties::EXPAND, false)
+        collapsedRendering.properties.put(KlighdProperties::COLLAPSED_RENDERING, true)
+        expandedRendering.properties.put(KlighdProperties::EXPANDED_RENDERING, true)
         
         var List<KNode> lastNodes = newArrayList()
         for(it : processorGroup.processors) {
