@@ -84,6 +84,7 @@ class ProcessorDataManager {
     private static Injector injector =
             new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration();    
     
+    static val NODE_PROCESSOR = "processor"
     static val NODE_PROCESSOR_BODY = "processorbody"
     static val NODE_ACTIVITY_STATUS = "status"
     static val NODE_NAME = "name"
@@ -234,6 +235,7 @@ class ProcessorDataManager {
         // Final result
         val finalResultNode = intermediateKGT.copy
         finalResultNode.xpos = intermediatePosX
+//        finalResultNode.width = finalResultNode.width * 1
         finalResultNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         intermediateRootNode.children += finalResultNode 
         finalResultNode.setProperty(INTERMEDIATE_DATA, 
@@ -241,6 +243,8 @@ class ProcessorDataManager {
         intermediatePosX += 3.5f            
         finalResultNode.container.setFBColor(INTERMEDIATE_FINAL_RESULT)        
 
+// This sometimes causes a Klighd exception: Exception in thread "pool-2-thread-30" java.lang.NullPointerException
+//    at de.cau.cs.kieler.klighd.internal.macrolayout.KlighdLayoutConfigurationStore.getContainer(KlighdLayoutConfigurationStore.java:396)
         val processorBodyNode = NODE_PROCESSOR_BODY.findNode(nodeIdMap)
         processorBodyNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
         processorBodyNode.setProperty(INTERMEDIATE_DATA, 
