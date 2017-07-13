@@ -553,13 +553,22 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__SCHEDULE = NODE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__VALUED_OBJECT = NODE_FEATURE_COUNT + 0;
+	int ASSIGNMENT__VALUED_OBJECT = NODE_FEATURE_COUNT + 1;
 
 	/**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -568,7 +577,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__EXPRESSION = NODE_FEATURE_COUNT + 1;
+	int ASSIGNMENT__EXPRESSION = NODE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Indices</b></em>' containment reference list.
@@ -577,7 +586,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__INDICES = NODE_FEATURE_COUNT + 2;
+	int ASSIGNMENT__INDICES = NODE_FEATURE_COUNT + 3;
 
 	/**
      * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -586,7 +595,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__OPERATOR = NODE_FEATURE_COUNT + 3;
+    int ASSIGNMENT__OPERATOR = NODE_FEATURE_COUNT + 4;
 
 	/**
      * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
@@ -595,7 +604,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__SUB_REFERENCE = NODE_FEATURE_COUNT + 4;
+    int ASSIGNMENT__SUB_REFERENCE = NODE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Next</b></em>' containment reference.
@@ -604,7 +613,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 5;
+	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 6;
 
     /**
      * The number of structural features of the '<em>Assignment</em>' class.
@@ -613,7 +622,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 6;
+	int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 7;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ForkImpl <em>Fork</em>}' class.
@@ -1306,13 +1315,22 @@ public interface ScgPackage extends EPackage {
     int GUARD__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD__SCHEDULE = NODE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD__VALUED_OBJECT = NODE_FEATURE_COUNT + 0;
+	int GUARD__VALUED_OBJECT = NODE_FEATURE_COUNT + 1;
 
 	/**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1321,7 +1339,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD__EXPRESSION = NODE_FEATURE_COUNT + 1;
+	int GUARD__EXPRESSION = NODE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Indices</b></em>' containment reference list.
@@ -1330,7 +1348,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD__INDICES = NODE_FEATURE_COUNT + 2;
+	int GUARD__INDICES = NODE_FEATURE_COUNT + 3;
 
 	/**
      * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -1339,7 +1357,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD__OPERATOR = NODE_FEATURE_COUNT + 3;
+	int GUARD__OPERATOR = NODE_FEATURE_COUNT + 4;
 
 	/**
      * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
@@ -1348,7 +1366,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GUARD__SUB_REFERENCE = NODE_FEATURE_COUNT + 4;
+    int GUARD__SUB_REFERENCE = NODE_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Guard</em>' class.
@@ -1357,7 +1375,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
+	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 6;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.

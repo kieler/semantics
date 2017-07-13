@@ -4,18 +4,25 @@ package de.cau.cs.kieler.kexpressions.keffects.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +32,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.EmissionImpl#getNewValue <em>New Value</em>}</li>
  * </ul>
@@ -32,6 +40,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 public class EmissionImpl extends AnnotatableImpl implements Emission {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
+
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
@@ -69,6 +87,18 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
     @Override
     protected EClass eStaticClass() {
         return KEffectsPackage.Literals.EMISSION;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.EMISSION__SCHEDULE);
+        }
+        return schedule;
     }
 
     /**
@@ -160,6 +190,8 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KEffectsPackage.EMISSION__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 return basicSetNewValue(null, msgs);
         }
@@ -174,6 +206,8 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KEffectsPackage.EMISSION__SCHEDULE:
+                return getSchedule();
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
@@ -188,9 +222,14 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KEffectsPackage.EMISSION__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
                 return;
@@ -209,6 +248,9 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KEffectsPackage.EMISSION__SCHEDULE:
+                getSchedule().clear();
+                return;
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
                 return;
@@ -227,12 +269,46 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KEffectsPackage.EMISSION__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 return valuedObject != null;
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 return newValue != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Schedulable.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.EMISSION__SCHEDULE: return KExpressionsPackage.SCHEDULABLE__SCHEDULE;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Schedulable.class) {
+            switch (baseFeatureID) {
+                case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return KEffectsPackage.EMISSION__SCHEDULE;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
 } //EmissionImpl

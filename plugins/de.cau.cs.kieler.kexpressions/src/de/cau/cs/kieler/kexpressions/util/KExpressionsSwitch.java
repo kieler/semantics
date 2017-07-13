@@ -77,6 +77,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.EXPRESSION: {
                 Expression expression = (Expression)theEObject;
                 T result = caseExpression(expression);
+                if (result == null) result = caseSchedulable(expression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -93,6 +94,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 ValuedObjectReference valuedObjectReference = (ValuedObjectReference)theEObject;
                 T result = caseValuedObjectReference(valuedObjectReference);
                 if (result == null) result = caseExpression(valuedObjectReference);
+                if (result == null) result = caseSchedulable(valuedObjectReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -100,6 +102,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 Value value = (Value)theEObject;
                 T result = caseValue(value);
                 if (result == null) result = caseExpression(value);
+                if (result == null) result = caseSchedulable(value);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -108,6 +111,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 T result = caseIntValue(intValue);
                 if (result == null) result = caseValue(intValue);
                 if (result == null) result = caseExpression(intValue);
+                if (result == null) result = caseSchedulable(intValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -116,6 +120,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 T result = caseFloatValue(floatValue);
                 if (result == null) result = caseValue(floatValue);
                 if (result == null) result = caseExpression(floatValue);
+                if (result == null) result = caseSchedulable(floatValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -124,6 +129,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 T result = caseBoolValue(boolValue);
                 if (result == null) result = caseValue(boolValue);
                 if (result == null) result = caseExpression(boolValue);
+                if (result == null) result = caseSchedulable(boolValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -132,6 +138,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 T result = caseStringValue(stringValue);
                 if (result == null) result = caseValue(stringValue);
                 if (result == null) result = caseExpression(stringValue);
+                if (result == null) result = caseSchedulable(stringValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -139,6 +146,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 OperatorExpression operatorExpression = (OperatorExpression)theEObject;
                 T result = caseOperatorExpression(operatorExpression);
                 if (result == null) result = caseExpression(operatorExpression);
+                if (result == null) result = caseSchedulable(operatorExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -146,6 +154,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 TextExpression textExpression = (TextExpression)theEObject;
                 T result = caseTextExpression(textExpression);
                 if (result == null) result = caseExpression(textExpression);
+                if (result == null) result = caseSchedulable(textExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -172,6 +181,29 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.SCHEDULE_DECLARATION: {
+                ScheduleDeclaration scheduleDeclaration = (ScheduleDeclaration)theEObject;
+                T result = caseScheduleDeclaration(scheduleDeclaration);
+                if (result == null) result = caseDeclaration(scheduleDeclaration);
+                if (result == null) result = caseAnnotatable(scheduleDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.SCHEDULE_PRIORITY: {
+                SchedulePriority schedulePriority = (SchedulePriority)theEObject;
+                T result = caseSchedulePriority(schedulePriority);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: {
+                ScheduleObjectReference scheduleObjectReference = (ScheduleObjectReference)theEObject;
+                T result = caseScheduleObjectReference(scheduleObjectReference);
+                if (result == null) result = caseValuedObjectReference(scheduleObjectReference);
+                if (result == null) result = caseExpression(scheduleObjectReference);
+                if (result == null) result = caseSchedulable(scheduleObjectReference);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.PARAMETER: {
                 Parameter parameter = (Parameter)theEObject;
                 T result = caseParameter(parameter);
@@ -182,6 +214,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 Call call = (Call)theEObject;
                 T result = caseCall(call);
                 if (result == null) result = caseExpression(call);
+                if (result == null) result = caseSchedulable(call);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -191,6 +224,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseValuedObjectReference(referenceCall);
                 if (result == null) result = caseCall(referenceCall);
                 if (result == null) result = caseExpression(referenceCall);
+                if (result == null) result = caseSchedulable(referenceCall);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -199,6 +233,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 T result = caseFunctionCall(functionCall);
                 if (result == null) result = caseCall(functionCall);
                 if (result == null) result = caseExpression(functionCall);
+                if (result == null) result = caseSchedulable(functionCall);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -211,6 +246,12 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.IDENTIFIABLE: {
                 Identifiable identifiable = (Identifiable)theEObject;
                 T result = caseIdentifiable(identifiable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.SCHEDULABLE: {
+                Schedulable schedulable = (Schedulable)theEObject;
+                T result = caseSchedulable(schedulable);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -399,6 +440,51 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Schedule Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedule Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseScheduleDeclaration(ScheduleDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Schedule Priority</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedule Priority</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSchedulePriority(SchedulePriority object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Schedule Object Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedule Object Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseScheduleObjectReference(ScheduleObjectReference object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -440,6 +526,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSchedulable(Schedulable object) {
         return null;
     }
 

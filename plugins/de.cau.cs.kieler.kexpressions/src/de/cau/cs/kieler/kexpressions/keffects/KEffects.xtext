@@ -54,7 +54,8 @@ Effect returns keffects::Effect:
 // annotations defined in the annotations grammar.		
 Emission returns keffects::Emission:
     (annotations+=QuotedStringAnnotation)*    
-	valuedObject=[kexpressions::ValuedObject|PrimeID] ( "(" newValue = Expression ")" )?;
+	valuedObject=[kexpressions::ValuedObject|PrimeID] ( "(" newValue = Expression ")" )?
+	('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Assignment Rule
 // An assignment may start with a list of arbitrary annotatations.
@@ -65,14 +66,16 @@ Assignment returns keffects::Assignment:
     (annotations+=Annotation)*    
 	valuedObject=[kexpressions::ValuedObject|PrimeID]
 	('[' indices+=Expression ']')*
-	 operator=AssignOperator expression = Expression;
+	 operator=AssignOperator expression = Expression
+	 ('schedule' schedule+=ScheduleObjectReference+)?;
 	 
 SubReferenceAssignment returns keffects::Assignment:
     (annotations+=Annotation)*    
     valuedObject=[kexpressions::ValuedObject|PrimeID]
     ('[' indices+=Expression ']')*
     ('.' subReference=ValuedObjectReference)?
-     operator=AssignOperator expression = Expression;	 
+     operator=AssignOperator expression = Expression
+     ('schedule' schedule+=ScheduleObjectReference+)?;	 
 	 
 // Postfix Effect
 // A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
@@ -82,7 +85,8 @@ PostfixEffect returns keffects::Assignment:
     (annotations+=Annotation)*    
     valuedObject=[kexpressions::ValuedObject|PrimeID]
     ('[' indices+=Expression ']')*
-     operator=PostfixOperator;
+     operator=PostfixOperator
+     ('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Hostcode Effect Rule
 // A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
