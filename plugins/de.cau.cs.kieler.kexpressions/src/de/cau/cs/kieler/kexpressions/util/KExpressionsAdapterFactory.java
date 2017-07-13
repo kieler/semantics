@@ -126,6 +126,18 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createReferenceDeclarationAdapter();
             }
             @Override
+            public Adapter caseScheduleDeclaration(ScheduleDeclaration object) {
+                return createScheduleDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseSchedulePriority(SchedulePriority object) {
+                return createSchedulePriorityAdapter();
+            }
+            @Override
+            public Adapter caseScheduleObjectReference(ScheduleObjectReference object) {
+                return createScheduleObjectReferenceAdapter();
+            }
+            @Override
             public Adapter caseParameter(Parameter object) {
                 return createParameterAdapter();
             }
@@ -148,6 +160,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseIdentifiable(Identifiable object) {
                 return createIdentifiableAdapter();
+            }
+            @Override
+            public Adapter caseSchedulable(Schedulable object) {
+                return createSchedulableAdapter();
             }
             @Override
             public Adapter caseNamedObject(NamedObject object) {
@@ -346,6 +362,48 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration <em>Schedule Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+     * @generated
+     */
+    public Adapter createScheduleDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.SchedulePriority <em>Schedule Priority</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriority
+     * @generated
+     */
+    public Adapter createSchedulePriorityAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference <em>Schedule Object Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+     * @generated
+     */
+    public Adapter createScheduleObjectReferenceAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.FunctionCall <em>Function Call</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -384,6 +442,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIdentifiableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Schedulable
+     * @generated
+     */
+    public Adapter createSchedulableAdapter() {
         return null;
     }
 

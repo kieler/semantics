@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -79,6 +80,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 Effect effect = (Effect)theEObject;
                 T result = caseEffect(effect);
                 if (result == null) result = caseAnnotatable(effect);
+                if (result == null) result = caseSchedulable(effect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -87,6 +89,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 T result = caseAssignment(assignment);
                 if (result == null) result = caseEffect(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
+                if (result == null) result = caseSchedulable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -95,6 +98,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 T result = caseEmission(emission);
                 if (result == null) result = caseEffect(emission);
                 if (result == null) result = caseAnnotatable(emission);
+                if (result == null) result = caseSchedulable(emission);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -105,6 +109,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseTextExpression(hostcodeEffect);
                 if (result == null) result = caseAnnotatable(hostcodeEffect);
                 if (result == null) result = caseExpression(hostcodeEffect);
+                if (result == null) result = caseSchedulable(hostcodeEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -117,6 +122,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseValuedObjectReference(referenceCallEffect);
                 if (result == null) result = caseCall(referenceCallEffect);
                 if (result == null) result = caseExpression(referenceCallEffect);
+                if (result == null) result = caseSchedulable(referenceCallEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -128,6 +134,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAnnotatable(functionCallEffect);
                 if (result == null) result = caseCall(functionCallEffect);
                 if (result == null) result = caseExpression(functionCallEffect);
+                if (result == null) result = caseSchedulable(functionCallEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -237,6 +244,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSchedulable(Schedulable object) {
         return null;
     }
 
