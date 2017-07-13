@@ -44,11 +44,10 @@ Workflow {
 			// generates Java API for the generated EPackages			 
 			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" }			
 			
-			// the serialization component
-			// Old serializer			
-			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-			// New Serializer 2.0
-			fragment = serializer.SerializerFragment {}
+            // the serialization component
+            fragment = serializer.SerializerFragment {
+                generateXtendStub = true
+            }
 			
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {

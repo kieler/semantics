@@ -43,8 +43,10 @@ Workflow {
 			// Java API to access grammar elements (required by several other fragments)
 			fragment = grammarAccess.GrammarAccessFragment {}
 
-			// New Serializer 2.0
-			fragment = serializer.SerializerFragment {}
+            // the serialization component
+            fragment = serializer.SerializerFragment {
+                generateXtendStub = true
+            }
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
