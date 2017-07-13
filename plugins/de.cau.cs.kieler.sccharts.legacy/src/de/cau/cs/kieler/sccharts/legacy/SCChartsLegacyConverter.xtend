@@ -152,7 +152,7 @@ class SCChartsLegacyConverter {
                             if (child.grammarElement.eClass.equals(toKeyword.eClass) && (child.grammarElement as Keyword).value == toKeyword.value) {
                                 to = true
                             }
-                            if (to && child.grammarElement instanceof CrossReference) {
+                            if (!to && child.grammarElement instanceof CrossReference) {
                                 boundName = child.text
                             }
                         }
@@ -248,10 +248,14 @@ class SCChartsLegacyConverter {
                                     valuedObject = (bind.key.actual?:(bind.key.formal)).convert as de.cau.cs.kieler.kexpressions.ValuedObject
                                 ]
                             }
-                            explicitBinding = createValuedObject => [
-                                name = bind.value
-                                state.declarations.head.valuedObjects += it
-                            ]
+                            if (state.declarations.head.valuedObjects.exists[name.equals(bind.value)]) {
+                                explicitBinding = state.declarations.head.valuedObjects.findFirst[name.equals(bind.value)]
+                            } else {
+                                explicitBinding = createValuedObject => [
+                                    name = bind.value
+                                    state.declarations.head.valuedObjects += it
+                                ]
+                            }
                         ]
                     }
                 }
@@ -410,7 +414,7 @@ class SCChartsLegacyConverter {
             
                 name = vo.name
                 if (vo.combineOperator != null) combineOperator = CombineOperator.getByName(vo.combineOperator.getName)
-                initialValue = initialValue?.convert as Expression
+                initialValue = vo.initialValue?.convert as Expression
                 cardinalities.addAll(vo.cardinalities.map[convert as Expression])
             ]
         }
