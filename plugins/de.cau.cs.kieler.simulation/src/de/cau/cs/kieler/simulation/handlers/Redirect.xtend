@@ -14,10 +14,9 @@ package de.cau.cs.kieler.simulation.handlers
 
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.DefaultDataHandler
+import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import java.util.Arrays
-import de.cau.cs.kieler.simulation.core.Model
 
 /**
  * Sets the value of input variables of one model (to)

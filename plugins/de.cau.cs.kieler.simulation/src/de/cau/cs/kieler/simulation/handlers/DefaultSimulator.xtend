@@ -10,7 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.core
+package de.cau.cs.kieler.simulation.handlers
+
+import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.Simulator
 
 /**
  * @author aas

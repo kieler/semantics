@@ -16,7 +16,6 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors

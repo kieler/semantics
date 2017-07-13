@@ -48,6 +48,7 @@ import org.eclipse.ui.statushandlers.StatusManager
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.io.File
+import de.cau.cs.kieler.simulation.handlers.Trace
 
 /**
  * @author aas
@@ -133,10 +134,10 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
         }
         
         // Create simulation based on selection
+        var simMan = SimulationManager.instance
         if(files.size == 1) {
             val file = files.get(0)
             var Simulator simulator
-            var simMan = SimulationManager.instance
             switch(file.fileExtension) {
             case "kisim": {
                 // Create simulation based on configuration
@@ -196,9 +197,36 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
                     simMan.appendSimulator(simulator)
                 }
             }
+        } else if(files.size == 2){
+            // Start executable with trace
+            val execFile = files.findFirst[it.fileExtension.isNullOrEmpty
+                                     || it.fileExtension == "exe"
+                                     || it.fileExtension == "jar"]
+            val traceFile = files.findFirst[it.fileExtension == "eso"]
+            if(execFile != null && traceFile != null) {
+                // Create simulation from executable
+                val exeSimulator = new ExecutableSimulator
+                exeSimulator.executableFile = execFile
+                
+                // Create trace from eso file
+                val traceHandler = new Trace()
+                traceHandler.tracePath.value = traceFile.fullPath.toOSString
+                
+                // Create new simulation with the trace
+                if(simMan == null || simMan.isStopped) {
+                    simMan = new SimulationManager()
+                    simMan.addAction(StepAction.Method.WRITE, traceHandler)
+                    simMan.addAction(StepAction.Method.WRITE, exeSimulator)
+                    simMan.addAction(StepAction.Method.READ, traceHandler)
+                    simMan.initializeSimulation
+                }
+            } else {
+                throw new Exception("Must select an executable and eso trace to start simulation.\n"
+                                  + "For more complex simulation configurations, please run a kisim file.")
+            }
         } else {
-            throw new Exception("Only a single file can be used to start a simulation.\n"
-                              + "For complex simulation configurations, please run a kisim file.")
+            throw new Exception("Only one or two files can be used to start a simulation.\n"
+                              + "For more complex simulation configurations, please run a kisim file.")
         }
     }
     

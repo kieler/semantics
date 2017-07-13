@@ -42,6 +42,13 @@ class Model implements Cloneable {
      */
     private List<Variable> variables = newArrayList()
 
+    new () {
+    }
+
+    new(String name) {
+        this.name = name
+    }
+
     /**
      * Convert this model to a json representation.
      */

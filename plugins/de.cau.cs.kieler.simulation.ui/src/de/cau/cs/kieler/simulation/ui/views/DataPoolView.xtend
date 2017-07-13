@@ -93,6 +93,7 @@ class DataPoolView extends ViewPart {
      * {@inheritDoc}
      */
     override setFocus() {
+        viewer.refresh
         viewer.control.setFocus
     }
     

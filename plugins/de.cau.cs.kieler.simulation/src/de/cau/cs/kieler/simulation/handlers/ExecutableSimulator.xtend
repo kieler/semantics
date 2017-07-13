@@ -12,11 +12,11 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import com.google.common.io.Files
 import com.google.common.util.concurrent.SimpleTimeLimiter
 import com.google.common.util.concurrent.UncheckedTimeoutException
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.DefaultSimulator
 import de.cau.cs.kieler.simulation.core.Model
 import java.io.BufferedReader
 import java.io.File
@@ -28,7 +28,6 @@ import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.io.Files
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -158,10 +157,10 @@ class ExecutableSimulator extends DefaultSimulator {
      * {@inheritDoc}
      */
     override String toString() {
-        if(executableFile != null) {
-            return "Simulator for "+executableFile.name
+        if(modelName.isNullOrEmpty) {
+            return "Simulator '"+executablePath.stringValue+"'"
         } else {
-            return "Simulator for "+executablePath.stringValue
+            return "Simulator '"+modelName+"'"
         }
     }
 }

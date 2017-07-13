@@ -10,12 +10,15 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.core
+package de.cau.cs.kieler.simulation.handlers
 
+import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.simulation.core.DataHandler
+import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IPath
-import de.cau.cs.kieler.prom.ModelImporter
 
 /**
  * Default implementation for a data handler.
