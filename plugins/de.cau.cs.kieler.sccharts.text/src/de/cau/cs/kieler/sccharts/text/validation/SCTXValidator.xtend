@@ -440,10 +440,10 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     // ENFORCER SPECIFIC
     
-    static val DIRECTOR = "director"
-    static val ENFORCER = "Enforcer"
+    public static val DIRECTOR = "director"
+    public static val ENFORCER = "Enforcer"
     
-    static val CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR = 
+    public static val CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR = 
         "Violation states require enforcer director" 
         
     @Check
