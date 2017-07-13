@@ -93,9 +93,9 @@ public abstract class AbstractAnnotationsRuntimeModule extends org.eclipse.xtext
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.annotations.validation.AnnotationsJavaValidator> bindAnnotationsJavaValidator() {
-		return de.cau.cs.kieler.annotations.validation.AnnotationsJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.annotations.validation.AnnotationsValidator> bindAnnotationsValidator() {
+		return de.cau.cs.kieler.annotations.validation.AnnotationsValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
