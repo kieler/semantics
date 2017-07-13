@@ -49,10 +49,9 @@ Workflow {
 			fragment = ecore.EMFGeneratorFragment {} //referencedGenModels = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts.genmodel" }
 			
 			// the serialization component
-			// Old serializer			
-			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-			// New Serializer 2.0
-			fragment = serializer.SerializerFragment {}
+			fragment = serializer.SerializerFragment {
+			    generateXtendStub = true
+			}
 			
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
