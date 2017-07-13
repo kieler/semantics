@@ -45,6 +45,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getAlternatives_6(), "rule__Transition__Alternatives_6");
 					put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
 					put(grammarAccess.getRegionAccess().getAlternatives(), "rule__Region__Alternatives");
+					put(grammarAccess.getHiddenKeywordsAccess().getAlternatives(), "rule__HiddenKeywords__Alternatives");
 					put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
 					put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 					put(grammarAccess.getDeclarationWOSemicolonAccess().getAlternatives(), "rule__DeclarationWOSemicolon__Alternatives");

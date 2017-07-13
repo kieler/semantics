@@ -1384,6 +1384,38 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//SubReferenceAssignment
 		public RuleCall getSubReferenceAssignmentParserRuleCall() { return cSubReferenceAssignmentParserRuleCall; }
 	}
+
+	public class HiddenKeywordsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.HiddenKeywords");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cGoKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cAbortKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cJoinKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cShallowKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		
+		//// -------------- //
+		////  Helper Rules  // 
+		//// -------------- //
+		//// These are implicit keywords due to rules such as 'go to'
+		//HiddenKeywords:
+		//	'go' | 'abort' | 'join' | 'shallow';
+		@Override public ParserRule getRule() { return rule; }
+
+		//'go' | 'abort' | 'join' | 'shallow'
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//'go'
+		public Keyword getGoKeyword_0() { return cGoKeyword_0; }
+
+		//'abort'
+		public Keyword getAbortKeyword_1() { return cAbortKeyword_1; }
+
+		//'join'
+		public Keyword getJoinKeyword_2() { return cJoinKeyword_2; }
+
+		//'shallow'
+		public Keyword getShallowKeyword_3() { return cShallowKeyword_3; }
+	}
 	
 	
 	public class PreemptionTypeElements extends AbstractEnumRuleElementFinder {
@@ -1562,6 +1594,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final PreemptionTypeLegacyElements ePreemptionTypeLegacy;
 	private final DelayTypeElements eDelayType;
 	private final HistoryTypeElements eHistoryType;
+	private final HiddenKeywordsElements pHiddenKeywords;
 	
 	private final Grammar grammar;
 
@@ -1612,6 +1645,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.ePreemptionTypeLegacy = new PreemptionTypeLegacyElements();
 		this.eDelayType = new DelayTypeElements();
 		this.eHistoryType = new HistoryTypeElements();
+		this.pHiddenKeywords = new HiddenKeywordsElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1949,6 +1983,20 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getHistoryTypeRule() {
 		return getHistoryTypeAccess().getRule();
+	}
+
+	//// -------------- //
+	////  Helper Rules  // 
+	//// -------------- //
+	//// These are implicit keywords due to rules such as 'go to'
+	//HiddenKeywords:
+	//	'go' | 'abort' | 'join' | 'shallow';
+	public HiddenKeywordsElements getHiddenKeywordsAccess() {
+		return pHiddenKeywords;
+	}
+	
+	public ParserRule getHiddenKeywordsRule() {
+		return getHiddenKeywordsAccess().getRule();
 	}
 
 	/// **
@@ -2528,8 +2576,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}

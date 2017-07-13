@@ -172,4 +172,9 @@ enum DelayType returns sccharts::DelayType:
 enum HistoryType returns sccharts::HistoryType:
     RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
 	
-	
+// -------------- //
+//  Helper Rules  // 
+// -------------- //
+
+// These are implicit keywords due to rules such as 'go to'
+HiddenKeywords: 'go' | 'abort' | 'join' | 'shallow';
