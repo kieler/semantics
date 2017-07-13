@@ -67,8 +67,7 @@ Workflow {
 			}
 
 			// java-based API for validation 
-			fragment = validation.JavaValidatorFragment {
-            }
+			fragment = validation.ValidatorFragment {}
             
 			// scoping and exporting API 
 			fragment = scoping.ImportNamespacesScopingFragment {
