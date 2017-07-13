@@ -40,10 +40,9 @@ Workflow {
             // fragment = ecore.EcoreGeneratorFragment {}
 
             // the serialization component
-            // New Serializer 2.0
-            fragment = serializer.SerializerFragment {}
-            // Old serializer            
-            fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+            fragment = serializer.SerializerFragment {
+                generateXtendStub = true
+            }
             
             // a custom ResourceFactory for use with EMF 
             fragment = resourceFactory.ResourceFactoryFragment {
@@ -58,9 +57,6 @@ Workflow {
                 }
             }
 
-
-            
-
             // java-based API for validation 
             fragment = validation.JavaValidatorFragment {
             //    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
@@ -72,10 +68,8 @@ Workflow {
             // fragment = exporting.SimpleNamesFragment {} -- chsch: seems to be abolished
             
             // scoping and exporting API 
-            
             // fragment = scoping.ImportNamespacesScopingFragment {}
             // fragment = exporting.QualifiedNamesFragment {}
-
 
             // formatter API 
 //            fragment = ecore2xtext.FormatterFragment {}
@@ -98,11 +92,6 @@ Workflow {
                     backtrack = false
                 }
             }
-            
-            
-            
-            
-            
 
             //fragment = builder.BuilderIntegrationFragment {}
 
