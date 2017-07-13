@@ -12,10 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.test
 
-import de.cau.cs.kieler.kico.KiCoPlugin
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
@@ -46,36 +45,10 @@ import static extension java.lang.String.format
  * @kieler.rating proposed yellow
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> {
+class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
-    // List of all transformations
-    // in an order that respects dependencies.
-    private val transformations = newArrayList(
-                                    "REFERENCE",         // Expansion
-                                    "CONST",
-                                    "MAP",
-                                    "FOR",
-        
-                                    "HISTORY",          // SCADE / QUARTZ / Esterel
-                                    "WEAKSUSPEND",
-                                    "STATIC",
-                                    "DEFERRED",
-                                    
-                                    "SIGNAL",           // SyncCharts
-                                    "SUSPEND",
-                                    "PRE",
-                                    "COUNTDELAY",
-                                    
-                                    "DURING",           // Statecharts
-                                    "COMPLEXFINALSTATE",
-                                    "ABORT",
-                                    "INITIALIZATION",
-                                    "EXIT",
-                                    "ENTRY",
-                                    "CONNECTOR",
-                                    
-                                    "TRIGGEREFFECT",    // CORE
-                                    "SURFACEDEPTH")
+    /** Compiler configuration */
+    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.simple"
     
     /** Sct Parser Injector */
     static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
@@ -100,24 +73,30 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
     
     @Test
     @StopOnFailure
-    def void testValidation(State scc, TestModelData modelData) {
+    def void testValidation(SCCharts scc, TestModelData modelData) {
         
         // Validate input model
         val validator = resourceSetInjector.getInstance(IResourceValidator)
         var validatorResults = validator.validate(scc.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
         assertTrue("Input model contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)
 
-        val result = scc.compile        
+       
         // Check all intermediate results
-        for (iResult : result.transformationIntermediateResults.filter[!id.nullOrEmpty]) {
-            assertNotNull("Intermediate result of transformation " + iResult.id + " is null", iResult.result)
-            assertTrue("Intermediate result of transformation " + iResult.id + " is not an SCChart", iResult.result instanceof State)
+        val context = scc.compile
+        for (iResult : context.processorInstancesSequence) {
+            assertNotNull("Intermediate result of transformation " + iResult.id + " is null", iResult.model)
+            assertTrue("Intermediate result of transformation " + iResult.id + " is not an SCChart", iResult.model instanceof SCCharts)
+
+            // Check compiler errors
+            if (!iResult.environment.errors.empty) {
+                fail("Intermediate result of transformation " + iResult.id + " has compilation error(s): \n- " + iResult.environment.errors.map[message].join("\n- "))
+            }     
             
             // Create resource
             val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString)
             val resourceSet = uri.xtextResourceSet as XtextResourceSet
             val resource = resourceSet.createResource(uri) as XtextResource
-            resource.getContents().add(iResult.result as State)
+            resource.getContents().add(iResult.model as SCCharts)
             
             // Check if validator marks no errors
             validatorResults = validator.validate(scc.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
@@ -125,38 +104,16 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
         }        
     }
     
-    @Test
-    @StopOnFailure
-    def void testFeatureElimination(State scc) {
-        val result = scc.compile
-        
-        // Check all intermediate results
-        for (iResult : result.transformationIntermediateResults.filter[!id.nullOrEmpty]) {
-            assertNotNull("Intermediate result of transformation " + iResult.id + " is null", iResult.result)
-            assertTrue("Intermediate result of transformation " + iResult.id + " is not an SCChart", iResult.result instanceof State)
-            
-            // Check if feature was removed
-            val feature = KiCoPlugin.getFeature(iResult.id)
-            if (feature !== null) {
-                assertFalse("Transformed intermediate result of transformation " + iResult.id + " still contains the expanded feature", feature.isContained(iResult.result as State))
-            }
-        }
-    }
-    
     @Test(timeout=60000)
-    def void testSerializability(State scc, TestModelData modelData) {
+    def void testSerializability(SCCharts scc, TestModelData modelData) {
         val result = scc.compile
         
         // Check all intermediate results
-        for (iResult : result.transformationIntermediateResults) {
-            val name = if (iResult.id.nullOrEmpty) {
-                "input model"
-            } else {
-                "intermediate result of transformation " + iResult.id
-            }
+        for (iResult : result.processorInstancesSequence) {
+            val name = "intermediate result of transformation " + iResult.id
             
-            assertNotNull("The %s is null".format(name), iResult.result)
-            assertTrue("The %s is not an SCChart".format(name), iResult.result instanceof State)
+            assertNotNull("The %s is null".format(name), iResult.model)
+            assertTrue("The %s is not an SCChart".format(name), iResult.model instanceof SCCharts)
 
             try {
                 // Serialize
@@ -166,7 +123,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
                 
                 // create model resource
                 val resource = resourceSet.createResource(uri) as XtextResource
-                resource.getContents().add(iResult.result as State)
+                resource.getContents().add(iResult.model as SCCharts)
 
                 // save
                 resource.save(outputStream, saveOptions)
@@ -182,23 +139,13 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
     
     //-----------------------------------------------------------------------------------------------------------------
     
-    private def compile(State scc) {
-        val compileChain = transformations.join("!T_SIMULATIONVISUALIZATION, !T_ABORTWTO, T_", ", T_", "")[it]
+    private def compile(SCCharts scc) {
+        val context = Compile.createCompilationContext(compilationSystemID, scc)
+        context.startEnvironment.setProperty(Environment.INPLACE, false)
+
+        context.compile
         
-        // Compile with KiCo
-        val context = new KielerCompilerContext(compileChain, scc)
-        context.advancedSelect = false // Compilation has fixed chain (respecting dependencies)
-        context.inplace = false // Save intermediate results
-        
-        val result = KielerCompiler.compile(context)
-        if (!result.postponedErrors.empty) {
-            throw new Exception("Could not compile SCCharts model into Core SCCharts form. Compilation error occurred!", result.postponedErrors.head)
-        }
-        val resultModel = result.getEObject()
-        assertNotNull("Compilation result is null", resultModel)
-        assertTrue("Compilation result is not an SCChart", resultModel instanceof State)
-        
-        return result
+        return context
     }
     
     private def getSaveOptions() {
