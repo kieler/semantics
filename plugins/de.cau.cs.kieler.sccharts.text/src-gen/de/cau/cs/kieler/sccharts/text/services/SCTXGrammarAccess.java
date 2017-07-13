@@ -510,8 +510,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIfKeyword_6_0_0_0 = (Keyword)cGroup_6_0_0.eContents().get(0);
 		private final Assignment cTriggerDelayAssignment_6_0_0_1 = (Assignment)cGroup_6_0_0.eContents().get(1);
 		private final RuleCall cTriggerDelayINTTerminalRuleCall_6_0_0_1_0 = (RuleCall)cTriggerDelayAssignment_6_0_0_1.eContents().get(0);
-		private final Assignment cTriggerAssignment_6_0_0_2 = (Assignment)cGroup_6_0_0.eContents().get(2);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_0_0_2_0 = (RuleCall)cTriggerAssignment_6_0_0_2.eContents().get(0);
+		private final Alternatives cAlternatives_6_0_0_2 = (Alternatives)cGroup_6_0_0.eContents().get(2);
+		private final Assignment cTriggerAssignment_6_0_0_2_0 = (Assignment)cAlternatives_6_0_0_2.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0 = (RuleCall)cTriggerAssignment_6_0_0_2_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_6_0_0_2_1 = (Assignment)cAlternatives_6_0_0_2.eContents().get(1);
+		private final RuleCall cTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0 = (RuleCall)cTriggerAssignment_6_0_0_2_1.eContents().get(0);
 		private final Group cGroup_6_0_1 = (Group)cGroup_6_0.eContents().get(1);
 		private final Keyword cDoKeyword_6_0_1_0 = (Keyword)cGroup_6_0_1.eContents().get(0);
 		private final Assignment cEffectsAssignment_6_0_1_1 = (Assignment)cGroup_6_0_1.eContents().get(1);
@@ -532,13 +535,14 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	annotations+=RestrictedTypeAnnotation*
 		//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
-		//	history=HistoryType? (('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	history=HistoryType? (('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+		//	effects+=Effect (';' effects+=Effect)*)?
 		//	| 'if' label=STRING)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=RestrictedTypeAnnotation* preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State]
-		//delay=DelayType? deferred?='deferred'? history=HistoryType? (('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
+		//delay=DelayType? deferred?='deferred'? history=HistoryType? (('if' triggerDelay=INT? (trigger=BoolExpression |
+		//trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=RestrictedTypeAnnotation*
@@ -586,13 +590,15 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//HistoryType
 		public RuleCall getHistoryHistoryTypeEnumRuleCall_5_0() { return cHistoryHistoryTypeEnumRuleCall_5_0; }
 
-		//(('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
+		//(('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';'
+		//effects+=Effect)*)? | 'if' label=STRING)?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
-		//('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';'
+		//effects+=Effect)*)?
 		public Group getGroup_6_0() { return cGroup_6_0; }
 
-		//('if' triggerDelay=INT? trigger=BoolExpression)?
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
 		public Group getGroup_6_0_0() { return cGroup_6_0_0; }
 
 		//'if'
@@ -604,11 +610,20 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getTriggerDelayINTTerminalRuleCall_6_0_0_1_0() { return cTriggerDelayINTTerminalRuleCall_6_0_0_1_0; }
 
+		//(trigger=BoolExpression | trigger=AtomicExpression)
+		public Alternatives getAlternatives_6_0_0_2() { return cAlternatives_6_0_0_2; }
+
 		//trigger=BoolExpression
-		public Assignment getTriggerAssignment_6_0_0_2() { return cTriggerAssignment_6_0_0_2; }
+		public Assignment getTriggerAssignment_6_0_0_2_0() { return cTriggerAssignment_6_0_0_2_0; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_6_0_0_2_0() { return cTriggerBoolExpressionParserRuleCall_6_0_0_2_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0() { return cTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0; }
+
+		//trigger=AtomicExpression
+		public Assignment getTriggerAssignment_6_0_0_2_1() { return cTriggerAssignment_6_0_0_2_1; }
+
+		//AtomicExpression
+		public RuleCall getTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_6_0_1() { return cGroup_6_0_1; }
@@ -1773,7 +1788,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=RestrictedTypeAnnotation*
 	//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
-	//	history=HistoryType? (('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	history=HistoryType? (('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+	//	effects+=Effect (';' effects+=Effect)*)?
 	//	| 'if' label=STRING)?
 	public TransitionElements getTransitionAccess() {
 		return pTransition;
@@ -2622,8 +2638,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
-	//	('*' subExpressions+=DivExpression)*)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
+	//	subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}

@@ -9,6 +9,11 @@ import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorType
+import static de.cau.cs.kieler.kexpressions.OperatorType.*
 
 /**
  * @author als
@@ -51,7 +56,13 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 if (transition.triggerDelay > 1) {
                     feeder.accept(tg.triggerDelayINTTerminalRuleCall_6_0_0_1_0, transition.triggerDelay)
                 }
-                feeder.accept(tg.triggerBoolExpressionParserRuleCall_6_0_0_2_0, transition.trigger)
+                
+                // This handles separation of count delay together with expressions starting with an integer
+                if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
+                    feeder.accept(tg.triggerAtomicExpressionParserRuleCall_6_0_0_2_1_0, transition.trigger)
+                } else {
+                    feeder.accept(tg.triggerBoolExpressionParserRuleCall_6_0_0_2_0_0, transition.trigger)
+                }
             }
             for (idxEffect : transition.effects.indexed) {
                 if (idxEffect.key == 0) {
@@ -63,6 +74,22 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
         }
                 
         feeder.finish
+    }
+    
+    private static val prefixOperators = newHashSet(NOT, PRE, VAL)
+    
+    private def boolean requiresParentheses(Expression exp) {
+        if (exp instanceof IntValue) {
+            return true
+        } else if (exp instanceof OperatorExpression) {
+            if (!prefixOperators.contains(exp.operator)) {
+                return exp.subExpressions.head.requiresParentheses
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
     }
 
 }

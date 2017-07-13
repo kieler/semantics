@@ -887,7 +887,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         delay=DelayType? 
 	 *         deferred?='deferred'? 
 	 *         history=HistoryType? 
-	 *         ((triggerDelay=INT? trigger=BoolExpression (effects+=Effect effects+=Effect*)) | (effects+=Effect effects+=Effect*) | label=STRING)?
+	 *         (
+	 *             (triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression) (effects+=Effect effects+=Effect*)) | 
+	 *             (effects+=Effect effects+=Effect*) | 
+	 *             label=STRING
+	 *         )?
 	 *     )
 	 */
 	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {

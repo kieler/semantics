@@ -71,7 +71,8 @@ Transition returns sccharts::Transition:
 	deferred?='deferred'?
 	history=HistoryType?
 	(
-		('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//                      -> This alternative is only for the serializer to enable forcing of brackets
+		('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
 		|
 		('if' label=STRING)
 	)?;
