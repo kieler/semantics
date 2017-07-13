@@ -74,25 +74,44 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Expression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cBoolExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cBoolExpressionParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cScheduleKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cScheduleAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_1_1_0 = (RuleCall)cScheduleAssignment_1_1.eContents().get(0);
 		
 		//// Expression Rule
 		//// An expression is either a boolean expression or a valued expression.
 		//Expression:
-		//	BoolExpression
-		//	| ValuedExpression;
+		//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//BoolExpression | ValuedExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup() { return cGroup; }
+
+		//(BoolExpression | ValuedExpression)
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//BoolExpression
-		public RuleCall getBoolExpressionParserRuleCall_0() { return cBoolExpressionParserRuleCall_0; }
+		public RuleCall getBoolExpressionParserRuleCall_0_0() { return cBoolExpressionParserRuleCall_0_0; }
 
 		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_1() { return cValuedExpressionParserRuleCall_1; }
+		public RuleCall getValuedExpressionParserRuleCall_0_1() { return cValuedExpressionParserRuleCall_0_1; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//'schedule'
+		public Keyword getScheduleKeyword_1_0() { return cScheduleKeyword_1_0; }
+
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_1_1() { return cScheduleAssignment_1_1; }
+
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_1_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_1_1_0; }
 	}
 
 	public class BoolExpressionElements extends AbstractParserRuleElementFinder {
@@ -1134,6 +1153,38 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0; }
 	}
 
+	public class ScheduleObjectReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Assignment cPriorityAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPriorityINTTerminalRuleCall_1_0 = (RuleCall)cPriorityAssignment_1.eContents().get(0);
+		
+		//ScheduleObjectReference:
+		//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+		@Override public ParserRule getRule() { return rule; }
+
+		//valuedObject=[ValuedObject|PrimeID] priority=INT
+		public Group getGroup() { return cGroup; }
+
+		//valuedObject=[ValuedObject|PrimeID]
+		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
+
+		//[ValuedObject|PrimeID]
+		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
+
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
+
+		//priority=INT
+		public Assignment getPriorityAssignment_1() { return cPriorityAssignment_1; }
+
+		//INT
+		public RuleCall getPriorityINTTerminalRuleCall_1_0() { return cPriorityINTTerminalRuleCall_1_0; }
+	}
+
 	public class ReferenceCallElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ReferenceCall");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2013,6 +2064,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
 	private final PrimeIDElements pPrimeID;
 	private final ValuedObjectReferenceElements pValuedObjectReference;
+	private final ScheduleObjectReferenceElements pScheduleObjectReference;
 	private final ReferenceCallElements pReferenceCall;
 	private final FunctionCallElements pFunctionCall;
 	private final ParameterElements pParameter;
@@ -2078,6 +2130,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
 		this.pPrimeID = new PrimeIDElements();
 		this.pValuedObjectReference = new ValuedObjectReferenceElements();
+		this.pScheduleObjectReference = new ScheduleObjectReferenceElements();
 		this.pReferenceCall = new ReferenceCallElements();
 		this.pFunctionCall = new FunctionCallElements();
 		this.pParameter = new ParameterElements();
@@ -2194,8 +2247,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	BoolExpression
-	//	| ValuedExpression;
+	//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}
@@ -2489,6 +2541,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
+	}
+
+	//ScheduleObjectReference:
+	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	public ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
+		return pScheduleObjectReference;
+	}
+	
+	public ParserRule getScheduleObjectReferenceRule() {
+		return getScheduleObjectReferenceAccess().getRule();
 	}
 
 	//// Reference Call Rule

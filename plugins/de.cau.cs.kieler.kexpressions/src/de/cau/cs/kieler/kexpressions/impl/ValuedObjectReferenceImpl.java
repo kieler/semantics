@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl#getSubReference <em>Sub Reference</em>}</li>
@@ -40,6 +42,16 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
  * @generated
  */
 public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObjectReference {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
+
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
@@ -87,6 +99,18 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
     @Override
     protected EClass eStaticClass() {
         return KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE);
+        }
+        return schedule;
     }
 
     /**
@@ -190,6 +214,8 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
                 return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE:
@@ -206,6 +232,8 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE:
+                return getSchedule();
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
@@ -226,6 +254,10 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
                 return;
@@ -248,6 +280,9 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE:
+                getSchedule().clear();
+                return;
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
                 return;
@@ -269,6 +304,8 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 return valuedObject != null;
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:

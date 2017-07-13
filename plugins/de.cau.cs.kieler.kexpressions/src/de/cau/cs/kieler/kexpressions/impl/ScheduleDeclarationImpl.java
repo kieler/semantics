@@ -1,79 +1,75 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
+import de.cau.cs.kieler.kexpressions.SchedulePriority;
+
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.TextExpression;
-import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Text Expression</b></em>'.
+ * An implementation of the model object '<em><b>Schedule Declaration</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.TextExpressionImpl#getSchedule <em>Schedule</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.TextExpressionImpl#getText <em>Text</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getPriorities <em>Priorities</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TextExpressionImpl extends EObjectImpl implements TextExpression {
+public class ScheduleDeclarationImpl extends DeclarationImpl implements ScheduleDeclaration {
     /**
-     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSchedule()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected EList<ScheduleObjectReference> schedule;
+    protected static final String NAME_EDEFAULT = null;
 
     /**
-     * The default value of the '{@link #getText() <em>Text</em>}' attribute.
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getText()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected static final String TEXT_EDEFAULT = null;
+    protected String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getText() <em>Text</em>}' attribute.
+     * The cached value of the '{@link #getPriorities() <em>Priorities</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getText()
+     * @see #getPriorities()
      * @generated
      * @ordered
      */
-    protected String text = TEXT_EDEFAULT;
+    protected EList<SchedulePriority> priorities;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TextExpressionImpl() {
+    protected ScheduleDeclarationImpl() {
         super();
     }
 
@@ -84,7 +80,7 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      */
     @Override
     protected EClass eStaticClass() {
-        return KExpressionsPackage.Literals.TEXT_EXPRESSION;
+        return KExpressionsPackage.Literals.SCHEDULE_DECLARATION;
     }
 
     /**
@@ -92,11 +88,8 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<ScheduleObjectReference> getSchedule() {
-        if (schedule == null) {
-            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE);
-        }
-        return schedule;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -104,20 +97,23 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setText(String newText) {
-        String oldText = text;
-        text = newText;
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.TEXT_EXPRESSION__TEXT, oldText, text));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.SCHEDULE_DECLARATION__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<SchedulePriority> getPriorities() {
+        if (priorities == null) {
+            priorities = new EObjectContainmentEList<SchedulePriority>(SchedulePriority.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);
+        }
+        return priorities;
     }
 
     /**
@@ -128,8 +124,8 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
-                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                return ((InternalEList<?>)getPriorities()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -142,10 +138,10 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
-                return getSchedule();
-            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
-                return getText();
+            case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
+                return getName();
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                return getPriorities();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -159,12 +155,12 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
-                getSchedule().clear();
-                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+            case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
+                setName((String)newValue);
                 return;
-            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
-                setText((String)newValue);
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                getPriorities().clear();
+                getPriorities().addAll((Collection<? extends SchedulePriority>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -178,11 +174,11 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
-                getSchedule().clear();
+            case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
+                setName(NAME_EDEFAULT);
                 return;
-            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
-                setText(TEXT_EDEFAULT);
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                getPriorities().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -196,10 +192,10 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE:
-                return schedule != null && !schedule.isEmpty();
-            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
-                return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
+            case KExpressionsPackage.SCHEDULE_DECLARATION__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
+                return priorities != null && !priorities.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -214,10 +210,10 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (text: ");
-        result.append(text);
+        result.append(" (name: ");
+        result.append(name);
         result.append(')');
         return result.toString();
     }
 
-} //TextExpressionImpl
+} //ScheduleDeclarationImpl

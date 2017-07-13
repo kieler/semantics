@@ -49,6 +49,7 @@ public class InternalKExpressionsLexer extends Lexer {
     public static final int RULE_ANY_OTHER=15;
     public static final int RULE_NUMBER=12;
     public static final int T__44=44;
+    public static final int T__45=45;
     public static final int RULE_FLOAT=8;
     public static final int T__40=40;
     public static final int T__41=41;
@@ -462,10 +463,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:30:7: ( '(' )
-            // InternalKExpressions.g:30:9: '('
+            // InternalKExpressions.g:30:7: ( 'schedule' )
+            // InternalKExpressions.g:30:9: 'schedule'
             {
-            match('('); 
+            match("schedule"); 
+
 
             }
 
@@ -482,10 +484,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:31:7: ( ')' )
-            // InternalKExpressions.g:31:9: ')'
+            // InternalKExpressions.g:31:7: ( '(' )
+            // InternalKExpressions.g:31:9: '('
             {
-            match(')'); 
+            match('('); 
 
             }
 
@@ -502,10 +504,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:32:7: ( '\\'' )
-            // InternalKExpressions.g:32:9: '\\''
+            // InternalKExpressions.g:32:7: ( ')' )
+            // InternalKExpressions.g:32:9: ')'
             {
-            match('\''); 
+            match(')'); 
 
             }
 
@@ -522,10 +524,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:33:7: ( '[' )
-            // InternalKExpressions.g:33:9: '['
+            // InternalKExpressions.g:33:7: ( '\\'' )
+            // InternalKExpressions.g:33:9: '\\''
             {
-            match('['); 
+            match('\''); 
 
             }
 
@@ -542,10 +544,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:34:7: ( ']' )
-            // InternalKExpressions.g:34:9: ']'
+            // InternalKExpressions.g:34:7: ( '[' )
+            // InternalKExpressions.g:34:9: '['
             {
-            match(']'); 
+            match('['); 
 
             }
 
@@ -562,10 +564,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:35:7: ( '.' )
-            // InternalKExpressions.g:35:9: '.'
+            // InternalKExpressions.g:35:7: ( ']' )
+            // InternalKExpressions.g:35:9: ']'
             {
-            match('.'); 
+            match(']'); 
 
             }
 
@@ -582,10 +584,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:36:7: ( ',' )
-            // InternalKExpressions.g:36:9: ','
+            // InternalKExpressions.g:36:7: ( '.' )
+            // InternalKExpressions.g:36:9: '.'
             {
-            match(','); 
+            match('.'); 
 
             }
 
@@ -602,11 +604,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:37:7: ( 'extern' )
-            // InternalKExpressions.g:37:9: 'extern'
+            // InternalKExpressions.g:37:7: ( ',' )
+            // InternalKExpressions.g:37:9: ','
             {
-            match("extern"); 
-
+            match(','); 
 
             }
 
@@ -623,10 +624,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:38:7: ( '@' )
-            // InternalKExpressions.g:38:9: '@'
+            // InternalKExpressions.g:38:7: ( 'extern' )
+            // InternalKExpressions.g:38:9: 'extern'
             {
-            match('@'); 
+            match("extern"); 
+
 
             }
 
@@ -643,10 +645,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:39:7: ( '#' )
-            // InternalKExpressions.g:39:9: '#'
+            // InternalKExpressions.g:39:7: ( '@' )
+            // InternalKExpressions.g:39:9: '@'
             {
-            match('#'); 
+            match('@'); 
 
             }
 
@@ -658,16 +660,36 @@ public class InternalKExpressionsLexer extends Lexer {
     }
     // $ANTLR end "T__44"
 
+    // $ANTLR start "T__45"
+    public final void mT__45() throws RecognitionException {
+        try {
+            int _type = T__45;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // InternalKExpressions.g:40:7: ( '#' )
+            // InternalKExpressions.g:40:9: '#'
+            {
+            match('#'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__45"
+
     // $ANTLR start "RULE_HOSTCODE"
     public final void mRULE_HOSTCODE() throws RecognitionException {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9882:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
-            // InternalKExpressions.g:9882:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
+            // InternalKExpressions.g:10151:15: ( '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`' )
+            // InternalKExpressions.g:10151:17: '`' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )* '`'
             {
             match('`'); 
-            // InternalKExpressions.g:9882:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
+            // InternalKExpressions.g:10151:21: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '`' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -683,7 +705,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalKExpressions.g:9882:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKExpressions.g:10151:22: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -699,7 +721,7 @@ public class InternalKExpressionsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKExpressions.g:9882:63: ~ ( ( '\\\\' | '`' ) )
+            	    // InternalKExpressions.g:10151:63: ~ ( ( '\\\\' | '`' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -736,12 +758,12 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9884:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // InternalKExpressions.g:9884:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalKExpressions.g:10153:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalKExpressions.g:10153:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // InternalKExpressions.g:9884:33: ( options {greedy=false; } : . )*
+            // InternalKExpressions.g:10153:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -766,7 +788,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalKExpressions.g:9884:61: .
+            	    // InternalKExpressions.g:10153:61: .
             	    {
             	    matchAny(); 
 
@@ -796,8 +818,8 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9886:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // InternalKExpressions.g:9886:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalKExpressions.g:10155:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalKExpressions.g:10155:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -810,7 +832,7 @@ public class InternalKExpressionsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKExpressions.g:9886:31: ( options {greedy=false; } : . )*
+            // InternalKExpressions.g:10155:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -835,7 +857,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalKExpressions.g:9886:59: .
+            	    // InternalKExpressions.g:10155:59: .
             	    {
             	    matchAny(); 
 
@@ -863,8 +885,8 @@ public class InternalKExpressionsLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // InternalKExpressions.g:9888:22: ( '0' .. '9' )
-            // InternalKExpressions.g:9888:24: '0' .. '9'
+            // InternalKExpressions.g:10157:22: ( '0' .. '9' )
+            // InternalKExpressions.g:10157:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -881,10 +903,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9890:10: ( ( RULE_NUMBER )+ )
-            // InternalKExpressions.g:9890:12: ( RULE_NUMBER )+
+            // InternalKExpressions.g:10159:10: ( ( RULE_NUMBER )+ )
+            // InternalKExpressions.g:10159:12: ( RULE_NUMBER )+
             {
-            // InternalKExpressions.g:9890:12: ( RULE_NUMBER )+
+            // InternalKExpressions.g:10159:12: ( RULE_NUMBER )+
             int cnt4=0;
             loop4:
             do {
@@ -898,7 +920,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // InternalKExpressions.g:9890:12: RULE_NUMBER
+            	    // InternalKExpressions.g:10159:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -930,17 +952,17 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9892:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // InternalKExpressions.g:9892:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKExpressions.g:10161:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalKExpressions.g:10161:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // InternalKExpressions.g:9892:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKExpressions.g:10161:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt12=2;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // InternalKExpressions.g:9892:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalKExpressions.g:10161:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // InternalKExpressions.g:9892:15: ( RULE_NUMBER )+
+                    // InternalKExpressions.g:10161:15: ( RULE_NUMBER )+
                     int cnt5=0;
                     loop5:
                     do {
@@ -954,7 +976,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // InternalKExpressions.g:9892:15: RULE_NUMBER
+                    	    // InternalKExpressions.g:10161:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -971,7 +993,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // InternalKExpressions.g:9892:32: ( RULE_NUMBER )*
+                    // InternalKExpressions.g:10161:32: ( RULE_NUMBER )*
                     loop6:
                     do {
                         int alt6=2;
@@ -984,7 +1006,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // InternalKExpressions.g:9892:32: RULE_NUMBER
+                    	    // InternalKExpressions.g:10161:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -996,7 +1018,7 @@ public class InternalKExpressionsLexer extends Lexer {
                         }
                     } while (true);
 
-                    // InternalKExpressions.g:9892:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalKExpressions.g:10161:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1005,7 +1027,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // InternalKExpressions.g:9892:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalKExpressions.g:10161:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -1016,7 +1038,7 @@ public class InternalKExpressionsLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // InternalKExpressions.g:9892:56: ( '+' | '-' )?
+                            // InternalKExpressions.g:10161:56: ( '+' | '-' )?
                             int alt7=2;
                             int LA7_0 = input.LA(1);
 
@@ -1042,7 +1064,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                             }
 
-                            // InternalKExpressions.g:9892:67: ( RULE_NUMBER )+
+                            // InternalKExpressions.g:10161:67: ( RULE_NUMBER )+
                             int cnt8=0;
                             loop8:
                             do {
@@ -1056,7 +1078,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                                 switch (alt8) {
                             	case 1 :
-                            	    // InternalKExpressions.g:9892:67: RULE_NUMBER
+                            	    // InternalKExpressions.g:10161:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -1078,7 +1100,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                     }
 
-                    // InternalKExpressions.g:9892:82: ( 'f' )?
+                    // InternalKExpressions.g:10161:82: ( 'f' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1087,7 +1109,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // InternalKExpressions.g:9892:82: 'f'
+                            // InternalKExpressions.g:10161:82: 'f'
                             {
                             match('f'); 
 
@@ -1100,9 +1122,9 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:9892:87: ( RULE_NUMBER )+ 'f'
+                    // InternalKExpressions.g:10161:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // InternalKExpressions.g:9892:87: ( RULE_NUMBER )+
+                    // InternalKExpressions.g:10161:87: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -1116,7 +1138,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // InternalKExpressions.g:9892:87: RULE_NUMBER
+                    	    // InternalKExpressions.g:10161:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1155,10 +1177,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9894:14: ( ( 'true' | 'false' ) )
-            // InternalKExpressions.g:9894:16: ( 'true' | 'false' )
+            // InternalKExpressions.g:10163:14: ( ( 'true' | 'false' ) )
+            // InternalKExpressions.g:10163:16: ( 'true' | 'false' )
             {
-            // InternalKExpressions.g:9894:16: ( 'true' | 'false' )
+            // InternalKExpressions.g:10163:16: ( 'true' | 'false' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1176,7 +1198,7 @@ public class InternalKExpressionsLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalKExpressions.g:9894:17: 'true'
+                    // InternalKExpressions.g:10163:17: 'true'
                     {
                     match("true"); 
 
@@ -1184,7 +1206,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalKExpressions.g:9894:24: 'false'
+                    // InternalKExpressions.g:10163:24: 'false'
                     {
                     match("false"); 
 
@@ -1210,11 +1232,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9896:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // InternalKExpressions.g:9896:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalKExpressions.g:10165:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalKExpressions.g:10165:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // InternalKExpressions.g:9896:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalKExpressions.g:10165:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop14:
             do {
                 int alt14=3;
@@ -1230,7 +1252,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // InternalKExpressions.g:9896:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKExpressions.g:10165:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1246,7 +1268,7 @@ public class InternalKExpressionsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // InternalKExpressions.g:9896:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalKExpressions.g:10165:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1283,10 +1305,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9898:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalKExpressions.g:9898:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKExpressions.g:10167:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalKExpressions.g:10167:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalKExpressions.g:9898:11: ( '^' )?
+            // InternalKExpressions.g:10167:11: ( '^' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1295,7 +1317,7 @@ public class InternalKExpressionsLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // InternalKExpressions.g:9898:11: '^'
+                    // InternalKExpressions.g:10167:11: '^'
                     {
                     match('^'); 
 
@@ -1313,7 +1335,7 @@ public class InternalKExpressionsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalKExpressions.g:9898:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKExpressions.g:10167:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop16:
             do {
                 int alt16=2;
@@ -1362,12 +1384,12 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9900:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalKExpressions.g:9900:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKExpressions.g:10169:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKExpressions.g:10169:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // InternalKExpressions.g:9900:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKExpressions.g:10169:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop17:
             do {
                 int alt17=2;
@@ -1380,7 +1402,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // InternalKExpressions.g:9900:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKExpressions.g:10169:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1400,7 +1422,7 @@ public class InternalKExpressionsLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalKExpressions.g:9900:40: ( ( '\\r' )? '\\n' )?
+            // InternalKExpressions.g:10169:40: ( ( '\\r' )? '\\n' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1409,9 +1431,9 @@ public class InternalKExpressionsLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // InternalKExpressions.g:9900:41: ( '\\r' )? '\\n'
+                    // InternalKExpressions.g:10169:41: ( '\\r' )? '\\n'
                     {
-                    // InternalKExpressions.g:9900:41: ( '\\r' )?
+                    // InternalKExpressions.g:10169:41: ( '\\r' )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -1420,7 +1442,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // InternalKExpressions.g:9900:41: '\\r'
+                            // InternalKExpressions.g:10169:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1452,10 +1474,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9902:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalKExpressions.g:9902:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKExpressions.g:10171:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalKExpressions.g:10171:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalKExpressions.g:9902:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKExpressions.g:10171:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt20=0;
             loop20:
             do {
@@ -1509,8 +1531,8 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:9904:16: ( . )
-            // InternalKExpressions.g:9904:18: .
+            // InternalKExpressions.g:10173:16: ( . )
+            // InternalKExpressions.g:10173:18: .
             {
             matchAny(); 
 
@@ -1525,8 +1547,8 @@ public class InternalKExpressionsLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // InternalKExpressions.g:1:8: ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt21=40;
+        // InternalKExpressions.g:1:8: ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt21=41;
         alt21 = dfa21.predict(input);
         switch (alt21) {
             case 1 :
@@ -1733,77 +1755,84 @@ public class InternalKExpressionsLexer extends Lexer {
                 }
                 break;
             case 30 :
-                // InternalKExpressions.g:1:184: RULE_HOSTCODE
+                // InternalKExpressions.g:1:184: T__45
+                {
+                mT__45(); 
+
+                }
+                break;
+            case 31 :
+                // InternalKExpressions.g:1:190: RULE_HOSTCODE
                 {
                 mRULE_HOSTCODE(); 
 
                 }
                 break;
-            case 31 :
-                // InternalKExpressions.g:1:198: RULE_COMMENT_ANNOTATION
+            case 32 :
+                // InternalKExpressions.g:1:204: RULE_COMMENT_ANNOTATION
                 {
                 mRULE_COMMENT_ANNOTATION(); 
 
                 }
                 break;
-            case 32 :
-                // InternalKExpressions.g:1:222: RULE_ML_COMMENT
+            case 33 :
+                // InternalKExpressions.g:1:228: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 33 :
-                // InternalKExpressions.g:1:238: RULE_INT
+            case 34 :
+                // InternalKExpressions.g:1:244: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 34 :
-                // InternalKExpressions.g:1:247: RULE_FLOAT
+            case 35 :
+                // InternalKExpressions.g:1:253: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
-            case 35 :
-                // InternalKExpressions.g:1:258: RULE_BOOLEAN
+            case 36 :
+                // InternalKExpressions.g:1:264: RULE_BOOLEAN
                 {
                 mRULE_BOOLEAN(); 
 
                 }
                 break;
-            case 36 :
-                // InternalKExpressions.g:1:271: RULE_STRING
+            case 37 :
+                // InternalKExpressions.g:1:277: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 37 :
-                // InternalKExpressions.g:1:283: RULE_ID
+            case 38 :
+                // InternalKExpressions.g:1:289: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 38 :
-                // InternalKExpressions.g:1:291: RULE_SL_COMMENT
+            case 39 :
+                // InternalKExpressions.g:1:297: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 39 :
-                // InternalKExpressions.g:1:307: RULE_WS
+            case 40 :
+                // InternalKExpressions.g:1:313: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 40 :
-                // InternalKExpressions.g:1:315: RULE_ANY_OTHER
+            case 41 :
+                // InternalKExpressions.g:1:321: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -1866,71 +1895,57 @@ public class InternalKExpressionsLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "9892:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "10161:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA21_eotS =
-        "\1\uffff\1\42\1\44\1\46\1\50\4\uffff\1\57\1\42\1\62\1\40\1\65\1\67\6\uffff\1\42\2\uffff\1\40\1\102\2\42\2\40\3\uffff\1\42\16\uffff\1\42\15\uffff\1\42\5\uffff\1\102\2\42\2\uffff\1\120\2\uffff\1\121\3\42\2\uffff\1\42\1\126\2\42\1\uffff\1\126\1\131\1\uffff";
+        "\1\uffff\1\43\1\45\1\47\1\51\4\uffff\1\60\1\43\1\63\1\41\1\66\1\70\1\43\6\uffff\1\43\2\uffff\1\41\1\104\2\43\2\41\3\uffff\1\43\16\uffff\1\43\7\uffff\1\43\6\uffff\1\43\4\uffff\1\104\1\uffff\2\43\2\uffff\1\123\2\uffff\1\124\4\43\2\uffff\2\43\1\133\3\43\1\uffff\1\133\1\43\1\140\1\43\1\uffff\1\142\1\uffff";
     static final String DFA21_eofS =
-        "\132\uffff";
+        "\143\uffff";
     static final String DFA21_minS =
-        "\1\0\1\162\1\174\1\46\1\75\4\uffff\1\52\1\141\1\51\3\75\6\uffff\1\170\2\uffff\1\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145\13\uffff\1\0\2\uffff\1\154\15\uffff\1\164\5\uffff\1\56\1\165\1\154\2\uffff\1\60\2\uffff\1\60\2\145\1\163\2\uffff\1\162\1\60\1\145\1\156\1\uffff\2\60\1\uffff";
+        "\1\0\1\162\1\174\1\46\1\75\4\uffff\1\52\1\141\1\51\3\75\1\143\6\uffff\1\170\2\uffff\1\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145\13\uffff\1\0\2\uffff\1\154\7\uffff\1\150\6\uffff\1\164\4\uffff\1\56\1\uffff\1\165\1\154\2\uffff\1\60\2\uffff\1\60\3\145\1\163\2\uffff\1\144\1\162\1\60\1\145\1\165\1\156\1\uffff\1\60\1\154\1\60\1\145\1\uffff\1\60\1\uffff";
     static final String DFA21_maxS =
-        "\1\uffff\1\162\1\174\1\46\1\75\4\uffff\1\57\1\141\1\51\3\75\6\uffff\1\170\2\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff\1\145\13\uffff\1\uffff\2\uffff\1\154\15\uffff\1\164\5\uffff\1\146\1\165\1\154\2\uffff\1\172\2\uffff\1\172\2\145\1\163\2\uffff\1\162\1\172\1\145\1\156\1\uffff\2\172\1\uffff";
+        "\1\uffff\1\162\1\174\1\46\1\75\4\uffff\1\57\1\141\1\51\3\75\1\143\6\uffff\1\170\2\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff\1\145\13\uffff\1\uffff\2\uffff\1\154\7\uffff\1\150\6\uffff\1\164\4\uffff\1\146\1\uffff\1\165\1\154\2\uffff\1\172\2\uffff\1\172\3\145\1\163\2\uffff\1\144\1\162\1\172\1\145\1\165\1\156\1\uffff\1\172\1\154\1\172\1\145\1\uffff\1\172\1\uffff";
     static final String DFA21_acceptS =
-        "\5\uffff\1\5\1\6\1\7\1\10\6\uffff\1\25\1\26\1\27\1\30\1\31\1\32\1\uffff\1\34\1\35\6\uffff\1\45\1\47\1\50\1\uffff\1\45\1\13\1\2\1\14\1\3\1\23\1\4\1\5\1\6\1\7\1\10\1\uffff\1\46\1\11\1\uffff\1\15\1\24\1\16\1\20\1\17\1\22\1\21\1\25\1\26\1\27\1\30\1\31\1\32\1\uffff\1\34\1\35\1\36\1\41\1\42\3\uffff\1\44\1\47\1\uffff\1\37\1\40\4\uffff\1\1\1\12\4\uffff\1\43\2\uffff\1\33";
+        "\5\uffff\1\5\1\6\1\7\1\10\7\uffff\1\26\1\27\1\30\1\31\1\32\1\33\1\uffff\1\35\1\36\6\uffff\1\46\1\50\1\51\1\uffff\1\46\1\13\1\2\1\14\1\3\1\23\1\4\1\5\1\6\1\7\1\10\1\uffff\1\47\1\11\1\uffff\1\15\1\25\1\16\1\20\1\17\1\22\1\21\1\uffff\1\26\1\27\1\30\1\31\1\32\1\33\1\uffff\1\35\1\36\1\37\1\42\1\uffff\1\43\2\uffff\1\45\1\50\1\uffff\1\40\1\41\5\uffff\1\1\1\12\6\uffff\1\44\4\uffff\1\34\1\uffff\1\24";
     static final String DFA21_specialS =
-        "\1\1\27\uffff\1\0\3\uffff\1\3\20\uffff\1\2\54\uffff}>";
+        "\1\1\30\uffff\1\3\3\uffff\1\2\20\uffff\1\0\64\uffff}>";
     static final String[] DFA21_transitionS = {
-            "\11\40\2\37\2\40\1\37\22\40\1\37\1\4\1\34\1\27\1\40\1\10\1\3\1\20\1\13\1\17\1\7\1\5\1\24\1\6\1\23\1\11\12\31\2\40\1\15\1\14\1\16\1\40\1\26\32\36\1\21\1\40\1\22\1\35\1\36\1\30\4\36\1\25\1\33\11\36\1\1\3\36\1\32\1\36\1\12\4\36\1\40\1\2\uff83\40",
-            "\1\41",
-            "\1\43",
-            "\1\45",
-            "\1\47",
+            "\11\41\2\40\2\41\1\40\22\41\1\40\1\4\1\35\1\30\1\41\1\10\1\3\1\21\1\13\1\20\1\7\1\5\1\25\1\6\1\24\1\11\12\32\2\41\1\15\1\14\1\16\1\41\1\27\32\37\1\22\1\41\1\23\1\36\1\37\1\31\4\37\1\26\1\34\11\37\1\1\2\37\1\17\1\33\1\37\1\12\4\37\1\41\1\2\uff83\41",
+            "\1\42",
+            "\1\44",
+            "\1\46",
+            "\1\50",
             "",
             "",
             "",
             "",
-            "\1\55\4\uffff\1\56",
-            "\1\60",
+            "\1\56\4\uffff\1\57",
             "\1\61",
-            "\1\63",
+            "\1\62",
             "\1\64",
-            "\1\66",
+            "\1\65",
+            "\1\67",
+            "\1\71",
             "",
             "",
             "",
             "",
             "",
             "",
-            "\1\76",
+            "\1\100",
             "",
             "",
-            "\0\101",
-            "\1\103\1\uffff\12\104\54\uffff\1\103",
-            "\1\105",
-            "\1\106",
-            "\0\107",
-            "\32\42\4\uffff\1\42\1\uffff\32\42",
-            "",
-            "",
-            "",
-            "\1\111",
+            "\0\103",
+            "\1\106\1\uffff\12\105\54\uffff\1\106",
+            "\1\107",
+            "\1\110",
+            "\0\111",
+            "\32\43\4\uffff\1\43\1\uffff\32\43",
             "",
             "",
             "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\52\113\1\112\uffd5\113",
-            "",
-            "",
-            "\1\114",
+            "\1\113",
             "",
             "",
             "",
@@ -1942,35 +1957,58 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "",
+            "\52\115\1\114\uffd5\115",
             "",
             "",
-            "\1\115",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\103\1\uffff\12\104\54\uffff\1\103",
             "\1\116",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\117",
             "",
             "",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "",
             "",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "",
+            "\1\120",
+            "",
+            "",
+            "",
+            "",
+            "\1\106\1\uffff\12\105\54\uffff\1\106",
+            "",
+            "\1\121",
             "\1\122",
-            "\1\123",
-            "\1\124",
             "",
             "",
+            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "",
+            "",
+            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
             "\1\125",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\126",
             "\1\127",
             "\1\130",
             "",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "\1\131",
+            "\1\132",
+            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "\1\134",
+            "\1\135",
+            "\1\136",
+            "",
+            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "\1\137",
+            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "\1\141",
+            "",
+            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
             ""
     };
 
@@ -2004,19 +2042,19 @@ public class InternalKExpressionsLexer extends Lexer {
             this.transition = DFA21_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA21_24 = input.LA(1);
+                        int LA21_46 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA21_24>='\u0000' && LA21_24<='\uFFFF')) ) {s = 65;}
+                        if ( (LA21_46=='*') ) {s = 76;}
 
-                        else s = 32;
+                        else if ( ((LA21_46>='\u0000' && LA21_46<=')')||(LA21_46>='+' && LA21_46<='\uFFFF')) ) {s = 77;}
 
                         if ( s>=0 ) return s;
                         break;
@@ -2052,61 +2090,63 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         else if ( (LA21_0=='>') ) {s = 14;}
 
-                        else if ( (LA21_0==')') ) {s = 15;}
+                        else if ( (LA21_0=='s') ) {s = 15;}
 
-                        else if ( (LA21_0=='\'') ) {s = 16;}
+                        else if ( (LA21_0==')') ) {s = 16;}
 
-                        else if ( (LA21_0=='[') ) {s = 17;}
+                        else if ( (LA21_0=='\'') ) {s = 17;}
 
-                        else if ( (LA21_0==']') ) {s = 18;}
+                        else if ( (LA21_0=='[') ) {s = 18;}
 
-                        else if ( (LA21_0=='.') ) {s = 19;}
+                        else if ( (LA21_0==']') ) {s = 19;}
 
-                        else if ( (LA21_0==',') ) {s = 20;}
+                        else if ( (LA21_0=='.') ) {s = 20;}
 
-                        else if ( (LA21_0=='e') ) {s = 21;}
+                        else if ( (LA21_0==',') ) {s = 21;}
 
-                        else if ( (LA21_0=='@') ) {s = 22;}
+                        else if ( (LA21_0=='e') ) {s = 22;}
 
-                        else if ( (LA21_0=='#') ) {s = 23;}
+                        else if ( (LA21_0=='@') ) {s = 23;}
 
-                        else if ( (LA21_0=='`') ) {s = 24;}
+                        else if ( (LA21_0=='#') ) {s = 24;}
 
-                        else if ( ((LA21_0>='0' && LA21_0<='9')) ) {s = 25;}
+                        else if ( (LA21_0=='`') ) {s = 25;}
 
-                        else if ( (LA21_0=='t') ) {s = 26;}
+                        else if ( ((LA21_0>='0' && LA21_0<='9')) ) {s = 26;}
 
-                        else if ( (LA21_0=='f') ) {s = 27;}
+                        else if ( (LA21_0=='t') ) {s = 27;}
 
-                        else if ( (LA21_0=='\"') ) {s = 28;}
+                        else if ( (LA21_0=='f') ) {s = 28;}
 
-                        else if ( (LA21_0=='^') ) {s = 29;}
+                        else if ( (LA21_0=='\"') ) {s = 29;}
 
-                        else if ( ((LA21_0>='A' && LA21_0<='Z')||LA21_0=='_'||(LA21_0>='a' && LA21_0<='d')||(LA21_0>='g' && LA21_0<='o')||(LA21_0>='q' && LA21_0<='s')||LA21_0=='u'||(LA21_0>='w' && LA21_0<='z')) ) {s = 30;}
+                        else if ( (LA21_0=='^') ) {s = 30;}
 
-                        else if ( ((LA21_0>='\t' && LA21_0<='\n')||LA21_0=='\r'||LA21_0==' ') ) {s = 31;}
+                        else if ( ((LA21_0>='A' && LA21_0<='Z')||LA21_0=='_'||(LA21_0>='a' && LA21_0<='d')||(LA21_0>='g' && LA21_0<='o')||(LA21_0>='q' && LA21_0<='r')||LA21_0=='u'||(LA21_0>='w' && LA21_0<='z')) ) {s = 31;}
 
-                        else if ( ((LA21_0>='\u0000' && LA21_0<='\b')||(LA21_0>='\u000B' && LA21_0<='\f')||(LA21_0>='\u000E' && LA21_0<='\u001F')||LA21_0=='$'||(LA21_0>=':' && LA21_0<=';')||LA21_0=='?'||LA21_0=='\\'||LA21_0=='{'||(LA21_0>='}' && LA21_0<='\uFFFF')) ) {s = 32;}
+                        else if ( ((LA21_0>='\t' && LA21_0<='\n')||LA21_0=='\r'||LA21_0==' ') ) {s = 32;}
+
+                        else if ( ((LA21_0>='\u0000' && LA21_0<='\b')||(LA21_0>='\u000B' && LA21_0<='\f')||(LA21_0>='\u000E' && LA21_0<='\u001F')||LA21_0=='$'||(LA21_0>=':' && LA21_0<=';')||LA21_0=='?'||LA21_0=='\\'||LA21_0=='{'||(LA21_0>='}' && LA21_0<='\uFFFF')) ) {s = 33;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA21_45 = input.LA(1);
+                        int LA21_29 = input.LA(1);
 
                         s = -1;
-                        if ( (LA21_45=='*') ) {s = 74;}
+                        if ( ((LA21_29>='\u0000' && LA21_29<='\uFFFF')) ) {s = 73;}
 
-                        else if ( ((LA21_45>='\u0000' && LA21_45<=')')||(LA21_45>='+' && LA21_45<='\uFFFF')) ) {s = 75;}
+                        else s = 33;
 
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA21_28 = input.LA(1);
+                        int LA21_25 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA21_28>='\u0000' && LA21_28<='\uFFFF')) ) {s = 71;}
+                        if ( ((LA21_25>='\u0000' && LA21_25<='\uFFFF')) ) {s = 67;}
 
-                        else s = 32;
+                        else s = 33;
 
                         if ( s>=0 ) return s;
                         break;

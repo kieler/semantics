@@ -354,6 +354,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         // Add supertypes to classes
         effectEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        effectEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
         assignmentEClass.getESuperTypes().add(this.getEffect());
         emissionEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(this.getEffect());

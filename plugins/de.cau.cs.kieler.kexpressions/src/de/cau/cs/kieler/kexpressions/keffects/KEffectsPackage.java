@@ -78,13 +78,22 @@ public interface KEffectsPackage extends EPackage {
     int EFFECT__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EFFECT__SCHEDULE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Effect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EFFECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int EFFECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -104,6 +113,15 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int ASSIGNMENT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -179,6 +197,15 @@ public interface KEffectsPackage extends EPackage {
     int EMISSION__ANNOTATIONS = EFFECT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMISSION__SCHEDULE = EFFECT__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -225,6 +252,15 @@ public interface KEffectsPackage extends EPackage {
     int HOSTCODE_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HOSTCODE_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -260,6 +296,15 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int REFERENCE_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -324,6 +369,15 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int FUNCTION_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
