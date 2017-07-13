@@ -49,7 +49,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
         } else {
             if (transition.trigger != null) {
                 if (transition.triggerDelay > 1) {
-                    feeder.accept(tg.triggerDelayINTTerminalRuleCall_6_0_0_1_0, transition.delay)
+                    feeder.accept(tg.triggerDelayINTTerminalRuleCall_6_0_0_1_0, transition.triggerDelay)
                 }
                 feeder.accept(tg.triggerBoolExpressionParserRuleCall_6_0_0_2_0, transition.trigger)
             }
