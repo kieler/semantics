@@ -50,15 +50,6 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsStateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
         
-    static val String BAD_ID = "bad_id";
-
-    static val String MISSING_PRIO = "missing_prio";
-    static val String NON_UNIQUE_PRIO = "non_unique_prio";
-
-    static val String NON_SUCCEEDING_PRIOS = "non_succeeding_prios";
-    static val String NO_PRIO_1_TRANSITION = "no_prio_1_transition";
-    static val String UNSORTED_PRIOS = "unsorted_prios";
-    
     static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     static val String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
@@ -319,7 +310,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         var onlyStrongAbortsBefore = true;
         // Checking priority by order
         for (transition : state.outgoingTransitions) {
-            if (onlyStrongAbortsBefore && transition.isStrongAbort) {
+            if (onlyStrongAbortsBefore && !transition.isStrongAbort) {
                 onlyStrongAbortsBefore = false;
             } else if (!onlyStrongAbortsBefore && transition.isStrongAbort) {
                 error(STRONG_ABORT_WITH_LOW_PRIORITY, transition, null, -1);
