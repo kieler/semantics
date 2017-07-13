@@ -3176,6 +3176,28 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__Transition__Alternatives_6_0_0_2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getTriggerAssignment_6_0_0_2_0()); }
+(rule__Transition__TriggerAssignment_6_0_0_2_0)
+{ after(grammarAccess.getTransitionAccess().getTriggerAssignment_6_0_0_2_0()); }
+)
+
+    |(
+{ before(grammarAccess.getTransitionAccess().getTriggerAssignment_6_0_0_2_1()); }
+(rule__Transition__TriggerAssignment_6_0_0_2_1)
+{ after(grammarAccess.getTransitionAccess().getTriggerAssignment_6_0_0_2_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__LocalAction__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -6394,9 +6416,9 @@ rule__Transition__Group_6_0_0__2__Impl
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getTriggerAssignment_6_0_0_2()); }
-(rule__Transition__TriggerAssignment_6_0_0_2)
-{ after(grammarAccess.getTransitionAccess().getTriggerAssignment_6_0_0_2()); }
+{ before(grammarAccess.getTransitionAccess().getAlternatives_6_0_0_2()); }
+(rule__Transition__Alternatives_6_0_0_2)
+{ after(grammarAccess.getTransitionAccess().getAlternatives_6_0_0_2()); }
 )
 
 ;
@@ -22114,14 +22136,29 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Transition__TriggerAssignment_6_0_0_2
+rule__Transition__TriggerAssignment_6_0_0_2_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_6_0_0_2_0()); }
-	ruleBoolExpression{ after(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_6_0_0_2_0()); }
+{ before(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0()); }
+	ruleBoolExpression{ after(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Transition__TriggerAssignment_6_0_0_2_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0()); }
+	ruleAtomicExpression{ after(grammarAccess.getTransitionAccess().getTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0()); }
 )
 
 ;
