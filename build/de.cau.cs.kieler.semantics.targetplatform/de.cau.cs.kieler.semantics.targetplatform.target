@@ -6,8 +6,6 @@
       <unit id="org.eclipse.egit.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.mwe.sdk.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.gmf.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.gmf.tooling.runtime.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.epp.mpc.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
