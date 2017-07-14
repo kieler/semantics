@@ -50,7 +50,7 @@ import static extension java.lang.String.format
 class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.simple"
+    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core.simple"
     
     /** Sct Parser Injector */
     static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
