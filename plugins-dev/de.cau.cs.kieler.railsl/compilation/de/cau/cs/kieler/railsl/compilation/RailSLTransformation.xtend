@@ -22,7 +22,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.railSL.Program
 import de.cau.cs.kieler.railsl.RailSLFeatures
 
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
@@ -45,6 +44,14 @@ import de.cau.cs.kieler.railSL.LightStatement
 import de.cau.cs.kieler.railSL.ConditionalStatement
 import de.cau.cs.kieler.railSL.CrossingStatement
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * Transforms a RailSL model to an SCChart.
@@ -74,24 +81,20 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      * I N J E C T I O N S ***************************************************
      *************************************************************************/
     
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension RailSLExtensions
-
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension RailSLExtensions
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsScopeExtensions 
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    
     /*************************************************************************
      * F I E L D S ***********************************************************
      *************************************************************************/
@@ -154,7 +157,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def State generateSCChart(List<Block> blocks) {
 
-        var chart = createSCChart();
+        var chart = createState
 
         // I N T E R F A C E
         // input bool contacts[48][2];
@@ -327,7 +330,8 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         // Fetch variable crossing from root SCChart
         val crossing = valObjects.get("crossing")
 
-        transition.addEffect(crossing.assign(createBoolValue(cStatement.parseCrossingSetting)))
+        transition.addEffect(crossing.createAssignment(createBoolValue(cStatement.parseCrossingSetting))
+        )
     }
 
     /**
@@ -369,8 +373,8 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             line.block.compile(currentState)
             val trans = region.initialState.createImmediateTransitionTo(currentState)
             trans.trigger = expressions.get(j)
-            trans.priority = j + 1
-            val termTrans = currentState.createTransitionTo(region.finalState)
+            trans.specificPriority = j + 1
+            val termTrans = currentState.createTransitionTo(region.allFinalStates.head)
             termTrans.setTypeTermination
             termTrans.setNotImmediate
             j++
@@ -398,7 +402,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         for (light : lStatement.lights) {
             var nextState = region.createState("_S" + i)
             var transition = currentState.createImmediateTransitionTo(nextState)
-            transition.addEffect(lights.assign(createIntValue(setting)) => [
+            transition.addEffect(lights.createAssignment(createIntValue(setting)) => [
                 indices += createIntValue(light)
             ])
             currentState = nextState
@@ -429,7 +433,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         for (segment : spStatement.points) {
             var nextState = region.createState("_S" + i)
             var transition = currentState.createImmediateTransitionTo(nextState)
-            transition.addEffect(points.assign(createIntValue(direction)) => [
+            transition.addEffect(points.createAssignment(createIntValue(direction)) => [
                 indices += createIntValue(segment)
             ])
             currentState = nextState
@@ -474,21 +478,21 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             }
 
             // Set the track speed and direction
-            transition.addEffect(tracks.assign(createIntValue(speed)) => [
+            transition.addEffect(tracks.createAssignment(createIntValue(speed)) => [
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(0)
             ])
-            transition.addEffect(tracks.assign(createIntValue(direction)) => [
+            transition.addEffect(tracks.createAssignment(createIntValue(direction)) => [
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(1)
             ])
             
             // Set the signals accordingly
-            transition.addEffect(signals.assign(createIntValue(signalValue)) => [
+            transition.addEffect(signals.createAssignment(createIntValue(signalValue)) => [
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(direction)
             ])
-            transition.addEffect(signals.assign(createIntValue(0)) => [
+            transition.addEffect(signals.createAssignment(createIntValue(0)) => [
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(if (direction == 0) 1 else 0)
             ])
@@ -517,7 +521,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         var init = region.createInitialState("init")
         var done = region.createFinalState("done");
         var transition = init.createImmediateTransitionTo(done)
-        transition.delay = delay
+        transition.triggerDelay = delay
 
         // Fetch variable contacts from root SCChart
         val contacts = valObjects.get("contacts")
@@ -543,7 +547,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         var init = region.createInitialState("init")
         var done = region.createFinalState("done")
         var transition = init.createImmediateTransitionTo(done)
-        transition.delay = twStatement.time
+        transition.triggerDelay = twStatement.time
 
         // Fetch variable second from root SCChart
         val second = valObjects.get("second")

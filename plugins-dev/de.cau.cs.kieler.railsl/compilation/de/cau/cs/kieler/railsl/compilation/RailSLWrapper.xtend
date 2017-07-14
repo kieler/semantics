@@ -20,12 +20,13 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.railSL.Program
 import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * @author stu121235
  *
  */
-class RailSLWrapper extends Processor {
+class RailSLWrapper extends Processor<Program, SCCharts> {
 
     @Inject Injector injector
     
@@ -38,14 +39,14 @@ class RailSLWrapper extends Processor {
     }
     
     override process() {
-        val model = environment.model
+        val model = getModel
         val wrappedTransformation = injector.getInstance(RailSLTransformation)
         val state = wrappedTransformation.transform(model as Program) as State
         
         val scc = SCChartsFactory.eINSTANCE.createSCCharts
         scc.rootStates += state
         
-        environment.model = scc
+        model = scc
     }
     
     override getType() {
