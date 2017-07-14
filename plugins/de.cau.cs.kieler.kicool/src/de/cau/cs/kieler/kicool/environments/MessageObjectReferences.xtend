@@ -55,7 +55,7 @@ class MessageObjectReferences extends LinkedList<MessageObjectLink> implements I
     }
 
     def add(Exception exception) {
-        add(new MessageObjectLink(exception.message, null, true, null, exception))
+        add(new MessageObjectLink(exception.toString, null, true, null, exception))
     }
     
 }

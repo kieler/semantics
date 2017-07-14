@@ -21,6 +21,8 @@ import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner.StopOnFailure
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
+import java.io.PrintWriter
+import java.io.StringWriter
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.XMLResource
@@ -89,7 +91,13 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
 
             // Check compiler errors
             if (!iResult.environment.errors.empty) {
-                fail("Intermediate result of transformation " + iResult.id + " has compilation error(s): \n- " + iResult.environment.errors.map[message].join("\n- "))
+                fail("Intermediate result of transformation " + iResult.id + " has compilation error(s): \n- " + iResult.environment.errors.map[ err |
+                     if (err.exception != null) {
+                         ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
+                     } else {
+                        err.message
+                     }
+                ].join("\n- "))
             }     
             
             // Create resource
