@@ -77,7 +77,7 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
     @Inject extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "__te_"
     
     private val nameCache = new UniqueNameCache
 
