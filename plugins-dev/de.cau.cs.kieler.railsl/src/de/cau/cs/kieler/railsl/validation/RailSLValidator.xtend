@@ -9,7 +9,7 @@ package de.cau.cs.kieler.railsl.validation
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-class RailSLValidator extends de.cau.cs.kieler.validation.AbstractRailSLValidator {
+class RailSLValidator extends de.cau.cs.kieler.railsl.validation.AbstractRailSLValidator {
 	
 //	public static val INVALID_NAME = 'invalidName'
 //

@@ -19,7 +19,7 @@ import java.util.Set
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import com.google.inject.Inject
-import de.cau.cs.kieler.railSL.Program
+import de.cau.cs.kieler.railsl.railSL.Program
 import de.cau.cs.kieler.railsl.RailSLFeatures
 
 import de.cau.cs.kieler.sccharts.State
@@ -34,15 +34,15 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.railSL.Block
-import de.cau.cs.kieler.railSL.Statement
-import de.cau.cs.kieler.railSL.TimeWaitStatement
-import de.cau.cs.kieler.railSL.ContactWaitStatement
-import de.cau.cs.kieler.railSL.SetTrackStatement
-import de.cau.cs.kieler.railSL.SetPointStatement
-import de.cau.cs.kieler.railSL.LightStatement
-import de.cau.cs.kieler.railSL.ConditionalStatement
-import de.cau.cs.kieler.railSL.CrossingStatement
+import de.cau.cs.kieler.railsl.railSL.Block
+import de.cau.cs.kieler.railsl.railSL.Statement
+import de.cau.cs.kieler.railsl.railSL.TimeWaitStatement
+import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
+import de.cau.cs.kieler.railsl.railSL.SetTrackStatement
+import de.cau.cs.kieler.railsl.railSL.SetPointStatement
+import de.cau.cs.kieler.railsl.railSL.LightStatement
+import de.cau.cs.kieler.railsl.railSL.ConditionalStatement
+import de.cau.cs.kieler.railsl.railSL.CrossingStatement
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions

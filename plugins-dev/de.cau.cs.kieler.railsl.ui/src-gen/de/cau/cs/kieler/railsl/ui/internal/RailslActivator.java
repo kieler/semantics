@@ -7,8 +7,8 @@ import com.google.common.collect.Maps;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import de.cau.cs.kieler.RailSLRuntimeModule;
-import de.cau.cs.kieler.ui.RailSLUiModule;
+import de.cau.cs.kieler.railsl.RailSLRuntimeModule;
+import de.cau.cs.kieler.railsl.ui.RailSLUiModule;
 import java.util.Collections;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
  */
 public class RailslActivator extends AbstractUIPlugin {
 
-	public static final String DE_CAU_CS_KIELER_RAILSL = "de.cau.cs.kieler.RailSL";
+	public static final String DE_CAU_CS_KIELER_RAILSL_RAILSL = "de.cau.cs.kieler.railsl.RailSL";
 	
 	private static final Logger logger = Logger.getLogger(RailslActivator.class);
 	
@@ -73,14 +73,14 @@ public class RailslActivator extends AbstractUIPlugin {
 	}
 	
 	protected Module getRuntimeModule(String grammar) {
-		if (DE_CAU_CS_KIELER_RAILSL.equals(grammar)) {
+		if (DE_CAU_CS_KIELER_RAILSL_RAILSL.equals(grammar)) {
 			return new RailSLRuntimeModule();
 		}
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
-		if (DE_CAU_CS_KIELER_RAILSL.equals(grammar)) {
+		if (DE_CAU_CS_KIELER_RAILSL_RAILSL.equals(grammar)) {
 			return new RailSLUiModule(this);
 		}
 		throw new IllegalArgumentException(grammar);

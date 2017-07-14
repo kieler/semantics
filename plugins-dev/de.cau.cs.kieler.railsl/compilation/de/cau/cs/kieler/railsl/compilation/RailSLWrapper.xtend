@@ -18,7 +18,7 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.railSL.Program
+import de.cau.cs.kieler.railsl.railSL.Program
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.SCCharts
 

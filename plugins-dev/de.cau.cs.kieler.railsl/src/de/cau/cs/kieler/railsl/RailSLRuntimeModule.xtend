@@ -7,5 +7,5 @@ package de.cau.cs.kieler.railsl
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-class RailSLRuntimeModule extends de.cau.cs.kieler.AbstractRailSLRuntimeModule {
+class RailSLRuntimeModule extends de.cau.cs.kieler.railsl.AbstractRailSLRuntimeModule {
 }

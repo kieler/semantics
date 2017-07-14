@@ -3,11 +3,10 @@
  */
 package de.cau.cs.kieler.railsl
 
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
-class RailSLStandaloneSetup extends de.cau.cs.kieler.RailSLStandaloneSetupGenerated {
+class RailSLStandaloneSetup extends de.cau.cs.kieler.railsl.RailSLStandaloneSetupGenerated {
 
 	def static void doSetup() {
 		new RailSLStandaloneSetup().createInjectorAndDoEMFRegistration()

@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.railsl.extensions
 
-import de.cau.cs.kieler.railSL.SetPointStatement
-import de.cau.cs.kieler.railSL.LightStatement
-import de.cau.cs.kieler.railSL.SetTrackStatement
-import de.cau.cs.kieler.railSL.CrossingStatement
+import de.cau.cs.kieler.railsl.railSL.SetPointStatement
+import de.cau.cs.kieler.railsl.railSL.LightStatement
+import de.cau.cs.kieler.railsl.railSL.SetTrackStatement
+import de.cau.cs.kieler.railsl.railSL.CrossingStatement
 
 /**
  * @author stu121235

@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.railsl
 
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.railsl.RailSLFeatures
-import de.cau.cs.kieler.railSL.Program
+import de.cau.cs.kieler.railsl.railSL.Program
 
 /**
  * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de

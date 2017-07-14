@@ -3,8 +3,8 @@
 <plugin>
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package 
-			uri = "http://www.cau.de/cs/kieler/RailSL"
-			class = "de.cau.cs.kieler.railSL.RailSLPackage"
+			uri = "http://www.cau.de/cs/kieler/railsl/RailSL"
+			class = "de.cau.cs.kieler.railsl.railSL.RailSLPackage"
 			genModel = "model/generated/RailSL.genmodel" />
 	</extension>
 </plugin>

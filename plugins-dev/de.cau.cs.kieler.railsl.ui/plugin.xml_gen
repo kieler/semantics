@@ -4,48 +4,48 @@
 	<extension
 		point="org.eclipse.ui.editors">
 		<editor
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
 			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
 			default="true"
 			extensions="railsl"
-			id="de.cau.cs.kieler.RailSL"
+			id="de.cau.cs.kieler.railsl.RailSL"
 			name="RailSL Editor">
 		</editor>
 	</extension>
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
 			commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+					definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
 		<handler
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-			commandId="de.cau.cs.kieler.RailSL.validate">
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+			commandId="de.cau.cs.kieler.railsl.RailSL.validate">
 		<activeWhen>
 			<reference
-					definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+					definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 			</reference>
 		</activeWhen>
 		</handler>
 		<!-- copy qualified name -->
 		<handler
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
 			<activeWhen>
-				<reference definitionId="de.cau.cs.kieler.RailSL.Editor.opened" />
+				<reference definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened" />
 			</activeWhen>
 		</handler>
 		<handler
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
 			<activeWhen>
 				<and>
-					<reference definitionId="de.cau.cs.kieler.RailSL.XtextEditor.opened" />
+					<reference definitionId="de.cau.cs.kieler.railsl.RailSL.XtextEditor.opened" />
 					<iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -54,22 +54,22 @@
 		</handler>
 	</extension>
 	<extension point="org.eclipse.core.expressions.definitions">
-		<definition id="de.cau.cs.kieler.RailSL.Editor.opened">
+		<definition id="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 			<and>
 				<reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
 				<with variable="activeEditor">
 					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-						value="de.cau.cs.kieler.RailSL" 
+						value="de.cau.cs.kieler.railsl.RailSL" 
 						forcePluginActivation="true"/>
 				</with>		
 			</and>
 		</definition>
-		<definition id="de.cau.cs.kieler.RailSL.XtextEditor.opened">
+		<definition id="de.cau.cs.kieler.railsl.RailSL.XtextEditor.opened">
 			<and>
 				<reference definitionId="isXtextEditorActive"/>
 				<with variable="activeEditor">
 					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-						value="de.cau.cs.kieler.RailSL" 
+						value="de.cau.cs.kieler.railsl.RailSL" 
 						forcePluginActivation="true"/>
 				</with>		
 			</and>
@@ -78,33 +78,33 @@
 	<extension
 			point="org.eclipse.ui.preferencePages">
 		<page
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-			id="de.cau.cs.kieler.RailSL"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="de.cau.cs.kieler.railsl.RailSL"
 			name="RailSL">
-			<keywordReference id="de.cau.cs.kieler.ui.keyword_RailSL"/>
+			<keywordReference id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"/>
 		</page>
 		<page
-			category="de.cau.cs.kieler.RailSL"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-			id="de.cau.cs.kieler.RailSL.coloring"
+			category="de.cau.cs.kieler.railsl.RailSL"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+			id="de.cau.cs.kieler.railsl.RailSL.coloring"
 			name="Syntax Coloring">
-			<keywordReference id="de.cau.cs.kieler.ui.keyword_RailSL"/>
+			<keywordReference id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"/>
 		</page>
 		<page
-			category="de.cau.cs.kieler.RailSL"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-			id="de.cau.cs.kieler.RailSL.templates"
+			category="de.cau.cs.kieler.railsl.RailSL"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+			id="de.cau.cs.kieler.railsl.RailSL.templates"
 			name="Templates">
-			<keywordReference id="de.cau.cs.kieler.ui.keyword_RailSL"/>
+			<keywordReference id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"/>
 		</page>
 	</extension>
 	<extension
 			point="org.eclipse.ui.propertyPages">
 		<page
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-			id="de.cau.cs.kieler.RailSL"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="de.cau.cs.kieler.railsl.RailSL"
 			name="RailSL">
-			<keywordReference id="de.cau.cs.kieler.ui.keyword_RailSL"/>
+			<keywordReference id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -114,14 +114,14 @@
 	<extension
 		point="org.eclipse.ui.keywords">
 		<keyword
-			id="de.cau.cs.kieler.ui.keyword_RailSL"
+			id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"
 			label="RailSL"/>
 	</extension>
 	<extension
 		point="org.eclipse.ui.commands">
 	<command
 			description="Trigger expensive validation"
-			id="de.cau.cs.kieler.RailSL.validate"
+			id="de.cau.cs.kieler.railsl.RailSL.validate"
 			name="Validate">
 	</command>
 	<!-- copy qualified name -->
@@ -142,12 +142,12 @@
 		<menuContribution
 			locationURI="popup:#TextEditorContext?after=group.edit">
 			 <command
-				 commandId="de.cau.cs.kieler.RailSL.validate"
+				 commandId="de.cau.cs.kieler.railsl.RailSL.validate"
 				 style="push"
 				 tooltip="Trigger expensive validation">
 			<visibleWhen checkEnabled="false">
 				<reference
-					definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+					definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 				</reference>
 			</visibleWhen>
 		</command>
@@ -157,7 +157,7 @@
 			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.RailSL.Editor.opened" />
+					<reference definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -165,7 +165,7 @@
 			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.RailSL.Editor.opened" />
+					<reference definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -174,7 +174,7 @@
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
 					<and>
-						<reference definitionId="de.cau.cs.kieler.RailSL.XtextEditor.opened" />
+						<reference definitionId="de.cau.cs.kieler.railsl.RailSL.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -187,7 +187,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+					<reference definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 					</reference>
 				</visibleWhen>
 			</command>
@@ -195,11 +195,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
 			commandId="org.eclipse.xtext.ui.editor.FindReferences">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+					definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -208,17 +208,17 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="railsl">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
 		<resourceServiceProvider
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
 			uriExtension="railsl">
 		</resourceServiceProvider>
 	</extension>
-	<!-- marker definitions for de.cau.cs.kieler.RailSL -->
+	<!-- marker definitions for de.cau.cs.kieler.railsl.RailSL -->
 	<extension
 			id="railsl.check.fast"
 			name="RailSL Problem"
@@ -242,25 +242,25 @@
 	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
 			fileExtensions="railsl"/>
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-			category="de.cau.cs.kieler.RailSL"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-			id="de.cau.cs.kieler.RailSL.compiler.preferencePage"
+			category="de.cau.cs.kieler.railsl.RailSL"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="de.cau.cs.kieler.railsl.RailSL.compiler.preferencePage"
 			name="Compiler">
-			<keywordReference id="de.cau.cs.kieler.ui.keyword_RailSL"/>
+			<keywordReference id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"/>
 		</page>
 	</extension>
 	<extension point="org.eclipse.ui.propertyPages">
 		<page
-			category="de.cau.cs.kieler.RailSL"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-			id="de.cau.cs.kieler.RailSL.compiler.propertyPage"
+			category="de.cau.cs.kieler.railsl.RailSL"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="de.cau.cs.kieler.railsl.RailSL.compiler.propertyPage"
 			name="Compiler">
-			<keywordReference id="de.cau.cs.kieler.ui.keyword_RailSL"/>
+			<keywordReference id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -271,20 +271,20 @@
 		<menuContribution locationURI="popup:#TextEditorContext?after=xtext.ui.openDeclaration">
 			<command
 				commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand"
-				id="de.cau.cs.kieler.RailSL.OpenGeneratedCode"
+				id="de.cau.cs.kieler.railsl.RailSL.OpenGeneratedCode"
 				style="push">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.RailSL.Editor.opened" />
+					<reference definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
 			commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand">
 			<activeWhen>
-				<reference definitionId="de.cau.cs.kieler.RailSL.Editor.opened" />
+				<reference definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened" />
 			</activeWhen>
 		</handler>
 	</extension>
@@ -292,11 +292,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+					definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -316,16 +316,16 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.RailSL.Editor.opened"/>
+					<reference definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-	<!-- quickfix marker resolution generator for de.cau.cs.kieler.RailSL -->
+	<!-- quickfix marker resolution generator for de.cau.cs.kieler.railsl.RailSL -->
 	<extension
 			point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
 			markerType="de.cau.cs.kieler.railsl.ui.railsl.check.fast">
 			<attribute
 				name="FIXABLE_KEY"
@@ -333,7 +333,7 @@
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
 			markerType="de.cau.cs.kieler.railsl.ui.railsl.check.normal">
 			<attribute
 				name="FIXABLE_KEY"
@@ -341,7 +341,7 @@
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
 			markerType="de.cau.cs.kieler.railsl.ui.railsl.check.expensive">
 			<attribute
 				name="FIXABLE_KEY"
@@ -352,11 +352,11 @@
 	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+					definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -368,7 +368,7 @@
 				style="push">
 				<visibleWhen checkEnabled="false">
 					<reference
-						definitionId="de.cau.cs.kieler.RailSL.Editor.opened">
+						definitionId="de.cau.cs.kieler.railsl.RailSL.Editor.opened">
 					</reference>
 				</visibleWhen>
 			</command>
@@ -376,28 +376,28 @@
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-			category="de.cau.cs.kieler.RailSL"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-			id="de.cau.cs.kieler.RailSL.refactoring"
+			category="de.cau.cs.kieler.railsl.RailSL"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+			id="de.cau.cs.kieler.railsl.RailSL.refactoring"
 			name="Refactoring">
-			<keywordReference id="de.cau.cs.kieler.ui.keyword_RailSL"/>
+			<keywordReference id="de.cau.cs.kieler.railsl.ui.keyword_RailSL"/>
 		</page>
 	</extension>
 	<extension point="org.eclipse.compare.contentViewers">
-		<viewer id="de.cau.cs.kieler.RailSL.compare.contentViewers"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+		<viewer id="de.cau.cs.kieler.railsl.RailSL.compare.contentViewers"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="railsl">
 		</viewer>
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
-		<viewer id="de.cau.cs.kieler.RailSL.compare.contentMergeViewers"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+		<viewer id="de.cau.cs.kieler.railsl.RailSL.compare.contentMergeViewers"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="railsl" label="RailSL Compare">
 		</viewer>
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
-		<provider id="de.cau.cs.kieler.RailSL.editors.documentProviders"
-			class="de.cau.cs.kieler.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+		<provider id="de.cau.cs.kieler.railsl.RailSL.editors.documentProviders"
+			class="de.cau.cs.kieler.railsl.ui.RailSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
 			extensions="railsl">
 		</provider>
 	</extension>

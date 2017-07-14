@@ -1,6 +1,6 @@
-grammar de.cau.cs.kieler.RailSL with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.railsl.RailSL with org.eclipse.xtext.common.Terminals
 
-generate railSL "http://www.cau.de/cs/kieler/RailSL"
+generate railSL "http://www.cau.de/cs/kieler/railsl/RailSL"
 
 Program:
 	(blocks+=Block)*

@@ -4,7 +4,7 @@
     modelPluginID="de.cau.cs.kieler.railsl" forceOverwrite="true" modelName="RailSL"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.12">
-  <genPackages prefix="RailSL" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+  <genPackages prefix="RailSL" basePackage="de.cau.cs.kieler.railsl" disposableProviderFactory="true"
       fileExtensions="railsl" ecorePackage="RailSL.ecore#/">
     <genClasses ecoreClass="RailSL.ecore#//Program">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//Program/blocks"/>

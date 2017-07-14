@@ -10,6 +10,6 @@ package de.cau.cs.kieler.railsl.scoping
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#scoping
  * on how and when to use it.
  */
-class RailSLScopeProvider extends de.cau.cs.kieler.scoping.AbstractRailSLScopeProvider {
+class RailSLScopeProvider extends de.cau.cs.kieler.railsl.scoping.AbstractRailSLScopeProvider {
 
 }

@@ -10,7 +10,7 @@
  <extension
        point="de.cau.cs.kieler.kico.transformation">
     <productionTransformationClass
-          class="de.cau.cs.kieler.railsl.RailSLTransformation">
+          class="de.cau.cs.kieler.railsl.compilation.RailSLTransformation">
     </productionTransformationClass>
  </extension>
  <extension
