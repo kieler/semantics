@@ -72,7 +72,7 @@ class WorkspaceBenchmarkDatabase extends AbstractBenchmarkDatabase {
         }        
         
         //Write data
-        val fileInput = new ByteArrayInputStream(data.toString.getBytes(StandardCharsets.UTF_8))
+        val fileInput = new ByteArrayInputStream(data.toJson.getBytes(StandardCharsets.UTF_8))
         file.create(fileInput, true, null)
     }
     
