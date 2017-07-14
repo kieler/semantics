@@ -64,7 +64,7 @@ public interface KExtPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getDeclarationScope()
      * @generated
      */
-    int DECLARATION_SCOPE = 3;
+    int DECLARATION_SCOPE = 4;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -85,14 +85,14 @@ public interface KExtPackage extends EPackage {
     int DECLARATION_SCOPE_FEATURE_COUNT = 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl <em>KEXT Scope</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl <em>Scope</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl
-     * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getKEXTScope()
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getKExtScope()
      * @generated
      */
-    int KEXT_SCOPE = 4;
+    int KEXT_SCOPE = 1;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -140,7 +140,7 @@ public interface KExtPackage extends EPackage {
     int KEXT_SCOPE__SCOPES = DECLARATION_SCOPE_FEATURE_COUNT + 3;
 
     /**
-     * The number of structural features of the '<em>KEXT Scope</em>' class.
+     * The number of structural features of the '<em>Scope</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -220,7 +220,7 @@ public interface KExtPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getTestEntity()
      * @generated
      */
-    int TEST_ENTITY = 1;
+    int TEST_ENTITY = 2;
 
     /**
      * The feature id for the '<em><b>Effect</b></em>' containment reference.
@@ -257,7 +257,7 @@ public interface KExtPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getAnnotatedExpression()
      * @generated
      */
-    int ANNOTATED_EXPRESSION = 2;
+    int ANNOTATED_EXPRESSION = 3;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -296,6 +296,38 @@ public interface KExtPackage extends EPackage {
      * @generated
      */
     EClass getKext();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.kext.KExtScope <em>Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Scope</em>'.
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtScope
+     * @generated
+     */
+    EClass getKExtScope();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.kext.KExtScope#getEntities <em>Entities</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Entities</em>'.
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtScope#getEntities()
+     * @see #getKExtScope()
+     * @generated
+     */
+    EReference getKExtScope_Entities();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.kext.KExtScope#getScopes <em>Scopes</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Scopes</em>'.
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtScope#getScopes()
+     * @see #getKExtScope()
+     * @generated
+     */
+    EReference getKExtScope_Scopes();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.kext.TestEntity <em>Test Entity</em>}'.
@@ -370,38 +402,6 @@ public interface KExtPackage extends EPackage {
      * @generated
      */
     EReference getDeclarationScope_Declarations();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.kext.KEXTScope <em>KEXT Scope</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>KEXT Scope</em>'.
-     * @see de.cau.cs.kieler.kexpressions.kext.KEXTScope
-     * @generated
-     */
-    EClass getKEXTScope();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.kext.KEXTScope#getEntities <em>Entities</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Entities</em>'.
-     * @see de.cau.cs.kieler.kexpressions.kext.KEXTScope#getEntities()
-     * @see #getKEXTScope()
-     * @generated
-     */
-    EReference getKEXTScope_Entities();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.kext.KEXTScope#getScopes <em>Scopes</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Scopes</em>'.
-     * @see de.cau.cs.kieler.kexpressions.kext.KEXTScope#getScopes()
-     * @see #getKEXTScope()
-     * @generated
-     */
-    EReference getKEXTScope_Scopes();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -498,14 +498,14 @@ public interface KExtPackage extends EPackage {
         EReference DECLARATION_SCOPE__DECLARATIONS = eINSTANCE.getDeclarationScope_Declarations();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl <em>KEXT Scope</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl <em>Scope</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.kext.impl.KEXTScopeImpl
-         * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getKEXTScope()
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getKExtScope()
          * @generated
          */
-        EClass KEXT_SCOPE = eINSTANCE.getKEXTScope();
+        EClass KEXT_SCOPE = eINSTANCE.getKExtScope();
 
         /**
          * The meta object literal for the '<em><b>Entities</b></em>' containment reference list feature.
@@ -513,7 +513,7 @@ public interface KExtPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference KEXT_SCOPE__ENTITIES = eINSTANCE.getKEXTScope_Entities();
+        EReference KEXT_SCOPE__ENTITIES = eINSTANCE.getKExtScope_Entities();
 
         /**
          * The meta object literal for the '<em><b>Scopes</b></em>' containment reference list feature.
@@ -521,7 +521,7 @@ public interface KExtPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference KEXT_SCOPE__SCOPES = eINSTANCE.getKEXTScope_Scopes();
+        EReference KEXT_SCOPE__SCOPES = eINSTANCE.getKExtScope_Scopes();
 
     }
 

@@ -41,14 +41,14 @@ import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 Kext returns kext::Kext:
 	scopes+=RootScope;
 	
-RootScope returns kext::KEXTScope:
-	{kext::KEXTScope} 
+RootScope returns kext::KExtScope:
+	{kext::KExtScope} 
     declarations+=Declaration*
     entities+=TestEntity* 
 	('scope' scopes+=Scope)*;
 
-Scope returns kext::KEXTScope:
-	{kext::KEXTScope} 
+Scope returns kext::KExtScope:
+	{kext::KExtScope} 
 	(id=ID)? '{'
     declarations+=Declaration*
     entities+=TestEntity* 

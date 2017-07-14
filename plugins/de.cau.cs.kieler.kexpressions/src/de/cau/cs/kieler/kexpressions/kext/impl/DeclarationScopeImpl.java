@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DeclarationScopeImpl extends MinimalEObjectImpl.Container implements DeclarationScope {
+public abstract class DeclarationScopeImpl extends MinimalEObjectImpl.Container implements DeclarationScope {
     /**
      * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->

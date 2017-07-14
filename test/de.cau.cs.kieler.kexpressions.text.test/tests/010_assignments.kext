@@ -1,0 +1,56 @@
+/* KEXT Test File for assignments
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+bool A;
+int I;
+int I1[5];
+
+/////////////////// SIMPLE ASSIGNMENTS ///////////////////
+
+@check "assignment.literal.true"
+A = true
+
+@check "assignment.literal.false"
+A = false
+
+@check assignment.reference
+A = A
+
+@check assignment.operator.unary.reference
+@strict
+A = pre(A)
+
+@check assignment.operator.binary.reference
+A = A & A
+
+
+
+/////////////////// ARRAY ASSIGNMENTS ///////////////////
+
+@check assignment.array.literal
+I1[0] = 0
+
+@check assignment.array.reference
+I1[0] = I
+
+@check assignment.array.operator.unary.reference
+@strict
+I1[0] = pre(I)
+
+@check assignment.array.operator.binary.reference
+I1[0] = I + I
+
+@check assignment.array.dynamic.literal
+I1[I] = 1
+
+@check assignment.array.dynamic.reference
+I1[I] = I
+
+@check assignment.array.dynamic.operator.unary.reference
+@strict
+I1[I] = pre(I)
+
+@check assignment.array.dynamic.operator.binary.reference
+I1[I] = I + I

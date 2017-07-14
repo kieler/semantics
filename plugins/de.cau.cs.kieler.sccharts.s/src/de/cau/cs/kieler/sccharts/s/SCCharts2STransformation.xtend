@@ -27,8 +27,6 @@ import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
 import java.util.List
 
@@ -44,6 +42,10 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 
 /**
  * Converts a SyncChart into an S program.
@@ -57,24 +59,14 @@ class SCCharts2STransformation {
     // -------------------------------------------------------------------------
     // Other extensions necessary
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsCreateExtensions
-
-
-    @Inject
-    extension SExtension
-    
-    @Inject
-    extension SCChartsExtension 
-
-    @Inject
-    extension DependencyTransformation
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension SExtension
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsTransitionExtensions 
+    @Inject extension DependencyTransformation
 
     // -------------------------------------------------------------------------
 
@@ -239,7 +231,7 @@ class SCCharts2STransformation {
         val state = dependencyState.getState
         val sState = state.sState
         
-        if (state.hasInnerStatesOrControlflowRegions) {
+        if (state.controlflowRegionsContainStates) {
             /////////////////////////
             // Handle macro states //
             /////////////////////////
@@ -248,7 +240,7 @@ class SCCharts2STransformation {
             if (state.outgoingTransitions.length > 0) {
                 val transition = state.outgoingTransitions.get(0)
 
-                if (transition.type == TransitionType::TERMINATION) {
+                if (transition.preemption == PreemptionType::TERMINATION) {
                     // if not joined yet - continue at state depth
                     val sjoin = joinElseContinueAt(transition.sourceState.sJoinState)
                     sJoinState.addInstruction(sjoin);
@@ -270,11 +262,11 @@ class SCCharts2STransformation {
             // Handle simples states //
             ///////////////////////////
             // Consider immediate transitions
-            for (transition : state.outgoingTransitions.filter[isImmediate]) {
+            for (transition : state.outgoingTransitions.filter[isImplicitlyImmediate]) {
                state.handleTransition(transition)
             }
             // Consider delayed transitions, if any
-            val delayedTransitions = state.outgoingTransitions.filter[!isImmediate]
+            val delayedTransitions = state.outgoingTransitions.filter[!isImplicitlyImmediate]
             if (!delayedTransitions.nullOrEmpty) {
                 for (transition : delayedTransitions) {
                    state.handleTransition(transition)
@@ -326,7 +318,7 @@ class SCCharts2STransformation {
             }
 
             // If necessary, insert a prio statement
-            var sourcePriority = state.priority(state.hasInnerStatesOrControlflowRegions)
+            var sourcePriority = state.priority(state.controlflowRegionsContainStates)
             var targetPriority = transition.targetState.priority
             if (sourcePriority != targetPriority) {
                 // Change priority
@@ -334,7 +326,7 @@ class SCCharts2STransformation {
             }
 
             // If there are delayed transitions create a pause
-            if (!transition.isImmediate) {
+            if (!transition.isImplicitlyImmediate) {
                 state.sState.addInstruction(createPause)
             }
 
@@ -383,12 +375,6 @@ class SCCharts2STransformation {
         createTextExpression(expression.text)
     }    
     
-    // Apply conversion to the default case
-    def dispatch Expression convertToSExpression(Expression expression) {
-        createExpression
-    }
-
-
 
     //-------------------------------------------------------------------------
     //--                   C O N V E R T    E F F E C T S                    --

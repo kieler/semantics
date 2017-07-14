@@ -36,7 +36,10 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
-import de.cau.cs.kieler.scg.SCGAnnotations
+
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import java.util.logging.Level
+import de.cau.cs.kieler.scg.SCGPlugin
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -69,22 +72,6 @@ import de.cau.cs.kieler.scg.SCGAnnotations
 
 class SurfaceSynchronizer extends AbstractSynchronizer {
 
-    static final boolean DEBUG = true;
-
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -173,7 +160,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             scg.guards += newGuard
             emptyDeclaration.valuedObjects += newGuard.valuedObject
             
-            debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+            SCGPlugin.log("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize, Level.FINE)
 		}
     }
     
@@ -185,7 +172,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
         var delayFound = false
         for(entry:data.join.getEntryNodes) {
-            val t = entry.getStringAnnotationValue(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
             threadPathTypes.put(entry.exit, t)
             if (t != ThreadPathType::INSTANTANEOUS) {
                 delayFound = true
@@ -200,7 +187,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         // Build an empty expression for each exit node.
         for(exit:exitNodes){
             
-            if ((!exit.entry.hasAnnotation(SCGAnnotations.ANNOTATION_IGNORETHREAD)) &&
+            if ((!exit.entry.hasAnnotation(ANNOTATION_IGNORETHREAD)) &&
                 ((!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS))) {
 	            
 	        	// Increment the exit node counter and retrieve the scheduling block of the exit node.

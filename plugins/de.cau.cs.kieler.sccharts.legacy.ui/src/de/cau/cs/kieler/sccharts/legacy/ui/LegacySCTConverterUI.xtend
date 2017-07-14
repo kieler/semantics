@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.handlers.HandlerUtil
 import static de.cau.cs.kieler.sccharts.legacy.SCChartsLegacyConverter.*
+import org.eclipse.ui.statushandlers.StatusManager
 
 /**
  * @author als
@@ -38,25 +39,40 @@ class LegacySCTConverterUI extends AbstractHandler {
         val selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
         if (selection instanceof IStructuredSelection) {
             val files = <IFile>newLinkedList
+            // Collect
             for (element : selection.iterator.toIterable) {
                 files.addAll(collect(element as IResource))
             }
+            
             if (!files.empty) {
                 val job = new Job("Converting legacy SCCharts") {
 
                     override protected run(IProgressMonitor monitor) {
                         monitor.beginTask("Converting legacy SCCharts", files.size)
-
+                        
+                        // Process
                         for (file : files) {
                             monitor.subTask("Converting: " + file.projectRelativePath.toString)
 
+                            if (monitor.canceled) return Status.CANCEL_STATUS
+                            
                             try {
-                                export(file)
+                                export(file, files)
                             } catch (Exception e) {
-                                // drop ?
+                                StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.legacy.ui", e.message, e), StatusManager.LOG)
+                                StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.legacy.ui", e.message, e.cause), StatusManager.SHOW)
                             }
 
                             monitor.worked(1)
+                        }
+                        
+                        // Refresh
+                        for (element : selection.iterator.filter(IResource).toIterable) {
+                            if (element instanceof IFile) {
+                                element.parent.refreshLocal(IResource.DEPTH_INFINITE, monitor)
+                            } else {
+                                element.refreshLocal(IResource.DEPTH_INFINITE, monitor)
+                            }
                         }
 
                         return Status.OK_STATUS

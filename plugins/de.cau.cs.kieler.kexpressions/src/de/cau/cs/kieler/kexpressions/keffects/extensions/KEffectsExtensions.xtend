@@ -20,6 +20,10 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * @author ssm
@@ -28,6 +32,9 @@ import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
  * @kieler.rating 2016-01-07 proposed yellow
  */
 class KEffectsExtensions {
+    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsComplexCreateExtensions    
     
     def isPostfixOperator(AssignOperator operator) {
         operator == AssignOperator.POSTFIXADD || operator == AssignOperator.POSTFIXSUB
@@ -57,6 +64,69 @@ class KEffectsExtensions {
    
     def ReferenceCallEffect createReferenceCallEffect() {
         KEffectsFactory::eINSTANCE.createReferenceCallEffect()
+    }
+    
+    
+    def createEmission() {
+        KEffectsFactory::eINSTANCE.createEmission
+    }
+
+    // was assign
+    def createAssignment(ValuedObject valuedObject) {
+        KEffectsFactory::eINSTANCE.createAssignment => [ it.valuedObject = valuedObject ]
+    }
+
+    // was assignRelative
+    def Assignment createRelativeAssignmentWithOr(ValuedObject valuedObject, Expression newValue) {
+        valuedObject.createAssignment(valuedObject.reference.or(newValue))
+    }
+    
+    
+    // was assignRelativeAnd
+    def Assignment createRelativeAssignmentWithAnd(ValuedObject valuedObject, Expression newValue) {
+        valuedObject.createAssignment(valuedObject.reference.and(newValue))
+    }    
+    
+    // was assingCombined
+    def Assignment createCombinedAssignment(ValuedObject valuedObject, Expression newValue) {
+        if (valuedObject.combineOperator == CombineOperator::AND) {
+            return valuedObject.createAssignment(valuedObject.reference.and(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::OR) {
+            return valuedObject.createAssignment(valuedObject.reference.or(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::ADD) {
+            return valuedObject.createAssignment(valuedObject.reference.add(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::MULT) {
+            return valuedObject.createAssignment(valuedObject.reference.mult(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::MAX) {
+            return valuedObject.createAssignment(valuedObject.reference.max(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::MIN) {
+            return valuedObject.createAssignment(valuedObject.reference.min(newValue))
+        }
+        return valuedObject.createAssignment(newValue)
+    }
+    
+
+    def createHostcodeEffect(String text) {
+        KEffectsFactory::eINSTANCE.createHostcodeEffect => [  it.text = text ]
+    }
+
+    def createEmission(ValuedObject valuedObject) {
+        KEffectsFactory::eINSTANCE.createEmission => [ it.valuedObject = valuedObject ]
+    }
+    
+    def emit(ValuedObject valuedObject) {
+        valuedObject.createEmission
+    }
+
+    def createEmission(ValuedObject valuedObject, Expression newValue) {
+        KEffectsFactory::eINSTANCE.createEmission => [ 
+            it.valuedObject = valuedObject
+            it.newValue = newValue
+        ]
+    }    
+     
+    def emit(ValuedObject valuedObject, Expression newValue) {
+        valuedObject.createEmission(newValue)
     }
 
 }

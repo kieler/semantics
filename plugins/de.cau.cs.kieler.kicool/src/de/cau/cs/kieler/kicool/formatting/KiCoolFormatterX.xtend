@@ -26,7 +26,7 @@ class KiCoolFormatterX extends KiCoolFormatter {
         super.configureFormatting(c)
         val f = getGrammarAccess() as de.cau.cs.kieler.kicool.services.KiCoolGrammarAccess
         
-        c.setLinewrap().before(f.getSystemAccess().getMetricsMetricParserRuleCall_7_0());
+//        c.setLinewrap().before(f.getSystemAccess().getMetricsMetricParserRuleCall_7_0());
     }
     
 }

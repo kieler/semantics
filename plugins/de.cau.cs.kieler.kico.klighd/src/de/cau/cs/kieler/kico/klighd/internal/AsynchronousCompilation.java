@@ -115,7 +115,7 @@ public class AsynchronousCompilation extends Job {
             KielerCompilerContext context =
                     new KielerCompilerContext(selection.getFirst(), (EObject) sourceModel);
             context.setAdvancedSelect(selection.getSecond());
-            context.setInplace(false);
+            context.setInplace(!tracing);
             context.setProgressMonitor(monitor);
             if (tracing) {
                 context.setProperty(Tracing.ACTIVE_TRACING, true);

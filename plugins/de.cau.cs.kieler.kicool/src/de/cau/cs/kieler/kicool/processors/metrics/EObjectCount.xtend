@@ -14,6 +14,9 @@ package de.cau.cs.kieler.kicool.processors.metrics
 
 import de.cau.cs.kieler.kicool.compilation.Metric
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Metric that measures differences in the eObject count.
@@ -22,7 +25,14 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class EObjectCount extends Metric {
+class EObjectCount extends Metric<EObject, Integer> {
+
+    static val IProperty<Integer> METRIC_ENTITY = 
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.eObjectCount.entity", 0)
+
+    static val IProperty<Integer> METRIC_SOURCE_ENTITY = 
+        new Property<Integer>("de.cau.cs.kieler.kicool.metrics.eObjectCount.sourceEntity", 0)
+    
     
     override getId() {
         "de.cau.cs.kieler.kicool.processors.metrics.eObjectCount"
@@ -32,12 +42,20 @@ class EObjectCount extends Metric {
         "EObject Count Metric"
     }
     
+    override protected getMetricEntityProperty() {
+        METRIC_ENTITY
+    }
+    
+    override protected getMetricSourceEntityProperty() {
+        METRIC_SOURCE_ENTITY
+    }    
+    
     static def count(EObject eObject) {
-        eObject.eAllContents.toList.size
+        eObject.eAllContents.toList.size + 1
     }
     
     override protected getMetricEntity() {
-        val model = environment.getModel
+        val model = environment.getProperty(Environment.MODEL)
         if (model instanceof EObject) {
             model.count
         } else {
@@ -47,8 +65,8 @@ class EObjectCount extends Metric {
     }
     
     override protected calculateMetricValue() {
-        val sourceEntity = environment.data.get(METRIC_SOURCE_ENTITY) as Integer
-        val modelEntity = environment.data.get(METRIC_ENTITY) as Integer
+        val sourceEntity = environment.getProperty(METRIC_SOURCE_ENTITY)
+        val modelEntity = environment.getProperty(METRIC_ENTITY)
         if (sourceEntity != 0) 
             return (modelEntity.intValue as double) / (sourceEntity.intValue as double)
         else

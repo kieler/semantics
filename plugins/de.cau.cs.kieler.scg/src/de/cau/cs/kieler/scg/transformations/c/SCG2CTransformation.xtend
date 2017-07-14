@@ -110,7 +110,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         parameterMapping.clear
         val mainEntry = scg.getStringAnnotationValue("main")
         for(tickStart : tickStarts) {
-            if (tickStart.id.equals(mainEntry)) {
+            if (tickStart.id == null || tickStart.id.equals(mainEntry)) {
                 entryMapping.put(tickStart.id, "")
             } else {
                 entryMapping.put(tickStart.id, suffixCounter.toString)
@@ -184,7 +184,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             val PREs = <ValuedObject> newHashSet      
             
             if (node instanceof Assignment) {
-                val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+                val incomingControlFlows = node.incoming.filter(ControlFlow).filter[ it.eContainer != null ].toList
                 if (incomingControlFlows.size>1) {
                     val conditional = conditionalStack.pop
                     

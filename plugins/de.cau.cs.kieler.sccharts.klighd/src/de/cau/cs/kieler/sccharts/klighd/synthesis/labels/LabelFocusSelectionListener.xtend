@@ -25,7 +25,6 @@ import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook
 import java.lang.ref.WeakReference
 import java.util.HashSet
@@ -35,6 +34,7 @@ import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.ui.PlatformUI
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * Manages focusing of shortened labels. A label is focused if it is selected or the declaration of a 
@@ -49,8 +49,7 @@ class LabelFocusSelectionListener implements ISelectionChangedListener {
     private final static IProperty<Set<WeakReference<KLabel>>> FOCUSED_LABELS = new Property<Set<WeakReference<KLabel>>>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.labels.focus", emptySet)
 
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
 
     new() { // Handle injection
         Guice.createInjector().injectMembers(this);

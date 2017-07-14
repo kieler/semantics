@@ -1375,8 +1375,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getKextAccess().getRule();
 	}
 
-	//RootScope kext::KEXTScope:
-	//	{kext::KEXTScope} declarations+=Declaration*
+	//RootScope kext::KExtScope:
+	//	{kext::KExtScope} declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)*
 	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
 		return gaKExt.getRootScopeAccess();
@@ -1386,8 +1386,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootScopeAccess().getRule();
 	}
 
-	//Scope kext::KEXTScope:
-	//	{kext::KEXTScope} id=ID? '{'
+	//Scope kext::KExtScope:
+	//	{kext::KExtScope} id=ID? '{'
 	//	declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
 	public KExtGrammarAccess.ScopeElements getScopeAccess() {
@@ -1667,7 +1667,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//enum AssignOperator returns keffects::AssignOperator:
 	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
-	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=";
+	//	ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+	//	ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
 		return gaKEffects.getAssignOperatorAccess();
 	}
@@ -1768,7 +1769,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression)+)?
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
@@ -1782,7 +1783,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression)+)?
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaKExpressions.getLogicalAndExpressionAccess();
 	}
@@ -1796,7 +1797,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseAndExpression)+)?
+	//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -1810,7 +1811,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation)+)?
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -1878,7 +1879,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
 	//AddExpression Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+	//	subExpressions+=SubExpression)*)?
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -1892,7 +1894,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: var(A) - i
 	//SubExpression Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
+	//	('-' subExpressions+=MultExpression)*)?
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -1906,7 +1909,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
+	//	('*' subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1920,7 +1924,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 / 4
 	//DivExpression Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
+	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
+	//	subExpressions+=ModExpression)*)?
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -1935,7 +1940,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: i % j
 	//ModExpression Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)+)?
+	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}
@@ -2367,14 +2372,14 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
-	//PragmaAnnotation Annotation:
-	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
-	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
-		return gaAnnotations.getPragmaAnnotationAccess();
+	//Pragma:
+	//	StringPragma | PragmaTag;
+	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaAnnotations.getPragmaAccess();
 	}
 	
-	public ParserRule getPragmaAnnotationRule() {
-		return getPragmaAnnotationAccess().getRule();
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
 	}
 
 	//// Valued Annotation Rule
@@ -2443,14 +2448,14 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
-	//PragmaTagAnnotation PragmaAnnotation:
+	//PragmaTag Pragma:
 	//	'#' name=ExtendedID
-	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
-		return gaAnnotations.getPragmaTagAnnotationAccess();
+	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
+		return gaAnnotations.getPragmaTagAccess();
 	}
 	
-	public ParserRule getPragmaTagAnnotationRule() {
-		return getPragmaTagAnnotationAccess().getRule();
+	public ParserRule getPragmaTagRule() {
+		return getPragmaTagAccess().getRule();
 	}
 
 	//// KeyStringValueAnnotation
@@ -2476,14 +2481,14 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
-	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
-	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
-		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	//StringPragma:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
+		return gaAnnotations.getStringPragmaAccess();
 	}
 	
-	public ParserRule getPramgaKeyStringValueAnnotationRule() {
-		return getPramgaKeyStringValueAnnotationAccess().getRule();
+	public ParserRule getStringPragmaRule() {
+		return getStringPragmaAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation

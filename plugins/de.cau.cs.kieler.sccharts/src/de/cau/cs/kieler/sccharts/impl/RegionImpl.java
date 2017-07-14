@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  * @generated
  */
-public class RegionImpl extends ScopeImpl implements Region {
+public abstract class RegionImpl extends ScopeImpl implements Region {
     /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

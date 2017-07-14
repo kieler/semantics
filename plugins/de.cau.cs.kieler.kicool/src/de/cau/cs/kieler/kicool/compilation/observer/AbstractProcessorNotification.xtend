@@ -22,6 +22,6 @@ package de.cau.cs.kieler.kicool.compilation.observer
  */
 @Data
 abstract class AbstractProcessorNotification extends AbstractContextNotification {
-    val de.cau.cs.kieler.kicool.Processor processorEntry
-    val de.cau.cs.kieler.kicool.compilation.Processor processorUnit
+    val de.cau.cs.kieler.kicool.ProcessorReference processorReference
+    val de.cau.cs.kieler.kicool.compilation.Processor<?,?> processorInstance
 }

@@ -7,9 +7,9 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
-import de.cau.cs.kieler.annotations.PragmaAnnotation;
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation;
+import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
 import java.util.Set;
@@ -43,11 +43,8 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.PRAGMA_ANNOTATION:
-				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
-				sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA:
+				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
@@ -67,6 +64,9 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 					return; 
 				}
 				else break;
+			case AnnotationsPackage.STRING_PRAGMA:
+				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
@@ -122,33 +122,20 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Contexts:
-	 *     PragmaAnnotation returns PragmaAnnotation
-	 *     PragmaTagAnnotation returns PragmaAnnotation
+	 *     Pragma returns Pragma
+	 *     PragmaTag returns Pragma
 	 *
 	 * Constraint:
 	 *     name=ExtendedID
 	 */
-	protected void sequence_PragmaTagAnnotation(ISerializationContext context, PragmaAnnotation semanticObject) {
+	protected void sequence_PragmaTag(ISerializationContext context, Pragma semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0(), semanticObject.getName());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     PragmaAnnotation returns PragmaStringAnnotation
-	 *     PramgaKeyStringValueAnnotation returns PragmaStringAnnotation
-	 *
-	 * Constraint:
-	 *     (name=ExtendedID values+=EStringAllTypes values+=EStringAllTypes*)
-	 */
-	protected void sequence_PramgaKeyStringValueAnnotation(ISerializationContext context, PragmaStringAnnotation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -200,6 +187,19 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *     (name=ExtendedID type=ExtendedID values+=EStringBoolean values+=EStringBoolean*)
 	 */
 	protected void sequence_RestrictedTypedKeyStringValueAnnotation(ISerializationContext context, TypedStringAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Pragma returns StringPragma
+	 *     StringPragma returns StringPragma
+	 *
+	 * Constraint:
+	 *     (name=ExtendedID values+=EStringAllTypes values+=EStringAllTypes*)
+	 */
+	protected void sequence_StringPragma(ISerializationContext context, StringPragma semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -404,8 +404,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                 model = ((SCCharts) myModel).getRootStates().get(0);
             }
             
-            if (model != null && kExpressionValuedObjectExtensions.getValuedObjects(model) != null) {
-                for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjects(model)) {
+            if (model != null && kExpressionValuedObjectExtensions.getValuedObjectsFromEObject(model) != null) {
+                for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjectsFromEObject(model)) {
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
                         if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
                             res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));

@@ -29,10 +29,10 @@ import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.DelayType;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.StateType;
 import de.cau.cs.kieler.sccharts.Transition;
 
 /**
@@ -260,7 +260,7 @@ public class SCTXTransientValueService extends DefaultTransientValueService {
     }
 
     private boolean actionIsEmpty(Action a) {
-        return a.getDelay() == 1 && a.isImmediate() == false && a.getTrigger() == null
+        return a.getTriggerDelay() == 1 && a.getDelay() != DelayType.IMMEDIATE && a.getTrigger() == null
                 && a.getEffects().isEmpty();
     }
 

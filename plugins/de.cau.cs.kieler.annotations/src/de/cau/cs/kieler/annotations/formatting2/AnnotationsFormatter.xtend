@@ -3,17 +3,28 @@
  */
 package de.cau.cs.kieler.annotations.formatting2;
 
-import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
-import org.eclipse.xtext.formatting2.AbstractFormatter2;
-import org.eclipse.xtext.formatting2.IFormattableDocument;
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.Pragma
+import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess
+import org.eclipse.xtext.formatting2.AbstractFormatter2
+import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class AnnotationsFormatter extends AbstractFormatter2 {
 	
 	@Inject extension AnnotationsGrammarAccess
 
-    override format(Object obj, IFormattableDocument document) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    def dispatch format(Annotation annotation, extension IFormattableDocument document) {
+        annotation.regionFor.keyword("[")?.prepend[ noSpace ].append[ noSpace ]
+        annotation.regionFor.keyword("]")?.prepend[ noSpace ]
+        annotation.regionFor.keyword(",")?.prepend[ noSpace ]
+        annotation.regionFor.keyword("@")?.append[ noSpace ]
+        annotation.append[ newLine ]
+    }
+    
+    def dispatch format(Pragma pragma, extension IFormattableDocument document) {
+        pragma.regionFor.keyword("#")?.append[ noSpace ]
+        pragma.append[ newLine ]
     }
 
 }

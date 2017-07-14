@@ -31,8 +31,14 @@ enum ProcessorType {
      *  Also, if the optimization fails, the source model is considered valid for the ongoing compilation. */
     OPTIMIZER, 
     
+    /** Specialized analyzer that creates metric values. */
+    METRIC, 
+
+    /** Specialized analyzer that reports warnings and errors. */
+    VALIDATOR, 
+    
     /** The processor is meant to perform testing on the model. */
-    TESTER, 
+    TESTER,     
     
     /** The processor is in a development phase (e.g. during runtime prototyping) and not yet ready for stable release. */
     DEVELOPER

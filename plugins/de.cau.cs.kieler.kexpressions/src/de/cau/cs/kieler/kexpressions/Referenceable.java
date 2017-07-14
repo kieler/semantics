@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceable()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
 public interface Referenceable extends EObject {

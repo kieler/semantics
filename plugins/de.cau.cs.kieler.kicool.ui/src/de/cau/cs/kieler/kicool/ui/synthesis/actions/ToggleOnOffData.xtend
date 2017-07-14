@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
 import org.eclipse.xtend.lib.annotations.Data
+import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * Class for holding the data of on/off requests.
@@ -23,5 +24,5 @@ import org.eclipse.xtend.lib.annotations.Data
  */
  @Data
 class ToggleOnOffData {
-    de.cau.cs.kieler.kicool.Processor metaProcessor
+    ProcessorReference processorReference
 }

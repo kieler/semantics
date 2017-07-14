@@ -59,10 +59,10 @@ public interface KEffectsPackage extends EPackage {
     KEffectsPackage eINSTANCE = de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.EffectImpl <em>Effect</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.Effect <em>Effect</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.keffects.impl.EffectImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.Effect
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getEffect()
      * @generated
      */
@@ -533,10 +533,10 @@ public interface KEffectsPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.EffectImpl <em>Effect</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.Effect <em>Effect</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.keffects.impl.EffectImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.Effect
          * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getEffect()
          * @generated
          */

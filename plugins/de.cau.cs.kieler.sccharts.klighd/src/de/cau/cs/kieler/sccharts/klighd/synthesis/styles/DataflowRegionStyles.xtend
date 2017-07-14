@@ -39,7 +39,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
  * 
  */
 @ViewSynthesisShared
-class DataflowRegionStyles {
+class DataflowRegionStyles extends ControlflowRegionStyles {
 
     @Inject
     extension KRenderingExtensions
@@ -60,7 +60,7 @@ class DataflowRegionStyles {
     /**
      * Adds a region figure.
      */
-    def KRectangle addRegionFigure(KNode node) {
+    override KRectangle addRegionFigure(KNode node) {
         node.addRectangle() => [
             background = REGION_BACKGROUND.color;
             foreground = REGION_FOREGROND.color;
@@ -72,7 +72,7 @@ class DataflowRegionStyles {
     /**
      * Adds a button with text.
      */
-    def KText addButton(KContainerRendering container, String text) {
+    override KText addButton(KContainerRendering container, String text) {
         container.addText(text) => [
             foreground = REGION_BUTTON.color;
             fontSize = 10;
@@ -82,51 +82,17 @@ class DataflowRegionStyles {
     }
 
     /**
-     * Adds an area for inner states.<br>
-     * Incompatible with {@link addStatesAndDeclarationsArea}.
-     */
-    def addStatesArea(KContainerRendering container, boolean useHeaderSpace) {
-        container.addChildArea() => [
-            if (useHeaderSpace) {
-                setAreaPlacementData().from(LEFT, -2, 0, TOP, -2, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-            } else {
-                setAreaPlacementData().from(LEFT, -2, 0, TOP, 8, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-            }
-        ]
-    }
-
-    /**
-     * Adds an area for inner states and a container for declarations.<br>
-     * Incompatible with {@link addStatesArea}.
-     */
-    def addStatesAndDeclarationsArea(KContainerRendering container) {
-        container.addRectangle() => [
-            invisible = true;
-            setGridPlacement(1);
-            // Declarations Area
-            val declarationsArea = addRectangle => [
-                invisible = true;
-                setGridPlacement(1);
-                setGridPlacementData().from(LEFT, 3, 0, TOP, 16, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0);
-            ]
-            container.setProperty(DECLARATIONS_CONTAINER, declarationsArea);
-            // States Area
-            addChildArea().setGridPlacementData().from(LEFT, -2, 0, TOP, -8, 0).to(RIGHT, -2, 0, BOTTOM, 3, 0);
-        ]
-    }
-
-    /**
      * Adds a label in declaration style with the given components.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
+    override KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
         container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
     }
     
     /** 
      * Retrieves the extended container for the region.
      */
-    def getRegionExtendedContainer(KNode node) {
+    override getRegionExtendedContainer(KNode node) {
         return node.data.filter(KContainerRendering).filter [
             getProperty(KlighdProperties.EXPANDED_RENDERING)
         ].head;

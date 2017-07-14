@@ -70,7 +70,7 @@ class StateActionsHook extends SynthesisActionHook {
     }
 
     override processState(State state, KNode node) {
-        if (!state.localActions.empty) {
+        if (!state.actions.empty) {
             val container = node.contentContainer
             val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
 
@@ -119,7 +119,7 @@ class StateActionsHook extends SynthesisActionHook {
 
                 // Show or hide actions
                 if (actions != null) {
-                    if (SHOW_STATE_ACTIONS.booleanValue && !state.localActions.empty) {
+                    if (SHOW_STATE_ACTIONS.booleanValue && !state.actions.empty) {
                         // Insert actions in correct position
                         val pos = actions.getProperty(INDEX)
                         container.children.remove(pos)

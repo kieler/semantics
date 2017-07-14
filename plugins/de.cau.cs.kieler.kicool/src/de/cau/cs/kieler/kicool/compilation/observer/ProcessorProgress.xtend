@@ -13,8 +13,9 @@
 package de.cau.cs.kieler.kicool.compilation.observer
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.Processor
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
  * Notification class for the processor progress event.
@@ -27,8 +28,8 @@ class ProcessorProgress extends AbstractProcessorNotification {
     
     @Accessors double progress
     
-    new(double progress, CompilationContext compilationContext, Processor processorEntry, de.cau.cs.kieler.kicool.compilation.Processor processorUnit) {
-        super(compilationContext, processorEntry, processorUnit)
+    new(double progress, CompilationContext compilationContext, ProcessorReference processorReference, Processor<?,?> processorInstance) {
+        super(compilationContext, processorReference, processorInstance)
         this.progress = progress
     }
     

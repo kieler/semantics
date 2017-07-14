@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
@@ -28,7 +29,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
  *
  * @generated
  */
-public class IntValueImpl extends ValueImpl implements IntValue {
+public class IntValueImpl extends EObjectImpl implements IntValue {
     /**
      * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
      * <!-- begin-user-doc -->

@@ -2,15 +2,14 @@
  */
 package de.cau.cs.kieler.kicool.impl;
 
+import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolFactory;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.Metric;
-import de.cau.cs.kieler.kicool.Processor;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
-import de.cau.cs.kieler.kicool.ProcessorContext;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
 
+import de.cau.cs.kieler.kicool.ProcessorReference;
 import de.cau.cs.kieler.kicool.ProcessorSystem;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -65,12 +64,11 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case KiCoolPackage.SYSTEM: return createSystem();
-            case KiCoolPackage.PROCESSOR: return createProcessor();
+            case KiCoolPackage.PROCESSOR_REFERENCE: return createProcessorReference();
             case KiCoolPackage.PROCESSOR_SYSTEM: return createProcessorSystem();
             case KiCoolPackage.PROCESSOR_GROUP: return createProcessorGroup();
             case KiCoolPackage.PROCESSOR_ALTERNATIVE_GROUP: return createProcessorAlternativeGroup();
-            case KiCoolPackage.METRIC: return createMetric();
-            case KiCoolPackage.PROCESSOR_CONTEXT: return createProcessorContext();
+            case KiCoolPackage.INTERMEDIATE_REFERENCE: return createIntermediateReference();
             case KiCoolPackage.KV_PAIR: return createKVPair();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -92,9 +90,9 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Processor createProcessor() {
-        ProcessorImpl processor = new ProcessorImpl();
-        return processor;
+    public ProcessorReference createProcessorReference() {
+        ProcessorReferenceImpl processorReference = new ProcessorReferenceImpl();
+        return processorReference;
     }
 
     /**
@@ -132,19 +130,9 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Metric createMetric() {
-        MetricImpl metric = new MetricImpl();
-        return metric;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ProcessorContext createProcessorContext() {
-        ProcessorContextImpl processorContext = new ProcessorContextImpl();
-        return processorContext;
+    public IntermediateReference createIntermediateReference() {
+        IntermediateReferenceImpl intermediateReference = new IntermediateReferenceImpl();
+        return intermediateReference;
     }
 
     /**

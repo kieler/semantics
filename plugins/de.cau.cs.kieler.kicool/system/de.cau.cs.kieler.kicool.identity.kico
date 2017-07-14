@@ -3,6 +3,6 @@ system de.cau.cs.kieler.kicool.identity
 	label "Identity Transformation System"
 	input Object
 	
-metric de.cau.cs.kieler.kicool.processors.metrics.eObjectCount	
+intermediate de.cau.cs.kieler.kicool.processors.metrics.eObjectCount	
 	
 de.cau.cs.kieler.kicool.processors.identity

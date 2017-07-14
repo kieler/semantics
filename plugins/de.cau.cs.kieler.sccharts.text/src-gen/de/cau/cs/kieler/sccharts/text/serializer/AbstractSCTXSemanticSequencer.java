@@ -7,9 +7,9 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
-import de.cau.cs.kieler.annotations.PragmaAnnotation;
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation;
+import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.StringPragma;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.FloatValue;
@@ -31,8 +31,8 @@ import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
-import de.cau.cs.kieler.kexpressions.kext.KEXTScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
@@ -41,12 +41,12 @@ import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
-import de.cau.cs.kieler.sccharts.FinalAction;
-import de.cau.cs.kieler.sccharts.InitAction;
-import de.cau.cs.kieler.sccharts.IterateAction;
+import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
+import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess;
@@ -78,20 +78,9 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.PRAGMA_ANNOTATION:
-				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA:
+				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
-			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
-				if (rule == grammarAccess.getPragmasRule()) {
-					sequence_Pragmas(context, (PragmaStringAnnotation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getPragmaAnnotationRule()
-						|| rule == grammarAccess.getPramgaKeyStringValueAnnotationRule()) {
-					sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
-					return; 
-				}
-				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
@@ -110,6 +99,9 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 					return; 
 				}
 				else break;
+			case AnnotationsPackage.STRING_PRAGMA:
+				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
@@ -269,11 +261,11 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				return; 
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
-					sequence_RootScope(context, (KEXTScope) semanticObject); 
+					sequence_RootScope(context, (KExtScope) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getScopeRule()) {
-					sequence_Scope(context, (KEXTScope) semanticObject); 
+					sequence_Scope(context, (KExtScope) semanticObject); 
 					return; 
 				}
 				else break;
@@ -317,17 +309,14 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
 				return; 
-			case SCChartsPackage.FINAL_ACTION:
-				sequence_FinalAction(context, (FinalAction) semanticObject); 
-				return; 
-			case SCChartsPackage.INIT_ACTION:
-				sequence_InitAction(context, (InitAction) semanticObject); 
-				return; 
-			case SCChartsPackage.ITERATE_ACTION:
-				sequence_IterateAction(context, (IterateAction) semanticObject); 
+			case SCChartsPackage.PRECEDING_ACTION:
+				sequence_PrecedingAction(context, (PrecedingAction) semanticObject); 
 				return; 
 			case SCChartsPackage.SC_CHARTS:
 				sequence_SCCharts(context, (SCCharts) semanticObject); 
+				return; 
+			case SCChartsPackage.SCOPE_CALL:
+				sequence_ScopeCall(context, (ScopeCall) semanticObject); 
 				return; 
 			case SCChartsPackage.STATE:
 				if (rule == grammarAccess.getRootStateRule()) {
@@ -339,6 +328,9 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 					return; 
 				}
 				else break;
+			case SCChartsPackage.SUCCEEDING_ACTION:
+				sequence_SucceedingAction(context, (SucceedingAction) semanticObject); 
+				return; 
 			case SCChartsPackage.SUSPEND_ACTION:
 				sequence_SuspendAction(context, (SuspendAction) semanticObject); 
 				return; 
@@ -394,7 +386,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     DuringAction returns DuringAction
 	 *
 	 * Constraint:
-	 *     (immediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (delay=DelayType? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_DuringAction(ISerializationContext context, DuringAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -429,58 +421,25 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     LocalAction returns FinalAction
-	 *     FinalAction returns FinalAction
+	 *     Parameter returns Parameter
+	 *
+	 * Constraint:
+	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?)
+	 */
+	protected void sequence_Parameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LocalAction returns PrecedingAction
+	 *     PrecedingAction returns PrecedingAction
 	 *
 	 * Constraint:
 	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
-	protected void sequence_FinalAction(ISerializationContext context, FinalAction semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     LocalAction returns InitAction
-	 *     InitAction returns InitAction
-	 *
-	 * Constraint:
-	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
-	 */
-	protected void sequence_InitAction(ISerializationContext context, InitAction semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     LocalAction returns IterateAction
-	 *     IterateAction returns IterateAction
-	 *
-	 * Constraint:
-	 *     (immediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
-	 */
-	protected void sequence_IterateAction(ISerializationContext context, IterateAction semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Pragmas returns PragmaStringAnnotation
-	 *
-	 * Constraint:
-	 *     (
-	 *         (name='version' values+=SCXVersions) | 
-	 *         (name='director' values+=SCXDirectors) | 
-	 *         (name='import' values+=EString) | 
-	 *         (name='symbols' values+=EString values+=EString?) | 
-	 *         (name='symbol' values+=EString values+=EString) | 
-	 *         (name='font' values+=EString)
-	 *     )
-	 */
-	protected void sequence_Pragmas(ISerializationContext context, PragmaStringAnnotation semanticObject) {
+	protected void sequence_PrecedingAction(ISerializationContext context, PrecedingAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -495,7 +454,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         declarations+=DeclarationWOSemicolon* 
-	 *         localActions+=LocalAction* 
+	 *         actions+=LocalAction* 
 	 *         (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region+)?
 	 *     )
 	 */
@@ -509,9 +468,21 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     SCCharts returns SCCharts
 	 *
 	 * Constraint:
-	 *     (((annotations+=Pragmas | annotations+=PragmaAnnotation)+ rootStates+=RootState+) | rootStates+=RootState+)?
+	 *     ((pragmas+=Pragma+ rootStates+=RootState+) | rootStates+=RootState+)?
 	 */
 	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ScopeCall returns ScopeCall
+	 *
+	 * Constraint:
+	 *     (scope=[State|ID] (parameters+=Parameter parameters+=Parameter*)?)
+	 */
+	protected void sequence_ScopeCall(ISerializationContext context, ScopeCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -554,13 +525,13 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             (referencedScope=[State|ID] (parameters+=Parameter parameters+=Parameter*)?) | 
+	 *             reference=ScopeCall | 
 	 *             (
 	 *                 declarations+=DeclarationWOSemicolon* 
-	 *                 localActions+=LocalAction* 
+	 *                 actions+=LocalAction* 
 	 *                 (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region+)?
 	 *             )
-	 *         ) 
+	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
 	 */
@@ -571,11 +542,24 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     LocalAction returns SucceedingAction
+	 *     SucceedingAction returns SucceedingAction
+	 *
+	 * Constraint:
+	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_SucceedingAction(ISerializationContext context, SucceedingAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LocalAction returns SuspendAction
 	 *     SuspendAction returns SuspendAction
 	 *
 	 * Constraint:
-	 *     (immediate?='immediate'? weak?='weak'? trigger=BoolExpression?)
+	 *     (delay=DelayType? weak?='weak'? trigger=BoolExpression?)
 	 */
 	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -589,12 +573,12 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=RestrictedTypeAnnotation* 
-	 *         type=TransitionType 
+	 *         (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
 	 *         targetState=[State|ID] 
-	 *         immediate?='immediate'? 
+	 *         delay=DelayType? 
 	 *         deferred?='deferred'? 
 	 *         history=HistoryType? 
-	 *         ((delay=INT? trigger=BoolExpression (effects+=Effect effects+=Effect*)) | (effects+=Effect effects+=Effect*) | label=STRING)?
+	 *         ((triggerDelay=INT? trigger=BoolExpression (effects+=Effect effects+=Effect*)) | (effects+=Effect effects+=Effect*) | label=STRING)?
 	 *     )
 	 */
 	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {

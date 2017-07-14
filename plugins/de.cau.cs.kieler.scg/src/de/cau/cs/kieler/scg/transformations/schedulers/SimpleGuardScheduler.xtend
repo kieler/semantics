@@ -99,7 +99,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
     	 * not scheduled. The topological sort should remove nodes after they have been placed.
     	 */
-    	val nodesToSchedule = scg.nodes.filter[ incoming.filter(GuardDependency).empty ].toSet
+    	val nodesToSchedule = scg.nodes.filter[ incoming.filter(GuardDependency).empty].toSet
     	val estimatedScheduleSize = nodesToSchedule.size 	
     	
     	/**
@@ -114,8 +114,9 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	}
     	
     	// Create schedule dependencies for the generated schedule
-    	for(var i = 0; i < schedule.size-1; i++) {
-    		schedule.get(i).createScheduleDependency(schedule.get(i+1))
+    	val scheduleList = schedule.toList
+    	for(var i = 0; i < scheduleList.size-1; i++) {
+    		scheduleList.get(i).createScheduleDependency(scheduleList.get(i+1))
     	}
     	val threadEntry = ScgFactory.eINSTANCE.createEntry
     	val threadExit = ScgFactory.eINSTANCE.createExit
@@ -130,8 +131,8 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     		SCGPlugin.log("The SCG is asc-schedulable.")
     		var sl = "";
     		for(s : schedule) {
-    			sl += (s as Assignment).valuedObject.name + " "
-//    			System.out.print(s.printNode + " ")
+       		    if (s instanceof Assignment)
+                    sl += (s as Assignment).valuedObject.name + " "
     		}
     		SCGPlugin.log(sl, Level.FINE)
     	}

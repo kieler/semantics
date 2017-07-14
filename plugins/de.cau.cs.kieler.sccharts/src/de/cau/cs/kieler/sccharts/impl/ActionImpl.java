@@ -17,6 +17,7 @@ import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.DelayType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -44,14 +45,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTrigger <em>Trigger</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTriggerDelay <em>Trigger Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#isImmediate <em>Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getDelay <em>Delay</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ActionImpl extends AnnotatableImpl implements Action {
+public abstract class ActionImpl extends AnnotatableImpl implements Action {
     /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -80,24 +81,24 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     protected Expression trigger;
 
     /**
-     * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
+     * The default value of the '{@link #getTriggerDelay() <em>Trigger Delay</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDelay()
+     * @see #getTriggerDelay()
      * @generated
      * @ordered
      */
-    protected static final int DELAY_EDEFAULT = 1;
+    protected static final int TRIGGER_DELAY_EDEFAULT = 1;
 
     /**
-     * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
+     * The cached value of the '{@link #getTriggerDelay() <em>Trigger Delay</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDelay()
+     * @see #getTriggerDelay()
      * @generated
      * @ordered
      */
-    protected int delay = DELAY_EDEFAULT;
+    protected int triggerDelay = TRIGGER_DELAY_EDEFAULT;
 
     /**
      * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
@@ -120,24 +121,24 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
+     * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isImmediate()
+     * @see #getDelay()
      * @generated
      * @ordered
      */
-    protected static final boolean IMMEDIATE_EDEFAULT = false;
+    protected static final DelayType DELAY_EDEFAULT = DelayType.UNDEFINED;
 
     /**
-     * The cached value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
+     * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isImmediate()
+     * @see #getDelay()
      * @generated
      * @ordered
      */
-    protected boolean immediate = IMMEDIATE_EDEFAULT;
+    protected DelayType delay = DELAY_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -218,7 +219,28 @@ public class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
-    public int getDelay() {
+    public int getTriggerDelay() {
+        return triggerDelay;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTriggerDelay(int newTriggerDelay) {
+        int oldTriggerDelay = triggerDelay;
+        triggerDelay = newTriggerDelay;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__TRIGGER_DELAY, oldTriggerDelay, triggerDelay));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DelayType getDelay() {
         return delay;
     }
 
@@ -227,9 +249,9 @@ public class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setDelay(int newDelay) {
-        int oldDelay = delay;
-        delay = newDelay;
+    public void setDelay(DelayType newDelay) {
+        DelayType oldDelay = delay;
+        delay = newDelay == null ? DELAY_EDEFAULT : newDelay;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__DELAY, oldDelay, delay));
     }
@@ -260,27 +282,6 @@ public class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isImmediate() {
-        return immediate;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setImmediate(boolean newImmediate) {
-        boolean oldImmediate = immediate;
-        immediate = newImmediate;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__IMMEDIATE, oldImmediate, immediate));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -304,12 +305,12 @@ public class ActionImpl extends AnnotatableImpl implements Action {
                 return getEffects();
             case SCChartsPackage.ACTION__TRIGGER:
                 return getTrigger();
-            case SCChartsPackage.ACTION__DELAY:
-                return getDelay();
+            case SCChartsPackage.ACTION__TRIGGER_DELAY:
+                return getTriggerDelay();
             case SCChartsPackage.ACTION__LABEL:
                 return getLabel();
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                return isImmediate();
+            case SCChartsPackage.ACTION__DELAY:
+                return getDelay();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -330,14 +331,14 @@ public class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__TRIGGER:
                 setTrigger((Expression)newValue);
                 return;
-            case SCChartsPackage.ACTION__DELAY:
-                setDelay((Integer)newValue);
+            case SCChartsPackage.ACTION__TRIGGER_DELAY:
+                setTriggerDelay((Integer)newValue);
                 return;
             case SCChartsPackage.ACTION__LABEL:
                 setLabel((String)newValue);
                 return;
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                setImmediate((Boolean)newValue);
+            case SCChartsPackage.ACTION__DELAY:
+                setDelay((DelayType)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -357,14 +358,14 @@ public class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__TRIGGER:
                 setTrigger((Expression)null);
                 return;
-            case SCChartsPackage.ACTION__DELAY:
-                setDelay(DELAY_EDEFAULT);
+            case SCChartsPackage.ACTION__TRIGGER_DELAY:
+                setTriggerDelay(TRIGGER_DELAY_EDEFAULT);
                 return;
             case SCChartsPackage.ACTION__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                setImmediate(IMMEDIATE_EDEFAULT);
+            case SCChartsPackage.ACTION__DELAY:
+                setDelay(DELAY_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -382,12 +383,12 @@ public class ActionImpl extends AnnotatableImpl implements Action {
                 return effects != null && !effects.isEmpty();
             case SCChartsPackage.ACTION__TRIGGER:
                 return trigger != null;
-            case SCChartsPackage.ACTION__DELAY:
-                return delay != DELAY_EDEFAULT;
+            case SCChartsPackage.ACTION__TRIGGER_DELAY:
+                return triggerDelay != TRIGGER_DELAY_EDEFAULT;
             case SCChartsPackage.ACTION__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                return immediate != IMMEDIATE_EDEFAULT;
+            case SCChartsPackage.ACTION__DELAY:
+                return delay != DELAY_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -402,12 +403,12 @@ public class ActionImpl extends AnnotatableImpl implements Action {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (delay: ");
-        result.append(delay);
+        result.append(" (triggerDelay: ");
+        result.append(triggerDelay);
         result.append(", label: ");
         result.append(label);
-        result.append(", immediate: ");
-        result.append(immediate);
+        result.append(", delay: ");
+        result.append(delay);
         result.append(')');
         return result.toString();
     }

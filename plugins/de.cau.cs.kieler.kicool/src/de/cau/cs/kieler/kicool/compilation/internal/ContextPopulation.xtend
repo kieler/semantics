@@ -14,8 +14,10 @@ package de.cau.cs.kieler.kicool.compilation.internal
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.compilation.Environment
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.IntermediateReference
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Internal class that creates all necessary instances of a compilation context.
@@ -31,36 +33,37 @@ class ContextPopulation {
      */
      static def void populateContext(CompilationContext cc) {
         cc.system.processors.populate(cc)     
-        cc.system.metrics.forEach[ it.populate(cc) ]
+        cc.system.intermediates.forEach[ it.populate(cc) ]
     }
     
-    static dispatch def void populate(de.cau.cs.kieler.kicool.Processor processor, CompilationContext cc) {
-        val processorCompilationUnit = KiCoolRegistration.getProcessorInstance(processor.id)
-        if (processorCompilationUnit == null) {
-            System.err.println("The context cannot find a compilation unit for the processor " + processor)
+    static dispatch def void populate(ProcessorReference processorReference, CompilationContext cc) {
+        val processorInstance = KiCoolRegistration.getProcessorInstance(processorReference.id)
+        if (processorInstance == null) {
+            System.err.println("The context cannot find a compilation unit for the processor " + processorReference)
             return
         }
         val env = new Environment()
         val envP = new Environment()
-        env.enabled = true
+        env.setProperty(Environment.ENABLED, true)
         
-        processorCompilationUnit.setEnvironment(env, envP)
+        processorInstance.setEnvironment(env, envP)
         
-        cc.processorMap.put(processor, processorCompilationUnit)
+        cc.processorMap.put(processorReference, processorInstance)
+        cc.processorInstancesSequence.add(processorInstance)
     }
 
-    static dispatch def void populate(de.cau.cs.kieler.kicool.Metric metric, CompilationContext cc) {
-        val processorCompilationUnit = KiCoolRegistration.getProcessorInstance(metric.id)
-        if (processorCompilationUnit == null) {
-            System.err.println("The context cannot find a compilation unit for the metric " + metric)
+    static dispatch def void populate(IntermediateReference intermediateReference, CompilationContext cc) {
+        val processorInstance = KiCoolRegistration.getProcessorInstance(intermediateReference.id)
+        if (processorInstance == null) {
+            System.err.println("The context cannot find a compilation unit for the metric " + intermediateReference)
             return
         }
         val env = new Environment()
         val envP = new Environment()
         
-        processorCompilationUnit.setEnvironment(env, envP)
+        processorInstance.setEnvironment(env, envP)
         
-        cc.processorMap.put(metric, processorCompilationUnit)
+        cc.processorMap.put(intermediateReference, processorInstance)
     }
     
     static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorGroup processorGroup, CompilationContext cc) {

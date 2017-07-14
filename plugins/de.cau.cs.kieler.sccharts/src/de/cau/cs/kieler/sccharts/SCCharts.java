@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.annotations.Pragmatable;
+
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -31,28 +33,28 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface SCCharts extends Scope {
-	/**
+public interface SCCharts extends Pragmatable {
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-	/**
+    /**
      * Returns the value of the '<em><b>Root States</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
      * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Root States</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Root States</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Root States</em>' containment reference list.
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSCCharts_RootStates()
      * @model containment="true"
      * @generated
      */
-	EList<State> getRootStates();
+    EList<State> getRootStates();
 
 } // SCCharts

@@ -1,0 +1,11 @@
+system de.cau.cs.kieler.scg.netlist
+	version 1 
+	label "SCG Netlist-based"
+
+de.cau.cs.kieler.scg.processors.transformators.dependency
+de.cau.cs.kieler.scg.processors.transformators.basicBlocks
+de.cau.cs.kieler.scg.processors.transformators.expressions
+de.cau.cs.kieler.scg.processors.transformators.guards
+de.cau.cs.kieler.scg.processors.transformators.scheduler
+de.cau.cs.kieler.scg.processors.transformators.sequentializer
+de.cau.cs.kieler.scg.processors.transformators.C

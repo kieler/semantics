@@ -18,6 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Kext extends KEXTScope {
+public interface Kext extends KExtScope {
 
 } // Kext

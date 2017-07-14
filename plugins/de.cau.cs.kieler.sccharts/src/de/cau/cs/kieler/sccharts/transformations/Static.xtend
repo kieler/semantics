@@ -18,12 +18,12 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
-
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * SCCharts Static Transformation.
@@ -58,14 +58,10 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions    
-
-    @Inject
-    extension ValuedObjectRise
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension KExpressionsDeclarationExtensions    
+    @Inject extension ValuedObjectRise
     
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -80,15 +76,13 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     // This is applied for all superstates that contain static variable declarations.
     //
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-
-        targetRootState.transformValuedObjectRise
+        rootState.transformValuedObjectRise
         
         // Traverse all states
-        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
-            targetTransition.transformStatic(targetRootState);
+        for (targetTransition : rootState.getAllStates.toList) {
+            targetTransition.transformStatic(rootState);
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     def void transformStatic(State state, State targetRootState) {

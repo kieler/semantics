@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.State;
  *
  * @author chsch
  * @author als
+ * @author ssm
  */
 
 public class SCTXResource extends LazyLinkingResource {
@@ -43,7 +44,7 @@ public class SCTXResource extends LazyLinkingResource {
      * Starts model consolidation before {@link LazyLinkingResource#doLinking()}.
      */
     protected void doLinking() {
-        consolidateModel();
+//        consolidateModel();
         super.doLinking();
     }
 
@@ -85,40 +86,29 @@ public class SCTXResource extends LazyLinkingResource {
 
     // ---------------------------------------------------------------------------------------
 
-    /**
-     * Iterates on the parsed model and delegates to {@link #setupTickSignal(Region)},
-     * {@link #setupScopeID(Scope, HashSet)} and {@link #setupPriorities(State)}.
-     */
-    private void consolidateModel() {
+//    /**
+//     * Iterates on the parsed model and delegates to {@link #setupTickSignal(Region)},
+//     * {@link #setupScopeID(Scope, HashSet)} and {@link #setupPriorities(State)}.
+//     */
+//    private void consolidateModel() {
+//
+//        EObject o = null;
+//        for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
+//            o = i.next();
+//            if (SCChartsPackage.eINSTANCE.getScope().isInstance(o)) {
+//                setupScopeLabel((Scope) o);
+//            }
+//        }
+//    }
+//    
+//    /**
+//     * Sets implicit scope labels.
+//     */
+//    private void setupScopeLabel(Scope scope) {
+//        if (scope.getLabel() == null) {
+//            scope.setLabel(scope.getId());
+//        }
+//    }
 
-        EObject o = null;
-        for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
-            o = i.next();
-            if (SCChartsPackage.eINSTANCE.getScope().isInstance(o)) {
-                setupScopeLabel((Scope) o);
-            }
-            if (SCChartsPackage.eINSTANCE.getState().isInstance(o)) {
-                setupPriorities((State) o);
-            }
-        }
-    }
-    
-    /**
-     * Sets implicit scope labels.
-     */
-    private void setupScopeLabel(Scope scope) {
-        if (scope.getLabel() == null) {
-            scope.setLabel(scope.getId());
-        }
-    }
-
-    /**
-     * Initializes the transition priority to 1 one exactly 1 transition is present.
-     */
-    private void setupPriorities(State s) {
-        if (s.getOutgoingTransitions().size()==1) {
-            s.getOutgoingTransitions().get(0).setPriority(1);
-        }
-    }
 
 }

@@ -633,8 +633,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                         sourceModelHasErrorMarkers = true;
                     }
 
-                    IFile underlyingFile = ResourceUtil.getUnderlyingFile(eResource);
                     try {
+                        IFile underlyingFile = ResourceUtil.getUnderlyingFile(eResource);
                         if (underlyingFile != null) {
                             sourceModelHasErrorMarkers |=
                                     underlyingFile.findMarkers(IMarker.PROBLEM, false,

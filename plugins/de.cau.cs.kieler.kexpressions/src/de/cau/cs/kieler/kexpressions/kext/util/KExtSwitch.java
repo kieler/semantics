@@ -72,11 +72,21 @@ public class KExtSwitch<T> extends Switch<T> {
             case KExtPackage.KEXT: {
                 Kext kext = (Kext)theEObject;
                 T result = caseKext(kext);
-                if (result == null) result = caseKEXTScope(kext);
+                if (result == null) result = caseKExtScope(kext);
                 if (result == null) result = caseDeclarationScope(kext);
                 if (result == null) result = caseAnnotatable(kext);
                 if (result == null) result = caseIdentifiable(kext);
                 if (result == null) result = caseReferenceable(kext);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExtPackage.KEXT_SCOPE: {
+                KExtScope kExtScope = (KExtScope)theEObject;
+                T result = caseKExtScope(kExtScope);
+                if (result == null) result = caseDeclarationScope(kExtScope);
+                if (result == null) result = caseAnnotatable(kExtScope);
+                if (result == null) result = caseIdentifiable(kExtScope);
+                if (result == null) result = caseReferenceable(kExtScope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -99,16 +109,6 @@ public class KExtSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExtPackage.KEXT_SCOPE: {
-                KEXTScope kextScope = (KEXTScope)theEObject;
-                T result = caseKEXTScope(kextScope);
-                if (result == null) result = caseDeclarationScope(kextScope);
-                if (result == null) result = caseAnnotatable(kextScope);
-                if (result == null) result = caseIdentifiable(kextScope);
-                if (result == null) result = caseReferenceable(kextScope);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             default: return defaultCase(theEObject);
         }
     }
@@ -125,6 +125,21 @@ public class KExtSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseKext(Kext object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseKExtScope(KExtScope object) {
         return null;
     }
 
@@ -170,21 +185,6 @@ public class KExtSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclarationScope(DeclarationScope object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>KEXT Scope</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>KEXT Scope</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseKEXTScope(KEXTScope object) {
         return null;
     }
 

@@ -22,15 +22,6 @@ public interface KEffectsFactory extends EFactory {
     KEffectsFactory eINSTANCE = de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Effect</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Effect</em>'.
-     * @generated
-     */
-    Effect createEffect();
-
-    /**
      * Returns a new object of class '<em>Assignment</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

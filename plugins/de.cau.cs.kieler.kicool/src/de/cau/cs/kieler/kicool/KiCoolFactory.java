@@ -31,13 +31,13 @@ public interface KiCoolFactory extends EFactory {
     System createSystem();
 
     /**
-     * Returns a new object of class '<em>Processor</em>'.
+     * Returns a new object of class '<em>Processor Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Processor</em>'.
+     * @return a new object of class '<em>Processor Reference</em>'.
      * @generated
      */
-    Processor createProcessor();
+    ProcessorReference createProcessorReference();
 
     /**
      * Returns a new object of class '<em>Processor System</em>'.
@@ -67,22 +67,13 @@ public interface KiCoolFactory extends EFactory {
     ProcessorAlternativeGroup createProcessorAlternativeGroup();
 
     /**
-     * Returns a new object of class '<em>Metric</em>'.
+     * Returns a new object of class '<em>Intermediate Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Metric</em>'.
+     * @return a new object of class '<em>Intermediate Reference</em>'.
      * @generated
      */
-    Metric createMetric();
-
-    /**
-     * Returns a new object of class '<em>Processor Context</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Processor Context</em>'.
-     * @generated
-     */
-    ProcessorContext createProcessorContext();
+    IntermediateReference createIntermediateReference();
 
     /**
      * Returns a new object of class '<em>KV Pair</em>'.

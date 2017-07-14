@@ -12,17 +12,27 @@
  */
 package de.cau.cs.kieler.sccharts.text.validation
 
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation
-import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
-import de.cau.cs.kieler.sccharts.Scope
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.ScopeCall
+import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.BindingType
 
 /**
  * @author ssm
  *
  */
 class SCTXValidatorX extends SCTXJavaValidator {
+    
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsReferenceExtensions
     
     public static final val DIRECTOR = "director"
     public static final val ENFORCER = "Enforcer"
@@ -34,21 +44,41 @@ class SCTXValidatorX extends SCTXJavaValidator {
     def void checkViolationState(de.cau.cs.kieler.sccharts.State state) {
         if (state.violation) {
             val scc = state.getSCCharts
-            if (scc.annotations.filter(PragmaStringAnnotation).
-                filter[ name.equals(DIRECTOR) && values.head.equals(ENFORCER)].size == 0
-            ) {
+            if (!scc.getStringPragmas(DIRECTOR).last.values.head.equals(ENFORCER)) {
                 error(CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR, state, 
                     SCChartsPackage.eINSTANCE.state_Violation, CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR
                 )
             }
         }
-    }    
-    
-    def static SCCharts getSCCharts(Scope scope) {
-        if (scope.eContainer != null) {
-            return (scope.eContainer as Scope).getSCCharts as SCCharts
-        } else {
-            return scope as SCCharts
-        }
     }
+    
+    @Check
+    def void checkScopeCall(ScopeCall scopeCall) {
+        if (scopeCall.eContainer instanceof Scope) {
+            val bindings = scopeCall.eContainer.asScope.createBindings
+            var errorMessage = ""
+            var implicitMessage = ""
+            for (binding : bindings) {
+                if (binding.errors > 0) {
+                    errorMessage += binding.errorMessages.join("\n")
+                }
+                if (binding.type == BindingType.IMPLICIT) {
+                    implicitMessage += binding.targetValuedObject.name + ", "
+                }
+            }
+            
+            if (errorMessage != "") {
+                error("The referencing binding is erroneous!\n" + errorMessage,
+                    scopeCall, 
+                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
+                    "The referencing binding is erroneous!\n" + errorMessage);
+            } else if (implicitMessage != "") {
+                warning("Valued Objects are bound implicitly!\n" + implicitMessage,
+                    scopeCall, 
+                    SCChartsPackage.eINSTANCE.scopeCall_Scope, 
+                    "Valued Objects are bound implicitly!\n" + implicitMessage);
+            }
+        }
+    } 
+    
 }

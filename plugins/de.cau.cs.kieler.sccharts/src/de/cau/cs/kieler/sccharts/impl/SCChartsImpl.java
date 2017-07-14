@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.annotations.impl.PragmatableImpl;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -41,7 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class SCChartsImpl extends ScopeImpl implements SCCharts {
+public class SCChartsImpl extends PragmatableImpl implements SCCharts {
 	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

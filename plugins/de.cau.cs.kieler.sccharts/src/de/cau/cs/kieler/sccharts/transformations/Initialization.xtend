@@ -15,18 +15,23 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
+import static de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.Scope
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Initialization Transformation.
@@ -61,12 +66,12 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsValuedObjectExtensions    
-
-    @Inject
-    extension SCChartsExtension
-
+    @Inject extension KExpressionsValuedObjectExtensions    
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsActionExtensions
+    
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
@@ -76,40 +81,31 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
     // @requires: entry actions
     // Transforming Variable Initializations
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
         // Traverse all states
-        for (scope : targetRootState.getAllScopes.immutableCopy) {
-            scope.transformInitialization(targetRootState);
+        for (scope : rootState.getAllScopes.toList) {
+            scope.transformInitialization(rootState);
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     // Traverse all states and transform macro states that have actions to transform
     def void transformInitialization(Scope scope, State targetRootState) {
-        val valuedObjects = scope.valuedObjects.filter[initialValue != null]
-        var addedIndex = 0; // This helps to preserve the initial order
-
-        if (!valuedObjects.nullOrEmpty) {
-            for (valuedObject : valuedObjects) {
-                setDefaultTrace(valuedObject, valuedObject.declaration)
-                
-                // Initialization combined with existing entry action: The order in which new, 
-                // additional initialization-entry actions are added matters for the semantics.
-                // Initializations before part of the declaration. Entry actions afterwards. 
-                // So the initialization-entry-actions should be ordered also before the other
-                // entry actions to keep the original order. 
-                if (scope instanceof State) {
-                    val entryAction = scope.createEntryAction(addedIndex)
-                    addedIndex = addedIndex + 1
-                    entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
-                } else {
-                    val entryAction = (scope.eContainer as State).createEntryAction(addedIndex)
-                    addedIndex = addedIndex + 1
-                    entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
-                }
-                valuedObject.setInitialValue(null)
+        for (valuedObject : scope.valuedObjects.filter[initialValue != null].toList.reverseView) {
+            setDefaultTrace(valuedObject, valuedObject.declaration)
+            
+            // Initialization combined with existing entry action: The order in which new, 
+            // additional initialization-entry actions are added matters for the semantics.
+            // Initializations before part of the declaration. Entry actions afterwards. 
+            // So the initialization-entry-actions should be ordered also before the other
+            // entry actions to keep the original order. 
+            if (scope instanceof State) {
+                val entryAction = scope.createEntryAction(0)
+                entryAction.addAssignment(valuedObject.createAssignment(valuedObject.initialValue.copy))
+            } else if (scope instanceof ControlflowRegion) {
+                val entryAction = scope.states.findFirst[initial].createEntryAction(0)
+                entryAction.addAssignment(valuedObject.createAssignment(valuedObject.initialValue.copy))
             }
+            valuedObject.setInitialValue(null)
         }
     }
 

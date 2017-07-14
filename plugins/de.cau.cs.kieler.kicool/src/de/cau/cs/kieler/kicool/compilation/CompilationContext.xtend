@@ -17,16 +17,22 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Observable
 import java.util.Map
 import java.util.HashMap
-
-import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager.*
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
-import static extension de.cau.cs.kieler.kicool.compilation.Environment.*
-import de.cau.cs.kieler.kicool.ProcessorGroup
 import java.util.Observer
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+
+import static extension de.cau.cs.kieler.kicool.environments.Environment.*
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
+import java.util.List
+import java.util.ArrayList
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author ssm
@@ -38,31 +44,34 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     // Minimal requirements for compilation
     @Accessors System system
     @Accessors Object sourceModel
-    @Accessors Map<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor> processorMap
-    @Accessors Map<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext> subContexts
+    @Accessors Map<ProcessorReference, Processor<?,?>> processorMap
+    @Accessors List<Processor<?,?>> processorInstancesSequence 
+    @Accessors Map<ProcessorSystem, CompilationContext> subContexts
     @Accessors CompilationContext parentContext = null
+    @Accessors Environment startEnvironment
     
     new() {
-        processorMap = new HashMap<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor>()
-        subContexts = new HashMap<de.cau.cs.kieler.kicool.ProcessorSystem, CompilationContext>()
+        processorMap = new HashMap<ProcessorReference, Processor<?,?>>()
+        processorInstancesSequence = new ArrayList<Processor<?,?>>()
+        subContexts = new HashMap<ProcessorSystem, CompilationContext>()
+        
+        startEnvironment = new Environment
+        startEnvironment.setProperty(SOURCE_MODEL, sourceModel)
+        startEnvironment.setProperty(COMPILATION_CONTEXT, this)
+        startEnvironment.setProperty(INPLACE, false)        
+        startEnvironment.setProperty(ONGOING_WORKING_COPY, true)
     }
     
     def getProcessorInstances() {
         processorMap.values.toList
     }
     
-    def de.cau.cs.kieler.kicool.compilation.Processor getCompilationUnit(de.cau.cs.kieler.kicool.ProcessorEntry entry) {
-        processorMap.get(entry)
+    def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getProcessorInstance(ProcessorReference processorReference) {
+        processorMap.get(processorReference)
     }
     
-    def de.cau.cs.kieler.kicool.compilation.Processor getFirstProcessorInstance() {
-        val processor = (system.processors as ProcessorGroup).processors.head
-        if (processor instanceof ProcessorGroup) {
-            val groupProcessor = processor.processors.head
-            return processorMap.get(groupProcessor)
-        } else {
-            return processorMap.get(processor)
-        }
+    def de.cau.cs.kieler.kicool.compilation.Processor<?,?> getFirstProcessorInstance() {
+        processorInstancesSequence.head
     }
     
     public def notify(Object arg) {
@@ -75,22 +84,21 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     def void compile() {
-        val environment = new Environment
-        environment.sourceModel = sourceModel
-        environment.model = sourceModel
-        environment.compilationContext = this
-        
-        val metric = getSourceMetric
-        if (metric != null) {
-            metric.setEnvironment(environment, environment)
-            metric.setMetricSourceEntity
-            metric.setMetricEntity
-            metric.setMetric
+        if (startEnvironment.getProperty(ONGOING_WORKING_COPY) && sourceModel instanceof EObject) {
+            startEnvironment.setProperty(MODEL, (sourceModel as EObject).copy)
+        } else {
+            startEnvironment.setProperty(MODEL, sourceModel)
         }
         
-        environment.inplaceCompilation = false
+        for(intermediateProcessor : getIntermediateProcessors) {
+            intermediateProcessor.setEnvironment(startEnvironment, startEnvironment)
+            if (intermediateProcessor.validateType) {
+                if (intermediateProcessor instanceof Metric<?,?>) intermediateProcessor.setMetricSourceEntity
+                intermediateProcessor.process
+            }
+        }
         
-        environment.compile        
+        startEnvironment.compile        
     }
     
     // Protected is important. Should not be accessible from the outside.
@@ -105,46 +113,51 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     }
     
     
-    protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.Processor processor, Environment environment) {
-        val compilationUnit = processorMap.get(processor)
-        environment.data.put(Environment.META_PROCESSOR, processor)
-        environment.data.put(Environment.COMPILATION_UNIT, compilationUnit)
+    protected dispatch def Environment compileEntry(ProcessorReference processorReference, Environment environment) {
+        val processorInstance = processorMap.get(processorReference)
+        environment.setProperty(PROCESSOR_REFERENCE, processorReference)
+        environment.setProperty(PROCESSOR_INSTANCE, processorInstance)
+        if (processorInstance == null) {
+            java.lang.System.err.println("An instance for processor reference " + processorReference + " was not found!")
+            return environment;    
+        }
+        
+        environment.setProperty(INPLACE_VALID, processorInstance.validateInplaceType)
         val environmentPrime = environment.preparePrimeEnvironment
         
-        compilationUnit.setEnvironment(environment, environmentPrime)
+        processorInstance.setEnvironment(environment, environmentPrime)
         
-        environment.processEnvironmentSetter(processor.presets)
+        environment.processEnvironmentSetter(processorReference.presets)
         
-        notify(new ProcessorStart(this, processor, compilationUnit))
+        notify(new ProcessorStart(this, processorReference, processorInstance))
         val startTimestamp = java.lang.System.nanoTime
-        environmentPrime.setData(START_TIMESTAMP, startTimestamp)
+        environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
         try {
-            if (compilationUnit.sourceEnvironment.enabled) { 
-                compilationUnit.process
+            if (processorInstance.sourceEnvironment.getProperty(ENABLED)) { 
+                processorInstance.process
             }
         } catch (Exception e) {
-            compilationUnit.environment.error = e.message
-            notify(new ProcessorError(e.message, this, processor, compilationUnit))
+            processorInstance.environment.errors.add(e.toString)
+            notify(new ProcessorError(e.message, this, processorReference, processorInstance))
+            java.lang.System.err.println("Error in processor " + processorReference)
+            e.printStackTrace
         }
         val stopTimestamp = java.lang.System.nanoTime
-        environmentPrime.setData(STOP_TIMESTAMP, stopTimestamp)
-        environmentPrime.setData(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
+        environmentPrime.setProperty(STOP_TIMESTAMP, stopTimestamp)
+        environmentPrime.setProperty(PTIME, (stopTimestamp - startTimestamp) / 1000_000)
         
-        // Add Metric code
-        val metric = getMetric(processor)
-        if (metric != null) {
-            metric.setEnvironment(environment, environmentPrime)
-            metric.setMetricEntity
-            metric.setMetric
+        for(intermediateProcessor : getIntermediateProcessors(processorReference)) {
+            intermediateProcessor.setEnvironment(environmentPrime, environmentPrime)
+            if (intermediateProcessor.validateType) intermediateProcessor.process
         }
         
         val overallTimestamp = java.lang.System.nanoTime
-        environmentPrime.setData(OVERALL_TIMESTAMP, overallTimestamp)
-        environmentPrime.setData(PTIME_OVERALL, (overallTimestamp - startTimestamp) / 1000_000)
+        environmentPrime.setProperty(OVERALL_TIMESTAMP, overallTimestamp)
+        environmentPrime.setProperty(OVERALL_PTIME, (overallTimestamp - startTimestamp) / 1000_000)
         
-        environmentPrime.processEnvironmentSetter(processor.postsets)
+        environmentPrime.processEnvironmentSetter(processorReference.postsets)
         
-        notify(new ProcessorFinished(this, processor, compilationUnit))
+        notify(new ProcessorFinished(this, processorReference, processorInstance))
         
         environmentPrime
     }
@@ -164,8 +177,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         }
         var selectedEnvironment = environmentList.last
         for(e : environmentList) {
-            val selMetric = selectedEnvironment.data.get(Metric.METRIC) as Double
-            val envMetric = e.data.get(Metric.METRIC) as Double
+            val selMetric = selectedEnvironment.getProperty(Metric.METRIC)
+            val envMetric = e.getProperty(Metric.METRIC)
             if (envMetric < selMetric) {
                 selectedEnvironment = e
             }
@@ -201,12 +214,17 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         else return parentContext.getRootContext
     }
     
-    protected def Metric getSourceMetric() {
-        processorMap.get(system.metrics.head) as Metric
+    protected def getIntermediateProcessors() {
+        system.intermediates.map[ processorMap.get(it) ]
     }
     
-    protected def Metric getMetric(de.cau.cs.kieler.kicool.Processor processor) {
-        processorMap.get(system.metrics.head) as Metric
+    protected def getIntermediateProcessors(ProcessorReference processorReference) {
+        if (processorReference.metric != null) {
+            return (system.intermediates.filter[ !(processorMap.get(it) instanceof Metric<?,?>) ].toList => [
+                it += processorReference.metric
+            ]).map[ processorMap.get(it) ]    
+        } 
+        return getIntermediateProcessors        
     }
         
 }

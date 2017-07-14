@@ -19,16 +19,22 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Abort WTO Transformation. This may require an advanced SCG compiler that can handle depth join.
@@ -75,29 +81,23 @@ class AbortWTODeep extends AbstractExpansionTransformation {
 
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions    
-    
-//    @Inject
-//    extension KExpressionsValuedObjectExtensions   
-
-    @Inject
-    extension SCChartsExtension
-    
-    @Inject
-    extension SCChartsTransformationExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions    
+    @Inject extension KEffectsExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
+    @Inject extension SCChartsTransformationExtension
     
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-
-    //private val nameCache = <String>newArrayList("_term")
+    
+    private val nameCache = new UniqueNameCache => [ it += "_term" ]
 
     //-------------------------------------------------------------------------
     //--     A B O R T     S P E C I A L      T R A N S F O R M A T I O N    --
@@ -107,18 +107,12 @@ class AbortWTODeep extends AbstractExpansionTransformation {
     // if there are weak&strong aborts mixed inside. for abro it works.
     // Transforming Aborts.
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all states
-        var done = false;
-        for (targetState : targetRootState.getAllContainedStatesList) {
-            if (!done) {
-                targetState.transformAbortSpecial(targetRootState);
-            }
-
-        //done = true;
+        for (targetState : rootState.getAllContainedStatesList) {
+                targetState.transformAbortSpecial(rootState)
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     // Traverse all states 
@@ -131,28 +125,28 @@ class AbortWTODeep extends AbstractExpansionTransformation {
         // this for example could be several terminations, in this case we do not need the FULL abort transformation
         // and can only combine the terminations (using one termination and a connector node)
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ( (state.outgoingTransitions.
-            size == 1) && ((!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
+            size == 1) && ((!(state.outgoingTransitions.filter[ isTermination ].filter[trigger == null].size == 1))
 //                  ||
 //                  !state.hasInnerActions && !state.hasInnerStatesOrRegions 
               ))
             )
 
         // in this case we need the FULL abort transformation
-        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
+        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[ !isTermination ].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        if ((state.controlflowRegionsContainStates || state.containsInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
             // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.controlflowRegions2.toList.immutableCopy
+            val regions = state.getNotEmptyControlflowRegions.toList
 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
-                val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueName
-                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
-                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
+                val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueName(nameCache)
+                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName(nameCache)
+                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName(nameCache)
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
@@ -161,12 +155,12 @@ class AbortWTODeep extends AbstractExpansionTransformation {
 
                     // Create a new _transitionTrigger valuedObject
                     val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                        GENERATED_PREFIX + "trig").setTypeBool.uniqueName
-                    state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
+                        GENERATED_PREFIX + "trig").setTypeBool.uniqueName(nameCache)
+                    state.createEntryAction.addEffect(transitionTriggerVariable.createAssignment(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                    if (transition.typeStrongAbort) {
+                    if (transition.isStrongAbort) {
                         strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference)
-                    } else if (transition.typeWeakAbort) {
+                    } else if (transition.isWeakAbort) {
                         weakAbortTrigger = weakAbortTrigger.or(transitionTriggerVariable.reference)
                     }
                 }
@@ -175,33 +169,33 @@ class AbortWTODeep extends AbstractExpansionTransformation {
 
                 // Decides whether a _TERM signal and the necessary _Run, _Done state is needed
                 // OPTIMIZATION
-                val terminationHandlingNeeded = !outgoingTransitions.filter[typeTermination].nullOrEmpty
+                val terminationHandlingNeeded = !outgoingTransitions.filter[ isTermination ].nullOrEmpty
 
                 // For each region encapsulate it into a _Main state and add a _Term variable
                 // also to the terminationTrigger
                 for (region : regions) {
                     if (terminationHandlingNeeded) {
-                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
-                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
+                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName(nameCache)
+                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName(nameCache)
                         mainState.regions.add(region)
-                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
-                        mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
+                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName(nameCache)
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName(nameCache)
+                        mainState.createTransitionTo(termState).setTypeTermination.addEffect(termVariable.createAssignment(TRUE))
                         if (terminationTrigger != null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)
                         } else {
                             terminationTrigger = termVariable.reference
                         }
-                        state.createEntryAction.addEffect(termVariable.assign(FALSE))
+                        state.createEntryAction.addEffect(termVariable.createAssignment(FALSE))
                     }
 
                     // Inside every region create a _Aborted
-                    val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").uniqueName
+                    val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "Aborted").uniqueName(nameCache)
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
-                                if (innerState.hasInnerStatesOrControlflowRegions || innerState.hasInnerActions) {
+                                if (innerState.controlflowRegionsContainStates || innerState.containsInnerActions) {
 
                                     // HERE DIFFERENCE TO ABORT1()
                                     // We dig deep in the hierarchy and connect all states with immediate transitions
@@ -209,24 +203,24 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                                     // This leads to more transitions but avoids more variables.
                                     strongAbort.setTypeTermination
                                     val allInnerSimpleStates = innerState.allContainedStatesList.filter[
-                                        !(hasInnerStatesOrControlflowRegions || hasInnerActions)].filter[!final]
+                                        !(controlflowRegionsContainStates || containsInnerActions)].filter[!final]
                                     for (innerSimpleState : allInnerSimpleStates) {
                                         val innerFinalStates = innerSimpleState.parentRegion.states.filter[final]
                                         var State innerAbortedState;
                                         if (innerFinalStates.nullOrEmpty) {
                                             innerAbortedState = innerSimpleState.parentRegion.
-                                                createFinalState(GENERATED_PREFIX + "Aborted").uniqueName
+                                                createFinalState(GENERATED_PREFIX + "Aborted").uniqueName(nameCache)
                                         } else {
                                             innerAbortedState = innerFinalStates.get(0)
                                         }
                                         val innerStrongAbort = innerSimpleState.createTransitionTo(innerAbortedState, 0)
-                                        innerStrongAbort.setPriority(0)
+                                        innerStrongAbort.setHighestPriority
                                         innerStrongAbort.setTrigger(strongAbortTrigger.copy)
                                     }
 
                                 // END OF DIFFERENCE
                                 }
-                                strongAbort.setPriority(0)
+                                strongAbort.setHighestPriority
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
                             }
                             if (weakAbortTrigger != null) {
@@ -251,7 +245,7 @@ class AbortWTODeep extends AbstractExpansionTransformation {
 
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
-                    if (transition.typeTermination) {
+                    if (transition.isTermination) {
                         if (transition.trigger != null) {
                             ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger))
                         } else {
@@ -263,16 +257,16 @@ class AbortWTODeep extends AbstractExpansionTransformation {
 
                     // ATTENTION: Test for ctrlTransition.immediate2 because transition's trigger has already been moved to ctrlTransition!!!
                     ctrlTransition.setImmediate(transition.immediate)
-                    if (ctrlTransition.immediate2) {
+                    if (ctrlTransition.implicitlyImmediate) {
                         ctrlTransition.setImmediate(true)
                     }
-                    ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
+                    ctrlTransition.addEffect(transitionTriggerVariable.createAssignment(TRUE))
                 }
 
             }
 
             // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName(nameCache).
                 setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
@@ -284,13 +278,13 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                 // Get the _transitionTrigger that was created earlier
                 val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
                 if (transitionTriggerVariable != null) {
-                    transition.setTrigger2(transitionTriggerVariable.reference)
+                    transition.setTrigger(transitionTriggerVariable.reference)
                 } else {
 
                     // Fall back to this case when we did not create a trigger variable
                     // because there where NO strong or weak aborts but one or more triggered
                     // normal termination transitions.
-                    transition.setTrigger2(transition.trigger)
+                    transition.setTrigger(transition.trigger)
                 }
 
                 transition.setTypeWeakAbort

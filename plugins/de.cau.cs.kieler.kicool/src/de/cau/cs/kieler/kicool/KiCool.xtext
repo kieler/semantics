@@ -26,12 +26,12 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 System returns kicool::System:
     'system' id = QualifiedID 'version' version = INT 'label' label = EString
     ('input' inputClass = ID)?
-    (metrics += Metric)*
+    (intermediates += IntermediateReference)*
     processors = ProcessorGroup
 ;
 
-Metric returns kicool::Metric:
-    'metric' id = QualifiedID ('alias' alias = EString)?
+IntermediateReference returns kicool::IntermediateReference:
+    'intermediate' id = QualifiedID ('alias' alias = EString)?
 ;
 
 ProcessorGroup returns kicool::ProcessorGroup:
@@ -52,11 +52,11 @@ ProcessorGroup returns kicool::ProcessorGroup:
     )+
 ;
 
-Processor returns kicool::Processor:
+Processor returns kicool::ProcessorReference:
     ('pre' 
         ('set' presets += KVPair)+
     )?
-    id = QualifiedID ('metric' metric = [kicool::Metric|QualifiedID])?
+    id = QualifiedID ('intermediate' metric = [kicool::IntermediateReference|QualifiedID])?
     ('post' 
         ('set' postsets += KVPair)+
     )?

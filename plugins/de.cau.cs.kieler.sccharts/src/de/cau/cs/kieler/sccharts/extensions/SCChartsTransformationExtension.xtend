@@ -37,11 +37,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
  */
 class SCChartsTransformationExtension {
 
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -52,9 +50,9 @@ class SCChartsTransformationExtension {
     
     // Test if a state can be immediately aborted
     def boolean canImmediateAborted(State state) {
-        ((state.outgoingTransitions.filter[e|e.typeStrongAbort && e.immediate2].size > 0)
+        ((state.outgoingTransitions.filter[e|e.isStrongAbort && e.implicitlyImmediate].size > 0)
         ||
-        (state.outgoingTransitions.filter[e|e.typeWeakAbort && e.immediate2].size > 0))
+        (state.outgoingTransitions.filter[e|e.isWeakAbort && e.implicitlyImmediate].size > 0))
     }
 
     // Test if for a state ALL regions may possibly terminate immediate
@@ -87,7 +85,7 @@ class SCChartsTransformationExtension {
         if (previousState.initial) {
             return true
         }
-        for (transition : previousState.incomingTransitions.filter[immediate]) {
+        for (transition : previousState.incomingTransitions.filter[implicitlyImmediate]) {
            if (finalState.isImmediatelyReachableHelper(transition.sourceState)) {
                return true
            }

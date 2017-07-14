@@ -40,6 +40,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.actions.VisualLayoutFeedbackToggle
 import org.eclipse.jface.action.MenuManager
 import de.cau.cs.kieler.kicool.ui.view.actions.SkinSelectionActions
+import com.google.inject.Inject
+import com.google.inject.Injector
 
 /**
  * The IMB Compiler View

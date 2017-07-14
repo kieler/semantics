@@ -57,7 +57,6 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case KEffectsPackage.EFFECT: return createEffect();
             case KEffectsPackage.ASSIGNMENT: return createAssignment();
             case KEffectsPackage.EMISSION: return createEmission();
             case KEffectsPackage.HOSTCODE_EFFECT: return createHostcodeEffect();
@@ -96,16 +95,6 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Effect createEffect() {
-        EffectImpl effect = new EffectImpl();
-        return effect;
     }
 
     /**

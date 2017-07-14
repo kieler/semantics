@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
@@ -29,6 +28,15 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Exit Transformation.
@@ -64,20 +72,22 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
 
-    @Inject
-    extension KExpressionsCreateExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions    
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions    
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     //-------------------------------------------------------------------------
     //--                      E X I T       A C T I O N S                    --
@@ -88,23 +98,23 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
     // @requires: valued valuedObjects
     // Transforming Exit Actions. 
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
         // Prepare all states so that each reagion has at most one final state
         // targetRootState.getAllStates.toList.forEach [ targetState |
             //targetState.prepareExit(targetRootState);
         // ]
+        
+        nameCache.clear
 
         // Traverse all states
-        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
-            targetState.transformExit(targetRootState);
+        rootState.getAllStates.toList.forEach [ targetState |
+            targetState.transformExit(rootState);
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     def void prepareExit(State state, State targetRootState) {
         for (region : state.regions.filter(ControlflowRegion)) {
-            val finalStates = region.finalStates
+            val finalStates = region.allFinalStates
             if (finalStates.size > 1) {
                 val firstFinalState = finalStates.get(0)
                 for (finalState : finalStates) {
@@ -127,12 +137,12 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
             val stateOutgoingTransitions = state.outgoingTransitions.size
             var State firstState
             var State lastState
-            val noregions = !state.hasInnerStatesOrControlflowRegions
+            val noregions = !state.controlflowRegionsContainStates
             
             
             if (noregions && stateOutgoingTransitions == 0) {
-                for (exitAction : state.exitActions.immutableCopy) {
-                    state.localActions.remove(exitAction);
+                for (exitAction : state.exitActions.toList) {
+                    state.actions.remove(exitAction);
                 }
                 return
             }            
@@ -142,14 +152,14 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "Exit")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
-            } else if (state.regions.filter(ControlflowRegion).size == 1 && !state.regions.filter(ControlflowRegion).get(0).finalStates.nullOrEmpty) {
-                val region = state.regions.filter(ControlflowRegion).get(0)
+            } else if (state.regions.filter(ControlflowRegion).size == 1 && !state.regions.filter(ControlflowRegion).head.allFinalStates.nullOrEmpty) {
+                val region = state.regions.filter(ControlflowRegion).head
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
 
-                firstState = region.retrieveFinalState(GENERATED_PREFIX + "PriorFinal") //every region MUST have an initial state
+                firstState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "PriorFinal") //every region MUST have an initial state
                 //firstState = region.finalStates.get(0) //every region MUST have a final state
                 firstState.setNotFinal
-                for (otherFinalState : region.finalStates) {
+                for (otherFinalState : region.allFinalStates) {
                     if (otherFinalState != lastState) {
                         otherFinalState.createImmediateTransitionTo(firstState)
                         otherFinalState.setNotFinal
@@ -157,7 +167,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 }
                 
             } else { // state has several regions (or one region without any final state!)
-                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName(nameCache)
                 firstState = region.createInitialState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
                     firstState.regions.add(mainRegion)
@@ -174,10 +184,10 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 var ValuedObject memory
                 if (stateOutgoingTransitions > 1) {
                     memory = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "exit", createIntDeclaration).
-                        uniqueName
+                        uniqueName(nameCache)
                 }
                 val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
-                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName.
+                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName(nameCache).
                     setTypeConnector
                 var counter = 1
                 for (transition : state.outgoingTransitions.immutableCopy) {
@@ -190,11 +200,11 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                     }
 
                     firstState.outgoingTransitions.add(transition)
-                    transition.setImmediate(transition.immediate2) // Ensure termination transitions are interpreted as immediate
+                    transition.setImmediate(transition.implicitlyImmediate) // Ensure termination transitions are interpreted as immediate
                     transition.setTypeWeakAbort
                     transition.setTargetState(middleState)
                     if (stateOutgoingTransitions > 1) {
-                        transition.addEffect(memory.assign(counter.createIntValue))
+                        transition.addEffect(memory.createAssignment(counter.createIntValue))
                         counter = counter + 1
                     }
                 }
@@ -205,17 +215,17 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
 
             val exitRegion = firstState.parentRegion
             val lastExitAction = state.exitActions.last
-            for (exitAction : state.exitActions.immutableCopy) {
+            for (exitAction : state.exitActions.toList) {
                 var connector = lastState
                 if (exitAction != lastExitAction) {
-                    connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
+                    connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName(nameCache).setTypeConnector
                 }
                 val transition = firstState.createImmediateTransitionTo(connector)
                 
                 // In case the starting point of this transition has regions with final states,
                 // it is necessary to wait until these final states are reached.
                 // Thus a termination transition is needed in this case.  
-                if(firstState.hasInnerStatesOrControlflowRegions) { 
+                if(firstState.controlflowRegionsContainStates) { 
                     transition.setTypeTermination
                 }
                 
@@ -231,7 +241,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 firstState = connector
 
                 // After transforming exit actions, erase them
-                state.localActions.remove(exitAction)
+                state.actions.remove(exitAction)
             }
         }
     }

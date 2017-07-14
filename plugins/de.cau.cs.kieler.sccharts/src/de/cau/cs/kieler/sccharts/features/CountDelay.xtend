@@ -16,8 +16,8 @@ package de.cau.cs.kieler.sccharts.features
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * SCCharts CountDelay Feature.
@@ -40,15 +40,14 @@ class CountDelay extends Feature {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             for (transition : state.outgoingTransitions) {
-                if (transition.delay > 1) {
+                if (transition.triggerDelay > 1) {
                     return true
                 }
             }

@@ -2,15 +2,14 @@
  */
 package de.cau.cs.kieler.kicool.util;
 
+import de.cau.cs.kieler.kicool.IntermediateReference;
 import de.cau.cs.kieler.kicool.KVPair;
 import de.cau.cs.kieler.kicool.KiCoolPackage;
-import de.cau.cs.kieler.kicool.Metric;
-import de.cau.cs.kieler.kicool.Processor;
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup;
-import de.cau.cs.kieler.kicool.ProcessorContext;
 import de.cau.cs.kieler.kicool.ProcessorEntry;
 import de.cau.cs.kieler.kicool.ProcessorGroup;
 
+import de.cau.cs.kieler.kicool.ProcessorReference;
 import de.cau.cs.kieler.kicool.ProcessorSystem;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -84,8 +83,8 @@ public class KiCoolAdapterFactory extends AdapterFactoryImpl {
                 return createProcessorEntryAdapter();
             }
             @Override
-            public Adapter caseProcessor(Processor object) {
-                return createProcessorAdapter();
+            public Adapter caseProcessorReference(ProcessorReference object) {
+                return createProcessorReferenceAdapter();
             }
             @Override
             public Adapter caseProcessorSystem(ProcessorSystem object) {
@@ -100,12 +99,8 @@ public class KiCoolAdapterFactory extends AdapterFactoryImpl {
                 return createProcessorAlternativeGroupAdapter();
             }
             @Override
-            public Adapter caseMetric(Metric object) {
-                return createMetricAdapter();
-            }
-            @Override
-            public Adapter caseProcessorContext(ProcessorContext object) {
-                return createProcessorContextAdapter();
+            public Adapter caseIntermediateReference(IntermediateReference object) {
+                return createIntermediateReferenceAdapter();
             }
             @Override
             public Adapter caseKVPair(KVPair object) {
@@ -160,16 +155,16 @@ public class KiCoolAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kicool.Processor <em>Processor</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kicool.ProcessorReference <em>Processor Reference</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.kicool.Processor
+     * @see de.cau.cs.kieler.kicool.ProcessorReference
      * @generated
      */
-    public Adapter createProcessorAdapter() {
+    public Adapter createProcessorReferenceAdapter() {
         return null;
     }
 
@@ -216,30 +211,16 @@ public class KiCoolAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kicool.Metric <em>Metric</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kicool.IntermediateReference <em>Intermediate Reference</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.kicool.Metric
+     * @see de.cau.cs.kieler.kicool.IntermediateReference
      * @generated
      */
-    public Adapter createMetricAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kicool.ProcessorContext <em>Processor Context</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kicool.ProcessorContext
-     * @generated
-     */
-    public Adapter createProcessorContextAdapter() {
+    public Adapter createIntermediateReferenceAdapter() {
         return null;
     }
 

@@ -20,8 +20,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
@@ -29,6 +28,11 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore
+
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -41,20 +45,13 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsSerializeHRExtension
-
-    @Inject
-    extension TransitionStyles
+    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KEdgeExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension TransitionStyles
+    @Inject extension ColorStore
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
@@ -73,7 +70,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         edge.addTransitionSpline();
 
         // Modifiers
-        if (transition.isImmediate2) {
+        if (transition.isImplicitlyImmediate) {
             edge.setImmediateStyle
         }
 
@@ -88,12 +85,17 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                 transition.history == HistoryType::SHALLOW);
         }
 
-        switch (transition.type) {
+        switch (transition.preemption) {
             case STRONGABORT: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
             default: {
             }
         };
+        
+        transition.getCommentAnnotations.forEach[
+            edge.addLabel(it.values.head, 
+                COMMENT_BACKGROUND_GRADIENT_1.color)
+        ]     
 
         // Add Label
         val label = new StringBuilder();
@@ -109,7 +111,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         if (label.length != 0) {
             edge.addLabel(label.toString).associateWith(transition);
         }
-
+        
         return <KEdge> newArrayList(edge)
     }
 

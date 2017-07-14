@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.Processor
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorSystem
@@ -26,7 +25,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
@@ -35,9 +34,10 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.uniqueProcessorId
-import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.Color.*
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.styles.ColorStore.*
+import static extension org.eclipse.xtext.EcoreUtil2.* import de.cau.cs.kieler.kicool.ProcessorReference
 
 /**
  * Main diagram synthesis for processors in KiCool.
@@ -55,21 +55,23 @@ class ProcessorSynthesis {
     @Inject extension ProcessorStyles 
     @Inject IResourceServiceProvider.Registry regXtext;      
     
-    static private val PROCESSOR_KGT = "processor.kgt"
-    static private val PROCESSOR_GROUP_KGT = "processor_group.kgt"
-    static private val COLLAPSED_ID = "collapsed"
-    static private val EXPANDED_ID = "expanded" 
+    static val PROCESSOR_KGT = "processor.kgt"
+    static val PROCESSOR_GROUP_KGT = "processor_group.kgt"
+    static val COLLAPSED_ID = "collapsed"
+    static val EXPANDED_ID = "expanded" 
+    
+    static val PROCESSOR_NODE = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
     
     private def setId(KNode node, String id) {
         node.getData(KIdentifier).id = id
         node
     }
 
-    dispatch def List<KNode> transform(Processor processor) {
-        val processorNode = KiCoolSynthesis.getKGTFromBundle(KiCoolUiModule.BUNDLE_ID, PROCESSOR_KGT)
-        val nodeId = processor.uniqueProcessorId
+    dispatch def List<KNode> transform(ProcessorReference processorReference) {
+        val processorNode = PROCESSOR_NODE.copy
+        val nodeId = processorReference.uniqueProcessorId
         processorNode.setId(nodeId)
-        processor.populateProcessorData(processorNode)        
+        processorReference.populateProcessorData(processorNode)        
         
         newArrayList(processorNode)
     }
@@ -85,7 +87,9 @@ class ProcessorSynthesis {
         collapsedRendering.eContents.filter(KText).head.text = label
         expandedRendering.eContents.filter(KText).head.text = label        
         
-        groupNode.addLayoutParam(KlighdProperties::EXPAND, false);
+        groupNode.addLayoutParam(KlighdProperties::EXPAND, false)
+        collapsedRendering.properties.put(KlighdProperties::COLLAPSED_RENDERING, true)
+        expandedRendering.properties.put(KlighdProperties::EXPANDED_RENDERING, true)
         
         var List<KNode> lastNodes = newArrayList()
         for(it : processorGroup.processors) {

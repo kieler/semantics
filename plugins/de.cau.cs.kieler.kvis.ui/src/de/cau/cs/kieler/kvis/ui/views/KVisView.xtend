@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -80,6 +80,7 @@ class KVisView extends ViewPart {
 
     private var IResourceChangeListener resourceChangeListener
     private var boolean updateAfterRendering
+    private var boolean isImageUnchanged
     private var Visualization kvisConfig
     private var IFile kvisFile
     private var IFile svgImage
@@ -115,6 +116,10 @@ class KVisView extends ViewPart {
     }
 
     private def void loadFile(IFile file) {
+        // Don't load a file that has not been modified.
+        if(isImageUnchanged) {
+            return;                
+        }
         try {
             if (!file.fileExtension.toLowerCase.equals(KVIS_FILE_EXTENSION)) {
                 throw new Exception("Selection is not a kvis file.")
@@ -122,6 +127,7 @@ class KVisView extends ViewPart {
             val model = ModelImporter.load(file)
             if (model != null) {
                 if (model instanceof Visualization) {
+                    isImageUnchanged = true
                     kvisConfig = model
                     lastPool = null
                     kvisFile = file
@@ -129,10 +135,14 @@ class KVisView extends ViewPart {
                     updateAfterRendering = true
                     // Load image
                     val project = file.project
-                    val imagePath = kvisConfig.image
+                    val imagePath = file.parent.projectRelativePath.append(kvisConfig.image)
                     svgImage = project.getFile(imagePath)
+                    if(!svgImage.exists) {
+                        throw new IllegalArgumentException("The SVG file '"+svgImage.projectRelativePath +"' "
+                                                         + "was not found in the project '"+file.project.name+"'.")
+                    }
                     canvas.setSVGFile(svgImage)
-    
+                    
                     // Register resource change listener for the files
                     registerResourceChangeListener(file, svgImage)
                 }
@@ -186,7 +196,6 @@ class KVisView extends ViewPart {
 
     public def void reload() {
         if (kvisFile != null) {
-            println("Reloading KVis View")
             loadFile(kvisFile)
         }
     }
@@ -285,6 +294,7 @@ class KVisView extends ViewPart {
                     updateAfterRendering = false
                     if(SimulationManager.instance != null
                         && !SimulationManager.instance.isStopped
+                        && SimulationManager.instance.currentPool != null
                         && SimulationManager.instance.currentPool != lastPool) {
                         update(SimulationManager.instance.currentPool)
                     }
@@ -306,6 +316,7 @@ class KVisView extends ViewPart {
                     for(file : files) {
                         val fileDelta = rootDelta.findMember(file.fullPath);
                         if (fileDelta != null) {
+                            isImageUnchanged = false
                             reload()
                         }
                     }
@@ -374,6 +385,7 @@ class KVisView extends ViewPart {
         if(pool == null) {
             reload
         } else {
+            isImageUnchanged = false
             // Execute interactions if needed
             for(interaction : interactionHandlers) {
                 interaction.apply(pool)

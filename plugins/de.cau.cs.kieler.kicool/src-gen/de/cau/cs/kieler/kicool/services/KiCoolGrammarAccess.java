@@ -35,8 +35,8 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cInputKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Assignment cInputClassAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cInputClassIDTerminalRuleCall_6_1_0 = (RuleCall)cInputClassAssignment_6_1.eContents().get(0);
-		private final Assignment cMetricsAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cMetricsMetricParserRuleCall_7_0 = (RuleCall)cMetricsAssignment_7.eContents().get(0);
+		private final Assignment cIntermediatesAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cIntermediatesIntermediateReferenceParserRuleCall_7_0 = (RuleCall)cIntermediatesAssignment_7.eContents().get(0);
 		private final Assignment cProcessorsAssignment_8 = (Assignment)cGroup.eContents().get(8);
 		private final RuleCall cProcessorsProcessorGroupParserRuleCall_8_0 = (RuleCall)cProcessorsAssignment_8.eContents().get(0);
 		
@@ -46,12 +46,12 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		// * @kieler.rating 2016-10-19 proposed yellow
 		// * / System kicool::System:
 		//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)?
-		//	metrics+=Metric*
+		//	intermediates+=IntermediateReference*
 		//	processors=ProcessorGroup
 		@Override public ParserRule getRule() { return rule; }
 
-		//'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)? metrics+=Metric*
-		//processors=ProcessorGroup
+		//'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)?
+		//intermediates+=IntermediateReference* processors=ProcessorGroup
 		public Group getGroup() { return cGroup; }
 
 		//'system'
@@ -93,11 +93,11 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getInputClassIDTerminalRuleCall_6_1_0() { return cInputClassIDTerminalRuleCall_6_1_0; }
 
-		//metrics+=Metric*
-		public Assignment getMetricsAssignment_7() { return cMetricsAssignment_7; }
+		//intermediates+=IntermediateReference*
+		public Assignment getIntermediatesAssignment_7() { return cIntermediatesAssignment_7; }
 
-		//Metric
-		public RuleCall getMetricsMetricParserRuleCall_7_0() { return cMetricsMetricParserRuleCall_7_0; }
+		//IntermediateReference
+		public RuleCall getIntermediatesIntermediateReferenceParserRuleCall_7_0() { return cIntermediatesIntermediateReferenceParserRuleCall_7_0; }
 
 		//processors=ProcessorGroup
 		public Assignment getProcessorsAssignment_8() { return cProcessorsAssignment_8; }
@@ -106,10 +106,10 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getProcessorsProcessorGroupParserRuleCall_8_0() { return cProcessorsProcessorGroupParserRuleCall_8_0; }
 	}
 
-	public class MetricElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.Metric");
+	public class IntermediateReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cMetricKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cIntermediateKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cIdQualifiedIDParserRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
@@ -117,15 +117,15 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAliasAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cAliasEStringParserRuleCall_2_1_0 = (RuleCall)cAliasAssignment_2_1.eContents().get(0);
 		
-		//Metric kicool::Metric:
-		//	'metric' id=QualifiedID ('alias' alias=EString)?
+		//IntermediateReference kicool::IntermediateReference:
+		//	'intermediate' id=QualifiedID ('alias' alias=EString)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//'metric' id=QualifiedID ('alias' alias=EString)?
+		//'intermediate' id=QualifiedID ('alias' alias=EString)?
 		public Group getGroup() { return cGroup; }
 
-		//'metric'
-		public Keyword getMetricKeyword_0() { return cMetricKeyword_0; }
+		//'intermediate'
+		public Keyword getIntermediateKeyword_0() { return cIntermediateKeyword_0; }
 
 		//id=QualifiedID
 		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
@@ -263,10 +263,10 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cIdQualifiedIDParserRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cMetricKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cIntermediateKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cMetricAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final CrossReference cMetricMetricCrossReference_2_1_0 = (CrossReference)cMetricAssignment_2_1.eContents().get(0);
-		private final RuleCall cMetricMetricQualifiedIDParserRuleCall_2_1_0_1 = (RuleCall)cMetricMetricCrossReference_2_1_0.eContents().get(1);
+		private final CrossReference cMetricIntermediateReferenceCrossReference_2_1_0 = (CrossReference)cMetricAssignment_2_1.eContents().get(0);
+		private final RuleCall cMetricIntermediateReferenceQualifiedIDParserRuleCall_2_1_0_1 = (RuleCall)cMetricIntermediateReferenceCrossReference_2_1_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cPostKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
@@ -274,13 +274,14 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPostsetsAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
 		private final RuleCall cPostsetsKVPairParserRuleCall_3_1_1_0 = (RuleCall)cPostsetsAssignment_3_1_1.eContents().get(0);
 		
-		//Processor kicool::Processor:
+		//Processor kicool::ProcessorReference:
 		//	('pre' ('set' presets+=KVPair)+)?
-		//	id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])? ('post' ('set' postsets+=KVPair)+)?
+		//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' ('set'
+		//	postsets+=KVPair)+)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//('pre' ('set' presets+=KVPair)+)? id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])? ('post' ('set'
-		//postsets+=KVPair)+)?
+		//('pre' ('set' presets+=KVPair)+)? id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])?
+		//('post' ('set' postsets+=KVPair)+)?
 		public Group getGroup() { return cGroup; }
 
 		//('pre' ('set' presets+=KVPair)+)?
@@ -307,20 +308,20 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedID
 		public RuleCall getIdQualifiedIDParserRuleCall_1_0() { return cIdQualifiedIDParserRuleCall_1_0; }
 
-		//('metric' metric=[kicool::Metric|QualifiedID])?
+		//('intermediate' metric=[kicool::IntermediateReference|QualifiedID])?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//'metric'
-		public Keyword getMetricKeyword_2_0() { return cMetricKeyword_2_0; }
+		//'intermediate'
+		public Keyword getIntermediateKeyword_2_0() { return cIntermediateKeyword_2_0; }
 
-		//metric=[kicool::Metric|QualifiedID]
+		//metric=[kicool::IntermediateReference|QualifiedID]
 		public Assignment getMetricAssignment_2_1() { return cMetricAssignment_2_1; }
 
-		//[kicool::Metric|QualifiedID]
-		public CrossReference getMetricMetricCrossReference_2_1_0() { return cMetricMetricCrossReference_2_1_0; }
+		//[kicool::IntermediateReference|QualifiedID]
+		public CrossReference getMetricIntermediateReferenceCrossReference_2_1_0() { return cMetricIntermediateReferenceCrossReference_2_1_0; }
 
 		//QualifiedID
-		public RuleCall getMetricMetricQualifiedIDParserRuleCall_2_1_0_1() { return cMetricMetricQualifiedIDParserRuleCall_2_1_0_1; }
+		public RuleCall getMetricIntermediateReferenceQualifiedIDParserRuleCall_2_1_0_1() { return cMetricIntermediateReferenceQualifiedIDParserRuleCall_2_1_0_1; }
 
 		//('post' ('set' postsets+=KVPair)+)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -452,7 +453,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private final SystemElements pSystem;
-	private final MetricElements pMetric;
+	private final IntermediateReferenceElements pIntermediateReference;
 	private final ProcessorGroupElements pProcessorGroup;
 	private final ProcessorElements pProcessor;
 	private final ProcessorSystemElements pProcessorSystem;
@@ -473,7 +474,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
 		this.pSystem = new SystemElements();
-		this.pMetric = new MetricElements();
+		this.pIntermediateReference = new IntermediateReferenceElements();
 		this.pProcessorGroup = new ProcessorGroupElements();
 		this.pProcessor = new ProcessorElements();
 		this.pProcessorSystem = new ProcessorSystemElements();
@@ -518,7 +519,7 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 	// * @kieler.rating 2016-10-19 proposed yellow
 	// * / System kicool::System:
 	//	'system' id=QualifiedID 'version' version=INT 'label' label=EString ('input' inputClass=ID)?
-	//	metrics+=Metric*
+	//	intermediates+=IntermediateReference*
 	//	processors=ProcessorGroup
 	public SystemElements getSystemAccess() {
 		return pSystem;
@@ -528,14 +529,14 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getSystemAccess().getRule();
 	}
 
-	//Metric kicool::Metric:
-	//	'metric' id=QualifiedID ('alias' alias=EString)?
-	public MetricElements getMetricAccess() {
-		return pMetric;
+	//IntermediateReference kicool::IntermediateReference:
+	//	'intermediate' id=QualifiedID ('alias' alias=EString)?
+	public IntermediateReferenceElements getIntermediateReferenceAccess() {
+		return pIntermediateReference;
 	}
 	
-	public ParserRule getMetricRule() {
-		return getMetricAccess().getRule();
+	public ParserRule getIntermediateReferenceRule() {
+		return getIntermediateReferenceAccess().getRule();
 	}
 
 	//ProcessorGroup kicool::ProcessorGroup:
@@ -555,9 +556,10 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getProcessorGroupAccess().getRule();
 	}
 
-	//Processor kicool::Processor:
+	//Processor kicool::ProcessorReference:
 	//	('pre' ('set' presets+=KVPair)+)?
-	//	id=QualifiedID ('metric' metric=[kicool::Metric|QualifiedID])? ('post' ('set' postsets+=KVPair)+)?
+	//	id=QualifiedID ('intermediate' metric=[kicool::IntermediateReference|QualifiedID])? ('post' ('set'
+	//	postsets+=KVPair)+)?
 	public ProcessorElements getProcessorAccess() {
 		return pProcessor;
 	}
@@ -618,14 +620,14 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
-	//PragmaAnnotation Annotation:
-	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
-	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
-		return gaAnnotations.getPragmaAnnotationAccess();
+	//Pragma:
+	//	StringPragma | PragmaTag;
+	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaAnnotations.getPragmaAccess();
 	}
 	
-	public ParserRule getPragmaAnnotationRule() {
-		return getPragmaAnnotationAccess().getRule();
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
 	}
 
 	//// Valued Annotation Rule
@@ -694,14 +696,14 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
-	//PragmaTagAnnotation PragmaAnnotation:
+	//PragmaTag Pragma:
 	//	'#' name=ExtendedID
-	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
-		return gaAnnotations.getPragmaTagAnnotationAccess();
+	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
+		return gaAnnotations.getPragmaTagAccess();
 	}
 	
-	public ParserRule getPragmaTagAnnotationRule() {
-		return getPragmaTagAnnotationAccess().getRule();
+	public ParserRule getPragmaTagRule() {
+		return getPragmaTagAccess().getRule();
 	}
 
 	//// KeyStringValueAnnotation
@@ -727,14 +729,14 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
-	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
-	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
-		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	//StringPragma:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
+		return gaAnnotations.getStringPragmaAccess();
 	}
 	
-	public ParserRule getPramgaKeyStringValueAnnotationRule() {
-		return getPramgaKeyStringValueAnnotationAccess().getRule();
+	public ParserRule getStringPragmaRule() {
+		return getStringPragmaAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation

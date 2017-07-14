@@ -7,9 +7,9 @@
 ']'=22
 'alias'=20
 'input'=18
+'intermediate'=19
 'key'=27
 'label'=17
-'metric'=19
 'post'=25
 'pre'=23
 'set'=24

@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.compilation.observer
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Notification class for the compilation has finished event.
@@ -24,9 +25,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class CompilationFinished extends AbstractCompilationNotification {
     
-    @Accessors val de.cau.cs.kieler.kicool.compilation.Environment environment
+    @Accessors val Environment environment
     
-    new(CompilationContext compilationContext, de.cau.cs.kieler.kicool.compilation.Environment environment) {
+    new(CompilationContext compilationContext, Environment environment) {
         super(compilationContext)
         this.environment = environment
     }

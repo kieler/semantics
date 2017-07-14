@@ -19,14 +19,7 @@ import java.util.Set;
 import org.eclipse.xtext.validation.Check;
 
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.BoolValue;
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.Declaration;
-//import de.cau.cs.kieler.sccharts.legacy.kexpressions.DoubleValue;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.Expression;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.FloatValue;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.IntValue;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.TextExpression;
-import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsExtension;

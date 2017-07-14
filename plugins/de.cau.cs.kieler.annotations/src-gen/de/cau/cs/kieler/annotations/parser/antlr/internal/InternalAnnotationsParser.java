@@ -434,25 +434,25 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleTagAnnotation"
 
 
-    // $ANTLR start "entryRulePragmaTagAnnotation"
-    // InternalAnnotations.g:217:1: entryRulePragmaTagAnnotation returns [EObject current=null] : iv_rulePragmaTagAnnotation= rulePragmaTagAnnotation EOF ;
-    public final EObject entryRulePragmaTagAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRulePragmaTag"
+    // InternalAnnotations.g:217:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
+    public final EObject entryRulePragmaTag() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_rulePragmaTagAnnotation = null;
+        EObject iv_rulePragmaTag = null;
 
 
         try {
-            // InternalAnnotations.g:218:2: (iv_rulePragmaTagAnnotation= rulePragmaTagAnnotation EOF )
-            // InternalAnnotations.g:219:2: iv_rulePragmaTagAnnotation= rulePragmaTagAnnotation EOF
+            // InternalAnnotations.g:218:2: (iv_rulePragmaTag= rulePragmaTag EOF )
+            // InternalAnnotations.g:219:2: iv_rulePragmaTag= rulePragmaTag EOF
             {
-             newCompositeNode(grammarAccess.getPragmaTagAnnotationRule()); 
+             newCompositeNode(grammarAccess.getPragmaTagRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_rulePragmaTagAnnotation=rulePragmaTagAnnotation();
+            iv_rulePragmaTag=rulePragmaTag();
 
             state._fsp--;
 
-             current =iv_rulePragmaTagAnnotation; 
+             current =iv_rulePragmaTag; 
             match(input,EOF,FollowSets000.FOLLOW_2); 
 
             }
@@ -467,12 +467,12 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRulePragmaTagAnnotation"
+    // $ANTLR end "entryRulePragmaTag"
 
 
-    // $ANTLR start "rulePragmaTagAnnotation"
-    // InternalAnnotations.g:226:1: rulePragmaTagAnnotation returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
-    public final EObject rulePragmaTagAnnotation() throws RecognitionException {
+    // $ANTLR start "rulePragmaTag"
+    // InternalAnnotations.g:226:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    public final EObject rulePragmaTag() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
@@ -490,7 +490,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAnnotationAccess().getNumberSignKeyword_0());
+                	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
                 
             // InternalAnnotations.g:234:1: ( (lv_name_1_0= ruleExtendedID ) )
             // InternalAnnotations.g:235:1: (lv_name_1_0= ruleExtendedID )
@@ -499,7 +499,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // InternalAnnotations.g:236:3: lv_name_1_0= ruleExtendedID
             {
              
-            	        newCompositeNode(grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+            	        newCompositeNode(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
             	    
             pushFollow(FollowSets000.FOLLOW_2);
             lv_name_1_0=ruleExtendedID();
@@ -508,7 +508,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
             	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getPragmaTagAnnotationRule());
+            	            current = createModelElementForParent(grammarAccess.getPragmaTagRule());
             	        }
                    		set(
                    			current, 
@@ -540,7 +540,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "rulePragmaTagAnnotation"
+    // $ANTLR end "rulePragmaTag"
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
@@ -951,25 +951,25 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleRestrictedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRulePramgaKeyStringValueAnnotation"
-    // InternalAnnotations.g:426:1: entryRulePramgaKeyStringValueAnnotation returns [EObject current=null] : iv_rulePramgaKeyStringValueAnnotation= rulePramgaKeyStringValueAnnotation EOF ;
-    public final EObject entryRulePramgaKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleStringPragma"
+    // InternalAnnotations.g:426:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
+    public final EObject entryRuleStringPragma() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_rulePramgaKeyStringValueAnnotation = null;
+        EObject iv_ruleStringPragma = null;
 
 
         try {
-            // InternalAnnotations.g:427:2: (iv_rulePramgaKeyStringValueAnnotation= rulePramgaKeyStringValueAnnotation EOF )
-            // InternalAnnotations.g:428:2: iv_rulePramgaKeyStringValueAnnotation= rulePramgaKeyStringValueAnnotation EOF
+            // InternalAnnotations.g:427:2: (iv_ruleStringPragma= ruleStringPragma EOF )
+            // InternalAnnotations.g:428:2: iv_ruleStringPragma= ruleStringPragma EOF
             {
-             newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationRule()); 
+             newCompositeNode(grammarAccess.getStringPragmaRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_rulePramgaKeyStringValueAnnotation=rulePramgaKeyStringValueAnnotation();
+            iv_ruleStringPragma=ruleStringPragma();
 
             state._fsp--;
 
-             current =iv_rulePramgaKeyStringValueAnnotation; 
+             current =iv_ruleStringPragma; 
             match(input,EOF,FollowSets000.FOLLOW_2); 
 
             }
@@ -984,12 +984,12 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRulePramgaKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleStringPragma"
 
 
-    // $ANTLR start "rulePramgaKeyStringValueAnnotation"
-    // InternalAnnotations.g:435:1: rulePramgaKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
-    public final EObject rulePramgaKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleStringPragma"
+    // InternalAnnotations.g:435:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    public final EObject ruleStringPragma() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
@@ -1012,7 +1012,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             {
             otherlv_0=(Token)match(input,16,FollowSets000.FOLLOW_3); 
 
-                	newLeafNode(otherlv_0, grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNumberSignKeyword_0());
+                	newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
                 
             // InternalAnnotations.g:443:1: ( (lv_name_1_0= ruleExtendedID ) )
             // InternalAnnotations.g:444:1: (lv_name_1_0= ruleExtendedID )
@@ -1021,7 +1021,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // InternalAnnotations.g:445:3: lv_name_1_0= ruleExtendedID
             {
              
-            	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+            	        newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
             	    
             pushFollow(FollowSets000.FOLLOW_4);
             lv_name_1_0=ruleExtendedID();
@@ -1030,7 +1030,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
             	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+            	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
             	        }
                    		set(
                    			current, 
@@ -1052,7 +1052,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // InternalAnnotations.g:463:3: lv_values_2_0= ruleEStringAllTypes
             {
              
-            	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
+            	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
             	    
             pushFollow(FollowSets000.FOLLOW_5);
             lv_values_2_0=ruleEStringAllTypes();
@@ -1061,7 +1061,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
             	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+            	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
             	        }
                    		add(
                    			current, 
@@ -1093,7 +1093,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             	    {
             	    otherlv_3=(Token)match(input,17,FollowSets000.FOLLOW_4); 
 
-            	        	newLeafNode(otherlv_3, grammarAccess.getPramgaKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	        	newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
             	        
             	    // InternalAnnotations.g:483:1: ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    // InternalAnnotations.g:484:1: (lv_values_4_0= ruleEStringAllTypes )
@@ -1102,7 +1102,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             	    // InternalAnnotations.g:485:3: lv_values_4_0= ruleEStringAllTypes
             	    {
             	     
-            	    	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
+            	    	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
             	    	    
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    lv_values_4_0=ruleEStringAllTypes();
@@ -1111,7 +1111,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
             	    	        if (current==null) {
-            	    	            current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+            	    	            current = createModelElementForParent(grammarAccess.getStringPragmaRule());
             	    	        }
             	           		add(
             	           			current, 
@@ -1152,7 +1152,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "rulePramgaKeyStringValueAnnotation"
+    // $ANTLR end "ruleStringPragma"
 
 
     // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"

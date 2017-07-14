@@ -13,6 +13,7 @@ import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
+import de.cau.cs.kieler.scg.SCGraph;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -47,13 +48,13 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
         EObject transformed = null;
 
         SCGTransformation transformation =
-        Guice.createInjector().getInstance(SCGTransformation.class);
+                Guice.createInjector().getInstance(SCGTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transform((SCCharts) model, null);
+            transformed = (SCGraph) transformation.transform((SCCharts) model, null);
         } 
         return transformed;
     }

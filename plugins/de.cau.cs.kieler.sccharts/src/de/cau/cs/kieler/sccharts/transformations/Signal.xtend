@@ -29,13 +29,23 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Signal Transformation.
@@ -70,19 +80,20 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-//    @Inject
-//    extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension KExpressionsCreateExtensions
 
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsTransformationExtension
-
-    @Inject
-    extension ValuedObjectRise
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
+    @Inject extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -105,15 +116,13 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // input signal S:integer; --> input boolean S; input integer S_val;
     // Transforming a signal to a variable. 
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-        
-        targetRootState.transformValuedObjectRise
+        rootState.transformValuedObjectRise
         
         // Traverse all states
-        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
-            targetState.transformSignal(targetRootState);
+        rootState.getAllStates.toList.forEach [ targetState |
+            targetState.transformSignal(rootState);
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
@@ -131,7 +140,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
         // The following is necessary only if there are state actions which could
         // possibly modify the signal!
-        if (!state.localActions.nullOrEmpty) {
+        if (!state.actions.nullOrEmpty) {
             val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "main")
             val mainState = mainRegion.createState(GENERATED_PREFIX + "main").setInitial
             for (region : state.regions.toList.immutableCopy) {
@@ -139,8 +148,8 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                     mainState.regions.add(region)
                 }
             }
-            for (action : state.localActions.toList.immutableCopy) {
-                mainState.localActions.add(action)
+            for (action : state.actions.toList.immutableCopy) {
+                mainState.actions.add(action)
             }
         }
 
@@ -159,8 +168,15 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
             // If this is a valued signal we need a second signal for the value
             if (isValuedSignal) {
-                val valueVariable = state.createVariable(signal.name + variableValueExtension)
-                val currentValueVariable = state.createVariable(signal.name + variableCurrentValueExtension)
+                val valueDecl = createVariableDeclaration(signal.type)
+                val valueVariable = state.createValuedObject(signal.name + variableValueExtension, valueDecl)
+                val currentValueVariable = state.createValuedObject(signal.name + variableCurrentValueExtension, createVariableDeclaration(signal.type))
+                
+                // Copy type and input/output attributes from the original signal
+                currentValueVariable.applyAttributes(signal)
+                valueDecl.setInput(signal.isInput);
+                valueDecl.setOutput(signal.isOutput);
+                valueVariable.applyAttributes(signal)
 
                 // Add an immediate during action that updates the value (in case of an emission)
                 // to the current value
@@ -174,13 +190,6 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
                 resetDuringAction.setImmediate(true)
 
-                // Copy type and input/output attributes from the original signal
-                currentValueVariable.copyAttributes(signal)
-                currentValueVariable.type = signal.declaration.type
-                valueVariable.setInput(signal.isInput);
-                valueVariable.setOutput(signal.isOutput);
-                valueVariable.copyAttributes(signal)
-                valueVariable.type = signal.declaration.type
 
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {
@@ -191,7 +200,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                         if (signalEmission.newValue != null) {
 
                             // Assign the emitted valued and combine!
-                            val variableAssignment = currentValueVariable.assingCombined(signalEmission.newValue)
+                            val variableAssignment = currentValueVariable.createCombinedAssignment(signalEmission.newValue)
 
                             // Put it in right order
                             val index = action.effects.indexOf(signalEmission);
@@ -220,8 +229,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             } // ValuedObject
 
             // Change signal to variable
-            presentVariable.setIsNotSignal
-            presentVariable.setTypeBool
+            val declarationScope = presentVariable.declarationScope
+            presentVariable.removeFromContainmentAndCleanup
+            declarationScope.addValuedObject(presentVariable, createBoolDeclaration)
 
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
@@ -237,7 +247,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 for (Emission signalEmission : allSignalEmissions.immutableCopy) {
 
                     // Assign the emitted valued
-                    val variableAssignment = presentVariable.assignRelative(TRUE)
+                    val variableAssignment = presentVariable.createRelativeAssignmentWithOr(TRUE)
                     variableAssignment.trace(signalEmission)
 
                     // Remove the signal emission value (because it will be the presentValue emission)

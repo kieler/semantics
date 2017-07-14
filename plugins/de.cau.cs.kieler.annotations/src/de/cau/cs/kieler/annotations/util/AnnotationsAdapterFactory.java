@@ -87,6 +87,10 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
                 return createAnnotatableAdapter();
             }
             @Override
+            public Adapter casePragmatable(Pragmatable object) {
+                return createPragmatableAdapter();
+            }
+            @Override
             public Adapter caseAnnotation(Annotation object) {
                 return createAnnotationAdapter();
             }
@@ -127,12 +131,12 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
                 return createCommentAnnotationAdapter();
             }
             @Override
-            public Adapter casePragmaAnnotation(PragmaAnnotation object) {
-                return createPragmaAnnotationAdapter();
+            public Adapter casePragma(Pragma object) {
+                return createPragmaAdapter();
             }
             @Override
-            public Adapter casePragmaStringAnnotation(PragmaStringAnnotation object) {
-                return createPragmaStringAnnotationAdapter();
+            public Adapter caseStringPragma(StringPragma object) {
+                return createStringPragmaAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -179,6 +183,20 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragmatable <em>Pragmatable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Pragmatable
+     * @generated
+     */
+    public Adapter createPragmatableAdapter() {
         return null;
     }
 
@@ -323,30 +341,30 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.PragmaAnnotation <em>Pragma Annotation</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragma <em>Pragma</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.annotations.PragmaAnnotation
+     * @see de.cau.cs.kieler.annotations.Pragma
      * @generated
      */
-    public Adapter createPragmaAnnotationAdapter() {
+    public Adapter createPragmaAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.PragmaStringAnnotation <em>Pragma String Annotation</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.StringPragma <em>String Pragma</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.annotations.PragmaStringAnnotation
+     * @see de.cau.cs.kieler.annotations.StringPragma
      * @generated
      */
-    public Adapter createPragmaStringAnnotationAdapter() {
+    public Adapter createStringPragmaAdapter() {
         return null;
     }
 

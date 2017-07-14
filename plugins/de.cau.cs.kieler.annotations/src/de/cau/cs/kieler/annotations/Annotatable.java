@@ -56,45 +56,4 @@ public interface Annotatable extends EObject {
      */
     EList<Annotation> getAnnotations();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Search an annotation with the given name.
-     * 
-     * @param name the name of the annotation, does not need to be unique
-     * @returns the first annotation that matches the name
-     * <!-- end-model-doc -->
-     * @model required="true"
-     * @generated
-     */
-    Annotation getAnnotation(String name);
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Search all annotations with the given name.
-     * 
-     * @param name the name of the annotations, does not need to be unique
-     * @returns a list of all annotations that match the name
-     * <!-- end-model-doc -->
-     * @model required="true" many="false"
-     * @generated
-     */
-    EList<Annotation> getAllAnnotations(String name);
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Remove all annotations with the given name.
-     * 
-     * @param name name of the annotations to remove
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    void removeAllAnnotations(String name);
-
 } // Annotatable

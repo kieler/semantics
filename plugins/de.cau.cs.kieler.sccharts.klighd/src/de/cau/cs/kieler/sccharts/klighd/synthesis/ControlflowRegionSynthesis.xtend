@@ -24,7 +24,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
@@ -38,6 +38,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -50,23 +51,14 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 @ViewSynthesisShared
 class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> {
 
-    @Inject
-    extension KNodeExtensions
-
-    @Inject
-    extension KRenderingExtensions
-
-    @Inject
-    extension SCChartsSerializeHRExtension
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions    
-
-    @Inject
-    extension StateSynthesis
-
-    @Inject
-    extension ControlflowRegionStyles
+    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KRenderingExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension KExpressionsDeclarationExtensions    
+    @Inject extension StateSynthesis
+    @Inject extension ControlflowRegionStyles
+    @Inject extension CommentSynthesis
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
@@ -99,9 +91,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 setAsExpandedView
                 associateWith(region)
                 if (region.declarations.empty) {
-                    addStatesArea(label.nullOrEmpty);
+                    addStatesArea(!label.nullOrEmpty);
                 } else {
-                    addStatesAndDeclarationsArea();
+                    addStatesAndDeclarationsArea(!label.nullOrEmpty);
                     // Add declarations
                     for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [
@@ -112,7 +104,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                 }
                 // Add Button after area to assure correct overlapping
-                addButton("[+]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addButton("[-]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
             ]
 
             // Collapsed
@@ -131,7 +123,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure;
         }
 
-        return <KNode> newArrayList(node)
+        val returnNodes = <KNode> newArrayList(node)
+        
+        region.getCommentAnnotations.forEach[
+            node.children += it.transform                
+        ]                        
+
+        return returnNodes
     }
 
     /**
@@ -159,7 +157,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         // Expanded
         node.addRegionFigure => [
             setAsExpandedView;
-            addStatesArea(true);
+            addStatesArea(false);
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
             addButton("[-]").addDoubleClickAction(ReferenceExpandAction::ID);

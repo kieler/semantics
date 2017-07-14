@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 
@@ -28,7 +29,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression;
  *
  * @generated
  */
-public class TextExpressionImpl extends ExpressionImpl implements TextExpression {
+public class TextExpressionImpl extends EObjectImpl implements TextExpression {
     /**
      * The default value of the '{@link #getText() <em>Text</em>}' attribute.
      * <!-- begin-user-doc -->

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -24,44 +24,22 @@ import org.w3c.dom.svg.SVGPoint
  */
 class WalkPathAnimation extends AnimationHandler {
     var String pathName
-    var boolean autoOrientation
-    var double anchorX
-    var double anchorY
     var double pathStart
     var double pathEnd
     var double pathLength
+    var boolean autoOrientation
+    var double anchorX = 0.5
+    var double anchorY = 0.5
+    var double angleValue = 0
     
     var String initialTransform
     var SVGPoint lastPoint
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        initialize()
-    }
-    
-    private def void initialize() {
-        // Read attribute values
-        for(attributeMapping : animation.attributeMappings) {
-            val literal = attributeMapping.literal
-            val attributeName = attributeMapping.attribute
-            switch(attributeName) {
-                case "path" : pathName = literal.primitiveValue.toString
-                case "autoOrientation" : autoOrientation = literal.primitiveValue as Boolean
-                case "anchorX" : anchorX = literal.primitiveValue.doubleValue
-                case "anchorY" : anchorY = literal.primitiveValue.doubleValue
-                case "start" : pathStart = literal.primitiveValue.doubleValue
-                case "end" : pathEnd = literal.primitiveValue.doubleValue
-                case "length" : pathLength = literal.primitiveValue.doubleValue
-                default: throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
-                    + "Handled attributes are:\n"
-                    + "path, autoOrientation, anchorX, anchorY, start, end, length"
-                )
-            }
-        }
-        // Define pathEnd using the path length
-        if(pathLength > 0 && pathEnd == 0) {
-            pathEnd += pathStart + pathLength
-        }
+        setAttributes("autoOrientation", "anchorX", "anchorY", "start", "end", "length")
+        val pathAttr = addAttribute("path")
+        pathAttr.mandatory = true
     }
     
     override getName() {
@@ -69,34 +47,74 @@ class WalkPathAnimation extends AnimationHandler {
     }
     
     override doApply(DataPool pool) {
-        val elem = findElement()
-        val value = variableValue as Double
-
+        val elem = findElement(true)
+        
+        val newPathName = getAttribute("path").stringValue
+        if(newPathName != null) {
+            pathName = newPathName
+        }
+        val newPathStart = getAttribute("start").floatValue
+        if(newPathStart != null) {
+            pathStart = newPathStart
+        }
+        val newPathEnd = getAttribute("end").floatValue
+        if(newPathEnd != null) {
+            pathEnd = newPathEnd
+        }
+        val newPathLength = getAttribute("length").floatValue
+        if(newPathLength != null) {
+            pathLength = newPathLength
+        }
+        // Define pathEnd using the path length
+        if(pathLength > 0 && pathEnd == 0) {
+            pathEnd = pathStart + pathLength
+        }
+        val length = (pathEnd-pathStart)
+        if(length <= 0) {
+            throw new IllegalArgumentException("The length of the path in the "+name+" animation must be greater than 0.")
+        }
+        
+        val newAutoOrientation = getAttribute("autoOrientation").boolValue
+        if(newAutoOrientation != null) {
+            autoOrientation = newAutoOrientation
+        }
+        val newAnchorX = getAttribute("anchorX").floatValue
+        if(newAnchorX != null) {
+            anchorX = newAnchorX
+        }
+        val newAnchorY = getAttribute("anchorY").floatValue
+        if(newAnchorY != null) {
+            anchorY = newAnchorY
+        }
+        
         // Calculate animation
         var SVGOMPathElement path
-        if(pathName.isNullOrEmpty){
-            throw new Exception("Path animation must have a path id set.")
+        val pathElement = findElement(pathName)
+        if(pathElement == null) {
+            throw new Exception("Path with id '" + pathName + "' was not found in the svg.")
         } else {
-            val pathElement = findElement(pathName)
-            if(pathElement == null) {
-                throw new Exception("Path with id '" + pathName + "' was not found in the svg.")
-            } else {
-                try {
-                    path = pathElement as SVGOMPathElement
-                } catch (Exception e) {
-                    throw new Exception("Element with id '" + pathName + "' is not a valid path in the svg.")
-                }
+            try {
+                path = pathElement as SVGOMPathElement
+            } catch (Exception e) {
+                throw new Exception("Element with id '" + pathName + "' is not a valid path in the svg.")
             }
         }
         // Compute position on path
         val totalPathLength = path.getTotalLength
-        val scaledValue = scale(value, pathStart, pathEnd, 0, totalPathLength)
-        var SVGPoint currentPoint = path.getPointAtLength(scaledValue.floatValue())
+        val value = variableValue.doubleValue
+        // If the value is above the path, bring it back to the range
+        var wrappedValue = value
+        while(wrappedValue > pathEnd) {
+            // it holds length >= 0, because we check it above and throw an exception if not
+            wrappedValue = wrappedValue-length
+        }
+        val scaledValue = scale(wrappedValue, pathStart, pathEnd, 0, totalPathLength)
+        var SVGPoint currentPoint = path.getPointAtLength(scaledValue.floatValue)
         // Compute angle
-        var Double angleValue = 0d
-        if (lastPoint != null) {
+        val delta = 1
+        if (autoOrientation && lastPoint != null && scaledValue <= (totalPathLength - delta)) {
             // Calculate slope ("Steigung" bzw. "Ableitung") on path on current position
-            val currentPointPlusDelta = path.getPointAtLength(scaledValue.floatValue()+1)
+            val currentPointPlusDelta = path.getPointAtLength(scaledValue.floatValue + delta)
             angleValue = computeAngle(currentPoint, currentPointPlusDelta);
         }
         lastPoint = currentPoint;
@@ -133,13 +151,15 @@ class WalkPathAnimation extends AnimationHandler {
     
     private def double computeAngle(SVGPoint p1, SVGPoint p2) {
         val double RADTODEG = 180.0 / Math.PI;
-        var double deltaX
-        var double deltaY
-        var double alpha
-
+        var double deltaX = 0
+        var double deltaY = 0
+        var double alpha = 0
+        
         deltaX = p2.getX() - p1.getX();// Ankathete
         deltaY = p2.getY() - p1.getY();// Gegenkathete
-
+        if(deltaX == 0) {
+            return 0;
+        }
         alpha = Math.atan(deltaY / deltaX) * RADTODEG;
 
         if (deltaX > 0 && deltaY <= 0) {

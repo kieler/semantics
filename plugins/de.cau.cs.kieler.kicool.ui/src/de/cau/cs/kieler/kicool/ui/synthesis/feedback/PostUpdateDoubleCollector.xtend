@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.feedback
 
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.core.model.properties.IProperty
 
 /**
  * @author ssm
@@ -22,20 +23,20 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class PostUpdateDoubleCollector {
     
-    @Accessors var String key
+    @Accessors var IProperty<Double> key
     @Accessors var double nullPercent = 0.33 
     @Accessors var double maxValue = nullPercent
     
-    private val processorMap = <de.cau.cs.kieler.kicool.compilation.Processor, Double> newHashMap
+    private val processorMap = <de.cau.cs.kieler.kicool.compilation.Processor<?,?>, Double> newHashMap
 
     
-    new(String key) {
+    new(IProperty<Double> key) {
         this.key = key
     }
     
-    def addProcessor(de.cau.cs.kieler.kicool.compilation.Processor processor) {
+    def addProcessor(de.cau.cs.kieler.kicool.compilation.Processor<?,?> processor) {
         try {
-            val v = processor.environment.getData(key, 0.0) as Double
+            val v = processor.environment.getProperty(key)
             var double value = v.doubleValue
             processorMap.put(processor, new Double(value))
             if (value > maxValue) maxValue = value
@@ -43,7 +44,7 @@ class PostUpdateDoubleCollector {
         }
     }
     
-    def getPercentile(de.cau.cs.kieler.kicool.compilation.Processor processor) {
+    def getPercentile(de.cau.cs.kieler.kicool.compilation.Processor<?,?> processor) {
         val value = processorMap.get(processor) 
         if (value != null) {
             var double pVal = value.doubleValue() / maxValue

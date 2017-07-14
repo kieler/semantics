@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.core
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.runtime.Assert
 
 /**
  * @author aas
@@ -58,7 +59,15 @@ class NDimensionalArray implements Cloneable{
         return indices.get(dimension);
     }
     
-    public def Object get(int... index) {
+    public def Object get(List<Integer> index) {
+        // Check array sizes
+        Assert.isTrue(index.size == dimension)
+        for(var i = 0; i < index.size; i++) {
+            if(index.get(i) < 0 || index.get(i) >= indices.get(i)) {
+                throw new IllegalArgumentException("Array index out of bounds (index was "+index+", array size is "+indices.toString+")")
+            }
+        }
+        // Return element at the given index
         val oneDimIndex = getOneDimensionalIndex(index)
         return elements.get(oneDimIndex).value
     }
@@ -82,7 +91,12 @@ class NDimensionalArray implements Cloneable{
     }
     
     public override NDimensionalArray clone() {
-        val arr = new NDimensionalArray(elements.map[it.cloneOfValue], indices.clone)
+        val arr = new NDimensionalArray(elements.map[NDimensionalArrayElement.getCloneOfValue(it.value)], indices.clone)
+        for(var i = 0; i < elements.size; i++) {
+            val oldElem = elements.get(i)
+            val newElem = arr.elements.get(i)
+            newElem.userValue = NDimensionalArrayElement.getCloneOfValue(oldElem.userValue)
+        }
         return arr 
     }
     
@@ -90,7 +104,10 @@ class NDimensionalArray implements Cloneable{
      * {@inheritDoc}
      */
     override toString() {
-        val values = elements.map[it.value]
+        val values = elements.map[if(it.isDirty)
+                                      "*"+it.userValue
+                                  else
+                                      it.value]
         return values.toString()
     }
     
@@ -112,5 +129,13 @@ class NDimensionalArray implements Cloneable{
             }
         }
         return false
+    }
+    
+    /**
+     * Returns a string representation for an array.
+     * @param arr The array
+     */
+    private def <T> String toString(T[] arr) {
+        return "["+arr.map[it.toString].join(", ")+"]"
     }
 }

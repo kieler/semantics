@@ -17,7 +17,6 @@ import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -27,6 +26,12 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts For Transformation.
@@ -61,16 +66,14 @@ class For extends AbstractExpansionTransformation {
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    // @Inject
-    // extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension SCChartsTransformationExtension
+    @Inject extension KEffectsExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions    
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension SCChartsTransformationExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -80,13 +83,11 @@ class For extends AbstractExpansionTransformation {
     // -------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-
         // Traverse all states
-        for (targetRegion : targetRootState.allContainedControlflowRegions.immutableCopy) {
-            targetRegion.transformFor(targetRootState);
+        for (targetRegion : rootState.allContainedControlflowRegions.toList) {
+            targetRegion.transformFor(rootState);
         }
-        targetRootState.fixAllTextualOrdersByPriorities
+        rootState
     }
 
     def void transformFor(ControlflowRegion region, State targetRootState) {
@@ -109,12 +110,12 @@ class For extends AbstractExpansionTransformation {
                 if (lastInstance != null) {
                     // connect
                     lastInstance.createTransitionTo(instance).setTypeTermination.effects.add(
-                        forData.valuedObject.assign(c.createIntValue))
+                        forData.valuedObject.createAssignment(c.createIntValue))
                 }
                 lastInstance = instance
             }
             start.createImmediateTransitionTo(firstInstance).effects.add(
-                forData.valuedObject.assign(forData.start.createIntValue))
+                forData.valuedObject.createAssignment(forData.start.createIntValue))
             lastInstance.createTransitionTo(end).setTypeTermination
             // Reset the region label
             region.label = ""

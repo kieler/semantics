@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.simulation.core.DataPool
+import java.util.List
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 
@@ -26,6 +27,8 @@ import org.w3c.dom.svg.SVGDocument
  *
  */
 abstract class AnimationHandler {
+    
+    protected val List<AnimationHandlerAttribute> attributes = newArrayList
     protected var String svgElementId
     protected var Animation animation
     protected var Object variableValue
@@ -50,6 +53,26 @@ abstract class AnimationHandler {
     public def void apply(DataPool pool) {
         variableValue = getVariableValue(pool)
         if(isActive(pool)) {
+            // Update attributes
+            for(attributeMapping : animation.attributeMappings) {
+                val attributeName = attributeMapping.attribute
+                val attr = getAttribute(attributeName)
+                if(attr != null) {
+                    attr.value = getMappedValue(attributeMapping, variableValue)
+                } else {
+                    throw new IllegalArgumentException("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
+                                                     + "Handled attributes are:\n"
+                                                     +  attributes.map[it.name].toList())
+                }
+            }
+            // Check if all mandatory attributes have been set
+            for(attr : attributes.filter[it.isMandatory]) {
+                if(attr.value == null) {
+                    throw new IllegalArgumentException("The attribute '" + attr.name+ "' "
+                                                 + "of the " + name + " animation must be set.")                                 
+                }
+            }
+            // Apply
             doApply(pool)
         }
     }
@@ -64,6 +87,15 @@ abstract class AnimationHandler {
     
     protected def Element findElement() {
         return SVGDocument.getElementById(svgElementId)
+    }
+    
+    protected def Element findElement(boolean mustExist) {
+        val elem = findElement
+        if(elem != null) {
+            return elem
+        } else {
+            throw new IllegalArgumentException("SVG element '"+svgElementId+"' does not exist")
+        }
     }
     
     protected def Object getVariableValue(DataPool pool) {
@@ -82,15 +114,15 @@ abstract class AnimationHandler {
             for(mapping : attributeMapping.mappings) {
                 if(mapping.variableDomain.matches(value)) {
                     return mapping.apply(value)
-                } else {
-                    if(mapping.variableDomain.range != null) {
-                        System.err.println(value + " does not match with "
-                            + mapping.variableDomain.range.from.primitiveValue 
-                            + "-"
-                            + mapping.variableDomain.range.to.primitiveValue)
-                    } else {
-                        System.err.println(value + " does not match with "+ mapping.variableDomain.value.primitiveValue)
-                    } 
+//                } else {
+//                    if(mapping.variableDomain.range != null) {
+//                        System.err.println(value + " does not match with "
+//                            + mapping.variableDomain.range.from.primitiveValue 
+//                            + "-"
+//                            + mapping.variableDomain.range.to.primitiveValue)
+//                    } else {
+//                        System.err.println(value + " does not match with "+ mapping.variableDomain.value.primitiveValue)
+//                    } 
                 }
             }
             return null
@@ -103,5 +135,25 @@ abstract class AnimationHandler {
         } else {
             return animation.condition.eval(pool)
         }
+    }
+    
+    protected def void setAttributes(String... name) {
+        attributes.clear()
+        for(n : name) {
+            addAttribute(n)
+        }
+    }
+    
+    protected def AnimationHandlerAttribute addAttribute(String name) {
+        var AnimationHandlerAttribute attr = getAttribute(name)
+        if(attr == null) {
+            attr = new AnimationHandlerAttribute(name)
+            attributes.add(attr)
+        }
+        return attr
+    }
+    
+    protected def AnimationHandlerAttribute getAttribute(String name) {
+        return attributes.findFirst[it.name == name]
     }
 }

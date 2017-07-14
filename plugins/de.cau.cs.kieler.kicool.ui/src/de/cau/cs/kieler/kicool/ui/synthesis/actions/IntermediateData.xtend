@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
  */
  @Data
 class IntermediateData {
-    de.cau.cs.kieler.kicool.compilation.Processor processor
+    de.cau.cs.kieler.kicool.compilation.Processor<?,?> processor
     CompilationContext compilationContext
     Object model
     CompilerView view

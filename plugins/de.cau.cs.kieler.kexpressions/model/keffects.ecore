@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="keffects" nsURI="http://kieler.cs.cau.de/keffects/0.1.0" nsPrefix="keffects">
-  <eClassifiers xsi:type="ecore:EClass" name="Effect" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Effect" abstract="true" interface="true"
+      eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass kexpressions.ecore#//Expression"
@@ -12,14 +13,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="ecore:EClass kexpressions.ecore#//ValuedObjectReference"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="ecore:EClass kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass kexpressions.ecore#//Expression"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="HostcodeEffect" eSuperTypes="#//Effect kexpressions.ecore#//TextExpression"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ReferenceCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//ReferenceCall"/>
   <eClassifiers xsi:type="ecore:EEnum" name="AssignOperator">
     <eLiterals name="ASSIGN"/>
     <eLiterals name="ASSIGNADD" value="1"/>
@@ -35,5 +28,13 @@
     <eLiterals name="ASSIGNMIN" value="11"/>
     <eLiterals name="ASSIGNMAX" value="12" literal=""/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
+        eType="ecore:EClass kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass kexpressions.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HostcodeEffect" eSuperTypes="#//Effect kexpressions.ecore#//TextExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferenceCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//ReferenceCall"/>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//FunctionCall"/>
 </ecore:EPackage>

@@ -138,7 +138,7 @@ class S2SCC {
     #define _SC_ID_MAX «2*program.priority» 
 
     // Highest signal id in use;
-    #define _SC_SIG_MAX «program.getValuedObjects().filter[e|e.isSignal].size» 
+    #define _SC_SIG_MAX «program.getValuedObjectsFromEObject().filter[e|e.isSignal].size» 
 
     #include "sc.h"
 
@@ -209,7 +209,7 @@ class S2SCC {
    
    // Generate signal constants.
    def sSignalConstants(Program program) {
-       val valuedObjects = program.getValuedObjects()
+       val valuedObjects = program.getValuedObjectsFromEObject()
        val signals = valuedObjects.filter[e|e.isSignal]
        if (!signals.nullOrEmpty) {
        '''typedef enum {«FOR signal : signals SEPARATOR ",
@@ -244,7 +244,7 @@ class S2SCC {
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
+       '''«FOR signal : program.getValuedObjectsFromEObject().filter[e|!e.isSignal] SEPARATOR ";
  "»«signal.type.expand» «signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
   «IF program.usesPre(signal)»
      «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
@@ -279,7 +279,7 @@ class S2SCC {
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
+       '''«FOR signal : program.getValuedObjectsFromEObject().filter[e|!e.isSignal] SEPARATOR ";
  "»«IF program.usesPre(signal)» PRE_«signal.name» = «signal.name» «ENDIF»«ENDFOR»'''
    }
 
@@ -310,10 +310,10 @@ class S2SCC {
    def sSetOutputFunction(Program program) {
        '''
     void callOutputs() {
-    «FOR signal : program.getValuedObjects().filter(e|e.isOutput && e.isSignal)»
+    «FOR signal : program.getValuedObjectsFromEObject().filter(e|e.isOutput && e.isSignal)»
         OUTPUT_«signal.name»(PRESENT_SCC(«signal.name»));
     «ENDFOR»
-    «FOR variable : program.getValuedObjects().filter(e|e.isOutput && !e.isSignal)»
+    «FOR variable : program.getValuedObjectsFromEObject().filter(e|e.isOutput && !e.isSignal)»
         OUTPUT_«variable.name»();
     «ENDFOR»
         }
@@ -325,7 +325,7 @@ class S2SCC {
    def sResetSignals(Program program) {
        '''
     void resetSignals() {
-    «FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
+    «FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal]»
       presentSigIntPre[«signal.name»] = presentSigInt[«signal.name»];
       presentSigInt[«signal.name»] = 0;
       valSigIntPre[«signal.name»] = valSigInt[«signal.name»];
@@ -343,7 +343,7 @@ class S2SCC {
    def sTotalResetSignals(Program program) {
        '''
     void totalResetSignals() {
-    «FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
+    «FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal]»
       presentSigInt[«signal.name»] = 0;
       presentSigIntPre[«signal.name»] = 0;
       valSigInt[«signal.name»] = «signal.combineOperator.initialValue»;
@@ -374,10 +374,10 @@ void setInputs(){
 
     object = cJSON_Parse(buffer);
     
-   «'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
+   «'''«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
                    «signal.callInputSignal»
    «ENDFOR»'''»    
-   «'''«FOR variable : program.getValuedObjects().filter[e|!e.isSignal].filter(e|e.isInput||e.isOutput)»
+   «'''«FOR variable : program.getValuedObjectsFromEObject().filter[e|!e.isSignal].filter(e|e.isInput||e.isOutput)»
                    «variable.callInputVariable»
    «ENDFOR»'''»    
    }'''
@@ -438,7 +438,7 @@ void setInputs(){
 
    // Define output functions to return JSON for each s signal.
    def sOutputSignals(Program program) {
-    '''«'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e | e.isOutput)»
+    '''«'''«FOR signal : program.getValuedObjectsFromEObject().filter[e|e.isSignal].filter(e | e.isOutput)»
         void OUTPUT_«signal.name»(int status){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
@@ -456,7 +456,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
 
    // Define output functions to return JSON for each s variable.
    def sOutputVariables(Program program) {
-    '''«'''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal].filter(e | e.isOutput)»
+    '''«'''«FOR signal : program.getValuedObjectsFromEObject().filter[e|!e.isSignal].filter(e | e.isOutput)»
         void OUTPUT_«signal.name»(){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", «signal.name»?cJSON_CreateTrue():cJSON_CreateFalse());

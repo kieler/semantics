@@ -18,9 +18,9 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * Shows priority label of the priority based compilation.
@@ -35,11 +35,8 @@ import de.cau.cs.kieler.sccharts.s.DependencyTransformation
  @ViewSynthesisShared
 class PrioritybasedCompilationHook extends SynthesisHook {
 
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension DependencyTransformation
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension DependencyTransformation
 
     // Options
     public static final SynthesisOption SHOW_DEPENDENCIES = SynthesisOption.createCheckOption(

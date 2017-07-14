@@ -2,8 +2,6 @@ system de.cau.cs.kieler.scg
 	version 1 
 	label "SCGraph"
 	
-metric de.cau.cs.kieler.scg.metrics.objectCount	
-	
 de.cau.cs.kieler.scg.dependencyAnalysis
 de.cau.cs.kieler.scg.basicBlockAnalysis
 de.cau.cs.kieler.scg.expressionGenerator

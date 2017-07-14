@@ -19,11 +19,11 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 
 /**
  * Removes model elements marked with the annotation hide.
@@ -36,11 +36,8 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 @ViewSynthesisShared
 class HideEntryKeywordHook extends SynthesisHook {
 
-    @Inject
-    extension StateStyles
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension StateStyles
+    @Inject extension SCChartsActionExtensions
 
     /** Keyword for the hide annotation */
     public static final String HIDE_ANNOTATION_KEYWORD = "CbasedSCChart";
@@ -56,13 +53,13 @@ class HideEntryKeywordHook extends SynthesisHook {
     override processState(State state, KNode node) {
         
         if (HIDE_ENTRY.booleanValue) { // && state.getRootState.hasHideAnnotation) {
-            if (!state.localActions.empty &&
-                state.localActions.size == state.entryActions.size) {
+            if (!state.actions.empty &&
+                state.actions.size == state.entryActions.size) {
                 // Remove entry actions
                 val parent = node.contentContainer;
                 val actionsContainer = parent?.getProperty(StateStyles.ACTIONS_CONTAINER);
                 if (actionsContainer != null) {
-                    for (action : state.localActions) {
+                    for (action : state.actions) {
                         val actionLabel = actionsContainer.children.findFirst [
                             isAssociatedWith(action)
                         ] as KContainerRendering

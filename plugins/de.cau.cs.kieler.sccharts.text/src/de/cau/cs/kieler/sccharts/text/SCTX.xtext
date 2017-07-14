@@ -14,23 +14,8 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
-    annotations+=(Pragmas | PragmaAnnotation)*
+    pragmas+=Pragma*
     rootStates+=RootState*;
-    
-Pragmas returns annotations::PragmaStringAnnotation:
-    '#' name = 'version' values += SCXVersions |
-    '#' name = 'director' values += SCXDirectors |
-    '#' name = 'import' values += EString |
-    '#' name = 'symbols' values += EString (',' values += EString)? |
-    '#' name = 'symbol' values += EString ',' values += EString |
-    '#' name = 'font' values += EString;
-
-SCXVersions returns ecore::EString:
-    'SCTX' | 'SCT';
-    
-SCXDirectors returns ecore::EString:
-    'SCCharts' | 'Enforcer';
-
 
 // ------------- //
 //  State Rules  // 
@@ -42,7 +27,7 @@ RootState returns sccharts::State:
 	'scchart' id=ID label=STRING?
 	'{'
 		declarations+=DeclarationWOSemicolon*
-		localActions+=LocalAction*
+		actions+=LocalAction*
 		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
 	'}';
     
@@ -55,14 +40,24 @@ State returns sccharts::State:
 	connector?='connector'?
 	'state' id=ID label=STRING?
 	((
-	    'is' referencedScope = [sccharts::State|ID]
-        ('(' parameters += Parameter (',' parameters += Parameter)* ')')?	    
+	    'is' reference = ScopeCall
 	)|('{'
 		declarations+=DeclarationWOSemicolon*
-		localActions+=LocalAction*
+		actions+=LocalAction*
 		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
 	'}'))?
 	outgoingTransitions+=Transition*;
+
+	
+ScopeCall returns sccharts::ScopeCall:
+    scope = [sccharts::State|ID]
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '(' ')')?;
+    
+Parameter returns kexpressions::Parameter:
+    ((pureOutput ?= '!')? callByReference ?= '&')?
+    expression = Expression
+    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
+    ;    
     
 // ------------------ //
 //  Transition Rules  // 
@@ -70,13 +65,13 @@ State returns sccharts::State:
 
 Transition returns sccharts::Transition:
 	annotations+=RestrictedTypeAnnotation*
-	type=TransitionType
+	preemption=(PreemptionType | PreemptionTypeLegacy)
 	targetState=[sccharts::State|ID]
-	immediate?='immediate'?
+	delay=DelayType?
 	deferred?='deferred'?
 	history=HistoryType?
 	(
-		('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		|
 		('if' label=STRING)
 	)?;
@@ -87,7 +82,7 @@ Transition returns sccharts::Transition:
 // -------------- //
 	
 LocalAction returns sccharts::LocalAction:
-    EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction | InitAction | FinalAction;    
+    EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction;    
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
@@ -95,7 +90,7 @@ EntryAction returns sccharts::EntryAction:
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+    delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
@@ -103,18 +98,14 @@ ExitAction returns sccharts::ExitAction:
        
 SuspendAction returns sccharts::SuspendAction:
 	{sccharts::SuspendAction}
-	immediate?='immediate'? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)?;
+	delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)?;
       
-IterateAction returns sccharts::IterateAction:
-	{sccharts::IterateAction}
-	immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
-
-InitAction returns sccharts::InitAction:
-	{sccharts::InitAction}
+PrecedingAction returns sccharts::PrecedingAction:
+	{sccharts::PrecedingAction}
    'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
          
-FinalAction returns sccharts::FinalAction:
-	{sccharts::FinalAction}
+SucceedingAction returns sccharts::SucceedingAction:
+	{sccharts::SucceedingAction}
 	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
 
 
@@ -169,9 +160,14 @@ Equation returns keffects::Assignment:
 //  Enum Rules  // 
 // ------------ //
 
-enum TransitionType returns sccharts::TransitionType:
+enum PreemptionType returns sccharts::PreemptionType:
 	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
-	
+
+enum PreemptionTypeLegacy returns sccharts::PreemptionType:
+    WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
+    
+enum DelayType returns sccharts::DelayType:
+    UNDEFINED = 'undefined' | DELAYED = 'delayed' | IMMEDIATE = 'immediate' | AUTOMATIC = 'auto';    
 
 enum HistoryType returns sccharts::HistoryType:
     RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';

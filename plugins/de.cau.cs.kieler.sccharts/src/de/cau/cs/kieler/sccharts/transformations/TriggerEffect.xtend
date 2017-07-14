@@ -19,12 +19,16 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts TriggerEffect Transformation.
@@ -65,14 +69,17 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
 //    }
 
     //-------------------------------------------------------------------------    
-    @Inject
-    extension SCChartsExtension
-    
-    @Inject
-    extension ValuedObjectRise
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
+    @Inject extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     //-------------------------------------------------------------------------
     //--                  T R I G G E R   E F F E C T                        --
@@ -84,21 +91,20 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
     //     Set the T_eff to have T's target state. Set T to have the target C.
     //     Add T_eff to C's outgoing transitions. 
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-        
-         targetRootState.transformValuedObjectRise
+        nameCache.clear
+        rootState.transformValuedObjectRise
 
         // Traverse all transitions
-        for (targetTransition : targetRootState.getAllContainedTransitions) {
-            targetTransition.transformTriggerEffect(targetRootState);
+        for (targetTransition : rootState.getAllContainedTransitions.toList) {
+            targetTransition.transformTriggerEffect(rootState)
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     def void transformTriggerEffect(Transition transition, State targetRootState) {
 
         // Only apply this to transition that have both, a trigger (or is a termination) and one or more effects 
-        if (((transition.trigger != null || !transition.immediate || transition.typeTermination) &&
+        if (((transition.trigger != null || !transition.immediate || transition.isTermination) &&
             !transition.effects.nullOrEmpty) || transition.effects.size > 1) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
@@ -107,8 +113,9 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
 
             for (effect : transition.effects.immutableCopy) {
                     val effectState = parentRegion.createState(GENERATED_PREFIX + "S").trace(transition, effect)
-                    effectState.uniqueName
-                    val effectTransition = createImmediateTransition().trace(transition, effect).addEffect(effect)
+                    effectState.uniqueName(nameCache)
+                    val effectTransition = createImmediateTransition().trace(transition, effect)
+                    effectTransition.addEffect(effect) 
                     effectTransition.setSourceState(effectState)
                     lastTransition.setTargetState(effectState)
                     lastTransition = effectTransition

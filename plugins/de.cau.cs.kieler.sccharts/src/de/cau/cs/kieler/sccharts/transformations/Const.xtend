@@ -24,11 +24,15 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
@@ -64,17 +68,11 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension ValuedObjectRise
+    @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -85,28 +83,32 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     // --                           C O N S T                                 --
     // -------------------------------------------------------------------------
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
+        var targetRootState = rootState
 
         targetRootState.transformValuedObjectRise
 
         // Traverse all states
-        for (states : targetRootState.getAllStates.immutableCopy) {
-            states.transformConst
+        for (scopes : targetRootState.getAllScopes.toList) {
+            scopes.transformConst
         }
         targetRootState;
     }
 
-    def void transformConst(State state) {
-        val constObjects = state.valuedObjects.filter[isConst && initialValue != null]
+    def void transformConst(Scope scope) {
+        val constObjects = scope.valuedObjects.filter[isConst && initialValue != null].toList
 
-        for (const : constObjects.toList.immutableCopy) {
+        for (const : constObjects) {
             val replacement = const.initialValue
             replacement.trace(const)
             replacement.trace(const.declaration)
-            state.replaceAllReferencesWithCopy(const, replacement)
+            
+            // Replace references
+            for (vor : scope.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const].toIterable) {
+                vor.replace(replacement.copy)
+            }
             
             if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
-                state.eAllContents.filter(typeof(TextExpression)).forEach [
+                scope.eAllContents.filter(typeof(TextExpression)).forEach [
                     var replacementString = ""
                     if (replacement instanceof IntValue)
                         replacementString = (replacement as IntValue).value.toString
@@ -121,9 +123,8 @@ class Const extends AbstractExpansionTransformation implements Traceable {
                     text = text.replaceAll(const.name, replacementString)
                 ]
             }
-            
-            const.deleteAndCleanup
         }
+        constObjects.forEach[ removeFromContainmentAndCleanup ]
 
     }
 

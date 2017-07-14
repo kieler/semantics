@@ -19,7 +19,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getDeclaration()
- * @model
+ * @model abstract="true"
  * @generated
  */
 public interface Declaration extends Annotatable {

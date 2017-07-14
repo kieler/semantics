@@ -75,24 +75,18 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case SCChartsPackage.ACTION: return createAction();
+            case SCChartsPackage.SC_CHARTS: return createSCCharts();
+            case SCChartsPackage.SCOPE_CALL: return createScopeCall();
             case SCChartsPackage.STATE: return createState();
-            case SCChartsPackage.REGION: return createRegion();
             case SCChartsPackage.CONTROLFLOW_REGION: return createControlflowRegion();
             case SCChartsPackage.DATAFLOW_REGION: return createDataflowRegion();
-            case SCChartsPackage.NODE: return createNode();
-            case SCChartsPackage.REFERENCE_NODE: return createReferenceNode();
-            case SCChartsPackage.CALL_NODE: return createCallNode();
-            case SCChartsPackage.DEFINE_NODE: return createDefineNode();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.ENTRY_ACTION: return createEntryAction();
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
-            case SCChartsPackage.ITERATE_ACTION: return createIterateAction();
-            case SCChartsPackage.INIT_ACTION: return createInitAction();
-            case SCChartsPackage.FINAL_ACTION: return createFinalAction();
-            case SCChartsPackage.SC_CHARTS: return createSCCharts();
+            case SCChartsPackage.PRECEDING_ACTION: return createPrecedingAction();
+            case SCChartsPackage.SUCCEEDING_ACTION: return createSucceedingAction();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -106,10 +100,12 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
         switch (eDataType.getClassifierID()) {
-            case SCChartsPackage.TRANSITION_TYPE:
-                return createTransitionTypeFromString(eDataType, initialValue);
+            case SCChartsPackage.PREEMPTION_TYPE:
+                return createPreemptionTypeFromString(eDataType, initialValue);
             case SCChartsPackage.HISTORY_TYPE:
                 return createHistoryTypeFromString(eDataType, initialValue);
+            case SCChartsPackage.DELAY_TYPE:
+                return createDelayTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -123,10 +119,12 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
         switch (eDataType.getClassifierID()) {
-            case SCChartsPackage.TRANSITION_TYPE:
-                return convertTransitionTypeToString(eDataType, instanceValue);
+            case SCChartsPackage.PREEMPTION_TYPE:
+                return convertPreemptionTypeToString(eDataType, instanceValue);
             case SCChartsPackage.HISTORY_TYPE:
                 return convertHistoryTypeToString(eDataType, instanceValue);
+            case SCChartsPackage.DELAY_TYPE:
+                return convertDelayTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -137,29 +135,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public Action createAction() {
-        ActionImpl action = new ActionImpl();
-        return action;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public State createState() {
         StateImpl state = new StateImpl();
         return state;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Region createRegion() {
-        RegionImpl region = new RegionImpl();
-        return region;
     }
 
     /**
@@ -180,46 +158,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public DataflowRegion createDataflowRegion() {
         DataflowRegionImpl dataflowRegion = new DataflowRegionImpl();
         return dataflowRegion;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Node createNode() {
-        NodeImpl node = new NodeImpl();
-        return node;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ReferenceNode createReferenceNode() {
-        ReferenceNodeImpl referenceNode = new ReferenceNodeImpl();
-        return referenceNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public CallNode createCallNode() {
-        CallNodeImpl callNode = new CallNodeImpl();
-        return callNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DefineNode createDefineNode() {
-        DefineNodeImpl defineNode = new DefineNodeImpl();
-        return defineNode;
     }
 
     /**
@@ -277,32 +215,42 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public IterateAction createIterateAction() {
-        IterateActionImpl iterateAction = new IterateActionImpl();
-        return iterateAction;
+    public PrecedingAction createPrecedingAction() {
+        PrecedingActionImpl precedingAction = new PrecedingActionImpl();
+        return precedingAction;
     }
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public InitAction createInitAction() {
-        InitActionImpl initAction = new InitActionImpl();
-        return initAction;
+    public SucceedingAction createSucceedingAction() {
+        SucceedingActionImpl succeedingAction = new SucceedingActionImpl();
+        return succeedingAction;
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public FinalAction createFinalAction() {
-        FinalActionImpl finalAction = new FinalActionImpl();
-        return finalAction;
+    public PreemptionType createPreemptionTypeFromString(EDataType eDataType, String initialValue) {
+        PreemptionType result = PreemptionType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
     }
 
-				/**
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertPreemptionTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -317,22 +265,12 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public TransitionType createTransitionTypeFromString(EDataType eDataType, String initialValue) {
-        TransitionType result = TransitionType.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
+    public ScopeCall createScopeCall() {
+        ScopeCallImpl scopeCall = new ScopeCallImpl();
+        return scopeCall;
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertTransitionTypeToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
-    }
-
-    /**
+                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -349,6 +287,26 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * @generated
      */
     public String convertHistoryTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DelayType createDelayTypeFromString(EDataType eDataType, String initialValue) {
+        DelayType result = DelayType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertDelayTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

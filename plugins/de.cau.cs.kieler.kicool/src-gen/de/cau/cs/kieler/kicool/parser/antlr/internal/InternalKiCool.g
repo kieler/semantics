@@ -174,17 +174,17 @@ ruleSystem returns [EObject current=null]
 ))?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSystemAccess().getMetricsMetricParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_7_0()); 
 	    }
-		lv_metrics_8_0=ruleMetric		{
+		lv_intermediates_8_0=ruleIntermediateReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSystemRule());
 	        }
        		add(
        			$current, 
-       			"metrics",
-        		lv_metrics_8_0, 
-        		"de.cau.cs.kieler.kicool.KiCool.Metric");
+       			"intermediates",
+        		lv_intermediates_8_0, 
+        		"de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -214,32 +214,32 @@ ruleSystem returns [EObject current=null]
 
 
 
-// Entry rule entryRuleMetric
-entryRuleMetric returns [EObject current=null] 
+// Entry rule entryRuleIntermediateReference
+entryRuleIntermediateReference returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getMetricRule()); }
-	 iv_ruleMetric=ruleMetric 
-	 { $current=$iv_ruleMetric.current; } 
+	{ newCompositeNode(grammarAccess.getIntermediateReferenceRule()); }
+	 iv_ruleIntermediateReference=ruleIntermediateReference 
+	 { $current=$iv_ruleIntermediateReference.current; } 
 	 EOF 
 ;
 
-// Rule Metric
-ruleMetric returns [EObject current=null] 
+// Rule IntermediateReference
+ruleIntermediateReference returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='metric' 
+(	otherlv_0='intermediate' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getMetricAccess().getMetricKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getIntermediateReferenceAccess().getIntermediateKeyword_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMetricAccess().getIdQualifiedIDParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getIntermediateReferenceAccess().getIdQualifiedIDParserRuleCall_1_0()); 
 	    }
 		lv_id_1_0=ruleQualifiedID		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getMetricRule());
+	            $current = createModelElementForParent(grammarAccess.getIntermediateReferenceRule());
 	        }
        		set(
        			$current, 
@@ -252,16 +252,16 @@ ruleMetric returns [EObject current=null]
 )
 )(	otherlv_2='alias' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getMetricAccess().getAliasKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getIntermediateReferenceAccess().getAliasKeyword_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMetricAccess().getAliasEStringParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getIntermediateReferenceAccess().getAliasEStringParserRuleCall_2_1_0()); 
 	    }
 		lv_alias_3_0=ruleEString		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getMetricRule());
+	            $current = createModelElementForParent(grammarAccess.getIntermediateReferenceRule());
 	        }
        		set(
        			$current, 
@@ -475,9 +475,9 @@ ruleProcessor returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_4='metric' 
+)(	otherlv_4='intermediate' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getMetricKeyword_2_0());
+    	newLeafNode(otherlv_4, grammarAccess.getProcessorAccess().getIntermediateKeyword_2_0());
     }
 (
 (
@@ -490,7 +490,7 @@ ruleProcessor returns [EObject current=null]
 	        }
         }
 		{ 
-	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricMetricCrossReference_2_1_0()); 
+	        newCompositeNode(grammarAccess.getProcessorAccess().getMetricIntermediateReferenceCrossReference_2_1_0()); 
 	    }
 		ruleQualifiedID		{ 
 	        afterParserOrEnumRuleCall();
@@ -816,32 +816,32 @@ ruleTagAnnotation returns [EObject current=null]
 
 
 
-// Entry rule entryRulePragmaTagAnnotation
-entryRulePragmaTagAnnotation returns [EObject current=null] 
+// Entry rule entryRulePragmaTag
+entryRulePragmaTag returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getPragmaTagAnnotationRule()); }
-	 iv_rulePragmaTagAnnotation=rulePragmaTagAnnotation 
-	 { $current=$iv_rulePragmaTagAnnotation.current; } 
+	{ newCompositeNode(grammarAccess.getPragmaTagRule()); }
+	 iv_rulePragmaTag=rulePragmaTag 
+	 { $current=$iv_rulePragmaTag.current; } 
 	 EOF 
 ;
 
-// Rule PragmaTagAnnotation
-rulePragmaTagAnnotation returns [EObject current=null] 
+// Rule PragmaTag
+rulePragmaTag returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 (	otherlv_0='#' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAnnotationAccess().getNumberSignKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
 	    }
 		lv_name_1_0=ruleExtendedID		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getPragmaTagAnnotationRule());
+	            $current = createModelElementForParent(grammarAccess.getPragmaTagRule());
 	        }
        		set(
        			$current, 
@@ -1025,32 +1025,32 @@ ruleRestrictedKeyStringValueAnnotation returns [EObject current=null]
 
 
 
-// Entry rule entryRulePramgaKeyStringValueAnnotation
-entryRulePramgaKeyStringValueAnnotation returns [EObject current=null] 
+// Entry rule entryRuleStringPragma
+entryRuleStringPragma returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationRule()); }
-	 iv_rulePramgaKeyStringValueAnnotation=rulePramgaKeyStringValueAnnotation 
-	 { $current=$iv_rulePramgaKeyStringValueAnnotation.current; } 
+	{ newCompositeNode(grammarAccess.getStringPragmaRule()); }
+	 iv_ruleStringPragma=ruleStringPragma 
+	 { $current=$iv_ruleStringPragma.current; } 
 	 EOF 
 ;
 
-// Rule PramgaKeyStringValueAnnotation
-rulePramgaKeyStringValueAnnotation returns [EObject current=null] 
+// Rule StringPragma
+ruleStringPragma returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 (	otherlv_0='#' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNumberSignKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
 	    }
 		lv_name_1_0=ruleExtendedID		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+	            $current = createModelElementForParent(grammarAccess.getStringPragmaRule());
 	        }
        		set(
        			$current, 
@@ -1064,11 +1064,11 @@ rulePramgaKeyStringValueAnnotation returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
 	    }
 		lv_values_2_0=ruleEStringAllTypes		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+	            $current = createModelElementForParent(grammarAccess.getStringPragmaRule());
 	        }
        		add(
        			$current, 
@@ -1081,16 +1081,16 @@ rulePramgaKeyStringValueAnnotation returns [EObject current=null]
 )
 )(	otherlv_3=',' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getPramgaKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+    	newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
 	    }
 		lv_values_4_0=ruleEStringAllTypes		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+	            $current = createModelElementForParent(grammarAccess.getStringPragmaRule());
 	        }
        		add(
        			$current, 

@@ -45,10 +45,9 @@ package de.cau.cs.kieler.sccharts;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getPreemption <em>Preemption</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}</li>
  * </ul>
@@ -60,65 +59,69 @@ package de.cau.cs.kieler.sccharts;
 public interface Transition extends Action {
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-				/**
-     * Returns the value of the '<em><b>Priority</b></em>' attribute.
+    /**
+     * Returns the value of the '<em><b>Preemption</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.PreemptionType}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Priority</em>' attribute isn't clear,
+     * If the meaning of the '<em>Preemption</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Priority</em>' attribute.
-     * @see #setPriority(int)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Priority()
-     * @model transient="true"
-     * @generated
-     */
-    int getPriority();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Priority</em>' attribute.
-     * @see #getPriority()
-     * @generated
-     */
-    void setPriority(int value);
-
-    /**
-     * Returns the value of the '<em><b>Type</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.TransitionType}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Type</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Type</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.TransitionType
-     * @see #setType(TransitionType)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Type()
+     * @return the value of the '<em>Preemption</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.PreemptionType
+     * @see #setPreemption(PreemptionType)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Preemption()
      * @model required="true"
      * @generated
      */
-    TransitionType getType();
+    PreemptionType getPreemption();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getPreemption <em>Preemption</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Type</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.TransitionType
-     * @see #getType()
+     * @param value the new value of the '<em>Preemption</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.PreemptionType
+     * @see #getPreemption()
      * @generated
      */
-    void setType(TransitionType value);
+    void setPreemption(PreemptionType value);
+
+    /**
+     * Returns the value of the '<em><b>History</b></em>' attribute.
+     * The default value is <code>"RESET"</code>.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.HistoryType}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>History</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>History</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @see #setHistory(HistoryType)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_History()
+     * @model default="RESET" required="true"
+     * @generated
+     */
+    HistoryType getHistory();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>History</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @see #getHistory()
+     * @generated
+     */
+    void setHistory(HistoryType value);
 
     /**
      * Returns the value of the '<em><b>Deferred</b></em>' attribute.
@@ -147,40 +150,11 @@ public interface Transition extends Action {
     void setDeferred(boolean value);
 
     /**
-     * Returns the value of the '<em><b>History</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.HistoryType}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>History</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>History</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.HistoryType
-     * @see #setHistory(HistoryType)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_History()
-     * @model
-     * @generated
-     */
-    HistoryType getHistory();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>History</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.HistoryType
-     * @see #getHistory()
-     * @generated
-     */
-    void setHistory(HistoryType value);
-
-    /**
      * Returns the value of the '<em><b>Target State</b></em>' reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Target State</em>' container reference isn't clear,
+     * If the meaning of the '<em>Target State</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->

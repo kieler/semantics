@@ -36,9 +36,9 @@ Annotation returns Annotation:
     
 // General rule for pragmas
 // We only have string and tag pragmas.    
-PragmaAnnotation returns Annotation:
-    PramgaKeyStringValueAnnotation |
-    PragmaTagAnnotation;
+Pragma returns Pragma:
+    StringPragma |
+    PragmaTag;
 
 
 // Valued Annotation Rule
@@ -84,7 +84,7 @@ CommentAnnotation returns CommentAnnotation:
 TagAnnotation returns Annotation:
     '@' name=ExtendedID;
     
-PragmaTagAnnotation returns PragmaAnnotation:
+PragmaTag returns Pragma:
     '#' name=ExtendedID;
     
     
@@ -97,7 +97,7 @@ KeyStringValueAnnotation returns StringAnnotation:
 RestrictedKeyStringValueAnnotation returns StringAnnotation:
     '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;    
 
-PramgaKeyStringValueAnnotation returns PragmaStringAnnotation:
+StringPragma returns StringPragma:
     '#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 
 // TypedKeyStringValueAnnotation

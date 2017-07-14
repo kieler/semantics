@@ -22,12 +22,16 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.sccharts.text.validation.SCTXValidatorX
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import com.google.inject.Inject
 
 /**
  * @author ssm
  *
  */
 class SCTXQuickfixProviderX extends SCTXQuickfixProvider {
+    
+    @Inject extension SCChartsScopeExtensions
     
    @Fix(SCTXValidatorX.CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR)
    def void setEnforcerDirector(Issue issue, IssueResolutionAcceptor acceptor) {
@@ -37,10 +41,10 @@ class SCTXQuickfixProviderX extends SCTXQuickfixProvider {
                             throws Exception {
                             
                                 if (element instanceof Scope) {
-                                    val scc = SCTXValidatorX.getSCCharts(element)
-                                    scc.annotations.removeIf[ it instanceof PragmaStringAnnotation &&
+                                    val scc = element.getSCCharts
+                                    scc.pragmas.removeIf[ it instanceof PragmaStringAnnotation &&
                                                               (it as PragmaStringAnnotation).name.equals(SCTXValidatorX.DIRECTOR) ]
-                                    scc.annotations += AnnotationsFactory.eINSTANCE.createPragmaStringAnnotation => [
+                                    scc.pragmas += AnnotationsFactory.eINSTANCE.createStringPragma => [
                                         name = SCTXValidatorX.DIRECTOR
                                         values += SCTXValidatorX.ENFORCER
                                     ]

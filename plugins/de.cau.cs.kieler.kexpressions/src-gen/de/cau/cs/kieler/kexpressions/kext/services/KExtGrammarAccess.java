@@ -54,7 +54,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	public class RootScopeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.RootScope");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cKEXTScopeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cKExtScopeAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cDeclarationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_0 = (RuleCall)cDeclarationsAssignment_1.eContents().get(0);
 		private final Assignment cEntitiesAssignment_2 = (Assignment)cGroup.eContents().get(2);
@@ -64,16 +64,16 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cScopesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cScopesScopeParserRuleCall_3_1_0 = (RuleCall)cScopesAssignment_3_1.eContents().get(0);
 		
-		//RootScope kext::KEXTScope:
-		//	{kext::KEXTScope} declarations+=Declaration*
+		//RootScope kext::KExtScope:
+		//	{kext::KExtScope} declarations+=Declaration*
 		//	entities+=TestEntity* ('scope' scopes+=Scope)*
 		@Override public ParserRule getRule() { return rule; }
 
-		//{kext::KEXTScope} declarations+=Declaration* entities+=TestEntity* ('scope' scopes+=Scope)*
+		//{kext::KExtScope} declarations+=Declaration* entities+=TestEntity* ('scope' scopes+=Scope)*
 		public Group getGroup() { return cGroup; }
 
-		//{kext::KEXTScope}
-		public Action getKEXTScopeAction_0() { return cKEXTScopeAction_0; }
+		//{kext::KExtScope}
+		public Action getKExtScopeAction_0() { return cKExtScopeAction_0; }
 
 		//declarations+=Declaration*
 		public Assignment getDeclarationsAssignment_1() { return cDeclarationsAssignment_1; }
@@ -103,7 +103,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScopeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.Scope");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cKEXTScopeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cKExtScopeAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cIdIDTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
@@ -117,17 +117,17 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScopesScopeParserRuleCall_5_1_0 = (RuleCall)cScopesAssignment_5_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		//Scope kext::KEXTScope:
-		//	{kext::KEXTScope} id=ID? '{'
+		//Scope kext::KExtScope:
+		//	{kext::KExtScope} id=ID? '{'
 		//	declarations+=Declaration*
 		//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
 		@Override public ParserRule getRule() { return rule; }
 
-		//{kext::KEXTScope} id=ID? '{' declarations+=Declaration* entities+=TestEntity* ('scope' scopes+=Scope)* '}'
+		//{kext::KExtScope} id=ID? '{' declarations+=Declaration* entities+=TestEntity* ('scope' scopes+=Scope)* '}'
 		public Group getGroup() { return cGroup; }
 
-		//{kext::KEXTScope}
-		public Action getKEXTScopeAction_0() { return cKEXTScopeAction_0; }
+		//{kext::KExtScope}
+		public Action getKExtScopeAction_0() { return cKExtScopeAction_0; }
 
 		//id=ID?
 		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
@@ -938,8 +938,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getKextAccess().getRule();
 	}
 
-	//RootScope kext::KEXTScope:
-	//	{kext::KEXTScope} declarations+=Declaration*
+	//RootScope kext::KExtScope:
+	//	{kext::KExtScope} declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)*
 	public RootScopeElements getRootScopeAccess() {
 		return pRootScope;
@@ -949,8 +949,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootScopeAccess().getRule();
 	}
 
-	//Scope kext::KEXTScope:
-	//	{kext::KEXTScope} id=ID? '{'
+	//Scope kext::KExtScope:
+	//	{kext::KExtScope} id=ID? '{'
 	//	declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
 	public ScopeElements getScopeAccess() {
@@ -1952,14 +1952,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
-	//PragmaAnnotation Annotation:
-	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
-	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
-		return gaAnnotations.getPragmaAnnotationAccess();
+	//Pragma:
+	//	StringPragma | PragmaTag;
+	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaAnnotations.getPragmaAccess();
 	}
 	
-	public ParserRule getPragmaAnnotationRule() {
-		return getPragmaAnnotationAccess().getRule();
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
 	}
 
 	//// Valued Annotation Rule
@@ -2028,14 +2028,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
-	//PragmaTagAnnotation PragmaAnnotation:
+	//PragmaTag Pragma:
 	//	'#' name=ExtendedID
-	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
-		return gaAnnotations.getPragmaTagAnnotationAccess();
+	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
+		return gaAnnotations.getPragmaTagAccess();
 	}
 	
-	public ParserRule getPragmaTagAnnotationRule() {
-		return getPragmaTagAnnotationAccess().getRule();
+	public ParserRule getPragmaTagRule() {
+		return getPragmaTagAccess().getRule();
 	}
 
 	//// KeyStringValueAnnotation
@@ -2061,14 +2061,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
-	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
-	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
-		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	//StringPragma:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
+		return gaAnnotations.getStringPragmaAccess();
 	}
 	
-	public ParserRule getPramgaKeyStringValueAnnotationRule() {
-		return getPramgaKeyStringValueAnnotationAccess().getRule();
+	public ParserRule getStringPragmaRule() {
+		return getStringPragmaAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation

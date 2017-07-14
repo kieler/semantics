@@ -1,0 +1,16 @@
+system de.cau.cs.kieler.core.netlist.simple
+	version 1 
+	label "Core Netlist-based Compilation (simple)"
+	intermediate de.cau.cs.kieler.kicool.processors.metrics.eObjectCount
+	intermediate de.cau.cs.kieler.scg.processors.validators.controlflow
+	
+de.cau.cs.kieler.sccharts.processors.transformators.triggerEffect
+de.cau.cs.kieler.sccharts.processors.transformators.surfaceDepth	
+de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
+de.cau.cs.kieler.scg.processors.transformators.dependency
+de.cau.cs.kieler.scg.processors.transformators.basicBlocks
+de.cau.cs.kieler.scg.processors.transformators.expressions
+de.cau.cs.kieler.scg.processors.transformators.guards
+de.cau.cs.kieler.scg.processors.transformators.scheduler
+de.cau.cs.kieler.scg.processors.transformators.sequentializer
+de.cau.cs.kieler.scg.processors.transformators.C

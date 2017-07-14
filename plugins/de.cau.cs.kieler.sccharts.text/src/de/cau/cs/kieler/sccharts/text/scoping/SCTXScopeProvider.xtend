@@ -8,13 +8,18 @@ import org.eclipse.emf.ecore.EReference
 import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.xtext.scoping.IScope
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.annotations.PragmaStringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.ScopeCall
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * This class contains custom scoping description.
@@ -25,14 +30,18 @@ import de.cau.cs.kieler.annotations.PragmaStringAnnotation
  */
 class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider {
     
-    @Inject extension SCChartsExtension
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     
     @Inject SCTXQualifiedNameProvider nameProvider
 
     override getScope(EObject context, EReference reference) {
 //        println(context + "\n  " + reference)
-        if (context instanceof Transition) {
-            return getScopeForTransition(context, reference)
+        
+        switch(context) {
+            Transition: return getScopeForTransition(context, reference)
+            ScopeCall: return getScopeForScopeCall(context, reference)  
         }
         
         return super.getScope(context, reference);
@@ -50,6 +59,43 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
         return SCTScopes.scopeFor(states)
     }
     
+    protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {
+        if (reference.name.equals("scope")) {
+            val eResource = scopeCall.eResource
+            if (eResource != null) {
+                val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
+                val eResourceSet = eResource.resourceSet
+                if (eResourceSet !== null) {
+                    eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
+                        scchartsInScope += it
+                    ]
+                }
+                return SCTScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+            }
+            
+            return IScope.NULLSCOPE
+        }
+        
+        return super.getScope(scopeCall as EObject, reference)
+    }
+        
+    override def IScope getScopeForParameter(Parameter parameter, EReference reference) {        
+        if (reference.name.equals("explicitBinding")) {
+            val voCandidates = <ValuedObject> newArrayList
+            
+            val scopeCall = parameter.eContainer as ScopeCall
+            if (scopeCall != null && scopeCall.scope != null) {
+                for (declaration : scopeCall.scope.variableDeclarations.filter[ input || output]) {
+                    voCandidates += declaration.valuedObjects
+                }
+            }
+            
+            return SCTScopes.scopeFor(voCandidates)
+        }
+        
+        return super.getScopeForParameter(parameter, reference)
+    }
+    
     override def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
         if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
             val candidates = <Scope> newArrayList 
@@ -59,7 +105,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
                 val superScope = super.getScope(context.eContainer, reference)
                 val root = context.root.asSCCharts
                 candidates += root.rootStates
-                val imports = root.annotations.filter(PragmaStringAnnotation).filter[ name.equals("import") ].toList
+                val imports = root.getStringPragmas("import").toList
                 
                 val res = context.eResource      
                 if (res != null) {

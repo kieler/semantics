@@ -19,16 +19,18 @@ import de.cau.cs.kieler.kicool.ui.KiCoolUIObserver
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetSystem
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetProcessor
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.postUpdateProcessors
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetSystem
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.resetProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.updateProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.postUpdateProcessors
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 
 import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
+import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author ssm
@@ -61,11 +63,16 @@ class CompilationUpdate extends KiCoolUIObserver {
                     
                     if (view.forwardResultToggle.checked) {
                         val editor = view.editPartSystemManager.findEditorForSystem(notification.compilationContext.system)
-                        var model = notification.environment.model
-                        if (model instanceof String) {
-                            model = new Container<String>(model)
-                        }
+                        var model = notification.environment.getProperty(Environment.MODEL)
                         view.editPartSystemManager.attachCompilationContextToEditorPart(editor, notification.compilationContext)
+//                        if (model instanceof String) {
+//                            model = new Container<String>(model)
+//                        }
+                        
+                        if (model instanceof String) {
+                            model = new CodePlaceHolder(editor.title + ".c", model)
+                        }
+                        
                         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)
                     }
                     
