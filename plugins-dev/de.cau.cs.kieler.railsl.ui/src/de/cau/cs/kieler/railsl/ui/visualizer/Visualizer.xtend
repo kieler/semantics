@@ -14,23 +14,23 @@ package de.cau.cs.kieler.railsl.ui.visualizer
 
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.railsl.railSL.Statement
 import de.cau.cs.kieler.railsl.railSL.SetTrackStatement
-import com.google.inject.Inject
 import de.cau.cs.kieler.railsl.railSL.SetPointStatement
 import de.cau.cs.kieler.railsl.railSL.LightStatement
-import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
 import de.cau.cs.kieler.railsl.compilation.RailSLTransformation
 import de.cau.cs.kieler.kvis.ui.views.KVisView
 import org.eclipse.swt.widgets.Display
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.EObjectAtOffsetHelper
 import org.eclipse.xtext.ui.editor.utils.EditorUtils
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
-import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.jface.text.TextSelection
-import org.eclipse.xtext.resource.EObjectAtOffsetHelper
 import org.eclipse.emf.ecore.EObject
 import java.util.ArrayList
+import com.google.inject.Inject
 
 /**
  * Show on-the-fly info about the model being edited.
