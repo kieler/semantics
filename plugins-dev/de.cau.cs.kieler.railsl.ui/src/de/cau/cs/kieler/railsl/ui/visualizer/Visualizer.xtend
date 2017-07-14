@@ -31,6 +31,9 @@ import org.eclipse.jface.text.TextSelection
 import org.eclipse.emf.ecore.EObject
 import java.util.ArrayList
 import com.google.inject.Inject
+import org.eclipse.swt.events.ModifyListener
+import org.eclipse.swt.events.ModifyEvent
+import com.google.inject.Injector
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -42,13 +45,13 @@ class Visualizer {
     /**
      * All the track name constants
      */
-    final static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4", "IC_LN_5",
+    static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4", "IC_LN_5",
         "IC_ST_0", "IC_ST_1", "IC_ST_2", "IC_ST_3", "IC_ST_4", "IO_LN_0", "IO_LN_1", "IO_LN_2", "KH_LN_0", "KH_LN_1",
         "KH_LN_2", "KH_LN_3", "KH_LN_4", "KH_LN_5", "KH_LN_6", "KH_LN_7", "KH_LN_8", "KH_ST_0", "KH_ST_1", "KH_ST_2",
         "KH_ST_3", "KH_ST_4", "KH_ST_5", "KH_ST_6", "KIO_LN_0", "KIO_LN_1", "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2",
         "OC_LN_3", "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1", "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1",
         "OI_LN_2"}
-
+    
         /*
          * For parsing helpers and speed constants
          */
@@ -80,6 +83,7 @@ class Visualizer {
          * Instantiates the DataPool and fills it with default values for all tracks, points and lights.
          */
         new() {
+            
             pool = new DataPool()
             val model = new Model()
             model.name = "railway"
