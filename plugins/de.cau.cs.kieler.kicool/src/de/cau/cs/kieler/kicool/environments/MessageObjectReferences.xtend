@@ -39,19 +39,23 @@ class MessageObjectReferences extends LinkedList<MessageObjectLink> implements I
     }    
     
     def add(String msg) {
-        add(new MessageObjectLink(msg, null, true, null))
+        add(new MessageObjectLink(msg, null, true, null, null))
     }
     
     def add(String msg, Object object) {
-        add(new MessageObjectLink(msg, object, true, null))
+        add(new MessageObjectLink(msg, object, true, null, null))
     }
     
     def add(String msg, Object object, boolean annotate) {
-        add(new MessageObjectLink(msg, object, annotate, null))
+        add(new MessageObjectLink(msg, object, annotate, null, null))
     }
     
     def add(String msg, Object object, boolean annotate, IColorSystem colorSystem) {
-        add(new MessageObjectLink(msg, object, annotate, colorSystem))
+        add(new MessageObjectLink(msg, object, annotate, colorSystem, null))
+    }
+
+    def add(Exception exception) {
+        add(new MessageObjectLink(exception.message, null, true, null, exception))
     }
     
 }
