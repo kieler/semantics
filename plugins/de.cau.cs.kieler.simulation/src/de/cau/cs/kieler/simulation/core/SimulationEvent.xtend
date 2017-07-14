@@ -17,7 +17,34 @@ package de.cau.cs.kieler.simulation.core
  *
  */
 class SimulationEvent {
+    
+    /**
+     * The type of the event.
+     */
     public var SimulationEventType type
-    public var DataPool newPool
-    public var Variable modifiedVariable
+    /**
+     * The new pool in the simulation.
+     */
+    public var DataPool pool
+    /**
+     * The modified variable or the variable on which a trace mismatch occured.
+     */
+    public var Variable variable
+    
+    new() {
+    }
+    
+    new(SimulationEventType type) {
+        this.type = type
+    }
+    
+    new(SimulationEventType type, DataPool pool) {
+        this(type)
+        this.pool = pool
+    }
+    
+    new(SimulationEventType type, Variable variable) {
+        this(type)
+        this.variable = variable
+    }
 }

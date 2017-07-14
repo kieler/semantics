@@ -10,22 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.core
+package de.cau.cs.kieler.simulation.handlers
 
 /**
  * @author aas
  *
  */
-enum SimulationEventType {
-    TRACE,
-    VARIABLE_CHANGE,
-    STOP,
-    PAUSE,
-    PLAY,
-    PLAYING,
-    STEP,
-    STEP_BACK,
-    SUB_STEP,
-    APPEND_SIMULATION,
-    INITIALIZED
+class TraceFinishedEvent extends TraceEvent {
+    
 }

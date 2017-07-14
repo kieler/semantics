@@ -15,6 +15,7 @@ package de.cau.cs.kieler.simulation.ui.views
 import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationEvent
@@ -22,8 +23,10 @@ import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import java.util.ArrayList
 import java.util.List
+import java.util.Map
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
@@ -39,7 +42,6 @@ import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.ui.views.LabelContribution
 
 /**
  * @author aas
@@ -68,6 +70,8 @@ class DataPoolView extends ViewPart {
     
     @Accessors(PUBLIC_GETTER)
     var boolean subTicksEnabled
+    
+    private var Map<String, TraceMismatchEvent> traceMismatches = newHashMap
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -109,8 +113,10 @@ class DataPoolView extends ViewPart {
      * Set the data pool to be displayed.
      */
     public def void setDataPool(DataPool pool) {
+        // Remove all trace mismatches of last tick
         if(pool == null) {
             viewer.input = null
+            traceMismatches = newHashMap
         } else {
             // Create a sorted list as input for the table viewer
             val List<Object> inputs = newArrayList()
@@ -137,6 +143,12 @@ class DataPoolView extends ViewPart {
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
         mgr.add(new ToggleColumnVisibleAction(inputColumn));
         mgr.add(new ToggleColumnVisibleAction(outputColumn));
+        mgr.add(new Action("Clear Trace Mismatches") {
+            override run() {
+                traceMismatches = newHashMap
+                viewer.refresh
+            }
+        });
         mgr.add(new Action("Enable Sub Ticks") {
             override run() {
                 subTicksEnabled = !subTicksEnabled
@@ -243,6 +255,17 @@ class DataPoolView extends ViewPart {
         };
         valueColumn = createTableColumn(viewer, "Current Value", 100, true)
         valueColumn.labelProvider = new DataPoolColumnLabelProvider() {
+            override String getToolTipText(Object element) {
+                if(element instanceof Variable) {
+                    // Add tooltip about trace mismatch of this value
+                    val mismatch = getTraceMismatch(element)
+                    if(mismatch != null) {
+                        return mismatch.toString
+                    }
+                }
+                return super.getToolTipText(element)
+            }
+            
             override String getText(Object element) {
                  if(element instanceof Variable) {
                     return element.value?.toString
@@ -318,6 +341,14 @@ class DataPoolView extends ViewPart {
         return viewerColumn
     }
     
+    public def void registerTraceMismatch(Variable variable, TraceMismatchEvent e) {
+        traceMismatches.put(variable.fullyQualifiedName, e)
+    }
+    
+    public def TraceMismatchEvent getTraceMismatch(Variable variable) {
+        return traceMismatches.getOrDefault(variable.fullyQualifiedName, null)
+    }
+    
     private def void updateTickInfo(SimulationEvent e) {
         val bars = getViewSite().getActionBars();
         if(bars != null) {
@@ -342,13 +373,26 @@ class DataPoolView extends ViewPart {
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
-                // Execute in UI thread
-                PromUIPlugin.asyncExecInUI[
-                        // Update tick info
-                        DataPoolView.instance?.updateTickInfo(e)
-                        // Set pool data
-                        DataPoolView.instance?.setDataPool(SimulationManager.instance?.currentPool)
-                    ]
+                val dataPoolView = DataPoolView.instance
+                if(dataPoolView == null) {
+                    return;
+                }
+                if(e.type == SimulationEventType.VARIABLE_CHANGE) {
+                    dataPoolView.viewer.update(e.variable, null)
+                } else if(e.type == SimulationEventType.TRACE) {
+                    if(e instanceof TraceMismatchEvent) {
+                        dataPoolView.registerTraceMismatch(e.variable, e)
+                        dataPoolView.viewer.update(e.variable, null)
+                    }
+                } else {
+                    // Execute in UI thread
+                    PromUIPlugin.asyncExecInUI[
+                            // Update tick info
+                            dataPoolView.updateTickInfo(e)
+                            // Set pool data
+                            dataPoolView.setDataPool(SimulationManager.instance?.currentPool)
+                        ]
+                }
             }
         }
         return listener

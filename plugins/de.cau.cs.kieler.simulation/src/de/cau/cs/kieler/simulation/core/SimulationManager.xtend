@@ -276,7 +276,7 @@ class SimulationManager extends Configurable {
         simulator.initialize(currentPool)
         
 //        println("Appended simulator")
-        notifyListeners(SimulationEventType.APPEND_SIMULATION)
+        fireEvent(SimulationEventType.APPEND_SIMULATION)
     }
     
     /**
@@ -306,7 +306,7 @@ class SimulationManager extends Configurable {
         }
         
 //        println("Initilized simulation")
-        notifyListeners(SimulationEventType.INITIALIZED)
+        fireEvent(SimulationEventType.INITIALIZED)
     }
     
     /**
@@ -345,7 +345,7 @@ class SimulationManager extends Configurable {
         setNewState(pool, currentState.actionIndex + 1)
         
 //        println("Sub Stepped simulation")
-        notifyListeners(SimulationEventType.SUB_STEP)
+        fireEvent(SimulationEventType.SUB_STEP)
     }
     
     /**
@@ -367,7 +367,7 @@ class SimulationManager extends Configurable {
         // Save new state
         setNewState(pool, nextActionIndex)
 //        println("Stepped simulation macro tick")
-        notifyListeners(SimulationEventType.STEP)
+        fireEvent(SimulationEventType.STEP)
     }
     
     /**
@@ -408,7 +408,7 @@ class SimulationManager extends Configurable {
             }
         }
         
-        notifyListeners(SimulationEventType.STEP_BACK)
+        fireEvent(SimulationEventType.STEP_BACK)
     }
 
     /**
@@ -435,9 +435,9 @@ class SimulationManager extends Configurable {
                         setNewState(pool, nextActionIndex)
                         
                         // Notify listeners of new state
-                        notifyListeners(SimulationEventType.PLAYING)
+                        fireEvent(SimulationEventType.PLAYING)
                     }
-                    notifyListeners(SimulationEventType.STEP)
+                    fireEvent(SimulationEventType.STEP)
                     return Status.OK_STATUS
                 }
             }
@@ -456,7 +456,7 @@ class SimulationManager extends Configurable {
             isPlaying = false
         }
         
-        notifyListeners(SimulationEventType.PAUSE)
+        fireEvent(SimulationEventType.PAUSE)
     }
     
     /**
@@ -484,7 +484,7 @@ class SimulationManager extends Configurable {
         }
         currentState = null
         
-        notifyListeners(SimulationEventType.STOP)
+        fireEvent(SimulationEventType.STOP)
     }
     
     /**
@@ -590,26 +590,32 @@ class SimulationManager extends Configurable {
     /**
      * Notifies all listeners about an event.
      */
-     protected def void notifyListeners(SimulationEventType type, Variable variable) {
+     public def void fireEvent(SimulationEvent event) {
+         for(l : listeners) {
+             l.update(event)
+         }
+     }
+    
+    /**
+     * Notifies all listeners about an event.
+     */
+     protected def void fireEvent(SimulationEventType type, Variable variable) {
          val e = new SimulationEvent()
          e.type = type
-         e.newPool = currentPool
-         e.modifiedVariable = variable
-         for(l : listeners) {
-             l.update(e)
-         }
+         e.pool = currentPool
+         e.variable = variable
+         fireEvent(e)
      }
      
      /**
      * Notifies all listeners about an event.
+     * The pool is set to the current pool in the simulation.
      */
-     protected def void notifyListeners(SimulationEventType type) {
+     public def void fireEvent(SimulationEventType type) {
          val e = new SimulationEvent()
          e.type = type
-         e.newPool = currentPool
-         for(l : listeners) {
-             l.update(e)
-         }
+         e.pool = currentPool
+         fireEvent(e)
      }
      
      public static def void addListener(SimulationListener listener) {

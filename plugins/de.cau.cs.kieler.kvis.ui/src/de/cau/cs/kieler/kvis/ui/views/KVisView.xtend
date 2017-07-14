@@ -58,6 +58,7 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.core.SimulationEventType
 
 /**
  * @author aas
@@ -513,9 +514,12 @@ class KVisView extends ViewPart {
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
-                if(KVisView.instance != null && KVisView.instance.lastPool !== e.newPool) {
-                    // Update the view in the UI thread
-                    PromUIPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
+                if(e.type != SimulationEventType.TRACE
+                && e.type != SimulationEventType.VARIABLE_CHANGE) {
+                    if(KVisView.instance != null && KVisView.instance.lastPool !== e.pool) {
+                        // Update the view in the UI thread
+                        PromUIPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
+                    }
                 }
             }
         }

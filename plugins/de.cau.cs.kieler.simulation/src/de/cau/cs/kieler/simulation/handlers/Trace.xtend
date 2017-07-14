@@ -14,10 +14,13 @@ package de.cau.cs.kieler.simulation.handlers
 
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import org.eclipse.core.runtime.Path
-import java.util.List
-import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.Variable
+import java.util.List
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.IPath
+import org.eclipse.core.runtime.Path
 
 /**
  * @author aas
@@ -29,8 +32,10 @@ class Trace extends DefaultDataHandler {
     public val modelName = new ConfigurableAttribute("modelName")
     public val currentTraceNumber = new ConfigurableAttribute("traceNumber", 0)
     public val currentTickNumber = new ConfigurableAttribute("tickNumber", 0)
+    public val checkOutputs = new ConfigurableAttribute("checkOutputs", true)
     
     private int traceCount = 0
+    private IFile traceFile
     private List<DataPool> currentTrace
     
     private var EsoUtil esoUtil;
@@ -38,61 +43,49 @@ class Trace extends DefaultDataHandler {
     override read(DataPool pool) {
         initialize
         if(isFinished) {
-            System.err.println("Trace is finished already.")
+//            System.err.println("Trace is finished already.")
             return;
         }
-        println("checking pool")
-        
-        // Read outputs for this tick and compare with variables in data pool.
-        val currentPool = currentTrace.get(currentTickNumber.intValue);
-        for(m : currentPool.models) {
-            for(v : m.variables) {
-                if(v.isOutput) {
-                    val correspondingVariable = getCorrespondingVariable(pool, m, v)
-                    val match = v.value == correspondingVariable.value
-                    if(!match) {
-                        System.err.println("Mismatch of variable '"+v.name+"' "
-                                         + "in tick "+currentTickNumber.intValue+" "
-                                         + "of trace "+currentTraceNumber.intValue+"\n"
-                                         + "(value in trace:"+v.value+", value in simulation:"+correspondingVariable.value+")")
-                    }
-                }
-            }
-        }
-        
-        // Find outputs of pool that are present but should be absent in the trace.
+        // Compare variables in pool with output of this tick
+        val tracePool = currentTrace.get(currentTickNumber.intValue)
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isOutput) {
+                    var TraceMismatchEvent event
                     val isPresent = (variable.value != false && variable.value != 0)
                     // No variable in currentPool => this variable is absent in the trace
-                    var boolean shouldBeAbsent = false
-                    if(pool.models.size == 1) {
-                        if(currentPool.getVariable(variable.name) == null) {
-                            shouldBeAbsent = true
-                        }
+                    var boolean shouldBePresent = true
+                    val correspondingVariable = getCorrespondingVariable(tracePool, model, variable)
+                    if(correspondingVariable == null) {
+                        // Variable is absent in the trace
+                        shouldBePresent = false
                     } else {
-                        val m = currentPool.getModel(model.name)
-                        if(m != null) {
-                            val v = m.getVariable(variable.name)
-                            if(v == null) {
-                                shouldBeAbsent = true
-                            }
+                        var boolean match
+                        // The present state is still OK
+                        // if a boolean is true and an integer is not equal to 0
+                        // if or a boolean is false and an integer is equal to 0
+                        if(variable.value instanceof Boolean
+                            && correspondingVariable.value instanceof Integer) {
+                            match = (variable.value == (correspondingVariable.value != 0))
+                        } else if (variable.value instanceof Integer
+                            && correspondingVariable.value instanceof Boolean){
+                             match = ((variable.value != 0) == correspondingVariable.value)
                         } else {
-                            shouldBeAbsent = true
+                             match = (variable.value == correspondingVariable.value)
+                        }
+                        if(!match) {
+                            event = createTraceMismatchEvent(variable, correspondingVariable.value)
                         }
                     }
-                    // Check that present state matches
-                    if(isPresent && shouldBeAbsent) {
-                        System.err.println("Mismatch of variable '"+variable.name+"' "
-                                         + "in tick "+currentTickNumber+" "
-                                         + "of trace "+currentTraceNumber
-                                         + "(expected absent but was present)")
+                    if(isPresent != shouldBePresent) {
+                        event = createTraceMismatchEvent(variable, variable.toggledPresentState)
                     }
-                }
-            }
+                    if(event != null) {
+                        SimulationManager.instance?.fireEvent(event)
+                    }
+                }   
+            }    
         }
-        
         // Get next tick
         loadNextTick
     }
@@ -100,57 +93,32 @@ class Trace extends DefaultDataHandler {
     override write(DataPool pool) {
         initialize
         if(isFinished) {
-            System.err.println("Trace is finished already.")
+//            System.err.println("Trace is finished already.")
             return;
         }
-        // Read inputs for this tick and set corresponding variables in data pool.
-        val currentPool = currentTrace.get(currentTickNumber.intValue);
-        for(m : currentPool.models) {
-            for(v : m.variables) {
-                if(v.isInput) {
-                    println("setting "+v.name+" to "+ v.value)
-                    val correspondingVariable = getCorrespondingVariable(pool, m, v)
-                    correspondingVariable.value = v.value
-//                    correspondingVariable.userValue = v.value
-                }
-            }
-        }
-        
-        // Set input variables in simulation to false if no input variable in currentPool was present
+        // Set inputs of variables in the pool to inputs of the trace.
+        val tracePool = currentTrace.get(currentTickNumber.intValue)
         for(model : pool.models) {
             for(variable : model.variables) {
                 if(variable.isInput) {
                     // No variable in currentPool => this variable is absent in the trace
-                    var boolean isAbsent = false
-                    if(pool.models.size == 1) {
-                        if(currentPool.getVariable(variable.name) == null) {
-                            isAbsent = true
-                        }
+                    val correspondingVariable = getCorrespondingVariable(tracePool, model, variable)
+                    if(correspondingVariable == null) {
+                        // Variable is absent in the trace
+                        variable.setAbsent
                     } else {
-                        val m = currentPool.getModel(model.name)
-                        if(m != null) {
-                            val v = m.getVariable(variable.name)
-                            if(v == null) {
-                                isAbsent = true
-                            }
-                        } else {
-                            isAbsent = true
-                        }
+                        // Variable is present in the trace, or is valued signal
+                        variable.value = correspondingVariable.value
                     }
-                    // Set variable to 0 or false if absent
-                    if(isAbsent) {
-                        println("setting "+variable.name+" to absent")
-                        if(variable.value instanceof Boolean) {
-                            variable.value = false
-//                            variable.userValue = false
-                        } else if (variable.value instanceof Number) {
-                            variable.value = true
-//                            variable.userValue = 0
-                        }
-                    }
-                }
-            }
+                }   
+            }    
         }
+        
+        // Don't compare outputs of the simulation with the trace.
+        // So only inputs should be set and we can get the next tick now.
+        if(!checkOutputs.boolValue) {
+            loadNextTick
+        }  
     }
     
     private def Variable getCorrespondingVariable(DataPool pool, Model model, Variable variable) {
@@ -167,22 +135,47 @@ class Trace extends DefaultDataHandler {
     private def void initialize() {
         if(currentTrace == null) {
             val path = new Path(tracePath.stringValue)
-            val esoFile = getFile(path)
-            if(esoFile != null && esoFile.exists) {
-                esoUtil = new EsoUtil(esoFile)
-                traceCount = esoUtil.traceCount
-                currentTrace = esoUtil.getTraceAsDataPools(currentTraceNumber.intValue)
-            } else {
-                System.err.println("ESO file does not exist")
+            if(path.fileExtension.toLowerCase == "eso") {
+                loadEsoTrace(path)
             }
+            // TODO: Other trace format with complete data pool history?
         }
+    }
+    
+    private def void loadEsoTrace(IPath path) {
+        traceFile = getFile(path)
+        if(traceFile != null && traceFile.exists) {
+            esoUtil = new EsoUtil(traceFile)
+            traceCount = esoUtil.traceCount
+            currentTrace = esoUtil.getTraceAsDataPools(currentTraceNumber.intValue)
+        } else {
+            throw new Exception("Could not load trace '"+path.toOSString+"'")
+        }
+    }
+    
+    private def TraceEvent createTraceFinishedEvent() {
+        val event = new TraceFinishedEvent()
+        event.tickNumber = currentTickNumber.intValue
+        event.traceNumber = currentTraceNumber.intValue
+        event.traceFile = traceFile
+        return event
+    }
+    
+    private def TraceMismatchEvent createTraceMismatchEvent(Variable variable, Object expectedValue) {
+        val event = new TraceMismatchEvent()
+        event.tickNumber = currentTickNumber.intValue
+        event.traceNumber = currentTraceNumber.intValue
+        event.traceFile = traceFile
+        event.variable = variable
+        event.expectedValue = expectedValue
+        return event
     }
     
     private def void loadNextTick() {
         currentTickNumber.value = currentTickNumber.intValue+1
         if(currentTickNumber.intValue >= currentTrace.size) {
-            // TODO: Fire finished event.
-            System.err.println("Trace finished")
+            val event = createTraceFinishedEvent
+            SimulationManager.instance.fireEvent(event)
         }
     }
     
