@@ -31,6 +31,22 @@ class SimulationLaunchShortcut extends PromLaunchShortcut {
         if(DataPoolView.instance != null) {
             PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().bringToTop(DataPoolView.instance);
         }
+
+        // DEBUGGING ONLY: Compile and simulate EObject (possibly with trace)
+//        if(files.size == 1) {
+//            val file = files.get(0)
+//            if(file.fileExtension == "sct") {
+//                val model = ModelImporter.load(file)
+//                SimulationUtil.compileAndSimulateModel(model)
+//                return
+//            }
+//        } else if(files.size == 2) {
+//            val traceFile = files.findFirst[it.fileExtension == "eso"]
+//            val modelFile = files.findFirst[it.fileExtension == "sct"]
+//            val model = ModelImporter.load(modelFile)
+//            SimulationUtil.compileAndSimulateModelWithTraceFile(model, traceFile)
+//            return
+//        }
         
         // Find launch config for the files or initialize new one.
         val configuration = findLaunchConfiguration(mode)

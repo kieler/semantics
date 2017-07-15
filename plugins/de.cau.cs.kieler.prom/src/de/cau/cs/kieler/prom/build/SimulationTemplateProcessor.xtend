@@ -17,6 +17,8 @@ import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
 import org.eclipse.core.runtime.Assert
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
@@ -26,6 +28,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     public val modelPath = new ConfigurableAttribute("modelFile")
     public val snippetFolder = new ConfigurableAttribute("snippetFolder", "snippets")
     public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "")
+    
+    @Accessors
+    private var EObject model
     
     new() {
         super()
@@ -46,7 +51,9 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         val compiledModelFile = project.getFile(compiledModelPath.stringValue)
         // Get annotations in model
         val annotationDatas = newArrayList()
-        val model = ModelImporter.load(modelFile)
+        if(model == null) {
+            model = ModelImporter.load(modelFile)
+        }
         WrapperCodeGenerator.getSimulationInterfaceData(model, annotationDatas)
         
         // Create wrapper code

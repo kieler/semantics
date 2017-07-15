@@ -40,6 +40,15 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
     /**
      * {@inheritDoc}
      */
+    override getModelName(EObject model) {
+        if (model instanceof State) {
+            return model.id
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     override getAnnotations(EObject model) {
         if (model instanceof State) {
             val annotationDatas = new ArrayList<WrapperCodeAnnotationData>()

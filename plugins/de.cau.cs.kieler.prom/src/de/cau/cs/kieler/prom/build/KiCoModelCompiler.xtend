@@ -97,6 +97,7 @@ class KiCoModelCompiler extends ModelCompiler {
                     simulationProcessor.compiledModelPath.value = targetFile.projectRelativePath.toOSString
                     simulationProcessor.monitor = monitor
                     simulationProcessor.project = file.project
+                    simulationProcessor.model = model
                     // Run processor
                     result.simulationGenerationResult = simulationProcessor.process
                 } 

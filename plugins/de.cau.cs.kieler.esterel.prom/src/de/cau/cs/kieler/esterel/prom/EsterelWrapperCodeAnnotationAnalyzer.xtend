@@ -23,12 +23,24 @@ import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.esterel.esterel.Program
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.
  * @author aas
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getModelName(EObject model) {
+        if (model instanceof Program) {
+            if(!model.modules.isNullOrEmpty) {
+                return model.modules.get(0).name    
+            }
+        }
+    }
     
     override getSimulationInterface(EObject model) {
         return null

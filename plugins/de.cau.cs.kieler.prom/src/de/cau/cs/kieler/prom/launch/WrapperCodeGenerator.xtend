@@ -481,6 +481,29 @@ class WrapperCodeGenerator {
         getWrapperCodeAnnotationData(model, annotationDatas)
         return annotationDatas
     }
+    
+    /**
+     * Adds wrapper code data objects to the annotationDatas list,
+     * which where found in the given files.
+     * 
+     * @param data File data holding a path to a model file
+     * @param annotationDatas List to add found annotation datas to
+     */
+    public static def String getModelName(EObject model) {
+        // Load EObject from file
+        if (model != null) {
+            initAnalyzers()
+            
+            // Analyze the model with all wrapper code annotation analyzers
+            for (analyzer : wrapperCodeAnnotationAnalyzers) {
+                val modelName = analyzer.getModelName(model)
+                if(modelName != null) {
+                    return modelName
+                }
+            }
+
+        }
+    }
 
     /**
      * Adds wrapper code data objects to the annotationDatas list,
