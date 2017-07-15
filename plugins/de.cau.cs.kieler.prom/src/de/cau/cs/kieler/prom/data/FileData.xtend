@@ -20,13 +20,6 @@ class FileData extends ConfigurationSerializable {
     protected var String projectRelativePath = ""
     
     /**
-     * Flag to mark that a file provides inputs for simulation,
-     * in contrast to files that should be simulated.
-     */
-    @Accessors(PRIVATE_GETTER, PRIVATE_SETTER)
-    protected var String providesInputs = ""
-
-    /**
      * The origin of the resource to be created.
      * This is either an absolute file system path or an url with the platform scheme provided by eclipse
      * (e.g. 'platform:/plugin/org.myplugin/path/to/my/Main.java').
@@ -64,23 +57,6 @@ class FileData extends ConfigurationSerializable {
         return new Path(projectRelativePath).lastSegment
     }
 
-    /**
-     * Getter for the field.
-     * 
-     * @return the boolean value of the string.
-     */
-    public def boolean isProvidesInputs(){
-        return Boolean.valueOf(providesInputs)
-        
-    }
-    
-    /**
-     * Setter for the field.
-     */
-    public def void setProvidesInputs(boolean value){
-        providesInputs = String.valueOf(value)
-    }
-    
     /**
      * {@inheritDoc}
      */    

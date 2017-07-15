@@ -239,7 +239,16 @@ class PromPlugin implements BundleActivator  {
         }
         return null
     }
-    
+
+    /**
+     * Find a file via its full path in the workspace.
+     */
+    public static def IFile findFile(String fullPath) {
+        val path = new Path(fullPath)
+        val file = ResourcesPlugin.workspace.root.getFile(path)
+        return file
+    }
+
     /**
      * Searches recursively for resources with the same file extension.
      * 

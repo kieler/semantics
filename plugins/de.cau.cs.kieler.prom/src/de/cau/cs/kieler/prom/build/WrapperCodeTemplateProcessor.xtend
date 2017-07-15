@@ -33,7 +33,7 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         if(monitor != null) {
             monitor.subTask("Processing wrapper code template '"+template.stringValue+"'")
         }
-        
+
         val templateFile = project.getFile(template.stringValue)
         val targetFile = project.getFile(target.stringValue)
         val modelFile = project.getFile(modelPath.stringValue)

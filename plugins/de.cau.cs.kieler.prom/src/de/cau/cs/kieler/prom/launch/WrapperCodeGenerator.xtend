@@ -199,7 +199,7 @@ class WrapperCodeGenerator {
         
         // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
-        
+
         // Add name of model 
         if(!map.containsKey(MODEL_NAME_VARIABLE) && !annotationDatas.isNullOrEmpty) {
             val modelName = annotationDatas.get(0).modelName
@@ -302,6 +302,13 @@ class WrapperCodeGenerator {
     private def Map<String, Object> getMacroCalls(WrapperCodeAnnotationData... annotationDatas) {
         val Map<String, Object> map = newHashMap
         if(annotationDatas.isNullOrEmpty) {
+            // Set the macro value for all placeholders (e.g. ${inputs}, ${outputs}) to the empty string,
+            // because there are no annotations to inject.
+            for(phase : codeGenerationPhases) {
+                for(macro : phase.macros) {
+                    map.put(macro.name+"s", "")
+                }
+            }
             return map
         }
         // The assignment macros such as <@init> and <@output> use a variable

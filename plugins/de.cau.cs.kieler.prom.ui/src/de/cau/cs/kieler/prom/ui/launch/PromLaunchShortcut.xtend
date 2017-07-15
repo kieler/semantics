@@ -111,7 +111,8 @@ abstract class PromLaunchShortcut implements ILaunchShortcut {
         try {
             val lm = DebugPlugin.getDefault().getLaunchManager()
             val type = lm.getLaunchConfigurationType(launchConfigTypeId)
-            val name = project.name + " ("+type.name+")"
+            val baseName = getNewLaunchConfigurationBaseName
+            val name = baseName + " ("+type.name+")"
             val uniqueName = getUniqueNameForLaunchConfig(lm, name, -1)
             val wc = type.newInstance(null, uniqueName)
             initializeConfiguration(wc)
@@ -120,6 +121,15 @@ abstract class PromLaunchShortcut implements ILaunchShortcut {
             ce.printStackTrace()
         }
         return null
+    }
+    
+    /**
+     * The base name for a new launch configuration
+     * 
+     * @return a suited name for a new launch configuration for the selected files
+     */
+    protected def String getNewLaunchConfigurationBaseName() {
+        return project.name
     }
     
     /**

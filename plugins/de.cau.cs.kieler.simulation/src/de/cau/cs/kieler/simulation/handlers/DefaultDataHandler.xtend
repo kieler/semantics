@@ -13,11 +13,11 @@
 package de.cau.cs.kieler.simulation.handlers
 
 import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.simulation.core.DataHandler
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IPath
 
 /**
@@ -38,10 +38,8 @@ abstract class DefaultDataHandler implements DataHandler {
     }
     
     protected def IFile getFile(IPath path) {
-        var IFile file
-        if(path.isAbsolute) {
-            file = ResourcesPlugin.workspace.root.getFile(path)
-        } else {
+        var IFile file = PromPlugin.findFile(path.toOSString)
+        if (file == null) {
             val simMan = SimulationManager.instance
             if(simMan != null && simMan.usedConfiguration != null) {
                 val configurationFile = ModelImporter.toPlatformResource(simMan.usedConfiguration.eResource) as IFile

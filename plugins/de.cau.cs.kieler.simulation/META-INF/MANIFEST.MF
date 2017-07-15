@@ -26,15 +26,16 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.simulation.core,
+ de.cau.cs.kieler.simulation.formatting,
  de.cau.cs.kieler.simulation.handlers,
- de.cau.cs.kieler.simulation.services,
  de.cau.cs.kieler.simulation.kisim,
  de.cau.cs.kieler.simulation.kisim.impl,
  de.cau.cs.kieler.simulation.kisim.util,
- de.cau.cs.kieler.simulation.serializer,
+ de.cau.cs.kieler.simulation.launch,
  de.cau.cs.kieler.simulation.parser.antlr,
  de.cau.cs.kieler.simulation.parser.antlr.internal,
- de.cau.cs.kieler.simulation.validation,
  de.cau.cs.kieler.simulation.scoping,
- de.cau.cs.kieler.simulation.formatting
+ de.cau.cs.kieler.simulation.serializer,
+ de.cau.cs.kieler.simulation.services,
+ de.cau.cs.kieler.simulation.validation
 Import-Package: org.apache.log4j

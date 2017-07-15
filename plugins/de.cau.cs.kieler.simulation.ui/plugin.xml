@@ -509,4 +509,20 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
+    <extension
+          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+       <launchConfigurationTypeImage
+             configTypeID="de.cau.cs.kieler.simulation.simulationLaunchConfig"
+             icon="icons/foerde-logo-16.png"
+             id="de.cau.cs.kieler.simulation.ui.simulationLaunchConfigTypeImage">
+       </launchConfigurationTypeImage>
+    </extension>
+    <extension
+          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+       <launchConfigurationTabGroup
+             class="de.cau.cs.kieler.simulation.ui.launch.SimulationLaunchConfigTabGroup"
+             id="de.cau.cs.kieler.simulation.ui.simulationLaunchConfigTabGroup"
+             type="de.cau.cs.kieler.simulation.simulationLaunchConfig">
+       </launchConfigurationTabGroup>
+    </extension>
 </plugin>

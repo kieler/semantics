@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.simulation.ui.launch
 
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup
+import org.eclipse.debug.ui.CommonTab
 import org.eclipse.debug.ui.ILaunchConfigurationDialog
-import org.eclipse.debug.ui.ILaunchConfigurationTab
 
 class SimulationLaunchConfigTabGroup extends AbstractLaunchConfigurationTabGroup {
 
@@ -24,8 +24,9 @@ class SimulationLaunchConfigTabGroup extends AbstractLaunchConfigurationTabGroup
      */
     override void createTabs(ILaunchConfigurationDialog dialog, String mode) {
         var mainTab = new SimulationMainTab()
+        var commonTab = new CommonTab()
         
-        var tabs = (#[mainTab] as ILaunchConfigurationTab[])
+        var tabs = #[mainTab, commonTab]
         setTabs(tabs)
     }
 }

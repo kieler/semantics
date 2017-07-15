@@ -30,6 +30,16 @@
            name="simout">
      </dataHandler>
   </extension>
+  <extension
+        point="org.eclipse.debug.core.launchConfigurationTypes">
+     <launchConfigurationType
+           delegate="de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig"
+           id="de.cau.cs.kieler.simulation.simulationLaunchConfig"
+           modes="run,debug"
+           name="KIELER Simulation"
+           public="true">
+     </launchConfigurationType>
+  </extension>
 
 
 

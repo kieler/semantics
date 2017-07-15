@@ -17,7 +17,6 @@ import de.cau.cs.kieler.prom.data.KiCoLaunchData
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup
 import org.eclipse.debug.ui.CommonTab
 import org.eclipse.debug.ui.ILaunchConfigurationDialog
-import org.eclipse.debug.ui.ILaunchConfigurationTab
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -42,7 +41,7 @@ class KiCoLaunchConfigTabGroup extends AbstractLaunchConfigurationTabGroup {
         var execTab = new KiCoLaunchConfigExecuteTab(this)
         var commonTab = new CommonTab()
         
-        var tabs = (#[mainTab, compilationTab, execTab, commonTab] as ILaunchConfigurationTab[])
+        var tabs = #[mainTab, compilationTab, execTab, commonTab]
         setTabs(tabs)
     }
 }
