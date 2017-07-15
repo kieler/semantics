@@ -77,10 +77,13 @@ public class TimingHighlighter {
 	 * @param regionRectangles 
 	 *            The mapping that says which region belongs to which rectangle.
 	 * @param viewContext 
+	 * @param focusAndContext 
 	 */
-    public void highlightRegion(Region region, int percentage, int deepPercentageInt, Set<WeakReference<KText>> labels,
+    public void highlightRegion(Region region, int percentage, int deepPercentageInt,
+            Set<WeakReference<KText>> labels,
             HashMultimap<Region, WeakReference<KRectangle>> regionRectangles,
-            KRenderingExtensions renderingExtensions, ViewContext viewContext) {
+            KRenderingExtensions renderingExtensions, ViewContext viewContext,
+            boolean focusAndContext) {
         IViewer view = viewContext.getViewer();
         Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
         for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
@@ -114,9 +117,11 @@ public class TimingHighlighter {
                     renderingExtensions.setForegroundColor(label, 0, 0, 0);
                 }
             }
-            if (deepPercentageInt < 10) {
-                if (regionNode != null) {
-                    view.collapse(regionNode);
+            if (focusAndContext) {
+                if (deepPercentageInt < 10) {
+                    if (regionNode != null) {
+                        view.collapse(regionNode);
+                    }
                 }
             }
         }

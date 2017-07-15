@@ -60,6 +60,9 @@ public class TimingAnalysisHook extends SynthesisHook {
 
     private static SynthesisOption SHOW_TIMING_HIGHLIGHTING = SynthesisOption
             .createCheckOption("Show Hotspot Highlighting", false).setCategory(TIMING_CATEGORY);
+    
+    private static SynthesisOption SHOW_FOCUS_CONTEXT = SynthesisOption
+            .createCheckOption("Use Timing Focus Expansion", false).setCategory(TIMING_CATEGORY);
 
     private static SynthesisOption TIMING_REP =
             SynthesisOption
@@ -77,7 +80,7 @@ public class TimingAnalysisHook extends SynthesisHook {
             return Collections.emptyList();
         } else {
             return Lists.newArrayList(TIMING_CATEGORY, SHOW_TIMING, SHOW_TIMING_HIGHLIGHTING,
-                    TIMING_REP);
+                    SHOW_FOCUS_CONTEXT, TIMING_REP);
         }
     }
 
@@ -169,7 +172,7 @@ public class TimingAnalysisHook extends SynthesisHook {
 			// start analysis job
             new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource,
                     regionRectangles,
-					getBooleanValue(SHOW_TIMING_HIGHLIGHTING),
+					getBooleanValue(SHOW_TIMING_HIGHLIGHTING), getBooleanValue(SHOW_FOCUS_CONTEXT),
                     (TimingAnalysis.TimingValueRepresentation) getObjectValue(TIMING_REP), 
                     viewContext)
                             .schedule();

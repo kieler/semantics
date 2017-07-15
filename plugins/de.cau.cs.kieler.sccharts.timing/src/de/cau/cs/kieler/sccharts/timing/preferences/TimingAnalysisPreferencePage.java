@@ -41,12 +41,12 @@ public class TimingAnalysisPreferencePage extends FieldEditorPreferencePage impl
         super(GRID);
         setDescription("Activates the interactive timing analysis user options in the sidebar.\n"
                 + "Sets the locations of the timing analysis tool and "
-                + "the compiler used by the timing analysis tool.\n"
+                + "the compiler used \nby the timing analysis tool.\n"
                 + "In each case insert the absolute path of the folder that contains the tool.\n"
                 + "If you want to test without an attached timing analysis file, check "
-                + "box: Test interactive timing analysis without analysis tool.\n"
-                + "For manual testing you have to provide a response file per hand and "
-                + "insert its file name below.\n");
+                + "box: \nTest interactive timing analysis without analysis tool.\n"
+                + "For manual testing you have to provide a response file per hand. \nIt must be "
+                + "named like the model file and have the file ending .man.ta.out.\n");
     }
 
 	    /**
@@ -58,12 +58,12 @@ public class TimingAnalysisPreferencePage extends FieldEditorPreferencePage impl
                 "Display user options in sidebar", getFieldEditorParent()));
         addField(new BooleanFieldEditor("manualTimingTest", "Test interactive timing analysis "
                 + "without analysis tool.", getFieldEditorParent()));
-        addField(new StringFieldEditor("ktaPath", "Path to kta tool executable (may leave blank for"
-                + " manual testing):",
+        addField(new StringFieldEditor("ktaPath", "Path to kta tool executable: \n(may leave blank for"
+                + " manual testing)",
                 getFieldEditorParent()));
         addField(new StringFieldEditor("mipsel-mcb32-elf-gccPath",
-                "Path to mipsel-mcb32-elf-gcc \ncompiler executable (may leave blank for"
-                + " manual testing):", getFieldEditorParent()));
+                "Path to mipsel-mcb32-elf-gcc \ncompiler executable: \n(may leave blank for"
+                + " manual testing)", getFieldEditorParent()));
 
     }
 	    

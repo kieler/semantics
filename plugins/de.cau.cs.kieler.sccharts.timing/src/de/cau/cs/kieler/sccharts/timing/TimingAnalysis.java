@@ -150,6 +150,7 @@ public class TimingAnalysis extends Job {
 	private ArrayList<Region> wcpRegions = new ArrayList<Region>();
 	private TimingValueRepresentation rep;
 	private boolean highlight;
+	private boolean focusAndContext;
 	private ICodePreparer codePreparer;
 	private final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
 	private TimingHighlighter timingHighlighter = new TimingHighlighter(renderingFactory);
@@ -158,7 +159,7 @@ public class TimingAnalysis extends Job {
 	protected TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
 			Region scchartDummyRegion, Resource resource,
 			HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
-			TimingValueRepresentation rep, ViewContext viewContext) {
+			boolean focusAndContext, TimingValueRepresentation rep, ViewContext viewContext) {
 		super("Timing Analysis");
 		this.scchart = rootState;
 		this.timingLabels = regionLabels;
@@ -166,6 +167,7 @@ public class TimingAnalysis extends Job {
 		this.resource = resource;
 		this.regionRectangles = regionRectangles;
 		this.highlight = highlight;
+		this.focusAndContext = focusAndContext;
 		this.rep = rep;
 		this.codePreparer = new KTACodePreparer();
 		this.viewContext = viewContext;
@@ -513,7 +515,7 @@ public class TimingAnalysis extends Job {
                         }
                         timingHighlighter.highlightRegion(region, percentageInt, deepPercentageInt,
                                 timingLabels.get(region), regionRectangles, renderingExtensions,
-                                viewContext);
+                                viewContext, focusAndContext);
                     }
 				}
 				LightDiagramServices.layoutDiagram(viewContext);
@@ -559,7 +561,7 @@ public class TimingAnalysis extends Job {
 		
 		// In any case we will ask for the analysis of the tick function and statevariable _GO is 
 		// generated for any scchart
-        stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
+        stringBuilder.append("Function tick\nInitFunction reset\n");//State _GO");
         
         // Get the inputs for which we want to have globalvar assumptions
         // Note that at the moment we will generate globalvar assumptions
@@ -582,7 +584,7 @@ public class TimingAnalysis extends Job {
                     }
                 } else {
                     if (currentDeclaration.isOutput()) {
-                        inputOutputNameSet.add(name);
+                        //inputOutputNameSet.add(name);
                     }
                 }
             }
@@ -603,7 +605,8 @@ public class TimingAnalysis extends Job {
                     // as the kta tool treats all variables with GlobalVar assumptions as inputs.
                     //boolean test = name.matches("g\\d.*");
                     if (!(name.matches("g\\d(.)*")
-                            || name.matches("_condg\\d(.)*"))) {
+                            || name.matches("_condg\\d(.)*")
+                                    || name.matches("_cg\\d(.)*"))) {
                         // neither inputs nor outputs are state variables
                         if (!inputOutputNameSet.contains(name)) {
                             stringBuilder.append("\nState " + name);
