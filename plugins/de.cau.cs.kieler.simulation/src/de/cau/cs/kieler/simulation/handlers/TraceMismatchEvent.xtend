@@ -20,13 +20,6 @@ class TraceMismatchEvent extends TraceEvent {
     public Object expectedValue
     
     override toString() {
-        // The trace number and tick number starts with zero in the data handler.
-        // Thus to match the displayed value in the data pool view,
-        // it needs to be increased by one
-        return "Mismatch of variable '"+variable.name+"' "
-             + "after tick "+(tickNumber+1)+" "
-             + "of trace "+(traceNumber+1)+" "
-             + "from '"+traceFile.projectRelativePath.toOSString+"'\n"
-             + "(trace value: "+expectedValue+", simulation value: "+variable.value+")"
+        return message
     }
 }

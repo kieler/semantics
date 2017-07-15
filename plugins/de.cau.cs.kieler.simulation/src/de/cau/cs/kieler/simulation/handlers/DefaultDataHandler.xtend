@@ -39,7 +39,7 @@ abstract class DefaultDataHandler implements DataHandler {
     
     protected def IFile getFile(IPath path) {
         var IFile file = PromPlugin.findFile(path.toOSString)
-        if (file == null) {
+        if (file == null || !file.exists) {
             val simMan = SimulationManager.instance
             if(simMan != null && simMan.usedConfiguration != null) {
                 val configurationFile = ModelImporter.toPlatformResource(simMan.usedConfiguration.eResource) as IFile

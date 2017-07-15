@@ -168,6 +168,14 @@ class Trace extends DefaultDataHandler {
         event.traceFile = traceFile
         event.variable = variable
         event.expectedValue = expectedValue
+        // The trace number and tick number starts with zero in the data handler.
+        // Thus to match the displayed value in the data pool view,
+        // it needs to be increased by one
+        event.message = "Mismatch of variable '"+variable.name+"' "
+                      + "after tick "+(event.tickNumber+1)+" "
+                      + "of trace "+(event.traceNumber+1)+" "
+                      + "from '"+traceFile.projectRelativePath.toOSString+"'\n"
+                      + "(trace value: "+expectedValue+", simulation value: "+variable.value+")"
         return event
     }
     

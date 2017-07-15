@@ -149,7 +149,7 @@ class Variable implements Cloneable {
     
     public def void setUserValue(Object value) {
         var boolean eq = true
-        if(value != userValue) {
+        if(value !== userValue) {
             eq = false
         } else if(value != null) {
             eq = value.equals(userValue) 
@@ -157,10 +157,34 @@ class Variable implements Cloneable {
             eq = userValue.equals(value)
         }
         if(!eq) {
+            // Mark the modification in the model
+            model.setModifiedVariable
+            // Set the user value
             userValue = value
             // Notify simulation listeners that value changed
             SimulationManager.instance?.fireEvent(SimulationEventType.VARIABLE_CHANGE, this) 
         }
+    }
+    
+    /**
+     * Applies user made changes to variable values.
+     */
+    public def void applyUserValues() {
+        if(!isDirty) {
+            return
+        }
+        
+        // Apply user value of changed array elements
+        if(userValue instanceof NDimensionalArray) {
+            val arr = userValue as NDimensionalArray
+            for(elem : arr.elements) {
+                if(elem.isDirty) {
+                    elem.value = elem.userValue
+                }
+            }
+        }
+        // Apply user value
+        value = userValue
     }
     
     public def void setPresent() {

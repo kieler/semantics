@@ -36,6 +36,13 @@ class DataPool implements Cloneable {
     private var DataPool previousPool
     
     /**
+     * Indicates that at least one variable might have a user value set,
+     * which must be applied before the next tick is executed.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private boolean hasModifiedVariable
+    
+    /**
      * Clone this object.
      */
     override DataPool clone() {
@@ -51,7 +58,25 @@ class DataPool implements Cloneable {
     }
     
     public def Variable getVariable(String variableName) {
-        return allVariables.findFirst[it.name == variableName]
+        return getVariable(variableName, true)
+    }
+    
+    public def Variable getVariable(String variableName, boolean isFullyQualified) {
+        if(!isFullyQualified) {
+            // No model name specified, so search in the complete data pool for the variable
+            return allVariables.findFirst[it.name == variableName]    
+        } else if(!variableName.isNullOrEmpty) {
+            // Separate model name and variable name
+            val i = variableName.indexOf(".")
+            if(i >= 0 && i < variableName.length-1) {
+                val modelName = variableName.substring(0,i)
+                val relativeVariableName = variableName.substring(i + 1, i - variableName.length)
+                return getVariable(modelName, relativeVariableName)
+            } else {
+                // This is not fully qualified actually.
+                return getVariable(variableName, false)
+            }
+        }
     }
     
     public def Variable getVariable(String modelName, String variableName) {
@@ -128,6 +153,20 @@ class DataPool implements Cloneable {
             next = next.previousPool
         }
         return history.reverse
+    }
+    
+    protected def void setModifiedVariable() {
+        hasModifiedVariable = true
+    }
+    
+    public def void applyUserValues() {
+        if(!hasModifiedVariable) {
+            return
+        }
+        // Apply user made changes to variable values
+        for(m : models) {
+            m.applyUserValues
+        }
     }
     
     /**

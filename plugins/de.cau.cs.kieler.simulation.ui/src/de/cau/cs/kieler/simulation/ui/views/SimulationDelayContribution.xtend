@@ -15,10 +15,10 @@ package de.cau.cs.kieler.simulation.ui.views
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.eclipse.jface.action.ControlContribution
 import org.eclipse.swt.SWT
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Spinner
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Spinner
 
 /**
  * @author aas
@@ -35,15 +35,18 @@ class SimulationDelayContribution extends ControlContribution {
     override createControl(Composite parent) {
         spinner = new Spinner(parent, SWT.BORDER)
         spinner.toolTipText = "Simulation delay in play mode (milliseconds)"
-        spinner.minimum = SimulationManager.MIN_DELAY
-        spinner.maximum = SimulationManager.MAX_DELAY
+        spinner.minimum = SimulationManager.MIN_PAUSE
+        spinner.maximum = SimulationManager.MAX_PAUSE
         spinner.increment = 50
         spinner.pageIncrement = 50
-        spinner.selection = SimulationManager.playDelay
+        spinner.selection = SimulationManager.getDesiredTickPause
         
         spinner.addSelectionListener(new SelectionAdapter() {
             override widgetSelected(SelectionEvent e) {
-                SimulationManager.playDelay = spinner.selection
+                val value = spinner.selection
+                if(value >= SimulationManager.MIN_PAUSE && value <= SimulationManager.MAX_PAUSE) {
+                    SimulationManager.desiredTickPause = value
+                }
             }
         })
         

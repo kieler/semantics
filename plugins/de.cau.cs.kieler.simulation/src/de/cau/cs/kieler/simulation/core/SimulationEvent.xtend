@@ -31,6 +31,11 @@ class SimulationEvent {
      */
     public var Variable variable
     
+    /**
+     * The modified variable or the variable on which a trace mismatch occured.
+     */
+    public var String message
+ 
     new() {
     }
     
@@ -46,5 +51,10 @@ class SimulationEvent {
     new(SimulationEventType type, Variable variable) {
         this(type)
         this.variable = variable
+    }
+    
+    new(SimulationEventType type, String message) {
+        this(type)
+        this.message = message
     }
 }

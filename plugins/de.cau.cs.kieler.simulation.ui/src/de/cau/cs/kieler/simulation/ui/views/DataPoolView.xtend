@@ -87,7 +87,6 @@ class DataPoolView extends ViewPart {
         // Create menu and toolbars.
         createMenu
         createToolbar
-        createStatusLine
         
         // Add key listeners for fast controls
         addKeyListeners()
@@ -117,6 +116,7 @@ class DataPoolView extends ViewPart {
         if(pool == null) {
             viewer.input = null
             traceMismatches = newHashMap
+            statusLineText = ""
         } else {
             // Create a sorted list as input for the table viewer
             val List<Object> inputs = newArrayList()
@@ -202,13 +202,6 @@ class DataPoolView extends ViewPart {
                 dialog.open
             }
         })
-    }
-    
-    private def void createStatusLine() {
-//        val bars = getViewSite().getActionBars()
-//        if(bars != null) {
-//            val statusLineManager = bars.getStatusLineManager()
-//        }
     }
     
     private def void addKeyListeners() {
@@ -350,18 +343,21 @@ class DataPoolView extends ViewPart {
     }
     
     private def void updateTickInfo(SimulationEvent e) {
+        var String txt = null
+        if(e.type != SimulationEventType.STOP) {
+            txt = "Tick #"+SimulationManager.instance.currentMacroTickNumber
+            if(SimulationManager.instance.positionInHistory > 0) {
+                txt += " (-" + SimulationManager.instance.positionInHistory + ")"
+            }
+        }
+        tickInfo?.setText(Strings.nullToEmpty(txt))
+    }
+    
+    private def void setStatusLineText(String value) {
         val bars = getViewSite().getActionBars();
         if(bars != null) {
             val statusLineManager = bars.getStatusLineManager()
-            var String txt = null
-            if(e.type != SimulationEventType.STOP) {
-                txt = "Tick #"+SimulationManager.instance.currentMacroTickNumber
-                if(SimulationManager.instance.positionInHistory > 0) {
-                    txt += " (-" + SimulationManager.instance.positionInHistory + ")"
-                }
-            }
-            statusLineManager.setMessage(txt);
-            tickInfo?.setText(Strings.nullToEmpty(txt))
+            statusLineManager.setMessage(value);
         }
     }
     
@@ -377,7 +373,11 @@ class DataPoolView extends ViewPart {
                 if(dataPoolView == null) {
                     return;
                 }
-                if(e.type == SimulationEventType.VARIABLE_CHANGE) {
+                if(e.type == SimulationEventType.ERROR) {
+                    PromUIPlugin.asyncExecInUI[
+                        dataPoolView.setStatusLineText(e.message)    
+                    ]
+                }else if(e.type == SimulationEventType.VARIABLE_CHANGE) {
                     dataPoolView.viewer.update(e.variable, null)
                 } else if(e.type == SimulationEventType.TRACE) {
                     if(e instanceof TraceMismatchEvent) {
