@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.kexpressions.Declaration
 import javax.swing.undo.UndoManager
 import de.cau.cs.kieler.sccharts.StateType
+import java.util.ArrayList
 
 /**
  * Import SCCharts from PTC
@@ -68,9 +69,17 @@ public class PTC2SCCharts {
     HashMap<String, ValuedObject> id2output = new HashMap();
 
     HashMap<String, ValuedObject> name2localValuedObject = new HashMap();
-    
-    List<String> statemachineList = null  
+
+    List<State> entryPoint = new ArrayList()
+    List<State> exitPoint = new ArrayList()
+
+    List<String> statemachineList = null
     List<String> optionListSelected = null
+
+    // The transitionMode tells whether to transform transitions and triggers/effects yet. Typically,
+    // first all states need to be created, then the transition mode is turned to true and
+    // then all transitions/triggers/effects are created
+    boolean transitionMode = false;
 
     /** Create an injector to load the transformation via guice. */
     private static Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
@@ -116,6 +125,8 @@ public class PTC2SCCharts {
             id2input.clear
             id2output.clear
             Operation2Name.clear
+            entryPoint.clear
+            exitPoint.clear
             var scchart = SCChartsFactory::eINSTANCE.createState;
             targetModel.add(scchart)
         }
@@ -245,6 +256,11 @@ public class PTC2SCCharts {
     }
 
     def void body2output(Action action, List<State> targetModel, Element element, String body) {
+        if (optionListSelected.contains(PTCModelFileHandler.OPTION_HOSTLABELS)) {
+            action.addEffect(asHostcodeEffect(body))
+            return;
+        }
+
         val outputName = body.extractOutputName
         val outputParam = body.extractOutputParam
 
@@ -337,7 +353,7 @@ public class PTC2SCCharts {
         for (child : element.eAllContents.toList) {
             if (child instanceof Element) {
                 if (child.isUMLSignalEvent) {
-                    println("element.id = " + child.id + " == " + eventid + " = eventid");
+                    // println("element.id = " + child.id + " == " + eventid + " = eventid");
                     if (child.id == eventid) {
                         return "I_" + child.name
                     }
@@ -377,21 +393,29 @@ public class PTC2SCCharts {
 
     def void transformStateMachine(List<State> targetModel, Element element, boolean clear) {
         if (clear) {
-        src2target.clear
-        target2src.clear
-        id2src.clear
-        name2localValuedObject.clear
-        src2id.clear
-        id2input.clear
-        id2output.clear
-        Operation2Name.clear
+            src2target.clear
+            target2src.clear
+            id2src.clear
+            name2localValuedObject.clear
+            src2id.clear
+            id2input.clear
+            id2output.clear
+            Operation2Name.clear
+            entryPoint.clear
+            exitPoint.clear
         }
         var scchart = SCChartsFactory::eINSTANCE.createState;
         targetModel.add(scchart)
         scchart.id = element.name.fixId;
         println("CREATE STATEMACHINE '" + scchart.id + "' for " + element.hashCode)
         element.map(scchart)
+
+        transitionMode = false
         targetModel.transformGeneral(element)
+
+        transitionMode = true
+        targetModel.transformGeneral(element)
+
     }
 
     def void transformRegion(List<State> targetModel, Element element, EObject srcParent) {
@@ -405,27 +429,54 @@ public class PTC2SCCharts {
     def void transformPseudostate(List<State> targetModel, Element element, EObject srcParent) {
         // Find region to create state in
         val srcParentRegion = src2target.get(srcParent)
-        if (!(srcParentRegion instanceof ControlflowRegion)) {
+        if (srcParentRegion instanceof State) {
+            val parentRegion = (srcParentRegion as State).regions.get(0) as ControlflowRegion;
+            if (parentRegion == null) {
+                println("ERROR: parentRegion is empty, cannot create entry/exit point")
+                return
+            }
+            // Entry and Exit Points
+            // if (element.name.startsWith("Initial")) {
+            if (element.kind == "entryPoint") {
+                println("CREATE ENTRY POINT '" + element.name + "' with id " + element.id)
+
+                val state = parentRegion.createState(element.name.fixId).uniqueName;
+                state.initial = true
+                entryPoint.add(state)
+                element.map(state)
+                targetModel.transformGeneral(element)
+
+            } else if (element.kind == "exitPoint") {
+                println("CREATE EXIT POINT '" + element.name + "' with id " + element.id)
+                val state = parentRegion.createState(element.name.fixId).uniqueName;
+                state.final = true
+                exitPoint.add(state)
+                element.map(state)
+                targetModel.transformGeneral(element)
+            }
+
+        } else if ((srcParentRegion instanceof ControlflowRegion)) {
+            if (element.kind == "junction") {
+                println("CREATE CONNECTOR STATE '" + element.name + "' with id " + element.id)
+                val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
+                state.setTypeConnector
+                element.map(state)
+                targetModel.transformGeneral(element)
+            } else if (element.kind == "") {
+                // Initial pseudostates have not any kind-value            
+                println("CREATE INIT STATE '" + element.name + "' with id " + element.id)
+                val state = (src2target.get(srcParent) as ControlflowRegion).createInitialState(element.name.fixId).
+                    uniqueName;
+                element.map(state)
+                targetModel.transformGeneral(element)
+            }
+        } else {
             println(
                 "ERROR: Element '" + srcParentRegion.id +
-                    "' is not a region. Cannot create initial or connector state '" + element.id + "' here. ")
+                    "' is not a state or region. Cannot create pseudo state '" + element.id + "' here. ")
             return
         }
 
-        // if (element.name.startsWith("Initial")) {
-        if (element.kind != "junction") {
-            println("CREATE INIT STATE '" + element.name + "' with id " + element.id)
-            val state = (src2target.get(srcParent) as ControlflowRegion).createInitialState(element.name.fixId).
-                uniqueName;
-            element.map(state)
-            targetModel.transformGeneral(element)
-        } else {
-            println("CREATE CONNECTOR STATE '" + element.name + "' with id " + element.id)
-            val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
-            state.setTypeConnector
-            element.map(state)
-            targetModel.transformGeneral(element)
-        }
     }
 
     def void transformFinalState(List<State> targetModel, Element element, EObject srcParent) {
@@ -448,6 +499,11 @@ public class PTC2SCCharts {
             return
         }
         if (element.type == "entry" || element.umlType == "exit") {
+            if (optionListSelected.contains(PTCModelFileHandler.OPTION_NO_ENTRYEXIT)) {
+                println("Skipping entry/exit action")
+                return;
+            }
+
             val parentState = element.parentAnyState
             if (parentState != null) {
                 if (element.type == "entry" || element.type == "exit") {
@@ -505,9 +561,29 @@ public class PTC2SCCharts {
      *           </ownedAttribute>
      */
     def void transformTransition(List<State> targetModel, Element element) {
-        println(" --> TRANSITION: from " + element.source + " to " + element.target);
-        val src = element.source.id2src.src2target
-        val dst = element.target.id2src.src2target
+        if (optionListSelected.contains(PTCModelFileHandler.OPTION_NO_TRANSITIONS)) {
+            println("Skipping transition")
+            return;
+        }
+        
+        if (exitPoint.contains(element.target)) {
+            println(" --> EXIT TRANSITION: from " + element.source + " to " + element.target);
+        } else if (entryPoint.contains(element.source)) {
+            println(" --> ENTRY TRANSITION: from " + element.source + " to " + element.target);
+        } else {
+            println(" --> TRANSITION: from " + element.source + " to " + element.target);
+        }
+
+        val src = element.source.id2src.src2target as State
+        val dst = element.target.id2src.src2target as State
+        
+        if (src == null || dst == null) {
+            return
+        }
+        if (src.eContainer != dst.eContainer) {
+            println(" X --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
+            return
+        }
 
         if ((src instanceof State) && (dst instanceof State)) {
             val transition = (src as State).createTransitionTo(dst as State)
@@ -561,6 +637,13 @@ public class PTC2SCCharts {
     }
 
     def transformTrigger(List<State> targetModel, Element element) {
+        if (optionListSelected.contains(PTCModelFileHandler.OPTION_NO_TRANSITIONS)) {
+            return;
+        }
+        if (optionListSelected.contains(PTCModelFileHandler.OPTION_HOSTLABELS)) {
+            return;
+        }
+
         val transition = element.parent.src2target as Transition
         println(" --> TRIGGER FOR TRANSITION: " + transition);
         if (transition != null) {
@@ -623,79 +706,96 @@ public class PTC2SCCharts {
     def transformGeneral(List<State> targetModel, Element element) {
         for (childElement : element.children) {
             // println("UML TYPE:" + childElement.umlType)
-            if (childElement.id.endsWith("Event")) {
-                targetModel.transformEvent(childElement)
-            } else if (childElement.isUMLStateMachine) {
-                targetModel.transformStateMachine(childElement, false)
-            } else if (childElement.isUMLRegion) {
-                targetModel.transformRegion(childElement, element)
-            } else if (childElement.isUMLPseudostate) {
-                targetModel.transformPseudostate(childElement, element)
-            } else if (childElement.isUMLFinalState) {
-                targetModel.transformFinalState(childElement, element)
-            } else if (childElement.isUMLState) {
-                targetModel.transformState(childElement, element)
-            } else if (childElement.isUMLActivity) {
-                targetModel.transformActivity(childElement)
-            } else if (childElement.isUMLTransition) {
-                targetModel.transformTransition(childElement)
-            } else if (childElement.isUMLTrigger) {
-                targetModel.transformTrigger(childElement)
-            } else if (childElement.isUMLOpaqueBehavior) {
-                targetModel.transformOpaqueBehavior(childElement)
-            } else if (childElement.isUMLOpaqueExpression) {
-                targetModel.transformOpaqueExpression(childElement)
-            } else if (childElement.isUMLOperation) {
-                targetModel.transformOperation(childElement)
-            } else if (childElement.isUMLParameter) {
-                targetModel.transformParameter(childElement)
-            } else if (childElement.isUMLOpaqueBehavior) {
-                targetModel.transformOpaqueBehavior(childElement)
-            } else if (childElement.isUMLProperty) {
-                targetModel.transformProperty(childElement)
-            } else if (childElement.isUMLSignalEvent) {
-                targetModel.transformSignalEvent(childElement)
-            } else if (childElement.children.size > 0) {
-                // A container
-                targetModel.transformGeneral(childElement)
+            // Partition all elements in transition mode and non-transition mode
+            if (!transitionMode) {
+                if (childElement.id.endsWith("Event")) {
+                    targetModel.transformEvent(childElement)
+                } else if (childElement.isUMLStateMachine) {
+                    targetModel.transformStateMachine(childElement, false)
+                } else if (childElement.isUMLRegion) {
+                    targetModel.transformRegion(childElement, element)
+                } else if (childElement.isUMLPseudostate) {
+                    targetModel.transformPseudostate(childElement, element)
+                } else if (childElement.isUMLFinalState) {
+                    targetModel.transformFinalState(childElement, element)
+                } else if (childElement.isUMLState) {
+                    targetModel.transformState(childElement, element)
+//                } else if (childElement.isUMLActivity) {
+//                    targetModel.transformActivity(childElement)
+//                } else if (childElement.isUMLTransition) {
+//                    targetModel.transformTransition(childElement)
+//                } else if (childElement.isUMLTrigger) {
+//                    targetModel.transformTrigger(childElement)
+//                } else if (childElement.isUMLOpaqueBehavior) {
+//                    targetModel.transformOpaqueBehavior(childElement)
+//                } else if (childElement.isUMLOpaqueExpression) {
+//                    targetModel.transformOpaqueExpression(childElement)
+                } else if (childElement.isUMLOperation) {
+                    targetModel.transformOperation(childElement)
+                } else if (childElement.isUMLParameter) {
+                    targetModel.transformParameter(childElement)
+                } else if (childElement.isUMLOpaqueBehavior) {
+                    targetModel.transformOpaqueBehavior(childElement)
+                } else if (childElement.isUMLProperty) {
+                    targetModel.transformProperty(childElement)
+//                } else if (childElement.isUMLSignalEvent) {
+//                    targetModel.transformSignalEvent(childElement)
+                } else if (childElement.children.size > 0) {
+                    // A container
+                    targetModel.transformGeneral(childElement)
+                }
+            } else {
+                if (childElement.isUMLActivity) {
+                    targetModel.transformActivity(childElement)
+                } else if (childElement.isUMLTransition) {
+                    targetModel.transformTransition(childElement)
+                } else if (childElement.isUMLTrigger) {
+                    targetModel.transformTrigger(childElement)
+                } else if (childElement.isUMLOpaqueBehavior) {
+                    targetModel.transformOpaqueBehavior(childElement)
+                } else if (childElement.isUMLSignalEvent) {
+                    targetModel.transformSignalEvent(childElement)
+                } else if (childElement.children.size > 0) {
+                    // A container
+                    targetModel.transformGeneral(childElement)
+                }
             }
 
         }
     }
 
-    def transform(EObject model, List<String> statemachineListParam,  List<String> optionListSelectedParam) {
+    def transform(EObject model, List<String> statemachineListParam, List<String> optionListSelectedParam) {
         statemachineList = statemachineListParam
         optionListSelected = optionListSelectedParam
-        
+
         println("Selected Statemachines:")
-        for (sm: statemachineList) {
+        for (sm : statemachineList) {
             println("   - " + sm)
         }
-        
+
         println("\nSelected Options:")
-        for (option: optionListSelected) {
+        for (option : optionListSelected) {
             println("   - " + option)
         }
-        
+
         println("\n")
-        
+
         println(
             "Importing SCChart from PTC IM UML Statemachines... \n Root:" + model.eClass.name + ":" +
                 model.eContents.length + "\n");
 
         var sccharts = newArrayList() // <State>;
-        
         val rootElement = model as Element;
-        
-        val allStatemachines = rootElement.eAllContents.filter[e | (e instanceof Element) && (e as Element).UMLStateMachine].toList
+
+        val allStatemachines = rootElement.eAllContents.filter [ e |
+            (e instanceof Element) && (e as Element).UMLStateMachine
+        ].toList
         for (statemachine : allStatemachines) {
             val Element elem = (statemachine as Element)
             if (statemachineList.contains(elem.name)) {
                 sccharts.transformStateMachine(elem, true)
             }
         }
-        
-       
 
         for (scchart : sccharts) {
             scchart.fixAllPriorities.fixAllTextualOrdersByPriorities

@@ -27,8 +27,21 @@ import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelExtensions
  */
 public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
     
-    public static String[] options = #{"EXPAND_SUBSTATEMACHINES"};
-    public static String[] optionLabels = #{"Expand Substatemachines"};
+    public static String OPTION_EXPAND_SUBSTATEMACHINES = "EXPAND_SUBSTATEMACHINES";
+    public static String OPTION_NO_TRANSITIONS = "NO_TRANSITIONS";
+    public static String OPTION_NO_ENTRYEXIT = "NO_ENTRYEXIT";
+    public static String OPTION_HOSTLABELS = "HOSTLABELS";
+    
+    public static String[] options = #[OPTION_EXPAND_SUBSTATEMACHINES, 
+                                       OPTION_NO_TRANSITIONS,
+                                       OPTION_NO_ENTRYEXIT,
+                                       OPTION_HOSTLABELS
+    ];
+    public static String[] optionLabels = #["Expand Substatemachines", 
+                                            "Skip Transitions", 
+                                            "Skip Entry/Exit Actions", 
+                                            "Transition Hostcode Labels"
+    ];
 
     @Inject
     extension SCChartsExtension;
@@ -63,8 +76,8 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
         
                 
 
-        ImportOptionsDialog.optionList = options.toList
-        ImportOptionsDialog.optionListLabel = optionLabels.toList
+        ImportOptionsDialog.optionList = options
+        ImportOptionsDialog.optionListLabel = optionLabels
         ImportOptionsDialog.statemachineList = (model as Element).getStatemachines
         val ok = showImportOptionsDialog();
         

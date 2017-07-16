@@ -81,8 +81,8 @@ public class ImportOptionsDialog extends Dialog {
     /** The temporary table that allows the user to select DataComponents. */
     private Table table;
     
-    public static List<String> optionList = new ArrayList<String>();
-    public static List<String> optionListLabel = new ArrayList<String>();
+    public static String[] optionList = null;
+    public static String[] optionListLabel = null;
 
     public static List<String> optionListSelected = new ArrayList<String>();
 
@@ -241,19 +241,21 @@ public class ImportOptionsDialog extends Dialog {
         gridData.verticalAlignment = GridData.FILL;
         table.setLayoutData(gridData);
         
-        for (int i = 0; i < optionList.size(); i++) {
-            String option = optionList.get(i);
-            String label = optionListLabel.get(i);
+        for (int i = 0; i < optionList.length; i++) {
+            final String option = optionList[i];
+            final String label = optionListLabel[i];
             Button btn = new Button(composite, SWT.CHECK);
+            btn.setData(option);
             btn.setText(label);
             btn.addSelectionListener(new SelectionListener() {
                 @Override
                 public void widgetSelected(SelectionEvent event) {
                     Button button = ((Button) event.widget);
+                    String btnOption = (String) button.getData();
                     if (button.getSelection()) {
-                        optionListSelected.add(option);
+                        optionListSelected.add(btnOption);
                     } else {
-                        optionListSelected.remove(option);
+                        optionListSelected.remove(btnOption);
                     }
                 }
                 @Override
