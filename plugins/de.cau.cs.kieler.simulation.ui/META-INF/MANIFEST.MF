@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.editors,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kexpressions.ui,
- de.cau.cs.kieler.annotations.ui
+ de.cau.cs.kieler.annotations.ui,
+ de.cau.cs.kieler.klighd.ui.view
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.simulation.ui,

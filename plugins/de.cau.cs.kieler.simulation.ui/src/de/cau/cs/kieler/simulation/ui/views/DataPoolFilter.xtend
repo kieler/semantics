@@ -36,7 +36,7 @@ class DataPoolFilter extends ViewerFilter {
      */
     override boolean select(Viewer viewer, Object parentElement, Object element) {
         if(element instanceof Variable) {
-            var boolean visible = (element.isInput || element.isOutput)
+            var boolean visible = true // (element.isInput || element.isOutput)
             if(!searchString.isNullOrEmpty) {
                 visible = visible && element.name.matches(".*"+searchString+".*")
             }

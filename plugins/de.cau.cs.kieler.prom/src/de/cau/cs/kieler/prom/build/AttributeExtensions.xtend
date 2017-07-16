@@ -102,7 +102,7 @@ class AttributeExtensions {
         } else if(!attribute.values.isNullOrEmpty) {
             return attribute.values.map[it.primitiveValue]
         } else if(!attribute.attributes.isNullOrEmpty) {
-            attribute.attributes.toMap
+            return attribute.attributes.toMap
         }
         return null
     }

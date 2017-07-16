@@ -92,7 +92,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                 for(decl : model.declarations) {
                     for(valuedObject : decl.valuedObjects) {
                         // At the moment, send only inputs and outputs
-                        if(decl.input || decl.output) {
+//                        if(decl.input || decl.output) {
                             val data = new WrapperCodeAnnotationData();
                             data.arguments.add(String.valueOf(decl.input))
                             data.arguments.add(String.valueOf(decl.output))
@@ -122,8 +122,19 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                             data.varType = decl.type.literal
                             data.varName = valuedObject.name
                             
+                            // Set interface type
+                            if(decl.input) {
+                                data.interfaceTypes.add("input")
+                            }
+                            if(decl.output) {
+                                data.interfaceTypes.add("output")
+                            }
+                            if(!decl.input && !decl.output) {
+                                data.interfaceTypes.add("internal")
+                            }
+                            
                             annotationDatas.add(data)
-                        }
+//                        }
                     }
                 }
             }

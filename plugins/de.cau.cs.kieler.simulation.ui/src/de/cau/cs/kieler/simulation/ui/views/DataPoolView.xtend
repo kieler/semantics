@@ -24,11 +24,10 @@ import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
-import de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig
+import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
-import org.eclipse.core.runtime.Path
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
@@ -39,14 +38,12 @@ import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.KeyAdapter
 import org.eclipse.swt.events.KeyEvent
+import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
-import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.io.Files
-import de.cau.cs.kieler.prom.PromPlugin
 
 /**
  * @author aas
@@ -67,8 +64,7 @@ class DataPoolView extends ViewPart {
     private var TableViewerColumn valueColumn
     private var TableViewerColumn userValueColumn
     private var TableViewerColumn historyColumn
-    private var TableViewerColumn inputColumn
-    private var TableViewerColumn outputColumn
+    private var TableViewerColumn inputOutputColumn
     
     private var LabelContribution tickInfo
     
@@ -147,8 +143,7 @@ class DataPoolView extends ViewPart {
     private def void createMenu() {
         val mgr = getViewSite().getActionBars().getMenuManager();
         mgr.add(new ToggleColumnVisibleAction(historyColumn));
-        mgr.add(new ToggleColumnVisibleAction(inputColumn));
-        mgr.add(new ToggleColumnVisibleAction(outputColumn));
+        mgr.add(new ToggleColumnVisibleAction(inputOutputColumn));
         mgr.add(new Action("Clear Trace Mismatches") {
             override run() {
                 traceMismatches = newHashMap
@@ -336,20 +331,63 @@ class DataPoolView extends ViewPart {
         historyColumn = createTableColumn(viewer, "History", 200, true)
         historyColumn.labelProvider = new HistoryColumnLabelProvider()
         
-        inputColumn = createTableColumn(viewer, "Is Input", 80, false)
-        inputColumn.labelProvider = new DataPoolColumnLabelProvider() {
+        inputOutputColumn = createTableColumn(viewer, "In Out", 32, false)
+        inputOutputColumn.labelProvider = new DataPoolColumnLabelProvider() {
+            private val inputImageDescriptor = SimulationUiPlugin.imageDescriptorFromPlugin(SimulationUiPlugin.PLUGIN_ID, "icons/input.png");
+            private val outputImageDescriptor = SimulationUiPlugin.imageDescriptorFromPlugin(SimulationUiPlugin.PLUGIN_ID, "icons/output.png");
+            private val inputOutputImageDescriptor = SimulationUiPlugin.imageDescriptorFromPlugin(SimulationUiPlugin.PLUGIN_ID, "icons/inputOutput.png");
+            private var Image inputImage
+            private var Image outputImage
+            private var Image inputOutputImage
+            
+            override getImage(Object element) {
+                if(element instanceof Variable) {
+                    if(element.isInput && element.isOutput) {
+                        if(inputOutputImage == null) {
+                            inputOutputImage = inputOutputImageDescriptor.createImage    
+                        }
+                        return inputOutputImage
+                    } else if (element.isInput) {
+                        if(inputImage == null) {
+                            inputImage = inputImageDescriptor.createImage    
+                        }
+                        return inputImage
+                    } else if (element.isOutput) {
+                        if(outputImage == null) {
+                            outputImage = outputImageDescriptor.createImage    
+                        }
+                        return outputImage
+                    }
+                }
+                
+            }
+            
+            override String getToolTipText(Object element) {
+                if(element instanceof Variable) {
+                    if(element.isInput && element.isOutput) {
+                        return "Input and output"
+                    } else if (element.isInput) {
+                        return "Input"
+                    } else if (element.isOutput) {
+                        return "Output"
+                    } else {
+                        return "Neither input nor output"
+                    }
+                }
+            }
+            
             override String getText(Object element) {
-                if(element instanceof Variable)
-                    return String.valueOf(element.isInput)
                 return ""
             }
-        };
-        outputColumn = createTableColumn(viewer, "Is Output", 80, false)
-        outputColumn.labelProvider = new DataPoolColumnLabelProvider() {
-            override String getText(Object element) {
-                if(element instanceof Variable)
-                    return String.valueOf(element.isOutput)
-                return ""
+            
+            override dispose() {
+                // Dispose created images
+                inputImage?.dispose()
+                inputImage = null
+                outputImage?.dispose()
+                outputImage = null
+                inputOutputImage?.dispose()
+                inputOutputImage = null
             }
         };
 
@@ -448,9 +486,19 @@ class DataPoolView extends ViewPart {
                             // Set pool data
                             dataPoolView.setDataPool(SimulationManager.instance?.currentPool)
                         ]
+                        
+//                    dataPoolView.highlightDiagram
                 }
             }
         }
         return listener
     }
+    
+//    private def void highlightDiagram() {
+//        val diagramViews = DiagramView.getAllDiagramViews
+//        if (!diagramViews.isNullOrEmpty) {
+//            val diagramView = diagramViews.get(0);
+//            val viewContext = diagramView.
+//        }
+//    }
 }

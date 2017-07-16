@@ -579,7 +579,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
-    private def void showBuildProblems(List<BuildProblem> problems) {
+    public static def void showBuildProblems(List<BuildProblem> problems) {
         for(problem : problems) {
             if(problem.file != null) {
                 var IMarker marker

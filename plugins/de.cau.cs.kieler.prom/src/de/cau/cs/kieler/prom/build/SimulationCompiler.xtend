@@ -57,18 +57,7 @@ abstract class SimulationCompiler extends Configurable {
     }
     
     public def FileGenerationResult compile(IFile file) {
-        Assert.isNotNull(command.stringValue)
-        Assert.isNotNull(outputFolder.stringValue)
-        Assert.isNotNull(libFolder.stringValue)
-        if(monitor != null) {
-            monitor.subTask("Compiling simulation:" + file.name)
-        }
         this.file = file
-        executableFile = getExecutableFile
-        
-        // Remove markers from old simulation file
-        KiCoBuilder.deleteMarkers(file)
-        
         // Create libraries and files required for compilation
         initializeCompilation
         
@@ -95,6 +84,17 @@ abstract class SimulationCompiler extends Configurable {
     }
     
     protected def void initializeCompilation() {
+        Assert.isNotNull(command.stringValue)
+        Assert.isNotNull(outputFolder.stringValue)
+        Assert.isNotNull(libFolder.stringValue)
+        if(monitor != null) {
+            monitor.subTask("Compiling simulation:" + file.name)
+        }
+        executableFile = getExecutableFile
+        
+        // Remove markers from old simulation file
+        KiCoBuilder.deleteMarkers(file)
+        
         // Create output folder
         if(!outputFolder.stringValue.isNullOrEmpty) {
             val outputFolderResource = project.getFolder(outputFolder.stringValue)

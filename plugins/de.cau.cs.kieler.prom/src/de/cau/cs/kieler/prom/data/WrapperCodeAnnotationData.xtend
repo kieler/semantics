@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom.data
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.Set
 
 /**
  * Data container for wrapper code annotations in Model file.
@@ -22,7 +23,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  */
 class WrapperCodeAnnotationData {
-    
     /**
      * The name of the model.
      * e.g. 'MyModel' for an scchart 'scchart MyModel {initial state init;}'
@@ -72,13 +72,17 @@ class WrapperCodeAnnotationData {
     private String varType = ""
     
     /**
+     * The interface type can be an input, output, internal variable or a mixture of those.
+     */
+    @Accessors
+    private Set<String> interfaceTypes = newHashSet
+    
+    /**
      * Specifies if the template engine should throw an error or ignore it
      * if a wrapper code snippet for this annotation does not exist.
      */
     @Accessors
     private boolean ignoreNonExistingSnippet
-
-
     
     /**
      * Two WrapperCodeAnnotationData are equal if the name is equal
