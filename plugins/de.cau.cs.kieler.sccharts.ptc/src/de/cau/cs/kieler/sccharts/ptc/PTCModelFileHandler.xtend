@@ -12,6 +12,11 @@ import org.eclipse.jface.viewers.ISelection
 import org.eclipse.emf.common.util.URI
 import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelParser
 import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelSerializer
+import de.cau.cs.kieler.sccharts.ptc.dialog.ImportOptionsDialog
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
+import java.util.List
+import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelExtensions
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -21,8 +26,18 @@ import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelSerializer
  * @kieler.rating 2015-02-15 proposed yellow
  */
 public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
+    
+    public static String[] options = #{"EXPAND_SUBSTATEMACHINES"};
+    public static String[] optionLabels = #{"Expand Substatemachines"};
 
+    @Inject
     extension SCChartsExtension;
+
+    @Inject
+    extension PTCXMIUMLExtensions;
+
+    @Inject
+    extension XMIModelExtensions;
 
     // GuiceModulesExecutableExtensionFactory
     HashMap<EObject, EObject> src2target = new HashMap();
@@ -45,8 +60,52 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
     }
 
     override protected transform(EObject model, ExecutionEvent event, ISelection selection) {
-        val pts2sccharts = Guice.createInjector().getInstance(PTC2SCCharts);
-        return pts2sccharts.transform(model);
+        
+                
+
+        ImportOptionsDialog.optionList = options.toList
+        ImportOptionsDialog.optionListLabel = optionLabels.toList
+        ImportOptionsDialog.statemachineList = (model as Element).getStatemachines
+        val ok = showImportOptionsDialog();
+        
+        if (ok) {
+            val pts2sccharts = Guice.createInjector().getInstance(PTC2SCCharts);
+            return pts2sccharts.transform(model, ImportOptionsDialog.statemachineList,
+                ImportOptionsDialog.optionListSelected);
+        } else {
+            return null
+        }
+
+    }
+
+    def String getStatemachineName(Element elem) {
+        var boolean isStatemachine = false
+        var String stateMachineName = null
+        for (attrib : elem.attributes) {
+            if (attrib.name == "xmi:type") {
+                if (attrib.value == "uml:StateMachine") {
+                    isStatemachine = true
+                }
+
+            }
+            if (attrib.name == "name") {
+                stateMachineName = attrib.value
+            }
+
+        }
+        if (isStatemachine) {
+            return stateMachineName
+        }
+        return null
+    }
+
+    def List<String> getStatemachines(Element model) {
+        val List<String> returnList = newArrayList
+        val allContent = model.eAllContents.filter[e|(e instanceof Element)].toList
+        for (stateMachine : allContent.filter[e|getStatemachineName(e as Element) != null].toList) {
+            returnList.add((stateMachine as Element).getStatemachineName)
+        }
+        return returnList
     }
 
     def String removeSection(String text, String startTag, String endTag, boolean removeAll) {
@@ -59,9 +118,10 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
             if ((startIndex < 0) || (endIndex < 0)) {
                 return returnText
             }
-            
-            returnText = returnText.substring(0, startIndex) + returnText.substring(endIndex + endTag.length, returnText.length)
-            
+
+            returnText = returnText.substring(0, startIndex) +
+                returnText.substring(endIndex + endTag.length, returnText.length)
+
             if (!removeAll) {
                 return returnText
             }
@@ -79,19 +139,17 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
             if ((startIndex < 0) || (endIndex < 0)) {
                 return returnText
             }
-            
+
             returnText = text.substring(startIndex, endIndex + endTag.length)
             if (returnText.contains(whenContainsText)) {
                 return returnText
             }
         }
-        
+
     }
 
-
     override preprocessFile(String content) {
-        
-        
+
 //        val model = XMIModelParser.parse(content)
 //        val serialized = XMIModelSerializer.serialize(model);        
 //        val output = URI.createURI("platform:/resource/SCCharts/test.xmi");
@@ -111,18 +169,15 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
 //        returnText = returnText.replace("<entry ", "<entry kind=\"entry\" ")
 //        returnText = returnText.replace("<exit ", "<exit kind=\"exit\" ")
 //        
-
         // Remove
         // <ownedBehavior xmi:type = "uml:Activity"
         // ..
         // </ownedBehavior>
-        //returnText = returnText.removeSection("<ownedBehavior xmi:type = \"uml:Activity\"", "</ownedBehavior>", true)
-        
+        // returnText = returnText.removeSection("<ownedBehavior xmi:type = \"uml:Activity\"", "</ownedBehavior>", true)
         // Remove
         // <packagedElement xmi:type = "uml:Class"
         // </packagedElement>
-        //returnText = returnText.removeSection("<packagedElement xmi:type = \"uml:Class\"", "</packagedElement>", true)
-
+        // returnText = returnText.removeSection("<packagedElement xmi:type = \"uml:Class\"", "</packagedElement>", true)
 //        returnText = returnText.extractSection(
 //        "<packagedElement xmi:type = \"uml:Package\"",
 //        "",
@@ -133,7 +188,6 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
 ////        print(returnText)
 //
 //        return returnText;
-
         return content
     }
 

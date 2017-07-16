@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -54,6 +55,7 @@ import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -65,6 +67,7 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.ptc.dialog.ImportOptionsDialog;
 import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelParser;
 
 /**
@@ -288,15 +291,15 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
 
                             ResourceSet resSet = new ResourceSetImpl();
                             Resource saveRes = resSet.createResource(output);
-                            saveRes.getContents().add((EObject)listObject);
+                            saveRes.getContents().add((EObject) listObject);
                             saveRes.save(getSaveOptions());
                             setCharset(WorkspaceSynchronizer.getFile(saveRes));
 
                             // Open associated editor, if necessary
                             // Because this code is not execute in the ui thread, this must be done
                             // synchronously.
-                            if (doOpenEditor((EObject)listObject, event, selection)) {
-                                openEditorSync((EObject)listObject);
+                            if (doOpenEditor((EObject) listObject, event, selection)) {
+                                openEditorSync((EObject) listObject);
                             }
 
                             // Call post-processing
@@ -409,4 +412,21 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
         }
     }
 
+    boolean dialogAborted = true;
+
+    protected boolean showImportOptionsDialog() {
+        dialogAborted = true;
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                // first ask the user to select input signals
+                ImportOptionsDialog dialog = new ImportOptionsDialog(shell);
+                dialog.open();
+                if (dialog.getReturnCode() == ImportOptionsDialog.OK) {
+                    dialogAborted = false;
+                }
+            }
+        });
+        return !dialogAborted;
+    }
 }

@@ -68,6 +68,9 @@ public class PTC2SCCharts {
     HashMap<String, ValuedObject> id2output = new HashMap();
 
     HashMap<String, ValuedObject> name2localValuedObject = new HashMap();
+    
+    List<String> statemachineList = null  
+    List<String> optionListSelected = null
 
     /** Create an injector to load the transformation via guice. */
     private static Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
@@ -372,7 +375,8 @@ public class PTC2SCCharts {
         return "I_" + inputCounter
     }
 
-    def void transformStateMachine(List<State> targetModel, Element element) {
+    def void transformStateMachine(List<State> targetModel, Element element, boolean clear) {
+        if (clear) {
         src2target.clear
         target2src.clear
         id2src.clear
@@ -381,6 +385,7 @@ public class PTC2SCCharts {
         id2input.clear
         id2output.clear
         Operation2Name.clear
+        }
         var scchart = SCChartsFactory::eINSTANCE.createState;
         targetModel.add(scchart)
         scchart.id = element.name.fixId;
@@ -621,7 +626,7 @@ public class PTC2SCCharts {
             if (childElement.id.endsWith("Event")) {
                 targetModel.transformEvent(childElement)
             } else if (childElement.isUMLStateMachine) {
-                targetModel.transformStateMachine(childElement)
+                targetModel.transformStateMachine(childElement, false)
             } else if (childElement.isUMLRegion) {
                 targetModel.transformRegion(childElement, element)
             } else if (childElement.isUMLPseudostate) {
@@ -658,13 +663,39 @@ public class PTC2SCCharts {
         }
     }
 
-    def transform(EObject model) {
+    def transform(EObject model, List<String> statemachineListParam,  List<String> optionListSelectedParam) {
+        statemachineList = statemachineListParam
+        optionListSelected = optionListSelectedParam
+        
+        println("Selected Statemachines:")
+        for (sm: statemachineList) {
+            println("   - " + sm)
+        }
+        
+        println("\nSelected Options:")
+        for (option: optionListSelected) {
+            println("   - " + option)
+        }
+        
+        println("\n")
+        
         println(
             "Importing SCChart from PTC IM UML Statemachines... \n Root:" + model.eClass.name + ":" +
                 model.eContents.length + "\n");
 
         var sccharts = newArrayList() // <State>;
-        sccharts.transformGeneral(model as Element)
+        
+        val rootElement = model as Element;
+        
+        val allStatemachines = rootElement.eAllContents.filter[e | (e instanceof Element) && (e as Element).UMLStateMachine].toList
+        for (statemachine : allStatemachines) {
+            val Element elem = (statemachine as Element)
+            if (statemachineList.contains(elem.name)) {
+                sccharts.transformStateMachine(elem, true)
+            }
+        }
+        
+       
 
         for (scchart : sccharts) {
             scchart.fixAllPriorities.fixAllTextualOrdersByPriorities
