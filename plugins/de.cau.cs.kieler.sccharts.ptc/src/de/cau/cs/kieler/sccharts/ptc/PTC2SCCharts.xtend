@@ -23,6 +23,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
 import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelExtensions
+import de.cau.cs.kieler.sccharts.ptx.xmi.UMLActionExpression
+import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.kexpressions.Declaration
+import javax.swing.undo.UndoManager
+import de.cau.cs.kieler.sccharts.StateType
 
 /**
  * Import SCCharts from PTC
@@ -62,18 +67,28 @@ public class PTC2SCCharts {
     HashMap<String, String> Operation2Name = new HashMap();
     HashMap<String, ValuedObject> id2output = new HashMap();
 
+    HashMap<String, ValuedObject> name2localValuedObject = new HashMap();
+
     /** Create an injector to load the transformation via guice. */
     private static Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
+
+    def println(String text) {
+        SCChartsPTCPlugin.printConsole(text)
+    }
 
     def String fixId(String name) {
         if (name == null) {
             return "Empty"
         }
         var returnName = name
+        returnName = returnName.replace(".", "_")
+        returnName = returnName.replace("#", "_")
+        returnName = returnName.replace("&", "")
         returnName = returnName.replace(">", "")
         returnName = returnName.replace("<", "")
         returnName = returnName.replace(":", "")
         returnName = returnName.replace(";", "")
+        returnName = returnName.replace(",", "_")
         returnName = returnName.replace(" ", "")
         returnName = returnName.replace("-", "")
         returnName = returnName.replace("*", "")
@@ -93,6 +108,7 @@ public class PTC2SCCharts {
             src2target.clear
             target2src.clear
             id2src.clear
+            name2localValuedObject.clear
             src2id.clear
             id2input.clear
             id2output.clear
@@ -135,7 +151,7 @@ public class PTC2SCCharts {
             // Not yet declared, declare it newly
             val rootElement = element.root
             val varName = id.searchInputName(rootElement);
-            println("INPUT EXTRAXT from '"+ id + "' ==> '"+varName+"'")
+            println("INPUT EXTRAXT from '" + id + "' ==> '" + varName + "'")
 
             val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
             declaration.input = true
@@ -149,36 +165,161 @@ public class PTC2SCCharts {
         }
     }
 
-    def ValuedObject body2output(List<State> targetModel, Element element, String body) {
-        val outputName = body.extractOutputName
-        val signalName = outputName.fixId
-
-        var valuedObject = id2output.get(body)
-        if (valuedObject != null) {
-            return valuedObject
-        } else {
-            // Not yet declared, declare it newly
-            //val rootElement = element.root
+    def ValuedObject getParamValuedObject(List<State> targetModel, String paramName) {
+        if (!id2input.containsKey(paramName)) {
+            // Insert new constant (intput)
             val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-            declaration.output = true
-            declaration.type = ValueType::PURE
-            declaration.signal = true
-            //(rootElement.src2target as State).declarations.add(declaration)
+            declaration.input = true
+            declaration.type = ValueType::INT
             targetModel.current.declarations.add(declaration)
-            valuedObject = createValuedObject(targetModel.current, signalName, declaration)
-            element.map(valuedObject)
-            println("EVENT OUT PUT:" + body + " (" + valuedObject.name + ")");
-            id2input.put(signalName, valuedObject)
-            return valuedObject
+            val valuedObject = createValuedObject(targetModel.current, paramName, declaration)
+            id2input.put(paramName, valuedObject)
+            println("PARAM IN PUT:" + paramName + " (" + valuedObject.name + ")");
         }
+        return id2input.get(paramName);
+    }
+
+    def ValuedObject getLocalValuedObject(List<State> targetModel, String localName) {
+        if (!name2localValuedObject.containsKey(localName)) {
+            // Insert new constant (intput)
+            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
+            declaration.input = false
+            declaration.output = false
+            declaration.type = ValueType::INT
+            targetModel.current.declarations.add(declaration)
+            val valuedObject = createValuedObject(targetModel.current, localName, declaration)
+            name2localValuedObject.put(localName, valuedObject)
+            println("LOCAL IN PUT:" + localName + " (" + valuedObject.name + ")");
+        }
+        return name2localValuedObject.get(localName);
+    }
+
+    def ValuedObject getReferencedValuedObject(List<State> targetModel, String localName) {
+        // If a references variable already exists as local, then return this, but make it input
+        // else
+        // create a new input
+        var returnValuedObject = getLocalValuedObject(targetModel, localName)
+        var decl = (returnValuedObject.eContainer as Declaration);
+        if (decl != null) {
+            decl.input = true
+        }
+        return returnValuedObject;
+    }
+
+    def ValuedObject getOutputValuedObject(List<State> targetModel, String outputName, ValueType type, boolean signal) {
+        if (!id2output.containsKey(outputName)) {
+            // Insert new constant (intput)
+            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
+            declaration.input = false
+            declaration.output = true
+            declaration.type = type
+            declaration.signal = signal
+            targetModel.current.declarations.add(declaration)
+            val valuedObject = createValuedObject(targetModel.current, outputName, declaration)
+            id2output.put(outputName, valuedObject)
+            println("OUTPUT IN PUT:" + outputName + " (" + valuedObject.name + ")");
+        }
+        return id2output.get(outputName);
+
+//        var valuedObject = id2output.get(body)
+//        if (valuedObject != null) {
+//            return valuedObject
+//        } else {
+//            // Not yet declared, declare it newly
+//            //val rootElement = element.root
+//            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
+//            declaration.output = true
+//            declaration.type = ValueType::PURE
+//            declaration.signal = true
+//            //(rootElement.src2target as State).declarations.add(declaration)
+//            targetModel.current.declarations.add(declaration)
+//            valuedObject = createValuedObject(targetModel.current, signalName, declaration)
+//            element.map(valuedObject)
+//            println("EVENT OUT PUT:" + body + " (" + valuedObject.name + ")");
+//            id2input.put(signalName, valuedObject)
+//            return valuedObject
+//        }
+    }
+
+    def void body2output(Action action, List<State> targetModel, Element element, String body) {
+        val outputName = body.extractOutputName
+        val outputParam = body.extractOutputParam
+
+        if (outputName == null) {
+            // @OPTION
+            // Only take the first expression (if multiple)
+            var bodyExpression = body
+            if (bodyExpression.contains(";")) {
+                bodyExpression = body.substring(0, bodyExpression.indexOf(";"));
+            }
+
+            println("Parsing expression '" + bodyExpression + "' ...")
+            try {
+                val expr = UMLActionExpression.parse(bodyExpression);
+                println(" DONE.");
+
+                // All assign variables need to exist as local variables
+                for (localValObjName : expr.assignedEntities) {
+                    // Possibly add new input (INT only supported!)
+                    val local = targetModel.getLocalValuedObject(localValObjName.name)
+                }
+                // @OPTION
+                // All references variables need to exist either as local variables
+                // or if not, they need to additional inputs
+                for (refValObjName : expr.referencedEntities) {
+                    // Only for REAL entities, not for numbers!!!
+                    if (refValObjName.isEntity) {
+                        val input = targetModel.getReferencedValuedObject(refValObjName.name)
+                    }
+                }
+
+            } catch (Exception e) {
+                println(" ERROR.");
+            }
+
+            // Add a host code effect
+            action.addEffect(asHostcodeEffect(body))
+            return;
+        }
+
+        val signalName = outputName.fixId
+        if (outputParam != null) {
+            // @OPTION type
+            // We need an integer input
+            if (UMLActionExpression::isEntity(outputParam)) {
+                // Parameter is INT input
+                val ValuedObject param = getParamValuedObject(targetModel, "P_" + outputParam)
+                val ValuedObject outVar = targetModel.getOutputValuedObject(signalName, ValueType::INT, false)
+                action.addAssignment(outVar.assign(param.reference))
+            } else {
+                // @OPTION type
+                val outputParamInt = UMLActionExpression::getInteger(outputParam)
+                // Parameter is integer number
+                val ValuedObject outVar = targetModel.getOutputValuedObject(signalName, ValueType::INT, false)
+                action.addAssignment(outVar.assign(outputParamInt.createIntValue))
+            }
+        } else {
+            // A signal outut is sufficient
+            val ValuedObject outSignal = targetModel.getOutputValuedObject(signalName, ValueType::PURE, true)
+            action.addEffect(outSignal.emit)
+        }
+    }
+
+    def String extractOutputParam(String actionBody) {
+        val i = actionBody.indexOf("(")
+        val i2 = actionBody.indexOf(")", i)
+        if (i > 0 && i2 > 0 && i2 > i + 1) {
+            return actionBody.substring(i + 1, i2).fixId
+        }
+        return null;
     }
 
     def String extractOutputName(String actionBody) {
         val i = actionBody.indexOf("(")
         if (i > 0) {
-            return "O_" + actionBody.substring(0, i)
+            return actionBody.substring(0, i)
         }
-        return actionBody
+        return null;
     }
 
     /**
@@ -187,7 +328,7 @@ public class PTC2SCCharts {
      *       <ownedOperation xmi:type = "uml:Operation" xmi:id = "_6f19a978-401b-4faa-adec-a586db001883" name = "ReqAllowed" visibility = "public">
 
      */
-    static var int inputCounter = 0
+    public static var int inputCounter = 0
 
     def String searchInputName(String eventid, Element element) {
         for (child : element.eAllContents.toList) {
@@ -235,6 +376,7 @@ public class PTC2SCCharts {
         src2target.clear
         target2src.clear
         id2src.clear
+        name2localValuedObject.clear
         src2id.clear
         id2input.clear
         id2output.clear
@@ -256,14 +398,24 @@ public class PTC2SCCharts {
     }
 
     def void transformPseudostate(List<State> targetModel, Element element, EObject srcParent) {
-        println("CREATE INIT STATE '" + element.name + "' with id " + element.id)
+        // Find region to create state in
+        val srcParentRegion = src2target.get(srcParent)
+        if (!(srcParentRegion instanceof ControlflowRegion)) {
+            println(
+                "ERROR: Element '" + srcParentRegion.id +
+                    "' is not a region. Cannot create initial or connector state '" + element.id + "' here. ")
+            return
+        }
+
         // if (element.name.startsWith("Initial")) {
         if (element.kind != "junction") {
+            println("CREATE INIT STATE '" + element.name + "' with id " + element.id)
             val state = (src2target.get(srcParent) as ControlflowRegion).createInitialState(element.name.fixId).
                 uniqueName;
             element.map(state)
             targetModel.transformGeneral(element)
         } else {
+            println("CREATE CONNECTOR STATE '" + element.name + "' with id " + element.id)
             val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
             state.setTypeConnector
             element.map(state)
@@ -281,6 +433,7 @@ public class PTC2SCCharts {
     def void transformState(List<State> targetModel, Element element, EObject srcParent) {
         println("CREATE STATE '" + element.name + "' with id " + element.id)
         val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
+        // if name == Initialize
         element.map(state)
         targetModel.transformGeneral(element)
     }
@@ -293,16 +446,18 @@ public class PTC2SCCharts {
             val parentState = element.parentAnyState
             if (parentState != null) {
                 if (element.type == "entry" || element.type == "exit") {
-                    val outputSignal = body2output(targetModel, element, element.name)
+                    // val outputSignal = body2output(targetModel, element, element.name)
                     if (element.type == "entry") {
                         val action = (parentState.src2target as State).createEntryAction
                         // action.addEffect(asHostcodeEffect(element.name))
-                        action.addEffect(outputSignal.emit)
+                        // action.addEffect(outputSignal.emit)
+                        action.body2output(targetModel, element, element.name)
                     }
                     if (element.umlType == "exit") {
                         val action = (parentState.src2target as State).createExitAction
                         // action.addEffect(asHostcodeEffect(element.name))
-                        action.addEffect(outputSignal.emit)
+                        // action.addEffect(outputSignal.emit)
+                        action.body2output(targetModel, element, element.name)
                     }
                 }
             }
@@ -357,20 +512,45 @@ public class PTC2SCCharts {
                 transition.immediate = true
             }
 
-//            for (attribute : element.attributes.toList) {
-//                println("TRANSITION XXXXXXXXXX: " + attribute.name + " = " + attribute.value);
-//            }
-//            for (child : element.eAllContents.toList) {
-//                println("TRANSITION XXXXXXXXXX: " + child.class.getName + " : " + child.id);
-//
-//                if (child instanceof Element)
-//                    if (child.event != null) {
-//                        targetModel.transformTrigger(child)
-//
-//                    } else if (child.body != null) {
-//                        transition.label = child.body
-//                    }
-//            }
+            // @OPTION
+            // Check if transition has a trigger, if not then create a dummy trigger
+            if ((element.eAllContents.filter[e|(e instanceof Element) && (e as Element).UMLTrigger]).size == 0) {
+                // Ignore initial transitions
+                // @OPTION
+                var skip = false;
+                if (transition.sourceState.isInitial) {
+                    if (transition.sourceState.outgoingTransitions.size == 1) {
+                        skip = true;
+                        println("Info: Outgoing transition from initial state will not get a dummy input trigger.")
+                    }
+                }
+                if (transition.sourceState.type == StateType::CONNECTOR) {
+                    val index = transition.sourceState.outgoingTransitions.indexOf(transition)
+
+                    val sourceStateElement = transition.sourceState.target2src as Element;
+
+                    val sourceStateElementTransitions = sourceStateElement.root.eAllContents.filter [ e |
+                        (e instanceof Element) && (e as Element).UMLTransition &&
+                            (e as Element).source.equals(sourceStateElement.id)
+                    ]
+
+                    val maxIndex = sourceStateElementTransitions.size - 1
+                    if (index == maxIndex) {
+                        skip = true;
+                        println(
+                            "Info: Default outgoing transition from connector state will not get a dummy input trigger.")
+                    }
+                }
+
+                if (!skip) {
+                    // No trigger, so create dummy trigger
+                    val valuedObject = targetModel.id2input(element, transition.hashCode + "")
+                    if (valuedObject != null) {
+                        println(" --> DUMMY TRIGGER ValuedObject: " + valuedObject.name);
+                        transition.trigger = valuedObject.reference
+                    }
+                }
+            }
         }
         targetModel.transformGeneral(element)
     }
@@ -393,13 +573,14 @@ public class PTC2SCCharts {
         // Parent shall be a transition
         val parent = element.parent
         if (parent != null && parent.UMLTransition) {
-            val outputSignal = body2output(targetModel, element, element.body)
+            // val outputSignal = body2output(targetModel, element, element.body)
             val umlTransition = parent.id.id2src
             if (umlTransition != null) {
                 val eobject = (umlTransition.src2target)
                 if (eobject instanceof Transition) {
                     val transition = eobject as Transition
-                    transition.addEffect(outputSignal.emit)
+                    transition.body2output(targetModel, element, element.body)
+                // transition.addEffect(outputSignal.emit)
                 }
             }
         }
@@ -478,7 +659,9 @@ public class PTC2SCCharts {
     }
 
     def transform(EObject model) {
-        println("XXXXXX: " + model.eClass.name + ":" + model.eContents.length);
+        println(
+            "Importing SCChart from PTC IM UML Statemachines... \n Root:" + model.eClass.name + ":" +
+                model.eContents.length + "\n");
 
         var sccharts = newArrayList() // <State>;
         sccharts.transformGeneral(model as Element)

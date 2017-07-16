@@ -14,7 +14,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.sccharts.commands.PTCImport"
-               label="Import SCChart from PTC Model"
+               label="Import SCChart from PTC Integrity Modeler (XMI)"
                mnemonic="P"
                style="push">
             <visibleWhen>

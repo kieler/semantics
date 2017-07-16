@@ -235,9 +235,10 @@ public abstract class PTCAbstractConvertModelHandler extends AbstractHandler {
      */
     protected void convert(final ExecutionEvent event, final IFile file, final ISelection selection)
             throws ExecutionException {
-
-        // TODO: Possible preprocessing!
-        // preprocessFile
+        // Clear console
+        SCChartsPTCPlugin.clearConosle();
+        // Reset input counter
+        PTC2SCCharts.inputCounter = 0;
 
         URI originalInput = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 

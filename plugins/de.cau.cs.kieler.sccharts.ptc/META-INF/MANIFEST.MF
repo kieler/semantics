@@ -26,7 +26,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext;bundle-version="2.10.0",
  org.eclipse.core.resources;bundle-version="3.11.1",
  org.eclipse.emf.workspace;bundle-version="1.5.1",
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.junit;bundle-version="4.12.0",
+ org.eclipse.ui.console;bundle-version="3.6.201"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts.ptc,
  de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel,
