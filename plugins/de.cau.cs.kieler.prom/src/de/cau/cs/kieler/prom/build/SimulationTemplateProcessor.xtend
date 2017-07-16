@@ -55,8 +55,10 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         // Get annotations in model
         var List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
         var IFile modelFile
-        if(model == null && !modelPath.stringValue.isNullOrEmpty) {
+        if(!modelPath.stringValue.isNullOrEmpty) {
             modelFile = project.getFile(modelPath.stringValue)
+        }
+        if(model == null && modelFile.exists) {
             model = ModelImporter.load(modelFile)
         }
         if(model != null) {
@@ -81,7 +83,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         }
         var String modelName = ""
         if(modelFile != null) {
-            Files.getNameWithoutExtension(modelFile.name)
+            modelName = Files.getNameWithoutExtension(modelFile.name)
         }
         
         // Filter annotation datas based on the interface types that should be inclueded (input/output/internal)
@@ -145,7 +147,6 @@ class SimulationTemplateProcessor extends TemplateProcessor {
     }
     
     private def boolean matches(WrapperCodeAnnotationData data, String interfaceType) {
-        println(data.varName+" is "+interfaceType+":"+data.interfaceTypes.contains(interfaceType))
         return (data.interfaceTypes.contains(interfaceType))
     }
 }

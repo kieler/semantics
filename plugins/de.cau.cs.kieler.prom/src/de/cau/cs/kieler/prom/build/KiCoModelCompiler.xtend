@@ -33,6 +33,8 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.IPath
+import de.cau.cs.kieler.s.s.Program
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * @author aas
@@ -80,8 +82,13 @@ class KiCoModelCompiler extends ModelCompiler {
                 
                 // Create simulation code
                 if(simulationProcessor != null) {
-                    // TODO: use information of variables that has been created as part of compilation
-                    // (e.g. guards, and internal variables)
+                    // Get all guards in the resulting program, to add them to the simulation data pool
+                    val interfaceTypes = (simulationProcessor.interfaceTypes.value as List)
+                    if(!interfaceTypes.isNullOrEmpty && interfaceTypes.contains("guard")) {
+                        val guards = kicoResult.getGuards
+                        simulationProcessor.additionalVariables.value = #{"guard" -> guards.map[it.name]}
+                        // TODO: How to get the PRE_g0 variables?
+                    }
                     
                     // Compute output file of simulation generation
                     var IPath simulationTargetFolder = new Path("")
@@ -142,6 +149,24 @@ class KiCoModelCompiler extends ModelCompiler {
         }
     }
     
+    private def List<ValuedObject> getGuards(CompilationResult kicoResult) {
+        val List<ValuedObject> valuedObjects = newArrayList
+        for(intermediateResult : kicoResult.transformationIntermediateResults) {
+            val intermediateModel = intermediateResult.result
+            if(intermediateModel instanceof Program) {
+                val decls = intermediateModel.declarations
+                for(decl : decls) {
+                    for(valuedObject : decl.valuedObjects) {
+                        if(valuedObject.name.matches("g\\d+")) {
+                            valuedObjects.add(valuedObject)    
+                        }
+                    }
+                }
+            }
+        }
+        return valuedObjects
+    }
+    
     private def CompilationResult compileWithKiCo(EObject model) {
         // Get compiler context with settings for KiCo
         // TODO: There are several transformations that do not work correctly or throw exceptions, so we explicitly disable them.
@@ -149,7 +174,8 @@ class KiCoModelCompiler extends ModelCompiler {
         // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015)
         // TODO: ABORTWTO often makes trouble and is not deterministicly choosen
         // TODO: scg.guards.ft and scg.scheduling.dc are experimental transformations and have issues (KISEMA-1188)
-        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO, !T_scg.guards.ft, !T_scg.scheduling.dc"
+        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, "
+                         + "!T_ABORTWTO, !T_scg.guards.ft, !T_scg.scheduling.dc"
         if(KiCoBuilder.isCompileChain(compileChain.stringValue)) {
             chain += ", " + compileChain.stringValue
         } else {
