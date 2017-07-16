@@ -70,6 +70,7 @@
             canFinishEarly="false"
             class="de.cau.cs.kieler.prom.ui.wizards.FreemarkerTemplateFileWizard"
             hasPages="true"
+            icon="icons/freemarker.png"
             id="de.cau.cs.kieler.prom.ui.ftlFileWizard"
             name="Freemarker Template"
             project="false">

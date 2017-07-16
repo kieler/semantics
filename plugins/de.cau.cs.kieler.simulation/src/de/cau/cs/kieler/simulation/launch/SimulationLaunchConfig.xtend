@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
     
@@ -36,6 +37,7 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate  {
     /**
      * Static field to re-start last configuration
      */
+    @Accessors(PUBLIC_GETTER)
     private static var List<IFile> lastFiles = newArrayList()
     
     /**

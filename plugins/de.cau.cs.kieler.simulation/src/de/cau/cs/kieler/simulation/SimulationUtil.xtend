@@ -237,22 +237,15 @@ class SimulationUtil {
     }
     
     private static def boolean isExecutableFile(IFile file) {
-        switch(file.fileExtension) {
-            case null,
-            case "",
-            case "jar",
-            case "exe": {
-                return true
-            }
+        if(file.fileExtension == null) {
+            return true
+        } else {
+            return #["", "exe", "jar"].contains(file.fileExtension)
         }
-        return false
     }
     
     private static def boolean isTraceFile(IFile file) {
-        if(file.fileExtension != null && file.fileExtension == "eso") {
-            return true
-        }
-        return false
+        return #["eso", "sim"].contains(file.fileExtension)
     }
     
     private static def IProject getTemporarySimulationProject() {

@@ -24,9 +24,11 @@ import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
+import de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import org.eclipse.core.runtime.Path
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
@@ -40,8 +42,11 @@ import org.eclipse.swt.events.KeyEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
+import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.common.io.Files
+import de.cau.cs.kieler.prom.PromPlugin
 
 /**
  * @author aas
@@ -55,18 +60,19 @@ class DataPoolView extends ViewPart {
     
     public static val simulationListener = createSimulationListener
     
+    @Accessors(PUBLIC_GETTER)
+    private var TableViewer viewer
+    
+    private var TableViewerColumn variableColumn
+    private var TableViewerColumn valueColumn
+    private var TableViewerColumn userValueColumn
+    private var TableViewerColumn historyColumn
+    private var TableViewerColumn inputColumn
+    private var TableViewerColumn outputColumn
+    
+    private var LabelContribution tickInfo
+    
     private var DataPoolFilter filter
-    
-    var TableViewer viewer
-    
-    var TableViewerColumn variableColumn
-    var TableViewerColumn valueColumn
-    var TableViewerColumn userValueColumn
-    var TableViewerColumn historyColumn
-    var TableViewerColumn inputColumn
-    var TableViewerColumn outputColumn
-    
-    var LabelContribution tickInfo
     
     @Accessors(PUBLIC_GETTER)
     var boolean subTicksEnabled
@@ -172,6 +178,56 @@ class DataPoolView extends ViewPart {
         mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))
         mgr.add(new Separator())
         mgr.add(new SimulationDelayContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.delay"))
+        mgr.add(new Separator())
+        mgr.add(new SaveSimulationAction("Save Data Pool History", "saveFile.png") {
+            override getFileExtension() {
+                return ".sim"
+            }
+            
+            override getFileContent(List<DataPool> history) {
+                // Turn models of data pool history to json objects
+                var String content = ""
+                for(pool : history) {
+                    content += pool.models.get(0).toJson+"\n"
+                }
+                return content
+            }
+        });
+        mgr.add(new SaveSimulationAction("Save Eso trace", "saveEsoFile.png") {
+            override getFileExtension() {
+                return ".eso"
+            }
+            
+            override getFileContent(List<DataPool> history) {
+                // Turn models of data pool history to eso file
+                var String content = ""
+                content += "! reset;\n"
+                for(pool : history) {
+                    for(v : pool.allVariables) {
+                        if(v.isInput && v.isPresent) {
+                            content += v.name
+                            if(v.value instanceof Integer) {
+                                content += "("+v.value+")"
+                            }
+                            content += " "
+                        }
+                    }
+                    content += "\n"
+                    content += "% Output: "
+                    for(v : pool.allVariables) {
+                        if(v.isOutput && v.isPresent) {
+                            content += v.name
+                            if(v.value instanceof Integer) {
+                                content += "("+v.value+")"
+                            }
+                            content += " "
+                        }
+                    }
+                    content += "\n;\n"
+                }
+                return content
+            }
+        });
         mgr.add(new Separator())
         mgr.add(new Action("Reset All"){
             override run(){

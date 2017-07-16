@@ -160,9 +160,6 @@ class DataPool implements Cloneable {
     }
     
     public def void applyUserValues() {
-        if(!hasModifiedVariable) {
-            return
-        }
         // Apply user made changes to variable values
         for(m : models) {
             m.applyUserValues

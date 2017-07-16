@@ -119,9 +119,6 @@ class Model implements Cloneable {
     }
     
     public def void applyUserValues() {
-        if(!hasModifiedVariable) {
-            return
-        }
         // Apply user made changes to variable values
         for(v : variables) {
             v.applyUserValues

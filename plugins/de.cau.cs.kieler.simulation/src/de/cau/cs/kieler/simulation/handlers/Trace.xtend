@@ -21,6 +21,10 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
+import com.google.common.io.Files
+import java.io.File
+import java.nio.charset.Charset
+import com.google.common.base.Charsets
 
 /**
  * @author aas
@@ -76,6 +80,7 @@ class Trace extends DefaultDataHandler {
                         if(!match) {
                             event = createTraceMismatchEvent(variable, correspondingVariable.value)
                         }
+                        shouldBePresent = correspondingVariable.isPresent
                     }
                     if(isPresent != shouldBePresent) {
                         event = createTraceMismatchEvent(variable, variable.toggledPresentState)
@@ -135,10 +140,12 @@ class Trace extends DefaultDataHandler {
     private def void initialize() {
         if(currentTrace == null) {
             val path = new Path(tracePath.stringValue)
-            if(path.fileExtension.toLowerCase == "eso") {
-                loadEsoTrace(path)
+            switch(path.fileExtension.toLowerCase) {
+                case "eso": loadEsoTrace(path)
+                case "sim": loadDataPoolHistory(path)
+                default:
+                    throw new Exception("The file '"+path.toOSString+"' is not a supported trace format.")
             }
-            // TODO: Other trace format with complete data pool history?
         }
     }
     
@@ -148,6 +155,30 @@ class Trace extends DefaultDataHandler {
             esoUtil = new EsoUtil(traceFile)
             traceCount = esoUtil.traceCount
             currentTrace = esoUtil.getTraceAsDataPools(currentTraceNumber.intValue)
+        } else {
+            throw new Exception("Could not load trace '"+path.toOSString+"'")
+        }
+    }
+    
+    private def void loadDataPoolHistory(IPath path) {
+        traceFile = getFile(path)
+        currentTrace = newArrayList
+        if(traceFile != null && traceFile.exists) {
+            val lines = Files.readLines(new File(traceFile.location.toOSString), Charsets.UTF_8)
+            var DataPool lastPool
+            for(line : lines) {
+                val modelName = "Model"
+                val model = Model.createFromJson(modelName, line)
+                if(model != null) {
+                    val pool = new DataPool()
+                    pool.addModel(model)
+                    if(lastPool != null) {
+                        pool.previousPool = lastPool
+                    }
+                    lastPool = pool
+                    currentTrace.add(pool)
+                }
+            }
         } else {
             throw new Exception("Could not load trace '"+path.toOSString+"'")
         }

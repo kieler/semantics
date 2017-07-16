@@ -344,11 +344,10 @@ class SimulationManager extends Configurable {
             pause()
         }
         
-        // Apply user made changes
-        currentPool.applyUserValues
-        
         // Create following state
         val DataPool pool = createNextPool()
+        // Apply user made changes
+        pool.applyUserValues
         // Perform action on this new state
         currentAction.apply(pool)
         // Save new state
@@ -368,11 +367,10 @@ class SimulationManager extends Configurable {
             pause()
         }
         
-        // Apply user made changes
-        currentPool.applyUserValues
-        
         // Create following state
         val DataPool pool = createNextPool()
+        // Apply user made changes
+        pool.applyUserValues
         // Perform actions on this new state
         val nextActionIndex = applyMacroTickActions(pool)
         // Save new state
@@ -449,19 +447,19 @@ class SimulationManager extends Configurable {
                         // Notify listeners of new state
                         fireEvent(SimulationEventType.PLAYING)
                         
+                        // Create following state
+                        val DataPool pool = createNextPool()
                         // Apply user made changes
-                        currentPool.applyUserValues
+                        pool.applyUserValues
                         // Set variable of model to current time if needed
                         if(currentTimeVariable.value != null) {
-                            val variable = currentPool.getVariable(currentTimeVariable.stringValue)
+                            val variable = pool.getVariable(currentTimeVariable.stringValue)
                             if(variable.isInput) {
                                 variable.value = System.currentTimeMillis.intValue
                             } else {
                                 throw new Exception("The variable that receives the current time must be an input")
                             }
                         }
-                        // Create following state
-                        val DataPool pool = createNextPool()
                         // Perform actions on this new state
                         val nextActionIndex = applyMacroTickActions(pool)
                         // Save new state
@@ -594,7 +592,12 @@ class SimulationManager extends Configurable {
      */
     private def DataPool createNextPool() {
         positionInHistory = 0
-        val pool = currentState.pool.clone()  
+        val pool = currentPool.clone()
+        // Apply user values to next tick
+        if(currentPool.hasModifiedVariable) {
+            pool.applyUserValues
+        }
+        // Set history
         if(maxHistoryLength.intValue != 0) {
             pool.previousPool = currentPool
         }

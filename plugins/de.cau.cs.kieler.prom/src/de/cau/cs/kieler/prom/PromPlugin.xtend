@@ -35,6 +35,7 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
+import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.QualifiedName
@@ -243,10 +244,17 @@ class PromPlugin implements BundleActivator  {
     /**
      * Find a file via its full path in the workspace.
      */
+    public static def IFile findFile(IPath fullPath) {
+        val file = ResourcesPlugin.workspace.root.getFile(fullPath)
+        return file
+    }
+    
+    /**
+     * Find a file via its full path in the workspace.
+     */
     public static def IFile findFile(String fullPath) {
         val path = new Path(fullPath)
-        val file = ResourcesPlugin.workspace.root.getFile(path)
-        return file
+        return findFile(path)
     }
 
     /**

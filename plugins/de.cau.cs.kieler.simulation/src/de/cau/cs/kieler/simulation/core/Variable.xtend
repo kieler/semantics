@@ -245,10 +245,11 @@ class Variable implements Cloneable {
         val v = new Variable()
         v.name = this.name
         v.type = this.type
-        v.value = this.value
         v.isInput = this.isInput
         v.isOutput = this.isOutput
         v.isSignal = this.isSignal
+        v.value = this.value
+        v.userValue = this.userValue
         return v
     }
     
