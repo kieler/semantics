@@ -94,7 +94,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         
         transition.getCommentAnnotations.forEach[
             edge.addLabel(it.values.head, 
-                COMMENT_BACKGROUND_GRADIENT_1.color)
+                COMMENT_BACKGROUND_GRADIENT_2.color)
         ]     
 
         // Add Label
