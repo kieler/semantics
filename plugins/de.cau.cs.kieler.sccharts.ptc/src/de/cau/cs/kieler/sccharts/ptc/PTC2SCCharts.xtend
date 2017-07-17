@@ -50,13 +50,16 @@ public class PTC2SCCharts {
     extension KEffectsExtensions
 
     @Inject
-    extension SCChartsExtension;
+    extension SCChartsExtension
 
     @Inject
-    extension KExpressionsCreateExtensions;
+    extension SCChartsAdditionalExtensions
 
     @Inject
-    extension KExpressionsValuedObjectExtensions;
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     // GuiceModulesExecutableExtensionFactory
     HashMap<EObject, EObject> src2target = new HashMap();
@@ -167,12 +170,7 @@ public class PTC2SCCharts {
             val rootElement = element.root
             val varName = id.searchInputName(rootElement);
             println("INPUT EXTRAXT from '" + id + "' ==> '" + varName + "'")
-
-            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-            declaration.input = true
-            declaration.type = ValueType::BOOL
-            targetModel.current.declarations.add(declaration)
-            val valuedObject = createValuedObject(targetModel.current, varName, declaration)
+            val valuedObject = targetModel.current.createBooInputVariable(varName)
             element.map(valuedObject)
             println("EVENT IN PUT:" + id + " (" + valuedObject.name + ")");
             id2input.put(id, valuedObject)
@@ -183,11 +181,7 @@ public class PTC2SCCharts {
     def ValuedObject getParamValuedObject(List<State> targetModel, String paramName) {
         if (!id2input.containsKey(paramName)) {
             // Insert new constant (intput)
-            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-            declaration.input = true
-            declaration.type = ValueType::INT
-            targetModel.current.declarations.add(declaration)
-            val valuedObject = createValuedObject(targetModel.current, paramName, declaration)
+            val valuedObject = targetModel.current.createIntInputVariable(paramName)
             id2input.put(paramName, valuedObject)
             println("PARAM IN PUT:" + paramName + " (" + valuedObject.name + ")");
         }
@@ -197,12 +191,7 @@ public class PTC2SCCharts {
     def ValuedObject getLocalValuedObject(List<State> targetModel, String localName) {
         if (!name2localValuedObject.containsKey(localName)) {
             // Insert new constant (intput)
-            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-            declaration.input = false
-            declaration.output = false
-            declaration.type = ValueType::INT
-            targetModel.current.declarations.add(declaration)
-            val valuedObject = createValuedObject(targetModel.current, localName, declaration)
+            val valuedObject = targetModel.current.createIntLocalVariable(localName)
             name2localValuedObject.put(localName, valuedObject)
             println("LOCAL IN PUT:" + localName + " (" + valuedObject.name + ")");
         }
@@ -223,37 +212,12 @@ public class PTC2SCCharts {
 
     def ValuedObject getOutputValuedObject(List<State> targetModel, String outputName, ValueType type, boolean signal) {
         if (!id2output.containsKey(outputName)) {
-            // Insert new constant (intput)
-            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-            declaration.input = false
-            declaration.output = true
-            declaration.type = type
-            declaration.signal = signal
-            targetModel.current.declarations.add(declaration)
-            val valuedObject = createValuedObject(targetModel.current, outputName, declaration)
+            // Insert new "constant" (intput)
+            val valuedObject = targetModel.current.createValuedObject(outputName, false, true,  type, signal)
             id2output.put(outputName, valuedObject)
             println("OUTPUT IN PUT:" + outputName + " (" + valuedObject.name + ")");
         }
         return id2output.get(outputName);
-
-//        var valuedObject = id2output.get(body)
-//        if (valuedObject != null) {
-//            return valuedObject
-//        } else {
-//            // Not yet declared, declare it newly
-//            //val rootElement = element.root
-//            val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-//            declaration.output = true
-//            declaration.type = ValueType::PURE
-//            declaration.signal = true
-//            //(rootElement.src2target as State).declarations.add(declaration)
-//            targetModel.current.declarations.add(declaration)
-//            valuedObject = createValuedObject(targetModel.current, signalName, declaration)
-//            element.map(valuedObject)
-//            println("EVENT OUT PUT:" + body + " (" + valuedObject.name + ")");
-//            id2input.put(signalName, valuedObject)
-//            return valuedObject
-//        }
     }
 
     def void body2output(Action action, List<State> targetModel, Element element, String body) {
@@ -416,7 +380,7 @@ public class PTC2SCCharts {
 
         transitionMode = true
         targetModel.transformGeneral(element)
-        
+
         targetModel.last.fixHierarchyCrossingTransitions
     }
 
@@ -554,20 +518,12 @@ public class PTC2SCCharts {
 //        id2input.put(element.id, valuedObject)
     }
 
-    /*
-     *         <packagedElement xmi:type = "uml:Class" xmi:id = "_43442151-fbf2-11d2-a53d-00104bb05af8" name = "Controller">
-     *           <ownedAttribute xmi:type = "uml:Property" xmi:id = "_0018e606-fd6b-11d2-a540-00104bb05af8" name = "ped_wait" type = "_bf9531dd-fd6d-429c-9c77-72c228475b8e" visibility = "private" aggregation = "composite">
-     *             <defaultValue xmi:type = "_bf9531dd-fd6d-429c-9c77-72c228475b8e" xmi:id = "_0018e606-fd6b-11d2-a540-00104bb05af8defaultValue" value = "0"/>
-     *           </ownedAttribute>
-     *           <ownedAttribute xmi:type = "uml:Property" xmi:id = "_98368725-fe2c-11d2-a541-00104bb05af8" name = "flashes" type = "_bf9531dd-fd6d-429c-9c77-72c228475b8e" visibility = "private" aggregation = "composite">
-     *           </ownedAttribute>
-     */
     def void transformTransition(List<State> targetModel, Element element) {
         if (optionListSelected.contains(PTCModelFileHandler.OPTION_NO_TRANSITIONS)) {
             println("Skipping transition")
             return;
         }
-        
+
         if (exitPoint.contains(element.target)) {
             println(" --> EXIT TRANSITION: from " + element.source + " to " + element.target);
         } else if (entryPoint.contains(element.source)) {
@@ -578,7 +534,7 @@ public class PTC2SCCharts {
 
         val src = element.source.id2src.src2target as State
         val dst = element.target.id2src.src2target as State
-        
+
         if (src == null || dst == null) {
             return
         }
@@ -708,7 +664,7 @@ public class PTC2SCCharts {
     def transformGeneral(List<State> targetModel, Element element) {
         for (childElement : element.children) {
             // println("UML TYPE:" + childElement.umlType)
-            // Partition all elements in transition mode and non-transition mode
+            // Partition all elements in transition mode (1) and non-transition mode (2)
             if (!transitionMode) {
                 if (childElement.id.endsWith("Event")) {
                     targetModel.transformEvent(childElement)
@@ -722,16 +678,6 @@ public class PTC2SCCharts {
                     targetModel.transformFinalState(childElement, element)
                 } else if (childElement.isUMLState) {
                     targetModel.transformState(childElement, element)
-//                } else if (childElement.isUMLActivity) {
-//                    targetModel.transformActivity(childElement)
-//                } else if (childElement.isUMLTransition) {
-//                    targetModel.transformTransition(childElement)
-//                } else if (childElement.isUMLTrigger) {
-//                    targetModel.transformTrigger(childElement)
-//                } else if (childElement.isUMLOpaqueBehavior) {
-//                    targetModel.transformOpaqueBehavior(childElement)
-//                } else if (childElement.isUMLOpaqueExpression) {
-//                    targetModel.transformOpaqueExpression(childElement)
                 } else if (childElement.isUMLOperation) {
                     targetModel.transformOperation(childElement)
                 } else if (childElement.isUMLParameter) {
@@ -740,8 +686,6 @@ public class PTC2SCCharts {
                     targetModel.transformOpaqueBehavior(childElement)
                 } else if (childElement.isUMLProperty) {
                     targetModel.transformProperty(childElement)
-//                } else if (childElement.isUMLSignalEvent) {
-//                    targetModel.transformSignalEvent(childElement)
                 } else if (childElement.children.size > 0) {
                     // A container
                     targetModel.transformGeneral(childElement)
@@ -765,6 +709,9 @@ public class PTC2SCCharts {
 
         }
     }
+    
+    
+    
 
     def transform(EObject model, List<String> statemachineListParam, List<String> optionListSelectedParam) {
         statemachineList = statemachineListParam
@@ -805,106 +752,6 @@ public class PTC2SCCharts {
 
         return sccharts
     }
-    
-    /**
-     * Eliminate hierarchy transitions
-     */
-    def void fixHierarchyCrossingTransitions(State rootState) {
-        
-        val hierarchyCrossingTransitions = rootState.allContainedTransitions.filter[e | e.sourceState != null &&
-            e.targetState != null && e.sourceState.parentRegion != e.targetState.parentRegion
-        ]
-        
-        for (transition : hierarchyCrossingTransitions) {
-            transition.fixHierarchyCrossingTransition
-        }       
-        
-    }
-    
-    /**
-     *  First calculate route which is a List of states
-     */
-    def void fixHierarchyCrossingTransition(Transition transition) {
-        val List<State> routeFromStart = new ArrayList()
-        val List<State> routeToEnd = new ArrayList()
-        val sharedParentRegion = transition.calculateHierarchyCrossingTransitionRoute(routeFromStart, routeToEnd, transition.sourceState, transition.targetState)
-        
-        val originalSource = transition.sourceState
-        val originalTarget = transition.targetState
-        
-        // Create a control flow signal
-        // TODO
-        
-        // Create a weak abort from the last state of routeFromStart to the first state of routeToEnd
-        val abortTransition = routeFromStart.last.createTransitionTo(routeToEnd.head)
-        // If original transition was immediate, then also the abort transition shall be immediate
-        abortTransition.immediate = transition.immediate
-        
-        // Set the target of the original transition to a new dummy state
-        val dummyState = originalSource.parentRegion.createState("_dummyState").uniqueName
-        transition.targetState = dummyState
-        // Add control flow signal as an effect here
-        // TODO
-        //transition.addEffect()
-           
-    }
-
-
-    def Region calculateHierarchyCrossingTransitionRoute(Transition transition, List<State> routeFromStart, List<State> routeToEnd, State start, State end) {
-        // End of recursion if same parent region
-        if (start.parentRegion == end.parentRegion) {
-            // Just end here but return parent region
-            return start.parentRegion
-        } else {
-            var startHierarchyLevel = start.hierarchyLevel
-            var endHierarchyLevel = end.hierarchyLevel
-            var updatedStart = start
-            var updatedEnd = end
-            
-            if (startHierarchyLevel > endHierarchyLevel) {
-                // start state deeper than end state
-                // => go up from start state until levels are equal
-                while (startHierarchyLevel > endHierarchyLevel) {
-                    updatedStart = start.parentRegion.parentState
-                    startHierarchyLevel--
-                    // TODO: is this necessary?
-                    routeFromStart.add(updatedStart) //Append list
-                }
-            } else if (endHierarchyLevel < startHierarchyLevel) {
-                // end state deeper than start state
-                // => go up from end state until levels are equal
-                while (endHierarchyLevel > startHierarchyLevel) {
-                    updatedEnd = end.parentRegion.parentState
-                    endHierarchyLevel--
-                    routeToEnd.add(0, updatedEnd) // Prepand list
-                }
-            } else if (endHierarchyLevel == startHierarchyLevel) {
-                // end state and start state same depth but
-                // different parent.
-                // => Go up with both states until we reach same parent
-                updatedStart = start.parentRegion.parentState
-                updatedEnd = end.parentRegion.parentState
-            }
-            
-            // Note: At this point both, updateStart & updatedEnd have
-            //       same hierarchy level but possibly not the same parent.
-            // 
-            // Do recursive call here
-            return transition.calculateHierarchyCrossingTransitionRoute(routeFromStart, routeToEnd, updatedStart, updatedEnd)
-        }
-        
-    }
-
-    /**
-     * Caclculate the hierarchy level for a state.
-     */
-    def int getHierarchyLevel(State state) {
-        if (state.parentRegion == null) {
-            return 0
-        } else {
-            return 1 + state.parentRegion.parentState.hierarchyLevel
-        }
-    }
 
 
 }
@@ -934,7 +781,6 @@ public class PTC2SCCharts {
 //        println("XXXXXX States: " + model.eAllContents.filter(typeof(org.eclipse.uml2.uml.State)).size);
 //        
 //        //println("XXXXXX SMs: " + model.eAllContents.filter(typeof(OwnedBehavior)).size);
-
 //    /** The Constant S_TRANSFORMATION. */
 //    public static final String S_TRANSFORMATION =
 //            "de.cau.cs.kieler.sccharts.commands.STransformation";

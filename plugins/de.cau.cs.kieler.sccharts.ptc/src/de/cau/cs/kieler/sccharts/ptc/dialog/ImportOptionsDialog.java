@@ -56,7 +56,7 @@ public class ImportOptionsDialog extends Dialog {
     private static final int FORM_WIDTH = 400;
 
     /** The Constant FORM_HEIGHT. */
-    private static final int FORM_HEIGHT = 300;
+    private static final int FORM_HEIGHT = 500;
 
     /** The color black. */
     private static final RGB COLOR_BLACK = new RGB(0, 0, 0);
