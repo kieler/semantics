@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import javax.swing.undo.UndoManager
 import de.cau.cs.kieler.sccharts.StateType
 import java.util.ArrayList
+import de.cau.cs.kieler.sccharts.Region
 
 /**
  * Import SCCharts from PTC
@@ -415,7 +416,8 @@ public class PTC2SCCharts {
 
         transitionMode = true
         targetModel.transformGeneral(element)
-
+        
+        targetModel.last.fixHierarchyCrossingTransitions
     }
 
     def void transformRegion(List<State> targetModel, Element element, EObject srcParent) {
@@ -581,8 +583,8 @@ public class PTC2SCCharts {
             return
         }
         if (src.eContainer != dst.eContainer) {
-            println(" X --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
-            return
+//            println(" X --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
+//            return
         }
 
         if ((src instanceof State) && (dst instanceof State)) {
@@ -802,7 +804,118 @@ public class PTC2SCCharts {
         }
 
         return sccharts
+    }
+    
+    /**
+     * Eliminate hierarchy transitions
+     */
+    def void fixHierarchyCrossingTransitions(State rootState) {
+        
+        val hierarchyCrossingTransitions = rootState.allContainedTransitions.filter[e | e.sourceState != null &&
+            e.targetState != null && e.sourceState.parentRegion != e.targetState.parentRegion
+        ]
+        
+        for (transition : hierarchyCrossingTransitions) {
+            transition.fixHierarchyCrossingTransition
+        }       
+        
+    }
+    
+    /**
+     *  First calculate route which is a List of states
+     */
+    def void fixHierarchyCrossingTransition(Transition transition) {
+        val List<State> routeFromStart = new ArrayList()
+        val List<State> routeToEnd = new ArrayList()
+        val sharedParentRegion = transition.calculateHierarchyCrossingTransitionRoute(routeFromStart, routeToEnd, transition.sourceState, transition.targetState)
+        
+        val originalSource = transition.sourceState
+        val originalTarget = transition.targetState
+        
+        // Create a control flow signal
+        // TODO
+        
+        // Create a weak abort from the last state of routeFromStart to the first state of routeToEnd
+        val abortTransition = routeFromStart.last.createTransitionTo(routeToEnd.head)
+        // If original transition was immediate, then also the abort transition shall be immediate
+        abortTransition.immediate = transition.immediate
+        
+        // Set the target of the original transition to a new dummy state
+        val dummyState = originalSource.parentRegion.createState("_dummyState").uniqueName
+        transition.targetState = dummyState
+        // Add control flow signal as an effect here
+        // TODO
+        //transition.addEffect()
+           
+    }
 
+
+    def Region calculateHierarchyCrossingTransitionRoute(Transition transition, List<State> routeFromStart, List<State> routeToEnd, State start, State end) {
+        // End of recursion if same parent region
+        if (start.parentRegion == end.parentRegion) {
+            // Just end here but return parent region
+            return start.parentRegion
+        } else {
+            var startHierarchyLevel = start.hierarchyLevel
+            var endHierarchyLevel = end.hierarchyLevel
+            var updatedStart = start
+            var updatedEnd = end
+            
+            if (startHierarchyLevel > endHierarchyLevel) {
+                // start state deeper than end state
+                // => go up from start state until levels are equal
+                while (startHierarchyLevel > endHierarchyLevel) {
+                    updatedStart = start.parentRegion.parentState
+                    startHierarchyLevel--
+                    // TODO: is this necessary?
+                    routeFromStart.add(updatedStart) //Append list
+                }
+            } else if (endHierarchyLevel < startHierarchyLevel) {
+                // end state deeper than start state
+                // => go up from end state until levels are equal
+                while (endHierarchyLevel > startHierarchyLevel) {
+                    updatedEnd = end.parentRegion.parentState
+                    endHierarchyLevel--
+                    routeToEnd.add(0, updatedEnd) // Prepand list
+                }
+            } else if (endHierarchyLevel == startHierarchyLevel) {
+                // end state and start state same depth but
+                // different parent.
+                // => Go up with both states until we reach same parent
+                updatedStart = start.parentRegion.parentState
+                updatedEnd = end.parentRegion.parentState
+            }
+            
+            // Note: At this point both, updateStart & updatedEnd have
+            //       same hierarchy level but possibly not the same parent.
+            // 
+            // Do recursive call here
+            return transition.calculateHierarchyCrossingTransitionRoute(routeFromStart, routeToEnd, updatedStart, updatedEnd)
+        }
+        
+    }
+
+    /**
+     * Caclculate the hierarchy level for a state.
+     */
+    def int getHierarchyLevel(State state) {
+        if (state.parentRegion == null) {
+            return 0
+        } else {
+            return 1 + state.parentRegion.parentState.hierarchyLevel
+        }
+    }
+
+
+}
+//
+//
+//
+//
+//
+//
+//
+//
 //        for (content : model.eAllContents.toList) {
 //             println("---XXXXXX: " + content.eClass.name + ":" + content.eContents.length);
 //             
@@ -821,9 +934,7 @@ public class PTC2SCCharts {
 //        println("XXXXXX States: " + model.eAllContents.filter(typeof(org.eclipse.uml2.uml.State)).size);
 //        
 //        //println("XXXXXX SMs: " + model.eAllContents.filter(typeof(OwnedBehavior)).size);
-    }
 
-}
 //    /** The Constant S_TRANSFORMATION. */
 //    public static final String S_TRANSFORMATION =
 //            "de.cau.cs.kieler.sccharts.commands.STransformation";
