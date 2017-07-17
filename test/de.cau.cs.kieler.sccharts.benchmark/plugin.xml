@@ -4,6 +4,9 @@
    <extension
          point="de.cau.cs.kieler.benchmark.common.benchmark">
       <benchmark
+            class="de.cau.cs.kieler.sccharts.benchmark.SCChartsPriorityBasedCompilationBenchmark">
+      </benchmark>
+      <benchmark
             class="de.cau.cs.kieler.sccharts.benchmark.SCChartsTransformationsBenchmark">
       </benchmark>
    </extension>
