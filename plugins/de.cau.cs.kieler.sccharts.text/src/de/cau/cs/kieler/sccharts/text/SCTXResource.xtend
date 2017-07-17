@@ -29,6 +29,15 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.SCCharts
+
+import static extension org.eclipse.emf.common.util.URI.*;
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import de.cau.cs.kieler.annotations.StringPragma
+import java.util.Collections
+import org.eclipse.emf.ecore.resource.Resource
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import com.google.inject.Inject
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -40,11 +49,14 @@ import de.cau.cs.kieler.sccharts.State;
 
 public class SCTXResource extends LazyLinkingResource {
 
+    @Inject extension AnnotationsExtensions
+
     /**
      * Starts model consolidation before {@link LazyLinkingResource#doLinking()}.
      */
-    protected void doLinking() {
+    override void doLinking() {
 //        consolidateModel();
+        updateResourceSet
         super.doLinking();
     }
 
@@ -52,12 +64,11 @@ public class SCTXResource extends LazyLinkingResource {
      * Registers {@link SaveOptions} and delegates to
      * {@link LazyLinkingResource#doSave(OutputStream, Map)}
      */
-    @Override
-    public void doSave(OutputStream outputStream, Map<?, ?> options) throws IOException {
+    override void doSave(OutputStream outputStream, Map<?, ?> options) throws IOException {
 
         // there's something strange let me go crazy : options is null no matter
         // what the param in resource.save(...) is ... :-(
-        Map<Object, Object> myOptions = new HashMap<Object, Object>();
+        val myOptions = new HashMap<Object, Object>();
 
         SaveOptions.newBuilder().format().noValidation().getOptions().addTo(myOptions);
 
@@ -71,7 +82,7 @@ public class SCTXResource extends LazyLinkingResource {
      * remain in contents though the parseResult is empty! After the next successful parser run the
      * new EObject will be added to contents regardless the non-emptiness of contents.
      */
-    protected void updateInternalState(IParseResult parseResult) {
+    override void updateInternalState(IParseResult parseResult) {
         if (parseResult.getRootASTElement() != null && getContents().size() != 0
                 && !getContents().get(0).equals(parseResult.getRootASTElement())) {
             unload(getContents().get(0));
@@ -85,6 +96,36 @@ public class SCTXResource extends LazyLinkingResource {
     }
 
     // ---------------------------------------------------------------------------------------
+
+    protected def void updateResourceSet() {
+        val rootObject = getContents
+        if (!(rootObject.get(0) instanceof SCCharts)) return
+        
+        val scc = rootObject.get(0) as SCCharts
+        val ownR = scc.eResource
+        val segments = ownR.URI.segments
+        val base = "platform:/" + String.join("/", segments.subList(0, segments.length - 1)) + "/"
+        
+        val rSet = this.getResourceSet
+        
+        val importlevels = scc.getPragmas("import-level")
+        if (!importlevels.empty) {
+            if ((importlevels.head as StringPragma).values.head.equals("root")) {
+                rSet.resources.removeIf[ it != ownR ]
+            }
+        }
+       
+        val importPragmas = scc.pragmas.filter[ name != null && name.equals("import") ].filter(StringPragma)
+        for (importPragma : importPragmas) {
+            try {
+                val importURI = createURI(base + importPragma.values.head + ".sctx") 
+                val r = rSet.getResource(importURI, true)
+            } catch (Exception e) {
+                System.err.println("Resource " + importPragma.values.head + " not found!")
+            }
+        }
+        
+    }
 
 //    /**
 //     * Iterates on the parsed model and delegates to {@link #setupTickSignal(Region)},
@@ -110,5 +151,6 @@ public class SCTXResource extends LazyLinkingResource {
 //        }
 //    }
 
+    
 
 }
