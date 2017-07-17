@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -33,9 +33,7 @@ class CSimulationCompiler extends SimulationCompiler {
     }
     
     override compile(IFile file) {
-        if(result == null) {
-            result = new SimulationGenerationResult()
-        }
+        result = new SimulationGenerationResult()
         
         // Compile this file
         monitor.subTask("Compiling simulation via gcc:" + file.name)
@@ -67,7 +65,7 @@ class CSimulationCompiler extends SimulationCompiler {
             executableFile.delete(true, null)
         
         // Create bin directory
-        PromPlugin.createResource(project.getFolder(executableDirectory), null)
+        PromPlugin.createResource(project.getFolder(executableDirectory))
         
         // Run gcc on simulation code
         // Example command to compile simulation code: "gcc -std=c99 SimulationCode.c -o SimulationCode"
@@ -114,6 +112,10 @@ class CSimulationCompiler extends SimulationCompiler {
      */
     private def void createCJsonLibrary(IProject project, IPath simDirectory) {
         val libPath = simDirectory.append("lib")
-        PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON")
+        val libFolder = project.getFolder(libPath)
+        if(!libFolder.exists) {
+            PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON")
+            libFolder.parent.refreshLocal(1, null)
+        }
     }
 }

@@ -32,7 +32,7 @@ Action returns Action:
 ;
 
 VariableAssignment returns Action:
-    variable=VariableReference '=' value=AnyValue
+    variable=VariableReference '=' value=Literal
 ;
 
 SimulationAction returns Action:
@@ -46,7 +46,7 @@ Animation:
 ;
 
 AttributeMapping:
-    attribute=ID ':' (literal=AnyValue | (mappings+=Mapping) (',' mappings+=Mapping)*)
+    attribute=ID ':' (literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
 ;
 
 Mapping:
@@ -61,11 +61,11 @@ AndExpression returns Condition:
 Comparison:
     left=VariableReference
     relation=CompareOperator
-    (right=AnyValue | right=VariableReference)
+    (right=Literal | right=VariableReference)
 ;
 
 VariableDomain returns Domain:
-    value = AnyValue
+    value = Literal
     | range = Interval
 ;
 
@@ -93,6 +93,10 @@ AndOperator returns BooleanOperator:
     AND='and'
 ;
 
+Literal:
+    value = SignedInt | value = SignedFloat | (value = AnyValue)
+;
+
 enum DOMEvent:
     CLICK='click'
     | MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
@@ -107,6 +111,20 @@ enum SimulationOperation:
     STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play'
 ;
 
+enum Sign:
+    POSITIVE='+' | NEGATIVE='-'
+;
+
 Range:
     '-' // Alternative would be '..'
+;
+
+SignedFloat:
+    (sign = Sign)?
+    value = FLOAT
+;
+
+SignedInt:
+    (sign = Sign)?
+    value = INT
 ;

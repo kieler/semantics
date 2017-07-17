@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -27,7 +27,7 @@ class FileGenerationResult {
         createdFiles.add(createdFile)
     }
     
-    public def List<IFile> getCreateFiles() {
+    public def List<IFile> getCreatedFiles() {
         return createdFiles
     }
     

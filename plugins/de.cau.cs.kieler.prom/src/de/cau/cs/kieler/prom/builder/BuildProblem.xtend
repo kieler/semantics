@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -23,6 +23,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class BuildProblem {
     @Accessors(PUBLIC_GETTER)
     private var IFile file
+    @Accessors
+    private var int line = -1
     @Accessors(PUBLIC_GETTER)
     private var Exception cause = null
     @Accessors(PUBLIC_GETTER)

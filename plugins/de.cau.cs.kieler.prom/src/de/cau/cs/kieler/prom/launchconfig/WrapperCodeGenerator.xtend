@@ -13,9 +13,10 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
+import com.google.common.base.Strings
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.common.FileData
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
+import de.cau.cs.kieler.prom.common.FreemarkerConfiguration
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
@@ -27,15 +28,12 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import java.util.Map
-import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.freemarker.FreeMarkerPlugin
 import org.eclipse.emf.ecore.EObject
-import com.google.common.base.Strings
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * This class generates wrapper code for models.
@@ -143,6 +141,28 @@ class WrapperCodeGenerator {
     }
     
     /**
+     * Generates code by running the template engine on a template file.
+     * 
+     * @param templatePath The project relative path to the template
+     * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
+     */
+    def public String processTemplate(String templatePath, Map<String, Object> additionalMappings) {
+        
+        // Check consistency of path
+        if (!templatePath.isNullOrEmpty()) {
+            FreemarkerConfiguration.newConfiguration(project.location.toOSString)
+            
+            val template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
+
+            val writer = new StringWriter()
+            template.process(additionalMappings, writer)
+    
+            return writer.toString()
+        }
+        return ""
+    }
+    
+    /**
      * Generates wrapper code for a list of annotated model files.
      * 
      * @param templatePath The project relative path to the wrapper code template
@@ -198,8 +218,8 @@ class WrapperCodeGenerator {
         map.putAll(additionalMappings)
         
         // Inject macro calls in input template
-        FreeMarkerPlugin.newConfiguration(project.location.toOSString)
-        val template = FreeMarkerPlugin.configuration.getTemplate(templatePath)
+        FreemarkerConfiguration.newConfiguration(project.location.toOSString)
+        val template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
 
         val writer = new StringWriter()
         template.process(map, writer)
@@ -225,11 +245,11 @@ class WrapperCodeGenerator {
                 snippetDirectoryLocation = new File(project.location + File.separator + resolvedWrapperCodeSnippetDirectory)
                 
             // Set the snippets directory to implicitly load the macro definitions
-            FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
+            FreemarkerConfiguration.newConfiguration(snippetDirectoryLocation.absolutePath)
     
             // Add implicit include of assignment macros such as <@init> and <@output>
-            FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
-            FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
+            FreemarkerConfiguration.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
+            FreemarkerConfiguration.configuration.addAutoInclude("assignmentMacros")
     
             // Add implicit include of snippet definitions
             val snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
@@ -237,12 +257,12 @@ class WrapperCodeGenerator {
                 // FreeMarker needs paths relative to the template directory.
                 // We calculate this via the URI class.
                 val relativeURI = snippetDirectoryLocation.toURI().relativize(snippetFile.toURI())
-                FreeMarkerPlugin.configuration.addAutoInclude(relativeURI.getPath())
+                FreemarkerConfiguration.configuration.addAutoInclude(relativeURI.getPath())
             }
         }
         
         // Process template with macro calls and now implicitly loaded snippet definitions.
-        val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
+        val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreemarkerConfiguration.configuration)
 
         // Process template and write output in string
         val writer = new StringWriter()

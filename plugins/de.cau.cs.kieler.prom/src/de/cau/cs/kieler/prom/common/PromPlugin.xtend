@@ -48,6 +48,7 @@ import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 import org.eclipse.ui.statushandlers.StatusAdapter
+import org.eclipse.swt.widgets.Display
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -376,37 +377,115 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     }
     
     /**
+     * Creates an empty resource and all needed parent folders.
+     * If the resource already exists, nothing happens.
+     * 
+     * @param resource The resource handle to be created
+     */
+    public static def void createResource(IResource resource) throws CoreException {
+        createResource(resource, null as InputStream, false)
+    }
+    
+    /**
+     * Creates an empty resource and all needed parent folders.
+     * 
+     * @param resource The resource handle to be created
+     * @param overwrite Determines if an existing resource should be replaced.
+     */
+    public static def void createResource(IResource resource, boolean overwrite) throws CoreException {
+        createResource(resource, null as InputStream, overwrite)
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders.
+     * If the resource is a file, it can be initialized with some text.
+     * If the resource already exists, nothing happens.
+     * 
+     * @param resource The resource handle to be created
+     * @param text Initial content for the resource
+     */
+    public static def void createResource(IResource resource, String text) throws CoreException {
+        createResource(resource, text, false)
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders.
+     * If the resource is a file, it can be initialized with some text.
+     * 
+     * @param resource The resource handle to be created
+     * @param text Initial content for the resource
+     * @param overwrite Determines if an existing resource should be replaced.
+     */
+    public static def void createResource(IResource resource, String text, boolean overwrite) throws CoreException {
+        val stream = if(text.isNullOrEmpty)
+                         null
+                     else
+                         new StringInputStream(text)
+        createResource(resource, stream, overwrite)
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders in a project.
+     * The created resource is initialized with the inputs of the stream.
+     * The stream is closed afterwards.
+     * If the resource already exists, nothing happens.
+     * 
+     * @param resource The resource handle to be created
+     * @param stream Input stream with initial content for the resource
+     */
+    public static def void createResource(IResource resource, InputStream stream) throws CoreException {
+        createResource(resource, stream, false)
+    }
+    
+    /**
      * Creates a resource and all needed parent folders in a project.
      * The created resource is initialized with the inputs of the stream.
      * The stream is closed afterwards.
      * 
      * @param resource The resource handle to be created
      * @param stream Input stream with initial content for the resource
+     * @param overwrite Determines if an already existing resource should be replaced.
      */
-    public static def void createResource(IResource resource, InputStream stream) throws CoreException {
-        if (resource == null || resource.exists())
+    public static def void createResource(IResource resource, InputStream inputStream, boolean overwrite) throws CoreException {
+        if (resource == null || (resource.exists && !overwrite))
             return;
 
-        if (!resource.getParent().exists())
-            createResource(resource.getParent(), stream);
+        if (!resource.parent.exists)
+            createResource(resource.parent, inputStream);
 
         switch(resource.getType()){
             case IResource.FILE : {
-                // Create new
-                if(stream != null) {
+                // Select a stream with content
+                val stream = if(inputStream != null)
+                                  inputStream
+                              else
+                                  new StringInputStream("")
+                // Update or create the file with the content from the stream
+                if(overwrite && resource.exists) {
+                    (resource as IFile).setContents(stream, true, false, null)
+                } else if(!resource.exists) {
                     (resource as IFile).create(stream, true, null)
-                    stream.close()
-                } else {
-                    val stringStream = new StringInputStream("")
-                    (resource as IFile).create(stringStream, true, null)
-                    stringStream.close()
+                }
+                // Close stream with content
+                stream.close()
+            }
+            case IResource.FOLDER : {
+                if(!resource.exists) {
+                    try {
+                        (resource as IFolder).create(true, true, null)
+                    } catch(CoreException e) {
+                        // There seem to be cases in which the resource does exist,
+                        // yet resource.exists returns false and thus an exception is thrown, because the resource already exists...
+                        // However, this exception can be safely ignored here.
+                        e.printStackTrace()
+                    }
                 }
             }
-            case IResource.FOLDER :
-                (resource as IFolder).create(IResource.NONE, true, null)
             case IResource.PROJECT : {
-                (resource as IProject).create(null)
-                (resource as IProject).open(null)
+                if(!resource.exists) {
+                    (resource as IProject).create(null)
+                    (resource as IProject).open(null)
+                }
             }
         }
     }
@@ -456,7 +535,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         val resource = project.getFile(projectRelativePath)
        // Create empty file
        if(origin.trim.isNullOrEmpty) {
-           PromPlugin.createResource(resource, null)
+           PromPlugin.createResource(resource)
        } else {
            // Create file with initial content from origin
            val initialContentStream = PromPlugin.getInputStream(origin, null)
@@ -476,16 +555,16 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             // Fill folder with files from plugin
             val newFolder = project.getFolder(projectRelativePath)
             initializeFolderViaPlatformURL(newFolder, origin)
-        } else if(!origin.isNullOrEmpty) {
+        } else if(origin.isNullOrEmpty) {
+            // Create empty directory
+            val newFolder = project.getFolder(projectRelativePath)
+            PromPlugin.createResource(newFolder);
+        } else {
             // Copy directory from file system
             val source = new File(origin)
             val target = new File(project.location + File.separator + projectRelativePath)
             
             copyFolder(source, target)
-        } else {
-            // Create empty directory
-            val newFolder = project.getFolder(projectRelativePath)
-            PromPlugin.createResource(newFolder, null);
         }
     }
     
@@ -534,6 +613,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                         PromPlugin.createResource(file, stream)
                         stream.close()
                     }
+                    newFolder.refreshLocal(IResource.DEPTH_INFINITE, null)
                 } else {
                     throw new Exception("The directory '"+dir+"'\n"
                         + "of the plugin '"+bundleName+"' does not exist or is empty.")
@@ -580,4 +660,15 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             }
         }
     }
+    
+    /**
+     * Executes a procedure (i.e. a method/function that returns nothing) in the UI thread.
+     */ 
+    public static def void asyncExecInUI( ()=>void procedure ) {
+        Display.getDefault().asyncExec(new Runnable() {
+            override void run() {
+                procedure.apply
+            }
+        });
+    } 
 }

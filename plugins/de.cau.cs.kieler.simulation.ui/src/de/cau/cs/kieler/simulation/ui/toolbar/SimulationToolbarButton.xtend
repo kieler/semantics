@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -35,13 +35,8 @@ class SimulationToolbarButton extends AbstractHandler {
             justRestarted = true
             PromConsole.print("Restarting last simulation")
             new SimulationLaunchShortcut().launchLastSelection
-            println("Restarted last simulation")
         }
         return null
-    }
-    
-    override isEnabled() {
-        return true
     }
 
     public def SimulationManager getSimulation() {

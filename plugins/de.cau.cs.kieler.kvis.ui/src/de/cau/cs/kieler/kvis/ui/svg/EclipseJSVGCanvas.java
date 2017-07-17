@@ -48,8 +48,8 @@ public final class EclipseJSVGCanvas extends JSVGCanvas {
      * @param b1
      * @param b2
      */
-    public EclipseJSVGCanvas(SVGUserAgent userAgent, boolean b1, boolean b2) {
-        super(userAgent, b1, b2);
+    public EclipseJSVGCanvas(SVGUserAgent userAgent, boolean eventsEnabled, boolean selectableText) {
+        super(userAgent, eventsEnabled, selectableText);
         // Add the loadingStatusListener to the single instance
         this.addSVGDocumentLoaderListener(loadingStatusListener);
     }

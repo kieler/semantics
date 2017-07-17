@@ -44,6 +44,7 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDomainAccess().getAlternatives(), "rule__VariableDomain__Alternatives");
 					put(grammarAccess.getIntervalAccess().getAlternatives_0(), "rule__Interval__Alternatives_0");
 					put(grammarAccess.getIntervalAccess().getAlternatives_2(), "rule__Interval__Alternatives_2");
+					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
@@ -62,6 +63,7 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
 					put(grammarAccess.getDOMEventAccess().getAlternatives(), "rule__DOMEvent__Alternatives");
 					put(grammarAccess.getSimulationOperationAccess().getAlternatives(), "rule__SimulationOperation__Alternatives");
+					put(grammarAccess.getSignAccess().getAlternatives(), "rule__Sign__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
@@ -88,6 +90,8 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableReferenceAccess().getGroup(), "rule__VariableReference__Group__0");
 					put(grammarAccess.getVariableReferenceAccess().getGroup_2(), "rule__VariableReference__Group_2__0");
 					put(grammarAccess.getModelReferenceAccess().getGroup(), "rule__ModelReference__Group__0");
+					put(grammarAccess.getSignedFloatAccess().getGroup(), "rule__SignedFloat__Group__0");
+					put(grammarAccess.getSignedIntAccess().getGroup(), "rule__SignedInt__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1(), "rule__LogicalOrExpression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1(), "rule__LogicalOrExpression__Group_1_1__0");
@@ -195,6 +199,13 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableReferenceAccess().getIndicesAssignment_2_1(), "rule__VariableReference__IndicesAssignment_2_1");
 					put(grammarAccess.getModelReferenceAccess().getNameAssignment_0(), "rule__ModelReference__NameAssignment_0");
 					put(grammarAccess.getAndOperatorAccess().getANDAssignment(), "rule__AndOperator__ANDAssignment");
+					put(grammarAccess.getLiteralAccess().getValueAssignment_0(), "rule__Literal__ValueAssignment_0");
+					put(grammarAccess.getLiteralAccess().getValueAssignment_1(), "rule__Literal__ValueAssignment_1");
+					put(grammarAccess.getLiteralAccess().getValueAssignment_2(), "rule__Literal__ValueAssignment_2");
+					put(grammarAccess.getSignedFloatAccess().getSignAssignment_0(), "rule__SignedFloat__SignAssignment_0");
+					put(grammarAccess.getSignedFloatAccess().getValueAssignment_1(), "rule__SignedFloat__ValueAssignment_1");
+					put(grammarAccess.getSignedIntAccess().getSignAssignment_0(), "rule__SignedInt__SignAssignment_0");
+					put(grammarAccess.getSignedIntAccess().getValueAssignment_1(), "rule__SignedInt__ValueAssignment_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1");

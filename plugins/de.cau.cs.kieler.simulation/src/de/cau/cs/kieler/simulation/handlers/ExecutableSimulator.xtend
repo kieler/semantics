@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -26,6 +26,7 @@ import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.common.util.concurrent.UncheckedTimeoutException
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -44,6 +45,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     private var Process process
     private var BufferedReader processReader
     private var PrintStream processWriter
+    private val timeLimiter = new SimpleTimeLimiter()
     
     /**
      * Create new process and read it's first JSON object with variables to fill the data pool.
@@ -117,7 +119,6 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     private def String waitForJSONOutput(BufferedReader br) {
         // Wait until output has been generated
         var String line
-        val timeLimiter = new SimpleTimeLimiter();
         do {
             // Call readLine with a timeout of 1 second
             val callable = new Callable<String>(){ 
@@ -126,8 +127,8 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
                 }
             }
             try {
-                line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, false)
-            } catch(Exception e) {
+                line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, true)
+            } catch(UncheckedTimeoutException e) {
                 // If the process is null, the simulation was stopped already
                 if(process != null) {
                     stop();
@@ -137,6 +138,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
             
             Thread.sleep(1);
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
+        
         return line
     }
     

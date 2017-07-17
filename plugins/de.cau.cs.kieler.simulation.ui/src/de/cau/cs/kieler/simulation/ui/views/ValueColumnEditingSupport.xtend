@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -67,7 +67,7 @@ class ValueColumnEditingSupport extends EditingSupport {
         if(element instanceof Variable) {
             value = if(element.isDirty) element.userValue else element.value
         } else if(element instanceof NDimensionalArrayElement) {
-            value = element.value
+            value = if(element.isDirty) element.userValue else element.value
         }
         
         if(value != null) {
@@ -127,6 +127,6 @@ class ValueColumnEditingSupport extends EditingSupport {
             PromConsole.print("Can't set value of " + element + " to "+value)
         }
         // Update this element
-        viewer.update(element, null);
+        viewer.refresh(element)
     }
 }

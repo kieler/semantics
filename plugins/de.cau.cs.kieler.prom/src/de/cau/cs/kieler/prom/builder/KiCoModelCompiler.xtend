@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -79,11 +79,25 @@ class KiCoModelCompiler extends ModelCompiler {
      */
     override compile(IFile file, EObject model) {
         // Prepare result
-        if(result == null) {
-            result = new ModelCompilationResult()
-        }
+        result = new ModelCompilationResult()
+        
         // Compile model
         if (model != null) {
+            // Skip compilation of models
+            // TODO: Remove this if the black- and whitelist compilation configuration works
+            var ignore = false
+            if(model instanceof State) {
+                for(ann : model.annotations) {
+                    if(ann.name == "SkipCompilation") {
+                        ignore = true
+                    }
+                }
+            }
+            // Don't compiles files that should be ignored
+            if(ignore) {
+                return result
+            }
+            
             // Compile
             val kicoResult = compileWithKiCo(model)
             
@@ -125,10 +139,12 @@ class KiCoModelCompiler extends ModelCompiler {
     
     private def CompilationResult compileWithKiCo(EObject model) {
         // Get compiler context with settings for KiCo
-        // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
-        // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-        // TODO: ABORTWTO often makes trouble and is not deterministicly choosen, so we explicitly disable it.
-        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO"
+        // TODO: There are several transformations that do not work correctly or throw exceptions, so we explicitly disable them.
+        // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015)
+        // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015)
+        // TODO: ABORTWTO often makes trouble and is not deterministicly choosen
+        // TODO: scg.guards.ft and scg.scheduling.dc are experimental transformations and have issues (KISEMA-1188)
+        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO, !T_scg.guards.ft, !T_scg.scheduling.dc"
         if(KiCoBuilder.isCompileChain(compileChain)) {
             chain += ", " + compileChain
         } else {
@@ -161,7 +177,7 @@ class KiCoModelCompiler extends ModelCompiler {
             val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate, file.project)
             if (resolvedTargetTemplate.isNullOrEmpty) {
                 val inputStream = new StringInputStream(result.string)
-                PromPlugin.createResource(targetFile, inputStream)
+                PromPlugin.createResource(targetFile, inputStream, true)
             } else {
                 // Inject compilation result into target template
                 val modelName = Files.getNameWithoutExtension(file.name)
@@ -175,7 +191,7 @@ class KiCoModelCompiler extends ModelCompiler {
                       WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]})
                 // Save output
                 val inputStream = new StringInputStream(wrapperCode)
-                PromPlugin.createResource(targetFile.parent, inputStream)
+                PromPlugin.createResource(targetFile.parent, inputStream, true)
             }
         }
     }
@@ -188,7 +204,7 @@ class KiCoModelCompiler extends ModelCompiler {
      */
     private def void saveEObject(EObject eobject, IFile targetFile) {
         // Create directories
-        PromPlugin.createResource(targetFile.parent, null)
+        PromPlugin.createResource(targetFile.parent)
         
         // Remove old resource
         if(targetFile.exists) {

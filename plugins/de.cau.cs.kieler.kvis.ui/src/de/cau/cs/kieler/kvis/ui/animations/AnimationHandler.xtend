@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -32,9 +32,10 @@ abstract class AnimationHandler {
     protected var String svgElementId
     protected var Animation animation
     protected var Object variableValue
+    protected var DataPool lastPool
     
     abstract public def String getName()
-    abstract protected def void doApply(DataPool pool)
+    abstract protected def void doApply(DataPool pool, Element element)
     
     @Extension
     protected KVisExtensions kvisExtensions
@@ -48,9 +49,19 @@ abstract class AnimationHandler {
         // Initialize extension methods
         kvisExtensions = new KVisExtensions
         svgExtensions = new SVGExtensions
+        // Add attribute to determine if everything of this animation should be applied recursively
+        // to child elements of this animation's svg element.
+        addAttribute("recursive")
     }
     
     public def void apply(DataPool pool) {
+        // Only update the svg if the pool changed since last time
+        if(pool == lastPool) {
+            return
+        } else {
+            lastPool = pool
+        }
+        // Update the svg with the new pool
         variableValue = getVariableValue(pool)
         if(isActive(pool)) {
             // Update attributes
@@ -73,7 +84,18 @@ abstract class AnimationHandler {
                 }
             }
             // Apply
-            doApply(pool)
+            val element = findElement(true)
+            val recursiveAttr = getAttribute("recursive")
+            if(recursiveAttr == null || recursiveAttr.value == null || !recursiveAttr.boolValue) {
+                // Don't apply this animation recursively
+                doApply(pool, element)
+            } else {
+                // Apply this animation recursively to all child elements
+                val elementAndChildren = element.getChildrenElements(true)
+                for(elem : elementAndChildren) {
+                    doApply(pool, elem)
+                }
+            }
         }
     }
     
@@ -87,6 +109,15 @@ abstract class AnimationHandler {
     
     protected def Element findElement() {
         return SVGDocument.getElementById(svgElementId)
+    }
+    
+    protected def Element findElement(boolean mustExist) {
+        val elem = findElement
+        if(elem != null) {
+            return elem
+        } else {
+            throw new IllegalArgumentException("SVG element '"+svgElementId+"' does not exist")
+        }
     }
     
     protected def Object getVariableValue(DataPool pool) {
@@ -128,8 +159,7 @@ abstract class AnimationHandler {
         }
     }
     
-    protected def void setAttributes(String... name) {
-        attributes.clear()
+    protected def void addAttributes(String... name) {
         for(n : name) {
             addAttribute(n)
         }

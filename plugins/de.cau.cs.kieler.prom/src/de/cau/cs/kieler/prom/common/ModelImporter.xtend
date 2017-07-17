@@ -14,17 +14,16 @@
 package de.cau.cs.kieler.prom.common
 
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
+import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.Path
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.util.EcoreUtil
 
 /** 
- * Auxilary class to load an EObject from a fully qualified file path.
+ * Auxilary class to load EObjects and handle ResourceSets.
  * 
  * @author aas
  */
@@ -79,29 +78,4 @@ class ModelImporter {
         val file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
         return file
     }
-    
-    /**
-     * Loads an EObject from a file path, optionally with cross-references to other models resolved.
-     * Resolving of cross-references works only if the referenced files are in the same project
-     * and have the same file extension.
-     * 
-     * @param fullPath The fully qualified path to a file that shall be loaded
-     * @param resolveReferences Flag that indicated whether cross-references to other files in the project shall be resolved
-     * @return the loaded EObject
-     */
-//    public static def EObject load(IFile file, boolean resolveReferences) {
-//        
-//        val injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
-//        val resourceSet = injector.getInstance(typeof(XtextResourceSet))
-//
-//        // Collect possibly referenced resources and resolve references
-//        if(resolveReferences){
-//            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
-////            System.err.println("\tCollecting possibly referenced resources")
-////            collectPossiblyReferencedResources(getFile(fullPath), resourceSet)
-////            System.err.println("\tDone!")
-//        }
-//
-//        return load(file, resourceSet)
-//    }
 }

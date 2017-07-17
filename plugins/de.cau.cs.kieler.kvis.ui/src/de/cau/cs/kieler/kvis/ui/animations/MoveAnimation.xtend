@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.simulation.core.DataPool
+import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
 
 /**
@@ -26,15 +27,14 @@ class MoveAnimation extends AnimationHandler {
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        setAttributes("x", "y")
+        addAttributes("x", "y")
     }
     
     override getName() {
         return "move"
     }
     
-    override doApply(DataPool pool) {
-        val elem = findElement()
+    override doApply(DataPool pool, Element elem) {
         // Get mapped value
         val newX = getAttribute("x").floatValue
         val newY = getAttribute("y").floatValue

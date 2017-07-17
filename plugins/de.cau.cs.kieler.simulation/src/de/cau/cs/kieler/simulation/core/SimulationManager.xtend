@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.simulation.SimulationPlugin
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -88,6 +89,10 @@ class SimulationManager {
     
     @Accessors(PUBLIC_GETTER)
     private var int positionInHistory;
+    
+    // TODO: Make history length configurable and set default to limitless (-1).
+    @Accessors
+    private var int maxHistoryLength = 10;
     
     /**
      * Instances of the data handlers in the step actions without duplicates.
@@ -231,7 +236,6 @@ class SimulationManager {
         val nextActionIndex = applyMacroTickActions(pool)
         // Save new state
         setNewState(pool, nextActionIndex)
-        
 //        println("Stepped simulation macro tick")
         notifyListeners(SimulationEventType.STEP)
     }
@@ -390,6 +394,12 @@ class SimulationManager {
     private def void setNewState(DataPool newPool, int newActionIndex) {
         if(currentState != null) {
             history.add(currentState)
+        }
+        // Remove oldest states if history is too long
+        if(maxHistoryLength > 0 && history.size > maxHistoryLength) {
+            val oldState = history.get(0)
+            oldState.pool.previousPool = null
+            history.remove(0)
         }
         currentState = new StepState(newPool, newActionIndex)
     }

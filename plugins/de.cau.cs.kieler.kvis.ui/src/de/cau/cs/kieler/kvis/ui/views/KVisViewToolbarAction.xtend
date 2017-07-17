@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -23,9 +23,18 @@ import de.cau.cs.kieler.prom.common.PromPlugin
 class KVisViewToolbarAction extends Action {
     String imageName
     
-    new(String title, String imageName) {
-        super(title)
+    new(String title, String imageName, int style) {
+        super(title, style)
         this.imageName = imageName
+    }
+    
+    new(String title, String imageName, boolean checked) {
+        this(title, imageName, AS_CHECK_BOX)
+        setChecked(checked)
+    }
+    
+    new(String title, String imageName) {
+        this(title, imageName, AS_PUSH_BUTTON)
     }
     
     override getImageDescriptor() {
