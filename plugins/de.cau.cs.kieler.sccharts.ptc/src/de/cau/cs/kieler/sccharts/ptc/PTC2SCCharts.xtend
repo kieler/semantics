@@ -214,7 +214,7 @@ public class PTC2SCCharts {
         // If a references variable already exists as local, then return this, but make it input
         // else
         // create a new input
-        var returnValuedObject = getLocalValuedObject(targetModel, localName)
+        var returnValuedObject = getLocalValuedObject(targetModel, localName.fixId)
         var decl = (returnValuedObject.eContainer as Declaration);
         if (decl != null) {
             decl.input = true
@@ -232,7 +232,17 @@ public class PTC2SCCharts {
         return id2output.get(outputName);
     }
 
+
     def void body2output(Action action, List<State> targetModel, Element element, String body) {
+        val bodyList = body.replace(".", "_").split(";");
+        for (subBody : bodyList) {
+            if (subBody != null && subBody != "" && !subBody.equals("&#13")) {
+                action.body2outputHelper(targetModel, element, subBody)
+            }
+        }
+    }
+
+    def void body2outputHelper(Action action, List<State> targetModel, Element element, String body) {
         if (PTCModelFileHandler.OPTION_HOSTLABELS.selected) {
             action.addEffect(asHostcodeEffect(body))
             return;
@@ -240,6 +250,9 @@ public class PTC2SCCharts {
 
         val outputName = body.extractOutputName
         val outputParam = body.extractOutputParam
+        
+        //TODO:
+        // transferType = GetRequestType(msgStruct);&#13;requestSessionId = msgStruct.SessionId;&#13;transferFileBufferFileName = msgStruct.FileName;&#13;dataLoaderIP = msgStruct.SourceIp;
 
         if (outputName == null) {
             // @OPTION
@@ -257,7 +270,7 @@ public class PTC2SCCharts {
                 // All assign variables need to exist as local variables
                 for (localValObjName : expr.assignedEntities) {
                     // Possibly add new input (INT only supported!)
-                    val local = targetModel.getLocalValuedObject(localValObjName.name)
+                    val local = targetModel.getLocalValuedObject(localValObjName.name.fixId)
                 }
                 // @OPTION
                 // All references variables need to exist either as local variables
