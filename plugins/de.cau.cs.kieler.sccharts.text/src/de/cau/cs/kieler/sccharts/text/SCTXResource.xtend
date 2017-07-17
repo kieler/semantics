@@ -31,6 +31,8 @@ import org.eclipse.xtext.resource.SaveOptions
 import org.eclipse.xtext.resource.XtextResource
 
 import static org.eclipse.emf.common.util.URI.*
+import org.eclipse.emf.ecore.util.EcoreUtil
+import java.io.InputStream
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -49,12 +51,14 @@ public class SCTXResource extends LazyLinkingResource {
     static val PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
         "Add resources via import to the resource set.")  
 
+    private var importPragmaHash = 0
+
     /**
      * Starts model consolidation before {@link LazyLinkingResource#doLinking()}.
      */
     override void doLinking() {
 //        consolidateModel();
-        updateResourceSet
+        if (importsHaveChanged) updateResourceSet
         super.doLinking();
     }
 
@@ -63,7 +67,6 @@ public class SCTXResource extends LazyLinkingResource {
      * {@link LazyLinkingResource#doSave(OutputStream, Map)}
      */
     override void doSave(OutputStream outputStream, Map<?, ?> options) throws IOException {
-
         // there's something strange let me go crazy : options is null no matter
         // what the param in resource.save(...) is ... :-(
         val myOptions = new HashMap<Object, Object>();
@@ -71,6 +74,7 @@ public class SCTXResource extends LazyLinkingResource {
         SaveOptions.newBuilder().format().noValidation().getOptions().addTo(myOptions);
 
         super.doSave(outputStream, myOptions);
+        updateResourceSet
     }
 
     /**
@@ -116,30 +120,52 @@ public class SCTXResource extends LazyLinkingResource {
         val importPragmas = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma)
         for (importPragma : importPragmas) {
             try {
-                val importName = importPragma.values.head
+                for(importName : importPragma.values) {
                 
-                if (importName.endsWith("*")) {
-                    val ownRLocationURI = createFileURI(CommonPlugin.resolve(ownR.URI).toFileString)
-                    
-                    val importNameBase = importName.substring(0, importName.length - 1)
-                    val baseURI = createURI(base + importNameBase)
-                    val resolvedFile = CommonPlugin.resolve(baseURI);
-                    val path = new Path(resolvedFile.toFileString())
-                    val folder = new File(path.toString)
-                    for (file : folder.listFiles.filter[ toString.endsWith(".sctx") ]) {
-                        val importURI = createFileURI(file.toString)
-                        if (!importURI.equals(ownRLocationURI) && !rSet.resources.exists[ it.URI.equals(importURI) ])
-                            rSet.getResource(importURI, true)
+                    if (importName.endsWith("*")) {
+                        val ownRLocationURI = createFileURI(CommonPlugin.resolve(ownR.URI).toFileString)
+                        
+                        val importNameBase = importName.substring(0, importName.length - 1)
+                        val baseURI = createURI(base + importNameBase)
+                        val resolvedFile = CommonPlugin.resolve(baseURI);
+                        val path = new Path(resolvedFile.toFileString())
+                        val folder = new File(path.toString)
+                        for (file : folder.listFiles.filter[ toString.endsWith(".sctx") ]) {
+                            val importURI = createFileURI(file.toString)
+                            if (!importURI.equals(ownRLocationURI) && !rSet.resources.exists[ it.URI.equals(importURI) ])
+                                rSet.getResource(importURI, true)
+                        }
+                    } else {
+                        val importURI = createURI(base + importName + ".sctx") 
+                        rSet.getResource(importURI, true)
                     }
-                } else {
-                    val importURI = createURI(base + importName + ".sctx") 
-                    rSet.getResource(importURI, true)
                 }
             } catch (Exception e) {
                 System.err.println("Resource " + importPragma.values.head + " not found!")
             }
         }
         
+    }
+    
+    protected def boolean importsHaveChanged() {
+        val rootObject = getContents
+        if (!(rootObject.get(0) instanceof SCCharts)) return false
+        
+        val scc = rootObject.get(0) as SCCharts
+        
+        var pragmaHash = 0
+        
+        val importlevels = scc.getPragmas(PRAGMA_IMPORT_LEVEL).filter(StringPragma)
+        val imports = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma)
+        
+        if (!importlevels.empty) pragmaHash += importlevels.head.values.head.hashCode
+        for (import : imports.map[values].flatten) pragmaHash += import.hashCode 
+                
+        if (importPragmaHash != pragmaHash) {
+            importPragmaHash = pragmaHash
+            return true
+        }
+        return false
     }
 
 //    /**
