@@ -13,31 +13,21 @@
  */
 package de.cau.cs.kieler.sccharts.text;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
-import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.resource.SaveOptions;
-
-import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
-import de.cau.cs.kieler.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SCCharts
-
-import static extension org.eclipse.emf.common.util.URI.*;
-import static extension org.eclipse.xtext.EcoreUtil2.*
-import de.cau.cs.kieler.annotations.StringPragma
-import java.util.Collections
-import org.eclipse.emf.ecore.resource.Resource
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.sccharts.SCCharts
+import java.io.IOException
+import java.io.OutputStream
+import java.util.HashMap
+import java.util.Map
+import org.eclipse.xtext.linking.lazy.LazyLinkingResource
+import org.eclipse.xtext.parser.IParseResult
+import org.eclipse.xtext.resource.SaveOptions
+import org.eclipse.xtext.resource.XtextResource
+
+import static org.eclipse.emf.common.util.URI.*
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -50,6 +40,11 @@ import com.google.inject.Inject
 public class SCTXResource extends LazyLinkingResource {
 
     @Inject extension AnnotationsExtensions
+    
+    static val PRAGMA_IMPORT_LEVEL = PragmaRegistry.register("import-level", StringPragma, 
+        "Top-level SCCharts can be annotation with \"root\" to clear the resource set.")
+    static val PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
+        "Add resources via import to the resource set.")  
 
     /**
      * Starts model consolidation before {@link LazyLinkingResource#doLinking()}.
@@ -77,7 +72,7 @@ public class SCTXResource extends LazyLinkingResource {
 
     /**
      * Eliminates an ugly bug within the calling method
-     * {@link org.eclipse.xtext.resource.XtextResource#update(int, int, String)}:<br>
+     * {@link XtextResource#update(int, int, String)}:<br>
      * If a parsing round fails entirely, the last previously successfully deducted EObject will
      * remain in contents though the parseResult is empty! After the next successful parser run the
      * new EObject will be added to contents regardless the non-emptiness of contents.
@@ -108,18 +103,18 @@ public class SCTXResource extends LazyLinkingResource {
         
         val rSet = this.getResourceSet
         
-        val importlevels = scc.getPragmas("import-level")
+        val importlevels = scc.getPragmas(PRAGMA_IMPORT_LEVEL)
         if (!importlevels.empty) {
             if ((importlevels.head as StringPragma).values.head.equals("root")) {
                 rSet.resources.removeIf[ it != ownR ]
             }
         }
        
-        val importPragmas = scc.pragmas.filter[ name != null && name.equals("import") ].filter(StringPragma)
+        val importPragmas = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma)
         for (importPragma : importPragmas) {
             try {
                 val importURI = createURI(base + importPragma.values.head + ".sctx") 
-                val r = rSet.getResource(importURI, true)
+                rSet.getResource(importURI, true)
             } catch (Exception e) {
                 System.err.println("Resource " + importPragma.values.head + " not found!")
             }
