@@ -4391,11 +4391,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                 {
                 int LA23_4 = input.LA(2);
 
-                if ( (LA23_4==RULE_INT) ) {
-                    alt23=4;
-                }
-                else if ( (LA23_4==RULE_FLOAT) ) {
+                if ( (LA23_4==RULE_FLOAT) ) {
                     alt23=5;
+                }
+                else if ( (LA23_4==RULE_INT) ) {
+                    alt23=4;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -4600,23 +4600,23 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalKiCool.g:1691:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) ;
+    // InternalKiCool.g:1691:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token this_ID_0=null;
         Token kw=null;
-        Token this_ID_2=null;
-        Token this_INT_4=null;
+        Token this_ID_3=null;
+        Token this_INT_5=null;
 
          enterRule(); 
             
         try {
-            // InternalKiCool.g:1694:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) )
-            // InternalKiCool.g:1695:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
+            // InternalKiCool.g:1694:28: ( (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalKiCool.g:1695:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalKiCool.g:1695:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
-            // InternalKiCool.g:1695:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )?
+            // InternalKiCool.g:1695:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalKiCool.g:1695:6: this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_25); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -4629,39 +4629,67 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // InternalKiCool.g:1702:1: (kw= '.' this_ID_2= RULE_ID )*
+            // InternalKiCool.g:1702:1: (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )*
             loop24:
             do {
-                int alt24=2;
+                int alt24=3;
                 int LA24_0 = input.LA(1);
 
-                if ( (LA24_0==31) ) {
+                if ( (LA24_0==32) ) {
+                    int LA24_2 = input.LA(2);
+
+                    if ( (LA24_2==RULE_ID) ) {
+                        alt24=2;
+                    }
+
+
+                }
+                else if ( (LA24_0==31) ) {
                     alt24=1;
                 }
 
 
                 switch (alt24) {
             	case 1 :
-            	    // InternalKiCool.g:1703:2: kw= '.' this_ID_2= RULE_ID
+            	    // InternalKiCool.g:1703:2: kw= '.'
             	    {
-            	    kw=(Token)match(input,31,FollowSets000.FOLLOW_3); if (state.failed) return current;
+            	    kw=(Token)match(input,31,FollowSets000.FOLLOW_25); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	              current.merge(kw);
             	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             	          
             	    }
-            	    this_ID_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_25); if (state.failed) return current;
+
+            	    }
+            	    break;
+            	case 2 :
+            	    // InternalKiCool.g:1709:6: (kw= '-' this_ID_3= RULE_ID )
+            	    {
+            	    // InternalKiCool.g:1709:6: (kw= '-' this_ID_3= RULE_ID )
+            	    // InternalKiCool.g:1710:2: kw= '-' this_ID_3= RULE_ID
+            	    {
+            	    kw=(Token)match(input,32,FollowSets000.FOLLOW_3); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      		current.merge(this_ID_2);
+            	              current.merge(kw);
+            	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); 
+            	          
+            	    }
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_25); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      		current.merge(this_ID_3);
             	          
             	    }
             	    if ( state.backtracking==0 ) {
             	       
-            	          newLeafNode(this_ID_2, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
+            	          newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); 
             	          
             	    }
+
+            	    }
+
 
             	    }
             	    break;
@@ -4671,7 +4699,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalKiCool.g:1715:3: (kw= '#' this_INT_4= RULE_INT )?
+            // InternalKiCool.g:1722:4: (kw= '#' this_INT_5= RULE_INT )?
             int alt25=2;
             int LA25_0 = input.LA(1);
 
@@ -4680,7 +4708,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
             switch (alt25) {
                 case 1 :
-                    // InternalKiCool.g:1716:2: kw= '#' this_INT_4= RULE_INT
+                    // InternalKiCool.g:1723:2: kw= '#' this_INT_5= RULE_INT
                     {
                     kw=(Token)match(input,29,FollowSets000.FOLLOW_5); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -4689,15 +4717,15 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                               newLeafNode(kw, grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
                           
                     }
-                    this_INT_4=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    this_INT_5=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		current.merge(this_INT_4);
+                      		current.merge(this_INT_5);
                           
                     }
                     if ( state.backtracking==0 ) {
                        
-                          newLeafNode(this_INT_4, grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
+                          newLeafNode(this_INT_5, grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
                           
                     }
 
@@ -4729,7 +4757,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQualifiedID"
-    // InternalKiCool.g:1736:1: entryRuleQualifiedID returns [String current=null] : iv_ruleQualifiedID= ruleQualifiedID EOF ;
+    // InternalKiCool.g:1743:1: entryRuleQualifiedID returns [String current=null] : iv_ruleQualifiedID= ruleQualifiedID EOF ;
     public final String entryRuleQualifiedID() throws RecognitionException {
         String current = null;
 
@@ -4737,8 +4765,8 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiCool.g:1737:2: (iv_ruleQualifiedID= ruleQualifiedID EOF )
-            // InternalKiCool.g:1738:2: iv_ruleQualifiedID= ruleQualifiedID EOF
+            // InternalKiCool.g:1744:2: (iv_ruleQualifiedID= ruleQualifiedID EOF )
+            // InternalKiCool.g:1745:2: iv_ruleQualifiedID= ruleQualifiedID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQualifiedIDRule()); 
@@ -4769,7 +4797,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQualifiedID"
-    // InternalKiCool.g:1745:1: ruleQualifiedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
+    // InternalKiCool.g:1752:1: ruleQualifiedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
     public final AntlrDatatypeRuleToken ruleQualifiedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -4780,11 +4808,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiCool.g:1748:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
-            // InternalKiCool.g:1749:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalKiCool.g:1755:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
+            // InternalKiCool.g:1756:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
             {
-            // InternalKiCool.g:1749:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
-            // InternalKiCool.g:1749:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
+            // InternalKiCool.g:1756:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalKiCool.g:1756:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_26); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -4797,7 +4825,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // InternalKiCool.g:1756:1: (kw= '.' this_ID_2= RULE_ID )*
+            // InternalKiCool.g:1763:1: (kw= '.' this_ID_2= RULE_ID )*
             loop26:
             do {
                 int alt26=2;
@@ -4810,7 +4838,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
                 switch (alt26) {
             	case 1 :
-            	    // InternalKiCool.g:1757:2: kw= '.' this_ID_2= RULE_ID
+            	    // InternalKiCool.g:1764:2: kw= '.' this_ID_2= RULE_ID
             	    {
             	    kw=(Token)match(input,31,FollowSets000.FOLLOW_3); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -4862,7 +4890,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalKiCool.g:1777:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
+    // InternalKiCool.g:1784:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
     public final String entryRuleInteger() throws RecognitionException {
         String current = null;
 
@@ -4870,8 +4898,8 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiCool.g:1778:2: (iv_ruleInteger= ruleInteger EOF )
-            // InternalKiCool.g:1779:2: iv_ruleInteger= ruleInteger EOF
+            // InternalKiCool.g:1785:2: (iv_ruleInteger= ruleInteger EOF )
+            // InternalKiCool.g:1786:2: iv_ruleInteger= ruleInteger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntegerRule()); 
@@ -4902,7 +4930,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInteger"
-    // InternalKiCool.g:1786:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalKiCool.g:1793:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleInteger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -4912,13 +4940,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiCool.g:1789:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalKiCool.g:1790:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalKiCool.g:1796:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalKiCool.g:1797:1: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalKiCool.g:1790:1: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalKiCool.g:1790:2: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalKiCool.g:1797:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalKiCool.g:1797:2: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalKiCool.g:1790:2: (kw= '-' )?
+            // InternalKiCool.g:1797:2: (kw= '-' )?
             int alt27=2;
             int LA27_0 = input.LA(1);
 
@@ -4927,7 +4955,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
             switch (alt27) {
                 case 1 :
-                    // InternalKiCool.g:1791:2: kw= '-'
+                    // InternalKiCool.g:1798:2: kw= '-'
                     {
                     kw=(Token)match(input,32,FollowSets000.FOLLOW_5); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -4976,7 +5004,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalKiCool.g:1811:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
+    // InternalKiCool.g:1818:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
     public final String entryRuleFloateger() throws RecognitionException {
         String current = null;
 
@@ -4984,8 +5012,8 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalKiCool.g:1812:2: (iv_ruleFloateger= ruleFloateger EOF )
-            // InternalKiCool.g:1813:2: iv_ruleFloateger= ruleFloateger EOF
+            // InternalKiCool.g:1819:2: (iv_ruleFloateger= ruleFloateger EOF )
+            // InternalKiCool.g:1820:2: iv_ruleFloateger= ruleFloateger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloategerRule()); 
@@ -5016,7 +5044,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalKiCool.g:1820:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalKiCool.g:1827:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleFloateger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5026,13 +5054,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiCool.g:1823:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
-            // InternalKiCool.g:1824:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalKiCool.g:1830:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
+            // InternalKiCool.g:1831:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalKiCool.g:1824:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
-            // InternalKiCool.g:1824:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
+            // InternalKiCool.g:1831:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalKiCool.g:1831:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
-            // InternalKiCool.g:1824:2: (kw= '-' )?
+            // InternalKiCool.g:1831:2: (kw= '-' )?
             int alt28=2;
             int LA28_0 = input.LA(1);
 
@@ -5041,7 +5069,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             }
             switch (alt28) {
                 case 1 :
-                    // InternalKiCool.g:1825:2: kw= '-'
+                    // InternalKiCool.g:1832:2: kw= '-'
                     {
                     kw=(Token)match(input,32,FollowSets000.FOLLOW_27); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -5360,7 +5388,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x00000000000001A0L});
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000000200000L});
         public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x00000000A0000002L});
+        public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x00000001A0000002L});
         public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000080000002L});
         public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000000000200L});
     }

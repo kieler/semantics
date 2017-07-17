@@ -2298,11 +2298,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                 {
                 int LA10_4 = input.LA(2);
 
-                if ( (LA10_4==RULE_INT) ) {
-                    alt10=4;
-                }
-                else if ( (LA10_4==RULE_FLOAT) ) {
+                if ( (LA10_4==RULE_FLOAT) ) {
                     alt10=5;
+                }
+                else if ( (LA10_4==RULE_INT) ) {
+                    alt10=4;
                 }
                 else {
                     NoViableAltException nvae =
@@ -2473,23 +2473,23 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalAnnotations.g:1050:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) ;
+    // InternalAnnotations.g:1050:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token this_ID_0=null;
         Token kw=null;
-        Token this_ID_2=null;
-        Token this_INT_4=null;
+        Token this_ID_3=null;
+        Token this_INT_5=null;
 
          enterRule(); 
             
         try {
-            // InternalAnnotations.g:1053:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? ) )
-            // InternalAnnotations.g:1054:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
+            // InternalAnnotations.g:1053:28: ( (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalAnnotations.g:1054:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalAnnotations.g:1054:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )? )
-            // InternalAnnotations.g:1054:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* (kw= '#' this_INT_4= RULE_INT )?
+            // InternalAnnotations.g:1054:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalAnnotations.g:1054:6: this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_10); 
 
@@ -2498,33 +2498,59 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
              
                 newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                 
-            // InternalAnnotations.g:1061:1: (kw= '.' this_ID_2= RULE_ID )*
+            // InternalAnnotations.g:1061:1: (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )*
             loop11:
             do {
-                int alt11=2;
+                int alt11=3;
                 int LA11_0 = input.LA(1);
 
-                if ( (LA11_0==20) ) {
+                if ( (LA11_0==21) ) {
+                    int LA11_2 = input.LA(2);
+
+                    if ( (LA11_2==RULE_ID) ) {
+                        alt11=2;
+                    }
+
+
+                }
+                else if ( (LA11_0==20) ) {
                     alt11=1;
                 }
 
 
                 switch (alt11) {
             	case 1 :
-            	    // InternalAnnotations.g:1062:2: kw= '.' this_ID_2= RULE_ID
+            	    // InternalAnnotations.g:1062:2: kw= '.'
             	    {
-            	    kw=(Token)match(input,20,FollowSets000.FOLLOW_3); 
+            	    kw=(Token)match(input,20,FollowSets000.FOLLOW_10); 
 
             	            current.merge(kw);
             	            newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             	        
-            	    this_ID_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_10); 
 
-            	    		current.merge(this_ID_2);
+            	    }
+            	    break;
+            	case 2 :
+            	    // InternalAnnotations.g:1068:6: (kw= '-' this_ID_3= RULE_ID )
+            	    {
+            	    // InternalAnnotations.g:1068:6: (kw= '-' this_ID_3= RULE_ID )
+            	    // InternalAnnotations.g:1069:2: kw= '-' this_ID_3= RULE_ID
+            	    {
+            	    kw=(Token)match(input,21,FollowSets000.FOLLOW_3); 
+
+            	            current.merge(kw);
+            	            newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); 
+            	        
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_10); 
+
+            	    		current.merge(this_ID_3);
             	        
             	     
-            	        newLeafNode(this_ID_2, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
+            	        newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); 
             	        
+
+            	    }
+
 
             	    }
             	    break;
@@ -2534,7 +2560,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalAnnotations.g:1074:3: (kw= '#' this_INT_4= RULE_INT )?
+            // InternalAnnotations.g:1081:4: (kw= '#' this_INT_5= RULE_INT )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -2543,19 +2569,19 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt12) {
                 case 1 :
-                    // InternalAnnotations.g:1075:2: kw= '#' this_INT_4= RULE_INT
+                    // InternalAnnotations.g:1082:2: kw= '#' this_INT_5= RULE_INT
                     {
                     kw=(Token)match(input,16,FollowSets000.FOLLOW_11); 
 
                             current.merge(kw);
                             newLeafNode(kw, grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
                         
-                    this_INT_4=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); 
+                    this_INT_5=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); 
 
-                    		current.merge(this_INT_4);
+                    		current.merge(this_INT_5);
                         
                      
-                        newLeafNode(this_INT_4, grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
+                        newLeafNode(this_INT_5, grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
                         
 
                     }
@@ -2584,7 +2610,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalAnnotations.g:1097:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
+    // InternalAnnotations.g:1104:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
     public final String entryRuleInteger() throws RecognitionException {
         String current = null;
 
@@ -2592,8 +2618,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:1098:2: (iv_ruleInteger= ruleInteger EOF )
-            // InternalAnnotations.g:1099:2: iv_ruleInteger= ruleInteger EOF
+            // InternalAnnotations.g:1105:2: (iv_ruleInteger= ruleInteger EOF )
+            // InternalAnnotations.g:1106:2: iv_ruleInteger= ruleInteger EOF
             {
              newCompositeNode(grammarAccess.getIntegerRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -2620,7 +2646,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInteger"
-    // InternalAnnotations.g:1106:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalAnnotations.g:1113:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleInteger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2630,13 +2656,13 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalAnnotations.g:1109:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalAnnotations.g:1110:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalAnnotations.g:1116:28: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalAnnotations.g:1117:1: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalAnnotations.g:1110:1: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalAnnotations.g:1110:2: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalAnnotations.g:1117:1: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalAnnotations.g:1117:2: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalAnnotations.g:1110:2: (kw= '-' )?
+            // InternalAnnotations.g:1117:2: (kw= '-' )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -2645,7 +2671,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalAnnotations.g:1111:2: kw= '-'
+                    // InternalAnnotations.g:1118:2: kw= '-'
                     {
                     kw=(Token)match(input,21,FollowSets000.FOLLOW_11); 
 
@@ -2686,7 +2712,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalAnnotations.g:1131:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
+    // InternalAnnotations.g:1138:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
     public final String entryRuleFloateger() throws RecognitionException {
         String current = null;
 
@@ -2694,8 +2720,8 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalAnnotations.g:1132:2: (iv_ruleFloateger= ruleFloateger EOF )
-            // InternalAnnotations.g:1133:2: iv_ruleFloateger= ruleFloateger EOF
+            // InternalAnnotations.g:1139:2: (iv_ruleFloateger= ruleFloateger EOF )
+            // InternalAnnotations.g:1140:2: iv_ruleFloateger= ruleFloateger EOF
             {
              newCompositeNode(grammarAccess.getFloategerRule()); 
             pushFollow(FollowSets000.FOLLOW_1);
@@ -2722,7 +2748,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalAnnotations.g:1140:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalAnnotations.g:1147:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleFloateger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2732,13 +2758,13 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalAnnotations.g:1143:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
-            // InternalAnnotations.g:1144:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalAnnotations.g:1150:28: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
+            // InternalAnnotations.g:1151:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalAnnotations.g:1144:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
-            // InternalAnnotations.g:1144:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
+            // InternalAnnotations.g:1151:1: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalAnnotations.g:1151:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
-            // InternalAnnotations.g:1144:2: (kw= '-' )?
+            // InternalAnnotations.g:1151:2: (kw= '-' )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -2747,7 +2773,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             }
             switch (alt14) {
                 case 1 :
-                    // InternalAnnotations.g:1145:2: kw= '-'
+                    // InternalAnnotations.g:1152:2: kw= '-'
                     {
                     kw=(Token)match(input,21,FollowSets000.FOLLOW_12); 
 
@@ -2790,24 +2816,25 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     protected DFA1 dfa1 = new DFA1(this);
-    static final String dfa_1s = "\13\uffff";
-    static final String dfa_2s = "\3\uffff\1\7\5\uffff\2\7";
-    static final String dfa_3s = "\1\4\1\uffff\1\7\1\5\1\7\1\10\3\uffff\2\5";
-    static final String dfa_4s = "\1\17\1\uffff\1\7\1\25\1\7\1\10\3\uffff\2\25";
-    static final String dfa_5s = "\1\uffff\1\1\4\uffff\1\3\1\4\1\2\2\uffff";
-    static final String dfa_6s = "\13\uffff}>";
+    static final String dfa_1s = "\14\uffff";
+    static final String dfa_2s = "\3\uffff\2\10\5\uffff\2\10";
+    static final String dfa_3s = "\1\4\1\uffff\1\7\2\5\1\7\1\10\3\uffff\2\5";
+    static final String dfa_4s = "\1\17\1\uffff\1\7\2\25\1\11\1\10\3\uffff\2\25";
+    static final String dfa_5s = "\1\uffff\1\1\5\uffff\1\3\1\4\1\2\2\uffff";
+    static final String dfa_6s = "\14\uffff}>";
     static final String[] dfa_7s = {
             "\1\1\12\uffff\1\2",
             "",
             "\1\3",
-            "\5\10\6\uffff\1\5\1\uffff\1\6\1\uffff\1\4\1\10",
-            "\1\11",
-            "\1\12",
+            "\5\11\6\uffff\1\6\1\uffff\1\7\1\uffff\1\4\1\5",
+            "\5\11\6\uffff\1\6\1\uffff\1\7\1\uffff\1\4\1\5",
+            "\1\12\2\11",
+            "\1\13",
             "",
             "",
             "",
-            "\5\10\6\uffff\1\5\1\uffff\1\6\1\uffff\1\4\1\10",
-            "\5\10\10\uffff\1\6\2\uffff\1\10"
+            "\5\11\6\uffff\1\6\1\uffff\1\7\1\uffff\1\4\1\5",
+            "\5\11\10\uffff\1\7\2\uffff\1\11"
     };
 
     static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);
@@ -2848,7 +2875,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000040000L});
         public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000080000L});
         public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000110002L});
+        public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000310002L});
         public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000000100L});
         public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000000200L});
     }

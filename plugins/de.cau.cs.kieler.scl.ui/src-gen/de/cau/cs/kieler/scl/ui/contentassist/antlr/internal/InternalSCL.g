@@ -3513,6 +3513,30 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__ExtendedID__Alternatives_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); }
+
+	'.' 
+
+{ after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); }
+)
+
+    |(
+{ before(grammarAccess.getExtendedIDAccess().getGroup_1_1()); }
+(rule__ExtendedID__Group_1_1__0)
+{ after(grammarAccess.getExtendedIDAccess().getGroup_1_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__SchedulePriorityType__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -17571,9 +17595,9 @@ rule__ExtendedID__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getExtendedIDAccess().getGroup_1()); }
-(rule__ExtendedID__Group_1__0)*
-{ after(grammarAccess.getExtendedIDAccess().getGroup_1()); }
+{ before(grammarAccess.getExtendedIDAccess().getAlternatives_1()); }
+(rule__ExtendedID__Alternatives_1)*
+{ after(grammarAccess.getExtendedIDAccess().getAlternatives_1()); }
 )
 
 ;
@@ -17616,29 +17640,29 @@ finally {
 
 
 
-rule__ExtendedID__Group_1__0
+rule__ExtendedID__Group_1_1__0
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__ExtendedID__Group_1__0__Impl
-	rule__ExtendedID__Group_1__1
+	rule__ExtendedID__Group_1_1__0__Impl
+	rule__ExtendedID__Group_1_1__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ExtendedID__Group_1__0__Impl
+rule__ExtendedID__Group_1_1__0__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); }
+{ before(grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); }
 
-	'.' 
+	'-' 
 
-{ after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); }
+{ after(grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); }
 )
 
 ;
@@ -17647,26 +17671,26 @@ finally {
 }
 
 
-rule__ExtendedID__Group_1__1
+rule__ExtendedID__Group_1_1__1
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__ExtendedID__Group_1__1__Impl
+	rule__ExtendedID__Group_1_1__1__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ExtendedID__Group_1__1__Impl
+rule__ExtendedID__Group_1_1__1__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); }
+{ before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); }
 	RULE_ID
-{ after(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); }
+{ after(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); }
 )
 
 ;

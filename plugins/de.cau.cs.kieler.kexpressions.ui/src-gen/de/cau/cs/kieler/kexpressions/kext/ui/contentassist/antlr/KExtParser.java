@@ -71,6 +71,7 @@ public class KExtParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
 					put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
+					put(grammarAccess.getExtendedIDAccess().getAlternatives_1(), "rule__ExtendedID__Alternatives_1");
 					put(grammarAccess.getSchedulePriorityTypeAccess().getAlternatives(), "rule__SchedulePriorityType__Alternatives");
 					put(grammarAccess.getAssignOperatorAccess().getAlternatives(), "rule__AssignOperator__Alternatives");
 					put(grammarAccess.getPostfixOperatorAccess().getAlternatives(), "rule__PostfixOperator__Alternatives");
@@ -209,7 +210,7 @@ public class KExtParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup(), "rule__QuotedTypedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6(), "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
-					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
+					put(grammarAccess.getExtendedIDAccess().getGroup_1_1(), "rule__ExtendedID__Group_1_1__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
 					put(grammarAccess.getQualifiedIDAccess().getGroup(), "rule__QualifiedID__Group__0");
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
