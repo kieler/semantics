@@ -18,10 +18,13 @@ import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.sccharts.SCCharts
+import java.io.File
 import java.io.IOException
 import java.io.OutputStream
 import java.util.HashMap
 import java.util.Map
+import org.eclipse.core.runtime.Path
+import org.eclipse.emf.common.CommonPlugin
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource
 import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.resource.SaveOptions
@@ -113,8 +116,25 @@ public class SCTXResource extends LazyLinkingResource {
         val importPragmas = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma)
         for (importPragma : importPragmas) {
             try {
-                val importURI = createURI(base + importPragma.values.head + ".sctx") 
-                rSet.getResource(importURI, true)
+                val importName = importPragma.values.head
+                
+                if (importName.endsWith("*")) {
+                    val ownRLocationURI = createFileURI(CommonPlugin.resolve(ownR.URI).toFileString)
+                    
+                    val importNameBase = importName.substring(0, importName.length - 1)
+                    val baseURI = createURI(base + importNameBase)
+                    val resolvedFile = CommonPlugin.resolve(baseURI);
+                    val path = new Path(resolvedFile.toFileString())
+                    val folder = new File(path.toString)
+                    for (file : folder.listFiles.filter[ toString.endsWith(".sctx") ]) {
+                        val importURI = createFileURI(file.toString)
+                        if (!importURI.equals(ownRLocationURI) && !rSet.resources.exists[ it.URI.equals(importURI) ])
+                            rSet.getResource(importURI, true)
+                    }
+                } else {
+                    val importURI = createURI(base + importName + ".sctx") 
+                    rSet.getResource(importURI, true)
+                }
             } catch (Exception e) {
                 System.err.println("Resource " + importPragma.values.head + " not found!")
             }
