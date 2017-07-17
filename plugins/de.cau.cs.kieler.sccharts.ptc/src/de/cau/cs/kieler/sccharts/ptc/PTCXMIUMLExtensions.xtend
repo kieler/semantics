@@ -139,6 +139,10 @@ class PTCXMIUMLExtensions {
         return (element.umlType == "Property")
     }
 
+    def boolean isUMLConnectionPointReference(Element element) { 
+        return (element.umlType == "ConnectionPointReference")
+    }
+
     // -----------------------------------------------------------------
     def String getVisibility(Element content) {
         return content.attributeByName("visibility")
@@ -210,6 +214,10 @@ class PTCXMIUMLExtensions {
 
     def String getTypeAttribute(Element content) {
         return content.attributeByName("type")
+    }
+    
+   def String getSubmachine(Element content) {
+        return content.attributeByName("submachine")
     }
 
 }

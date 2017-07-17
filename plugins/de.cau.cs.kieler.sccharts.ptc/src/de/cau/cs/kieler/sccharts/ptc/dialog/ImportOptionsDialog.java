@@ -82,7 +82,6 @@ public class ImportOptionsDialog extends Dialog {
     private Table table;
     
     public static String[] optionList = null;
-    public static String[] optionListLabel = null;
 
     public static List<String> optionListSelected = new ArrayList<String>();
 
@@ -243,10 +242,14 @@ public class ImportOptionsDialog extends Dialog {
         
         for (int i = 0; i < optionList.length; i++) {
             final String option = optionList[i];
-            final String label = optionListLabel[i];
             Button btn = new Button(composite, SWT.CHECK);
             btn.setData(option);
-            btn.setText(label);
+            boolean preChecked = option.startsWith("X");
+            btn.setText(option.substring(1));
+            btn.setSelection(preChecked);
+            if (preChecked) {
+                optionListSelected.add(option);
+            }
             btn.addSelectionListener(new SelectionListener() {
                 @Override
                 public void widgetSelected(SelectionEvent event) {

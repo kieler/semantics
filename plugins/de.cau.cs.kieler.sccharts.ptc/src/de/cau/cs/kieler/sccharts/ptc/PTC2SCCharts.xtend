@@ -31,6 +31,9 @@ import de.cau.cs.kieler.sccharts.StateType
 import java.util.ArrayList
 import de.cau.cs.kieler.sccharts.Region
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
+
 /**
  * Import SCCharts from PTC
  * 
@@ -71,6 +74,9 @@ public class PTC2SCCharts {
     HashMap<String, ValuedObject> id2input = new HashMap();
     HashMap<String, String> Operation2Name = new HashMap();
     HashMap<String, ValuedObject> id2output = new HashMap();
+
+    HashMap<String, String> ConnetionPointRef2ConnectionPoint = new HashMap();
+    HashMap<String, EObject> ConnectionPoint2State = new HashMap();
 
     HashMap<String, ValuedObject> name2localValuedObject = new HashMap();
 
@@ -121,6 +127,8 @@ public class PTC2SCCharts {
 //    }
     def State current(List<State> targetModel) {
         if (targetModel.nullOrEmpty) {
+            ConnetionPointRef2ConnectionPoint.clear
+            ConnectionPoint2State.clear
             src2target.clear
             target2src.clear
             id2src.clear
@@ -137,12 +145,16 @@ public class PTC2SCCharts {
         return targetModel.last
     }
 
-    def void map(Element element, EObject target) {
+    def void map(Element element, EObject target, String id) {
         src2target.put(element, target);
         target2src.put(target, element);
 
-        id2src.put(element.id, element);
-        src2id.put(element, element.id);
+        id2src.put(id, element);
+        src2id.put(element, id);
+    }
+
+    def void map(Element element, EObject target) {
+        element.map(target, element.id)
     }
 
     def EObject src2target(EObject src) {
@@ -191,7 +203,7 @@ public class PTC2SCCharts {
     def ValuedObject getLocalValuedObject(List<State> targetModel, String localName) {
         if (!name2localValuedObject.containsKey(localName)) {
             // Insert new constant (intput)
-            val valuedObject = targetModel.current.createIntLocalVariable(localName)
+            val valuedObject = targetModel.current.createIntOutputVariable(localName)
             name2localValuedObject.put(localName, valuedObject)
             println("LOCAL IN PUT:" + localName + " (" + valuedObject.name + ")");
         }
@@ -213,7 +225,7 @@ public class PTC2SCCharts {
     def ValuedObject getOutputValuedObject(List<State> targetModel, String outputName, ValueType type, boolean signal) {
         if (!id2output.containsKey(outputName)) {
             // Insert new "constant" (intput)
-            val valuedObject = targetModel.current.createValuedObject(outputName, false, true,  type, signal)
+            val valuedObject = targetModel.current.createValuedObject(outputName, false, true, type, signal)
             id2output.put(outputName, valuedObject)
             println("OUTPUT IN PUT:" + outputName + " (" + valuedObject.name + ")");
         }
@@ -221,7 +233,7 @@ public class PTC2SCCharts {
     }
 
     def void body2output(Action action, List<State> targetModel, Element element, String body) {
-        if (optionListSelected.contains(PTCModelFileHandler.OPTION_HOSTLABELS)) {
+        if (PTCModelFileHandler.OPTION_HOSTLABELS.selected) {
             action.addEffect(asHostcodeEffect(body))
             return;
         }
@@ -356,8 +368,31 @@ public class PTC2SCCharts {
         return "I_" + inputCounter
     }
 
-    def void transformStateMachine(List<State> targetModel, Element element, boolean clear) {
+    def State resolveConnectionOrConnectionRef(String id) {
+        // First try direct connection points
+        if (ConnectionPoint2State.containsKey(id)) {
+            val state = ConnectionPoint2State.get(id)
+            if (state instanceof State) {
+                return state
+            }
+        }
+        // Then try indirectly referenced ones (-> results in hierarchy crossing transitions)
+        if (ConnetionPointRef2ConnectionPoint.containsKey(id)) {
+            val connectionPointId = ConnetionPointRef2ConnectionPoint.get(id)
+            if (ConnectionPoint2State.containsKey(connectionPointId)) {
+                val state = ConnectionPoint2State.get(connectionPointId)
+                if (state instanceof State) {
+                    return state
+                }
+            }
+        }
+        return null
+    }
+
+    def void transformStateMachine(List<State> targetModel, Element element, boolean clear, Region parentRegion) {
         if (clear) {
+            ConnetionPointRef2ConnectionPoint.clear
+            ConnectionPoint2State.clear
             src2target.clear
             target2src.clear
             id2src.clear
@@ -369,18 +404,35 @@ public class PTC2SCCharts {
             entryPoint.clear
             exitPoint.clear
         }
-        var scchart = SCChartsFactory::eINSTANCE.createState;
-        targetModel.add(scchart)
-        scchart.id = element.name.fixId;
-        println("CREATE STATEMACHINE '" + scchart.id + "' for " + element.hashCode)
-        element.map(scchart)
+        var State scchart
 
+        if (parentRegion == null) {
+            // New root SCChart
+            scchart = SCChartsFactory::eINSTANCE.createState;
+            targetModel.add(scchart)
+            scchart.id = element.name.fixId;
+            println("CREATE STATEMACHINE '" + scchart.id + "' for " + element.hashCode)
+            element.map(scchart)
+        } else {
+            // Expand into parent region
+            scchart = parentRegion.parentState
+            element.map(scchart)
+        }
         transitionMode = false
         targetModel.transformGeneral(element)
+
+        if (parentRegion != null) {
+            // Gather connection points            
+            for (connectionPoint : element.children.filter[e | e.type == "connectionPoint"].toList) {
+                targetModel.transformEntryExitPoints(connectionPoint, scchart)
+            }
+        }
 
         transitionMode = true
         targetModel.transformGeneral(element)
 
+        targetModel.last.fixDeadStates
+        targetModel.last.fixMultipleEntry
         targetModel.last.fixHierarchyCrossingTransitions
     }
 
@@ -392,17 +444,15 @@ public class PTC2SCCharts {
         targetModel.transformGeneral(element)
     }
 
-    def void transformPseudostate(List<State> targetModel, Element element, EObject srcParent) {
-        // Find region to create state in
-        val srcParentRegion = src2target.get(srcParent)
-        if (srcParentRegion instanceof State) {
-            val parentRegion = (srcParentRegion as State).regions.get(0) as ControlflowRegion;
+    def void transformEntryExitPoints(List<State> targetModel, Element element, EObject srcParent) {
+            var parentState = (srcParent as State)
+            var parentRegion = parentState.regions.get(0) as ControlflowRegion;
             if (parentRegion == null) {
                 println("ERROR: parentRegion is empty, cannot create entry/exit point")
                 return
             }
-            // Entry and Exit Points
-            // if (element.name.startsWith("Initial")) {
+
+                    // Entry and Exit Points
             if (element.kind == "entryPoint") {
                 println("CREATE ENTRY POINT '" + element.name + "' with id " + element.id)
 
@@ -411,7 +461,8 @@ public class PTC2SCCharts {
                 entryPoint.add(state)
                 element.map(state)
                 targetModel.transformGeneral(element)
-
+                ConnectionPoint2State.put(element.id, state);
+                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
             } else if (element.kind == "exitPoint") {
                 println("CREATE EXIT POINT '" + element.name + "' with id " + element.id)
                 val state = parentRegion.createState(element.name.fixId).uniqueName;
@@ -419,9 +470,53 @@ public class PTC2SCCharts {
                 exitPoint.add(state)
                 element.map(state)
                 targetModel.transformGeneral(element)
+                ConnectionPoint2State.put(element.id, state);
+                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
             }
+    }
 
-        } else if ((srcParentRegion instanceof ControlflowRegion)) {
+
+    def void transformPseudostate(List<State> targetModel, Element element, EObject srcParent) {
+        // Find region to create state in
+        var srcParentRegionOrState = src2target.get(srcParent)
+        if (srcParentRegionOrState == null) {
+            srcParentRegionOrState = srcParent
+        }
+        if (srcParentRegionOrState instanceof State) {
+            targetModel.transformEntryExitPoints(element, srcParentRegionOrState)
+
+//        if (srcParentRegionOrState instanceof State) {
+//            var parentState = (srcParentRegionOrState as State)
+//            var parentRegion = parentState.regions.get(0) as ControlflowRegion;
+//            if (parentRegion == null) {
+//                println("ERROR: parentRegion is empty, cannot create entry/exit point")
+//                return
+//            }
+//            // Entry and Exit Points
+//            // if (element.name.startsWith("Initial")) {
+//            if (element.kind == "entryPoint") {
+//                println("CREATE ENTRY POINT '" + element.name + "' with id " + element.id)
+//
+//                val state = parentRegion.createState(element.name.fixId).uniqueName;
+//                state.initial = true
+//                entryPoint.add(state)
+//                element.map(state)
+//                targetModel.transformGeneral(element)
+//                ConnectionPoint2State.put(element.id, state);
+//                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
+//            } else if (element.kind == "exitPoint") {
+//                println("CREATE EXIT POINT '" + element.name + "' with id " + element.id)
+//                val state = parentRegion.createState(element.name.fixId).uniqueName;
+//                state.final = true
+//                exitPoint.add(state)
+//                element.map(state)
+//                targetModel.transformGeneral(element)
+//                ConnectionPoint2State.put(element.id, state);
+//                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
+//            }
+//
+        } else if ((srcParentRegionOrState instanceof ControlflowRegion)) {
+//             if ((srcParentRegionOrState instanceof ControlflowRegion)) {
             if (element.kind == "junction") {
                 println("CREATE CONNECTOR STATE '" + element.name + "' with id " + element.id)
                 val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
@@ -438,7 +533,7 @@ public class PTC2SCCharts {
             }
         } else {
             println(
-                "ERROR: Element '" + srcParentRegion.id +
+                "ERROR: Element '" + srcParentRegionOrState.id +
                     "' is not a state or region. Cannot create pseudo state '" + element.id + "' here. ")
             return
         }
@@ -458,14 +553,71 @@ public class PTC2SCCharts {
         // if name == Initialize
         element.map(state)
         targetModel.transformGeneral(element)
+
+        // Check if the state references a substatemachine
+        if (element.getSubmachine() != "") {
+            // Inspect ConnectionPointReferences
+            targetModel.transformConnectionPointReferences(element, state)
+
+            if (PTCModelFileHandler.OPTION_EXPAND_SUBSTATEMACHINES.selected) {
+                // Expand the substatemachine inside this state
+                var Region region = null
+                if (state.regions.nullOrEmpty) {
+                    region = state.createControlflowRegion("Substatemachine").uniqueName
+                } else {
+                    region = state.regions.get(0);
+                }
+                // region.createInitialState("BLAAA")
+                targetModel.transformStateMachine(element, element.getSubmachine(), region)
+            }
+
+        // Option 1: 
+        // Consolidate all 
+        }
+    }
+
+    def transformConnectionPointReferences(List<State> targetModel, Element element, State scchartState) {
+        if (element.UMLState) {
+            for (child : element.children) {
+                if (child.isUMLConnectionPointReference) {
+                    val cprId = child.xmiId
+                    for (childchild : child.children) {
+                        if (childchild.type == "entry") {
+                            if (!PTCModelFileHandler.OPTION_EXPAND_SUBSTATEMACHINES.selected) {
+                                // Only map to connection point reference
+                                println("Entry ConnectionPointReference '" + cprId + "' for state '" + scchartState.id +
+                                    "'")
+                                childchild.map(scchartState, cprId)
+                            } else {
+                                val cpId = childchild.attributeByName("xmi:idref")
+                                ConnetionPointRef2ConnectionPoint.put(cprId, cpId)
+                                println("ConnetionPointRef2ConnectionPoint: '" + cprId + "' -> '" + cpId + "'")
+                            }
+                        } else if (childchild.type == "exit") {
+                            if (!PTCModelFileHandler.OPTION_EXPAND_SUBSTATEMACHINES.selected) {
+                                // Only map to connection point reference
+                                println(
+                                    "Exit ConnectionPointReference '" + cprId + "' for state '" + scchartState.id + "'")
+                                childchild.map(scchartState, cprId)
+                            } else {
+                                val cpId = childchild.attributeByName("xmi:idref")
+                                ConnetionPointRef2ConnectionPoint.put(cprId, cpId)
+                                println("ConnetionPointRef2ConnectionPoint: '" + cprId + "' -> '" + cpId + "'")
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
     }
 
     def transformActivity(List<State> targetModel, Element element) {
-        if (element.umlType != "Activity") {
+        if (!element.UMLActivity) { // umlType != "Activity") {
             return
         }
         if (element.type == "entry" || element.umlType == "exit") {
-            if (optionListSelected.contains(PTCModelFileHandler.OPTION_NO_ENTRYEXIT)) {
+            if (PTCModelFileHandler.OPTION_NO_ENTRYEXIT.selected) {
                 println("Skipping entry/exit action")
                 return;
             }
@@ -517,9 +669,11 @@ public class PTC2SCCharts {
 //        element.map(valuedObject)
 //        id2input.put(element.id, valuedObject)
     }
+    
+    var int counter = 0;
 
     def void transformTransition(List<State> targetModel, Element element) {
-        if (optionListSelected.contains(PTCModelFileHandler.OPTION_NO_TRANSITIONS)) {
+        if (PTCModelFileHandler.OPTION_NO_TRANSITIONS.selected) {
             println("Skipping transition")
             return;
         }
@@ -532,15 +686,40 @@ public class PTC2SCCharts {
             println(" --> TRANSITION: from " + element.source + " to " + element.target);
         }
 
-        val src = element.source.id2src.src2target as State
-        val dst = element.target.id2src.src2target as State
+        var src = element.source.id2src.src2target as State
+        var dst = element.target.id2src.src2target as State
+
+        // Try to resolve from connection points
+        if (src == null) {
+            println("Transition source == null: Try to resolve ConnectionPointRef (" + element.source + ") ...")
+            src = element.source.resolveConnectionOrConnectionRef()
+            if (src == null) {
+                println("Not found.")
+            } else {
+                println("Found: " + (src as State).id)
+            }
+        }
+        if (dst == null) {
+            println("Transition dest == null: Try to resolve ConnectionPointRef (" + element.target + ") ...")
+            dst = element.target.resolveConnectionOrConnectionRef()
+            if (dst == null) {
+                println("Not found.")
+            } else {
+                println("Found: " + (dst as State).id)
+            }
+        }
 
         if (src == null || dst == null) {
             return
         }
         if (src.eContainer != dst.eContainer) {
-//            println(" X --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
-//            return
+            counter++
+            if (counter < 0) {
+                println(" X --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
+                 return
+            } else {
+                println(" V --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
+            } 
         }
 
         if ((src instanceof State) && (dst instanceof State)) {
@@ -557,12 +736,12 @@ public class PTC2SCCharts {
                 // Ignore initial transitions
                 // @OPTION
                 var skip = false;
-                if (transition.sourceState.isInitial) {
-                    if (transition.sourceState.outgoingTransitions.size == 1) {
-                        skip = true;
-                        println("Info: Outgoing transition from initial state will not get a dummy input trigger.")
-                    }
-                }
+//                if (transition.sourceState.isInitial) {
+//                    if (transition.sourceState.outgoingTransitions.size == 1) {
+//                        skip = true;
+//                        println("Info: Outgoing transition from initial state will not get a dummy input trigger.")
+//                    }
+//                }
                 if (transition.sourceState.type == StateType::CONNECTOR) {
                     val index = transition.sourceState.outgoingTransitions.indexOf(transition)
 
@@ -581,6 +760,10 @@ public class PTC2SCCharts {
                     }
                 }
 
+                if (!PTCModelFileHandler.OPTION_ADDTRIGGERS.selected) {
+                    skip = true
+                }
+
                 if (!skip) {
                     // No trigger, so create dummy trigger
                     val valuedObject = targetModel.id2input(element, transition.hashCode + "")
@@ -595,10 +778,10 @@ public class PTC2SCCharts {
     }
 
     def transformTrigger(List<State> targetModel, Element element) {
-        if (optionListSelected.contains(PTCModelFileHandler.OPTION_NO_TRANSITIONS)) {
+        if (PTCModelFileHandler.OPTION_NO_TRANSITIONS.selected) {
             return;
         }
-        if (optionListSelected.contains(PTCModelFileHandler.OPTION_HOSTLABELS)) {
+        if (PTCModelFileHandler.OPTION_HOSTLABELS.selected) {
             return;
         }
 
@@ -669,7 +852,7 @@ public class PTC2SCCharts {
                 if (childElement.id.endsWith("Event")) {
                     targetModel.transformEvent(childElement)
                 } else if (childElement.isUMLStateMachine) {
-                    targetModel.transformStateMachine(childElement, false)
+                    targetModel.transformStateMachine(childElement, false, null)
                 } else if (childElement.isUMLRegion) {
                     targetModel.transformRegion(childElement, element)
                 } else if (childElement.isUMLPseudostate) {
@@ -709,9 +892,18 @@ public class PTC2SCCharts {
 
         }
     }
-    
-    
-    
+
+    def transformStateMachine(List<State> targetModel, Element anyElement, String stateMachineID, Region parentRegion) {
+        val allStatemachines = anyElement.root.eAllContents.filter [ e |
+            (e instanceof Element) && (e as Element).UMLStateMachine
+        ].toList
+        for (statemachine : allStatemachines) {
+            val Element elem = (statemachine as Element)
+            if (elem.xmiId.equals(stateMachineID)) {
+                targetModel.transformStateMachine(elem, false, parentRegion)
+            }
+        }
+    }
 
     def transform(EObject model, List<String> statemachineListParam, List<String> optionListSelectedParam) {
         statemachineList = statemachineListParam
@@ -742,7 +934,7 @@ public class PTC2SCCharts {
         for (statemachine : allStatemachines) {
             val Element elem = (statemachine as Element)
             if (statemachineList.contains(elem.name)) {
-                sccharts.transformStateMachine(elem, true)
+                sccharts.transformStateMachine(elem, true, null)
             }
         }
 
@@ -753,7 +945,10 @@ public class PTC2SCCharts {
         return sccharts
     }
 
-
+    // Shortcut: OPTION.selected
+    def boolean selected(String option) {
+        return optionListSelected.contains(option)
+    }
 }
 //
 //
