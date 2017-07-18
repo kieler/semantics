@@ -4,13 +4,10 @@
 package de.cau.cs.kieler.sccharts.text;
 
 import org.eclipse.xtext.linking.ILinker;
-import org.eclipse.xtext.resource.IContainer;
-import org.eclipse.xtext.resource.containers.StateBasedContainerManager;
 
 import de.cau.cs.kieler.sccharts.text.formatting.SCTXIndentionInformation;
 import de.cau.cs.kieler.sccharts.text.formatting.SCTXValueConverter;
 import de.cau.cs.kieler.sccharts.text.scoping.SCTXQualifiedNameProvider;
-import de.cau.cs.kieler.sccharts.text.validation.SCTXValidatorX;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -18,11 +15,6 @@ import de.cau.cs.kieler.sccharts.text.validation.SCTXValidatorX;
  * @author ssm 
  */
 public class SCTXRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCTXRuntimeModule {
-    
-    @org.eclipse.xtext.service.SingletonBinding(eager=true) 
-    public Class<? extends SCTXValidatorX> bindSctJavaValidator() {
-        return SCTXValidatorX.class;
-    }
     
     public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
         return SCTXQualifiedNameProvider.class;

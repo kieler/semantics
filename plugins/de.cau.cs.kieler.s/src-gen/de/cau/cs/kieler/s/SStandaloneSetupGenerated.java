@@ -41,6 +41,5 @@ public class SStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

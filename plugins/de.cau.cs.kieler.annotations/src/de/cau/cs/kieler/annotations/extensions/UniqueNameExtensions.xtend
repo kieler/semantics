@@ -33,7 +33,7 @@ class UniqueNameExtensions {
             val m = p.matcher(namedObject.name);
             if(m.find()) {
                 val n = Integer.parseInt(m.group)
-                namedObject.name = namedObject.name.substring(0, namedObject.name.length - m.group.length) + n
+                namedObject.name = namedObject.name.substring(0, namedObject.name.length - m.group.length) + (n + 1)
             } else {
                 namedObject.name = namedObject.name + "0"
             }

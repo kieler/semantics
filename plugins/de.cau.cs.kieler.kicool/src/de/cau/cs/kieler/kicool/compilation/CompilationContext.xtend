@@ -137,7 +137,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
                 processorInstance.process
             }
         } catch (Exception e) {
-            processorInstance.environment.errors.add(e.toString)
+            processorInstance.environment.errors.add(e)
             notify(new ProcessorError(e.message, this, processorReference, processorInstance))
             java.lang.System.err.println("Error in processor " + processorReference)
             e.printStackTrace

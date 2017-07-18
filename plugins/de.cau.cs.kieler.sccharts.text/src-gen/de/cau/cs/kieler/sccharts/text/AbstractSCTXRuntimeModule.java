@@ -93,9 +93,9 @@ public abstract class AbstractSCTXRuntimeModule extends org.eclipse.xtext.servic
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.sccharts.text.validation.SCTXJavaValidator> bindSCTXJavaValidator() {
-		return de.cau.cs.kieler.sccharts.text.validation.SCTXJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.sccharts.text.validation.SCTXValidator> bindSCTXValidator() {
+		return de.cau.cs.kieler.sccharts.text.validation.SCTXValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

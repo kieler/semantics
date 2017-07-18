@@ -25,5 +25,5 @@ import org.eclipse.emf.ecore.EObject;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Expression extends EObject {
+public interface Expression extends Schedulable {
 } // Expression

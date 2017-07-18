@@ -38,6 +38,5 @@ public class AnnotationsStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

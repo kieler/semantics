@@ -199,6 +199,15 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE_CALL = 2;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE_CALL__SCHEDULE = KExpressionsPackage.CALL__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
