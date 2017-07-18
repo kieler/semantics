@@ -79,9 +79,11 @@ class SCChartsCoreExtensions {
             if (scope.id != null) {
                 scopeId = scope.id
             } else {
-                val parent = (scope.eContainer as Scope);
-                if (parent instanceof State) {
-                    scopeId = "region" + parent.regions.indexOf(scope)
+                if (scope.eContainer instanceof Scope) {
+                    val parent = (scope.eContainer as Scope);
+                    if (parent instanceof State) {
+                        scopeId = "region" + parent.regions.indexOf(scope)
+                    }
                 }
             }
             if (scope.eContainer instanceof SCCharts) return scopeId + "_" + decendingName
