@@ -6,23 +6,26 @@
       <unit id="org.eclipse.egit.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.mwe.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.gmf.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.gmf.tooling.runtime.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.epp.mpc.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.gmf.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.gmf.tooling.runtime.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.graphiti.sdk.feature.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.jst.ws.jaxws.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.cdt.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/neon"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="org.apache.batik.swing" version="0.0.0"/>
+      <unit id="org.apache.batik.transcoder" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/"/>
+    </location>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="javax.xml.bind" version="0.0.0"/>
       <unit id="com.google.gson" version="0.0.0"/>
+      <unit id="org.freemarker" version="0.0.0"/>
       <unit id="org.eclipse.orbit.mongodb" version="0.0.0"/>
       <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170307180635/repository/"/>
     </location>
@@ -31,12 +34,12 @@
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
-      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-01/"/>
+      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-03/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.graphviz.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.elk.ui.feature.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/elk/updates/releases/0.2.1/"/>
+      <repository location="http://download.eclipse.org/elk/updates/releases/0.2.2/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.lejos.nxt.ldt.feature.feature.group" version="0.0.0"/>
