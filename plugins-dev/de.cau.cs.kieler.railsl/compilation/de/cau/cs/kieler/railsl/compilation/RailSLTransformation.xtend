@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -45,9 +45,6 @@ import de.cau.cs.kieler.railsl.railSL.ConditionalStatement
 import de.cau.cs.kieler.railsl.railSL.CrossingStatement
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
@@ -57,53 +54,48 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  * Transforms a RailSL model to an SCChart.
  * 
  * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
- *
+ * 
  */
 class RailSLTransformation extends AbstractProductionTransformation implements Traceable {
-    
+
     override getProducedFeatureId() {
         return "REFERENCE"
     }
-    
+
     override getId() {
         return "RailSLTransformation"
     }
-    
+
     override Set<String> getRequiredFeatureIds() {
         return Sets.newHashSet(RailSLFeatures.BASIC_ID)
-    }    
-    
+    }
+
     override transform(EObject eObject) {
         return (eObject as Program).railSLtoSCChart
     }
-    
+
     /*************************************************************************
      * I N J E C T I O N S ***************************************************
      *************************************************************************/
-    
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension KExtDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension RailSLExtensions
-    @Inject extension SCChartsCoreExtensions
-    @Inject extension SCChartsScopeExtensions 
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    
+
     /*************************************************************************
      * F I E L D S ***********************************************************
      *************************************************************************/
-
     /**
      * The speed value for slow driving
      */
     public static val SPEED_SLOW = 45;
-    
+
     /**
      * The speed value for full speed driving
      */
@@ -113,37 +105,35 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      * Maps variable names in the top-level SCChart to their corresponding @code{ValuedObjects}.
      */
     static var valObjects = new HashMap<String, ValuedObject>()
-    
+
     /**
      * The number of segments that exist in the railway installation.
      */
     public static val NUM_OF_SEGMENTS = 48
-    
+
     /**
      * The number of points that exist in the railway installation.
      */
     public static val NUM_OF_POINTS = 30
-    
+
     /**
      * The number of lights that exist in the railway installation.
      */
     public static val NUM_OF_LIGHTS = 24
-    
+
     /**
      * Helper variable to count region IDs
      */
     static var nextRegionID = 0;
-    
+
     /**
      * Helper variable to count state IDs
      */
     static var nextStateID = 0;
-    
 
     /**************************************************************************
      * T R A N S F O R M A T I O N S ******************************************
      **************************************************************************/
-
     /**
      * Transforms an instance of the RailSL metamodel to an instance of the SCCharts metamodel.
      */
@@ -227,14 +217,14 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
 
         chart.declarations.add(secondDecl)
         valObjects.put("second", second);
-        
+
         // output bool crossing
         val crossingDecl = createBoolDeclaration
         crossingDecl.output = true
         val crossing = createValuedObject("crossing")
         crossingDecl.attach(crossing)
         crossingDecl.annotations.add(createStringAnnotation("Wrapper", "crossing"))
-        
+
         chart.declarations.add(crossingDecl)
         valObjects.put("crossing", crossing);
 
@@ -276,17 +266,17 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
                 var transition = currentState.createTransitionTo(state)
                 transition.setImmediate
             }
-            
+
             currentState = state
         }
-        
+
         // Create the last state of the region and connect it to
         // the previous state with a normal termination transition 
         var state = region.createState("")
         var term = currentState.createTransitionTo(state)
         term.setTypeTermination
         currentState = state
-        
+
         if (block.end.equals("End.")) {
             // Create final state
             val done = region.createFinalState("done")
@@ -307,14 +297,20 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
 
         var state = region.createState("");
 
-        switch(statement) {
-            TimeWaitStatement: state.makeTimeWaitStatement(statement as TimeWaitStatement)
-            ContactWaitStatement: state.makeContactWaitStatement(statement as ContactWaitStatement)
-            SetTrackStatement: state.makeSetTrackStatement(statement as SetTrackStatement)
-            SetPointStatement: state.makeSetPointStatement(statement as SetPointStatement)
-            LightStatement: state.makeLightStatement(statement as LightStatement)
-            ConditionalStatement: state.makeConditionalStatement(statement as ConditionalStatement)
-            CrossingStatement: state.makeCrossingStatement(statement as CrossingStatement)
+        if (statement instanceof TimeWaitStatement) {
+            state.makeTimeWaitStatement(statement as TimeWaitStatement)
+        } else if (statement instanceof ContactWaitStatement) {
+            state.makeContactWaitStatement(statement as ContactWaitStatement)
+        } else if (statement instanceof SetTrackStatement) {
+            state.makeSetTrackStatement(statement as SetTrackStatement)
+        } else if (statement instanceof SetPointStatement) {
+            state.makeSetPointStatement(statement as SetPointStatement)
+        } else if (statement instanceof LightStatement) {
+            state.makeLightStatement(statement as LightStatement)
+        } else if (statement instanceof ConditionalStatement) {
+            state.makeConditionalStatement(statement as ConditionalStatement)
+        } else {
+            state.makeCrossingStatement(statement as CrossingStatement)
         }
 
         return state
@@ -330,7 +326,8 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         // Fetch variable crossing from root SCChart
         val crossing = valObjects.get("crossing")
 
-        transition.addEffect(crossing.createAssignment(createBoolValue(cStatement.parseCrossingSetting))
+        transition.addEffect(
+            crossing.createAssignment(createBoolValue(cStatement.parseCrossingSetting))
         )
     }
 
@@ -342,7 +339,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     def void makeConditionalStatement(State state, ConditionalStatement cStatement) {
         state.label = "_" + getStateID() + "_Conditional"
         var i = 0;
-        
+
         // Fetch variable contacts from root SCChart
         val contacts = valObjects.get("contacts")
         var expressions = new ArrayList<Expression>()
@@ -365,7 +362,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             ])
             i++
         }
-        
+
         // create states for each line and connect them accordingly
         var j = 0
         for (line : cStatement.lines) {
@@ -393,7 +390,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         val setting = parseLightMode(lStatement)
         var currentState = region.createInitialState("init")
         var i = 0
-        
+
         // Fetch variable lights from root SCChart
         val lights = valObjects.get("lights")
 
@@ -409,7 +406,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             i++
         }
         currentState.final = true
-        
+
     }
 
     /**
@@ -470,12 +467,12 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             val trackIndex = segment.parseTrackSegment
 
             val signalValue = if (speed == SPEED_FULL) {
-                4 // green signal
-            } else if (speed == SPEED_SLOW) {
-                2 // yellow signal
-            } else {
-                1 // red signal
-            }
+                    4 // green signal
+                } else if (speed == SPEED_SLOW) {
+                    2 // yellow signal
+                } else {
+                    1 // red signal
+                }
 
             // Set the track speed and direction
             transition.addEffect(tracks.createAssignment(createIntValue(speed)) => [
@@ -486,7 +483,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(1)
             ])
-            
+
             // Set the signals accordingly
             transition.addEffect(signals.createAssignment(createIntValue(signalValue)) => [
                 indices += createIntValue(trackIndex)
@@ -494,7 +491,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             ])
             transition.addEffect(signals.createAssignment(createIntValue(0)) => [
                 indices += createIntValue(trackIndex)
-                indices += createIntValue(if (direction == 0) 1 else 0)
+                indices += createIntValue(if(direction == 0) 1 else 0)
             ])
             currentState = nextState
             i++
@@ -575,7 +572,3 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     }
 
 }
-
-
-
-
