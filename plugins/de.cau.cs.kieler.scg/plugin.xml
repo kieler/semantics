@@ -150,6 +150,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.core.netlist.simple.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.reference.core.netlist.simple.kico">
+      </TransformationSystem>
    </extension>
 
 

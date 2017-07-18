@@ -126,9 +126,9 @@ final class StateIterator {
      */
     def static Iterator<State> sccAllStates(Scope s) {
         if (s instanceof State) {
-            return sccAllStates((s as State))
+            return sccAllStates(s as State)
         } else if (s instanceof ControlflowRegion) {
-            return sccAllStates((s as ControlflowRegion))
+            return sccAllStates(s as ControlflowRegion)
         } else {
             throw new IllegalArgumentException("Scope type not supported.")
         }
@@ -142,9 +142,9 @@ final class StateIterator {
      */
     def static Iterator<State> sccAllContainedStates(Scope s) {
         if (s instanceof State) {
-            return sccAllContainedStates((s as State))
+            return sccAllContainedStates(s as State)
         } else if (s instanceof ControlflowRegion) {
-            return sccAllContainedStates((s as ControlflowRegion))
+            return sccAllContainedStates(s as ControlflowRegion)
         } else {
             throw new IllegalArgumentException("Scope type not supported.")
         }
