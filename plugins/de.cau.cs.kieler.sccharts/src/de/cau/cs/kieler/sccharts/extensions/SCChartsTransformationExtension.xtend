@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -38,6 +39,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 class SCChartsTransformationExtension {
 
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsControlflowRegionExtensions
 
@@ -149,7 +151,7 @@ class SCChartsTransformationExtension {
 //    // ========= ATTRIBUTE GETTER =========
 
     def public ValueType getType(ValuedObject valuedObject) {
-        valuedObject.type
+        valuedObject.variableDeclaration.type
     }
 
     // Create a ValuedObjectReference to a valuedObject

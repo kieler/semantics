@@ -93,9 +93,9 @@ public abstract class AbstractKEffectsRuntimeModule extends org.eclipse.xtext.se
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kexpressions.keffects.validation.KEffectsJavaValidator> bindKEffectsJavaValidator() {
-		return de.cau.cs.kieler.kexpressions.keffects.validation.KEffectsJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kexpressions.keffects.validation.KEffectsValidator> bindKEffectsValidator() {
+		return de.cau.cs.kieler.kexpressions.keffects.validation.KEffectsValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

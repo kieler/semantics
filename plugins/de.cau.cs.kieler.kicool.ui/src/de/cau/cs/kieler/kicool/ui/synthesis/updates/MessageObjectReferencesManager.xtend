@@ -118,7 +118,7 @@ class MessageObjectReferencesManager {
         val newReferences = new MessageObjectReferences
         for(reference : references) {
             val IColorSystem cs = if (reference.colorSystem != null) reference.colorSystem else colorSystem
-            newReferences.add(new MessageObjectLink(reference.message, reference.object, reference.annotate, cs))
+            newReferences.add(new MessageObjectLink(reference.message, reference.object, reference.annotate, cs, null))
         }
         newReferences
     }     

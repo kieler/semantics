@@ -41,6 +41,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
         
         switch(context) {
             Transition: return getScopeForTransition(context, reference)
+            State: return getScopeForState(context, reference)
             ScopeCall: return getScopeForScopeCall(context, reference)  
         }
         
@@ -57,6 +58,26 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
         ]
         
         return SCTScopes.scopeFor(states)
+    }
+    
+    protected def IScope getScopeForState(State state, EReference reference) {
+        if (reference.name.equals("scope")) {
+            val eResource = state.eResource
+            if (eResource != null) {
+                val scchartsInScope = newHashSet(eResource.contents.head as SCCharts)
+                val eResourceSet = eResource.resourceSet
+                if (eResourceSet !== null) {
+                    eResourceSet.resources.filter[!contents.empty].map[contents.head].filter(SCCharts).forEach[ 
+                        scchartsInScope += it
+                    ]
+                }
+                return SCTScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
+            }
+            
+            return IScope.NULLSCOPE
+        }
+        
+        return super.getScope(state, reference)
     }
     
     protected def IScope getScopeForScopeCall(ScopeCall scopeCall, EReference reference) {

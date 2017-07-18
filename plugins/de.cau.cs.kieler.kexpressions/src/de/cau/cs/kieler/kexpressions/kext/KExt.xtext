@@ -74,10 +74,10 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
-    VariableDeclaration | ReferenceDeclaration;
+    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
 
 DeclarationWOSemicolon returns kexpressions::Declaration:
-    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon;
+    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
 
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
@@ -118,6 +118,24 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
         'extern' extern = STRING
     ))
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
+    
+ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
+    annotations += Annotation*
+    'schedule' name = PrimeID
+    (priorities += SchedulePriority)*
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    
+ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
+    annotations += Annotation*
+    'schedule' name = PrimeID
+    (priorities += SchedulePriority)*
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
+    
+SchedulePriority returns kexpressions::SchedulePriority:
+    'prio' priority=INT type=SchedulePriorityType;
+    
+enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+    CONFLICT="conflict" | CONFLUENT="confluent";
     
 //ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
 //    annotations+=Annotation*

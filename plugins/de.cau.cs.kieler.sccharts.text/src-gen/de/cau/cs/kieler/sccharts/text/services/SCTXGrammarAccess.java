@@ -510,8 +510,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIfKeyword_6_0_0_0 = (Keyword)cGroup_6_0_0.eContents().get(0);
 		private final Assignment cTriggerDelayAssignment_6_0_0_1 = (Assignment)cGroup_6_0_0.eContents().get(1);
 		private final RuleCall cTriggerDelayINTTerminalRuleCall_6_0_0_1_0 = (RuleCall)cTriggerDelayAssignment_6_0_0_1.eContents().get(0);
-		private final Assignment cTriggerAssignment_6_0_0_2 = (Assignment)cGroup_6_0_0.eContents().get(2);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_0_0_2_0 = (RuleCall)cTriggerAssignment_6_0_0_2.eContents().get(0);
+		private final Alternatives cAlternatives_6_0_0_2 = (Alternatives)cGroup_6_0_0.eContents().get(2);
+		private final Assignment cTriggerAssignment_6_0_0_2_0 = (Assignment)cAlternatives_6_0_0_2.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0 = (RuleCall)cTriggerAssignment_6_0_0_2_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_6_0_0_2_1 = (Assignment)cAlternatives_6_0_0_2.eContents().get(1);
+		private final RuleCall cTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0 = (RuleCall)cTriggerAssignment_6_0_0_2_1.eContents().get(0);
 		private final Group cGroup_6_0_1 = (Group)cGroup_6_0.eContents().get(1);
 		private final Keyword cDoKeyword_6_0_1_0 = (Keyword)cGroup_6_0_1.eContents().get(0);
 		private final Assignment cEffectsAssignment_6_0_1_1 = (Assignment)cGroup_6_0_1.eContents().get(1);
@@ -532,13 +535,14 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	annotations+=RestrictedTypeAnnotation*
 		//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
-		//	history=HistoryType? (('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	history=HistoryType? (('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+		//	effects+=Effect (';' effects+=Effect)*)?
 		//	| 'if' label=STRING)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=RestrictedTypeAnnotation* preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State]
-		//delay=DelayType? deferred?='deferred'? history=HistoryType? (('if' triggerDelay=INT? trigger=BoolExpression)? ('do'
-		//effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
+		//delay=DelayType? deferred?='deferred'? history=HistoryType? (('if' triggerDelay=INT? (trigger=BoolExpression |
+		//trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=RestrictedTypeAnnotation*
@@ -586,13 +590,15 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//HistoryType
 		public RuleCall getHistoryHistoryTypeEnumRuleCall_5_0() { return cHistoryHistoryTypeEnumRuleCall_5_0; }
 
-		//(('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
+		//(('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';'
+		//effects+=Effect)*)? | 'if' label=STRING)?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
-		//('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';'
+		//effects+=Effect)*)?
 		public Group getGroup_6_0() { return cGroup_6_0; }
 
-		//('if' triggerDelay=INT? trigger=BoolExpression)?
+		//('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))?
 		public Group getGroup_6_0_0() { return cGroup_6_0_0; }
 
 		//'if'
@@ -604,11 +610,20 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getTriggerDelayINTTerminalRuleCall_6_0_0_1_0() { return cTriggerDelayINTTerminalRuleCall_6_0_0_1_0; }
 
+		//(trigger=BoolExpression | trigger=AtomicExpression)
+		public Alternatives getAlternatives_6_0_0_2() { return cAlternatives_6_0_0_2; }
+
 		//trigger=BoolExpression
-		public Assignment getTriggerAssignment_6_0_0_2() { return cTriggerAssignment_6_0_0_2; }
+		public Assignment getTriggerAssignment_6_0_0_2_0() { return cTriggerAssignment_6_0_0_2_0; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_6_0_0_2_0() { return cTriggerBoolExpressionParserRuleCall_6_0_0_2_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0() { return cTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0; }
+
+		//trigger=AtomicExpression
+		public Assignment getTriggerAssignment_6_0_0_2_1() { return cTriggerAssignment_6_0_0_2_1; }
+
+		//AtomicExpression
+		public RuleCall getTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0; }
 
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_6_0_1() { return cGroup_6_0_1; }
@@ -1384,6 +1399,38 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//SubReferenceAssignment
 		public RuleCall getSubReferenceAssignmentParserRuleCall() { return cSubReferenceAssignmentParserRuleCall; }
 	}
+
+	public class HiddenKeywordsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.HiddenKeywords");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cGoKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cAbortKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cJoinKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cShallowKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		
+		//// -------------- //
+		////  Helper Rules  // 
+		//// -------------- //
+		//// These are implicit keywords due to rules such as 'go to'
+		//HiddenKeywords:
+		//	'go' | 'abort' | 'join' | 'shallow';
+		@Override public ParserRule getRule() { return rule; }
+
+		//'go' | 'abort' | 'join' | 'shallow'
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//'go'
+		public Keyword getGoKeyword_0() { return cGoKeyword_0; }
+
+		//'abort'
+		public Keyword getAbortKeyword_1() { return cAbortKeyword_1; }
+
+		//'join'
+		public Keyword getJoinKeyword_2() { return cJoinKeyword_2; }
+
+		//'shallow'
+		public Keyword getShallowKeyword_3() { return cShallowKeyword_3; }
+	}
 	
 	
 	public class PreemptionTypeElements extends AbstractEnumRuleElementFinder {
@@ -1562,6 +1609,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final PreemptionTypeLegacyElements ePreemptionTypeLegacy;
 	private final DelayTypeElements eDelayType;
 	private final HistoryTypeElements eHistoryType;
+	private final HiddenKeywordsElements pHiddenKeywords;
 	
 	private final Grammar grammar;
 
@@ -1612,6 +1660,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.ePreemptionTypeLegacy = new PreemptionTypeLegacyElements();
 		this.eDelayType = new DelayTypeElements();
 		this.eHistoryType = new HistoryTypeElements();
+		this.pHiddenKeywords = new HiddenKeywordsElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1739,7 +1788,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=RestrictedTypeAnnotation*
 	//	preemption=(PreemptionType | PreemptionTypeLegacy) targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
-	//	history=HistoryType? (('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	history=HistoryType? (('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do'
+	//	effects+=Effect (';' effects+=Effect)*)?
 	//	| 'if' label=STRING)?
 	public TransitionElements getTransitionAccess() {
 		return pTransition;
@@ -1951,6 +2001,20 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getHistoryTypeAccess().getRule();
 	}
 
+	//// -------------- //
+	////  Helper Rules  // 
+	//// -------------- //
+	//// These are implicit keywords due to rules such as 'go to'
+	//HiddenKeywords:
+	//	'go' | 'abort' | 'join' | 'shallow';
+	public HiddenKeywordsElements getHiddenKeywordsAccess() {
+		return pHiddenKeywords;
+	}
+	
+	public ParserRule getHiddenKeywordsRule() {
+		return getHiddenKeywordsAccess().getRule();
+	}
+
 	/// **
 	// * @author ssm
 	// * @kieler.design 2015-08-23 proposed 
@@ -2032,7 +2096,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -2042,7 +2106,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//DeclarationWOSemicolon kexpressions::Declaration:
-	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon
+	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -2111,6 +2175,52 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getReferenceDeclarationWOSemicolonRule() {
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
+	//	annotations+=Annotation*
+	//	'schedule' name=PrimeID
+	//	priorities+=SchedulePriority*
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
+		return gaKExt.getScheduleDeclarationAccess();
+	}
+	
+	public ParserRule getScheduleDeclarationRule() {
+		return getScheduleDeclarationAccess().getRule();
+	}
+
+	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
+	//	annotations+=Annotation*
+	//	'schedule' name=PrimeID
+	//	priorities+=SchedulePriority*
+	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
+		return gaKExt.getScheduleDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getScheduleDeclarationWOSemicolonRule() {
+		return getScheduleDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//SchedulePriority kexpressions::SchedulePriority:
+	//	'prio' priority=INT type=SchedulePriorityType
+	public KExtGrammarAccess.SchedulePriorityElements getSchedulePriorityAccess() {
+		return gaKExt.getSchedulePriorityAccess();
+	}
+	
+	public ParserRule getSchedulePriorityRule() {
+		return getSchedulePriorityAccess().getRule();
+	}
+
+	//enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+	//	CONFLICT="conflict" | CONFLUENT="confluent";
+	public KExtGrammarAccess.SchedulePriorityTypeElements getSchedulePriorityTypeAccess() {
+		return gaKExt.getSchedulePriorityTypeAccess();
+	}
+	
+	public EnumRule getSchedulePriorityTypeRule() {
+		return getSchedulePriorityTypeAccess().getRule();
 	}
 
 	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
@@ -2184,7 +2294,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// annotations defined in the annotations grammar.		
 	//Emission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")?
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")? ('schedule'
+	//	schedule+=ScheduleObjectReference+)?
 	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaKEffects.getEmissionAccess();
 	}
@@ -2201,7 +2312,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment keffects::Assignment:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-	//	operator=AssignOperator expression=Expression
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaKEffects.getAssignmentAccess();
 	}
@@ -2214,7 +2325,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
 	//	subReference=ValuedObjectReference)?
-	//	operator=AssignOperator expression=Expression
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 	public KEffectsGrammarAccess.SubReferenceAssignmentElements getSubReferenceAssignmentAccess() {
 		return gaKEffects.getSubReferenceAssignmentAccess();
 	}
@@ -2230,7 +2341,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//PostfixEffect keffects::Assignment:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-	//	operator=PostfixOperator
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
 	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
 		return gaKEffects.getPostfixEffectAccess();
 	}
@@ -2360,8 +2471,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	BoolExpression
-	//	| ValuedExpression;
+	//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -2655,6 +2765,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
+	}
+
+	//ScheduleObjectReference:
+	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
+		return gaKExpressions.getScheduleObjectReferenceAccess();
+	}
+	
+	public ParserRule getScheduleObjectReferenceRule() {
+		return getScheduleObjectReferenceAccess().getRule();
 	}
 
 	//// Reference Call Rule
@@ -3180,7 +3300,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID ("." ID)* ("#" INT)?;
+	//	ID ("." | "-" ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}

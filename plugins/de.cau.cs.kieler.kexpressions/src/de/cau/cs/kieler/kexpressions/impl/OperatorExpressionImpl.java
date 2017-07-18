@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.OperatorExpressionImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.OperatorExpressionImpl#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.OperatorExpressionImpl#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
@@ -39,6 +41,16 @@ import de.cau.cs.kieler.kexpressions.OperatorType;
  * @generated
  */
 public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpression {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
+
     /**
      * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -93,6 +105,18 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.OPERATOR_EXPRESSION__SCHEDULE);
+        }
+        return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public OperatorType getOperator() {
         return operator;
     }
@@ -129,6 +153,8 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
             case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
                 return ((InternalEList<?>)getSubExpressions()).basicRemove(otherEnd, msgs);
         }
@@ -143,6 +169,8 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SCHEDULE:
+                return getSchedule();
             case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
                 return getOperator();
             case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
@@ -160,6 +188,10 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
             case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
                 setOperator((OperatorType)newValue);
                 return;
@@ -179,6 +211,9 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SCHEDULE:
+                getSchedule().clear();
+                return;
             case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
                 return;
@@ -197,6 +232,8 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
             case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
             case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:

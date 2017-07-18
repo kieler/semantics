@@ -93,9 +93,9 @@ public abstract class AbstractKiCoolRuntimeModule extends org.eclipse.xtext.serv
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kicool.validation.KiCoolJavaValidator> bindKiCoolJavaValidator() {
-		return de.cau.cs.kieler.kicool.validation.KiCoolJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kicool.validation.KiCoolValidator> bindKiCoolValidator() {
+		return de.cau.cs.kieler.kicool.validation.KiCoolValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

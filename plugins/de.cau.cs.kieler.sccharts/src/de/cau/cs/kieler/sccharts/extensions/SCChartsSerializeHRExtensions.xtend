@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.PrecedingAction
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 
 /**
  * @author ssm
@@ -399,6 +400,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
 
         return new Pair(keywords, content);
+    }
+    
+    def dispatch Pair<List<String>, List<String>> serializeComponents(ScheduleDeclaration declaration, boolean hr
+    ) {
+        
     }    
     
     def dispatch Pair<List<String>, List<String>> serializeComponents(Void void, boolean hr) {

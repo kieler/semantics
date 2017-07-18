@@ -21,7 +21,7 @@ import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.sccharts.text.validation.SCTXValidatorX
+import de.cau.cs.kieler.sccharts.text.validation.SCTXValidator
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import com.google.inject.Inject
 
@@ -33,7 +33,7 @@ class SCTXQuickfixProviderX extends SCTXQuickfixProvider {
     
     @Inject extension SCChartsScopeExtensions
     
-   @Fix(SCTXValidatorX.CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR)
+   @Fix(SCTXValidator.CHECK_VIOLATION_STATES_REQUIRE_ENFORCER_DIRECTOR)
    def void setEnforcerDirector(Issue issue, IssueResolutionAcceptor acceptor) {
         acceptor.accept(issue, "Set Enforcer director", "Use the Enforcer director for the SCCharts.",
                 null, new ISemanticModification() {
@@ -43,10 +43,10 @@ class SCTXQuickfixProviderX extends SCTXQuickfixProvider {
                                 if (element instanceof Scope) {
                                     val scc = element.getSCCharts
                                     scc.pragmas.removeIf[ it instanceof PragmaStringAnnotation &&
-                                                              (it as PragmaStringAnnotation).name.equals(SCTXValidatorX.DIRECTOR) ]
+                                                              (it as PragmaStringAnnotation).name.equals(SCTXValidator.DIRECTOR) ]
                                     scc.pragmas += AnnotationsFactory.eINSTANCE.createStringPragma => [
-                                        name = SCTXValidatorX.DIRECTOR
-                                        values += SCTXValidatorX.ENFORCER
+                                        name = SCTXValidator.DIRECTOR
+                                        values += SCTXValidator.ENFORCER
                                     ]
                                 }
                             

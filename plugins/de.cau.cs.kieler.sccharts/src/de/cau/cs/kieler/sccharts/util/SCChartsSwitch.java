@@ -18,6 +18,7 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.ecore.EObject;
@@ -109,6 +110,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseScopeCall(scopeCall);
                 if (result == null) result = caseCall(scopeCall);
                 if (result == null) result = caseExpression(scopeCall);
+                if (result == null) result = caseSchedulable(scopeCall);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -532,6 +534,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSchedulable(Schedulable object) {
         return null;
     }
 

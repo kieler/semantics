@@ -71,7 +71,8 @@ Transition returns sccharts::Transition:
 	deferred?='deferred'?
 	history=HistoryType?
 	(
-		('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//                      -> This alternative is only for the serializer to enable forcing of brackets
+		('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
 		|
 		('if' label=STRING)
 	)?;
@@ -172,4 +173,9 @@ enum DelayType returns sccharts::DelayType:
 enum HistoryType returns sccharts::HistoryType:
     RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
 	
-	
+// -------------- //
+//  Helper Rules  // 
+// -------------- //
+
+// These are implicit keywords due to rules such as 'go to'
+HiddenKeywords: 'go' | 'abort' | 'join' | 'shallow';

@@ -69,6 +69,7 @@ public class ColorStore {
         REFERENCENODE_FOREGROUND(Colors.GRAY),
         
         COMMENT_FOREGROND(0xf0, 0xf0, 0x24),
+        COMMENT_FOREGROND_TRANSITION(0x00, 0x00, 0x00),
         COMMENT_BACKGROUND_GRADIENT_1(0xff, 0xff, 0xcc),
         COMMENT_BACKGROUND_GRADIENT_2(0xff, 0xf9, 0xba),
         COMMENT_TEXT(0, 0, 0),

@@ -71,6 +71,9 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
             case KExpressionsPackage.REFERENCE_DECLARATION: return createReferenceDeclaration();
+            case KExpressionsPackage.SCHEDULE_DECLARATION: return createScheduleDeclaration();
+            case KExpressionsPackage.SCHEDULE_PRIORITY: return createSchedulePriority();
+            case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: return createScheduleObjectReference();
             case KExpressionsPackage.PARAMETER: return createParameter();
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
             case KExpressionsPackage.FUNCTION_CALL: return createFunctionCall();
@@ -93,6 +96,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return createOperatorTypeFromString(eDataType, initialValue);
             case KExpressionsPackage.VALUE_TYPE:
                 return createValueTypeFromString(eDataType, initialValue);
+            case KExpressionsPackage.SCHEDULE_PRIORITY_TYPE:
+                return createSchedulePriorityTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -112,6 +117,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return convertOperatorTypeToString(eDataType, instanceValue);
             case KExpressionsPackage.VALUE_TYPE:
                 return convertValueTypeToString(eDataType, instanceValue);
+            case KExpressionsPackage.SCHEDULE_PRIORITY_TYPE:
+                return convertSchedulePriorityTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -212,6 +219,36 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public ScheduleDeclaration createScheduleDeclaration() {
+        ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
+        return scheduleDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SchedulePriority createSchedulePriority() {
+        SchedulePriorityImpl schedulePriority = new SchedulePriorityImpl();
+        return schedulePriority;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ScheduleObjectReference createScheduleObjectReference() {
+        ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
+        return scheduleObjectReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public FunctionCall createFunctionCall() {
         FunctionCallImpl functionCall = new FunctionCallImpl();
         return functionCall;
@@ -304,6 +341,26 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * @generated
      */
     public String convertValueTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SchedulePriorityType createSchedulePriorityTypeFromString(EDataType eDataType, String initialValue) {
+        SchedulePriorityType result = SchedulePriorityType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertSchedulePriorityTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

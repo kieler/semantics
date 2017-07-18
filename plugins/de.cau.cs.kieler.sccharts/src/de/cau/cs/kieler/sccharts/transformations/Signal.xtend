@@ -127,7 +127,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
     def void transformSignal(State state, State targetRootState) {
-        val allSignals = state.signals
+        val allSignals = state.signals.toList
         allSignals.setDefaultTrace
 
         // !!!CHANGED
@@ -136,7 +136,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
         }
 
         // One absentDuringAction for all signals
-        var DuringAction absentDuringAction
+        var DuringAction absentDuringAction = null
 
         // The following is necessary only if there are state actions which could
         // possibly modify the signal!
@@ -151,11 +151,6 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             for (action : state.actions.toList.immutableCopy) {
                 mainState.actions.add(action)
             }
-        }
-
-        if (!allSignals.nullOrEmpty && !allSignals.filter[!isInput].nullOrEmpty) {
-            absentDuringAction = state.createDuringAction
-            absentDuringAction.setImmediate(true);
         }
 
         // Go thru all signals
@@ -274,6 +269,11 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             // Do not do this for only-input-variables.
             if (!presentVariable.isInput) {
 
+                if (absentDuringAction == null) {
+                    absentDuringAction = state.createDuringAction
+                    absentDuringAction.setImmediate(true);
+                }
+                
                 // duringAction.setTrigger(TRUE) (implicit true)
                 // create AND add an absent-reset-assignment
                 absentDuringAction.createAssignment(presentVariable, FALSE)

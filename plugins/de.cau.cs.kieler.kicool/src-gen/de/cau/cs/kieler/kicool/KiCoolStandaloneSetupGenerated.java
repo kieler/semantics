@@ -38,6 +38,5 @@ public class KiCoolStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

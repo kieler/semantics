@@ -107,6 +107,33 @@ public interface KExpressionsFactory extends EFactory {
     ReferenceDeclaration createReferenceDeclaration();
 
     /**
+     * Returns a new object of class '<em>Schedule Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Declaration</em>'.
+     * @generated
+     */
+    ScheduleDeclaration createScheduleDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Schedule Priority</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Priority</em>'.
+     * @generated
+     */
+    SchedulePriority createSchedulePriority();
+
+    /**
+     * Returns a new object of class '<em>Schedule Object Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Object Reference</em>'.
+     * @generated
+     */
+    ScheduleObjectReference createScheduleObjectReference();
+
+    /**
      * Returns a new object of class '<em>Function Call</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

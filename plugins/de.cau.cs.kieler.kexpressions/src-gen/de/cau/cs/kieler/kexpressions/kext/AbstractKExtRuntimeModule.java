@@ -93,9 +93,9 @@ public abstract class AbstractKExtRuntimeModule extends org.eclipse.xtext.servic
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kexpressions.kext.validation.KExtJavaValidator> bindKExtJavaValidator() {
-		return de.cau.cs.kieler.kexpressions.kext.validation.KExtJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator> bindKExtValidator() {
+		return de.cau.cs.kieler.kexpressions.kext.validation.KExtValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
