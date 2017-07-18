@@ -40,7 +40,7 @@ class KiCoolFormatter extends AnnotationsFormatter {
 	}
 	
 	def dispatch void format(IntermediateReference intermediate, extension IFormattableDocument document) {
-	    intermediate.regionFor.keyword("metric").prepend[ newLine ]
+	    intermediate.regionFor.keyword("intermediate").prepend[ newLine ]
 	    
 	}
 }
