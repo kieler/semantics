@@ -15,8 +15,14 @@ package de.cau.cs.kieler.prom.build
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResourceChangeListener
+import org.eclipse.core.resources.IncrementalProjectBuilder
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
+import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.core.resources.IFile
 
 /**
  * @author aas
@@ -33,6 +39,37 @@ class JavaSimulationCompiler extends SimulationCompiler {
     
     new(IProgressMonitor monitor) {
         super(monitor)
+    }
+    
+    override compile(IFile file) {
+        this.file = file
+        // Create JSON library
+        initializeCompilation
+        
+        // Delay the compilation in another thread to ensure that the java builder
+        // has compiled the generated simulation code to a class file
+        val javaSimulationCompiler = this
+        val job = new Job("Delayed Java Simulation Compilation") {
+            override protected run(IProgressMonitor monitor) {
+                // Wait for the current build to finish
+                jobManager.join(ResourcesPlugin.FAMILY_AUTO_BUILD, monitor)
+                // Restart java builder on changed files
+                project.build(IncrementalProjectBuilder.INCREMENTAL_BUILD, monitor)
+                // In the following, the class file for the simulation is up-to-date
+                // Continue with compilation
+                javaSimulationCompiler.doCompile(file)
+                return Status.OK_STATUS
+            }
+        }
+        job.schedule()
+        return new FileGenerationResult
+    }
+    
+    /**
+     * Compile the simulation code to a java archive. 
+     */
+    private def void doCompile(IFile file) {
+        super.compile(file)
     }
     
     override initializeCompilation() {
