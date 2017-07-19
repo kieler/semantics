@@ -1119,6 +1119,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
 	//	'schedule' name=PrimeID
+	//	global=SchedulePriorityType?
 	//	priorities+=SchedulePriority*
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	public KExtGrammarAccess.ScheduleDeclarationElements getScheduleDeclarationAccess() {
@@ -1132,6 +1133,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
 	//	'schedule' name=PrimeID
+	//	global=SchedulePriorityType?
 	//	priorities+=SchedulePriority*
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	public KExtGrammarAccess.ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {

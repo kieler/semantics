@@ -663,6 +663,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getScheduleDeclaration_Global() {
+        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getSchedulePriority() {
         return schedulePriorityEClass;
     }
@@ -966,6 +975,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         scheduleDeclarationEClass = createEClass(SCHEDULE_DECLARATION);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__NAME);
         createEReference(scheduleDeclarationEClass, SCHEDULE_DECLARATION__PRIORITIES);
+        createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__GLOBAL);
 
         schedulePriorityEClass = createEClass(SCHEDULE_PRIORITY);
         createEAttribute(schedulePriorityEClass, SCHEDULE_PRIORITY__PRIORITY);
@@ -1110,6 +1120,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScheduleDeclaration_Priorities(), this.getSchedulePriority(), null, "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getScheduleDeclaration_Global(), this.getSchedulePriorityType(), "global", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(schedulePriorityEClass, SchedulePriority.class, "SchedulePriority", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSchedulePriority_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, SchedulePriority.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

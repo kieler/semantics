@@ -641,7 +641,14 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ScheduleDeclarationWOSemicolon returns ScheduleDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* name=PrimeID priorities+=SchedulePriority* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=PrimeID 
+	 *         global=SchedulePriorityType? 
+	 *         priorities+=SchedulePriority* 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
 	 */
 	protected void sequence_ScheduleDeclarationWOSemicolon(ISerializationContext context, ScheduleDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -654,7 +661,14 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ScheduleDeclaration returns ScheduleDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* name=PrimeID priorities+=SchedulePriority* valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=PrimeID 
+	 *         global=SchedulePriorityType? 
+	 *         priorities+=SchedulePriority* 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
 	 */
 	protected void sequence_ScheduleDeclaration(ISerializationContext context, ScheduleDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

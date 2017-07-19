@@ -122,12 +122,14 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
     'schedule' name = PrimeID
+    (global = SchedulePriorityType)?
     (priorities += SchedulePriority)*
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
 ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
     'schedule' name = PrimeID
+    (global = SchedulePriorityType)?
     (priorities += SchedulePriority)*
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
     

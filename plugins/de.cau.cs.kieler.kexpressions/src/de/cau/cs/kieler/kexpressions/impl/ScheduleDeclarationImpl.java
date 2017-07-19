@@ -6,6 +6,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.SchedulePriority;
 
+import de.cau.cs.kieler.kexpressions.SchedulePriorityType;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getPriorities <em>Priorities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl#getGlobal <em>Global</em>}</li>
  * </ul>
  *
  * @generated
@@ -63,6 +65,26 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * @ordered
      */
     protected EList<SchedulePriority> priorities;
+
+    /**
+     * The default value of the '{@link #getGlobal() <em>Global</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGlobal()
+     * @generated
+     * @ordered
+     */
+    protected static final SchedulePriorityType GLOBAL_EDEFAULT = SchedulePriorityType.CONFLICT;
+
+    /**
+     * The cached value of the '{@link #getGlobal() <em>Global</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getGlobal()
+     * @generated
+     * @ordered
+     */
+    protected SchedulePriorityType global = GLOBAL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -121,6 +143,27 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
+    public SchedulePriorityType getGlobal() {
+        return global;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setGlobal(SchedulePriorityType newGlobal) {
+        SchedulePriorityType oldGlobal = global;
+        global = newGlobal == null ? GLOBAL_EDEFAULT : newGlobal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL, oldGlobal, global));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -142,6 +185,8 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
                 return getName();
             case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
                 return getPriorities();
+            case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
+                return getGlobal();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -162,6 +207,9 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
                 getPriorities().clear();
                 getPriorities().addAll((Collection<? extends SchedulePriority>)newValue);
                 return;
+            case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
+                setGlobal((SchedulePriorityType)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -180,6 +228,9 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
             case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
                 getPriorities().clear();
                 return;
+            case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
+                setGlobal(GLOBAL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -196,6 +247,8 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES:
                 return priorities != null && !priorities.isEmpty();
+            case KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL:
+                return global != GLOBAL_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -212,6 +265,8 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: ");
         result.append(name);
+        result.append(", global: ");
+        result.append(global);
         result.append(')');
         return result.toString();
     }

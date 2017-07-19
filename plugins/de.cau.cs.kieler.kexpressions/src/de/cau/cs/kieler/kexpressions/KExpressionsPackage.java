@@ -792,13 +792,22 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_DECLARATION__PRIORITIES = DECLARATION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Global</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__GLOBAL = DECLARATION_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Schedule Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCHEDULE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 2;
+    int SCHEDULE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
@@ -1571,6 +1580,17 @@ public interface KExpressionsPackage extends EPackage {
     EReference getScheduleDeclaration_Priorities();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Global</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal()
+     * @see #getScheduleDeclaration()
+     * @generated
+     */
+    EAttribute getScheduleDeclaration_Global();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.SchedulePriority <em>Schedule Priority</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2199,6 +2219,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference SCHEDULE_DECLARATION__PRIORITIES = eINSTANCE.getScheduleDeclaration_Priorities();
+
+        /**
+         * The meta object literal for the '<em><b>Global</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCHEDULE_DECLARATION__GLOBAL = eINSTANCE.getScheduleDeclaration_Global();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
