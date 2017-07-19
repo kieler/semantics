@@ -166,16 +166,16 @@ ruleRootState returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRootStateAccess().getIdExtendedIDParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getRootStateAccess().getNameExtendedIDParserRuleCall_2_0()); 
 	    }
-		lv_id_2_0=ruleExtendedID		{
+		lv_name_2_0=ruleExtendedID		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getRootStateRule());
 	        }
        		set(
        			$current, 
-       			"id",
-        		lv_id_2_0, 
+       			"name",
+        		lv_name_2_0, 
         		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -404,9 +404,9 @@ ruleState returns [EObject current=null]
     }
 (
 (
-		lv_id_6_0=RULE_ID
+		lv_name_6_0=RULE_ID
 		{
-			newLeafNode(lv_id_6_0, grammarAccess.getStateAccess().getIdIDTerminalRuleCall_6_0()); 
+			newLeafNode(lv_name_6_0, grammarAccess.getStateAccess().getNameIDTerminalRuleCall_6_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -414,8 +414,8 @@ ruleState returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"id",
-        		lv_id_6_0, 
+       			"name",
+        		lv_name_6_0, 
         		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
@@ -1958,16 +1958,16 @@ ruleControlflowRegion returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
 	    }
-		lv_id_3_0=ruleExtendedID		{
+		lv_name_3_0=ruleExtendedID		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
 	        }
        		set(
        			$current, 
-       			"id",
-        		lv_id_3_0, 
+       			"name",
+        		lv_name_3_0, 
         		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2086,16 +2086,16 @@ ruleDataflowRegion returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
 	    }
-		lv_id_3_0=ruleExtendedID		{
+		lv_name_3_0=ruleExtendedID		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		set(
        			$current, 
-       			"id",
-        		lv_id_3_0, 
+       			"name",
+        		lv_name_3_0, 
         		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2318,9 +2318,9 @@ ruleScope returns [EObject current=null]
     }
 )(
 (
-		lv_id_1_0=RULE_ID
+		lv_name_1_0=RULE_ID
 		{
-			newLeafNode(lv_id_1_0, grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
+			newLeafNode(lv_name_1_0, grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2328,8 +2328,8 @@ ruleScope returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"id",
-        		lv_id_1_0, 
+       			"name",
+        		lv_name_1_0, 
         		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
@@ -3116,7 +3116,7 @@ ruleReferenceDeclaration returns [EObject current=null]
 	        }
         }
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
 	    }
 		ruleNamespaceID		{ 
 	        afterParserOrEnumRuleCall();
@@ -3244,7 +3244,7 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
 	        }
         }
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
 	    }
 		ruleNamespaceID		{ 
 	        afterParserOrEnumRuleCall();

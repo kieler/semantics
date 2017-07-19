@@ -107,7 +107,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                         statesWithLoop.add(entry.key)
                     }
                 }
-                val message = IMMEDIATE_LOOP + "\nInvolved states: " + statesWithLoop.map[it.id]
+                val message = IMMEDIATE_LOOP + "\nInvolved states: " + statesWithLoop.map[it.name]
                 for(s : statesWithLoop) {
                     // Highlight immediate transitions that lead to states, which are part of the loop.
                     // This is more helpful than highlighting the complete state.
@@ -329,8 +329,8 @@ class SCTXValidator extends AbstractSCTXValidator {
             var int foundInitial = 0;
             if ((parentState.actions.size() > 0) && (parentState.getRegions().size() == 1)
                     && parentState.getRegions().filter(typeof(ControlflowRegion)).head.getStates().size() == 0
-                    && (parentState.getRegions().head.getId() == null
-                        || parentState.getRegions().head.id.equals(""))) {
+                    && (parentState.getRegions().head.name == null
+                        || parentState.getRegions().head.name.equals(""))) {
                 foundInitial = 1;
             }
             for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {

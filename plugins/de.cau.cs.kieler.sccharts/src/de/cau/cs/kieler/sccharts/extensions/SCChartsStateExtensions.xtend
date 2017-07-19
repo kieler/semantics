@@ -39,7 +39,7 @@ class SCChartsStateExtensions {
     
     def State createState(String id) {
         SCChartsFactory::eINSTANCE.createState => [
-            setId(id)
+            setName(id)
             setLabel("")
         ]
     }

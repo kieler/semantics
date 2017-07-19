@@ -291,9 +291,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Referenceable" abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Identifiable" abstract="true" interface="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Schedulable" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedule" upperBound="-1"
         eType="#//ScheduleObjectReference" containment="true"/>

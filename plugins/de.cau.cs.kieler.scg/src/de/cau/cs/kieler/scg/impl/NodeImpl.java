@@ -13,11 +13,9 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.kexpressions.Identifiable;
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
-
 import de.cau.cs.kieler.scg.Dependency;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
@@ -47,7 +45,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getDependencies <em>Dependencies</em>}</li>
@@ -58,24 +56,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class NodeImpl extends AnnotatableImpl implements Node {
     /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected static final String ID_EDEFAULT = null;
+    protected static final String NAME_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected String id = ID_EDEFAULT;
+    protected String name = NAME_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getIncoming() <em>Incoming</em>}' reference list.
@@ -161,8 +159,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -170,11 +168,11 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setId(String newId) {
-        String oldId = id;
-        id = newId;
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__ID, oldId, id));
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__NAME, oldName, name));
     }
 
     /**
@@ -282,8 +280,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ScgPackage.NODE__ID:
-                return getId();
+            case ScgPackage.NODE__NAME:
+                return getName();
             case ScgPackage.NODE__INCOMING:
                 return getIncoming();
             case ScgPackage.NODE__IS_INITIAL:
@@ -305,8 +303,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ScgPackage.NODE__ID:
-                setId((String)newValue);
+            case ScgPackage.NODE__NAME:
+                setName((String)newValue);
                 return;
             case ScgPackage.NODE__INCOMING:
                 getIncoming().clear();
@@ -334,8 +332,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ScgPackage.NODE__ID:
-                setId(ID_EDEFAULT);
+            case ScgPackage.NODE__NAME:
+                setName(NAME_EDEFAULT);
                 return;
             case ScgPackage.NODE__INCOMING:
                 getIncoming().clear();
@@ -361,8 +359,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ScgPackage.NODE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+            case ScgPackage.NODE__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case ScgPackage.NODE__INCOMING:
                 return incoming != null && !incoming.isEmpty();
             case ScgPackage.NODE__IS_INITIAL:
@@ -382,9 +380,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      */
     @Override
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-        if (baseClass == Identifiable.class) {
+        if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
-                case ScgPackage.NODE__ID: return KExpressionsPackage.IDENTIFIABLE__ID;
+                case ScgPackage.NODE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
                 default: return -1;
             }
         }
@@ -398,9 +396,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      */
     @Override
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-        if (baseClass == Identifiable.class) {
+        if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
-                case KExpressionsPackage.IDENTIFIABLE__ID: return ScgPackage.NODE__ID;
+                case AnnotationsPackage.NAMED_OBJECT__NAME: return ScgPackage.NODE__NAME;
                 default: return -1;
             }
         }
@@ -417,8 +415,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
-        result.append(id);
+        result.append(" (name: ");
+        result.append(name);
         result.append(", isInitial: ");
         result.append(isInitial);
         result.append(", schizophrenic: ");

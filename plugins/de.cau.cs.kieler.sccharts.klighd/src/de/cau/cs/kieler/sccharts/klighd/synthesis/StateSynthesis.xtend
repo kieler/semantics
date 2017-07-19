@@ -66,8 +66,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val node = state.createNode().associateWith(state);
 
         // Set KIdentifier for use with incremental update
-        if (!state.id.nullOrEmpty) {
-            node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.id])
+        if (!state.name.nullOrEmpty) {
+            node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.name])
         }
         
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
@@ -160,9 +160,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         for (transition : state.outgoingTransitions) {
             transition.transform => [ edge |
                 val target = transition.targetState;
-                if (!target.id.nullOrEmpty) {
+                if (!target.name.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.id + counter]
+                    edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.name + counter]
                 }
             ];
         }

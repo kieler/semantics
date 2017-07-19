@@ -7677,9 +7677,9 @@ rule__Scope__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getScopeAccess().getIdAssignment_1()); }
-(rule__Scope__IdAssignment_1)?
-{ after(grammarAccess.getScopeAccess().getIdAssignment_1()); }
+{ before(grammarAccess.getScopeAccess().getNameAssignment_1()); }
+(rule__Scope__NameAssignment_1)?
+{ after(grammarAccess.getScopeAccess().getNameAssignment_1()); }
 )
 
 ;
@@ -19551,14 +19551,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Scope__IdAssignment_1
+rule__Scope__NameAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); }
-	RULE_ID{ after(grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); }
+{ before(grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); }
+	RULE_ID{ after(grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); }
 )
 
 ;
@@ -20088,12 +20088,12 @@ rule__ReferenceDeclaration__ReferenceAssignment_1_0_1
     }
 :
 (
-{ before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); }
+{ before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); }
 (
-{ before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); }
-	ruleNamespaceID{ after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); }
+{ before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); }
+	ruleNamespaceID{ after(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); }
 )
-{ after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); }
+{ after(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); }
 )
 
 ;
@@ -20167,12 +20167,12 @@ rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_1_0_1
     }
 :
 (
-{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); }
+{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); }
 (
-{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); }
-	ruleNamespaceID{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); }
+{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); }
+	ruleNamespaceID{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); }
 )
-{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); }
+{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); }
 )
 
 ;

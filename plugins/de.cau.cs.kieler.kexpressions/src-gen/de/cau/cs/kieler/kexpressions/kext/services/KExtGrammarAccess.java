@@ -104,8 +104,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.Scope");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cKExtScopeAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cIdIDTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cDeclarationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_3_0 = (RuleCall)cDeclarationsAssignment_3.eContents().get(0);
@@ -118,22 +118,22 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Scope kext::KExtScope:
-		//	{kext::KExtScope} id=ID? '{'
+		//	{kext::KExtScope} name=ID? '{'
 		//	declarations+=Declaration*
 		//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
 		@Override public ParserRule getRule() { return rule; }
 
-		//{kext::KExtScope} id=ID? '{' declarations+=Declaration* entities+=TestEntity* ('scope' scopes+=Scope)* '}'
+		//{kext::KExtScope} name=ID? '{' declarations+=Declaration* entities+=TestEntity* ('scope' scopes+=Scope)* '}'
 		public Group getGroup() { return cGroup; }
 
 		//{kext::KExtScope}
 		public Action getKExtScopeAction_0() { return cKExtScopeAction_0; }
 
-		//id=ID?
-		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
+		//name=ID?
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_1_0() { return cIdIDTerminalRuleCall_1_0; }
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
@@ -556,8 +556,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
 		private final Keyword cRefKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
 		private final Assignment cReferenceAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final CrossReference cReferenceIdentifiableCrossReference_1_0_1_0 = (CrossReference)cReferenceAssignment_1_0_1.eContents().get(0);
-		private final RuleCall cReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1 = (RuleCall)cReferenceIdentifiableCrossReference_1_0_1_0.eContents().get(1);
+		private final CrossReference cReferenceNamedObjectCrossReference_1_0_1_0 = (CrossReference)cReferenceAssignment_1_0_1.eContents().get(0);
+		private final RuleCall cReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1 = (RuleCall)cReferenceNamedObjectCrossReference_1_0_1_0.eContents().get(1);
 		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
 		private final Keyword cExternKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
 		private final Assignment cExternAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
@@ -571,11 +571,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-		//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+		//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 		//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
 		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 		public Group getGroup() { return cGroup; }
 
@@ -585,23 +585,23 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//'ref' reference=[kexpressions::Identifiable|NamespaceID]
+		//'ref' reference=[annotations::NamedObject|NamespaceID]
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//'ref'
 		public Keyword getRefKeyword_1_0_0() { return cRefKeyword_1_0_0; }
 
-		//reference=[kexpressions::Identifiable|NamespaceID]
+		//reference=[annotations::NamedObject|NamespaceID]
 		public Assignment getReferenceAssignment_1_0_1() { return cReferenceAssignment_1_0_1; }
 
-		//[kexpressions::Identifiable|NamespaceID]
-		public CrossReference getReferenceIdentifiableCrossReference_1_0_1_0() { return cReferenceIdentifiableCrossReference_1_0_1_0; }
+		//[annotations::NamedObject|NamespaceID]
+		public CrossReference getReferenceNamedObjectCrossReference_1_0_1_0() { return cReferenceNamedObjectCrossReference_1_0_1_0; }
 
 		//NamespaceID
-		public RuleCall getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1() { return cReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1; }
+		public RuleCall getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1() { return cReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1; }
 
 		//'extern' extern=STRING
 		public Group getGroup_1_1() { return cGroup_1_1; }
@@ -646,8 +646,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
 		private final Keyword cRefKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
 		private final Assignment cReferenceAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final CrossReference cReferenceIdentifiableCrossReference_1_0_1_0 = (CrossReference)cReferenceAssignment_1_0_1.eContents().get(0);
-		private final RuleCall cReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1 = (RuleCall)cReferenceIdentifiableCrossReference_1_0_1_0.eContents().get(1);
+		private final CrossReference cReferenceNamedObjectCrossReference_1_0_1_0 = (CrossReference)cReferenceAssignment_1_0_1.eContents().get(0);
+		private final RuleCall cReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1 = (RuleCall)cReferenceNamedObjectCrossReference_1_0_1_0.eContents().get(1);
 		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
 		private final Keyword cExternKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
 		private final Assignment cExternAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
@@ -660,11 +660,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_3_1_0 = (RuleCall)cValuedObjectsAssignment_3_1.eContents().get(0);
 		
 		//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-		//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+		//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 		//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
 		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		public Group getGroup() { return cGroup; }
 
@@ -674,23 +674,23 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//'ref' reference=[kexpressions::Identifiable|NamespaceID]
+		//'ref' reference=[annotations::NamedObject|NamespaceID]
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//'ref'
 		public Keyword getRefKeyword_1_0_0() { return cRefKeyword_1_0_0; }
 
-		//reference=[kexpressions::Identifiable|NamespaceID]
+		//reference=[annotations::NamedObject|NamespaceID]
 		public Assignment getReferenceAssignment_1_0_1() { return cReferenceAssignment_1_0_1; }
 
-		//[kexpressions::Identifiable|NamespaceID]
-		public CrossReference getReferenceIdentifiableCrossReference_1_0_1_0() { return cReferenceIdentifiableCrossReference_1_0_1_0; }
+		//[annotations::NamedObject|NamespaceID]
+		public CrossReference getReferenceNamedObjectCrossReference_1_0_1_0() { return cReferenceNamedObjectCrossReference_1_0_1_0; }
 
 		//NamespaceID
-		public RuleCall getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1() { return cReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1; }
+		public RuleCall getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1() { return cReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1; }
 
 		//'extern' extern=STRING
 		public Group getGroup_1_1() { return cGroup_1_1; }
@@ -1166,7 +1166,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scope kext::KExtScope:
-	//	{kext::KExtScope} id=ID? '{'
+	//	{kext::KExtScope} name=ID? '{'
 	//	declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
 	public ScopeElements getScopeAccess() {
@@ -1271,7 +1271,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	public ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return pReferenceDeclaration;
@@ -1282,7 +1282,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	public ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return pReferenceDeclarationWOSemicolon;

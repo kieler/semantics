@@ -15435,26 +15435,26 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RootState__Group__2__Impl"
-    // InternalSCTX.g:4686:1: rule__RootState__Group__2__Impl : ( ( rule__RootState__IdAssignment_2 ) ) ;
+    // InternalSCTX.g:4686:1: rule__RootState__Group__2__Impl : ( ( rule__RootState__NameAssignment_2 ) ) ;
     public final void rule__RootState__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:4690:1: ( ( ( rule__RootState__IdAssignment_2 ) ) )
-            // InternalSCTX.g:4691:1: ( ( rule__RootState__IdAssignment_2 ) )
+            // InternalSCTX.g:4690:1: ( ( ( rule__RootState__NameAssignment_2 ) ) )
+            // InternalSCTX.g:4691:1: ( ( rule__RootState__NameAssignment_2 ) )
             {
-            // InternalSCTX.g:4691:1: ( ( rule__RootState__IdAssignment_2 ) )
-            // InternalSCTX.g:4692:1: ( rule__RootState__IdAssignment_2 )
+            // InternalSCTX.g:4691:1: ( ( rule__RootState__NameAssignment_2 ) )
+            // InternalSCTX.g:4692:1: ( rule__RootState__NameAssignment_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getRootStateAccess().getIdAssignment_2()); 
+               before(grammarAccess.getRootStateAccess().getNameAssignment_2()); 
             }
-            // InternalSCTX.g:4693:1: ( rule__RootState__IdAssignment_2 )
-            // InternalSCTX.g:4693:2: rule__RootState__IdAssignment_2
+            // InternalSCTX.g:4693:1: ( rule__RootState__NameAssignment_2 )
+            // InternalSCTX.g:4693:2: rule__RootState__NameAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__RootState__IdAssignment_2();
+            rule__RootState__NameAssignment_2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -15462,7 +15462,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getRootStateAccess().getIdAssignment_2()); 
+               after(grammarAccess.getRootStateAccess().getNameAssignment_2()); 
             }
 
             }
@@ -16660,26 +16660,26 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__State__Group__6__Impl"
-    // InternalSCTX.g:5086:1: rule__State__Group__6__Impl : ( ( rule__State__IdAssignment_6 ) ) ;
+    // InternalSCTX.g:5086:1: rule__State__Group__6__Impl : ( ( rule__State__NameAssignment_6 ) ) ;
     public final void rule__State__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:5090:1: ( ( ( rule__State__IdAssignment_6 ) ) )
-            // InternalSCTX.g:5091:1: ( ( rule__State__IdAssignment_6 ) )
+            // InternalSCTX.g:5090:1: ( ( ( rule__State__NameAssignment_6 ) ) )
+            // InternalSCTX.g:5091:1: ( ( rule__State__NameAssignment_6 ) )
             {
-            // InternalSCTX.g:5091:1: ( ( rule__State__IdAssignment_6 ) )
-            // InternalSCTX.g:5092:1: ( rule__State__IdAssignment_6 )
+            // InternalSCTX.g:5091:1: ( ( rule__State__NameAssignment_6 ) )
+            // InternalSCTX.g:5092:1: ( rule__State__NameAssignment_6 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getIdAssignment_6()); 
+               before(grammarAccess.getStateAccess().getNameAssignment_6()); 
             }
-            // InternalSCTX.g:5093:1: ( rule__State__IdAssignment_6 )
-            // InternalSCTX.g:5093:2: rule__State__IdAssignment_6
+            // InternalSCTX.g:5093:1: ( rule__State__NameAssignment_6 )
+            // InternalSCTX.g:5093:2: rule__State__NameAssignment_6
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__State__IdAssignment_6();
+            rule__State__NameAssignment_6();
 
             state._fsp--;
             if (state.failed) return ;
@@ -16687,7 +16687,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getIdAssignment_6()); 
+               after(grammarAccess.getStateAccess().getNameAssignment_6()); 
             }
 
             }
@@ -27366,22 +27366,22 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ControlflowRegion__Group__3__Impl"
-    // InternalSCTX.g:8910:1: rule__ControlflowRegion__Group__3__Impl : ( ( rule__ControlflowRegion__IdAssignment_3 )? ) ;
+    // InternalSCTX.g:8910:1: rule__ControlflowRegion__Group__3__Impl : ( ( rule__ControlflowRegion__NameAssignment_3 )? ) ;
     public final void rule__ControlflowRegion__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:8914:1: ( ( ( rule__ControlflowRegion__IdAssignment_3 )? ) )
-            // InternalSCTX.g:8915:1: ( ( rule__ControlflowRegion__IdAssignment_3 )? )
+            // InternalSCTX.g:8914:1: ( ( ( rule__ControlflowRegion__NameAssignment_3 )? ) )
+            // InternalSCTX.g:8915:1: ( ( rule__ControlflowRegion__NameAssignment_3 )? )
             {
-            // InternalSCTX.g:8915:1: ( ( rule__ControlflowRegion__IdAssignment_3 )? )
-            // InternalSCTX.g:8916:1: ( rule__ControlflowRegion__IdAssignment_3 )?
+            // InternalSCTX.g:8915:1: ( ( rule__ControlflowRegion__NameAssignment_3 )? )
+            // InternalSCTX.g:8916:1: ( rule__ControlflowRegion__NameAssignment_3 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getControlflowRegionAccess().getIdAssignment_3()); 
+               before(grammarAccess.getControlflowRegionAccess().getNameAssignment_3()); 
             }
-            // InternalSCTX.g:8917:1: ( rule__ControlflowRegion__IdAssignment_3 )?
+            // InternalSCTX.g:8917:1: ( rule__ControlflowRegion__NameAssignment_3 )?
             int alt106=2;
             int LA106_0 = input.LA(1);
 
@@ -27390,10 +27390,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
             switch (alt106) {
                 case 1 :
-                    // InternalSCTX.g:8917:2: rule__ControlflowRegion__IdAssignment_3
+                    // InternalSCTX.g:8917:2: rule__ControlflowRegion__NameAssignment_3
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__ControlflowRegion__IdAssignment_3();
+                    rule__ControlflowRegion__NameAssignment_3();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -27404,7 +27404,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getControlflowRegionAccess().getIdAssignment_3()); 
+               after(grammarAccess.getControlflowRegionAccess().getNameAssignment_3()); 
             }
 
             }
@@ -28136,22 +28136,22 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DataflowRegion__Group__3__Impl"
-    // InternalSCTX.g:9170:1: rule__DataflowRegion__Group__3__Impl : ( ( rule__DataflowRegion__IdAssignment_3 )? ) ;
+    // InternalSCTX.g:9170:1: rule__DataflowRegion__Group__3__Impl : ( ( rule__DataflowRegion__NameAssignment_3 )? ) ;
     public final void rule__DataflowRegion__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:9174:1: ( ( ( rule__DataflowRegion__IdAssignment_3 )? ) )
-            // InternalSCTX.g:9175:1: ( ( rule__DataflowRegion__IdAssignment_3 )? )
+            // InternalSCTX.g:9174:1: ( ( ( rule__DataflowRegion__NameAssignment_3 )? ) )
+            // InternalSCTX.g:9175:1: ( ( rule__DataflowRegion__NameAssignment_3 )? )
             {
-            // InternalSCTX.g:9175:1: ( ( rule__DataflowRegion__IdAssignment_3 )? )
-            // InternalSCTX.g:9176:1: ( rule__DataflowRegion__IdAssignment_3 )?
+            // InternalSCTX.g:9175:1: ( ( rule__DataflowRegion__NameAssignment_3 )? )
+            // InternalSCTX.g:9176:1: ( rule__DataflowRegion__NameAssignment_3 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDataflowRegionAccess().getIdAssignment_3()); 
+               before(grammarAccess.getDataflowRegionAccess().getNameAssignment_3()); 
             }
-            // InternalSCTX.g:9177:1: ( rule__DataflowRegion__IdAssignment_3 )?
+            // InternalSCTX.g:9177:1: ( rule__DataflowRegion__NameAssignment_3 )?
             int alt111=2;
             int LA111_0 = input.LA(1);
 
@@ -28160,10 +28160,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
             switch (alt111) {
                 case 1 :
-                    // InternalSCTX.g:9177:2: rule__DataflowRegion__IdAssignment_3
+                    // InternalSCTX.g:9177:2: rule__DataflowRegion__NameAssignment_3
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__DataflowRegion__IdAssignment_3();
+                    rule__DataflowRegion__NameAssignment_3();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -28174,7 +28174,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDataflowRegionAccess().getIdAssignment_3()); 
+               after(grammarAccess.getDataflowRegionAccess().getNameAssignment_3()); 
             }
 
             }
@@ -29272,22 +29272,22 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scope__Group__1__Impl"
-    // InternalSCTX.g:9560:1: rule__Scope__Group__1__Impl : ( ( rule__Scope__IdAssignment_1 )? ) ;
+    // InternalSCTX.g:9560:1: rule__Scope__Group__1__Impl : ( ( rule__Scope__NameAssignment_1 )? ) ;
     public final void rule__Scope__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalSCTX.g:9564:1: ( ( ( rule__Scope__IdAssignment_1 )? ) )
-            // InternalSCTX.g:9565:1: ( ( rule__Scope__IdAssignment_1 )? )
+            // InternalSCTX.g:9564:1: ( ( ( rule__Scope__NameAssignment_1 )? ) )
+            // InternalSCTX.g:9565:1: ( ( rule__Scope__NameAssignment_1 )? )
             {
-            // InternalSCTX.g:9565:1: ( ( rule__Scope__IdAssignment_1 )? )
-            // InternalSCTX.g:9566:1: ( rule__Scope__IdAssignment_1 )?
+            // InternalSCTX.g:9565:1: ( ( rule__Scope__NameAssignment_1 )? )
+            // InternalSCTX.g:9566:1: ( rule__Scope__NameAssignment_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getScopeAccess().getIdAssignment_1()); 
+               before(grammarAccess.getScopeAccess().getNameAssignment_1()); 
             }
-            // InternalSCTX.g:9567:1: ( rule__Scope__IdAssignment_1 )?
+            // InternalSCTX.g:9567:1: ( rule__Scope__NameAssignment_1 )?
             int alt118=2;
             int LA118_0 = input.LA(1);
 
@@ -29296,10 +29296,10 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
             switch (alt118) {
                 case 1 :
-                    // InternalSCTX.g:9567:2: rule__Scope__IdAssignment_1
+                    // InternalSCTX.g:9567:2: rule__Scope__NameAssignment_1
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__Scope__IdAssignment_1();
+                    rule__Scope__NameAssignment_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -29310,7 +29310,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getScopeAccess().getIdAssignment_1()); 
+               after(grammarAccess.getScopeAccess().getNameAssignment_1()); 
             }
 
             }
@@ -62863,9 +62863,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__RootState__AnnotationsAssignment_0"
 
 
-    // $ANTLR start "rule__RootState__IdAssignment_2"
-    // InternalSCTX.g:21554:1: rule__RootState__IdAssignment_2 : ( ruleExtendedID ) ;
-    public final void rule__RootState__IdAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__RootState__NameAssignment_2"
+    // InternalSCTX.g:21554:1: rule__RootState__NameAssignment_2 : ( ruleExtendedID ) ;
+    public final void rule__RootState__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -62877,7 +62877,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:21560:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getRootStateAccess().getIdExtendedIDParserRuleCall_2_0()); 
+               before(grammarAccess.getRootStateAccess().getNameExtendedIDParserRuleCall_2_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleExtendedID();
@@ -62885,7 +62885,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getRootStateAccess().getIdExtendedIDParserRuleCall_2_0()); 
+               after(grammarAccess.getRootStateAccess().getNameExtendedIDParserRuleCall_2_0()); 
             }
 
             }
@@ -62905,7 +62905,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__RootState__IdAssignment_2"
+    // $ANTLR end "rule__RootState__NameAssignment_2"
 
 
     // $ANTLR start "rule__RootState__LabelAssignment_3"
@@ -63431,9 +63431,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__State__ConnectorAssignment_4"
 
 
-    // $ANTLR start "rule__State__IdAssignment_6"
-    // InternalSCTX.g:21766:1: rule__State__IdAssignment_6 : ( RULE_ID ) ;
-    public final void rule__State__IdAssignment_6() throws RecognitionException {
+    // $ANTLR start "rule__State__NameAssignment_6"
+    // InternalSCTX.g:21766:1: rule__State__NameAssignment_6 : ( RULE_ID ) ;
+    public final void rule__State__NameAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -63445,11 +63445,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:21772:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getIdIDTerminalRuleCall_6_0()); 
+               before(grammarAccess.getStateAccess().getNameIDTerminalRuleCall_6_0()); 
             }
             match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getIdIDTerminalRuleCall_6_0()); 
+               after(grammarAccess.getStateAccess().getNameIDTerminalRuleCall_6_0()); 
             }
 
             }
@@ -63469,7 +63469,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__State__IdAssignment_6"
+    // $ANTLR end "rule__State__NameAssignment_6"
 
 
     // $ANTLR start "rule__State__LabelAssignment_7"
@@ -65772,9 +65772,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ControlflowRegion__AnnotationsAssignment_1"
 
 
-    // $ANTLR start "rule__ControlflowRegion__IdAssignment_3"
-    // InternalSCTX.g:22576:1: rule__ControlflowRegion__IdAssignment_3 : ( ruleExtendedID ) ;
-    public final void rule__ControlflowRegion__IdAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__ControlflowRegion__NameAssignment_3"
+    // InternalSCTX.g:22576:1: rule__ControlflowRegion__NameAssignment_3 : ( ruleExtendedID ) ;
+    public final void rule__ControlflowRegion__NameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -65786,7 +65786,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22582:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getControlflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+               before(grammarAccess.getControlflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleExtendedID();
@@ -65794,7 +65794,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getControlflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+               after(grammarAccess.getControlflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
             }
 
             }
@@ -65814,7 +65814,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ControlflowRegion__IdAssignment_3"
+    // $ANTLR end "rule__ControlflowRegion__NameAssignment_3"
 
 
     // $ANTLR start "rule__ControlflowRegion__LabelAssignment_4"
@@ -65993,9 +65993,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__DataflowRegion__AnnotationsAssignment_1"
 
 
-    // $ANTLR start "rule__DataflowRegion__IdAssignment_3"
-    // InternalSCTX.g:22651:1: rule__DataflowRegion__IdAssignment_3 : ( ruleExtendedID ) ;
-    public final void rule__DataflowRegion__IdAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__DataflowRegion__NameAssignment_3"
+    // InternalSCTX.g:22651:1: rule__DataflowRegion__NameAssignment_3 : ( ruleExtendedID ) ;
+    public final void rule__DataflowRegion__NameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -66007,7 +66007,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22657:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getDataflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+               before(grammarAccess.getDataflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleExtendedID();
@@ -66015,7 +66015,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getDataflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+               after(grammarAccess.getDataflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
             }
 
             }
@@ -66035,7 +66035,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__DataflowRegion__IdAssignment_3"
+    // $ANTLR end "rule__DataflowRegion__NameAssignment_3"
 
 
     // $ANTLR start "rule__DataflowRegion__LabelAssignment_4"
@@ -66304,9 +66304,9 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__RootScope__ScopesAssignment_3_1"
 
 
-    // $ANTLR start "rule__Scope__IdAssignment_1"
-    // InternalSCTX.g:22762:1: rule__Scope__IdAssignment_1 : ( RULE_ID ) ;
-    public final void rule__Scope__IdAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__Scope__NameAssignment_1"
+    // InternalSCTX.g:22762:1: rule__Scope__NameAssignment_1 : ( RULE_ID ) ;
+    public final void rule__Scope__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -66318,11 +66318,11 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:22768:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
+               before(grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
             }
             match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
+               after(grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
             }
 
             }
@@ -66342,7 +66342,7 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Scope__IdAssignment_1"
+    // $ANTLR end "rule__Scope__NameAssignment_1"
 
 
     // $ANTLR start "rule__Scope__DeclarationsAssignment_3"
@@ -67715,13 +67715,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:23299:1: ( ruleNamespaceID )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
             // InternalSCTX.g:23300:1: ( ruleNamespaceID )
             // InternalSCTX.g:23301:1: ruleNamespaceID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleNamespaceID();
@@ -67729,13 +67729,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               after(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               after(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
 
             }
@@ -67948,13 +67948,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             // InternalSCTX.g:23378:1: ( ruleNamespaceID )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
             // InternalSCTX.g:23379:1: ( ruleNamespaceID )
             // InternalSCTX.g:23380:1: ruleNamespaceID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleNamespaceID();
@@ -67962,13 +67962,13 @@ public class InternalSCTXParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
 
             }

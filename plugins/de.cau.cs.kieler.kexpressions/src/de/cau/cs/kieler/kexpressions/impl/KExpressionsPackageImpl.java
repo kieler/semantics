@@ -15,7 +15,6 @@ import de.cau.cs.kieler.kexpressions.DoubleValue;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
-import de.cau.cs.kieler.kexpressions.Identifiable;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
@@ -171,13 +170,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass referenceableEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass identifiableEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -743,24 +735,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getIdentifiable() {
-        return identifiableEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getIdentifiable_Id() {
-        return (EAttribute)identifiableEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getSchedulable() {
         return schedulableEClass;
     }
@@ -1017,9 +991,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         referenceableEClass = createEClass(REFERENCEABLE);
 
-        identifiableEClass = createEClass(IDENTIFIABLE);
-        createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
-
         schedulableEClass = createEClass(SCHEDULABLE);
         createEReference(schedulableEClass, SCHEDULABLE__SCHEDULE);
 
@@ -1163,9 +1134,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceableEClass, Referenceable.class, "Referenceable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(identifiableEClass, Identifiable.class, "Identifiable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIdentifiable_Id(), ecorePackage.getEString(), "id", null, 0, 1, Identifiable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(schedulableEClass, Schedulable.class, "Schedulable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSchedulable_Schedule(), this.getScheduleObjectReference(), null, "schedule", null, 0, -1, Schedulable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

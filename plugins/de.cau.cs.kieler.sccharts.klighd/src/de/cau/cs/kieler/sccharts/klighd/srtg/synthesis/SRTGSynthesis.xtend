@@ -117,7 +117,7 @@ class SRTGSynthesis extends AbstractSCChartsSynthesis<Scope> {
         
         // Log elapsed time
         Log.log(
-            "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
+            "SCCharts synthesis transformed model " + (root.label ?: root.name) + " in " +
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
 		
         return rootNode;

@@ -162,13 +162,13 @@ public interface ScgPackage extends EPackage {
 	int NODE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int NODE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int NODE__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -235,13 +235,13 @@ public interface ScgPackage extends EPackage {
 	int CONDITIONAL__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONDITIONAL__ID = NODE__ID;
+    int CONDITIONAL__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -335,13 +335,13 @@ public interface ScgPackage extends EPackage {
 	int SURFACE__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SURFACE__ID = NODE__ID;
+    int SURFACE__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -417,13 +417,13 @@ public interface ScgPackage extends EPackage {
 	int DEPTH__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEPTH__ID = NODE__ID;
+    int DEPTH__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -508,13 +508,13 @@ public interface ScgPackage extends EPackage {
 	int ASSIGNMENT__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__ID = NODE__ID;
+    int ASSIGNMENT__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -644,13 +644,13 @@ public interface ScgPackage extends EPackage {
 	int FORK__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FORK__ID = NODE__ID;
+    int FORK__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -735,13 +735,13 @@ public interface ScgPackage extends EPackage {
 	int JOIN__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int JOIN__ID = NODE__ID;
+    int JOIN__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -836,13 +836,13 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ENTRY__ID = NODE__ID;
+    int ENTRY__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -927,13 +927,13 @@ public interface ScgPackage extends EPackage {
 	int EXIT__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EXIT__ID = NODE__ID;
+    int EXIT__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -1270,13 +1270,13 @@ public interface ScgPackage extends EPackage {
 	int GUARD__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int GUARD__ID = NODE__ID;
+    int GUARD__NAME = NODE__NAME;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.

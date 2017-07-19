@@ -603,7 +603,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ReferenceDeclarationWOSemicolon returns ReferenceDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (reference=[Identifiable|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (annotations+=Annotation* (reference=[NamedObject|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 */
 	protected void sequence_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -616,7 +616,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ReferenceDeclaration returns ReferenceDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (reference=[Identifiable|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (annotations+=Annotation* (reference=[NamedObject|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 */
 	protected void sequence_ReferenceDeclaration(ISerializationContext context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -687,7 +687,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     Scope returns KExtScope
 	 *
 	 * Constraint:
-	 *     (id=ID? declarations+=Declaration* entities+=TestEntity* scopes+=Scope*)
+	 *     (name=ID? declarations+=Declaration* entities+=TestEntity* scopes+=Scope*)
 	 */
 	protected void sequence_Scope(ISerializationContext context, KExtScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

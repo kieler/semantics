@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scg.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
-import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.scg.*;
@@ -176,8 +176,8 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createAnnotatableAdapter();
             }
             @Override
-            public Adapter caseIdentifiable(Identifiable object) {
-                return createIdentifiableAdapter();
+            public Adapter caseNamedObject(NamedObject object) {
+                return createNamedObjectAdapter();
             }
             @Override
             public Adapter caseSchedulable(Schedulable object) {
@@ -534,16 +534,16 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
+     * @see de.cau.cs.kieler.annotations.NamedObject
      * @generated
      */
-    public Adapter createIdentifiableAdapter() {
+    public Adapter createNamedObjectAdapter() {
         return null;
     }
 

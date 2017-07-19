@@ -199,10 +199,10 @@ public abstract class AbstractSCTXSyntacticSequencer extends AbstractSyntacticSe
 	 *     ('{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     id=ID (ambiguity) (rule end)
-	 *     id=ID (ambiguity) outgoingTransitions+=Transition
 	 *     label=STRING (ambiguity) (rule end)
 	 *     label=STRING (ambiguity) outgoingTransitions+=Transition
+	 *     name=ID (ambiguity) (rule end)
+	 *     name=ID (ambiguity) outgoingTransitions+=Transition
 	 */
 	protected void emit_State___LeftCurlyBracketKeyword_8_1_0_RightCurlyBracketKeyword_8_1_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

@@ -112,7 +112,7 @@ class ModelGenerator {
 
         // Create a basic SCCharts, set the id, label, and input and output declarations.
         val rootState = createState => [
-            it.id = id
+            it.name = id
             it.label = id
             it.declarations += createVariableDeclaration(ValueType.BOOL) => [ decl | 
                 decl.input = true

@@ -3757,11 +3757,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScope"
-    // InternalSCL.g:1292:1: ruleScope returns [EObject current=null] : ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) ;
+    // InternalSCL.g:1292:1: ruleScope returns [EObject current=null] : ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) ;
     public final EObject ruleScope() throws RecognitionException {
         EObject current = null;
         int ruleScope_StartIndex = input.index();
-        Token lv_id_1_0=null;
+        Token lv_name_1_0=null;
         Token otherlv_2=null;
         Token otherlv_5=null;
         Token otherlv_7=null;
@@ -3776,11 +3776,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 26) ) { return current; }
-            // InternalSCL.g:1295:28: ( ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) )
-            // InternalSCL.g:1296:1: ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
+            // InternalSCL.g:1295:28: ( ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) )
+            // InternalSCL.g:1296:1: ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
             {
-            // InternalSCL.g:1296:1: ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
-            // InternalSCL.g:1296:2: () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}'
+            // InternalSCL.g:1296:1: ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
+            // InternalSCL.g:1296:2: () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}'
             {
             // InternalSCL.g:1296:2: ()
             // InternalSCL.g:1297:2: 
@@ -3800,7 +3800,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:1305:2: ( (lv_id_1_0= RULE_ID ) )?
+            // InternalSCL.g:1305:2: ( (lv_name_1_0= RULE_ID ) )?
             int alt32=2;
             int LA32_0 = input.LA(1);
 
@@ -3809,15 +3809,15 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt32) {
                 case 1 :
-                    // InternalSCL.g:1306:1: (lv_id_1_0= RULE_ID )
+                    // InternalSCL.g:1306:1: (lv_name_1_0= RULE_ID )
                     {
-                    // InternalSCL.g:1306:1: (lv_id_1_0= RULE_ID )
-                    // InternalSCL.g:1307:3: lv_id_1_0= RULE_ID
+                    // InternalSCL.g:1306:1: (lv_name_1_0= RULE_ID )
+                    // InternalSCL.g:1307:3: lv_name_1_0= RULE_ID
                     {
-                    lv_id_1_0=(Token)match(input,RULE_ID,FOLLOW_28); if (state.failed) return current;
+                    lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_28); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_id_1_0, grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
+                      			newLeafNode(lv_name_1_0, grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -3827,8 +3827,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"id",
-                              		lv_id_1_0, 
+                             			"name",
+                              		lv_name_1_0, 
                               		"org.eclipse.xtext.common.Terminals.ID");
                       	    
                     }
@@ -5980,7 +5980,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+                      	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_38);
@@ -6356,7 +6356,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+                      	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_38);

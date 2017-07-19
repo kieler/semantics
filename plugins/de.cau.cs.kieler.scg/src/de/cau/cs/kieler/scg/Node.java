@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg;
 import org.eclipse.emf.common.util.EList;
 
 import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.annotations.NamedObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,7 +37,7 @@ import de.cau.cs.kieler.kexpressions.Identifiable;
  * @model
  * @generated
  */
-public interface Node extends Annotatable, Identifiable {
+public interface Node extends Annotatable, NamedObject {
     /**
      * Returns the value of the '<em><b>Incoming</b></em>' reference list.
      * The list contents are of type {@link de.cau.cs.kieler.scg.Link}.

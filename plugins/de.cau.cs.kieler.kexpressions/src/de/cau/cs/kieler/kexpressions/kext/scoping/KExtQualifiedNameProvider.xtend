@@ -15,7 +15,6 @@ import org.eclipse.xtext.util.Tuples;
 import com.google.common.base.Function;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import de.cau.cs.kieler.kexpressions.Identifiable
 
 /**
  * @author ssm
@@ -39,11 +38,7 @@ public class KExtQualifiedNameProvider extends DefaultDeclarativeQualifiedNamePr
 	private val nameResolver = SimpleAttributeResolver.newResolver(typeof(String), "name")
 	private val resolver = new Function<EObject, String>() {
 		override String apply(EObject input) {
-			if (input instanceof Identifiable) {
-				return idResolver.apply(input);
-			} else {
-				return nameResolver.apply(input);
-			}
+    		return nameResolver.apply(input);
 		}
 	};
 

@@ -70,7 +70,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
      * @generated
      */
-    int SCHEDULABLE = 22;
+    int SCHEDULABLE = 21;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -445,16 +445,6 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     int REFERENCEABLE = 20;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
-     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
-     * @generated
-     */
-    int IDENTIFIABLE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -1112,24 +1102,6 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCEABLE_FEATURE_COUNT = 0;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE__ID = 0;
-
-    /**
-     * The number of structural features of the '<em>Identifiable</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE_FEATURE_COUNT = 1;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1137,7 +1109,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 23;
+    int COMBINE_OPERATOR = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -1147,7 +1119,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 24;
+    int OPERATOR_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -1157,7 +1129,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 25;
+    int VALUE_TYPE = 24;
 
 
     /**
@@ -1168,7 +1140,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriorityType()
      * @generated
      */
-    int SCHEDULE_PRIORITY_TYPE = 26;
+    int SCHEDULE_PRIORITY_TYPE = 25;
 
 
     /**
@@ -1681,27 +1653,6 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getReferenceable();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Identifiable</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
-     * @generated
-     */
-    EClass getIdentifiable();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Identifiable#getId <em>Id</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable#getId()
-     * @see #getIdentifiable()
-     * @generated
-     */
-    EAttribute getIdentifiable_Id();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
@@ -2320,24 +2271,6 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass REFERENCEABLE = eINSTANCE.getReferenceable();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.Identifiable
-         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
-         * @generated
-         */
-        EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
-
-        /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}' class.

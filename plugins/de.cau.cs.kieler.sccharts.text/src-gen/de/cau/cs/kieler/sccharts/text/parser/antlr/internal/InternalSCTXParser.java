@@ -412,7 +412,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRootState"
-    // InternalSCTX.g:140:1: ruleRootState returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_id_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' ) ;
+    // InternalSCTX.g:140:1: ruleRootState returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_name_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' ) ;
     public final EObject ruleRootState() throws RecognitionException {
         EObject current = null;
 
@@ -422,7 +422,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         Token otherlv_10=null;
         EObject lv_annotations_0_0 = null;
 
-        AntlrDatatypeRuleToken lv_id_2_0 = null;
+        AntlrDatatypeRuleToken lv_name_2_0 = null;
 
         EObject lv_declarations_5_0 = null;
 
@@ -438,11 +438,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCTX.g:143:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_id_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' ) )
-            // InternalSCTX.g:144:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_id_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' )
+            // InternalSCTX.g:143:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_name_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' ) )
+            // InternalSCTX.g:144:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_name_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' )
             {
-            // InternalSCTX.g:144:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_id_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' )
-            // InternalSCTX.g:144:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_id_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}'
+            // InternalSCTX.g:144:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_name_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}' )
+            // InternalSCTX.g:144:2: ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'scchart' ( (lv_name_2_0= ruleExtendedID ) ) ( (lv_label_3_0= RULE_STRING ) )? otherlv_4= '{' ( (lv_declarations_5_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_6_0= ruleLocalAction ) )* ( ( (lv_regions_7_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_8_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_9_0= ruleRegion ) )* ) otherlv_10= '}'
             {
             // InternalSCTX.g:144:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop3:
@@ -503,19 +503,19 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_1, grammarAccess.getRootStateAccess().getScchartKeyword_1());
                   
             }
-            // InternalSCTX.g:166:1: ( (lv_id_2_0= ruleExtendedID ) )
-            // InternalSCTX.g:167:1: (lv_id_2_0= ruleExtendedID )
+            // InternalSCTX.g:166:1: ( (lv_name_2_0= ruleExtendedID ) )
+            // InternalSCTX.g:167:1: (lv_name_2_0= ruleExtendedID )
             {
-            // InternalSCTX.g:167:1: (lv_id_2_0= ruleExtendedID )
-            // InternalSCTX.g:168:3: lv_id_2_0= ruleExtendedID
+            // InternalSCTX.g:167:1: (lv_name_2_0= ruleExtendedID )
+            // InternalSCTX.g:168:3: lv_name_2_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getRootStateAccess().getIdExtendedIDParserRuleCall_2_0()); 
+              	        newCompositeNode(grammarAccess.getRootStateAccess().getNameExtendedIDParserRuleCall_2_0()); 
               	    
             }
             pushFollow(FollowSets000.FOLLOW_7);
-            lv_id_2_0=ruleExtendedID();
+            lv_name_2_0=ruleExtendedID();
 
             state._fsp--;
             if (state.failed) return current;
@@ -526,8 +526,8 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"id",
-                      		lv_id_2_0, 
+                     			"name",
+                      		lv_name_2_0, 
                       		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
@@ -902,7 +902,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleState"
-    // InternalSCTX.g:319:1: ruleState returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_id_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* ) ;
+    // InternalSCTX.g:319:1: ruleState returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_name_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* ) ;
     public final EObject ruleState() throws RecognitionException {
         EObject current = null;
 
@@ -911,7 +911,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         Token lv_violation_3_0=null;
         Token lv_connector_4_0=null;
         Token otherlv_5=null;
-        Token lv_id_6_0=null;
+        Token lv_name_6_0=null;
         Token lv_label_7_0=null;
         Token otherlv_8=null;
         Token otherlv_10=null;
@@ -936,11 +936,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCTX.g:322:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_id_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* ) )
-            // InternalSCTX.g:323:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_id_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* )
+            // InternalSCTX.g:322:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_name_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* ) )
+            // InternalSCTX.g:323:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_name_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* )
             {
-            // InternalSCTX.g:323:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_id_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* )
-            // InternalSCTX.g:323:2: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_id_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )*
+            // InternalSCTX.g:323:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_name_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )* )
+            // InternalSCTX.g:323:2: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_initial_1_0= 'initial' ) )? ( (lv_final_2_0= 'final' ) )? ( (lv_violation_3_0= 'violation' ) )? ( (lv_connector_4_0= 'connector' ) )? otherlv_5= 'state' ( (lv_name_6_0= RULE_ID ) ) ( (lv_label_7_0= RULE_STRING ) )? ( (otherlv_8= 'is' ( (lv_reference_9_0= ruleScopeCall ) ) ) | (otherlv_10= '{' ( (lv_declarations_11_0= ruleDeclarationWOSemicolon ) )* ( (lv_actions_12_0= ruleLocalAction ) )* ( ( (lv_regions_13_0= ruleSingleControlflowRegion ) ) | ( (lv_regions_14_0= ruleSingleDataflowRegion ) ) | ( (lv_regions_15_0= ruleRegion ) )* ) otherlv_16= '}' ) )? ( (lv_outgoingTransitions_17_0= ruleTransition ) )*
             {
             // InternalSCTX.g:323:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop9:
@@ -1149,16 +1149,16 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_5, grammarAccess.getStateAccess().getStateKeyword_5());
                   
             }
-            // InternalSCTX.g:405:1: ( (lv_id_6_0= RULE_ID ) )
-            // InternalSCTX.g:406:1: (lv_id_6_0= RULE_ID )
+            // InternalSCTX.g:405:1: ( (lv_name_6_0= RULE_ID ) )
+            // InternalSCTX.g:406:1: (lv_name_6_0= RULE_ID )
             {
-            // InternalSCTX.g:406:1: (lv_id_6_0= RULE_ID )
-            // InternalSCTX.g:407:3: lv_id_6_0= RULE_ID
+            // InternalSCTX.g:406:1: (lv_name_6_0= RULE_ID )
+            // InternalSCTX.g:407:3: lv_name_6_0= RULE_ID
             {
-            lv_id_6_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_18); if (state.failed) return current;
+            lv_name_6_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_18); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_id_6_0, grammarAccess.getStateAccess().getIdIDTerminalRuleCall_6_0()); 
+              			newLeafNode(lv_name_6_0, grammarAccess.getStateAccess().getNameIDTerminalRuleCall_6_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -1168,8 +1168,8 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
               	        }
                      		setWithLastConsumed(
                      			current, 
-                     			"id",
-                      		lv_id_6_0, 
+                     			"name",
+                      		lv_name_6_0, 
                       		"org.eclipse.xtext.common.Terminals.ID");
               	    
             }
@@ -5487,7 +5487,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleControlflowRegion"
-    // InternalSCTX.g:1923:1: ruleControlflowRegion returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ ) ;
+    // InternalSCTX.g:1923:1: ruleControlflowRegion returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ ) ;
     public final EObject ruleControlflowRegion() throws RecognitionException {
         EObject current = null;
 
@@ -5496,7 +5496,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         EObject lv_annotations_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_id_3_0 = null;
+        AntlrDatatypeRuleToken lv_name_3_0 = null;
 
         EObject lv_declarations_6_0 = null;
 
@@ -5506,11 +5506,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCTX.g:1926:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ ) )
-            // InternalSCTX.g:1927:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ )
+            // InternalSCTX.g:1926:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ ) )
+            // InternalSCTX.g:1927:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ )
             {
-            // InternalSCTX.g:1927:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ )
-            // InternalSCTX.g:1927:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+
+            // InternalSCTX.g:1927:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+ )
+            // InternalSCTX.g:1927:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'region' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_states_7_0= ruleState ) )+
             {
             // InternalSCTX.g:1927:2: ()
             // InternalSCTX.g:1928:2: 
@@ -5589,7 +5589,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getControlflowRegionAccess().getRegionKeyword_2());
                   
             }
-            // InternalSCTX.g:1958:1: ( (lv_id_3_0= ruleExtendedID ) )?
+            // InternalSCTX.g:1958:1: ( (lv_name_3_0= ruleExtendedID ) )?
             int alt62=2;
             int LA62_0 = input.LA(1);
 
@@ -5598,18 +5598,18 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             }
             switch (alt62) {
                 case 1 :
-                    // InternalSCTX.g:1959:1: (lv_id_3_0= ruleExtendedID )
+                    // InternalSCTX.g:1959:1: (lv_name_3_0= ruleExtendedID )
                     {
-                    // InternalSCTX.g:1959:1: (lv_id_3_0= ruleExtendedID )
-                    // InternalSCTX.g:1960:3: lv_id_3_0= ruleExtendedID
+                    // InternalSCTX.g:1959:1: (lv_name_3_0= ruleExtendedID )
+                    // InternalSCTX.g:1960:3: lv_name_3_0= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+                      	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_47);
-                    lv_id_3_0=ruleExtendedID();
+                    lv_name_3_0=ruleExtendedID();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -5620,8 +5620,8 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                       	        }
                              		set(
                              			current, 
-                             			"id",
-                              		lv_id_3_0, 
+                             			"name",
+                              		lv_name_3_0, 
                               		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
                       	        afterParserOrEnumRuleCall();
                       	    
@@ -5845,7 +5845,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataflowRegion"
-    // InternalSCTX.g:2051:1: ruleDataflowRegion returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ ) ;
+    // InternalSCTX.g:2051:1: ruleDataflowRegion returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ ) ;
     public final EObject ruleDataflowRegion() throws RecognitionException {
         EObject current = null;
 
@@ -5854,7 +5854,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         Token otherlv_5=null;
         EObject lv_annotations_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_id_3_0 = null;
+        AntlrDatatypeRuleToken lv_name_3_0 = null;
 
         EObject lv_declarations_6_0 = null;
 
@@ -5864,11 +5864,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCTX.g:2054:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ ) )
-            // InternalSCTX.g:2055:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ )
+            // InternalSCTX.g:2054:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ ) )
+            // InternalSCTX.g:2055:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ )
             {
-            // InternalSCTX.g:2055:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ )
-            // InternalSCTX.g:2055:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+
+            // InternalSCTX.g:2055:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+ )
+            // InternalSCTX.g:2055:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_name_3_0= ruleExtendedID ) )? ( (lv_label_4_0= RULE_STRING ) )? otherlv_5= ':' ( (lv_declarations_6_0= ruleDeclarationWOSemicolon ) )* ( (lv_equations_7_0= ruleEquation ) )+
             {
             // InternalSCTX.g:2055:2: ()
             // InternalSCTX.g:2056:2: 
@@ -5947,7 +5947,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_2, grammarAccess.getDataflowRegionAccess().getDataflowKeyword_2());
                   
             }
-            // InternalSCTX.g:2086:1: ( (lv_id_3_0= ruleExtendedID ) )?
+            // InternalSCTX.g:2086:1: ( (lv_name_3_0= ruleExtendedID ) )?
             int alt67=2;
             int LA67_0 = input.LA(1);
 
@@ -5956,18 +5956,18 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             }
             switch (alt67) {
                 case 1 :
-                    // InternalSCTX.g:2087:1: (lv_id_3_0= ruleExtendedID )
+                    // InternalSCTX.g:2087:1: (lv_name_3_0= ruleExtendedID )
                     {
-                    // InternalSCTX.g:2087:1: (lv_id_3_0= ruleExtendedID )
-                    // InternalSCTX.g:2088:3: lv_id_3_0= ruleExtendedID
+                    // InternalSCTX.g:2087:1: (lv_name_3_0= ruleExtendedID )
+                    // InternalSCTX.g:2088:3: lv_name_3_0= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+                      	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getNameExtendedIDParserRuleCall_3_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_47);
-                    lv_id_3_0=ruleExtendedID();
+                    lv_name_3_0=ruleExtendedID();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -5978,8 +5978,8 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                       	        }
                              		set(
                              			current, 
-                             			"id",
-                              		lv_id_3_0, 
+                             			"name",
+                              		lv_name_3_0, 
                               		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
                       	        afterParserOrEnumRuleCall();
                       	    
@@ -6564,11 +6564,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScope"
-    // InternalSCTX.g:2306:1: ruleScope returns [EObject current=null] : ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) ;
+    // InternalSCTX.g:2306:1: ruleScope returns [EObject current=null] : ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) ;
     public final EObject ruleScope() throws RecognitionException {
         EObject current = null;
 
-        Token lv_id_1_0=null;
+        Token lv_name_1_0=null;
         Token otherlv_2=null;
         Token otherlv_5=null;
         Token otherlv_7=null;
@@ -6582,11 +6582,11 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalSCTX.g:2309:28: ( ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) )
-            // InternalSCTX.g:2310:1: ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
+            // InternalSCTX.g:2309:28: ( ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' ) )
+            // InternalSCTX.g:2310:1: ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
             {
-            // InternalSCTX.g:2310:1: ( () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
-            // InternalSCTX.g:2310:2: () ( (lv_id_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}'
+            // InternalSCTX.g:2310:1: ( () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}' )
+            // InternalSCTX.g:2310:2: () ( (lv_name_1_0= RULE_ID ) )? otherlv_2= '{' ( (lv_declarations_3_0= ruleDeclaration ) )* ( (lv_entities_4_0= ruleTestEntity ) )* (otherlv_5= 'scope' ( (lv_scopes_6_0= ruleScope ) ) )* otherlv_7= '}'
             {
             // InternalSCTX.g:2310:2: ()
             // InternalSCTX.g:2311:2: 
@@ -6606,7 +6606,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCTX.g:2319:2: ( (lv_id_1_0= RULE_ID ) )?
+            // InternalSCTX.g:2319:2: ( (lv_name_1_0= RULE_ID ) )?
             int alt74=2;
             int LA74_0 = input.LA(1);
 
@@ -6615,15 +6615,15 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             }
             switch (alt74) {
                 case 1 :
-                    // InternalSCTX.g:2320:1: (lv_id_1_0= RULE_ID )
+                    // InternalSCTX.g:2320:1: (lv_name_1_0= RULE_ID )
                     {
-                    // InternalSCTX.g:2320:1: (lv_id_1_0= RULE_ID )
-                    // InternalSCTX.g:2321:3: lv_id_1_0= RULE_ID
+                    // InternalSCTX.g:2320:1: (lv_name_1_0= RULE_ID )
+                    // InternalSCTX.g:2321:3: lv_name_1_0= RULE_ID
                     {
-                    lv_id_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_8); if (state.failed) return current;
+                    lv_name_1_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_id_1_0, grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
+                      			newLeafNode(lv_name_1_0, grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -6633,8 +6633,8 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                       	        }
                              		setWithLastConsumed(
                              			current, 
-                             			"id",
-                              		lv_id_1_0, 
+                             			"name",
+                              		lv_name_1_0, 
                               		"org.eclipse.xtext.common.Terminals.ID");
                       	    
                     }
@@ -8923,7 +8923,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+                      	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_65);
@@ -9295,7 +9295,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+                      	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
                       	    
                     }
                     pushFollow(FollowSets000.FOLLOW_65);

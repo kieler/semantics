@@ -49,7 +49,7 @@ RootScope returns kext::KExtScope:
 
 Scope returns kext::KExtScope:
 	{kext::KExtScope} 
-	(id=ID)? '{'
+	(name=ID)? '{'
     declarations+=Declaration*
     entities+=TestEntity* 
 	('scope' scopes+=Scope)* '}';
@@ -104,7 +104,7 @@ NamespaceID returns ecore::EString:
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     ((
-        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+        'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
         'extern' extern = STRING
     ))
@@ -113,7 +113,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     ((
-        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+        'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
         'extern' extern = STRING
     ))

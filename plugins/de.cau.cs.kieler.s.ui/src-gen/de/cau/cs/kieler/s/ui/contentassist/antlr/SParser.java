@@ -279,7 +279,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRootScopeAccess().getDeclarationsAssignment_1(), "rule__RootScope__DeclarationsAssignment_1");
 					put(grammarAccess.getRootScopeAccess().getEntitiesAssignment_2(), "rule__RootScope__EntitiesAssignment_2");
 					put(grammarAccess.getRootScopeAccess().getScopesAssignment_3_1(), "rule__RootScope__ScopesAssignment_3_1");
-					put(grammarAccess.getScopeAccess().getIdAssignment_1(), "rule__Scope__IdAssignment_1");
+					put(grammarAccess.getScopeAccess().getNameAssignment_1(), "rule__Scope__NameAssignment_1");
 					put(grammarAccess.getScopeAccess().getDeclarationsAssignment_3(), "rule__Scope__DeclarationsAssignment_3");
 					put(grammarAccess.getScopeAccess().getEntitiesAssignment_4(), "rule__Scope__EntitiesAssignment_4");
 					put(grammarAccess.getScopeAccess().getScopesAssignment_5_1(), "rule__Scope__ScopesAssignment_5_1");

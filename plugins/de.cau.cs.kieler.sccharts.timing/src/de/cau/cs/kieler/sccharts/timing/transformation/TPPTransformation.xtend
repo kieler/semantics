@@ -187,7 +187,7 @@ class TPPTransformation extends AbstractProductionTransformation
 
                         var HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
                         val Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createControlflowRegion();
-                        scchartDummyRegion.setId("SCChartDummyRegion");
+                        scchartDummyRegion.setName("SCChartDummyRegion");
                         scchartDummyRegion.label = "SCChartDummyRegion";
 
                         // insert timing program points

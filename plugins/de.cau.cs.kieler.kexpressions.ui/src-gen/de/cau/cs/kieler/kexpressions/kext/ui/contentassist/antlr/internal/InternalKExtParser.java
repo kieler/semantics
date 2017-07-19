@@ -11811,22 +11811,22 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scope__Group__1__Impl"
-    // InternalKExt.g:3675:1: rule__Scope__Group__1__Impl : ( ( rule__Scope__IdAssignment_1 )? ) ;
+    // InternalKExt.g:3675:1: rule__Scope__Group__1__Impl : ( ( rule__Scope__NameAssignment_1 )? ) ;
     public final void rule__Scope__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExt.g:3679:1: ( ( ( rule__Scope__IdAssignment_1 )? ) )
-            // InternalKExt.g:3680:1: ( ( rule__Scope__IdAssignment_1 )? )
+            // InternalKExt.g:3679:1: ( ( ( rule__Scope__NameAssignment_1 )? ) )
+            // InternalKExt.g:3680:1: ( ( rule__Scope__NameAssignment_1 )? )
             {
-            // InternalKExt.g:3680:1: ( ( rule__Scope__IdAssignment_1 )? )
-            // InternalKExt.g:3681:1: ( rule__Scope__IdAssignment_1 )?
+            // InternalKExt.g:3680:1: ( ( rule__Scope__NameAssignment_1 )? )
+            // InternalKExt.g:3681:1: ( rule__Scope__NameAssignment_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getScopeAccess().getIdAssignment_1()); 
+               before(grammarAccess.getScopeAccess().getNameAssignment_1()); 
             }
-            // InternalKExt.g:3682:1: ( rule__Scope__IdAssignment_1 )?
+            // InternalKExt.g:3682:1: ( rule__Scope__NameAssignment_1 )?
             int alt38=2;
             int LA38_0 = input.LA(1);
 
@@ -11835,10 +11835,10 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             }
             switch (alt38) {
                 case 1 :
-                    // InternalKExt.g:3682:2: rule__Scope__IdAssignment_1
+                    // InternalKExt.g:3682:2: rule__Scope__NameAssignment_1
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__Scope__IdAssignment_1();
+                    rule__Scope__NameAssignment_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -11849,7 +11849,7 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getScopeAccess().getIdAssignment_1()); 
+               after(grammarAccess.getScopeAccess().getNameAssignment_1()); 
             }
 
             }
@@ -44533,9 +44533,9 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__RootScope__ScopesAssignment_3_1"
 
 
-    // $ANTLR start "rule__Scope__IdAssignment_1"
-    // InternalKExt.g:15365:1: rule__Scope__IdAssignment_1 : ( RULE_ID ) ;
-    public final void rule__Scope__IdAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__Scope__NameAssignment_1"
+    // InternalKExt.g:15365:1: rule__Scope__NameAssignment_1 : ( RULE_ID ) ;
+    public final void rule__Scope__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -44547,11 +44547,11 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             // InternalKExt.g:15371:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
+               before(grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
             }
             match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
+               after(grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
             }
 
             }
@@ -44571,7 +44571,7 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Scope__IdAssignment_1"
+    // $ANTLR end "rule__Scope__NameAssignment_1"
 
 
     // $ANTLR start "rule__Scope__DeclarationsAssignment_3"
@@ -45944,13 +45944,13 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             // InternalKExt.g:15902:1: ( ruleNamespaceID )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
             // InternalKExt.g:15903:1: ( ruleNamespaceID )
             // InternalKExt.g:15904:1: ruleNamespaceID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleNamespaceID();
@@ -45958,13 +45958,13 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               after(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               after(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
 
             }
@@ -46177,13 +46177,13 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             // InternalKExt.g:15981:1: ( ruleNamespaceID )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
             // InternalKExt.g:15982:1: ( ruleNamespaceID )
             // InternalKExt.g:15983:1: ruleNamespaceID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleNamespaceID();
@@ -46191,13 +46191,13 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableNamespaceIDParserRuleCall_1_0_1_0_1()); 
+               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_1_0_1_0_1()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_1_0_1_0()); 
+               after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_1_0_1_0()); 
             }
 
             }

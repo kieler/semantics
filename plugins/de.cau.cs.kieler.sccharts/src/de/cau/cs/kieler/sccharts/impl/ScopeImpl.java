@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Declaration;
-import de.cau.cs.kieler.kexpressions.Identifiable;
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.LocalAction;
@@ -47,7 +47,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReference <em>Reference</em>}</li>
@@ -74,24 +74,24 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EList<Declaration> declarations;
 
     /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
-   protected static final String ID_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected String id = ID_EDEFAULT;
+    protected static final String NAME_EDEFAULT = null;
+
+                /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
 
     /**
      * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
@@ -155,34 +155,13 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setId(String newId) {
-        String oldId = id;
-        id = newId;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__ID, oldId, id));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
      * edited by ssm to provide label/id service
      */
     public String getLabel() {
         if (label != null) {
             return label;
         } else {
-            return id;
+            return name;
         }
     }
 
@@ -270,6 +249,27 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -293,8 +293,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         switch (featureID) {
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return getDeclarations();
-            case SCChartsPackage.SCOPE__ID:
-                return getId();
+            case SCChartsPackage.SCOPE__NAME:
+                return getName();
             case SCChartsPackage.SCOPE__LABEL:
                 return getLabel();
             case SCChartsPackage.SCOPE__ACTIONS:
@@ -318,8 +318,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getDeclarations().clear();
                 getDeclarations().addAll((Collection<? extends Declaration>)newValue);
                 return;
-            case SCChartsPackage.SCOPE__ID:
-                setId((String)newValue);
+            case SCChartsPackage.SCOPE__NAME:
+                setName((String)newValue);
                 return;
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel((String)newValue);
@@ -346,8 +346,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 getDeclarations().clear();
                 return;
-            case SCChartsPackage.SCOPE__ID:
-                setId(ID_EDEFAULT);
+            case SCChartsPackage.SCOPE__NAME:
+                setName(NAME_EDEFAULT);
                 return;
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel(LABEL_EDEFAULT);
@@ -372,8 +372,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         switch (featureID) {
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return declarations != null && !declarations.isEmpty();
-            case SCChartsPackage.SCOPE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+            case SCChartsPackage.SCOPE__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case SCChartsPackage.SCOPE__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case SCChartsPackage.SCOPE__ACTIONS:
@@ -397,9 +397,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
-        if (baseClass == Identifiable.class) {
+        if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
-                case SCChartsPackage.SCOPE__ID: return KExpressionsPackage.IDENTIFIABLE__ID;
+                case SCChartsPackage.SCOPE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
                 default: return -1;
             }
         }
@@ -419,9 +419,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
-        if (baseClass == Identifiable.class) {
+        if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
-                case KExpressionsPackage.IDENTIFIABLE__ID: return SCChartsPackage.SCOPE__ID;
+                case AnnotationsPackage.NAMED_OBJECT__NAME: return SCChartsPackage.SCOPE__NAME;
                 default: return -1;
             }
         }
@@ -438,8 +438,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
-        result.append(id);
+        result.append(" (name: ");
+        result.append(name);
         result.append(", label: ");
         result.append(label);
         result.append(')');

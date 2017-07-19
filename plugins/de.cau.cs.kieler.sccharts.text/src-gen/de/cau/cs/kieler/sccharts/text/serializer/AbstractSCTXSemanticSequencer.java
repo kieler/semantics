@@ -657,7 +657,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+)
+	 *     (annotations+=Annotation* name=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+)
 	 */
 	protected void sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -682,7 +682,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     DataflowRegion returns DataflowRegion
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* equations+=Equation+)
+	 *     (annotations+=Annotation* name=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* equations+=Equation+)
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -760,7 +760,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         id=ExtendedID 
+	 *         name=ExtendedID 
 	 *         label=STRING? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         actions+=LocalAction* 
@@ -831,7 +831,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         final?='final'? 
 	 *         violation?='violation'? 
 	 *         connector?='connector'? 
-	 *         id=ID 
+	 *         name=ID 
 	 *         label=STRING? 
 	 *         (
 	 *             reference=ScopeCall | 

@@ -244,13 +244,13 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             activeStates.enterState(enterState);
             // activeStates.leaveState(leaveState);
             if (DEBUG) {
-                SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
+                SCChartsKiViPlugin.log(leaveState.getName() + " ----> " + enterState.getName());
             }
         }
 
         for (State activeState : activeStates.getAllActiveStates()) {
             if (DEBUG) {
-                SCChartsKiViPlugin.log("ACTIVE: " + activeState.getId());
+                SCChartsKiViPlugin.log("ACTIVE: " + activeState.getName());
             }
         }
 

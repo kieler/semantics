@@ -756,7 +756,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             generatedSCFiles.add("-I " + includePath);
             String modelName = "SCG";
             if (myModel instanceof State) {
-                modelName = ((State) myModel).getId();
+                modelName = ((State) myModel).getName();
             }
             cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
         } catch (RuntimeException e) {

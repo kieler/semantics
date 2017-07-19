@@ -142,7 +142,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
         
         // Log elapsed time
         Log.log(
-            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.id) + " in " +
+            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.hash) + " in " +
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
 		
         return rootNode

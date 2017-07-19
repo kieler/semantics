@@ -51,7 +51,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                 if (decl.input || decl.output) {
                     for (annotation : decl.annotations) {
                         val data = new WrapperCodeAnnotationData()
-                        data.modelName = model.id
+                        data.modelName = model.name
                         initData(data, decl)
                         initData(data, annotation)
                         annotationDatas += data
@@ -107,7 +107,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                                 }
                             }
                             
-                            data.modelName = model.id
+                            data.modelName = model.name
                             data.input = true
                             data.output = true
                             data.name = "Simulate"

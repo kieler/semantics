@@ -74,7 +74,7 @@ class Reference extends SCChartsProcessor {
     
     protected def expandReferencedState(State stateWithReference, Replacements replacements) {
         val newState = stateWithReference.reference.scope.copy as State => [ 
-            id = stateWithReference.id 
+            name = stateWithReference.name 
             label = stateWithReference.label
             initial = stateWithReference.initial
             final = stateWithReference.final
