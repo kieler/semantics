@@ -22,8 +22,8 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
-import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelExtensions
-import de.cau.cs.kieler.sccharts.ptx.xmi.UMLActionExpression
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModelExtensions
+import de.cau.cs.kieler.sccharts.ptc.xmi.UMLActionExpression
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.kexpressions.Declaration
 import javax.swing.undo.UndoManager

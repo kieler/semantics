@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.sccharts.ptc
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelExtensions
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModelExtensions
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
 
 /**

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ptx.xmi;
+package de.cau.cs.kieler.sccharts.ptc.xmi;
 
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Attribute;
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element;

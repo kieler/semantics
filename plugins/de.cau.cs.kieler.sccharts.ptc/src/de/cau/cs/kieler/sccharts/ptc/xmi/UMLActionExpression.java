@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.sccharts.ptx.xmi;
+package de.cau.cs.kieler.sccharts.ptc.xmi;
 
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient

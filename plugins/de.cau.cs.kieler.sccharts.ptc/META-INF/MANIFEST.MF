@@ -31,9 +31,9 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts.ptc,
  de.cau.cs.kieler.sccharts.ptc.dialog,
+ de.cau.cs.kieler.sccharts.ptc.xmi,
  de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel,
  de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.impl,
- de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.util,
- de.cau.cs.kieler.sccharts.ptx.xmi
+ de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.util
 Bundle-ActivationPolicy: lazy
 

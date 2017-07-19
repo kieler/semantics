@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.ptx.xmi;
+package de.cau.cs.kieler.sccharts.ptc.xmi;
 
 import java.lang.reflect.Field;
 import java.util.Stack;

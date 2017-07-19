@@ -10,13 +10,13 @@ import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.emf.common.util.URI
-import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelParser
-import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelSerializer
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModelParser
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModelSerializer
 import de.cau.cs.kieler.sccharts.ptc.dialog.ImportOptionsDialog
 import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModel.Element
 import java.util.List
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelExtensions
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModelExtensions
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.

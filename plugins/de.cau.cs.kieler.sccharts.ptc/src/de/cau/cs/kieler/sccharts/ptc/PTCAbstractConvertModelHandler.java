@@ -68,7 +68,7 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.ptc.dialog.ImportOptionsDialog;
-import de.cau.cs.kieler.sccharts.ptx.xmi.XMIModelParser;
+import de.cau.cs.kieler.sccharts.ptc.xmi.XMIModelParser;
 
 /**
  * Changed AbstractConvertModelHandler to import uml models
