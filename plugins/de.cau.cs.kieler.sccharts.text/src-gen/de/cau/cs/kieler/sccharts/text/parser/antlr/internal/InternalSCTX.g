@@ -165,19 +165,19 @@ ruleRootState returns [EObject current=null]
     }
 (
 (
-		lv_id_2_0=RULE_ID
-		{
-			newLeafNode(lv_id_2_0, grammarAccess.getRootStateAccess().getIdIDTerminalRuleCall_2_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getRootStateAccess().getIdExtendedIDParserRuleCall_2_0()); 
+	    }
+		lv_id_2_0=ruleExtendedID		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getRootStateRule());
+	            $current = createModelElementForParent(grammarAccess.getRootStateRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"id",
         		lv_id_2_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -1957,19 +1957,19 @@ ruleControlflowRegion returns [EObject current=null]
     }
 (
 (
-		lv_id_3_0=RULE_ID
-		{
-			newLeafNode(lv_id_3_0, grammarAccess.getControlflowRegionAccess().getIdIDTerminalRuleCall_3_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+	    }
+		lv_id_3_0=ruleExtendedID		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getControlflowRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"id",
         		lv_id_3_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -2085,19 +2085,19 @@ ruleDataflowRegion returns [EObject current=null]
     }
 (
 (
-		lv_id_3_0=RULE_ID
-		{
-			newLeafNode(lv_id_3_0, grammarAccess.getDataflowRegionAccess().getIdIDTerminalRuleCall_3_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); 
+	    }
+		lv_id_3_0=ruleExtendedID		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getDataflowRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"id",
         		lv_id_3_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )

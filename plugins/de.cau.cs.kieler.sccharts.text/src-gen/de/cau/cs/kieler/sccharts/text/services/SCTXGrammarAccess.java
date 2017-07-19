@@ -62,7 +62,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Keyword cScchartKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cIdIDTerminalRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
+		private final RuleCall cIdExtendedIDParserRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
 		private final Assignment cLabelAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cLabelAssignment_3.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
@@ -84,15 +84,15 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//// ------------- //
 		//RootState sccharts::State:
 		//	annotations+=Annotation*
-		//	'scchart' id=ID label=STRING?
+		//	'scchart' id=ExtendedID label=STRING?
 		//	'{'
 		//	declarations+=DeclarationWOSemicolon*
 		//	actions+=LocalAction* (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
 		//	'}'
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* 'scchart' id=ID label=STRING? '{' declarations+=DeclarationWOSemicolon* actions+=LocalAction*
-		//(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*) '}'
+		//annotations+=Annotation* 'scchart' id=ExtendedID label=STRING? '{' declarations+=DeclarationWOSemicolon*
+		//actions+=LocalAction* (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*) '}'
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -104,11 +104,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'scchart'
 		public Keyword getScchartKeyword_1() { return cScchartKeyword_1; }
 
-		//id=ID
+		//id=ExtendedID
 		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
 
-		//ID
-		public RuleCall getIdIDTerminalRuleCall_2_0() { return cIdIDTerminalRuleCall_2_0; }
+		//ExtendedID
+		public RuleCall getIdExtendedIDParserRuleCall_2_0() { return cIdExtendedIDParserRuleCall_2_0; }
 
 		//label=STRING?
 		public Assignment getLabelAssignment_3() { return cLabelAssignment_3; }
@@ -1186,7 +1186,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
 		private final Keyword cRegionKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cIdIDTerminalRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
+		private final RuleCall cIdExtendedIDParserRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
 		private final Assignment cLabelAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_4_0 = (RuleCall)cLabelAssignment_4.eContents().get(0);
 		private final Keyword cColonKeyword_5 = (Keyword)cGroup.eContents().get(5);
@@ -1197,12 +1197,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ControlflowRegion sccharts::ControlflowRegion:
 		//	{sccharts::ControlflowRegion} annotations+=Annotation*
-		//	'region' id=ID? label=STRING? ':'
+		//	'region' id=ExtendedID? label=STRING? ':'
 		//	declarations+=DeclarationWOSemicolon*
 		//	states+=State+
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::ControlflowRegion} annotations+=Annotation* 'region' id=ID? label=STRING? ':'
+		//{sccharts::ControlflowRegion} annotations+=Annotation* 'region' id=ExtendedID? label=STRING? ':'
 		//declarations+=DeclarationWOSemicolon* states+=State+
 		public Group getGroup() { return cGroup; }
 
@@ -1218,11 +1218,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'region'
 		public Keyword getRegionKeyword_2() { return cRegionKeyword_2; }
 
-		//id=ID?
+		//id=ExtendedID?
 		public Assignment getIdAssignment_3() { return cIdAssignment_3; }
 
-		//ID
-		public RuleCall getIdIDTerminalRuleCall_3_0() { return cIdIDTerminalRuleCall_3_0; }
+		//ExtendedID
+		public RuleCall getIdExtendedIDParserRuleCall_3_0() { return cIdExtendedIDParserRuleCall_3_0; }
 
 		//label=STRING?
 		public Assignment getLabelAssignment_4() { return cLabelAssignment_4; }
@@ -1254,7 +1254,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
 		private final Keyword cDataflowKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cIdIDTerminalRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
+		private final RuleCall cIdExtendedIDParserRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
 		private final Assignment cLabelAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_4_0 = (RuleCall)cLabelAssignment_4.eContents().get(0);
 		private final Keyword cColonKeyword_5 = (Keyword)cGroup.eContents().get(5);
@@ -1265,12 +1265,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DataflowRegion sccharts::DataflowRegion:
 		//	{sccharts::DataflowRegion} annotations+=Annotation*
-		//	'dataflow' id=ID? label=STRING? ':'
+		//	'dataflow' id=ExtendedID? label=STRING? ':'
 		//	declarations+=DeclarationWOSemicolon*
 		//	equations+=Equation+
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::DataflowRegion} annotations+=Annotation* 'dataflow' id=ID? label=STRING? ':'
+		//{sccharts::DataflowRegion} annotations+=Annotation* 'dataflow' id=ExtendedID? label=STRING? ':'
 		//declarations+=DeclarationWOSemicolon* equations+=Equation+
 		public Group getGroup() { return cGroup; }
 
@@ -1286,11 +1286,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'dataflow'
 		public Keyword getDataflowKeyword_2() { return cDataflowKeyword_2; }
 
-		//id=ID?
+		//id=ExtendedID?
 		public Assignment getIdAssignment_3() { return cIdAssignment_3; }
 
-		//ID
-		public RuleCall getIdIDTerminalRuleCall_3_0() { return cIdIDTerminalRuleCall_3_0; }
+		//ExtendedID
+		public RuleCall getIdExtendedIDParserRuleCall_3_0() { return cIdExtendedIDParserRuleCall_3_0; }
 
 		//label=STRING?
 		public Assignment getLabelAssignment_4() { return cLabelAssignment_4; }
@@ -1726,7 +1726,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// ------------- //
 	//RootState sccharts::State:
 	//	annotations+=Annotation*
-	//	'scchart' id=ID label=STRING?
+	//	'scchart' id=ExtendedID label=STRING?
 	//	'{'
 	//	declarations+=DeclarationWOSemicolon*
 	//	actions+=LocalAction* (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
@@ -1912,7 +1912,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ControlflowRegion sccharts::ControlflowRegion:
 	//	{sccharts::ControlflowRegion} annotations+=Annotation*
-	//	'region' id=ID? label=STRING? ':'
+	//	'region' id=ExtendedID? label=STRING? ':'
 	//	declarations+=DeclarationWOSemicolon*
 	//	states+=State+
 	public ControlflowRegionElements getControlflowRegionAccess() {
@@ -1925,7 +1925,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DataflowRegion sccharts::DataflowRegion:
 	//	{sccharts::DataflowRegion} annotations+=Annotation*
-	//	'dataflow' id=ID? label=STRING? ':'
+	//	'dataflow' id=ExtendedID? label=STRING? ':'
 	//	declarations+=DeclarationWOSemicolon*
 	//	equations+=Equation+
 	public DataflowRegionElements getDataflowRegionAccess() {

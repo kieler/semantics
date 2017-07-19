@@ -24,7 +24,7 @@ SCCharts returns sccharts::SCCharts:
 
 RootState returns sccharts::State:
 	annotations+=Annotation*
-	'scchart' id=ID label=STRING?
+	'scchart' id=ExtendedID label=STRING?
 	'{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
@@ -130,7 +130,7 @@ SingleDataflowRegion returns sccharts::DataflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
     annotations+=Annotation*
-    'region' id=ID? label=STRING? ':'
+    'region' id=ExtendedID? label=STRING? ':'
     declarations+=DeclarationWOSemicolon*
     states+=State+;
 
@@ -138,7 +138,7 @@ ControlflowRegion returns sccharts::ControlflowRegion:
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     annotations+=Annotation*
-    'dataflow' id=ID? label=STRING? ':'
+    'dataflow' id=ExtendedID? label=STRING? ':'
     declarations+=DeclarationWOSemicolon*
     equations+=Equation+;
 

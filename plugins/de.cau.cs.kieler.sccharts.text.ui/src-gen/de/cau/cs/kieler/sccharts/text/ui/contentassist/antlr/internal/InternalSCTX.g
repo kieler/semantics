@@ -21557,8 +21557,8 @@ rule__RootState__IdAssignment_2
     }
 :
 (
-{ before(grammarAccess.getRootStateAccess().getIdIDTerminalRuleCall_2_0()); }
-	RULE_ID{ after(grammarAccess.getRootStateAccess().getIdIDTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getRootStateAccess().getIdExtendedIDParserRuleCall_2_0()); }
+	ruleExtendedID{ after(grammarAccess.getRootStateAccess().getIdExtendedIDParserRuleCall_2_0()); }
 )
 
 ;
@@ -22579,8 +22579,8 @@ rule__ControlflowRegion__IdAssignment_3
     }
 :
 (
-{ before(grammarAccess.getControlflowRegionAccess().getIdIDTerminalRuleCall_3_0()); }
-	RULE_ID{ after(grammarAccess.getControlflowRegionAccess().getIdIDTerminalRuleCall_3_0()); }
+{ before(grammarAccess.getControlflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); }
+	ruleExtendedID{ after(grammarAccess.getControlflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); }
 )
 
 ;
@@ -22654,8 +22654,8 @@ rule__DataflowRegion__IdAssignment_3
     }
 :
 (
-{ before(grammarAccess.getDataflowRegionAccess().getIdIDTerminalRuleCall_3_0()); }
-	RULE_ID{ after(grammarAccess.getDataflowRegionAccess().getIdIDTerminalRuleCall_3_0()); }
+{ before(grammarAccess.getDataflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); }
+	ruleExtendedID{ after(grammarAccess.getDataflowRegionAccess().getIdExtendedIDParserRuleCall_3_0()); }
 )
 
 ;
