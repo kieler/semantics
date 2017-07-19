@@ -4,7 +4,7 @@ Bundle-Name: de.cau.cs.kieler.railsl.ui
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.railsl.ui;singleton:=true
-Bundle-ActivationPolicy: lazy
+Bundle-ActivationPolicy: lazy; exclude:="de.cau.cs.kieler.railsl.ui.visualizer.Visualizer"
 Require-Bundle: de.cau.cs.kieler.railsl.ide,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
@@ -25,4 +25,4 @@ Export-Package: de.cau.cs.kieler.railsl.ui.contentassist,
  de.cau.cs.kieler.railsl.ui.internal,
  de.cau.cs.kieler.railsl.ui.quickfix,
  de.cau.cs.kieler.railsl.ui.visualizer
-Bundle-Activator: de.cau.cs.kieler.railsl.ui.internal.RailslActivator
+Bundle-Activator: de.cau.cs.kieler.railsl.ui.CustomRailSLActivator

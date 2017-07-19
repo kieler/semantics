@@ -37,4 +37,5 @@ Export-Package: de.cau.cs.kieler.railsl,
  de.cau.cs.kieler.railsl.serializer,
  de.cau.cs.kieler.railsl.services,
  de.cau.cs.kieler.railsl.validation
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j,
+ javax.xml.stream

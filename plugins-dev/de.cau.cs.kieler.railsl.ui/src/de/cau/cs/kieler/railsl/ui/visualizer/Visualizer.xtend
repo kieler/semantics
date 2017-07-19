@@ -31,8 +31,9 @@ import org.eclipse.jface.text.TextSelection
 import org.eclipse.emf.ecore.EObject
 import java.util.ArrayList
 import com.google.inject.Inject
-import org.eclipse.swt.events.ModifyListener
-import org.eclipse.swt.events.ModifyEvent
+
+import org.eclipse.jface.text.IDocumentListener
+import org.eclipse.jface.text.DocumentEvent
 import com.google.inject.Injector
 
 /**
@@ -41,6 +42,8 @@ import com.google.inject.Injector
  * @author Philip Eumann (peu) - stu121235@mail.uni-kiel.de
  */
 class Visualizer {
+
+    private static var Visualizer instance
 
     /**
      * All the track name constants
@@ -84,6 +87,7 @@ class Visualizer {
          */
         new() {
             
+            System.out.println("Creating Visualizer...")
             pool = new DataPool()
             val model = new Model()
             model.name = "railway"
@@ -102,8 +106,33 @@ class Visualizer {
                 model.addVariable(new Variable("point_" + i, 0))
             }
             
-            addedVars.clear()
+            val visualizer = this
             
+            Display.getDefault.asyncExec(new Runnable() {
+                @Override
+                override void run() {
+                    val editor = EditorUtils.activeXtextEditor
+                    editor.document.addDocumentListener(new IDocumentListener {
+                        
+                        @Override
+                        override documentAboutToBeChanged(DocumentEvent event) {
+                            // ignore
+                        }
+                        
+                        @Override
+                        override documentChanged(DocumentEvent event) {
+                            visualizer.updateView
+                        }
+                        
+                    })
+                }
+            })
+            
+            addedVars.clear()
+        }
+
+        public static def void initialize(Injector injector) {
+            instance = injector.getInstance(Visualizer)
         }
 
         /**

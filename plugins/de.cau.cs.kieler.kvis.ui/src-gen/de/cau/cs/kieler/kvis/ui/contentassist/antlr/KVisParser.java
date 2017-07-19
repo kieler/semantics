@@ -44,7 +44,7 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDomainAccess().getAlternatives(), "rule__VariableDomain__Alternatives");
 					put(grammarAccess.getIntervalAccess().getAlternatives_0(), "rule__Interval__Alternatives_0");
 					put(grammarAccess.getIntervalAccess().getAlternatives_2(), "rule__Interval__Alternatives_2");
-					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
+					put(grammarAccess.getExpressionAccess().getAlternatives_0(), "rule__Expression__Alternatives_0");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 					put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
@@ -66,6 +66,7 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
 					put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
+					put(grammarAccess.getExtendedIDAccess().getAlternatives_1(), "rule__ExtendedID__Alternatives_1");
 					put(grammarAccess.getDOMEventAccess().getAlternatives(), "rule__DOMEvent__Alternatives");
 					put(grammarAccess.getSimulationOperationAccess().getAlternatives(), "rule__SimulationOperation__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
@@ -94,6 +95,8 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableReferenceAccess().getGroup(), "rule__VariableReference__Group__0");
 					put(grammarAccess.getVariableReferenceAccess().getGroup_2(), "rule__VariableReference__Group_2__0");
 					put(grammarAccess.getModelReferenceAccess().getGroup(), "rule__ModelReference__Group__0");
+					put(grammarAccess.getExpressionAccess().getGroup(), "rule__Expression__Group__0");
+					put(grammarAccess.getExpressionAccess().getGroup_1(), "rule__Expression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1(), "rule__LogicalOrExpression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1(), "rule__LogicalOrExpression__Group_1_1__0");
@@ -141,6 +144,7 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup_2(), "rule__ValuedObjectReference__Group_2__0");
+					put(grammarAccess.getScheduleObjectReferenceAccess().getGroup(), "rule__ScheduleObjectReference__Group__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup(), "rule__ReferenceCall__Group__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0(), "rule__ReferenceCall__Group_1_0__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0_2(), "rule__ReferenceCall__Group_1_0_2__0");
@@ -169,7 +173,7 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup(), "rule__QuotedTypedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6(), "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
-					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
+					put(grammarAccess.getExtendedIDAccess().getGroup_1_1(), "rule__ExtendedID__Group_1_1__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
 					put(grammarAccess.getQualifiedIDAccess().getGroup(), "rule__QualifiedID__Group__0");
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
@@ -215,6 +219,7 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableReferenceAccess().getIndicesAssignment_2_1(), "rule__VariableReference__IndicesAssignment_2_1");
 					put(grammarAccess.getModelReferenceAccess().getNameAssignment_0(), "rule__ModelReference__NameAssignment_0");
 					put(grammarAccess.getAndOperatorAccess().getANDAssignment(), "rule__AndOperator__ANDAssignment");
+					put(grammarAccess.getExpressionAccess().getScheduleAssignment_1_1(), "rule__Expression__ScheduleAssignment_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1");
@@ -253,6 +258,8 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
 					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");
+					put(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ScheduleObjectReference__ValuedObjectAssignment_0");
+					put(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1(), "rule__ScheduleObjectReference__PriorityAssignment_1");
 					put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0(), "rule__ReferenceCall__ValuedObjectAssignment_0");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1(), "rule__ReferenceCall__ParametersAssignment_1_0_1");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1(), "rule__ReferenceCall__ParametersAssignment_1_0_2_1");

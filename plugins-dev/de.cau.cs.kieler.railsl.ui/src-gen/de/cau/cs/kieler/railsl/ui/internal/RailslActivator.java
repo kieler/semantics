@@ -9,6 +9,7 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import de.cau.cs.kieler.railsl.RailSLRuntimeModule;
 import de.cau.cs.kieler.railsl.ui.RailSLUiModule;
+
 import java.util.Collections;
 import java.util.Map;
 import org.apache.log4j.Logger;
