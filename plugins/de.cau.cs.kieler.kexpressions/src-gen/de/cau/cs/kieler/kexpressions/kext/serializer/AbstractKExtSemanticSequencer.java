@@ -68,8 +68,19 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
-				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
+					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.PRAGMA:
 				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
@@ -603,7 +614,13 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ReferenceDeclarationWOSemicolon returns ReferenceDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (reference=[NamedObject|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         (reference=[NamedObject|NamespaceID] | extern=STRING) 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
 	 */
 	protected void sequence_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -616,7 +633,13 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ReferenceDeclaration returns ReferenceDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* (reference=[NamedObject|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         (reference=[NamedObject|NamespaceID] | extern=STRING) 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
+	 *     )
 	 */
 	protected void sequence_ReferenceDeclaration(ISerializationContext context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -647,7 +670,8 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         global=SchedulePriorityType? 
 	 *         priorities+=SchedulePriority* 
 	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
+	 *         valuedObjects+=ValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
 	protected void sequence_ScheduleDeclarationWOSemicolon(ISerializationContext context, ScheduleDeclaration semanticObject) {
@@ -667,7 +691,8 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         global=SchedulePriorityType? 
 	 *         priorities+=SchedulePriority* 
 	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
+	 *         valuedObjects+=ValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
 	protected void sequence_ScheduleDeclaration(ISerializationContext context, ScheduleDeclaration semanticObject) {
@@ -746,7 +771,8 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         static?='static'? 
 	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
 	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
+	 *         valuedObjects+=ValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
 	protected void sequence_VariableDeclarationWOSemicolon(ISerializationContext context, VariableDeclaration semanticObject) {
@@ -768,7 +794,8 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         static?='static'? 
 	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
 	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
+	 *         valuedObjects+=ValuedObject* 
+	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
 	protected void sequence_VariableDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {

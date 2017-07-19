@@ -315,6 +315,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_7_1_0 = (RuleCall)cValuedObjectsAssignment_7_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cAnnotationsAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_9_0 = (RuleCall)cAnnotationsAssignment_9.eContents().get(0);
 		
 		//VariableDeclaration kexpressions::VariableDeclaration:
 		//	annotations+=Annotation*
@@ -323,10 +325,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	output?='output'?
 		//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 		//	valuedObjects+=ValuedObject)* ';'
+		//	annotations+=CommentAnnotatonSL?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* const?='const'? input?='input'? output?='output'? static?='static'? (signal?='signal'?
 		//type=ValueType | signal?='signal') valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -403,6 +407,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//';'
 		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
+
+		//annotations+=CommentAnnotatonSL?
+		public Assignment getAnnotationsAssignment_9() { return cAnnotationsAssignment_9; }
+
+		//CommentAnnotatonSL
+		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_9_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_9_0; }
 	}
 
 	public class VariableDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
@@ -432,6 +442,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommaKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_7_1_0 = (RuleCall)cValuedObjectsAssignment_7_1.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_8_0 = (RuleCall)cAnnotationsAssignment_8.eContents().get(0);
 		
 		//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
 		//	annotations+=Annotation*
@@ -440,10 +452,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	output?='output'?
 		//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 		//	valuedObjects+=ValuedObject)*
+		//	annotations+=CommentAnnotatonSL?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* const?='const'? input?='input'? output?='output'? static?='static'? (signal?='signal'?
 		//type=ValueType | signal?='signal') valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -517,6 +531,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ValuedObject
 		public RuleCall getValuedObjectsValuedObjectParserRuleCall_7_1_0() { return cValuedObjectsValuedObjectParserRuleCall_7_1_0; }
+
+		//annotations+=CommentAnnotatonSL?
+		public Assignment getAnnotationsAssignment_8() { return cAnnotationsAssignment_8; }
+
+		//CommentAnnotatonSL
+		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_8_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_8_0; }
 	}
 
 	public class NamespaceIDElements extends AbstractParserRuleElementFinder {
@@ -569,14 +589,17 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_3_1_0 = (RuleCall)cValuedObjectsAssignment_3_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cAnnotationsAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_5_0 = (RuleCall)cAnnotationsAssignment_5.eContents().get(0);
 		
 		//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 		//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 		//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//	annotations+=CommentAnnotatonSL?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -635,6 +658,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+
+		//annotations+=CommentAnnotatonSL?
+		public Assignment getAnnotationsAssignment_5() { return cAnnotationsAssignment_5; }
+
+		//CommentAnnotatonSL
+		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_5_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_5_0; }
 	}
 
 	public class ReferenceDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
@@ -658,14 +687,17 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_3_1_0 = (RuleCall)cValuedObjectsAssignment_3_1.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_4_0 = (RuleCall)cAnnotationsAssignment_4.eContents().get(0);
 		
 		//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 		//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 		//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//	annotations+=CommentAnnotatonSL?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern=STRING)
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -721,6 +753,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ValuedObject
 		public RuleCall getValuedObjectsValuedObjectParserRuleCall_3_1_0() { return cValuedObjectsValuedObjectParserRuleCall_3_1_0; }
+
+		//annotations+=CommentAnnotatonSL?
+		public Assignment getAnnotationsAssignment_4() { return cAnnotationsAssignment_4; }
+
+		//CommentAnnotatonSL
+		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_4_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_4_0; }
 	}
 
 	public class ScheduleDeclarationElements extends AbstractParserRuleElementFinder {
@@ -742,6 +780,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectsAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_1_0 = (RuleCall)cValuedObjectsAssignment_6_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Assignment cAnnotationsAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_8_0 = (RuleCall)cAnnotationsAssignment_8.eContents().get(0);
 		
 		//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 		//	annotations+=Annotation*
@@ -749,10 +789,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	global=SchedulePriorityType?
 		//	priorities+=SchedulePriority*
 		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//	annotations+=CommentAnnotatonSL?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* 'schedule' name=PrimeID global=SchedulePriorityType? priorities+=SchedulePriority*
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -802,6 +843,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//';'
 		public Keyword getSemicolonKeyword_7() { return cSemicolonKeyword_7; }
+
+		//annotations+=CommentAnnotatonSL?
+		public Assignment getAnnotationsAssignment_8() { return cAnnotationsAssignment_8; }
+
+		//CommentAnnotatonSL
+		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_8_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_8_0; }
 	}
 
 	public class ScheduleDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
@@ -822,6 +869,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommaKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_1_0 = (RuleCall)cValuedObjectsAssignment_6_1.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_7_0 = (RuleCall)cAnnotationsAssignment_7.eContents().get(0);
 		
 		//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 		//	annotations+=Annotation*
@@ -829,10 +878,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	global=SchedulePriorityType?
 		//	priorities+=SchedulePriority*
 		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//	annotations+=CommentAnnotatonSL?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* 'schedule' name=PrimeID global=SchedulePriorityType? priorities+=SchedulePriority*
-		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -879,6 +929,12 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ValuedObject
 		public RuleCall getValuedObjectsValuedObjectParserRuleCall_6_1_0() { return cValuedObjectsValuedObjectParserRuleCall_6_1_0; }
+
+		//annotations+=CommentAnnotatonSL?
+		public Assignment getAnnotationsAssignment_7() { return cAnnotationsAssignment_7; }
+
+		//CommentAnnotatonSL
+		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_7_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_7_0; }
 	}
 
 	public class SchedulePriorityElements extends AbstractParserRuleElementFinder {
@@ -1255,6 +1311,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?
 	public VariableDeclarationElements getVariableDeclarationAccess() {
 		return pVariableDeclaration;
 	}
@@ -1270,6 +1327,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?
 	public VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return pVariableDeclarationWOSemicolon;
 	}
@@ -1291,6 +1349,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?
 	public ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return pReferenceDeclaration;
 	}
@@ -1302,6 +1361,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?
 	public ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return pReferenceDeclarationWOSemicolon;
 	}
@@ -1316,6 +1376,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	global=SchedulePriorityType?
 	//	priorities+=SchedulePriority*
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=CommentAnnotatonSL?
 	public ScheduleDeclarationElements getScheduleDeclarationAccess() {
 		return pScheduleDeclaration;
 	}
@@ -1330,6 +1391,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	global=SchedulePriorityType?
 	//	priorities+=SchedulePriority*
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=CommentAnnotatonSL?
 	public ScheduleDeclarationWOSemicolonElements getScheduleDeclarationWOSemicolonAccess() {
 		return pScheduleDeclarationWOSemicolon;
 	}
@@ -2308,6 +2370,16 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
+	//CommentAnnotatonSL CommentAnnotation:
+	//	values+=SL_COMMENT_ANNOTATION
+	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
+		return gaAnnotations.getCommentAnnotatonSLAccess();
+	}
+	
+	public ParserRule getCommentAnnotatonSLRule() {
+		return getCommentAnnotatonSLAccess().getRule();
+	}
+
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
@@ -2503,6 +2575,18 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
+	//terminal SL_COMMENT_ANNOTATION:
+	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
+		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
+	} 
+
+	//terminal SL_COMMENT:
+	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENTRule() {
+		return gaAnnotations.getSL_COMMENTRule();
+	} 
+
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
@@ -2537,12 +2621,6 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:

@@ -272,6 +272,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getBoolValueAccess().getValueAssignment(), "rule__BoolValue__ValueAssignment");
 					put(grammarAccess.getStringValueAccess().getValueAssignment(), "rule__StringValue__ValueAssignment");
 					put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
+					put(grammarAccess.getCommentAnnotatonSLAccess().getValuesAssignment(), "rule__CommentAnnotatonSL__ValuesAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");
 					put(grammarAccess.getPragmaTagAccess().getNameAssignment_1(), "rule__PragmaTag__NameAssignment_1");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__KeyStringValueAnnotation__NameAssignment_1");

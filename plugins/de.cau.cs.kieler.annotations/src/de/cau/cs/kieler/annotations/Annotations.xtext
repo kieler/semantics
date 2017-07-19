@@ -77,6 +77,9 @@ QuotedStringAnnotation returns Annotation:
 // e.g.: /** semantic comment */
 CommentAnnotation returns CommentAnnotation:
     values += COMMENT_ANNOTATION;
+    
+CommentAnnotatonSL returns CommentAnnotation:
+    values += SL_COMMENT_ANNOTATION;
 
 
 // TagAnnotation
@@ -173,6 +176,11 @@ terminal COMMENT_ANNOTATION returns ecore::EString:
 terminal ML_COMMENT returns ecore::EString:
     '/*'!'*' -> '*/';
 
+terminal SL_COMMENT_ANNOTATION returns ecore::EString: 
+    '//*' !('\n'|'\r')* ('\r'? '\n')?;
+
+terminal SL_COMMENT: 
+    '//' !'*' !('\n'|'\r')* ('\r'? '\n')?;
 
 // Number Terminal
 terminal fragment NUMBER :

@@ -87,7 +87,8 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     output?='output'?
     static?='static'?
     ((signal?='signal'? type = ValueType) | signal?='signal') 
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    annotations+=CommentAnnotatonSL?;
     
 VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
@@ -96,7 +97,8 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     output?='output'?
     static?='static'?
     ((signal?='signal'? type = ValueType) | signal?='signal') 
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?;  
     
 NamespaceID returns ecore::EString:
   ID (':' PrimeID)*;    
@@ -108,7 +110,8 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     ) | (
         'extern' extern = STRING
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    annotations+=CommentAnnotatonSL?;
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
@@ -117,21 +120,24 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     ) | (
         'extern' extern = STRING
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?;
     
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
     'schedule' name = PrimeID
     (global = SchedulePriorityType)?
     (priorities += SchedulePriority)*
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    annotations+=CommentAnnotatonSL?;
     
 ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
     'schedule' name = PrimeID
     (global = SchedulePriorityType)?
     (priorities += SchedulePriority)*
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?;
     
 SchedulePriority returns kexpressions::SchedulePriority:
     'prio' priority=INT type=SchedulePriorityType;

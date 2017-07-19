@@ -187,6 +187,22 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0() { return cValuesCOMMENT_ANNOTATIONTerminalRuleCall_0; }
 	}
 
+	public class CommentAnnotatonSLElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.CommentAnnotatonSL");
+		private final Assignment cValuesAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0 = (RuleCall)cValuesAssignment.eContents().get(0);
+		
+		//CommentAnnotatonSL CommentAnnotation:
+		//	values+=SL_COMMENT_ANNOTATION
+		@Override public ParserRule getRule() { return rule; }
+
+		//values+=SL_COMMENT_ANNOTATION
+		public Assignment getValuesAssignment() { return cValuesAssignment; }
+
+		//SL_COMMENT_ANNOTATION
+		public RuleCall getValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0() { return cValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0; }
+	}
+
 	public class TagAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.TagAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -841,6 +857,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final RestrictedTypeAnnotationElements pRestrictedTypeAnnotation;
 	private final QuotedStringAnnotationElements pQuotedStringAnnotation;
 	private final CommentAnnotationElements pCommentAnnotation;
+	private final CommentAnnotatonSLElements pCommentAnnotatonSL;
 	private final TagAnnotationElements pTagAnnotation;
 	private final PragmaTagElements pPragmaTag;
 	private final KeyStringValueAnnotationElements pKeyStringValueAnnotation;
@@ -859,6 +876,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final FloategerElements pFloateger;
 	private final TerminalRule tCOMMENT_ANNOTATION;
 	private final TerminalRule tML_COMMENT;
+	private final TerminalRule tSL_COMMENT_ANNOTATION;
+	private final TerminalRule tSL_COMMENT;
 	private final TerminalRule tNUMBER;
 	private final TerminalRule tINT;
 	private final TerminalRule tFLOAT;
@@ -880,6 +899,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pRestrictedTypeAnnotation = new RestrictedTypeAnnotationElements();
 		this.pQuotedStringAnnotation = new QuotedStringAnnotationElements();
 		this.pCommentAnnotation = new CommentAnnotationElements();
+		this.pCommentAnnotatonSL = new CommentAnnotatonSLElements();
 		this.pTagAnnotation = new TagAnnotationElements();
 		this.pPragmaTag = new PragmaTagElements();
 		this.pKeyStringValueAnnotation = new KeyStringValueAnnotationElements();
@@ -898,6 +918,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pFloateger = new FloategerElements();
 		this.tCOMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.COMMENT_ANNOTATION");
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.ML_COMMENT");
+		this.tSL_COMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.SL_COMMENT_ANNOTATION");
+		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.SL_COMMENT");
 		this.tNUMBER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.NUMBER");
 		this.tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.INT");
 		this.tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.FLOAT");
@@ -1015,6 +1037,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getCommentAnnotationRule() {
 		return getCommentAnnotationAccess().getRule();
+	}
+
+	//CommentAnnotatonSL CommentAnnotation:
+	//	values+=SL_COMMENT_ANNOTATION
+	public CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
+		return pCommentAnnotatonSL;
+	}
+	
+	public ParserRule getCommentAnnotatonSLRule() {
+		return getCommentAnnotatonSLAccess().getRule();
 	}
 
 	//// TagAnnotation
@@ -1212,6 +1244,18 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tML_COMMENT;
 	} 
 
+	//terminal SL_COMMENT_ANNOTATION:
+	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
+		return tSL_COMMENT_ANNOTATION;
+	} 
+
+	//terminal SL_COMMENT:
+	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENTRule() {
+		return tSL_COMMENT;
+	} 
+
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
@@ -1246,12 +1290,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
