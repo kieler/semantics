@@ -97,15 +97,14 @@ class ConstantTransformation extends AbstractExpansionTransformation implements 
         }
         transformReferences(scope, newVariables)
         transformConstantExpressions(scope, newVariables)
-        module.intSensorDecls.clear
+        module.intConstantDecls.clear
     }
     
     def transformReferences(Statement statement, Map<Constant, ValuedObject> newVariables) {
-        var references = statement.eAllContents.filter(ValuedObjectReference)
+        var references = statement.eAllContents.filter(ValuedObjectReference).toList
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed sensor then set the reference to the new variable
-        while (references.hasNext) {
-            var ref = references.next
+        for (ref : references) {
             if (ref.valuedObject instanceof Constant) {
                 var vObject = ref.valuedObject as Constant
                 if (newVariables.containsKey(vObject)) {
@@ -117,9 +116,8 @@ class ConstantTransformation extends AbstractExpansionTransformation implements 
     }
     
     def transformConstantExpressions(Statement statement, Map<Constant, ValuedObject> newVariables) {
-        var constantExpr = statement.eAllContents.filter(ConstantExpression)
-        while (constantExpr.hasNext) {
-            var expr = constantExpr.next
+        var constantExpr = statement.eAllContents.filter(ConstantExpression).toList
+        for (expr : constantExpr) {
             if (expr.constant instanceof Constant) {
                 var constant = expr.constant as Constant
                 // if the constant expression references a transformed constant

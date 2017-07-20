@@ -203,11 +203,10 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
     }
     
     def transformReferences(Statement statement, Map<IVariable, ValuedObject> newVariables) {
-        var references = statement.eAllContents.filter(ValuedObjectReference)
+        var references = statement.eAllContents.filter(ValuedObjectReference).toList
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed variable then set the reference to the new variable
-        while (references.hasNext) {
-            var ref = references.next
+        for (ref : references) {
             if (ref.valuedObject instanceof IVariable) {
                 var vObject = ref.valuedObject as IVariable
                 if (newVariables.containsKey(vObject)) {
@@ -220,9 +219,8 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
     
     def transformAssignments(Statement statement, Map<IVariable, ValuedObject> newVariables) {
         // iterate over all Esterel assignments in the scope
-        var assignmentsEst = statement.eAllContents.filter(EsterelAssignment)
-        while (assignmentsEst.hasNext) {
-            var a = assignmentsEst.next
+        var assignmentsEst = statement.eAllContents.filter(EsterelAssignment).toList
+        for (a : assignmentsEst) {
             if (newVariables.containsKey(a.getVar())) {
                 var statements = a.getContainingList
                 var pos = statements.indexOf(a)
@@ -231,9 +229,8 @@ class LocalVariableTransformation extends AbstractExpansionTransformation implem
             }
         }
         // iterate over all SCL assignments in the scope
-        var assignmentsSCL = statement.eAllContents.filter(Assignment)
-        while (assignmentsSCL.hasNext) {
-            var a = assignmentsSCL.next
+        var assignmentsSCL = statement.eAllContents.filter(Assignment).toList
+        for (a : assignmentsSCL) {
             if (newVariables.containsKey(a.valuedObject)) {
                 a.valuedObject = newVariables.get(a.valuedObject)
             }

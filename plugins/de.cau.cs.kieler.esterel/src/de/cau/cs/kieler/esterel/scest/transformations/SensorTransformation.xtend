@@ -94,11 +94,10 @@ class SensorTransformation extends AbstractExpansionTransformation implements Tr
     }
     
     def transformReferences(Statement statement, Map<ISignal, ValuedObject> newVariables) {
-        var references = statement.eAllContents.filter(ValuedObjectReference)
+        var references = statement.eAllContents.filter(ValuedObjectReference).toList
         // iterate over all valued object references contained in the scope
         // if a reference references a transformed sensor then set the reference to the new variable
-        while (references.hasNext) {
-            var ref = references.next
+        for (ref : references) {
             if (ref.valuedObject instanceof ISignal) {
                 var vObject = ref.valuedObject as ISignal
                 if (newVariables.containsKey(vObject)) {

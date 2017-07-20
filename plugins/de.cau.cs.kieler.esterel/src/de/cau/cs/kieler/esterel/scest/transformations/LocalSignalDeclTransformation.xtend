@@ -190,7 +190,7 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
     }
     
     def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {
-        var iterator = signalsMap.keySet.iterator
+        var signals = signalsMap.keySet.iterator.toList
         var term = createNewUniqueTermFlag(createFalse)
         var decl = createDeclaration(ValueType.BOOL, term)
         var parallel = createParallel
@@ -206,9 +206,7 @@ class LocalSignalDeclTransformation extends AbstractExpansionTransformation impl
         // thread1 statements: the initializations of the signals
         var label = createLabel
         thread1.statements.add(label)
-        iterator = signalsMap.keySet.iterator
-        while (iterator.hasNext) {
-            var signal = iterator.next
+        for (signal : signals) {
             var keyValue = signalsMap.get(signal)
             var s = keyValue.s
             if (signal.type != ValueType.PURE) {

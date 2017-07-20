@@ -152,11 +152,13 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
     
     def createParallelForSignals(ScopeStatement scope, HashMap<ISignal, NewSignals> signalsMap) {
         var necessary = false
-        var it = signalsMap.keySet.iterator
-        while (!necessary && it.hasNext) {
-            var ISignal signal = it.next
+        var signals = signalsMap.keySet.iterator.toList
+        var i = 0
+        while (!necessary && i<signals.length) {
+            var ISignal signal = signals.get(i)
             necessary = necessary || (signal.type != ValueType.PURE) || 
                             (signal.eContainer instanceof Output) || (signal.eContainer instanceof LocalSignalDecl)
+            i++
         }
         if (necessary) {
             var term = createNewUniqueTermFlag(createFalse)
@@ -174,9 +176,7 @@ class  SignalTransformation extends AbstractExpansionTransformation implements T
             // thread1 statements: the initializations of the output signals
             var label = createLabel
             thread1.statements.add(label)
-            it = signalsMap.keySet.iterator
-            while (it.hasNext) {
-                var signal = it.next
+            for (signal : signals) {
                 var keyValue = signalsMap.get(signal)
                 var s = keyValue.s
                 if (signal.type != ValueType.PURE) {
