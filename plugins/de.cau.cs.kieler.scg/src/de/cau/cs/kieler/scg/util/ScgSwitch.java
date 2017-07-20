@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg.util;
 import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.scg.*;
@@ -82,10 +83,18 @@ public class ScgSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
+            case ScgPackage.SC_GRAPHS: {
+                SCGraphs scGraphs = (SCGraphs)theEObject;
+                T result = caseSCGraphs(scGraphs);
+                if (result == null) result = casePragmatable(scGraphs);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case ScgPackage.SC_GRAPH: {
                 SCGraph scGraph = (SCGraph)theEObject;
                 T result = caseSCGraph(scGraph);
                 if (result == null) result = caseAnnotatable(scGraph);
+                if (result == null) result = caseNamedObject(scGraph);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -272,6 +281,21 @@ public class ScgSwitch<T> extends Switch<T> {
             }
             default: return defaultCase(theEObject);
         }
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>SC Graphs</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>SC Graphs</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSCGraphs(SCGraphs object) {
+        return null;
     }
 
     /**
@@ -590,6 +614,21 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
 				/**
+     * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePragmatable(Pragmatable object) {
+        return null;
+    }
+
+                /**
      * Returns the result of interpreting the object as an instance of '<em>Guard</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;

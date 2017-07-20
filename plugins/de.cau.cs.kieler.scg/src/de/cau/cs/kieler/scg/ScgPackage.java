@@ -70,6 +70,43 @@ public interface ScgPackage extends EPackage {
 	ScgPackage eINSTANCE = de.cau.cs.kieler.scg.impl.ScgPackageImpl.init();
 
 	/**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.SCGraphsImpl <em>SC Graphs</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.SCGraphsImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSCGraphs()
+     * @generated
+     */
+    int SC_GRAPHS = 0;
+
+    /**
+     * The feature id for the '<em><b>Pragmas</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPHS__PRAGMAS = AnnotationsPackage.PRAGMATABLE__PRAGMAS;
+
+    /**
+     * The feature id for the '<em><b>Scgs</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPHS__SCGS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>SC Graphs</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPHS_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.SCGraphImpl <em>SC Graph</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -77,7 +114,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSCGraph()
      * @generated
      */
-	int SC_GRAPH = 0;
+	int SC_GRAPH = 1;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -89,13 +126,22 @@ public interface ScgPackage extends EPackage {
 	int SC_GRAPH__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SC_GRAPH__NODES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+	int SC_GRAPH__NODES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
 	/**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -104,7 +150,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SC_GRAPH__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+	int SC_GRAPH__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Basic Blocks</b></em>' containment reference list.
@@ -113,7 +159,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SC_GRAPH__BASIC_BLOCKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+	int SC_GRAPH__BASIC_BLOCKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 	/**
      * The feature id for the '<em><b>Guards</b></em>' containment reference list.
@@ -122,7 +168,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SC_GRAPH__GUARDS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	int SC_GRAPH__GUARDS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
 	/**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -131,7 +177,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SC_GRAPH__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+	int SC_GRAPH__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
 	/**
      * The number of structural features of the '<em>SC Graph</em>' class.
@@ -140,7 +186,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+	int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.NodeImpl <em>Node</em>}' class.
@@ -150,7 +196,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getNode()
      * @generated
      */
-	int NODE = 1;
+	int NODE = 2;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -223,7 +269,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getConditional()
      * @generated
      */
-	int CONDITIONAL = 2;
+	int CONDITIONAL = 3;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -323,7 +369,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSurface()
      * @generated
      */
-	int SURFACE = 3;
+	int SURFACE = 4;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -405,7 +451,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDepth()
      * @generated
      */
-	int DEPTH = 4;
+	int DEPTH = 5;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -496,7 +542,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAssignment()
      * @generated
      */
-	int ASSIGNMENT = 5;
+	int ASSIGNMENT = 6;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -632,7 +678,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getFork()
      * @generated
      */
-	int FORK = 6;
+	int FORK = 7;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -723,7 +769,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getJoin()
      * @generated
      */
-	int JOIN = 7;
+	int JOIN = 8;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -814,7 +860,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getLink()
      * @generated
      */
-	int LINK = 14;
+	int LINK = 15;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.
@@ -824,7 +870,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getEntry()
      * @generated
      */
-	int ENTRY = 8;
+	int ENTRY = 9;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -915,7 +961,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExit()
      * @generated
      */
-	int EXIT = 9;
+	int EXIT = 10;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1006,7 +1052,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlFlow()
      * @generated
      */
-	int CONTROL_FLOW = 15;
+	int CONTROL_FLOW = 16;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DependencyImpl <em>Dependency</em>}' class.
@@ -1016,7 +1062,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDependency()
      * @generated
      */
-    int DEPENDENCY = 16;
+    int DEPENDENCY = 17;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
@@ -1026,7 +1072,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependency()
      * @generated
      */
-    int DATA_DEPENDENCY = 17;
+    int DATA_DEPENDENCY = 18;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
@@ -1036,7 +1082,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlDependency()
      * @generated
      */
-    int CONTROL_DEPENDENCY = 18;
+    int CONTROL_DEPENDENCY = 19;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl <em>Basic Block</em>}' class.
@@ -1046,7 +1092,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBasicBlock()
      * @generated
      */
-	int BASIC_BLOCK = 10;
+	int BASIC_BLOCK = 11;
 
 	/**
      * The feature id for the '<em><b>Scheduling Blocks</b></em>' containment reference list.
@@ -1137,7 +1183,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedulingBlock()
      * @generated
      */
-	int SCHEDULING_BLOCK = 11;
+	int SCHEDULING_BLOCK = 12;
 
 	/**
      * The feature id for the '<em><b>Nodes</b></em>' reference list.
@@ -1192,7 +1238,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getPredecessor()
      * @generated
      */
-	int PREDECESSOR = 12;
+	int PREDECESSOR = 13;
 
 	/**
      * The feature id for the '<em><b>Basic Block</b></em>' reference.
@@ -1238,7 +1284,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExpressionDependency()
      * @generated
      */
-	int EXPRESSION_DEPENDENCY = 19;
+	int EXPRESSION_DEPENDENCY = 20;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardDependencyImpl <em>Guard Dependency</em>}' class.
@@ -1248,7 +1294,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardDependency()
      * @generated
      */
-	int GUARD_DEPENDENCY = 20;
+	int GUARD_DEPENDENCY = 21;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.
@@ -1258,7 +1304,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuard()
      * @generated
      */
-	int GUARD = 13;
+	int GUARD = 14;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1601,7 +1647,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleDependency()
      * @generated
      */
-	int SCHEDULE_DEPENDENCY = 21;
+	int SCHEDULE_DEPENDENCY = 22;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1638,7 +1684,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
      * @generated
      */
-	int BRANCH_TYPE = 22;
+	int BRANCH_TYPE = 23;
 
 
 	/**
@@ -1649,10 +1695,31 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependencyType()
      * @generated
      */
-	int DATA_DEPENDENCY_TYPE = 23;
+	int DATA_DEPENDENCY_TYPE = 24;
 
 
 	/**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.SCGraphs <em>SC Graphs</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SC Graphs</em>'.
+     * @see de.cau.cs.kieler.scg.SCGraphs
+     * @generated
+     */
+    EClass getSCGraphs();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraphs#getScgs <em>Scgs</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Scgs</em>'.
+     * @see de.cau.cs.kieler.scg.SCGraphs#getScgs()
+     * @see #getSCGraphs()
+     * @generated
+     */
+    EReference getSCGraphs_Scgs();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.SCGraph <em>SC Graph</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2388,6 +2455,24 @@ public interface ScgPackage extends EPackage {
      */
 	interface Literals {
 		/**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.SCGraphsImpl <em>SC Graphs</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.SCGraphsImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSCGraphs()
+         * @generated
+         */
+        EClass SC_GRAPHS = eINSTANCE.getSCGraphs();
+
+        /**
+         * The meta object literal for the '<em><b>Scgs</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SC_GRAPHS__SCGS = eINSTANCE.getSCGraphs_Scgs();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.SCGraphImpl <em>SC Graph</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

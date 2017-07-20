@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scg" nsURI="http://kieler.cs.cau.de/scg/0.1.0" nsPrefix="scg">
-  <eClassifiers xsi:type="ecore:EClass" name="SCGraph" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="SCGraphs" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Pragmatable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scgs" upperBound="-1" eType="#//SCGraph"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SCGraph" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//Node" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"

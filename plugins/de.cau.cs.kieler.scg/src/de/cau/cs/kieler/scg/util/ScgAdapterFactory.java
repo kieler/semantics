@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg.util;
 import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.scg.*;
@@ -83,6 +84,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      */
     protected ScgSwitch<Adapter> modelSwitch =
         new ScgSwitch<Adapter>() {
+            @Override
+            public Adapter caseSCGraphs(SCGraphs object) {
+                return createSCGraphsAdapter();
+            }
             @Override
             public Adapter caseSCGraph(SCGraph object) {
                 return createSCGraphAdapter();
@@ -172,6 +177,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createScheduleDependencyAdapter();
             }
             @Override
+            public Adapter casePragmatable(Pragmatable object) {
+                return createPragmatableAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -210,6 +219,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
         return modelSwitch.doSwitch((EObject)target);
     }
 
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SCGraphs <em>SC Graphs</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.SCGraphs
+     * @generated
+     */
+    public Adapter createSCGraphsAdapter() {
+        return null;
+    }
 
     /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Node <em>Node</em>}'.
@@ -506,6 +529,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
 				/**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragmatable <em>Pragmatable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Pragmatable
+     * @generated
+     */
+    public Adapter createPragmatableAdapter() {
+        return null;
+    }
+
+                /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

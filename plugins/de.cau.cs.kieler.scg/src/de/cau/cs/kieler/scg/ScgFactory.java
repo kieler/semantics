@@ -33,6 +33,15 @@ public interface ScgFactory extends EFactory {
     ScgFactory eINSTANCE = de.cau.cs.kieler.scg.impl.ScgFactoryImpl.init();
 
     /**
+     * Returns a new object of class '<em>SC Graphs</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>SC Graphs</em>'.
+     * @generated
+     */
+    SCGraphs createSCGraphs();
+
+    /**
      * Returns a new object of class '<em>Node</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

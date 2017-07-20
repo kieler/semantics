@@ -57,6 +57,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
+            case ScgPackage.SC_GRAPHS: return createSCGraphs();
             case ScgPackage.SC_GRAPH: return createSCGraph();
             case ScgPackage.NODE: return createNode();
             case ScgPackage.CONDITIONAL: return createConditional();
@@ -116,6 +117,16 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SCGraphs createSCGraphs() {
+        SCGraphsImpl scGraphs = new SCGraphsImpl();
+        return scGraphs;
     }
 
     /**
