@@ -40,6 +40,10 @@ import org.eclipse.ui.IPartListener2
 import org.eclipse.ui.IWorkbenchPartReference
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.ui.internal.Workbench
+import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
+import de.cau.cs.kieler.railsl.railSL.ConditionalStatement
+import de.cau.cs.kieler.railsl.railSL.ConditionalLine
+import de.cau.cs.kieler.railsl.railSL.Block
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -119,11 +123,18 @@ class Visualizer {
             model.addVariable(new Variable(constant, 0))
             model.addVariable(new Variable("S0_" + constant, 4))
             model.addVariable(new Variable("S1_" + constant, 4))
+            model.addVariable(new Variable(constant + "_C_0", "off"))
+            model.addVariable(new Variable(constant + "_C_1", "off"))
         }
 
         // Add points as straight
         for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
             model.addVariable(new Variable("point_" + i, 0))
+        }
+
+        // Add lights as off
+        for (var i = 0; i < RailSLTransformation::NUM_OF_LIGHTS; i++) {
+            model.addVariable(new Variable("light_" + i, "off"))
         }
 
         // TODO Add more default variable values here
@@ -303,9 +314,15 @@ class Visualizer {
         // process the EObject passed as a parameter
         if (object instanceof Statement) {
             model.addValues(object as Statement)
-        } // else if (object instanceof Block) {
-        // TODO how do we display blocks? 
-        // }
+        }  else if (object instanceof Block) {
+            
+            // For a block, display all statements at once
+            for (statement : (object as Block).statements) {
+                model.addValues(statement)
+            }
+        } else if (object instanceof ConditionalLine) {
+            model.addConditionalLineValues(object as ConditionalLine)
+        }
     }
 
     /**
@@ -322,30 +339,10 @@ class Visualizer {
             model.addPointValues(statement as SetPointStatement)
         } else if (statement instanceof LightStatement) {
             model.addLightValues(statement as LightStatement)
-        }
-    }
-
-    /**
-     * Add data representing the LightStatement to the model.
-     * 
-     * @param model The model from the DataPool to which the data should be added
-     * @param statement The statement to be represented
-     */
-    def addLightValues(Model model, LightStatement statement) {
-        for (index : statement.lights) {
-            model.addVariable(new Variable("light_" + index, statement.state))
-        }
-    }
-
-    /**
-     * Add data representing the SetPointStatement to the model.
-     * 
-     * @param model The model from the DataPool to which the data should be added
-     * @param statement The statement to be represented
-     */
-    def addPointValues(Model model, SetPointStatement statement) {
-        for (index : statement.points) {
-            model.addVariable(new Variable("point_" + index, statement.orientation))
+        } else if (statement instanceof ContactWaitStatement) {
+            model.addContactValue(statement as ContactWaitStatement)
+        } else if (statement instanceof ConditionalStatement) {
+            model.addConditionalValues(statement as ConditionalStatement)
         }
     }
 
@@ -403,6 +400,76 @@ class Visualizer {
         }
     }
 
+    /**
+     * Add data representing the SetPointStatement to the model.
+     * 
+     * @param model The model from the DataPool to which the data should be added
+     * @param statement The statement to be represented
+     */
+    def addPointValues(Model model, SetPointStatement statement) {
+        
+        var Variable variable
+        
+        for (index : statement.points) {
+            variable = new Variable("point_" + index, statement.orientation)
+            model.addVariable(variable)
+            addedVars.add(0, variable)
+        }
+    }
+    
+    /**
+     * Add data representing the LightStatement to the model.
+     * 
+     * @param model The model from the DataPool to which the data should be added
+     * @param statement The statement to be represented
+     */
+    def addLightValues(Model model, LightStatement statement) {
+        
+        var Variable variable
+        
+        for (index : statement.lights) {
+            variable = new Variable("light_" + index, statement.state)
+            model.addVariable(variable)
+            addedVars.add(variable)
+        }
+    }
+
+    /**
+     * Add data representing the ContactWaitStatement to the model.
+     * 
+     * @param model The model from the DataPool to which the data should be added
+     * @param statement The statement to be represented
+     */
+    def addContactValue(Model model, ContactWaitStatement statement) {
+        val variable = new Variable(statement.segName + "_C_" + statement.parseContactIndex, "on")
+        model.addVariable(variable)
+        addedVars.add(0, variable)
+    }
+
+    /**
+     * Add data representing the ConditionalStatement to the model.
+     * 
+     * @param model The model from the DataPool to which the data should be added
+     * @param statement The statement to be represented
+     */
+    def addConditionalValues(Model model, ConditionalStatement statement) {
+        for (line : statement.lines) {
+            model.addConditionalLineValues(line)
+        }
+    }
+
+    /**
+     * Add data representing the ConditionalLine to the model.
+     * 
+     * @param model The model from the DataPool to which the data should be added
+     * @param statement The statement to be represented
+     */
+    def addConditionalLineValues(Model model, ConditionalLine line) {
+        val variable = new Variable(line.segName + "_C_" + line.parseContactIndex, "on")
+        model.addVariable(variable)
+        addedVars.add(0, variable)
+    }
+
     /*************************************************************************
      * G E T T E R S   &   S E T T E R S *************************************
      *************************************************************************/
@@ -414,7 +481,6 @@ class Visualizer {
     public def DataPool getDataPool() {
         return pool
     }
-
 
     public def XtextEditor getRegisteredEditor() {
         return registeredEditor

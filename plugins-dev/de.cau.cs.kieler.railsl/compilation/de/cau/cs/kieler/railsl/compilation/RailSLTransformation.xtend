@@ -509,7 +509,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
 
         // Parse information from statement object 
         val trackIndex = cwStatement.segName.parseTrackSegment
-        val contactIndex = (if(cwStatement.contactIndex.equals("first")) 0 else 1)
+        val contactIndex = cwStatement.parseContactIndex
         val delay = (if(cwStatement.event.equals("Reach")) 1 else 2)
 
         // Create all required states

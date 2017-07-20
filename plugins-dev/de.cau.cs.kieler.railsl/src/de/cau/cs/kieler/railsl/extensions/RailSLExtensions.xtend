@@ -16,6 +16,8 @@ import de.cau.cs.kieler.railsl.railSL.SetPointStatement
 import de.cau.cs.kieler.railsl.railSL.LightStatement
 import de.cau.cs.kieler.railsl.railSL.SetTrackStatement
 import de.cau.cs.kieler.railsl.railSL.CrossingStatement
+import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
+import de.cau.cs.kieler.railsl.railSL.ConditionalLine
 
 /**
  * @author stu121235
@@ -86,6 +88,14 @@ class RailSLExtensions {
 
     def boolean parseCrossingSetting(CrossingStatement cStatement) {
         return cStatement.mode.equals("Open")
+    }
+
+    def int parseContactIndex(ContactWaitStatement statement) {
+        if(statement.contactIndex.equals("first")) 0 else 1
+    }
+
+    def int parseContactIndex(ConditionalLine line) {
+        if(line.contact.equals("first")) 0 else 1
     }
 
     /**
