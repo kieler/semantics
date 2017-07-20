@@ -48,37 +48,32 @@ import org.eclipse.ui.internal.Workbench
  */
 class Visualizer {
 
+    /*************************************************************************
+     * I N J E C T I O N S ***************************************************
+     *************************************************************************/
+    // For parsing helpers and speed constants
+    @Inject extension RailSLExtensions
+
+    // To determine the EObject generated from a certain cursor position in the XText editor
+    @Inject EObjectAtOffsetHelper eObjectAtOffsetHelper // = new EObjectAtOffsetHelper();
+    /*************************************************************************
+     * F I E L D S ***********************************************************
+     *************************************************************************/
+    /**
+     * The singleton instance to be used for all behalfs
+     */
     private static var Visualizer instance
 
+    /**
+     * The editor being currently monitored by the Visualizer
+     */
     private var XtextEditor registeredEditor
 
+    /**
+     * The currently registered DocumentListener
+     */
     @Accessors
     private var IDocumentListener listener
-
-    public def XtextEditor getRegisteredEditor() {
-        return registeredEditor
-    }
-
-    /**
-     * All the track name constants
-     */
-    static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4", "IC_LN_5", "IC_ST_0",
-        "IC_ST_1", "IC_ST_2", "IC_ST_3", "IC_ST_4", "IO_LN_0", "IO_LN_1", "IO_LN_2", "KH_LN_0", "KH_LN_1", "KH_LN_2",
-        "KH_LN_3", "KH_LN_4", "KH_LN_5", "KH_LN_6", "KH_LN_7", "KH_LN_8", "KH_ST_0", "KH_ST_1", "KH_ST_2", "KH_ST_3",
-        "KH_ST_4", "KH_ST_5", "KH_ST_6", "KIO_LN_0", "KIO_LN_1", "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2", "OC_LN_3",
-        "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1", "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1", "OI_LN_2"}
-
-    /*
-     * For parsing helpers and speed constants
-     */
-    @Inject
-    extension RailSLExtensions
-
-    /*
-     * To determine the EObject generated from a certain cursor position in the XText editor
-     */
-    @Inject
-    EObjectAtOffsetHelper eObjectAtOffsetHelper = new EObjectAtOffsetHelper();
 
     /**
      * The DataPool object maintained by this object.
@@ -94,6 +89,18 @@ class Visualizer {
      */
     private val addedVars = new ArrayList<Variable>()
 
+    /**
+     * All the track name constants
+     */
+    static val constants = #{"IC_JCT_0", "IC_LN_0", "IC_LN_1", "IC_LN_2", "IC_LN_3", "IC_LN_4", "IC_LN_5", "IC_ST_0",
+        "IC_ST_1", "IC_ST_2", "IC_ST_3", "IC_ST_4", "IO_LN_0", "IO_LN_1", "IO_LN_2", "KH_LN_0", "KH_LN_1", "KH_LN_2",
+        "KH_LN_3", "KH_LN_4", "KH_LN_5", "KH_LN_6", "KH_LN_7", "KH_LN_8", "KH_ST_0", "KH_ST_1", "KH_ST_2", "KH_ST_3",
+        "KH_ST_4", "KH_ST_5", "KH_ST_6", "KIO_LN_0", "KIO_LN_1", "OC_JCT_0", "OC_LN_0", "OC_LN_1", "OC_LN_2", "OC_LN_3",
+        "OC_LN_4", "OC_LN_5", "OC_ST_0", "OC_ST_1", "OC_ST_2", "OC_ST_3", "OC_ST_4", "OI_LN_0", "OI_LN_1", "OI_LN_2"}
+
+    /*************************************************************************
+     * C O N S T R U C T O R *************************************************
+     *************************************************************************/
     /**
      * Default constructor.
      * Instantiates the DataPool and fills it with default values for all tracks, points and lights.
@@ -119,80 +126,97 @@ class Visualizer {
             model.addVariable(new Variable("point_" + i, 0))
         }
 
+        // TODO Add more default variable values here
         registerListenerToEditor
 
-        // Register listener to keep the selected editor up to date
-        Display.getDefault.asyncExec(new Runnable() {
-            
-            @Override
-            override void run() {
-            
-                Workbench.getInstance().getActiveWorkbenchWindow().getPartService().addPartListener(new IPartListener2() {
-                    
-                    @Override
-                    override partActivated(IWorkbenchPartReference partRef) {
-                        if (partRef.getPart(false).equals(EditorUtils.activeXtextEditor)) {
-                            Visualizer.instance.registerListenerToEditor  
-                        }
-                    }
-                    
-                    @Override
-                    override partBroughtToTop(IWorkbenchPartReference partRef) {
-                        // ignore
-                    }
-                    
-                    @Override
-                    override partClosed(IWorkbenchPartReference partRef) {
-                        if (partRef.getPart(false).equals(Visualizer.instance.getRegisteredEditor)) {
-                            Visualizer.instance.deactivateListener  
-                        }
-                    }
-                    
-                    @Override
-                    override partDeactivated(IWorkbenchPartReference partRef) {
-                        if (partRef.getPart(false).equals(Visualizer.instance.getRegisteredEditor)) {
-                            Visualizer.instance.deactivateListener  
-                        }
-                    }
-                    
-                    @Override
-                    override partHidden(IWorkbenchPartReference partRef) {
-                        // ignore
-                    }
-                    
-                    @Override
-                    override partInputChanged(IWorkbenchPartReference partRef) {
-                        // ignore
-                    }
-                    
-                    @Override
-                    override partOpened(IWorkbenchPartReference partRef) {
-                        // ignore
-                    }
-                    
-                    @Override
-                    override partVisible(IWorkbenchPartReference partRef) {
-                        // ignore
-                    }
-                    
-                })
-            
-            }
-        })
+        // Register listener to keep track of changing editors
+        Display.getDefault.asyncExec(
+            new Runnable() {
+                @Override
+                override void run() {
+                    Workbench.getInstance().getActiveWorkbenchWindow().getPartService().addPartListener(
+                        new IPartListener2() {
 
+                            @Override
+                            override partActivated(IWorkbenchPartReference partRef) {
+                                if (partRef.getPart(false).equals(EditorUtils.activeXtextEditor)) {
+                                    Visualizer.instance.registerListenerToEditor
+                                }
+                            }
+
+                            @Override
+                            override partBroughtToTop(IWorkbenchPartReference partRef) {
+                                // ignore
+                            }
+
+                            @Override
+                            override partClosed(IWorkbenchPartReference partRef) {
+                                if (partRef.getPart(false).equals(Visualizer.instance.getRegisteredEditor)) {
+                                    Visualizer.instance.deactivateListener
+                                }
+                            }
+
+                            @Override
+                            override partDeactivated(IWorkbenchPartReference partRef) {
+                                if (partRef.getPart(false).equals(Visualizer.instance.getRegisteredEditor)) {
+                                    Visualizer.instance.deactivateListener
+                                }
+                            }
+
+                            @Override
+                            override partHidden(IWorkbenchPartReference partRef) {
+                                // ignore
+                            }
+
+                            @Override
+                            override partInputChanged(IWorkbenchPartReference partRef) {
+                                // ignore
+                            }
+
+                            @Override
+                            override partOpened(IWorkbenchPartReference partRef) {
+                                // ignore
+                            }
+
+                            @Override
+                            override partVisible(IWorkbenchPartReference partRef) {
+                                // ignore
+                            }
+                        })
+                }
+            })
     }
 
+    /**
+     * Creates the singleton instance of the Visualizer.
+     */
+    public static def void initialize(Injector injector) {
+        instance = injector.getInstance(Visualizer)
+    }
+
+    /*************************************************************************
+     * L I S T E N E R S *****************************************************
+     *************************************************************************/
+
+    /**
+     * Deactivates the IDocumentListener attached to the XtextEditor.
+     * 
+     * Called by the IPartListener when the active editor is closed or deactivated.
+     */
     def void deactivateListener() {
         Display.getDefault.asyncExec(new Runnable() {
-          
+
             @Override
             override void run() {
                 registeredEditor.document?.removeDocumentListener(Visualizer.instance.getListener)
             }
-            
+
         })
     }
 
+    /**
+     * Registers an IDocumentListener to the currently open document in the XTextEditor.
+     */
     def void registerListenerToEditor() {
 
         Display.getDefault.asyncExec(new Runnable() {
@@ -215,22 +239,14 @@ class Visualizer {
                 })
                 registeredEditor.document.addDocumentListener(listener)
                 Visualizer.instance.listener = listener
-                
+
             }
         })
     }
 
-    public static def void initialize(Injector injector) {
-        instance = injector.getInstance(Visualizer)
-    }
-
-    /**
-     * Getter for the DataPool.
-     * Currently unused.
-     */
-    public def DataPool getDataPool() {
-        return pool
-    }
+    /*************************************************************************
+     * U P D A T I N G *******************************************************
+     *************************************************************************/
 
     /**
      * Read the current cursor position from the active editor and 
@@ -242,31 +258,13 @@ class Visualizer {
 
             @Override
             override void run() {
-                val editor = EditorUtils.activeXtextEditor
-                if (editor != registeredEditor) {
-                    registeredEditor = editor
-                    registeredEditor.document.addDocumentListener(new IDocumentListener {
-
-                        @Override
-                        override documentAboutToBeChanged(DocumentEvent event) {
-                            // ignore
-                        }
-
-                        @Override
-                        override documentChanged(DocumentEvent event) {
-                            instance.updateView
-                        }
-
-                    })
-                    return
-                }
 
                 registeredEditor.document.readOnly(new IUnitOfWork<String, XtextResource>() {
 
                     @Override
                     override exec(XtextResource state) {
                         try {
-                            val textSelection = editor.getSelectionProvider().getSelection() as TextSelection;
+                            val textSelection = registeredEditor.getSelectionProvider().getSelection() as TextSelection;
                             val object = eObjectAtOffsetHelper.resolveElementAt(state, textSelection.getOffset())
                             updatePool(object)
 
@@ -404,4 +402,22 @@ class Visualizer {
             return
         }
     }
+
+    /*************************************************************************
+     * G E T T E R S   &   S E T T E R S *************************************
+     *************************************************************************/
+
+    /**
+     * Getter for the DataPool.
+     * Currently unused.
+     */
+    public def DataPool getDataPool() {
+        return pool
+    }
+
+
+    public def XtextEditor getRegisteredEditor() {
+        return registeredEditor
+    }
+
 }
