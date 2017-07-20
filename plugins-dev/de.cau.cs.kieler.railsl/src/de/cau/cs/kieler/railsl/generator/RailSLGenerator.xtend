@@ -25,13 +25,6 @@ class RailSLGenerator extends AbstractGenerator {
     override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
         generateHeaders(fsa)
         generateSnippets(fsa)
-        
-        // TODO find a way to get the visualizer listening to editor updates by itself
-        
-//        if (visualizer == null) {
-//            visualizer = injector.getInstance(Visualizer)
-//        }
-//        visualizer.updateView()
     }
 
     /*************************************************************************

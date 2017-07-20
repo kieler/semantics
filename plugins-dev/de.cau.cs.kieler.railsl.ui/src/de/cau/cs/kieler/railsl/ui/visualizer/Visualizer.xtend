@@ -36,6 +36,10 @@ import org.eclipse.jface.text.IDocumentListener
 import org.eclipse.jface.text.DocumentEvent
 import com.google.inject.Injector
 import org.eclipse.xtext.ui.editor.XtextEditor
+import org.eclipse.ui.IPartListener2
+import org.eclipse.ui.IWorkbenchPartReference
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.ui.internal.Workbench
 
 /**
  * Show on-the-fly info about the model being edited.
@@ -47,6 +51,13 @@ class Visualizer {
     private static var Visualizer instance
 
     private var XtextEditor registeredEditor
+
+    @Accessors
+    private var IDocumentListener listener
+
+    public def XtextEditor getRegisteredEditor() {
+        return registeredEditor
+    }
 
     /**
      * All the track name constants
@@ -108,13 +119,88 @@ class Visualizer {
             model.addVariable(new Variable("point_" + i, 0))
         }
 
-        val visualizer = this
+        registerListenerToEditor
+
+        // Register listener to keep the selected editor up to date
+        Display.getDefault.asyncExec(new Runnable() {
+            
+            @Override
+            override void run() {
+            
+                Workbench.getInstance().getActiveWorkbenchWindow().getPartService().addPartListener(new IPartListener2() {
+                    
+                    @Override
+                    override partActivated(IWorkbenchPartReference partRef) {
+                        if (partRef.getPart(false).equals(EditorUtils.activeXtextEditor)) {
+                            Visualizer.instance.registerListenerToEditor  
+                        }
+                    }
+                    
+                    @Override
+                    override partBroughtToTop(IWorkbenchPartReference partRef) {
+                        // ignore
+                    }
+                    
+                    @Override
+                    override partClosed(IWorkbenchPartReference partRef) {
+                        if (partRef.getPart(false).equals(Visualizer.instance.getRegisteredEditor)) {
+                            Visualizer.instance.deactivateListener  
+                        }
+                    }
+                    
+                    @Override
+                    override partDeactivated(IWorkbenchPartReference partRef) {
+                        if (partRef.getPart(false).equals(Visualizer.instance.getRegisteredEditor)) {
+                            Visualizer.instance.deactivateListener  
+                        }
+                    }
+                    
+                    @Override
+                    override partHidden(IWorkbenchPartReference partRef) {
+                        // ignore
+                    }
+                    
+                    @Override
+                    override partInputChanged(IWorkbenchPartReference partRef) {
+                        // ignore
+                    }
+                    
+                    @Override
+                    override partOpened(IWorkbenchPartReference partRef) {
+                        // ignore
+                    }
+                    
+                    @Override
+                    override partVisible(IWorkbenchPartReference partRef) {
+                        // ignore
+                    }
+                    
+                })
+            
+            }
+        })
+
+    }
+
+    def void deactivateListener() {
+        Display.getDefault.asyncExec(new Runnable() {
+          
+            @Override
+            override void run() {
+                registeredEditor.document?.removeDocumentListener(Visualizer.instance.getListener)
+            }
+            
+        })
+    }
+
+    def void registerListenerToEditor() {
 
         Display.getDefault.asyncExec(new Runnable() {
             @Override
             override void run() {
+
                 registeredEditor = EditorUtils.activeXtextEditor
-                registeredEditor.document.addDocumentListener(new IDocumentListener {
+                val listener = (new IDocumentListener {
 
                     @Override
                     override documentAboutToBeChanged(DocumentEvent event) {
@@ -123,10 +209,13 @@ class Visualizer {
 
                     @Override
                     override documentChanged(DocumentEvent event) {
-                        visualizer.updateView
+                        Visualizer.instance.updateView
                     }
 
                 })
+                registeredEditor.document.addDocumentListener(listener)
+                Visualizer.instance.listener = listener
+                
             }
         })
     }
