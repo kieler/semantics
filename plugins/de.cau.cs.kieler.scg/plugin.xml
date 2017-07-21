@@ -115,7 +115,7 @@
             class="de.cau.cs.kieler.scg.processors.transformators.DependencyWrapper">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.SCG2CWrapper">
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGenerator">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.SequentializerWrapper">

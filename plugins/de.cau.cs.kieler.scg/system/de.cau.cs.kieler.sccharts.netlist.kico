@@ -33,5 +33,5 @@ de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG
 	de.cau.cs.kieler.scg.processors.transformators.guards
 	de.cau.cs.kieler.scg.processors.transformators.scheduler
 	de.cau.cs.kieler.scg.processors.transformators.sequentializer
-	de.cau.cs.kieler.scg.processors.transformators.C
+	de.cau.cs.kieler.scg.processors.codegen.c
 ]
