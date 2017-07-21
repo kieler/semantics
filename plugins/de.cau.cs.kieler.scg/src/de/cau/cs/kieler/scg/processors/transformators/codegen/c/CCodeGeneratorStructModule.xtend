@@ -52,7 +52,7 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     override generate() {
         for (declaration : scg.declarations) {
             if (declaration instanceof VariableDeclaration) {
-                code.append(declaration.type)
+                code.append(indentation + declaration.type)
                 code.append(";\n")
             }
         }

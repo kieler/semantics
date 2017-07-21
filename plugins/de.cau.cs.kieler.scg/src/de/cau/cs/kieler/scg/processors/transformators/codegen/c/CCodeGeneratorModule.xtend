@@ -53,6 +53,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
     override generateDone() {
         struct.generateDone
+        
+        code.append(struct.code)
     }
     
 }

@@ -27,7 +27,6 @@ abstract class CodeGeneratorModule {
     @Inject protected Injector injector
         
     @Accessors val StringBuilder code = new StringBuilder
-    @Accessors val SCG2CSerializeHRExtensions serializer = injector.getInstance(SCG2CSerializeHRExtensions)
     @Accessors var String baseName = ""
     @Accessors var String prefix = ""
     @Accessors var String suffix = ""

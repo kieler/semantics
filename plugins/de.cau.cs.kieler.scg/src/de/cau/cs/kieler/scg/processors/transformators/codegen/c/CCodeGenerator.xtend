@@ -70,6 +70,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     }
     
     protected def hostcodeSafeName(String string) {
+        if (string == null) return ""
         string.replaceAll("[\\s-]","_")
     }
 
