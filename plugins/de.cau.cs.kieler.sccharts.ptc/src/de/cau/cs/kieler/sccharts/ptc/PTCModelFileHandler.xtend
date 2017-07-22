@@ -29,15 +29,21 @@ public class PTCModelFileHandler extends PTCAbstractConvertModelHandler {
     
     public static String OPTION_EXPAND_SUBSTATEMACHINES = " Expand Substatemachines"
     public static String OPTION_NO_TRANSITIONS = " Skip Transitions"
+    public static String OPTION_NO_INTERLEVEL_TRANSITIONS = "XSkip Interlevel Transitions"
     public static String OPTION_NO_ENTRYEXIT = " Skip Entry/Exit Actions"
     public static String OPTION_HOSTLABELS = " Transition Hostcode Labels"
-    public static String OPTION_ADDTRIGGERS = "XAdd Triggers to untriggered Transitions";
+    public static String OPTION_VARIABLEPARAMETERS = " Action Parameters become Input Variables (not Constants)"
+    public static String OPTION_ADDSUBTRIGGERS = "XAdd Triggers to Substatemachine Transitions";
+    public static String OPTION_ADDALLTRIGGERS = " Add Triggers to ALL untriggered Transitions";
     
     public static String[] options = #[OPTION_EXPAND_SUBSTATEMACHINES, 
+                                       OPTION_NO_INTERLEVEL_TRANSITIONS,
                                        OPTION_NO_TRANSITIONS,
                                        OPTION_NO_ENTRYEXIT,
                                        OPTION_HOSTLABELS, 
-                                       OPTION_ADDTRIGGERS
+                                       OPTION_VARIABLEPARAMETERS,
+                                       OPTION_ADDSUBTRIGGERS,
+                                       OPTION_ADDALLTRIGGERS
     ];
 
     @Inject

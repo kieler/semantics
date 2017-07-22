@@ -32,7 +32,8 @@ import java.util.ArrayList
 import de.cau.cs.kieler.sccharts.Region
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * Import SCCharts from PTC
@@ -83,6 +84,8 @@ public class PTC2SCCharts {
     List<State> entryPoint = new ArrayList()
     List<State> exitPoint = new ArrayList()
 
+    List<EObject> substatemachinestates = new ArrayList()
+
     List<String> statemachineList = null
     List<String> optionListSelected = null
 
@@ -129,6 +132,7 @@ public class PTC2SCCharts {
         if (targetModel.nullOrEmpty) {
             ConnetionPointRef2ConnectionPoint.clear
             ConnectionPoint2State.clear
+            substatemachinestates.clear
             src2target.clear
             target2src.clear
             id2src.clear
@@ -139,6 +143,7 @@ public class PTC2SCCharts {
             Operation2Name.clear
             entryPoint.clear
             exitPoint.clear
+            constantValue = 0
             var scchart = SCChartsFactory::eINSTANCE.createState;
             targetModel.add(scchart)
         }
@@ -161,8 +166,8 @@ public class PTC2SCCharts {
         return src2target.get(src)
     }
 
-    def EObject target2src(EObject target) {
-        return target2src.get(target)
+    def Element target2src(EObject target) {
+        return target2src.get(target) as Element
     }
 
     def EObject id2src(String id) {
@@ -171,6 +176,10 @@ public class PTC2SCCharts {
 
     def String src2id(EObject src) {
         return src2id.get(src)
+    }
+
+    def boolean isSubstatemachineReference(Element state) {
+        return substatemachinestates.contains(state)
     }
 
     def ValuedObject id2input(List<State> targetModel, Element element, String id) {
@@ -203,12 +212,14 @@ public class PTC2SCCharts {
     def ValuedObject getLocalValuedObject(List<State> targetModel, String localName) {
         if (!name2localValuedObject.containsKey(localName)) {
             // Insert new constant (intput)
-            val valuedObject = targetModel.current.createIntOutputVariable(localName)
+            val valuedObject = targetModel.current.createIntLocalVariable(localName)
             name2localValuedObject.put(localName, valuedObject)
             println("LOCAL IN PUT:" + localName + " (" + valuedObject.name + ")");
         }
         return name2localValuedObject.get(localName);
     }
+
+    static var constantValue = 0;
 
     def ValuedObject getReferencedValuedObject(List<State> targetModel, String localName) {
         // If a references variable already exists as local, then return this, but make it input
@@ -216,9 +227,25 @@ public class PTC2SCCharts {
         // create a new input
         var returnValuedObject = getLocalValuedObject(targetModel, localName.fixId)
         var decl = (returnValuedObject.eContainer as Declaration);
-        if (decl != null) {
-            decl.input = true
+
+        if (PTCModelFileHandler.OPTION_VARIABLEPARAMETERS.selected) {
+            // Treat as variable inputs
+            if (decl != null) {
+                println("Making " + returnValuedObject.name + " a variable INPUT parameter");
+                decl.input = true
+            }
+        } else {
+            // Treat as constants
+            if (decl != null) {
+                if (!decl.const) {
+                    constantValue++;
+                    println("Making " + returnValuedObject.name + " a constant parameter with value " + constantValue);
+                    decl.const = true
+                    returnValuedObject.initialValue = constantValue.createIntValue
+                }
+            }
         }
+
         return returnValuedObject;
     }
 
@@ -231,7 +258,6 @@ public class PTC2SCCharts {
         }
         return id2output.get(outputName);
     }
-
 
     def void body2output(Action action, List<State> targetModel, Element element, String body) {
         val bodyList = body.replace(".", "_").split(";");
@@ -248,70 +274,145 @@ public class PTC2SCCharts {
             return;
         }
 
-        val outputName = body.extractOutputName
-        val outputParam = body.extractOutputParam
-        
-        //TODO:
-        // transferType = GetRequestType(msgStruct);&#13;requestSessionId = msgStruct.SessionId;&#13;transferFileBufferFileName = msgStruct.FileName;&#13;dataLoaderIP = msgStruct.SourceIp;
+        var UMLActionExpression assignVar = null
+        var UMLActionExpression assignExpr = null
+        var String assignExprString = null
+        var int assignExprNumber = 0;
+        var String assignVarString = null
+        var signalCase = false;
 
-        if (outputName == null) {
-            // @OPTION
-            // Only take the first expression (if multiple)
-            var bodyExpression = body
-            if (bodyExpression.contains(";")) {
-                bodyExpression = body.substring(0, bodyExpression.indexOf(";"));
-            }
+        // / First parse and see if this is an assignment
+        println("Parsing expression '" + body + "' ...")
+        try {
+            val bodyExpression = UMLActionExpression.parse(body);
+            println(" DONE.");
 
-            println("Parsing expression '" + bodyExpression + "' ...")
-            try {
-                val expr = UMLActionExpression.parse(bodyExpression);
-                println(" DONE.");
-
-                // All assign variables need to exist as local variables
-                for (localValObjName : expr.assignedEntities) {
-                    // Possibly add new input (INT only supported!)
-                    val local = targetModel.getLocalValuedObject(localValObjName.name.fixId)
+            if (!bodyExpression.subExpressions.nullOrEmpty) {
+                if (bodyExpression.subExpressions.get(0).operator == UMLActionExpression::Operator.ASSIGN) {
+                    assignVar = bodyExpression.subExpressions.get(0).subExpressions.get(0)
+                    assignExpr = bodyExpression.subExpressions.get(0).subExpressions.get(1)
                 }
-                // @OPTION
-                // All references variables need to exist either as local variables
-                // or if not, they need to additional inputs
-                for (refValObjName : expr.referencedEntities) {
-                    // Only for REAL entities, not for numbers!!!
-                    if (refValObjName.isEntity) {
-                        val input = targetModel.getReferencedValuedObject(refValObjName.name)
-                    }
-                }
-
-            } catch (Exception e) {
-                println(" ERROR.");
             }
-
-            // Add a host code effect
-            action.addEffect(asHostcodeEffect(body))
-            return;
+        } catch (Exception e) {
+            println(" ERROR.");
         }
 
-        val signalName = outputName.fixId
-        if (outputParam != null) {
-            // @OPTION type
-            // We need an integer input
-            if (UMLActionExpression::isEntity(outputParam)) {
-                // Parameter is INT input
-                val ValuedObject param = getParamValuedObject(targetModel, "P_" + outputParam)
-                val ValuedObject outVar = targetModel.getOutputValuedObject(signalName, ValueType::INT, false)
-                action.addAssignment(outVar.assign(param.reference))
+        // If expression then inspect assignExpr for standard parameters such as TRUE, FALSE, Integers
+        if (assignExpr != null) {
+            assignVarString = assignVar.name
+            // Case: "/ x = <EXPRESSION>"
+            if (!assignExpr.isEntity) {
+                // Case: "/x = 3"
+                assignExprNumber = UMLActionExpression.getInteger(assignExpr.name, true);
             } else {
-                // @OPTION type
-                val outputParamInt = UMLActionExpression::getInteger(outputParam)
-                // Parameter is integer number
-                val ValuedObject outVar = targetModel.getOutputValuedObject(signalName, ValueType::INT, false)
-                action.addAssignment(outVar.assign(outputParamInt.createIntValue))
+                // Case: "/x = f(a,b,c)" 
+                // From "f(a,b,c)"  make "f_a_b_c"  
+                assignExprString = assignExpr.name.replace('(', "_").replace(')', "_").replace(',', "_")
             }
         } else {
-            // A signal outut is sufficient
-            val ValuedObject outSignal = targetModel.getOutputValuedObject(signalName, ValueType::PURE, true)
-            action.addEffect(outSignal.emit)
+            // Case: "/abc(<PARAMETER>)" or "/abc"
+            assignVarString = body.extractOutputName
+            val outputParam = body.extractOutputParam
+
+            if (outputParam != null) {
+                // Case: "/abc(<SOMEPARAMETER>)"
+                if (UMLActionExpression.isInteger(outputParam, true)) {
+                    // Case: "/abc(42)" or "/abc(true)" 
+                    assignExprNumber = UMLActionExpression.getInteger(outputParam, true)
+                } else {
+                    // Case: "/abc(identifier)" or "/abc(a,b,c)"
+                    assignExprString = outputParam.replace('(', "_").replace(')', "_").replace(',', "_")
+                }
+            } else {
+                // Case: "/abc"
+                signalCase = true
+            }
+
         }
+
+        assignVarString = "O_" + assignVarString;
+        if (signalCase) {
+            val ValuedObject outSignal = targetModel.getOutputValuedObject(assignVarString, ValueType::PURE, true)
+            action.addEffect(outSignal.emit)
+        } else {
+            val ValuedObject outVariable = targetModel.getOutputValuedObject(assignVarString, ValueType::INT, false)
+            var String value
+            if (assignExprString == null) {
+                // The integer case
+                value = assignExprNumber + ""
+            } else {
+                // The complex case
+                val input = targetModel.getReferencedValuedObject(assignExprString.fixId)
+                value = input.name
+            }
+            // Build a new hostcode action for this case
+            action.addEffect(asHostcodeEffect(assignVarString + "=" + value))
+            println("Resulting hostcode effect: '" + assignVarString + "=" + value + "'");
+        }
+
+//        val outputName = body.extractOutputName
+//        val outputParam = body.extractOutputParam
+//
+//        // TODO:
+//        // transferType = GetRequestType(msgStruct);&#13;requestSessionId = msgStruct.SessionId;&#13;transferFileBufferFileName = msgStruct.FileName;&#13;dataLoaderIP = msgStruct.SourceIp;
+//        if (outputName == null) {
+//            // @OPTION
+//            // Only take the first expression (if multiple)
+//            var bodyExpression = body
+//            if (bodyExpression.contains(";")) {
+//                bodyExpression = body.substring(0, bodyExpression.indexOf(";"));
+//            }
+//
+//            println("Parsing expression '" + bodyExpression + "' ...")
+//            try {
+//                val expr = UMLActionExpression.parse(bodyExpression);
+//                println(" DONE.");
+//
+//                // All assign variables need to exist as local variables
+//                for (localValObjName : expr.assignedEntities) {
+//                    // Possibly add new input (INT only supported!)
+//                    val local = targetModel.getLocalValuedObject(localValObjName.name.fixId)
+//                }
+//                // @OPTION
+//                // All references variables need to exist either as local variables
+//                // or if not, they need to become additional inputs
+//                for (refValObjName : expr.referencedEntities) {
+//                    // Only for REAL entities, not for numbers!!!
+//                    if (refValObjName.isEntity) {
+//                        val input = targetModel.getReferencedValuedObject(refValObjName.name)
+//                    }
+//                }
+//
+//            } catch (Exception e) {
+//                println(" ERROR.");
+//            }
+//
+//            // Add a host code effect
+//            action.addEffect(asHostcodeEffect(body))
+//            return;
+//        }
+//
+//        val signalName = outputName.fixId
+//        if (outputParam != null) {
+//            // @OPTION type
+//            // We need an integer input
+//            if (UMLActionExpression::isEntity(outputParam)) {
+//                // Parameter is INT input
+//                val ValuedObject param = getParamValuedObject(targetModel, "P_" + outputParam)
+//                val ValuedObject outVar = targetModel.getOutputValuedObject(signalName, ValueType::INT, false)
+//                action.addAssignment(outVar.assign(param.reference))
+//            } else {
+//                // @OPTION type
+//                val outputParamInt = UMLActionExpression::getInteger(outputParam)
+//                // Parameter is integer number
+//                val ValuedObject outVar = targetModel.getOutputValuedObject(signalName, ValueType::INT, false)
+//                action.addAssignment(outVar.assign(outputParamInt.createIntValue))
+//            }
+//        } else {
+//            // A signal output is sufficient
+//            val ValuedObject outSignal = targetModel.getOutputValuedObject(signalName, ValueType::PURE, true)
+//            action.addEffect(outSignal.emit)
+//        }
     }
 
     def String extractOutputParam(String actionBody) {
@@ -404,6 +505,7 @@ public class PTC2SCCharts {
 
     def void transformStateMachine(List<State> targetModel, Element element, boolean clear, Region parentRegion) {
         if (clear) {
+            substatemachinestates.clear
             ConnetionPointRef2ConnectionPoint.clear
             ConnectionPoint2State.clear
             src2target.clear
@@ -416,6 +518,7 @@ public class PTC2SCCharts {
             Operation2Name.clear
             entryPoint.clear
             exitPoint.clear
+            constantValue = 0
         }
         var State scchart
 
@@ -436,7 +539,7 @@ public class PTC2SCCharts {
 
         if (parentRegion != null) {
             // Gather connection points            
-            for (connectionPoint : element.children.filter[e | e.type == "connectionPoint"].toList) {
+            for (connectionPoint : element.children.filter[e|e.type == "connectionPoint"].toList) {
                 targetModel.transformEntryExitPoints(connectionPoint, scchart)
             }
         }
@@ -458,36 +561,35 @@ public class PTC2SCCharts {
     }
 
     def void transformEntryExitPoints(List<State> targetModel, Element element, EObject srcParent) {
-            var parentState = (srcParent as State)
-            var parentRegion = parentState.regions.get(0) as ControlflowRegion;
-            if (parentRegion == null) {
-                println("ERROR: parentRegion is empty, cannot create entry/exit point")
-                return
-            }
+        var parentState = (srcParent as State)
+        var parentRegion = parentState.regions.get(0) as ControlflowRegion;
+        if (parentRegion == null) {
+            println("ERROR: parentRegion is empty, cannot create entry/exit point")
+            return
+        }
 
-                    // Entry and Exit Points
-            if (element.kind == "entryPoint") {
-                println("CREATE ENTRY POINT '" + element.name + "' with id " + element.id)
+        // Entry and Exit Points
+        if (element.kind == "entryPoint") {
+            println("CREATE ENTRY POINT '" + element.name + "' with id " + element.id)
 
-                val state = parentRegion.createState(element.name.fixId).uniqueName;
-                state.initial = true
-                entryPoint.add(state)
-                element.map(state)
-                targetModel.transformGeneral(element)
-                ConnectionPoint2State.put(element.id, state);
-                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
-            } else if (element.kind == "exitPoint") {
-                println("CREATE EXIT POINT '" + element.name + "' with id " + element.id)
-                val state = parentRegion.createState(element.name.fixId).uniqueName;
-                state.final = true
-                exitPoint.add(state)
-                element.map(state)
-                targetModel.transformGeneral(element)
-                ConnectionPoint2State.put(element.id, state);
-                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
-            }
+            val state = parentRegion.createState(element.name.fixId).uniqueName;
+            state.initial = true
+            entryPoint.add(state)
+            element.map(state)
+            targetModel.transformGeneral(element)
+            ConnectionPoint2State.put(element.id, state);
+            println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
+        } else if (element.kind == "exitPoint") {
+            println("CREATE EXIT POINT '" + element.name + "' with id " + element.id)
+            val state = parentRegion.createState(element.name.fixId).uniqueName;
+            state.final = true
+            exitPoint.add(state)
+            element.map(state)
+            targetModel.transformGeneral(element)
+            ConnectionPoint2State.put(element.id, state);
+            println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
+        }
     }
-
 
     def void transformPseudostate(List<State> targetModel, Element element, EObject srcParent) {
         // Find region to create state in
@@ -497,39 +599,7 @@ public class PTC2SCCharts {
         }
         if (srcParentRegionOrState instanceof State) {
             targetModel.transformEntryExitPoints(element, srcParentRegionOrState)
-
-//        if (srcParentRegionOrState instanceof State) {
-//            var parentState = (srcParentRegionOrState as State)
-//            var parentRegion = parentState.regions.get(0) as ControlflowRegion;
-//            if (parentRegion == null) {
-//                println("ERROR: parentRegion is empty, cannot create entry/exit point")
-//                return
-//            }
-//            // Entry and Exit Points
-//            // if (element.name.startsWith("Initial")) {
-//            if (element.kind == "entryPoint") {
-//                println("CREATE ENTRY POINT '" + element.name + "' with id " + element.id)
-//
-//                val state = parentRegion.createState(element.name.fixId).uniqueName;
-//                state.initial = true
-//                entryPoint.add(state)
-//                element.map(state)
-//                targetModel.transformGeneral(element)
-//                ConnectionPoint2State.put(element.id, state);
-//                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
-//            } else if (element.kind == "exitPoint") {
-//                println("CREATE EXIT POINT '" + element.name + "' with id " + element.id)
-//                val state = parentRegion.createState(element.name.fixId).uniqueName;
-//                state.final = true
-//                exitPoint.add(state)
-//                element.map(state)
-//                targetModel.transformGeneral(element)
-//                ConnectionPoint2State.put(element.id, state);
-//                println("ConnectionPoint2State: '" + element.id + "' -> '" + state.id + "'")
-//            }
-//
         } else if ((srcParentRegionOrState instanceof ControlflowRegion)) {
-//             if ((srcParentRegionOrState instanceof ControlflowRegion)) {
             if (element.kind == "junction") {
                 println("CREATE CONNECTOR STATE '" + element.name + "' with id " + element.id)
                 val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
@@ -560,19 +630,34 @@ public class PTC2SCCharts {
         targetModel.transformGeneral(element)
     }
 
+    def State findReferenceScope(Element element) {
+        val stateMachineID = element.getSubmachine()
+        val submachineElement = element.getStatemachineWithId(stateMachineID);
+        return (submachineElement.src2target as State)
+    }
+
     def void transformState(List<State> targetModel, Element element, EObject srcParent) {
         println("CREATE STATE '" + element.name + "' with id " + element.id)
         val state = (src2target.get(srcParent) as ControlflowRegion).createState(element.name.fixId).uniqueName;
         // if name == Initialize
         element.map(state)
         targetModel.transformGeneral(element)
-
+    
         // Check if the state references a substatemachine
         if (element.getSubmachine() != "") {
+            state.label = "<<< " + state.id + " >>>"
+    
+            // Remember this is a substatemachine reference
+            substatemachinestates.add(element)
             // Inspect ConnectionPointReferences
             targetModel.transformConnectionPointReferences(element, state)
 
             if (PTCModelFileHandler.OPTION_EXPAND_SUBSTATEMACHINES.selected) {
+                // If we find the ref scope, that is cool, then link it!
+//                val refScope = element.findReferenceScope
+//                if (refScope != null) {
+//                    state.referencedScope = refScope
+//                }
                 // Expand the substatemachine inside this state
                 var Region region = null
                 if (state.regions.nullOrEmpty) {
@@ -657,32 +742,11 @@ public class PTC2SCCharts {
     }
 
     def transformEvent(List<State> targetModel, Element element) {
-//        val varName = element.name
-//        val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-//        declaration.input = true
-//        declaration.type = ValueType::BOOL
-//        targetModel.current.declarations.add(declaration)
-//        val valuedObject = createValuedObject(targetModel.current, varName, declaration)
-//        element.map(valuedObject)
-//        id2input.put(element.id, valuedObject)
     }
 
     def transformProperty(List<State> targetModel, Element element) {
-//        if ((element == null) || (element.name == null)) {
-//            return
-//        }
-//        val varName = element.name.replace(" ", "")
-//
-//        println(" $$$ ADDING PROPERTY: '" + varName + "'");
-//        val declaration = KExpressionsFactory::eINSTANCE.createDeclaration
-//        // declaration.input = true
-//        declaration.type = ValueType::INT
-//        targetModel.current.declarations.add(declaration)
-//        val valuedObject = createValuedObject(targetModel.current, varName, declaration)
-//        element.map(valuedObject)
-//        id2input.put(element.id, valuedObject)
     }
-    
+
     var int counter = 0;
 
     def void transformTransition(List<State> targetModel, Element element) {
@@ -697,6 +761,12 @@ public class PTC2SCCharts {
             println(" --> ENTRY TRANSITION: from " + element.source + " to " + element.target);
         } else {
             println(" --> TRANSITION: from " + element.source + " to " + element.target);
+        }
+
+        if (PTCModelFileHandler.OPTION_NO_INTERLEVEL_TRANSITIONS.selected) {
+            if (exitPoint.contains(element.target) || entryPoint.contains(element.source)) {
+                return
+            }
         }
 
         var src = element.source.id2src.src2target as State
@@ -726,13 +796,20 @@ public class PTC2SCCharts {
             return
         }
         if (src.eContainer != dst.eContainer) {
+            if (PTCModelFileHandler.OPTION_NO_INTERLEVEL_TRANSITIONS.selected) {
+                return
+            }
             counter++
             if (counter < 0) {
-                println(" X --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
-                 return
+                println(
+                    " X --> INTERLEVEL TRANSITION: from " + element.source + " (" + src.id + ") to " + element.target +
+                        " (" + dst.id + ") skipped.");
+                return
             } else {
-                println(" V --> INTERLEVEL TRANSITION: from " + element.source + " ("+src.id +") to " + element.target + " ("+dst.id+") skipped.");
-            } 
+                println(
+                    " V --> INTERLEVEL TRANSITION: from " + element.source + " (" + src.id + ") to " + element.target +
+                        " (" + dst.id + ") skipped.");
+            }
         }
 
         if ((src instanceof State) && (dst instanceof State)) {
@@ -773,8 +850,16 @@ public class PTC2SCCharts {
                     }
                 }
 
-                if (!PTCModelFileHandler.OPTION_ADDTRIGGERS.selected) {
+                // Not All triggers => skip
+                if (!PTCModelFileHandler.OPTION_ADDALLTRIGGERS.selected) {
                     skip = true
+                }
+
+                // Only substatemachine trigges & source a subsm => not skip
+                if (PTCModelFileHandler.OPTION_ADDSUBTRIGGERS.selected) {
+                    if (transition.sourceState.target2src.isSubstatemachineReference) {
+                        skip = false
+                    }
                 }
 
                 if (!skip) {
@@ -906,16 +991,26 @@ public class PTC2SCCharts {
         }
     }
 
-    def transformStateMachine(List<State> targetModel, Element anyElement, String stateMachineID, Region parentRegion) {
+    def List<EObject> getAllStatemachines(Element anyElement) {
         val allStatemachines = anyElement.root.eAllContents.filter [ e |
             (e instanceof Element) && (e as Element).UMLStateMachine
         ].toList
-        for (statemachine : allStatemachines) {
+        return allStatemachines
+    }
+
+    def Element getStatemachineWithId(Element anyElement, String stateMachineID) {
+        for (statemachine : anyElement.allStatemachines) {
             val Element elem = (statemachine as Element)
             if (elem.xmiId.equals(stateMachineID)) {
-                targetModel.transformStateMachine(elem, false, parentRegion)
+                return elem
             }
         }
+
+    }
+
+    def transformStateMachine(List<State> targetModel, Element anyElement, String stateMachineID, Region parentRegion) {
+        val Element elem = anyElement.getStatemachineWithId(stateMachineID)
+        targetModel.transformStateMachine(elem, false, parentRegion)
     }
 
     def transform(EObject model, List<String> statemachineListParam, List<String> optionListSelectedParam) {

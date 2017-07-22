@@ -187,10 +187,19 @@ class SCChartsAdditionalExtensions {
         val List<State> routeToEnd = new ArrayList()
         val sharedParentRegion = transition.calculateHierarchyCrossingTransitionRoute(routeFromStart, routeToEnd,
             transition.sourceState, transition.targetState)
+            
+        if (sharedParentRegion == null) {
+            transition.sourceState.remove
+            println("sharedParentRegion == NULL ==>> Remove Transition")
+            return
+        }
 
         val originalSource = transition.sourceState
         val originalTarget = transition.targetState
 
+        if (sharedParentRegion.parentState == null) {
+            println("sharedParentRegion.parentState == NULL")
+        }
         // Create a control flow signal
         val signalName = "_e" + counter; // ("_" + originalSource.id + "_to_" + originalTarget.id).fixId
         val ctrlSignal = sharedParentRegion.parentState.createSignal(signalName, false, false, ValueType::PURE)
@@ -262,7 +271,12 @@ class SCChartsAdditionalExtensions {
     def Region calculateHierarchyCrossingTransitionRoute(Transition transition, List<State> routeFromStart,
         List<State> routeToEnd, State start, State end) {
         // End of recursion if same parent region
-        if (start.parentRegion == end.parentRegion) {
+        if (start.parentRegion != null && end.parentRegion != null
+            && start.parentRegion.parentState.parentRegion == end.parentRegion.parentState.parentRegion
+            && start.parentRegion.parentState.parentRegion == null) {
+           return start.parentRegion     
+        }
+        else if (start.parentRegion == end.parentRegion) {
             // Just end here but return parent region
             return start.parentRegion
         } else {

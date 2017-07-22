@@ -47,12 +47,12 @@ public class UMLActionExpression {
         System.out.println(expr.serialize());
     }
 
-    enum Operator {
+    public enum Operator {
         // &&, ||, +, -, *, /, ++, --, %, = , ==, ^, NOT, BASE
         AND, OR, ADD, SUB, MULT, DIV, INC, DEC, MOD, ASSIGN, EQUALS, POWER, NOT, BASE
     }
 
-    enum Type {
+    public enum Type {
         OPERATOREXPRESSION, VAREXPRESSION
     }
 
@@ -190,8 +190,32 @@ public class UMLActionExpression {
         }
     }
 
-    public static int getInteger(String expressionString) {
+    
+    public static boolean isInteger(String expressionString, boolean considerBooleansAsInteger) {
         try {
+            if (considerBooleansAsInteger) {
+                if (expressionString.toLowerCase().trim().equals("true")) {
+                    return true;
+                } else if (expressionString.toLowerCase().trim().equals("false")) {
+                    return true;
+                }
+            }
+            int i = Integer.parseInt(expressionString);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public static int getInteger(String expressionString, boolean considerBooleansAsInteger) {
+        try {
+            if (considerBooleansAsInteger) {
+                if (expressionString.toLowerCase().trim().equals("true")) {
+                    return 1;
+                } else if (expressionString.toLowerCase().trim().equals("false")) {
+                    return 0;
+                }
+            }
             int i = Integer.parseInt(expressionString);
             return i;
         } catch (Exception e) {
@@ -387,6 +411,7 @@ public class UMLActionExpression {
 
         Stack<UMLActionExpression> stack = new Stack<UMLActionExpression>();
         boolean var = false;
+        int varEscape = 0; // > 0 while parameters are parsed b
         boolean op = false;
         boolean comment = false; // is true after the first "
         int invisibleParanthesisCounter = 0; // counts extra bindings
@@ -448,6 +473,12 @@ public class UMLActionExpression {
                 // Just insert another hierarchy layer
                 nextNeg = !nextNeg;
                 skip = true;
+            }
+
+            // Escape paramters ... like e(p1,p2) ... "e(p1,p2)" is all
+            // an entity
+            if (!comment && var && character == '(') {
+                varEscape++;
             }
 
             boolean opChanged = false || ((opPart.length() == 2) && (character != ')'));
@@ -535,7 +566,8 @@ public class UMLActionExpression {
             }
 
             if ((!skip || lastChar) && !comment && var
-                    && (isOpCharacter || character == ')' || lastChar)) {
+                    && (isOpCharacter || (character == ')' && varEscape==0)  || lastChar)) {
+//                    && (isOpCharacter || character == ')' || lastChar)) {
                 // End of var
                 var = false;
 
@@ -595,6 +627,11 @@ public class UMLActionExpression {
                 var = true;
             }
 
+            
+            if(!comment && var && character == ')') {
+                varEscape--;
+            }
+            
             // Append
             if (!skip && var) {
                 varPart.append(character);
