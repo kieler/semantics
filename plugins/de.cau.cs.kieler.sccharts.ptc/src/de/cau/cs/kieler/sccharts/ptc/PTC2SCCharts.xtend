@@ -240,7 +240,7 @@ public class PTC2SCCharts {
                 if (!decl.const) {
                     constantValue++;
                     println("Making " + returnValuedObject.name + " a constant parameter with value " + constantValue);
-                    decl.const = true
+                    //decl.const = true
                     returnValuedObject.initialValue = constantValue.createIntValue
                 }
             }
@@ -330,7 +330,7 @@ public class PTC2SCCharts {
 
         }
 
-        assignVarString = "O_" + assignVarString;
+        //assignVarString = "O_" + assignVarString;
         if (signalCase) {
             val ValuedObject outSignal = targetModel.getOutputValuedObject(assignVarString, ValueType::PURE, true)
             action.addEffect(outSignal.emit)
@@ -446,7 +446,8 @@ public class PTC2SCCharts {
                 if (child.isUMLSignalEvent) {
                     // println("element.id = " + child.id + " == " + eventid + " = eventid");
                     if (child.id == eventid) {
-                        return "I_" + child.name
+                        return child.name
+                        //return "I_" + child.name
                     }
                 }
             }
@@ -875,6 +876,9 @@ public class PTC2SCCharts {
         targetModel.transformGeneral(element)
     }
 
+
+
+
     def transformTrigger(List<State> targetModel, Element element) {
         if (PTCModelFileHandler.OPTION_NO_TRANSITIONS.selected) {
             return;
@@ -913,8 +917,48 @@ public class PTC2SCCharts {
         }
     }
 
+/**
+ * <transition xmi:type = "uml:Transition" xmi:id = "_270f15d0-0d47-4a91-aa4a-196b55daae36" guard = "_c57cbfaa-947d-46f5-9d65-d477ed5b1e8dguard" source = "_cae22d8c-43e2-417a-9aa6-f5f2785fceb7" target = "_eb52af86-1921-4830-a759-dd5c7be670d0">
+ *   <ownedRule xmi:type = "uml:Constraint" xmi:id = "_c57cbfaa-947d-46f5-9d65-d477ed5b1e8dguard" constrainedElement = "_270f15d0-0d47-4a91-aa4a-196b55daae36">
+ *     <specification xmi:type = "uml:OpaqueExpression" xmi:id = "_c57cbfaa-947d-46f5-9d65-d477ed5b1e8dspecification" body = "msgStruct==AllowedOK">
+ *     </specification>
+ *   </ownedRule>
+ *   <trigger xmi:type = "uml:Trigger" xmi:id = "_ba3cc70f-1106-42e4-bc74-a213b2ec21d4trigger" event = "_d8ca3a73-fce4-4b7f-88e7-79e2f76b2c91">
+ * <  /trigger>
+ * </transition>
+ */
+
     def transformConstraint(List<State> targetModel, Element element) {
-        //
+
+        var Expression addExpression = null
+
+        for (child : element.children) {
+            if (child.isUMLOpaqueExpression) {
+                if (addExpression != null) {
+                addExpression = addExpression.createLogicalAndExpression(child.body.asTextExpression)
+                } else {
+                addExpression = child.body.asTextExpression
+                }
+            }
+        }
+        
+        if (element.parent != null && element.parent != null && element.parent.isUMLTransition) {
+            val umlTransition = element.parent.id.id2src
+            if (umlTransition != null) {
+                val eobject = (umlTransition.src2target)
+                if (eobject instanceof Transition) {
+                    val transition = eobject as Transition
+                    
+                    if (transition.trigger != null) {
+                        transition.trigger = transition.trigger.createLogicalAndExpression(addExpression)
+                        
+                    } else {
+                        transition.trigger = addExpression
+                    }
+                }
+            }
+        }
+
     }
 
     def transformOpaqueExpression(List<State> targetModel, Element element) {
@@ -963,8 +1007,8 @@ public class PTC2SCCharts {
                     targetModel.transformOperation(childElement)
                 } else if (childElement.isUMLParameter) {
                     targetModel.transformParameter(childElement)
-                } else if (childElement.isUMLOpaqueBehavior) {
-                    targetModel.transformOpaqueBehavior(childElement)
+//                } else if (childElement.isUMLOpaqueBehavior) {
+//                    targetModel.transformOpaqueBehavior(childElement)
                 } else if (childElement.isUMLProperty) {
                     targetModel.transformProperty(childElement)
                 } else if (childElement.children.size > 0) {
@@ -978,6 +1022,8 @@ public class PTC2SCCharts {
                     targetModel.transformTransition(childElement)
                 } else if (childElement.isUMLTrigger) {
                     targetModel.transformTrigger(childElement)
+                } else if (childElement.isUMLConstraint) {
+                    targetModel.transformConstraint(childElement)
                 } else if (childElement.isUMLOpaqueBehavior) {
                     targetModel.transformOpaqueBehavior(childElement)
                 } else if (childElement.isUMLSignalEvent) {

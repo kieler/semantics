@@ -119,6 +119,10 @@ class PTCXMIUMLExtensions {
         return (element.umlType == "OpaqueBehavior")
     }
 
+    def boolean isUMLConstraint(Element element) { 
+        return (element.umlType == "Constraint")
+    }
+
     def boolean isUMLOpaqueExpression(Element element) { 
         return (element.umlType == "OpaqueExpression")
     }
