@@ -92,20 +92,20 @@ class SctValidator extends SctJavaValidator {
                                         if (transition.isImmediate2) {
                                             if (transition.trigger == null
                                                 && (transition.sourceState.outgoingTransitions.indexOf(transition) == 0)
-                                                && (transition.sourceState.isStateReachable(true, true))) {
+                                                && (transition.sourceState.isStateReachable(true, true, true))) {
                                                 return;
                                             }
                                         }
-                                        if (transition.sourceState.isStateReachable(true, false)) {
+                                        if (transition.sourceState.isStateReachable(true, false, true)) {
                                             foundAtLeastPotentialInitialization = true;
                                         }
                                     }
                                     else if (container instanceof de.cau.cs.kieler.sccharts.State) {
                                         val state = (action.eContainer) as de.cau.cs.kieler.sccharts.State;
-                                        if (state.isStateReachable(true, true)) {
+                                        if (state.isStateReachable(true, true, true)) {
                                             return;
                                         }
-                                        if (state.isStateReachable(true, false)) {
+                                        if (state.isStateReachable(true, false, true)) {
                                             foundAtLeastPotentialInitialization = true;
                                         }
                                     }

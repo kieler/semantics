@@ -127,7 +127,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      */
     @Check
     public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
-        if (!sCChartExtension.isStateReachable(state, false, false)) {
+        if (!sCChartExtension.isStateReachable(state, false, false, false)) {
            warning(STATE_NOT_REACHABLE, state, null, -1);
         }
     }
