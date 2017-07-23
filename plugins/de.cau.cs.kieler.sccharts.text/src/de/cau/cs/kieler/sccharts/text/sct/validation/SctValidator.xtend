@@ -85,9 +85,9 @@ class SctValidator extends SctJavaValidator {
                                     // that we search, so now lets see if it can
                                     // be reached initially
                                     val container = action.eContainer
-                                    if (container instanceof Transition) {
+                                    if (action instanceof Transition) {
                                         // Case transition
-                                        val transition = action.eContainer as Transition
+                                        val transition = action as Transition
                                         // Now see if we can reach the source state
                                         // initially
                                         if (transition.isImmediate2) {
@@ -96,12 +96,13 @@ class SctValidator extends SctJavaValidator {
                                                 (transition.sourceState.isStateReachable(true, true, true))) {
                                                 return;
                                             }
-                                        }
-                                        if (transition.sourceState.isStateReachable(true, false, true)) {
-                                            foundAtLeastPotentialInitialization = true;
+                                            if (transition.sourceState.isStateReachable(true, false, true)) {
+                                                foundAtLeastPotentialInitialization = true;
+                                            }
                                         }
                                     } else if (container instanceof de.cau.cs.kieler.sccharts.State) {
-                                        if (action.immediate || action instanceof EntryAction || action instanceof ExitAction) {
+                                        if (action.immediate || action instanceof EntryAction ||
+                                            action instanceof ExitAction) {
                                             val state = (action.eContainer) as de.cau.cs.kieler.sccharts.State;
                                             if (action instanceof EntryAction || action instanceof DuringAction) {
                                                 if (state.isStateReachable(true, true, true)) {
