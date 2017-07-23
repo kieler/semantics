@@ -1189,7 +1189,7 @@ class SCChartsExtension {
     // -------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
     def State fixDeadCode(State rootState) {
-        val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable(false, false)].toList
+        val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable(false, false, false)].toList
 
         for (nonReachabledState : nonReachabledStates.immutableCopy) {
             val parentRegion = (nonReachabledState.eContainer as ControlflowRegion)
@@ -1200,34 +1200,41 @@ class SCChartsExtension {
 
     /**
      * unconditionally:     A state is reached without any conditional transitions, and each
-     * transition is the only one to take. 
+     * transition is the only one to take.
+     * 
+     * hierarchically:      Do not stop at an initial state, then continue at its parent state! Can we also reach it?!
+     *  
     */
-    def boolean isStateReachable(State originalState, boolean immediately, boolean unconditionally) {
+    def boolean isStateReachable(State originalState, boolean immediately, boolean unconditionally, boolean hierarchically) {
 
         // Must ensure not to loop forever when having cycles in the model
         val visited = new ArrayList<State>()
-        isStateReachable(originalState, originalState, visited, immediately, unconditionally)
+        isStateReachable(originalState, originalState, visited, immediately, unconditionally, hierarchically)
     }
 
-    def boolean isStateReachable(State originalState, State state, List<State> visited, boolean immediately, boolean unconditionally) {
+    def boolean isStateReachable(State originalState, State state, List<State> visited, boolean immediately, boolean unconditionally, boolean hierarchically) {
         if (visited.contains(state) || state == null) {
             return false
         }
         visited.add(state);
         if (originalState.parentRegion == null) {
-
             // Root states ARE reachable
             return true
         }
         if (state.isInitial()) {
-            return true
+            // If hierarchically => continue with parent if existent
+            if (hierarchically && state.parentRegion != null && state.parentRegion.parentState != null) {
+                return state.parentRegion.parentState.isStateReachable(immediately, unconditionally, hierarchically)                
+            } else {
+                return true
+            }
         } else {
             for (Transition transition : state.getIncomingTransitions()) {
                 if (!immediately || transition.immediate2) {
                     if (!unconditionally || 
                         transition.trigger == null && transition.sourceState.outgoingTransitions.indexOf(transition) == 0
                     ) {
-                        if (isStateReachable(originalState, transition.getSourceState(), visited, immediately, unconditionally)) {
+                        if (isStateReachable(originalState, transition.getSourceState(), visited, immediately, unconditionally, hierarchically)) {
                             return true
                         }
                     }
