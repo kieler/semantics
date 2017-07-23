@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
@@ -27,20 +27,22 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.ExitAction
 
 /**
  * @author ssm, cmot
- *
+ * 
  */
 class SctValidator extends SctJavaValidator {
-    
+
     @Inject
     extension SCChartsExtension = sCChartExtension;
-    
+
     @Inject
     extension KExpressionsValuedObjectExtensions
-    
-    
+
     // Conservatively only check if directly assigning a value here
     // TODO: Possibly extend this to check rederencing other
     // valued objects and test if they are set... but that would 
@@ -48,21 +50,20 @@ class SctValidator extends SctJavaValidator {
     def boolean isAbsoluteAssignment(Assignment assignment) {
         return (assignment.operator == AssignOperator::ASSIGN)
     }
-    
 
     /**
      * Check whether variables that are non-inputs are initialized either by
      * - initial values
      * - entry or transition actions (absolute values) that can be reached initially, e.g.,
      * in the initial tick
-     *
+     * 
      * @param valuedObject the valuedObject
      */
     @Check
     public def void checkVariableInitialization(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         var foundAtLeastPotentialInitialization = false;
         // Check if actually a valued signal
-        if(!valuedObject.isSignal && !valuedObject.isInput) {
+        if (!valuedObject.isSignal && !valuedObject.isInput) {
             // Do the check only for non-input variables
             //
             if (valuedObject.initialValue != null) {
@@ -87,26 +88,29 @@ class SctValidator extends SctJavaValidator {
                                     if (container instanceof Transition) {
                                         // Case transition
                                         val transition = action.eContainer as Transition
-                                            // Now see if we can reach the source state
-                                            // initially
+                                        // Now see if we can reach the source state
+                                        // initially
                                         if (transition.isImmediate2) {
-                                            if (transition.trigger == null
-                                                && (transition.sourceState.outgoingTransitions.indexOf(transition) == 0)
-                                                && (transition.sourceState.isStateReachable(true, true, true))) {
+                                            if (transition.trigger == null &&
+                                                (transition.sourceState.outgoingTransitions.indexOf(transition) == 0) &&
+                                                (transition.sourceState.isStateReachable(true, true, true))) {
                                                 return;
                                             }
                                         }
                                         if (transition.sourceState.isStateReachable(true, false, true)) {
                                             foundAtLeastPotentialInitialization = true;
                                         }
-                                    }
-                                    else if (container instanceof de.cau.cs.kieler.sccharts.State) {
-                                        val state = (action.eContainer) as de.cau.cs.kieler.sccharts.State;
-                                        if (state.isStateReachable(true, true, true)) {
-                                            return;
-                                        }
-                                        if (state.isStateReachable(true, false, true)) {
-                                            foundAtLeastPotentialInitialization = true;
+                                    } else if (container instanceof de.cau.cs.kieler.sccharts.State) {
+                                        if (action.immediate || action instanceof EntryAction || action instanceof ExitAction) {
+                                            val state = (action.eContainer) as de.cau.cs.kieler.sccharts.State;
+                                            if (action instanceof EntryAction || action instanceof DuringAction) {
+                                                if (state.isStateReachable(true, true, true)) {
+                                                    return;
+                                                }
+                                            }
+                                            if (state.isStateReachable(true, false, true)) {
+                                                foundAtLeastPotentialInitialization = true;
+                                            }
                                         }
                                     }
                                 }
@@ -121,45 +125,45 @@ class SctValidator extends SctJavaValidator {
                 error(NOINITIALIZATION, valuedObject, null)
             }
         }
-    } 
+    }
 
     /**
      * Check if valued signal has a combine functions
-     *
+     * 
      * @param valuedObject the valuedObject
      */
     @Check
     public def void checkCombineFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
+        if (valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
-            if(valuedObject.combineOperator == null) {
+            if (valuedObject.combineOperator == null) {
                 warning(NOCOMBINE, valuedObject, null)
             }
         }
-    } 
-
+    }
 
     /**
      * Check if max or min is used which is currently not supported
-     *
+     * 
      * @param valuedObject the valuedObject
      */
     @Check
     public def void checkMinMaxUsedCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
+        if (valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
-            if(valuedObject.combineOperator != null) {
-                if (valuedObject.combineOperator.equals(CombineOperator.MIN) || valuedObject.combineOperator.equals(CombineOperator.MAX))
-                warning(MINMAX_COMBINE, valuedObject, null)
+            if (valuedObject.combineOperator != null) {
+                if (valuedObject.combineOperator.equals(CombineOperator.MIN) ||
+                    valuedObject.combineOperator.equals(CombineOperator.MAX))
+                    warning(MINMAX_COMBINE, valuedObject, null)
             }
         }
-    } 
-    
+    }
+
     /**
      * Check if there is exactly ONE initial state per region.
-     *
+     * 
      * @param region the region
      */
     @Check
@@ -170,10 +174,9 @@ class SctValidator extends SctJavaValidator {
             // dummy region for entry/during/exit actions or suspends
             val parentState = region.getParentState
             var int foundInitial = 0;
-            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
-                    && parentState.getRegions().filter(typeof(ControlflowRegion)).head.getStates().size() == 0
-                    && (parentState.getRegions().head.getId() == null
-                        || parentState.getRegions().head.id.equals(""))) {
+            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1) &&
+                parentState.getRegions().filter(typeof(ControlflowRegion)).head.getStates().size() == 0 &&
+                (parentState.getRegions().head.getId() == null || parentState.getRegions().head.id.equals(""))) {
                 foundInitial = 1;
             }
             for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
@@ -188,7 +191,7 @@ class SctValidator extends SctJavaValidator {
             }
         }
     }
-    
+
     /**
      * A state with a termination transition should have final states in all its
      * inner regions. 
@@ -199,18 +202,18 @@ class SctValidator extends SctJavaValidator {
     @Check
     public def void checkFinalStates(de.cau.cs.kieler.sccharts.State state) {
         // Check if state has termination transition
-        val foundTermination = !state.outgoingTransitions.filter[ type == TransitionType.TERMINATION ].empty
+        val foundTermination = !state.outgoingTransitions.filter[type == TransitionType.TERMINATION].empty
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
-            if(regions.isEmpty && state.referencedScope == null) {
+            if (regions.isEmpty && state.referencedScope == null) {
                 error(NO_REGION, state, null, -1);
             }
 
             // Now test for every region
             if (state.localActions.nullOrEmpty) {
                 for (region : regions) {
-                    val foundFinal = !region.states.filter[ isFinal ].empty
+                    val foundFinal = !region.states.filter[isFinal].empty
                     if (!foundFinal) {
                         warning(REGION_NO_FINAL_STATE, region, null, -1);
                     }
@@ -218,7 +221,7 @@ class SctValidator extends SctJavaValidator {
             }
         }
     }
-    
+
     /**
      * Checks if the given state has any strong abort transitions with lower priority than non-strong-abort transitions-
      */
@@ -233,7 +236,7 @@ class SctValidator extends SctJavaValidator {
                 error(STRONG_ABORT_WITH_LOW_PRIORITY, transition, null, -1);
             }
         }
-    } 
+    }
 
     /**
      * Checks if the given state has abort transitions without trigger and adds a warning.
@@ -241,16 +244,16 @@ class SctValidator extends SctJavaValidator {
      */
     @Check
     public def void checkAbortHasTrigger(de.cau.cs.kieler.sccharts.State state) {
-        if(state.isHierarchical) {
+        if (state.isHierarchical) {
             for (transition : state.outgoingTransitions) {
-                if ((transition.type == TransitionType.STRONGABORT || transition.type == TransitionType.WEAKABORT)
-                    && transition.trigger == null) {
+                if ((transition.type == TransitionType.STRONGABORT || transition.type == TransitionType.WEAKABORT) &&
+                    transition.trigger == null) {
                     warning(ABORT_WITHOUT_TRIGGER, transition, null, -1);
                 }
             }
         }
-    } 
-    
+    }
+
     /**
      * Checks if the given valued signal has a combination function.
      * This check can be removed if there is a transformation
@@ -260,57 +263,57 @@ class SctValidator extends SctJavaValidator {
     @Check
     public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         // Check if actually a valued signal
-        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
+        if (valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
-            if(valuedObject.combineOperator == null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
+            if (valuedObject.combineOperator == null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
                 warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
             }
         }
-    } 
-    
+    }
+
     /**
      * Checks that static variables are initialized.
      * If it is not initialized the static modifier is useless from a modeling perspective.   
      */
     @Check
     public def void checkStaticVariableIsInitialized(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
-        if(valuedObject.isStatic && valuedObject.initialValue == null) {
+        if (valuedObject.isStatic && valuedObject.initialValue == null) {
             warning(STATIC_VARIABLE_WITHOUT_INITIALIZATION, valuedObject, null)
         }
-    } 
-    
+    }
+
     /**
      * Checks binding for reference states.
      */
     @Check
     public def void checkReferenceBinding(de.cau.cs.kieler.sccharts.State state) {
-    	if(state.referencedState) {
-    		val variables = newHashSet()
-    		var scope = state as Scope
-    		// Collect all accessible variables
-    		while (scope != null) {
-	    		for ( delc : scope.declarations) {
-	    			for (vo : delc.valuedObjects) {
-	    				variables.add(vo.name)
-	    			}
-	    		}
-    			scope = scope.eContainer as Scope
-    		}
-    		// Added binding to accessable variables
-    		for (bind : state.bindings) {
-    			variables.add(bind.formal.name)
-    		}
-    		for ( delc : state.referencedScope.declarations.filter[input || output]) {
-    			for (vo : delc.valuedObjects) {
-    				if (!variables.contains(vo.name)) {
-    					error(MISSING_BINDING_FOR+vo.name, state, (state.eClass.EPackage as SCChartsPackageImpl).scope_ReferencedScope, -1);
-    				}
-    			}
-    		}
-    	}
+        if (state.referencedState) {
+            val variables = newHashSet()
+            var scope = state as Scope
+            // Collect all accessible variables
+            while (scope != null) {
+                for (delc : scope.declarations) {
+                    for (vo : delc.valuedObjects) {
+                        variables.add(vo.name)
+                    }
+                }
+                scope = scope.eContainer as Scope
+            }
+            // Added binding to accessable variables
+            for (bind : state.bindings) {
+                variables.add(bind.formal.name)
+            }
+            for (delc : state.referencedScope.declarations.filter[input || output]) {
+                for (vo : delc.valuedObjects) {
+                    if (!variables.contains(vo.name)) {
+                        error(MISSING_BINDING_FOR + vo.name, state,
+                            (state.eClass.EPackage as SCChartsPackageImpl).scope_ReferencedScope, -1);
+                    }
+                }
+            }
+        }
     }
-    
-    
+
     /**
      * Checks scope of valued objects of transition triggers are correct.
      */
@@ -324,23 +327,22 @@ class SctValidator extends SctJavaValidator {
             val region = (stateOrRegion as Region)
             state = region.parentState
         }
-        
+
         for (transition : state.outgoingTransitions) {
             val valuedObjectRefs = transition.eAllContents.filter(typeof(ValuedObjectReference))
             if (valuedObjectRefs.filter[valuedObject == testValuedObject].size > 0) {
                 error(VALUEDOBJECT_TRANSITION_SCOPE_WRONG, testValuedObject, null, -1);
             }
         }
-    }  
+    }
 
-    
     /**
      * Checks currently unsupported INPUT OUTPUT variables and displays a warning.
      */
     @Check
     public def void checkNoInputOutput(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
-        if(valuedObject.isInput && valuedObject.isOutput) {
-                warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
-       }
-    }  
+        if (valuedObject.isInput && valuedObject.isOutput) {
+            warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
+        }
+    }
 }
