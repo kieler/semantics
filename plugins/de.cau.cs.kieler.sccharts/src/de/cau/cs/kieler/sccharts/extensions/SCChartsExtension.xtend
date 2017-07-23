@@ -1232,7 +1232,7 @@ class SCChartsExtension {
             for (Transition transition : state.getIncomingTransitions()) {
                 if (!immediately || transition.immediate2) {
                     if (!unconditionally || 
-                        transition.trigger == null && transition.sourceState.outgoingTransitions.indexOf(transition) == 0
+                        (transition.type != TransitionType::TERMINATION && transition.trigger == null && transition.sourceState.outgoingTransitions.indexOf(transition) == 0)
                     ) {
                         if (isStateReachable(originalState, transition.getSourceState(), visited, immediately, unconditionally, hierarchically)) {
                             return true

@@ -91,7 +91,8 @@ class SctValidator extends SctJavaValidator {
                                         // Now see if we can reach the source state
                                         // initially
                                         if (transition.isImmediate2) {
-                                            if (transition.trigger == null &&
+                                            if (transition.type != TransitionType::TERMINATION &&
+                                                transition.trigger == null &&
                                                 (transition.sourceState.outgoingTransitions.indexOf(transition) == 0) &&
                                                 (transition.sourceState.isStateReachable(true, true, true))) {
                                                 return;
