@@ -3,7 +3,7 @@
 @VHLayout  
 scchart ComplexFinalState {
   input bool T1, T2;
-  output bool A1;
+  output bool A1 = false;
   output int R1S = 0;
   output int R2S = 0;
 

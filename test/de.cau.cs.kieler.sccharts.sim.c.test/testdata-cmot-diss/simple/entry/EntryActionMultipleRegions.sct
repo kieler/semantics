@@ -2,7 +2,7 @@
 @VHLayout  
 scchart EntryAction {
   input bool T1;
-  output bool Ae2a, Ae2b;
+  output bool Ae2a = false, Ae2b = false;
   
   initial state S1
   --> S2;

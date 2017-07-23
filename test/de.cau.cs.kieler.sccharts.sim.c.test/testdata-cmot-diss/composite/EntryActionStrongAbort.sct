@@ -1,8 +1,8 @@
 @diagram[KLayLayered] false  
 @VHLayout  
 scchart EntryActionStrongAbort {
-  output bool A1;
-  output bool A2;
+  output bool A1 = false;
+  output bool A2 = false;
   input bool T1;
   input bool T2;
   

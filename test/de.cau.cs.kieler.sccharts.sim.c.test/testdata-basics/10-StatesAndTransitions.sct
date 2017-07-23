@@ -1,6 +1,6 @@
 scchart StatesAndTransitions {
 
-    output int O;
+    output int O = 0;
 
     initial state S1
     --> S2 with / O++;

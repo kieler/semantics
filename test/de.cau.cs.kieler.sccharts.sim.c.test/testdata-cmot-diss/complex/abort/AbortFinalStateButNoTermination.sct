@@ -4,8 +4,8 @@
 //@HVLayout
 scchart AbortFinalStateNoTermination { 
   input bool R;
-  output bool O;
-  output bool A;
+  output bool O = false;
+  output bool A = false;
   
   region Main " ":
   

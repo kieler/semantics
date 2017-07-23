@@ -4,8 +4,8 @@
 scchart AbortMixedDelayedImmediateStrong {
   input bool I1;
   input bool I2;
-  output bool O1;
-  output bool O2;
+  output bool O1 = false;
+  output bool O2 = false;
 
   region Main " ":
 

@@ -4,8 +4,8 @@
 @HVLayout
 scchart AbortComplexityWeak { 
   input bool R;
-  output int O;
-  output bool A;
+  output int O = 0;
+  output bool A = false;
   
   region Main " ":
 

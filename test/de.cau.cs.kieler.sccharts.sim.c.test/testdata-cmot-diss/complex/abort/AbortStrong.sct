@@ -2,8 +2,8 @@
 @VHLayout
 scchart StrongAbort { 
   input bool R;
-  output int O;
-  output int O2;
+  output int O = 0;
+  output int O2 = 0;
   
   initial state init {
      initial state I --> S immediate with / O++;

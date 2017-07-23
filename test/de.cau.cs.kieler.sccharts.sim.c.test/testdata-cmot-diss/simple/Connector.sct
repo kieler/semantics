@@ -3,10 +3,10 @@ scchart Connector {
   input bool T1;
   input bool T2;
   input bool T3;
-  output bool A1;
-  output bool A2;
-  output bool A3;
-  output bool A4;
+  output bool A1 = false;
+  output bool A2 = false;
+  output bool A3 = false;
+  output bool A4 = false;
 
   initial state S1
   --> _3 with T1 / A1 = true

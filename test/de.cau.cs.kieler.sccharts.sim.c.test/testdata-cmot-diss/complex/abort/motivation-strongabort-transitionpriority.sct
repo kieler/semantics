@@ -1,7 +1,7 @@
 @diagram[KLayLayered] false  
 scchart Countdown_StrongAbort_Wrong {
   input signal R;
-  output int T;
+  output int T = 0;
   output int O;
   signal Zero;
 

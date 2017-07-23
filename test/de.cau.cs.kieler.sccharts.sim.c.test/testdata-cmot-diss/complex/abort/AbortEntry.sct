@@ -4,7 +4,7 @@
 @VHLayout
 scchart AbortComplexity { 
   input bool R;
-  output int O;
+  output int O = 0;
 
   region Main " ":
   

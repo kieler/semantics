@@ -1,7 +1,7 @@
 @diagram[KLayLayered] false  
 scchart DuringAction {
   input bool T1, T2;
-  output int A1, A2, A3, A4;
+  output int A1 = 0, A2 = 0, A3 = 0, A4 = 0;
    
    initial state S1
    --> S2;

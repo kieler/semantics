@@ -1,8 +1,8 @@
 @Transformation STATIC
 scchart StaticVariableScopes {
   
-  output int OXA;
-  output int OXB;
+  output int OXA = 0;
+  output int OXB = 0;
   
   initial state A {
     static int x = 100;

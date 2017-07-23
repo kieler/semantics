@@ -3,9 +3,9 @@
 @layout[direction] DOWN //@HVLayout
 scchart AbortComplexityWeak {
   input bool R;
-  output int O;
-  output int O2;
-  output bool A;
+  output int O = 0;
+  output int O2 = 0;
+  output bool A = false;
 
   region Main " ":
 

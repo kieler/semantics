@@ -1,6 +1,6 @@
 scchart Hierarchy {
 
-    output bool O1, O2, O3, O4;
+    output bool O1 = false, O2 = false, O3 = false, O4 = false;
 
     initial state S0 {
       initial state S1 {

@@ -1,6 +1,6 @@
 scchart ExitAction {
-  output bool Ae1;
-  output bool A1;
+  output bool Ae1 = false;
+  output bool A1 = false;
 
   initial state init {
 

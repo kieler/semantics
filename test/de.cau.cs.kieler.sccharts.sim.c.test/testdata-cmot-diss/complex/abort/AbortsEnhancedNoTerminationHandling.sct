@@ -3,13 +3,13 @@
 @diagram[Declarations] false  
 
 scchart AbortsEnhancedNoTerminationHandling {
-  output bool S1toS2;
-  output bool S2toS3;
+  output bool S1toS2 = false;
+  output bool S2toS3 = false;
   input bool S1trig;
-  output bool S1act;
+  output bool S1act = false;
   input bool W1trig;
-  output bool W1act;
-  output bool N1act;
+  output bool W1act = false;
+  output bool N1act = false;
 
   initial state M {
 

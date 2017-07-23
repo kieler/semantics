@@ -1,8 +1,8 @@
 @diagram[KLayLayered] false  
 @VHLayout  
 scchart ExitAction {
-  output bool Ae4;
-  output bool A5;
+  output bool Ae4 = false;
+  output bool A5 = false;
 
   initial state S1
   --> S4;

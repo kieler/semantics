@@ -1,6 +1,6 @@
 scchart hostcode {
-  int x;
-  output bool O; 
+  int x = 0;
+  output bool O = false; 
   
   initial state init {
     entry / '/* Host Code */'

@@ -1,7 +1,7 @@
 scchart FinalStateAndTermination {
 
-    output bool O1, O2;
-
+    output bool O1 = false, O2 = false;
+ 
     initial state A {
       initial state A0
       --> A1;

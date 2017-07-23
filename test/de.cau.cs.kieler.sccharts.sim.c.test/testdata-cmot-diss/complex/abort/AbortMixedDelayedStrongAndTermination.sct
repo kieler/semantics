@@ -3,8 +3,8 @@
 @layout[direction] RIGHT //@HVLayout
 scchart AbortMixedDelayedStrongAndTermination {
   input bool I1;
-  output bool O1;
-  output bool O2;
+  output bool O1 = false;
+  output bool O2 = false;
   output bool A;
 
   region Main " ":

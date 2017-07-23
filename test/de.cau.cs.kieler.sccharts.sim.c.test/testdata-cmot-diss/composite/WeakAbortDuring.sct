@@ -4,8 +4,8 @@
 @HVLayout
 scchart WeakAbortDuring { 
   input bool I;
-  output int O;
-  output bool A;
+  output int O = 0;
+  output bool A = false;
 
   initial state S0 {
     immediate during / O++;
