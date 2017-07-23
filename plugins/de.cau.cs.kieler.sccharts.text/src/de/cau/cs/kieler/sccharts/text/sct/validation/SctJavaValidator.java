@@ -77,6 +77,9 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR = "Variables that war input AND output at the same time are currently not supported by the simulator";
 
     public static final String VALUEDOBJECT_TRANSITION_SCOPE_WRONG = "Variable or signal used out of its scope. Declare it one hierarchy layer up!";
+
+    public static final String POTENTIALINITIALIZATION = "Non-input variable potentially never initialized";
+    public static final String NOINITIALIZATION = "Non-input variable is never initialized";
     
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
@@ -124,7 +127,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      */
     @Check
     public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
-        if (!sCChartExtension.isStateReachable(state)) {
+        if (!sCChartExtension.isStateReachable(state, false, false)) {
            warning(STATE_NOT_REACHABLE, state, null, -1);
         }
     }

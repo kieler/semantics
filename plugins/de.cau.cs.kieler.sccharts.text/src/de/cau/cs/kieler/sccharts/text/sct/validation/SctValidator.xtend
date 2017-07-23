@@ -24,6 +24,9 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * @author ssm, cmot
@@ -36,8 +39,89 @@ class SctValidator extends SctJavaValidator {
     
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    
+    // Conservatively only check if directly assigning a value here
+    // TODO: Possibly extend this to check rederencing other
+    // valued objects and test if they are set... but that would 
+    // complicate things.
+    def boolean isAbsoluteAssignment(Assignment assignment) {
+        return (assignment.operator == AssignOperator::ASSIGN)
+    }
+    
 
-
+    /**
+     * Check whether variables that are non-inputs are initialized either by
+     * - initial values
+     * - entry or transition actions (absolute values) that can be reached initially, e.g.,
+     * in the initial tick
+     *
+     * @param valuedObject the valuedObject
+     */
+    @Check
+    public def void checkVariableInitialization(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+        var foundAtLeastPotentialInitialization = false;
+        // Check if actually a valued signal
+        if(!valuedObject.isSignal && !valuedObject.isInput) {
+            // Do the check only for non-input variables
+            //
+            if (valuedObject.initialValue != null) {
+                // If we found an initial value we are done
+                return;
+            } else {
+                // If we did not find an initial value, we will look at ALL (absolute)
+                // assignment actions of the variable and then test these whether
+                // they are reachable initially. If there is such one, then
+                // this is OK, otherwise we raise a warning
+                val scope = valuedObject.declaration.eContainer as Scope;
+                if (scope != null) {
+                    val rootState = scope.rootState
+                    for (action : rootState.allContainedActions.toList) {
+                        for (assignment : action.allContainedAssignments) {
+                            if (assignment.valuedObject == valuedObject) {
+                                if (assignment.absoluteAssignment) {
+                                    // This is an absolute assignment to the variable
+                                    // that we search, so now lets see if it can
+                                    // be reached initially
+                                    val container = action.eContainer
+                                    if (container instanceof Transition) {
+                                        // Case transition
+                                        val transition = action.eContainer as Transition
+                                            // Now see if we can reach the source state
+                                            // initially
+                                        if (transition.isImmediate2) {
+                                            if (transition.trigger == null
+                                                && (transition.sourceState.outgoingTransitions.indexOf(transition) == 0)
+                                                && (transition.sourceState.isStateReachable(true, true))) {
+                                                return;
+                                            }
+                                        }
+                                        if (transition.sourceState.isStateReachable(true, false)) {
+                                            foundAtLeastPotentialInitialization = true;
+                                        }
+                                    }
+                                    else if (container instanceof de.cau.cs.kieler.sccharts.State) {
+                                        val state = (action.eContainer) as de.cau.cs.kieler.sccharts.State;
+                                        if (state.isStateReachable(true, true)) {
+                                            return;
+                                        }
+                                        if (state.isStateReachable(true, false)) {
+                                            foundAtLeastPotentialInitialization = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (foundAtLeastPotentialInitialization) {
+                warning(POTENTIALINITIALIZATION, valuedObject, null)
+            } else {
+                error(NOINITIALIZATION, valuedObject, null)
+            }
+        }
+    } 
 
     /**
      * Check if valued signal has a combine functions
