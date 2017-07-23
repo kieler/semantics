@@ -80,6 +80,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
     public static final String POTENTIALINITIALIZATION = "Non-input variable potentially never initialized";
     public static final String NOINITIALIZATION = "Non-input variable is never initialized";
+    public static final String NOTUNIQUE = "Name is not unique. Valued object names shall be unique per scope.";
     
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 

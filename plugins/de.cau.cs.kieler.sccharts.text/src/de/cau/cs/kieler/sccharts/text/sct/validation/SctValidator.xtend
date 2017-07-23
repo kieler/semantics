@@ -129,6 +129,26 @@ class SctValidator extends SctJavaValidator {
     }
 
     /**
+     * Check if valued signal is unique
+     * 
+     * @param valuedObject the valuedObject
+     */
+    @Check
+    public def void checkValuedObjectUnique(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+        // Check if actually a valued signal
+        val scope = valuedObject.declaration.eContainer as Scope;
+        if (scope != null) {
+            for (otherValuedObject : scope.valuedObjects) {
+                if (otherValuedObject != valuedObject) {
+                    if (otherValuedObject.name == valuedObject.name) {
+                        warning(NOTUNIQUE, valuedObject, null)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Check if valued signal has a combine functions
      * 
      * @param valuedObject the valuedObject
