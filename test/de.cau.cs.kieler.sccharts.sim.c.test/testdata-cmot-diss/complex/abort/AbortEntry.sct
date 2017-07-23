@@ -11,6 +11,6 @@ scchart AbortComplexity {
   initial state S {
      entry / O++;
   } 
-  o-> S with R  / O = false;  
+  o-> S with R  / O = 0;  
       
 } 

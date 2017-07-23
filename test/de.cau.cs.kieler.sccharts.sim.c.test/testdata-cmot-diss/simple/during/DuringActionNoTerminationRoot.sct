@@ -1,7 +1,7 @@
 @diagram[KLayLayered] false  
 scchart DuringActionNoTermination {
   input bool T1;
-  output bool A1 = false;
+  output int A1 = 0;
   during / A1 += 1;
   
   initial state S1
