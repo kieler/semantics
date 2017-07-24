@@ -28,7 +28,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
     static val LEGACY_TRANSITIONS_PRAGMA = PragmaRegistry.register("syntax", StringPragma, "Syntax switch for sctx language.")
     
     /** Legacy transitions keyword */
-    static val LEGACY_TRANSITIONS_KEYWORD = PragmaRegistry.register("syntax", StringPragma, "Syntax switch for sctx language.")
+    static val LEGACY_TRANSITIONS_KEYWORD = "arrows"
     
     /** Flag for switching to legacy syntax */
     var boolean legacyTransitionSyntax = false
