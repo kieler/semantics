@@ -93,7 +93,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 if (region.declarations.empty) {
                     addStatesArea(!label.nullOrEmpty);
                 } else {
-                    addStatesAndDeclarationsArea(!label.nullOrEmpty);
+                    addStatesAndDeclarationsArea(!label.nullOrEmpty, region.declarations.size > 3);
                     // Add declarations
                     for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [

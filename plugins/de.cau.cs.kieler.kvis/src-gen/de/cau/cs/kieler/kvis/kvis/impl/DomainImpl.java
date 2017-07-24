@@ -2,11 +2,10 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
-import de.cau.cs.kieler.kexpressions.Value;
-
 import de.cau.cs.kieler.kvis.kvis.Domain;
 import de.cau.cs.kieler.kvis.kvis.Interval;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
+import de.cau.cs.kieler.kvis.kvis.Literal;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -41,7 +40,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
    * @generated
    * @ordered
    */
-  protected Value value;
+  protected Literal value;
 
   /**
    * The cached value of the '{@link #getRange() <em>Range</em>}' containment reference.
@@ -79,7 +78,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
    * <!-- end-user-doc -->
    * @generated
    */
-  public Value getValue()
+  public Literal getValue()
   {
     return value;
   }
@@ -89,9 +88,9 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(Value newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(Literal newValue, NotificationChain msgs)
   {
-    Value oldValue = value;
+    Literal oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
@@ -106,7 +105,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(Value newValue)
+  public void setValue(Literal newValue)
   {
     if (newValue != value)
     {
@@ -217,7 +216,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
     switch (featureID)
     {
       case KvisPackage.DOMAIN__VALUE:
-        setValue((Value)newValue);
+        setValue((Literal)newValue);
         return;
       case KvisPackage.DOMAIN__RANGE:
         setRange((Interval)newValue);
@@ -237,7 +236,7 @@ public class DomainImpl extends MinimalEObjectImpl.Container implements Domain
     switch (featureID)
     {
       case KvisPackage.DOMAIN__VALUE:
-        setValue((Value)null);
+        setValue((Literal)null);
         return;
       case KvisPackage.DOMAIN__RANGE:
         setRange((Interval)null);

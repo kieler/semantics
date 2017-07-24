@@ -2,10 +2,9 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
-import de.cau.cs.kieler.kexpressions.Value;
-
 import de.cau.cs.kieler.kvis.kvis.Action;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
+import de.cau.cs.kieler.kvis.kvis.Literal;
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
 
@@ -53,7 +52,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * @generated
    * @ordered
    */
-  protected Value value;
+  protected Literal value;
 
   /**
    * The default value of the '{@link #getOperation() <em>Operation</em>}' attribute.
@@ -149,7 +148,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public Value getValue()
+  public Literal getValue()
   {
     return value;
   }
@@ -159,9 +158,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(Value newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(Literal newValue, NotificationChain msgs)
   {
-    Value oldValue = value;
+    Literal oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
@@ -176,7 +175,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(Value newValue)
+  public void setValue(Literal newValue)
   {
     if (newValue != value)
     {
@@ -267,7 +266,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         setVariable((VariableReference)newValue);
         return;
       case KvisPackage.ACTION__VALUE:
-        setValue((Value)newValue);
+        setValue((Literal)newValue);
         return;
       case KvisPackage.ACTION__OPERATION:
         setOperation((SimulationOperation)newValue);
@@ -290,7 +289,7 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
         setVariable((VariableReference)null);
         return;
       case KvisPackage.ACTION__VALUE:
-        setValue((Value)null);
+        setValue((Literal)null);
         return;
       case KvisPackage.ACTION__OPERATION:
         setOperation(OPERATION_EDEFAULT);

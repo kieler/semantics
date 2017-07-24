@@ -211,12 +211,8 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                                 " for the launch configuration '"+configuration.name +"' could not be instantiated.")
         }
         
-        // There is an "invalid thread access" exception if this asyncExec is not used.
-        Display.getDefault().asyncExec(new Runnable() {
-           override run() {
-              shortcut.launch(selection, mode)
-           }
-       })
+        // There is an "invalid thread access" exception, if the launch is not executed in the UI thread.
+        PromPlugin.asyncExecInUI[shortcut.launch(selection, mode)]
     }
 
     /**

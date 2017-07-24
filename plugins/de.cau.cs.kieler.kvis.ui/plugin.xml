@@ -319,5 +319,21 @@
              restorable="true">
        </view>
     </extension>
+    <extension
+          point="org.eclipse.ui.newWizards">
+       <wizard
+             canFinishEarly="false"
+             category="de.cau.cs.kieler.simulation"
+             class="de.cau.cs.kieler.kvis.ui.wizards.KVisFileWizard"
+             finalPerspective="de.cau.cs.kieler.simulation"
+             hasPages="true"
+             id="de.cau.cs.kieler.kvis.ui.fileWizard"
+             name="KVis File"
+             project="false">
+          <description>
+             Create a new KVis file to configure simulation visualization.
+          </description>
+       </wizard>
+    </extension>
 
 </plugin>
