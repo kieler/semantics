@@ -82,7 +82,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String NO_OUTGOING_TRANSITION = "Connector states must have an outgoing transition."
     static val String NON_REACHABLE_TRANSITION = "The transition is not reachable."
     
-    static val String IMMEDIATE_LOOP = "There is an immediate loop. The model is not ASC."
+    static val String IMMEDIATE_LOOP = "There is an immediate loop. The model is not SASC."
 
     /**
      * Check that there are no immediate loops between states in a region.
