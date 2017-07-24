@@ -28,7 +28,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Action">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableReference"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Value"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Literal"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operation" eType="#//SimulationOperation"/>
   </eClassifiers>
@@ -43,7 +43,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AttributeMapping">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="literal" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Value"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="literal" eType="#//Literal"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappings" upperBound="-1"
         eType="#//Mapping" containment="true"/>
@@ -63,7 +63,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Domain">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Value"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Literal"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="range" eType="#//Interval"
         containment="true"/>
@@ -87,6 +87,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="BooleanOperator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="AND" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Literal">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DOMEvent">
     <eLiterals name="CLICK" literal="click"/>
     <eLiterals name="MOUSEDOWN" value="1" literal="mousedown"/>
@@ -98,6 +102,18 @@
     <eLiterals name="STOP" value="1" literal="stop"/>
     <eLiterals name="PAUSE" value="2" literal="pause"/>
     <eLiterals name="PLAY" value="3" literal="play"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Sign">
+    <eLiterals name="POSITIVE" literal="+"/>
+    <eLiterals name="NEGATIVE" value="1" literal="-"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedFloat">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sign" eType="#//Sign"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedInt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sign" eType="#//Sign"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AndExpression" eSuperTypes="#//Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Condition"

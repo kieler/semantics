@@ -141,5 +141,19 @@
             type="org.eclipse.core.resources.problemmarker">
       </super>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            class="de.cau.cs.kieler.prom.filewizard.FreemarkerTemplateFileWizard"
+            hasPages="true"
+            id="de.cau.cs.kieler.prom.ftlFileWizard"
+            name="Freemarker Template"
+            project="false">
+         <description>
+            Create a new FTL file.
+         </description>
+      </wizard>
+   </extension>
 
 </plugin>

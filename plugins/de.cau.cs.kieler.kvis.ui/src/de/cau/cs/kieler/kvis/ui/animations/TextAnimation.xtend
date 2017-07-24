@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.simulation.core.DataPool
+import org.w3c.dom.Element
 
 /**
  * @author aas
@@ -22,15 +23,14 @@ import de.cau.cs.kieler.simulation.core.DataPool
 class TextAnimation extends AnimationHandler {
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        setAttributes("text", "fontSize", "fontFamily", "text")
+        addAttributes("text", "fontSize", "fontFamily", "text")
     }
     
     override getName() {
         return "text"
     }
     
-    override doApply(DataPool pool) {
-        val elem = findElement(true)
+    override doApply(DataPool pool, Element elem) {
         // Apply attributes to svg element
         val text = getAttribute("text").stringValue
         if(text != null) {
