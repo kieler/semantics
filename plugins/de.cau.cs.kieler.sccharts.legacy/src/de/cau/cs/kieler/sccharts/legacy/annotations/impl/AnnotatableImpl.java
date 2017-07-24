@@ -13,23 +13,21 @@
  */
 package de.cau.cs.kieler.sccharts.legacy.annotations.impl;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import de.cau.cs.kieler.sccharts.legacy.annotations.Annotatable;
 import de.cau.cs.kieler.sccharts.legacy.annotations.Annotation;
 import de.cau.cs.kieler.sccharts.legacy.annotations.AnnotationsPackage;
-
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -88,35 +86,49 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
 
     /**
      * <!-- begin-user-doc -->
+     * {@inheritDoc}
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     public Annotation getAnnotation(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
+        for (Annotation annotation : getAnnotations()) {
+            if (name.equalsIgnoreCase(annotation.getName())){
+                return annotation;
+            }
+        }
+        return null;
     }
 
     /**
      * <!-- begin-user-doc -->
+     * {@inheritDoc}
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     public EList<Annotation> getAllAnnotations(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
+        EList<Annotation> list = new BasicEList<Annotation>();
+        for (Annotation annotation : getAnnotations()) {
+            if (name.equalsIgnoreCase(annotation.getName())){
+                list.add(annotation);
+            }
+        }
+        return list;
     }
 
     /**
      * <!-- begin-user-doc -->
+     * {@inheritDoc}
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     public void removeAllAnnotations(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
+        Iterator<Annotation> annotationIter = getAnnotations().iterator();
+        while (annotationIter.hasNext()) {
+            Annotation annotation = annotationIter.next();
+            if (name.equals(annotation.getName())) {
+                annotationIter.remove();
+            }
+        }
     }
 
     /**
