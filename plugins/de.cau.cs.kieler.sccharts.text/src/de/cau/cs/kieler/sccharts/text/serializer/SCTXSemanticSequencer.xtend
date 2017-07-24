@@ -4,15 +4,17 @@
 package de.cau.cs.kieler.sccharts.text.serializer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
 import org.eclipse.xtext.serializer.ISerializationContext
-import de.cau.cs.kieler.sccharts.DelayType
-import de.cau.cs.kieler.sccharts.HistoryType
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.OperatorType
+
 import static de.cau.cs.kieler.kexpressions.OperatorType.*
 
 /**
@@ -21,8 +23,25 @@ import static de.cau.cs.kieler.kexpressions.OperatorType.*
  * @kieler.rating proposed yellow
  */
 class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
+    
+    /** Legacy transitions pragma keyword */
+    static val LEGACY_TRANSITIONS_PRAGMA = PragmaRegistry.register("syntax", StringPragma, "Syntax switch for sctx language.")
+    
+    /** Legacy transitions keyword */
+    static val LEGACY_TRANSITIONS_KEYWORD = PragmaRegistry.register("syntax", StringPragma, "Syntax switch for sctx language.")
+    
+    /** Flag for switching to legacy syntax */
+    var boolean legacyTransitionSyntax = false
+    
     @Inject
     private SCTXGrammarAccess grammarAccess;
+    
+    override sequence_StringPragma(ISerializationContext context, StringPragma pragma) {
+        if (pragma.name.equals(LEGACY_TRANSITIONS_PRAGMA)) {
+            legacyTransitionSyntax = pragma.values.contains(LEGACY_TRANSITIONS_KEYWORD)
+        }
+        super.sequence_StringPragma(context, pragma)
+    }
 
     override sequence_Transition(ISerializationContext context, Transition transition) {
         val feeder = createSequencerFeeder(transition, createNodeProvider(transition))
@@ -32,8 +51,12 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             feeder.accept(tg.annotationsRestrictedTypeAnnotationParserRuleCall_0_0, idxAnnotation.value, idxAnnotation.key)
         }
         
-        // TODO support legacy
-        feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_1_0_0, transition.preemption)
+        // support legacy transitions
+        if (legacyTransitionSyntax) {
+            feeder.accept(tg.getPreemptionPreemptionTypeLegacyEnumRuleCall_1_0_1, transition.preemption)
+        } else {
+            feeder.accept(tg.preemptionPreemptionTypeEnumRuleCall_1_0_0, transition.preemption)
+        }
         
         feeder.accept(tg.targetStateStateIDTerminalRuleCall_2_0_1, transition.targetState)
         
