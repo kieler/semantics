@@ -28,44 +28,43 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  * @kieler.rating 2017-07-21 proposed yellow 
  * 
  */
-class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
+class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
     
-    public static val STRUCT_NAME = "TickData"
-    public static val STRUCT_VARIABLE_NAME = "d"
-    val guardType = "char"
+    @Inject extension SCG2CSerializeHRExtensions
+    
+    static val TICK_NAME = "tick"
+    
+    var CCodeGeneratorStructModule struct = null 
+    var CCodeGeneratorLogicModule logic = null
     
     new(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
         super(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        
+        struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
+        logic = (parent as CCodeGeneratorModule).logic as CCodeGeneratorLogicModule
     }
     
     def getName() {
-        STRUCT_NAME + baseName + suffix
-    }
-    
-    def getVariableName() {
-        STRUCT_VARIABLE_NAME
+        TICK_NAME + baseName + suffix
     }
     
     override generateInit() {
-        code.append("typedef struct {\n")
+        code.append("void ").append(getName)
+        code.append("(")
+        code.append(struct.getName).append("* ").append(struct.getVariableName)
+        code.append(") {\n")
+        code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
+        code.append("\n")
     }
     
     override generate() {
-        for (declaration : scg.declarations) {
-            for (valuedObject : declaration.valuedObjects) {
-                if (declaration instanceof VariableDeclaration) {
-                    code.append(indentation + declaration.type.serializeHR + " ")
-                    code.append(valuedObject.name)
-                    code.append(";\n")
-                }
-            }
-        }
+
     }
     
     override generateDone() {
-        code.append("} ").append(getName).append(";\n")
+        code.append("}\n")
     }
     
 }

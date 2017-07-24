@@ -74,7 +74,6 @@ public class SCTXResource extends LazyLinkingResource {
         SaveOptions.newBuilder().format().noValidation().getOptions().addTo(myOptions);
 
         super.doSave(outputStream, myOptions);
-        updateResourceSet
     }
 
     /**

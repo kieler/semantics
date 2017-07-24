@@ -18,6 +18,9 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import com.google.inject.Inject
+import com.google.inject.Injector
+import com.google.inject.Provider
 
 /**
  * @author ssm
@@ -26,6 +29,8 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  * 
  */
 class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
+    
+    @Inject Injector injector
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.codegen.c"
@@ -45,7 +50,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         
         val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap
         for (scg : graphs.scgs) {
-            scgModuleMap.put(scg, new CCodeGeneratorModule("", graphs, scg, this, scgModuleMap))
+            scgModuleMap.put(scg, new CCodeGeneratorModule("", graphs, scg, this, scgModuleMap, null))
             scgModuleMap.get(scg).suffix = hostcodeSafeName(scg.name)
         }
         
@@ -75,3 +80,4 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     }
 
 }
+

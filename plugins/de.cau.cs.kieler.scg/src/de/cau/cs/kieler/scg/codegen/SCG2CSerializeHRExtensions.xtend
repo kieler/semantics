@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author ssm
@@ -28,6 +29,14 @@ class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
     
     @Accessors var String valuedObjectPrefix
     @Accessors var String prePrefix 
+    
+    override dispatch CharSequence serialize(ValueType valueType) {
+        if (valueType == ValueType.BOOL) {
+            return "char"
+        } else {
+            return valueType.literal
+        }
+    }
     
     override dispatch CharSequence serialize(ValuedObject valuedObject) {
         var vo = valuedObjectPrefix + valuedObject.name

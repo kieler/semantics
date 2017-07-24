@@ -40,4 +40,14 @@ abstract class CodeGeneratorModule {
         this.baseName = baseName       
     }
     
+    
+    protected def indent() {
+        code.append(indentation)
+    }
+    
+    protected def indent(int n) {
+        for (i : 1..n) {
+            code.append(indentation)
+        }
+    }
 }
