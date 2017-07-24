@@ -13,11 +13,14 @@
 package de.cau.cs.kieler.sccharts.text.formatting
 
 import de.cau.cs.kieler.kexpressions.kext.formatting.KExtValueConverter
+import org.eclipse.xtext.conversion.ValueConverter
+import org.eclipse.xtext.conversion.ValueConverterException
+import org.eclipse.xtext.conversion.IValueConverter
 
 /**
  * @author ssm
  *
  */
 class SCTXValueConverter extends KExtValueConverter {
-    
+ 
 }

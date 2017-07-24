@@ -148,7 +148,7 @@ public class SCTXResource extends LazyLinkingResource {
     
     protected def boolean importsHaveChanged() {
         val rootObject = getContents
-        if (!(rootObject.get(0) instanceof SCCharts)) return false
+        if (rootObject.empty || !(rootObject.get(0) instanceof SCCharts)) return false
         
         val scc = rootObject.get(0) as SCCharts
         

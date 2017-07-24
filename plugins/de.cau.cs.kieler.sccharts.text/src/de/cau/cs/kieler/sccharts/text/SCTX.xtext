@@ -28,7 +28,7 @@ RootState returns sccharts::State:
 	'{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
-		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
+		(regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region*)
 	'}';
     
 
@@ -44,9 +44,14 @@ State returns sccharts::State:
 	)|('{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
-		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
+		(regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region*)
 	'}'))?
 	outgoingTransitions+=Transition*;
+	
+
+ImplicitState returns sccharts::State:
+    {sccharts::State}
+    (regions+=Region+);
 
 	
 ScopeCall returns sccharts::ScopeCall:
@@ -77,6 +82,47 @@ Transition returns sccharts::Transition:
 		('if' label=STRING)
 	)?;
 	
+// -------------- //
+//  Region Rules  // 
+// -------------- //
+
+Region returns sccharts::Region:
+    ControlflowRegion | NestedControlflowRegion | DataflowRegion;
+
+ImplicitControlflowRegion returns sccharts::ControlflowRegion:
+    {sccharts::ControlflowRegion}
+    (states+=State)+;
+
+
+ImplicitDataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
+    (equations += Equation)+;
+
+
+ControlflowRegion returns sccharts::ControlflowRegion:
+    {sccharts::ControlflowRegion}
+    annotations+=Annotation*
+    'region' name=ExtendedID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    states+=State+;
+
+    
+NestedControlflowRegion returns sccharts::ControlflowRegion:
+    {sccharts::ControlflowRegion}
+    annotations+=Annotation*
+    'region' name=ExtendedID? label=STRING? '{'
+    declarations+=DeclarationWOSemicolon*
+    (states+=ImplicitState | states+=State+)
+    '}'
+;
+
+
+DataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
+    annotations+=Annotation*
+    'dataflow' name=ExtendedID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    equations+=Equation+;
 	
 // -------------- //
 //  Action Rules  // 
@@ -108,40 +154,6 @@ PrecedingAction returns sccharts::PrecedingAction:
 SucceedingAction returns sccharts::SucceedingAction:
 	{sccharts::SucceedingAction}
 	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
-
-
-// -------------- //
-//  Region Rules  // 
-// -------------- //
-
-Region returns sccharts::Region:
-    ControlflowRegion | DataflowRegion;
-
-SingleControlflowRegion returns sccharts::ControlflowRegion:
-	{sccharts::ControlflowRegion}
-    (states+=State)+;
-
-
-SingleDataflowRegion returns sccharts::DataflowRegion:
-    {sccharts::DataflowRegion}
-    (equations += Equation)+;
-
-
-ControlflowRegion returns sccharts::ControlflowRegion:
-	{sccharts::ControlflowRegion}
-    annotations+=Annotation*
-    'region' name=ExtendedID? label=STRING? ':'
-    declarations+=DeclarationWOSemicolon*
-    states+=State+;
-
-
-DataflowRegion returns sccharts::DataflowRegion:
-    {sccharts::DataflowRegion}
-    annotations+=Annotation*
-    'dataflow' name=ExtendedID? label=STRING? ':'
-    declarations+=DeclarationWOSemicolon*
-    equations+=Equation+;
-
 
 
 // ---------------- //

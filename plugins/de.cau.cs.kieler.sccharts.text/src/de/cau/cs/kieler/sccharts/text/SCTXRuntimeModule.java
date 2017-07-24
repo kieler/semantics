@@ -40,6 +40,11 @@ public class SCTXRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSC
         return SCTXValueConverter.class;
     } 
     
+    public Class<? extends org.eclipse.xtext.parser.IParser> bindIParser() {
+        return de.cau.cs.kieler.sccharts.text.parser.SCTXParser.class;
+    }
+    
+    
 //    public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
 //        return org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider.class;
 //    }

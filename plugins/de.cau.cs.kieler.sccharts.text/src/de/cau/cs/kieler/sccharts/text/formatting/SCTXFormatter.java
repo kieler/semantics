@@ -42,7 +42,7 @@ public class SCTXFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().after(f.getAnnotationAccess().getTagAnnotationParserRuleCall_3());
         
         c.setLinewrap().before(f.getRegionAccess().getControlflowRegionParserRuleCall_0());
-        c.setLinewrap().before(f.getRegionAccess().getDataflowRegionParserRuleCall_1());
+        c.setLinewrap().before(f.getRegionAccess().getDataflowRegionParserRuleCall_2());
         
         c.setLinewrap().before(f.getSCChartsAccess().getRootStatesRootStateParserRuleCall_1_0());
         
