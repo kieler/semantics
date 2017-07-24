@@ -136,10 +136,10 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 
         for(entry : scg.nodes.filter(Entry)) {
             val parameterList = <ValuedObject> newArrayList
-            for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(entry.id)]) {
+            for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(entry.name)]) {
                 parameterList += scg.findValuedObjectByName(tsa.type)
             }
-            parameterMapping.put(entry.id, parameterList)
+            parameterMapping.put(entry.name, parameterList)
         }
 
 		nodeMapping.createNodeCaches(assignments, conditionals, writer, relativeWriter, reader)

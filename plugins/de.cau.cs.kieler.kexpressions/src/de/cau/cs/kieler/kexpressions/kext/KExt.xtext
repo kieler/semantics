@@ -49,7 +49,7 @@ RootScope returns kext::KExtScope:
 
 Scope returns kext::KExtScope:
 	{kext::KExtScope} 
-	(id=ID)? '{'
+	(name=ID)? '{'
     declarations+=Declaration*
     entities+=TestEntity* 
 	('scope' scopes+=Scope)* '}';
@@ -74,10 +74,10 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
-    VariableDeclaration | ReferenceDeclaration;
+    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration;
 
 DeclarationWOSemicolon returns kexpressions::Declaration:
-    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon;
+    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon;
 
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
@@ -87,7 +87,8 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     output?='output'?
     static?='static'?
     ((signal?='signal'? type = ValueType) | signal?='signal') 
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    annotations+=CommentAnnotatonSL?;
     
 VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
@@ -96,7 +97,8 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     output?='output'?
     static?='static'?
     ((signal?='signal'? type = ValueType) | signal?='signal') 
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?;  
     
 NamespaceID returns ecore::EString:
   ID (':' PrimeID)*;    
@@ -104,20 +106,44 @@ NamespaceID returns ecore::EString:
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     ((
-        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+        'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
         'extern' extern = STRING
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    annotations+=CommentAnnotatonSL?;
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
     ((
-        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+        'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
         'extern' extern = STRING
     ))
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?;
+    
+ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
+    annotations += Annotation*
+    'schedule' name = PrimeID
+    (global = SchedulePriorityType)?
+    (priorities += SchedulePriority)*
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    annotations+=CommentAnnotatonSL?;
+    
+ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
+    annotations += Annotation*
+    'schedule' name = PrimeID
+    (global = SchedulePriorityType)?
+    (priorities += SchedulePriority)*
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+    annotations+=CommentAnnotatonSL?;
+    
+SchedulePriority returns kexpressions::SchedulePriority:
+    'prio' priority=INT type=SchedulePriorityType;
+    
+enum SchedulePriorityType returns kexpressions::SchedulePriorityType:
+    CONFLICT="conflict" | CONFLUENT="confluent";
     
 //ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
 //    annotations+=Annotation*

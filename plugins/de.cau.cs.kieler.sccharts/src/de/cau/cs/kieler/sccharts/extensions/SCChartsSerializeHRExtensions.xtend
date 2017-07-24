@@ -25,7 +25,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.Identifiable
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.State
@@ -38,6 +37,8 @@ import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.PrecedingAction
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.annotations.NamedObject
 
 /**
  * @author ssm
@@ -368,8 +369,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         val content = newLinkedList;
         
         keywords += "ref"
-        if (declaration.reference instanceof Identifiable) {
-            keywords += (declaration.reference as Identifiable).id
+        if (declaration.reference instanceof NamedObject) {
+            keywords += (declaration.reference as NamedObject).name
         } else {
             keywords += declaration.reference.class.name
         }
@@ -399,6 +400,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
 
         return new Pair(keywords, content);
+    }
+    
+    def dispatch Pair<List<String>, List<String>> serializeComponents(ScheduleDeclaration declaration, boolean hr
+    ) {
+        
     }    
     
     def dispatch Pair<List<String>, List<String>> serializeComponents(Void void, boolean hr) {

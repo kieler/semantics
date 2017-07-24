@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.Predecessor;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.SCGraphs;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.ScheduleDependency;
@@ -57,6 +58,13 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass scGraphsEClass = null;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -289,6 +297,24 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
     }
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSCGraphs() {
+        return scGraphsEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSCGraphs_Scgs() {
+        return (EReference)scGraphsEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -919,6 +945,9 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         isCreated = true;
 
         // Create classes and their features
+        scGraphsEClass = createEClass(SC_GRAPHS);
+        createEReference(scGraphsEClass, SC_GRAPHS__SCGS);
+
         scGraphEClass = createEClass(SC_GRAPH);
         createEReference(scGraphEClass, SC_GRAPH__NODES);
         createEReference(scGraphEClass, SC_GRAPH__DECLARATIONS);
@@ -1044,9 +1073,11 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        scGraphsEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
         scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        nodeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
+        nodeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         conditionalEClass.getESuperTypes().add(this.getNode());
         surfaceEClass.getESuperTypes().add(this.getNode());
         depthEClass.getESuperTypes().add(this.getNode());
@@ -1068,6 +1099,9 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         scheduleDependencyEClass.getESuperTypes().add(this.getDependency());
 
         // Initialize classes and features; add operations and parameters
+        initEClass(scGraphsEClass, SCGraphs.class, "SCGraphs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getSCGraphs_Scgs(), this.getSCGraph(), null, "scgs", null, 0, -1, SCGraphs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSCGraph_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSCGraph_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

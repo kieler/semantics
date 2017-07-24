@@ -32,11 +32,11 @@ class ReferenceWrapper extends SCChartsProcessor {
     @Inject Injector injector
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.reference"
+        "de.cau.cs.kieler.sccharts.processors.transformators.reference.wrapper"
     }
     
     override getName() {
-        "Reference"
+        "Reference V1"
     }
     
     override process() {

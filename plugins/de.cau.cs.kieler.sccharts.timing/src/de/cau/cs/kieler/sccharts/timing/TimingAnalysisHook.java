@@ -93,7 +93,7 @@ public class TimingAnalysisHook extends SynthesisHook {
 			// region to represent the SCChart in Timing Analysis.
 			State rootState = (State) scope;
 			Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createControlflowRegion();
-			scchartDummyRegion.setId("SCChartDummyRegion");
+			scchartDummyRegion.setName("SCChartDummyRegion");
 
 			Resource resource = null;
             KielerCompilerContext context =

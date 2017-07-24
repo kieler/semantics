@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.kexpressions.keffects;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,5 +15,5 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Effect extends Annotatable {
+public interface Effect extends Annotatable, Schedulable {
 } // Effect

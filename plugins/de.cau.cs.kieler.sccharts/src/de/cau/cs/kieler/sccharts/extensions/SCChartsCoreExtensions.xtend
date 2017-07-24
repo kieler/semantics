@@ -45,15 +45,15 @@ class SCChartsCoreExtensions {
         if (eObject.eContainer == null) eObject  else eObject.eContainer.root
     }         
     
-    def int id(EObject eObject) {
+    def int hash(EObject eObject) {
         eObject.hashCode
     }
 
-    def String id(EObject eObject, String string) {
-        string + eObject.id
+    def String hash(EObject eObject, String string) {
+        string + eObject.hash
     }
 
-    def String id(String string) {
+    def String hash(String string) {
         GENERATED_PREFIX + string;
     }
 
@@ -76,12 +76,14 @@ class SCChartsCoreExtensions {
             return decendingName
         else {
             var scopeId = "";
-            if (scope.id != null) {
-                scopeId = scope.id
+            if (scope.name != null) {
+                scopeId = scope.name
             } else {
-                val parent = (scope.eContainer as Scope);
-                if (parent instanceof State) {
-                    scopeId = "region" + parent.regions.indexOf(scope)
+                if (scope.eContainer instanceof Scope) {
+                    val parent = (scope.eContainer as Scope);
+                    if (parent instanceof State) {
+                        scopeId = "region" + parent.regions.indexOf(scope)
+                    }
                 }
             }
             if (scope.eContainer instanceof SCCharts) return scopeId + "_" + decendingName

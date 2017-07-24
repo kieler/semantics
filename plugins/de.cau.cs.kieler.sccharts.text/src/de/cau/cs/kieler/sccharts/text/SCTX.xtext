@@ -24,7 +24,7 @@ SCCharts returns sccharts::SCCharts:
 
 RootState returns sccharts::State:
 	annotations+=Annotation*
-	'scchart' id=ID label=STRING?
+	'scchart' name=ExtendedID label=STRING?
 	'{'
 		declarations+=DeclarationWOSemicolon*
 		actions+=LocalAction*
@@ -38,7 +38,7 @@ State returns sccharts::State:
 	final?='final'?
 	violation?='violation'?
 	connector?='connector'?
-	'state' id=ID label=STRING?
+	'state' name=ID label=STRING?
 	((
 	    'is' reference = ScopeCall
 	)|('{'
@@ -71,7 +71,8 @@ Transition returns sccharts::Transition:
 	deferred?='deferred'?
 	history=HistoryType?
 	(
-		('if' triggerDelay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//                      -> This alternative is only for the serializer to enable forcing of brackets
+		('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
 		|
 		('if' label=STRING)
 	)?;
@@ -129,7 +130,7 @@ SingleDataflowRegion returns sccharts::DataflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
     annotations+=Annotation*
-    'region' id=ID? label=STRING? ':'
+    'region' name=ExtendedID? label=STRING? ':'
     declarations+=DeclarationWOSemicolon*
     states+=State+;
 
@@ -137,7 +138,7 @@ ControlflowRegion returns sccharts::ControlflowRegion:
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     annotations+=Annotation*
-    'dataflow' id=ID? label=STRING? ':'
+    'dataflow' name=ExtendedID? label=STRING? ':'
     declarations+=DeclarationWOSemicolon*
     equations+=Equation+;
 
@@ -172,4 +173,9 @@ enum DelayType returns sccharts::DelayType:
 enum HistoryType returns sccharts::HistoryType:
     RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
 	
-	
+// -------------- //
+//  Helper Rules  // 
+// -------------- //
+
+// These are implicit keywords due to rules such as 'go to'
+HiddenKeywords: 'go' | 'abort' | 'join' | 'shallow';

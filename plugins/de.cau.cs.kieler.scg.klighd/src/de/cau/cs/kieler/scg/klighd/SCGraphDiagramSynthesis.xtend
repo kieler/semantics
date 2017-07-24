@@ -994,13 +994,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
             
-            if (!entry.id.nullOrEmpty) {
-                val label = entry.id.createLabel(node).associateWith(entry).
-                    configureOutsideTopCenteredNodeLabel(entry.id, 7, KlighdConstants::DEFAULT_FONT_NAME)
+            if (!entry.name.nullOrEmpty) {
+                val label = entry.name.createLabel(node).associateWith(entry).
+                    configureOutsideTopCenteredNodeLabel(entry.name, 7, KlighdConstants::DEFAULT_FONT_NAME)
                  label.KRendering.foreground = "black".color
                  node.setLayoutOption(CoreOptions::NODE_LABELS_PLACEMENT, NodeLabelPlacement::outsideTopCenter)
                  label.setLayoutOption(CoreOptions::NODE_LABELS_PLACEMENT, null)
-                 if (entry.id.equals(mainEntry)) {
+                 if (entry.name.equals(mainEntry)) {
                      label.KRendering.fontBold = true
                  }
             }

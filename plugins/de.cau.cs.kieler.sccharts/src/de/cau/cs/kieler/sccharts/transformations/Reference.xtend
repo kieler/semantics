@@ -146,7 +146,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         // Each referenced state must be contained in a region.
         val newState = (state.reference.scope as State).copyState => [
             state.parentRegion.states += it
-            id = state.id
+            name = state.name
             label = state.label
         ]
 

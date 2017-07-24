@@ -25,7 +25,6 @@ import org.eclipse.xtext.scoping.Scopes
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
-import de.cau.cs.kieler.kexpressions.Identifiable
 import java.util.Set
 import de.cau.cs.kieler.kexpressions.Referenceable
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -137,7 +136,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 	
 	protected def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
  		if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
- 			val candidates = <Identifiable> newArrayList
 			val declaration = context
 			if (declaration instanceof ReferenceDeclaration) {
 				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
@@ -174,14 +172,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 		return null
 	}
 	
-	protected def Set<Identifiable> getIdentifiables(EObject eObject) {
-		<Identifiable> newHashSet => [ set | 
-			val ids = eObject.eContents.filter(Identifiable).toSet
-			ids.forEach[ set += it.getIdentifiables ]
-			set += ids	
-		]
-	}
-
 	protected def Set<Referenceable> getReferenceables(EObject eObject) {
 	    eObject.eContents.filter(Referenceable).toSet
 	}

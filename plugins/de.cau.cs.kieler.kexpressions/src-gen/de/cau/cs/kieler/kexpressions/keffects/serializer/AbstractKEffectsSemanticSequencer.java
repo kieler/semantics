@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -55,8 +56,19 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
-				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
+					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.PRAGMA:
 				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
@@ -136,21 +148,167 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 		else if (epackage == KExpressionsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KExpressionsPackage.BOOL_VALUE:
-				sequence_BoolValue(context, (BoolValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getBoolValueRule()
+						|| rule == grammarAccess.getAnyValueRule()) {
+					sequence_BoolValue(context, (BoolValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_BoolValue_Expression(context, (BoolValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
-				sequence_FloatValue(context, (FloatValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_FloatValue(context, (FloatValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getFloatValueRule()
+						|| rule == grammarAccess.getAnyValueRule()) {
+					sequence_FloatValue(context, (FloatValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.FUNCTION_CALL:
-				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_FunctionCall(context, (FunctionCall) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getFunctionCallRule()) {
+					sequence_FunctionCall(context, (FunctionCall) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.INT_VALUE:
-				sequence_IntValue(context, (IntValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_IntValue(context, (IntValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getIntValueRule()
+						|| rule == grammarAccess.getAnyValueRule()) {
+					sequence_IntValue(context, (IntValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_Expression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getLogicalOrExpressionRule()
 						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getLogicalAndExpressionRule()
@@ -189,17 +347,162 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
 				return; 
 			case KExpressionsPackage.REFERENCE_CALL:
-				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_ReferenceCall(context, (ReferenceCall) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getReferenceCallRule()) {
+					sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
+				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
-				sequence_StringValue(context, (StringValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_StringValue(context, (StringValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getStringValueRule()
+						|| rule == grammarAccess.getAnyValueRule()) {
+					sequence_StringValue(context, (StringValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.TEXT_EXPRESSION:
-				sequence_TextExpression(context, (TextExpression) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_TextExpression(context, (TextExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getTextExpressionRule()) {
+					sequence_TextExpression(context, (TextExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
-				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
+						|| rule == grammarAccess.getValuedObjectReferenceRule()) {
+					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -210,7 +513,14 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=AssignOperator expression=Expression)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         valuedObject=[ValuedObject|PrimeID] 
+	 *         indices+=Expression* 
+	 *         operator=AssignOperator 
+	 *         expression=Expression 
+	 *         schedule+=ScheduleObjectReference*
+	 *     )
 	 */
 	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -223,8 +533,15 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *
 	 * Constraint:
 	 *     (
-	 *         (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=AssignOperator expression=Expression) | 
-	 *         (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=PostfixOperator)
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             valuedObject=[ValuedObject|PrimeID] 
+	 *             indices+=Expression* 
+	 *             operator=AssignOperator 
+	 *             expression=Expression 
+	 *             schedule+=ScheduleObjectReference*
+	 *         ) | 
+	 *         (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=PostfixOperator schedule+=ScheduleObjectReference*)
 	 *     )
 	 */
 	protected void sequence_Assignment_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
@@ -238,7 +555,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     Emission returns Emission
 	 *
 	 * Constraint:
-	 *     (annotations+=QuotedStringAnnotation* valuedObject=[ValuedObject|PrimeID] newValue=Expression?)
+	 *     (annotations+=QuotedStringAnnotation* valuedObject=[ValuedObject|PrimeID] newValue=Expression? schedule+=ScheduleObjectReference*)
 	 */
 	protected void sequence_Emission(ISerializationContext context, Emission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -279,7 +596,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     PostfixEffect returns Assignment
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=PostfixOperator)
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=PostfixOperator schedule+=ScheduleObjectReference*)
 	 */
 	protected void sequence_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -310,7 +627,8 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *         indices+=Expression* 
 	 *         subReference=ValuedObjectReference? 
 	 *         operator=AssignOperator 
-	 *         expression=Expression
+	 *         expression=Expression 
+	 *         schedule+=ScheduleObjectReference*
 	 *     )
 	 */
 	protected void sequence_SubReferenceAssignment(ISerializationContext context, Assignment semanticObject) {

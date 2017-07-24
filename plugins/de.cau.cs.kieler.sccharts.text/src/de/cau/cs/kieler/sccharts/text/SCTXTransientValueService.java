@@ -97,7 +97,7 @@ public class SCTXTransientValueService extends DefaultTransientValueService {
                 }
             }
             Scope scope = (Scope) owner;
-            return (scope.getLabel() == null || scope.getLabel().equals(scope.getId()));
+            return (scope.getLabel() == null || scope.getLabel().equals(scope.getName()));
         }
 
         // if (feature == SCChartsPackage.eINSTANCE.getScope_BodyContents()) {
@@ -110,7 +110,7 @@ public class SCTXTransientValueService extends DefaultTransientValueService {
 
         /* suppress id serialization if id is equals to "" */
         if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)
-                && feature == KExpressionsPackage.eINSTANCE.getIdentifiable_Id()) {
+                && feature == AnnotationsPackage.eINSTANCE.getNamedObject_Name()) {
             return Strings.isEmpty((String) owner.eGet(feature));
         }
 

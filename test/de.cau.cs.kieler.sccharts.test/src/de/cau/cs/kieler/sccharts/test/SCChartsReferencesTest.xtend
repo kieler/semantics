@@ -12,18 +12,19 @@
  */
 package de.cau.cs.kieler.sccharts.test
 
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import org.eclipse.xtext.Keyword
 import org.eclipse.xtext.resource.XtextResource
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import org.eclipse.xtext.Keyword
 
 /**
  * Tests if all reference in SCCharts are correctly linked.
@@ -33,7 +34,7 @@ import org.eclipse.xtext.Keyword
  * @kieler.rating proposed yellow
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<State> {
+class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
     /** Sct Parser Injector */
     static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
@@ -57,16 +58,16 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<State> {
     }
     
     @Test
-    def void testReferences(State scc, TestModelData modelData) {
+    def void testReferences(SCCharts scc, TestModelData modelData) {
         val keyword = grammar.stateAccess.isKeyword_8_0_0
         for (res : scc.eResource.resourceSet.resources.filter(XtextResource)) {
             val parserNodes = res.parseResult.rootNode
             parserNodes.asTreeIterable.filter[
-                semanticElement instanceof State 
+                semanticElement instanceof SCCharts 
                 && grammarElement.eClass.equals(keyword.eClass)
                 && (grammarElement as Keyword).value == keyword.value
             ].forEach[
-                assertTrue("Referenced state " + (semanticElement as State).id + " in " + res.URI.segment(res.URI.segmentCount - 1) + " cannot be resolved",
+                assertTrue("Referenced state " + (semanticElement as State).name + " in " + res.URI.segment(res.URI.segmentCount - 1) + " cannot be resolved",
                     (semanticElement as State).reference.scope !== null)
             ]
         }

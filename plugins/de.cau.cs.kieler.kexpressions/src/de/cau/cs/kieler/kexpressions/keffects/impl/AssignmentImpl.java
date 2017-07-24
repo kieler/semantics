@@ -4,6 +4,9 @@ package de.cau.cs.kieler.kexpressions.keffects.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -34,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getSchedule <em>Schedule</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
@@ -44,6 +48,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class AssignmentImpl extends AnnotatableImpl implements Assignment {
+    /**
+     * The cached value of the '{@link #getSchedule() <em>Schedule</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSchedule()
+     * @generated
+     * @ordered
+     */
+    protected EList<ScheduleObjectReference> schedule;
+
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
@@ -121,6 +135,18 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     @Override
     protected EClass eStaticClass() {
         return KEffectsPackage.Literals.ASSIGNMENT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ScheduleObjectReference> getSchedule() {
+        if (schedule == null) {
+            schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.ASSIGNMENT__SCHEDULE);
+        }
+        return schedule;
     }
 
     /**
@@ -288,6 +314,8 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KEffectsPackage.ASSIGNMENT__SCHEDULE:
+                return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 return basicSetExpression(null, msgs);
             case KEffectsPackage.ASSIGNMENT__INDICES:
@@ -306,6 +334,8 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case KEffectsPackage.ASSIGNMENT__SCHEDULE:
+                return getSchedule();
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
@@ -330,6 +360,10 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case KEffectsPackage.ASSIGNMENT__SCHEDULE:
+                getSchedule().clear();
+                getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
                 return;
@@ -358,6 +392,9 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case KEffectsPackage.ASSIGNMENT__SCHEDULE:
+                getSchedule().clear();
+                return;
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
                 return;
@@ -385,6 +422,8 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case KEffectsPackage.ASSIGNMENT__SCHEDULE:
+                return schedule != null && !schedule.isEmpty();
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 return valuedObject != null;
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
@@ -397,6 +436,38 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
                 return subReference != null;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Schedulable.class) {
+            switch (derivedFeatureID) {
+                case KEffectsPackage.ASSIGNMENT__SCHEDULE: return KExpressionsPackage.SCHEDULABLE__SCHEDULE;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Schedulable.class) {
+            switch (baseFeatureID) {
+                case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return KEffectsPackage.ASSIGNMENT__SCHEDULE;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**

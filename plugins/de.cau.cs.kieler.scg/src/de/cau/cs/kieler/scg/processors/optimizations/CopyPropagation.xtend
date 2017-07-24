@@ -42,9 +42,8 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.impl.ValueImpl
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-
+import de.cau.cs.kieler.kexpressions.Value
 
 class CopyPropagation extends AbstractProductionTransformation {
     // Inject from SCGDeclarations
@@ -91,7 +90,7 @@ class CopyPropagation extends AbstractProductionTransformation {
             it.expression.class.typeName.equals(ValuedObjectReferenceImpl.typeName)
         ]
         val constantAssignments = assignments.filter[
-           it.expression instanceof ValueImpl
+           it.expression instanceof Value
         ]
         // extract  condg variables
         val condAssignments = assignments.filter[

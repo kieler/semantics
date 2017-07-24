@@ -3,7 +3,7 @@
 package de.cau.cs.kieler.kexpressions.kext.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.kext.*;
 
@@ -95,12 +95,12 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
                 return createAnnotatableAdapter();
             }
             @Override
-            public Adapter caseIdentifiable(Identifiable object) {
-                return createIdentifiableAdapter();
-            }
-            @Override
             public Adapter caseReferenceable(Referenceable object) {
                 return createReferenceableAdapter();
+            }
+            @Override
+            public Adapter caseNamedObject(NamedObject object) {
+                return createNamedObjectAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -207,20 +207,6 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
-     * @generated
-     */
-    public Adapter createIdentifiableAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -231,6 +217,20 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createReferenceableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.NamedObject
+     * @generated
+     */
+    public Adapter createNamedObjectAdapter() {
         return null;
     }
 

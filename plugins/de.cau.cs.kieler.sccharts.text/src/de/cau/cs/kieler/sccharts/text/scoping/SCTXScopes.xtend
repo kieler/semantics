@@ -17,21 +17,19 @@ import org.eclipse.xtext.util.SimpleAttributeResolver
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
-import de.cau.cs.kieler.sccharts.Scope
 import org.eclipse.xtext.scoping.IScope
-import org.eclipse.internal.xtend.util.Pair
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 /**
  * @author ssm
  * 
  */
-class SCTScopes extends Scopes {
+class SCTXScopes extends Scopes {
     
-    public final static val ID_RESOLVER = SimpleAttributeResolver.newResolver(typeof(String), "id")    
+//    public final static val ID_RESOLVER = SimpleAttributeResolver.newResolver(typeof(String), "id")    
     
     public final static val NAME_WRAPPER = QualifiedName.wrapper(SimpleAttributeResolver.NAME_RESOLVER)
-    public final static val ID_WRAPPER = QualifiedName.wrapper(ID_RESOLVER)
+//    public final static val ID_WRAPPER = QualifiedName.wrapper(ID_RESOLVER)
     
     
     public static def IScope scopeFor(Iterable<? extends EObject> elements) {
@@ -39,34 +37,15 @@ class SCTScopes extends Scopes {
     }    
     
     public static def IScope scopeFor(Iterable<? extends EObject> elements, IScope outer) {
-        val elementListPair = elements.splitElements
-                    
-        val idScope = scopeFor(elementListPair.first, ID_WRAPPER, outer)
-        val nameScope = scopeFor(elementListPair.second, NAME_WRAPPER, outer)
+        val nameScope = scopeFor(elements, NAME_WRAPPER, outer)
         
-        return new SimpleScope(idScope.allElements + nameScope.allElements)
+        return new SimpleScope(nameScope.allElements)
     }    
     
     public static def Iterable<IEObjectDescription> scopedElementsFor(Iterable<? extends EObject> elements) {
-        val elementListPair = elements.splitElements
-                    
-        val idScope = scopedElementsFor(elementListPair.first, ID_WRAPPER)
-        val nameScope = scopedElementsFor(elementListPair.second, NAME_WRAPPER)
+        val nameScope = scopedElementsFor(elements, NAME_WRAPPER)
         
-        return idScope + nameScope
-    }
-    
-    private static def splitElements(Iterable<? extends EObject> elements) {
-        val nameElements = <EObject> newLinkedList
-        val idElements = <EObject> newLinkedList
-        for(element : elements) {
-            if (element instanceof Scope) {
-                idElements += element
-            } else {
-                nameElements += element
-            }
-        }
-        return new Pair<Iterable<EObject>, Iterable<EObject>>(idElements, nameElements)
+        return nameScope
     }
     
 }

@@ -64,8 +64,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         val node = region.createNode().associateWith(region);
 
         // Set KIdentifier for use with incremental update
-        if (!region.id.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.id]
+        if (!region.name.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.name]
         }
         
         if (USE_KLAY.booleanValue) {

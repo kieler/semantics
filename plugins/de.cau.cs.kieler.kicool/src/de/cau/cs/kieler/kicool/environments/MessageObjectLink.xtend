@@ -27,11 +27,13 @@ class MessageObjectLink {
     @Accessors Object object
     @Accessors boolean annotate
     @Accessors IColorSystem colorSystem
+    @Accessors Exception exception
     
-    new(String message, Object object, boolean annotate, IColorSystem colorSystem) {
+    new(String message, Object object, boolean annotate, IColorSystem colorSystem, Exception exception) {
         this.message = message
         this.object = object
         this.annotate = annotate
         this.colorSystem = colorSystem
+        this.exception = exception
     }
 }

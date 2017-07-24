@@ -218,7 +218,8 @@ class TransitionStyles {
         label.configureCenterEdgeLabel(text) // Add text
         label.getKRendering => [ // Configure text
             fontSize = 7;
-            foreground = COMMENT_FOREGROND.color
+            
+            foreground = COMMENT_FOREGROND_TRANSITION.color
             background = backgroundColor
         ]
         return label;

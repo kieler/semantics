@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -103,6 +104,10 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter caseSchedulable(Schedulable object) {
+                return createSchedulableAdapter();
             }
             @Override
             public Adapter caseExpression(Expression object) {
@@ -243,6 +248,20 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Schedulable
+     * @generated
+     */
+    public Adapter createSchedulableAdapter() {
         return null;
     }
 

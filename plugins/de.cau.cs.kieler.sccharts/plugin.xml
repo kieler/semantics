@@ -284,6 +284,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.Snapshot">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.Reference">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">
@@ -295,6 +298,9 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.extended.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.extended.core.simple.kico">
         </TransformationSystem>
      </extension>
 

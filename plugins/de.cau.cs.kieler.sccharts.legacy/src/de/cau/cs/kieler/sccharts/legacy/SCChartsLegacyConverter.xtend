@@ -152,7 +152,7 @@ class SCChartsLegacyConverter {
                             if (child.grammarElement.eClass.equals(toKeyword.eClass) && (child.grammarElement as Keyword).value == toKeyword.value) {
                                 to = true
                             }
-                            if (to && child.grammarElement instanceof CrossReference) {
+                            if (!to && child.grammarElement instanceof CrossReference) {
                                 boundName = child.text
                             }
                         }
@@ -231,7 +231,7 @@ class SCChartsLegacyConverter {
                         name = "DUMMY"
                     ]
                 ]
-                s.id = entry.value
+                s.name = entry.value
                 referencedSCCharts.rootStates += s
                 referenced.put(entry.value, s)
                 s
@@ -248,10 +248,14 @@ class SCChartsLegacyConverter {
                                     valuedObject = (bind.key.actual?:(bind.key.formal)).convert as de.cau.cs.kieler.kexpressions.ValuedObject
                                 ]
                             }
-                            explicitBinding = createValuedObject => [
-                                name = bind.value
-                                state.declarations.head.valuedObjects += it
-                            ]
+                            if (state.declarations.head.valuedObjects.exists[name.equals(bind.value)]) {
+                                explicitBinding = state.declarations.head.valuedObjects.findFirst[name.equals(bind.value)]
+                            } else {
+                                explicitBinding = createValuedObject => [
+                                    name = bind.value
+                                    state.declarations.head.valuedObjects += it
+                                ]
+                            }
                         ]
                     }
                 }
@@ -268,7 +272,7 @@ class SCChartsLegacyConverter {
             s => [ // This is important for cyclic states
                 annotations.addAll(state.annotations.map[convert as Annotation])
             
-                id = state.id
+                name = state.id
                 label = state.label
                 actions.addAll(state.localActions.map[convert as de.cau.cs.kieler.sccharts.LocalAction])
                 if (referenceCalls.containsKey(state)) {
@@ -289,7 +293,7 @@ class SCChartsLegacyConverter {
         return createControlflowRegion => [
             annotations.addAll(region.annotations.map[convert as Annotation])
             
-            id = region.id
+            name = region.id
             label = region.label
             actions.addAll(region.localActions.map[convert as de.cau.cs.kieler.sccharts.LocalAction])
             declarations.addAll(region.declarations.map[convert as de.cau.cs.kieler.kexpressions.Declaration])
@@ -410,7 +414,7 @@ class SCChartsLegacyConverter {
             
                 name = vo.name
                 if (vo.combineOperator != null) combineOperator = CombineOperator.getByName(vo.combineOperator.getName)
-                initialValue = initialValue?.convert as Expression
+                initialValue = vo.initialValue?.convert as Expression
                 cardinalities.addAll(vo.cardinalities.map[convert as Expression])
             ]
         }

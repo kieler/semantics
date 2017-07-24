@@ -83,6 +83,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNewValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cNewValueExpressionParserRuleCall_2_1_0 = (RuleCall)cNewValueAssignment_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cScheduleKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cScheduleAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_3_1_0 = (RuleCall)cScheduleAssignment_3_1.eContents().get(0);
 		
 		//// Emission Rule
 		//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -93,10 +97,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// annotations defined in the annotations grammar.		
 		//Emission keffects::Emission:
 		//	annotations+=QuotedStringAnnotation*
-		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")?
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")? ('schedule'
+		//	schedule+=ScheduleObjectReference+)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=QuotedStringAnnotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")?
+		//('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=QuotedStringAnnotation*
@@ -128,6 +134,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//'schedule'
+		public Keyword getScheduleKeyword_3_0() { return cScheduleKeyword_3_0; }
+
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_3_1() { return cScheduleAssignment_3_1; }
+
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_3_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_3_1_0; }
 	}
 
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -147,6 +165,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorAssignOperatorEnumRuleCall_3_0 = (RuleCall)cOperatorAssignment_3.eContents().get(0);
 		private final Assignment cExpressionAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cExpressionExpressionParserRuleCall_4_0 = (RuleCall)cExpressionAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cScheduleKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cScheduleAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_5_1_0 = (RuleCall)cScheduleAssignment_5_1.eContents().get(0);
 		
 		//// Assignment Rule
 		//// An assignment may start with a list of arbitrary annotatations.
@@ -156,11 +178,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Assignment keffects::Assignment:
 		//	annotations+=Annotation*
 		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-		//	operator=AssignOperator expression=Expression
+		//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-		//operator=AssignOperator expression=Expression
+		//operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -204,6 +226,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_4_0() { return cExpressionExpressionParserRuleCall_4_0; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//'schedule'
+		public Keyword getScheduleKeyword_5_0() { return cScheduleKeyword_5_0; }
+
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_5_1() { return cScheduleAssignment_5_1; }
+
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_5_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_5_1_0; }
 	}
 
 	public class SubReferenceAssignmentElements extends AbstractParserRuleElementFinder {
@@ -227,16 +261,21 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorAssignOperatorEnumRuleCall_4_0 = (RuleCall)cOperatorAssignment_4.eContents().get(0);
 		private final Assignment cExpressionAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cExpressionExpressionParserRuleCall_5_0 = (RuleCall)cExpressionAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cScheduleKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cScheduleAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_6_1_0 = (RuleCall)cScheduleAssignment_6_1.eContents().get(0);
 		
 		//SubReferenceAssignment keffects::Assignment:
 		//	annotations+=Annotation*
 		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
 		//	subReference=ValuedObjectReference)?
-		//	operator=AssignOperator expression=Expression
+		//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
-		//subReference=ValuedObjectReference)? operator=AssignOperator expression=Expression
+		//subReference=ValuedObjectReference)? operator=AssignOperator expression=Expression ('schedule'
+		//schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -292,6 +331,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_5_0() { return cExpressionExpressionParserRuleCall_5_0; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_6() { return cGroup_6; }
+
+		//'schedule'
+		public Keyword getScheduleKeyword_6_0() { return cScheduleKeyword_6_0; }
+
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_6_1() { return cScheduleAssignment_6_1; }
+
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_6_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_6_1_0; }
 	}
 
 	public class PostfixEffectElements extends AbstractParserRuleElementFinder {
@@ -309,6 +360,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		private final Assignment cOperatorAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cOperatorPostfixOperatorEnumRuleCall_3_0 = (RuleCall)cOperatorAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cScheduleKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cScheduleAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_4_1_0 = (RuleCall)cScheduleAssignment_4_1.eContents().get(0);
 		
 		//// Postfix Effect
 		//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
@@ -317,11 +372,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//PostfixEffect keffects::Assignment:
 		//	annotations+=Annotation*
 		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-		//	operator=PostfixOperator
+		//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-		//operator=PostfixOperator
+		//operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -359,6 +414,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//PostfixOperator
 		public RuleCall getOperatorPostfixOperatorEnumRuleCall_3_0() { return cOperatorPostfixOperatorEnumRuleCall_3_0; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'schedule'
+		public Keyword getScheduleKeyword_4_0() { return cScheduleKeyword_4_0; }
+
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_4_1() { return cScheduleAssignment_4_1; }
+
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_4_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_4_1_0; }
 	}
 
 	public class HostcodeEffectElements extends AbstractParserRuleElementFinder {
@@ -868,7 +935,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// annotations defined in the annotations grammar.		
 	//Emission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")?
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")? ('schedule'
+	//	schedule+=ScheduleObjectReference+)?
 	public EmissionElements getEmissionAccess() {
 		return pEmission;
 	}
@@ -885,7 +953,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment keffects::Assignment:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-	//	operator=AssignOperator expression=Expression
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
 	}
@@ -898,7 +966,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
 	//	subReference=ValuedObjectReference)?
-	//	operator=AssignOperator expression=Expression
+	//	operator=AssignOperator expression=Expression ('schedule' schedule+=ScheduleObjectReference+)?
 	public SubReferenceAssignmentElements getSubReferenceAssignmentAccess() {
 		return pSubReferenceAssignment;
 	}
@@ -914,7 +982,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//PostfixEffect keffects::Assignment:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
-	//	operator=PostfixOperator
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
 	public PostfixEffectElements getPostfixEffectAccess() {
 		return pPostfixEffect;
 	}
@@ -1042,8 +1110,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	BoolExpression
-	//	| ValuedExpression;
+	//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -1337,6 +1404,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
+	}
+
+	//ScheduleObjectReference:
+	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	public KExpressionsGrammarAccess.ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
+		return gaKExpressions.getScheduleObjectReferenceAccess();
+	}
+	
+	public ParserRule getScheduleObjectReferenceRule() {
+		return getScheduleObjectReferenceAccess().getRule();
 	}
 
 	//// Reference Call Rule
@@ -1737,6 +1814,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
+	//CommentAnnotatonSL CommentAnnotation:
+	//	values+=SL_COMMENT_ANNOTATION
+	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
+		return gaAnnotations.getCommentAnnotatonSLAccess();
+	}
+	
+	public ParserRule getCommentAnnotatonSLRule() {
+		return getCommentAnnotatonSLAccess().getRule();
+	}
+
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
@@ -1877,7 +1964,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID ("." ID)* ("#" INT)?;
+	//	ID ("." | "-" ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -1932,6 +2019,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
+	//terminal SL_COMMENT_ANNOTATION:
+	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
+		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
+	} 
+
+	//terminal SL_COMMENT:
+	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENTRule() {
+		return gaAnnotations.getSL_COMMENTRule();
+	} 
+
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
@@ -1966,12 +2065,6 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:

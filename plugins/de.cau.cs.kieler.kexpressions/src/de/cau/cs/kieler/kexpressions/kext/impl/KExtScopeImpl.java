@@ -6,8 +6,8 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Declaration;
-import de.cau.cs.kieler.kexpressions.Identifiable;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 
@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getAnnotations <em>Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getEntities <em>Entities</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl#getScopes <em>Scopes</em>}</li>
  * </ul>
@@ -59,24 +59,24 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
     protected EList<Annotation> annotations;
 
     /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected static final String ID_EDEFAULT = null;
+    protected static final String NAME_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected String id = ID_EDEFAULT;
+    protected String name = NAME_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getEntities() <em>Entities</em>}' containment reference list.
@@ -134,8 +134,8 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -143,11 +143,11 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setId(String newId) {
-        String oldId = id;
-        id = newId;
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.KEXT_SCOPE__ID, oldId, id));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.KEXT_SCOPE__NAME, oldName, name));
     }
 
     /**
@@ -202,8 +202,8 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
         switch (featureID) {
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return getAnnotations();
-            case KExtPackage.KEXT_SCOPE__ID:
-                return getId();
+            case KExtPackage.KEXT_SCOPE__NAME:
+                return getName();
             case KExtPackage.KEXT_SCOPE__ENTITIES:
                 return getEntities();
             case KExtPackage.KEXT_SCOPE__SCOPES:
@@ -225,8 +225,8 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
                 getAnnotations().clear();
                 getAnnotations().addAll((Collection<? extends Annotation>)newValue);
                 return;
-            case KExtPackage.KEXT_SCOPE__ID:
-                setId((String)newValue);
+            case KExtPackage.KEXT_SCOPE__NAME:
+                setName((String)newValue);
                 return;
             case KExtPackage.KEXT_SCOPE__ENTITIES:
                 getEntities().clear();
@@ -251,8 +251,8 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 getAnnotations().clear();
                 return;
-            case KExtPackage.KEXT_SCOPE__ID:
-                setId(ID_EDEFAULT);
+            case KExtPackage.KEXT_SCOPE__NAME:
+                setName(NAME_EDEFAULT);
                 return;
             case KExtPackage.KEXT_SCOPE__ENTITIES:
                 getEntities().clear();
@@ -274,8 +274,8 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
         switch (featureID) {
             case KExtPackage.KEXT_SCOPE__ANNOTATIONS:
                 return annotations != null && !annotations.isEmpty();
-            case KExtPackage.KEXT_SCOPE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+            case KExtPackage.KEXT_SCOPE__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case KExtPackage.KEXT_SCOPE__ENTITIES:
                 return entities != null && !entities.isEmpty();
             case KExtPackage.KEXT_SCOPE__SCOPES:
@@ -297,14 +297,14 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
                 default: return -1;
             }
         }
-        if (baseClass == Identifiable.class) {
+        if (baseClass == Referenceable.class) {
             switch (derivedFeatureID) {
-                case KExtPackage.KEXT_SCOPE__ID: return KExpressionsPackage.IDENTIFIABLE__ID;
                 default: return -1;
             }
         }
-        if (baseClass == Referenceable.class) {
+        if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
+                case KExtPackage.KEXT_SCOPE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
                 default: return -1;
             }
         }
@@ -324,14 +324,14 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
                 default: return -1;
             }
         }
-        if (baseClass == Identifiable.class) {
+        if (baseClass == Referenceable.class) {
             switch (baseFeatureID) {
-                case KExpressionsPackage.IDENTIFIABLE__ID: return KExtPackage.KEXT_SCOPE__ID;
                 default: return -1;
             }
         }
-        if (baseClass == Referenceable.class) {
+        if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
+                case AnnotationsPackage.NAMED_OBJECT__NAME: return KExtPackage.KEXT_SCOPE__NAME;
                 default: return -1;
             }
         }
@@ -348,8 +348,8 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
-        result.append(id);
+        result.append(" (name: ");
+        result.append(name);
         result.append(')');
         return result.toString();
     }

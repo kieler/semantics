@@ -100,7 +100,7 @@ class KGXExtension implements ISCTGeneratorExtension {
     
     protected def saveModel(SCCharts sccharts, IProject project, KNode node) {
         // Create output URI.
-        var output = URI.createURI(project.locationURI.toString() + "/kgx/" + sccharts.rootStates.head.id);
+        var output = URI.createURI(project.locationURI.toString() + "/kgx/" + sccharts.rootStates.head.name);
         output = output.appendFileExtension(KGX_MODEL_EXTENSION);
 
         // Try to save the model.

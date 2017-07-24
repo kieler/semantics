@@ -4,7 +4,7 @@ package de.cau.cs.kieler.kexpressions.kext;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
-import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.Referenceable;
 
 import org.eclipse.emf.common.util.EList;
@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface KExtScope extends DeclarationScope, Annotatable, Identifiable, Referenceable {
+public interface KExtScope extends DeclarationScope, Annotatable, Referenceable, NamedObject {
     /**
      * Returns the value of the '<em><b>Entities</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.kexpressions.kext.TestEntity}.

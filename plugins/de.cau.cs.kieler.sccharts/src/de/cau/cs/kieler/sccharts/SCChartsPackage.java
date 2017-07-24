@@ -144,13 +144,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int SCOPE__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -197,6 +197,15 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     int SCOPE_CALL = 2;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE_CALL__SCHEDULE = KExpressionsPackage.CALL__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -400,13 +409,13 @@ public interface SCChartsPackage extends EPackage {
     int STATE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__ID = SCOPE__ID;
+    int STATE__NAME = SCOPE__NAME;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -545,13 +554,13 @@ public interface SCChartsPackage extends EPackage {
     int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__ID = SCOPE__ID;
+    int REGION__NAME = SCOPE__NAME;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -627,13 +636,13 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTROLFLOW_REGION__ID = REGION__ID;
+    int CONTROLFLOW_REGION__NAME = REGION__NAME;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -718,13 +727,13 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_REGION__ID = REGION__ID;
+    int DATAFLOW_REGION__NAME = REGION__NAME;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.

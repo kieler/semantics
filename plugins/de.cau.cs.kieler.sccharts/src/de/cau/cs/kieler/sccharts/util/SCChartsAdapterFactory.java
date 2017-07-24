@@ -14,10 +14,11 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.common.notify.Adapter;
@@ -166,8 +167,12 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createDeclarationScopeAdapter();
             }
             @Override
-            public Adapter caseIdentifiable(Identifiable object) {
-                return createIdentifiableAdapter();
+            public Adapter caseNamedObject(NamedObject object) {
+                return createNamedObjectAdapter();
+            }
+            @Override
+            public Adapter caseSchedulable(Schedulable object) {
+                return createSchedulableAdapter();
             }
             @Override
             public Adapter caseExpression(Expression object) {
@@ -464,16 +469,30 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
+     * @see de.cau.cs.kieler.annotations.NamedObject
      * @generated
      */
-    public Adapter createIdentifiableAdapter() {
+    public Adapter createNamedObjectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Schedulable
+     * @generated
+     */
+    public Adapter createSchedulableAdapter() {
         return null;
     }
 

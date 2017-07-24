@@ -63,6 +63,34 @@ public interface KExpressionsPackage extends EPackage {
     KExpressionsPackage eINSTANCE = de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl.init();
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.Schedulable
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
+     * @generated
+     */
+    int SCHEDULABLE = 21;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULABLE__SCHEDULE = 0;
+
+    /**
+     * The number of structural features of the '<em>Schedulable</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULABLE_FEATURE_COUNT = 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -73,13 +101,22 @@ public interface KExpressionsPackage extends EPackage {
     int EXPRESSION = 0;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXPRESSION__SCHEDULE = SCHEDULABLE__SCHEDULE;
+
+    /**
      * The number of structural features of the '<em>Expression</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EXPRESSION_FEATURE_COUNT = 0;
+    int EXPRESSION_FEATURE_COUNT = SCHEDULABLE_FEATURE_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
@@ -156,6 +193,15 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT_REFERENCE = 2;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUED_OBJECT_REFERENCE__SCHEDULE = EXPRESSION__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -202,6 +248,15 @@ public interface KExpressionsPackage extends EPackage {
     int VALUE = 3;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUE__SCHEDULE = EXPRESSION__SCHEDULE;
+
+    /**
      * The number of structural features of the '<em>Value</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -219,6 +274,15 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     int INT_VALUE = 4;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INT_VALUE__SCHEDULE = VALUE__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -249,6 +313,15 @@ public interface KExpressionsPackage extends EPackage {
     int FLOAT_VALUE = 5;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FLOAT_VALUE__SCHEDULE = VALUE__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -275,6 +348,15 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     int BOOL_VALUE = 6;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOL_VALUE__SCHEDULE = VALUE__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -352,7 +434,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()
      * @generated
      */
-    int FUNCTION_CALL = 16;
+    int FUNCTION_CALL = 19;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}' class.
@@ -362,17 +444,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
      * @generated
      */
-    int REFERENCEABLE = 17;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
-     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
-     * @generated
-     */
-    int IDENTIFIABLE = 18;
+    int REFERENCEABLE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -382,7 +454,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 13;
+    int PARAMETER = 16;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.StringValueImpl <em>String Value</em>}' class.
@@ -393,6 +465,15 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     int STRING_VALUE = 7;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STRING_VALUE__SCHEDULE = VALUE__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -411,6 +492,15 @@ public interface KExpressionsPackage extends EPackage {
      * @ordered
      */
     int STRING_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATOR_EXPRESSION__SCHEDULE = EXPRESSION__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -438,6 +528,15 @@ public interface KExpressionsPackage extends EPackage {
      * @ordered
      */
     int OPERATOR_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EXPRESSION__SCHEDULE = EXPRESSION__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -647,6 +746,171 @@ public interface KExpressionsPackage extends EPackage {
    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl <em>Schedule Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleDeclaration()
+     * @generated
+     */
+    int SCHEDULE_DECLARATION = 13;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__ANNOTATIONS = DECLARATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__NAME = DECLARATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Priorities</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__PRIORITIES = DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Global</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__GLOBAL = DECLARATION_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Schedule Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriority()
+     * @generated
+     */
+    int SCHEDULE_PRIORITY = 14;
+
+    /**
+     * The feature id for the '<em><b>Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_PRIORITY__PRIORITY = 0;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_PRIORITY__TYPE = 1;
+
+    /**
+     * The number of structural features of the '<em>Schedule Priority</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_PRIORITY_FEATURE_COUNT = 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl <em>Schedule Object Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleObjectReference()
+     * @generated
+     */
+    int SCHEDULE_OBJECT_REFERENCE = 15;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_OBJECT_REFERENCE__SCHEDULE = VALUED_OBJECT_REFERENCE__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_OBJECT_REFERENCE__VALUED_OBJECT = VALUED_OBJECT_REFERENCE__VALUED_OBJECT;
+
+    /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_OBJECT_REFERENCE__INDICES = VALUED_OBJECT_REFERENCE__INDICES;
+
+    /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_OBJECT_REFERENCE__SUB_REFERENCE = VALUED_OBJECT_REFERENCE__SUB_REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_OBJECT_REFERENCE__PRIORITY = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Schedule Object Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_OBJECT_REFERENCE_FEATURE_COUNT = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Call By Reference</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -708,7 +972,16 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCall()
      * @generated
      */
-    int CALL = 14;
+    int CALL = 17;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL__SCHEDULE = EXPRESSION__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -736,7 +1009,16 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceCall()
      * @generated
      */
-    int REFERENCE_CALL = 15;
+    int REFERENCE_CALL = 18;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL__SCHEDULE = VALUED_OBJECT_REFERENCE__SCHEDULE;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -784,6 +1066,15 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCE_CALL_FEATURE_COUNT = VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL__SCHEDULE = CALL__SCHEDULE;
+
+    /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -820,24 +1111,6 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCEABLE_FEATURE_COUNT = 0;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE__ID = 0;
-
-    /**
-     * The number of structural features of the '<em>Identifiable</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE_FEATURE_COUNT = 1;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -845,7 +1118,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 19;
+    int COMBINE_OPERATOR = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -855,7 +1128,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 20;
+    int OPERATOR_TYPE = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -865,7 +1138,18 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 21;
+    int VALUE_TYPE = 24;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.SchedulePriorityType <em>Schedule Priority Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriorityType()
+     * @generated
+     */
+    int SCHEDULE_PRIORITY_TYPE = 25;
 
 
     /**
@@ -1264,6 +1548,102 @@ public interface KExpressionsPackage extends EPackage {
     EReference getReferenceDeclaration_Parameters();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration <em>Schedule Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Schedule Declaration</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+     * @generated
+     */
+    EClass getScheduleDeclaration();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getName()
+     * @see #getScheduleDeclaration()
+     * @generated
+     */
+    EAttribute getScheduleDeclaration_Name();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities <em>Priorities</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Priorities</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities()
+     * @see #getScheduleDeclaration()
+     * @generated
+     */
+    EReference getScheduleDeclaration_Priorities();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Global</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal()
+     * @see #getScheduleDeclaration()
+     * @generated
+     */
+    EAttribute getScheduleDeclaration_Global();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.SchedulePriority <em>Schedule Priority</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Schedule Priority</em>'.
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriority
+     * @generated
+     */
+    EClass getSchedulePriority();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.SchedulePriority#getPriority <em>Priority</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Priority</em>'.
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriority#getPriority()
+     * @see #getSchedulePriority()
+     * @generated
+     */
+    EAttribute getSchedulePriority_Priority();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.SchedulePriority#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriority#getType()
+     * @see #getSchedulePriority()
+     * @generated
+     */
+    EAttribute getSchedulePriority_Type();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference <em>Schedule Object Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Schedule Object Reference</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+     * @generated
+     */
+    EClass getScheduleObjectReference();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference#getPriority <em>Priority</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Priority</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleObjectReference#getPriority()
+     * @see #getScheduleObjectReference()
+     * @generated
+     */
+    EAttribute getScheduleObjectReference_Priority();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.FunctionCall <em>Function Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1295,25 +1675,25 @@ public interface KExpressionsPackage extends EPackage {
     EClass getReferenceable();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Identifiable</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
+     * @return the meta object for class '<em>Schedulable</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Schedulable
      * @generated
      */
-    EClass getIdentifiable();
+    EClass getSchedulable();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Identifiable#getId <em>Id</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.Schedulable#getSchedule <em>Schedule</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable#getId()
-     * @see #getIdentifiable()
+     * @return the meta object for the containment reference list '<em>Schedule</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Schedulable#getSchedule()
+     * @see #getSchedulable()
      * @generated
      */
-    EAttribute getIdentifiable_Id();
+    EReference getSchedulable_Schedule();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Parameter <em>Parameter</em>}'.
@@ -1461,6 +1841,16 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EEnum getValueType();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.SchedulePriorityType <em>Schedule Priority Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Schedule Priority Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
+     * @generated
+     */
+    EEnum getSchedulePriorityType();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -1805,6 +2195,84 @@ public interface KExpressionsPackage extends EPackage {
         EReference REFERENCE_DECLARATION__PARAMETERS = eINSTANCE.getReferenceDeclaration_Parameters();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl <em>Schedule Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.ScheduleDeclarationImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleDeclaration()
+         * @generated
+         */
+        EClass SCHEDULE_DECLARATION = eINSTANCE.getScheduleDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCHEDULE_DECLARATION__NAME = eINSTANCE.getScheduleDeclaration_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Priorities</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SCHEDULE_DECLARATION__PRIORITIES = eINSTANCE.getScheduleDeclaration_Priorities();
+
+        /**
+         * The meta object literal for the '<em><b>Global</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCHEDULE_DECLARATION__GLOBAL = eINSTANCE.getScheduleDeclaration_Global();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriority()
+         * @generated
+         */
+        EClass SCHEDULE_PRIORITY = eINSTANCE.getSchedulePriority();
+
+        /**
+         * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCHEDULE_PRIORITY__PRIORITY = eINSTANCE.getSchedulePriority_Priority();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCHEDULE_PRIORITY__TYPE = eINSTANCE.getSchedulePriority_Type();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl <em>Schedule Object Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleObjectReference()
+         * @generated
+         */
+        EClass SCHEDULE_OBJECT_REFERENCE = eINSTANCE.getScheduleObjectReference();
+
+        /**
+         * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCHEDULE_OBJECT_REFERENCE__PRIORITY = eINSTANCE.getScheduleObjectReference_Priority();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1833,22 +2301,22 @@ public interface KExpressionsPackage extends EPackage {
         EClass REFERENCEABLE = eINSTANCE.getReferenceable();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.Identifiable
-         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
+         * @see de.cau.cs.kieler.kexpressions.Schedulable
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
          * @generated
          */
-        EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
+        EClass SCHEDULABLE = eINSTANCE.getSchedulable();
 
         /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Schedule</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
+        EReference SCHEDULABLE__SCHEDULE = eINSTANCE.getSchedulable_Schedule();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -1975,6 +2443,16 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EEnum VALUE_TYPE = eINSTANCE.getValueType();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.SchedulePriorityType <em>Schedule Priority Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulePriorityType()
+         * @generated
+         */
+        EEnum SCHEDULE_PRIORITY_TYPE = eINSTANCE.getSchedulePriorityType();
 
     }
 

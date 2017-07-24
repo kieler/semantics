@@ -224,28 +224,28 @@
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.kexpressions.kext.KExt -->
-    <extension
-            id="kext.check.fast"
-            name="KExt Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kext.check.normal"
-            name="KExt Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kext.check.expensive"
-            name="KExt Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
+	<!-- marker definitions for de.cau.cs.kieler.kexpressions.kext.KExt -->
+	<extension
+	        id="kext.check.fast"
+	        name="KExt Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.fast"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kext.check.normal"
+	        name="KExt Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.normal"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kext.check.expensive"
+	        name="KExt Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.expensive"/>
+	    <persistent value="true"/>
+	</extension>
 
 	<!-- Quick Outline -->
 	<extension

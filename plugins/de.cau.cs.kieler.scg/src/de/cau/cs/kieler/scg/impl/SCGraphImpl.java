@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.scg.BasicBlock;
@@ -43,6 +45,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getBasicBlocks <em>Basic Blocks</em>}</li>
@@ -54,6 +57,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	/**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
+
+    /**
      * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -133,6 +156,27 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
     }
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SC_GRAPH__NAME, oldName, name));
+    }
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -229,6 +273,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case ScgPackage.SC_GRAPH__NAME:
+                return getName();
             case ScgPackage.SC_GRAPH__NODES:
                 return getNodes();
             case ScgPackage.SC_GRAPH__DECLARATIONS:
@@ -252,6 +298,9 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	@Override
 	public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case ScgPackage.SC_GRAPH__NAME:
+                setName((String)newValue);
+                return;
             case ScgPackage.SC_GRAPH__NODES:
                 getNodes().clear();
                 getNodes().addAll((Collection<? extends Node>)newValue);
@@ -283,6 +332,9 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	@Override
 	public void eUnset(int featureID) {
         switch (featureID) {
+            case ScgPackage.SC_GRAPH__NAME:
+                setName(NAME_EDEFAULT);
+                return;
             case ScgPackage.SC_GRAPH__NODES:
                 getNodes().clear();
                 return;
@@ -310,6 +362,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 	@Override
 	public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case ScgPackage.SC_GRAPH__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case ScgPackage.SC_GRAPH__NODES:
                 return nodes != null && !nodes.isEmpty();
             case ScgPackage.SC_GRAPH__DECLARATIONS:
@@ -326,6 +380,38 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == NamedObject.class) {
+            switch (derivedFeatureID) {
+                case ScgPackage.SC_GRAPH__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == NamedObject.class) {
+            switch (baseFeatureID) {
+                case AnnotationsPackage.NAMED_OBJECT__NAME: return ScgPackage.SC_GRAPH__NAME;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -334,7 +420,9 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (label: ");
+        result.append(" (name: ");
+        result.append(name);
+        result.append(", label: ");
         result.append(label);
         result.append(')');
         return result.toString();

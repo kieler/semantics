@@ -47,7 +47,7 @@ class Snapshot extends SCChartsProcessor {
         val scc = SCChartsFactory::eINSTANCE.createSCCharts
         
         val root = createState => [
-            id = "Snapshots"
+            name = "Snapshots"
             scc.rootStates += it
         ]
         
@@ -58,7 +58,7 @@ class Snapshot extends SCChartsProcessor {
         snapshot(scc)
         
         s0.initial = true
-        s0.id = "Init"
+        s0.name = "Init"
         
         val s1 = region.createState("S1")
         

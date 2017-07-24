@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.text.scoping;
 import java.util.Collections;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.naming.QualifiedName;
@@ -53,13 +52,13 @@ public class SCTXQualifiedNameProvider extends DefaultDeclarativeQualifiedNamePr
     @Inject
     private IResourceScopeCache cache = IResourceScopeCache.NullImpl.INSTANCE;    
     
-    private Function<EObject, String> idResolver = SimpleAttributeResolver.newResolver(String.class, "id");
+//    private Function<EObject, String> idResolver = SimpleAttributeResolver.newResolver(String.class, "id");
     private Function<EObject, String> nameResolver = SimpleAttributeResolver.newResolver(String.class, "name");
 
     private Function<EObject, String> resolver = new Function<EObject, String>() {
         public String apply(EObject input) {
             if (input instanceof Scope || input instanceof Region) {
-                return idResolver.apply(input);
+                return nameResolver.apply(input);
             } else {
                 return nameResolver.apply(input);
             }
@@ -75,7 +74,6 @@ public class SCTXQualifiedNameProvider extends DefaultDeclarativeQualifiedNamePr
 
                 public QualifiedName get() {
                         EObject temp = obj;
-                        Resource res = obj.eResource();
                         QualifiedName qualifiedNameFromDispatcher = qualifiedName.invoke(temp);
                         if (qualifiedNameFromDispatcher!=null)
                                 return qualifiedNameFromDispatcher;

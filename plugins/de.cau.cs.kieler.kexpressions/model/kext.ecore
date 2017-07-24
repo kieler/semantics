@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kext" nsURI="http://kieler.cs.cau.de/kext/0.1.0" nsPrefix="kext">
   <eClassifiers xsi:type="ecore:EClass" name="Kext" eSuperTypes="#//KExtScope"/>
-  <eClassifiers xsi:type="ecore:EClass" name="KExtScope" eSuperTypes="#//DeclarationScope ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable kexpressions.ecore#//Identifiable kexpressions.ecore#//Referenceable">
+  <eClassifiers xsi:type="ecore:EClass" name="KExtScope" eSuperTypes="#//DeclarationScope ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable kexpressions.ecore#//Referenceable ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entities" upperBound="-1"
         eType="#//TestEntity" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"

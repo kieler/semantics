@@ -235,7 +235,7 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
      */
     protected def saveModel(SCCharts sccharts, IProject project) {
         // Create output URI.
-        var output = URI.createURI(project.locationURI.toString() + "/" + sccharts.rootStates.head.id);
+        var output = URI.createURI(project.locationURI.toString() + "/" + sccharts.rootStates.head.name);
         output = output.appendFileExtension(SCT_MODEL_EXTENSION);
 
         // Try to save the model.

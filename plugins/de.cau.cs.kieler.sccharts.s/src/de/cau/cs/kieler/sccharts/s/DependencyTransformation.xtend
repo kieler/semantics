@@ -91,7 +91,7 @@ class DependencyTransformation {
 
 
         for (dependency : dependencies) {
-           SCChartsSPlugin.log("XXXX dependency " + dependency.stateDepending.state.id + " -> " +  dependency.stateToDependOn.state.id);
+           SCChartsSPlugin.log("XXXX dependency " + dependency.stateDepending.state.name + " -> " +  dependency.stateToDependOn.state.name);
         }
 
 
@@ -100,7 +100,7 @@ class DependencyTransformation {
 
         SCChartsSPlugin.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
         for (dependencyNode : dependencyNodes) {
-            SCChartsSPlugin.log("XXXX dependencyNode for " + dependencyNode.state.id + " : p=" + dependencyNode.priority + ", o=" + dependencyNode.order + ", join=" + dependencyNode.isJoin);
+            SCChartsSPlugin.log("XXXX dependencyNode for " + dependencyNode.state.name + " : p=" + dependencyNode.priority + ", o=" + dependencyNode.order + ", join=" + dependencyNode.isJoin);
         }
 
         dependencyGraph
