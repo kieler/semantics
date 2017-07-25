@@ -19,6 +19,9 @@ import de.cau.cs.kieler.scg.SCGraph
 import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import com.google.inject.Inject
+import com.google.inject.Injector
+import com.google.inject.Guice
 
 /**
  * @author ssm
@@ -28,20 +31,32 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  */
 class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     
-    @Accessors var SCGCodeGeneratorModule struct
-    @Accessors var SCGCodeGeneratorModule tick
-    @Accessors var SCGCodeGeneratorModule reset 
-    @Accessors var SCGCodeGeneratorModule logic
+    val Injector injector = Guice.createInjector
     
-    new(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
+    @Accessors var CCodeGeneratorStructModule struct
+    @Accessors var CCodeGeneratorResetModule reset 
+    @Accessors var CCodeGeneratorTickModule tick
+    @Accessors var CCodeGeneratorLogicModule logic
+    
+    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
-        super(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
         
-        struct = new CCodeGeneratorStructModule(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
-        reset = new CCodeGeneratorResetModule(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)  
-        logic = new CCodeGeneratorLogicModule(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
-        tick = new CCodeGeneratorTickModule(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)  
+        struct = injector.getInstance(typeof(CCodeGeneratorStructModule)).
+            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorStructModule
+            
+        reset = injector.getInstance(CCodeGeneratorResetModule).
+            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorResetModule
+            
+            
+            
+        tick = injector.getInstance(CCodeGeneratorTickModule).
+            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorTickModule  
+        logic = injector.getInstance(CCodeGeneratorLogicModule).
+            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorLogicModule
+            
+        return this
     }
     
     override generateInit() {

@@ -28,23 +28,22 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  */
 abstract class SCGCodeGeneratorModule extends CodeGeneratorModule {
     
-    static val serializer = new SCG2CSerializeHRExtensions    
-    
     @Accessors var SCGraphs sCGraphs
     @Accessors var SCGraph scg
     @Accessors var Processor<SCGraphs, CodeContainer> processorInstance
     @Accessors var Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap
     @Accessors var SCGCodeGeneratorModule parent
     
-    new(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
+    def configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
-        super(baseName)
+        this.baseName = baseName
         this.sCGraphs = sCGraphs
         this.scg = scg
         this.processorInstance = processorInstance
         this.codeGeneratorModuleMap = codeGeneratorModuleMap
         this.parent = parent
+        return this
     }
     
     abstract def void generateInit()
@@ -53,7 +52,4 @@ abstract class SCGCodeGeneratorModule extends CodeGeneratorModule {
     
     abstract def void generateDone()
     
-    protected def serializeHR(Object object) {
-        serializer.serializeHR(object)
-    }  
 }

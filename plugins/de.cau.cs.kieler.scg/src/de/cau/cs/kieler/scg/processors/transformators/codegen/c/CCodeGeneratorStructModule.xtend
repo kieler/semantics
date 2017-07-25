@@ -17,10 +17,10 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.codegen.SCG2CSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import com.google.inject.Inject
+import de.cau.cs.kieler.scg.codegen.SCG2CSerializeHRExtensions
 
 /**
  * @author ssm
@@ -30,14 +30,15 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  */
 class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
+    @Inject extension SCG2CSerializeHRExtensions
+    
     public static val STRUCT_NAME = "TickData"
     public static val STRUCT_VARIABLE_NAME = "d"
-    val guardType = "char"
     
-    new(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
+    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
-        super(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
     }
     
     def getName() {

@@ -17,10 +17,9 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.codegen.SCG2CSerializeHRExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
+import com.google.inject.Inject
 
 /**
  * @author ssm
@@ -30,20 +29,15 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  */
 class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
     
-    @Inject extension SCG2CSerializeHRExtensions
-    
     static val TICK_NAME = "tick"
     
-    var CCodeGeneratorStructModule struct = null 
-    var CCodeGeneratorLogicModule logic = null
+    @Inject CCodeGeneratorStructModule struct
+    @Inject CCodeGeneratorLogicModule logic
     
-    new(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
+    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
-        super(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
-        
-        struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
-        logic = (parent as CCodeGeneratorModule).logic as CCodeGeneratorLogicModule
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
     }
     
     def getName() {
@@ -64,6 +58,8 @@ class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
     }
     
     override generateDone() {
+        indent 
+        code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
         code.append("}\n")
     }
     

@@ -50,8 +50,9 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         
         val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap
         for (scg : graphs.scgs) {
-            scgModuleMap.put(scg, new CCodeGeneratorModule("", graphs, scg, this, scgModuleMap, null))
-            scgModuleMap.get(scg).suffix = hostcodeSafeName(scg.name)
+            val generatorModule = injector.getInstance(CCodeGeneratorModule).configure("", graphs, scg, this, scgModuleMap, null)
+            scgModuleMap.put(scg, generatorModule)
+            generatorModule.suffix = hostcodeSafeName(scg.name)
         }
         
         for (scg : graphs.scgs) {

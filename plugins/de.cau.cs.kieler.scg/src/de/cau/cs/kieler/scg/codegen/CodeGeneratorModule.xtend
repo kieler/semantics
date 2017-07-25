@@ -36,11 +36,6 @@ abstract class CodeGeneratorModule {
         
     }
     
-    new(String baseName) {
-        this.baseName = baseName       
-    }
-    
-    
     protected def indent() {
         code.append(indentation)
     }

@@ -17,10 +17,10 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.codegen.SCG2CSerializeHRExtensions
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
+import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardTransformation
+import com.google.inject.Inject
 
 /**
  * @author ssm
@@ -30,18 +30,14 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  */
 class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
     
-    @Inject extension SCG2CSerializeHRExtensions
-    
     static val RESET_NAME = "reset"
     
-    var CCodeGeneratorStructModule struct = null 
+    @Inject CCodeGeneratorStructModule struct
     
-    new(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
+    override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
-        super(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
-        
-        struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
+        super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
     }
     
     def getName() {
@@ -53,10 +49,14 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
         code.append("(")
         code.append(struct.getName).append("* ").append(struct.getVariableName)
         code.append(") {\n")
+        
+        indent 
+        code.append(struct.getVariableName).append("->").append(AbstractGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
+        indent
+        code.append(struct.getVariableName).append("->").append(AbstractGuardTransformation.TERM_GUARD_NAME).append(" = 0;\n")
     }
     
     override generate() {
-
     }
     
     override generateDone() {
