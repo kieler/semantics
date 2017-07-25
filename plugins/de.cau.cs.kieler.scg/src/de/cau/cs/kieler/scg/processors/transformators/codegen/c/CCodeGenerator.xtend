@@ -20,9 +20,10 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Inject
 import com.google.inject.Injector
-import com.google.inject.Provider
 
 /**
+ * C Code Processor
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 
@@ -48,6 +49,7 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         val graphs = getModel
         val result = new CodeContainer
         
+        // Create a c code generator module for each SCG.
         val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap
         for (scg : graphs.scgs) {
             val generatorModule = injector.getInstance(CCodeGeneratorModule).configure("", graphs, scg, this, scgModuleMap, null)

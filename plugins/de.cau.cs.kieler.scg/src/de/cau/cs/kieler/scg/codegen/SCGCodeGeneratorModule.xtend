@@ -21,6 +21,8 @@ import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 /**
+ * The SCGCodeGeneratorModule allows specific configuration for SCG code generators
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 

@@ -19,11 +19,14 @@ import de.cau.cs.kieler.scg.SCGraph
 import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Guice
 
 /**
+ * Root C Code Generator Module
+ * 
+ * Initializes necessary modules and invokes them in correct order.
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 
@@ -43,18 +46,15 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     ) {
         super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
         
-        struct = injector.getInstance(typeof(CCodeGeneratorStructModule)).
-            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorStructModule
+        struct = injector.getInstance(CCodeGeneratorStructModule)
+        reset = injector.getInstance(CCodeGeneratorResetModule)
+        tick = injector.getInstance(CCodeGeneratorTickModule)
+        logic = injector.getInstance(CCodeGeneratorLogicModule)
             
-        reset = injector.getInstance(CCodeGeneratorResetModule).
-            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorResetModule
-            
-            
-            
-        tick = injector.getInstance(CCodeGeneratorTickModule).
-            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorTickModule  
-        logic = injector.getInstance(CCodeGeneratorLogicModule).
-            configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this) as CCodeGeneratorLogicModule
+        struct.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
+        reset.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
+        tick.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
+        logic.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, this)
             
         return this
     }

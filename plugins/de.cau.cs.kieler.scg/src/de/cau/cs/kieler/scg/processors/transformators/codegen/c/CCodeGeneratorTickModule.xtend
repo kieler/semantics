@@ -19,9 +19,12 @@ import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
-import com.google.inject.Inject
 
 /**
+ * C Code Generator Tick Module
+ * 
+ * Handles the creation of the tick function.
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 
@@ -31,13 +34,18 @@ class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
     
     static val TICK_NAME = "tick"
     
-    @Inject CCodeGeneratorStructModule struct
-    @Inject CCodeGeneratorLogicModule logic
+    var CCodeGeneratorStructModule struct
+    var CCodeGeneratorLogicModule logic
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
         super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        
+        struct = (parent as CCodeGeneratorModule).struct
+        logic = (parent as CCodeGeneratorModule).logic
+        
+        return this
     }
     
     def getName() {

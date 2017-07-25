@@ -25,9 +25,15 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import java.util.List
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.codegen.SCG2CSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.scg.ControlFlow
 
 /**
+ * C Code Generator Logic Module
+ * 
+ * Handles the creation of the tick logic function.
+ * 
  * @author ssm
  * @kieler.design 2017-07-24 proposed 
  * @kieler.rating 2017-07-24 proposed yellow 
@@ -35,27 +41,39 @@ import de.cau.cs.kieler.scg.codegen.SCG2CSerializeHRExtensions
  */
 class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
-    @Inject extension SCG2CSerializeHRExtensions
+    @Inject extension CCodeSerializeHRExtensions
     
     static val LOGIC_NAME = "logic"
     
-    @Inject CCodeGeneratorStructModule struct 
-    @Inject CCodeGeneratorResetModule reset
-    @Inject CCodeGeneratorTickModule tick 
-    
+    var CCodeGeneratorStructModule struct 
+    var CCodeGeneratorResetModule reset
+    var CCodeGeneratorTickModule tick 
+
+    /** Hash for already handles pre variables */    
+    protected val preVariables = <String> newHashSet
+    /** Conditional Stack that keeps track of the nesting depth of conditionals */
     protected val conditionalStack = <Conditional> newLinkedList
     
     override configure(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
         super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
+        
+        struct = (parent as CCodeGeneratorModule).struct
+        reset = (parent as CCodeGeneratorModule).reset
+        tick = (parent as CCodeGeneratorModule).tick
+        
+        return this
     }
+
     
     def getName() {
         LOGIC_NAME + baseName + suffix
     }
     
     override generateInit() {
+        preVariables.clear
+        
         code.append("void ").append(getName)
         code.append("(")
         code.append(struct.getName).append("* ").append(struct.getVariableName)
@@ -66,9 +84,15 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         var nodes = newLinkedList => [ it += scg.nodes.head ]
         conditionalStack.clear
         
+        // Iterate through all nodes. 
+        // However, if the last node was already the actual node, then skip it, because
+        // this are two joining control-flows from a conditional. 
+        // Consequence: Self-Loops in sequentialized assignments are forbidden.
+        var Node lastNode = null
         while(!nodes.empty) {
             val node = nodes.pop
-            node.generate(nodes)
+            if (node != lastNode) node.generate(nodes)
+            lastNode = node
         }
     }
     
@@ -77,13 +101,61 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
     
     protected def dispatch void generate(Assignment assignment, List<Node> nodes) {
+        if (!conditionalStack.empty) {
+            // Apparently, we are in a nested conditional. Handle it if necessary. 
+            assignment.handleConditionalNesting
+        }
+        
+        // Add the assignment.
         indent(conditionalStack.size + 1)
         valuedObjectPrefix = struct.getVariableName + "->"
+        prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
         code.append(assignment.serializeHR).append(";\n")
+        
+        // Handle pre variable if necessary.
+        if (assignment.expression != null && assignment.expression instanceof OperatorExpression &&
+            (assignment.expression as OperatorExpression).operator == OperatorType.PRE) {
+            (assignment.expression as OperatorExpression).addPreVariable                    
+        }
+        
+        // If a new statement follows, add it to the node list.
+        if (assignment.next != null) nodes += assignment.next.target
     }
     
     protected def dispatch void generate(Conditional conditional, List<Node> nodes) {
+        valuedObjectPrefix = struct.getVariableName + "->"
+        prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+
+        indent(conditionalStack.size + 1)
+        code.append("if (")
+        code.append(conditional.condition.serializeHR)
+        code.append(") {\n")
         
+        conditionalStack.push(conditional)
+        
+        if (conditional.^then != null) nodes += conditional.^then.target
+        if (conditional.^else != null) nodes += conditional.^else.target        
+    }
+    
+    protected def void handleConditionalNesting(Assignment assignment) {
+        // There are two cases. The else branch is distinct from the actual control flow or 
+        // the actual branch joins with the else branch of the conditional directly. 
+        // (In the latter case we can omit the "else" in C.)
+        val conditional = conditionalStack.peek
+        val incomingControlFlows = assignment.incoming.filter(ControlFlow).toList
+        if (conditional.^else != null && conditional.^else.target == assignment) {
+            if (incomingControlFlows.size == 1) {
+                // Apparently, it is the first assignment of a dedicated else branch. Handle it. 
+                indent(conditionalStack.size)
+                code.append("} else {\n")
+            }        
+        }
+        // If multiple control-flows are joining here, reduce the nesting depth accordingly.
+        if (incomingControlFlows.size > 1) for (i : 2..incomingControlFlows.size) {
+            indent(conditionalStack.size)
+            code.append("}\n")
+            conditionalStack.pop
+        }            
     }
     
     protected def dispatch void generate(Entry entry, List<Node> nodes) {
@@ -91,6 +163,30 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     }
     
     protected def dispatch void generate(Exit exit, List<Node> nodes) {
+    }
+    
+    protected def void addPreVariable(OperatorExpression operatorExpression) {
+        valuedObjectPrefix = ""
+        prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+        val name = operatorExpression.serializeHR 
+        if (preVariables.contains(name)) return;
+    
+        // Add the pre variable to the variables hashes to mark it handled.    
+        preVariables += name.toString
+        
+        // Add the variable to the data struct.
+        struct.code.append(indentation +  "char ")
+        struct.code.append(name)
+        struct.code.append(";\n")
+        
+        // Add the initialization in the reset function.
+        reset.code.append(indentation).append(struct.getVariableName).append("->").append(name).append(" = 0;\n")
+        
+        // Add the "register save" in the tick function.
+        prePrefix = ""
+        tick.code.append(indentation)
+        tick.code.append(struct.getVariableName).append("->").append(name).append(" = ")
+        tick.code.append(operatorExpression.serializeHR).append(";\n")
     }
     
 }

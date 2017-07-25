@@ -12,17 +12,21 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraph
-import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardTransformation
 import com.google.inject.Inject
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import java.util.Map
 
 /**
+ * C Code Generator Reset Module
+ * 
+ * Handles the creation of the reset function.
+ * 
  * @author ssm
  * @kieler.design 2017-07-24 proposed 
  * @kieler.rating 2017-07-24 proposed yellow 
@@ -38,7 +42,11 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
         Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap, SCGCodeGeneratorModule parent
     ) {
         super.configure(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap, parent)
-    }
+        
+        struct = (parent as CCodeGeneratorModule).struct
+        
+        return this
+    }    
     
     def getName() {
         RESET_NAME + baseName + suffix

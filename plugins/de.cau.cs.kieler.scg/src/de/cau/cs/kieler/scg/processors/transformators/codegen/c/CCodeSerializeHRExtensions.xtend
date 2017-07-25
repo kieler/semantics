@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.codegen
+package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -20,12 +20,21 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.ValueType
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import java.util.List
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * @author ssm
  *
  */
-class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
+class CCodeSerializeHRExtensions extends SCGSerializeHRExtensions {
+    
+    @Inject extension KEffectsExtensions    
     
     @Accessors var String valuedObjectPrefix
     @Accessors var String prePrefix 
@@ -62,6 +71,19 @@ class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
         vo
     }    
     
+    protected override CharSequence serializeHROperatorExpressionPRE(OperatorExpression expression) {
+        val prefix = valuedObjectPrefix
+        valuedObjectPrefix = valuedObjectPrefix + prePrefix
+        val s = expression.subExpressions.head.serializeHR
+        valuedObjectPrefix = prefix
+        return s.toString.replaceFirst(prePrefix + "_", prePrefix)
+    }  
+    
+    override dispatch CharSequence serialize(BoolValue expression) {
+        if(expression.value == true) return "1"
+        return "0"
+    }
+    
     public override CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = ""
         
@@ -82,17 +104,40 @@ class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
         return res
     }   
     
-    protected override CharSequence serializeHROperatorExpressionPRE(OperatorExpression expression) {
-        val prefix = valuedObjectPrefix
-        valuedObjectPrefix = valuedObjectPrefix + prePrefix
-        val s = expression.subExpressions.head.serializeHR
-        valuedObjectPrefix = prefix
-        return s
-    }  
+    dispatch override CharSequence serializeHR(de.cau.cs.kieler.scg.Assignment assignment) {
+        if (assignment.valuedObject != null) {
+            var CharSequence assignmentText = ""
+            if (assignment.expression != null && !assignment.operator.isPostfixOperator) {
+                assignmentText = serializeHR(assignment.expression)
+            }
+            var valuedObjectName = valuedObjectPrefix + assignment.valuedObject.name
+            if (!assignment.indices.nullOrEmpty) {
+                valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
+            }
+            if (assignment.expression instanceof TextExpression) {
+                assignmentText = (assignment.expression as TextExpression).text
+            }
+            var assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
+            assignmentStr
+        } else if (assignment.expression instanceof TextExpression) {
+            (assignment.expression as TextExpression).text
+        } else if (assignment.expression instanceof FunctionCall) {
+            serialize(assignment.expression) 
+        }
+        else if (assignment.expression instanceof ReferenceCall) {
+            (assignment.expression as ReferenceCall).serializeHR
+        }
+    }    
     
-    override dispatch CharSequence serialize(BoolValue expression) {
-        if(expression.value == true) return "1"
-        return "0"
-    }
+    protected override CharSequence serializeHRIndices(List<Expression> indices) {
+        var String indicesStr = ""
+        for(index : indices) {
+            indicesStr = indicesStr + "[" + 
+                serializeHR(index)
+                + "]"          
+        }
+        indicesStr
+    }     
+    
     
 }
