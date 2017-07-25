@@ -104,7 +104,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     // -- Constants
     // -------------------------------------------------------------------------
         
-    public static val String GUARDPREFIX = "g"
+    public static val String GUARDPREFIX = "_g"
     
 	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
 

@@ -51,8 +51,6 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
-import com.google.inject.Guice
-import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnalyzer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -214,7 +212,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             val conditional = p.conditional
             if (conditional != null && !conditionalGuards.keySet.contains(conditional)) {
                 val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
-                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name
+                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name.replaceFirst("^_", "")
 
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = newVO
@@ -461,7 +459,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // --- CREATE GUARDS: GO BLOCK 
     protected def void createGoBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         guard.setDefaultTrace
-        guard.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
+        guard.expression = scg.findValuedObjectByName(GO_GUARD_NAME).reference
     }
 
     // --- CREATE GUARDS: DEPTH BLOCK 

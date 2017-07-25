@@ -53,7 +53,7 @@ abstract class AbstractGuardExpressions extends AbstractProductionTransformation
     // -------------------------------------------------------------------------
     
     /** Name of the go signal. */
-    public static val String GOGUARDNAME = "_GO"
+    public static val String GO_GUARD_NAME = "_GO"
     
     public static val CONDITIONAL_EXPRESSION_PREFIX = "_c"
     
@@ -77,7 +77,7 @@ abstract class AbstractGuardExpressions extends AbstractProductionTransformation
          
         // Create a new signal using the kexpression factory for the GO signal.
         // Don't forget to add it to the SCG.
-        createValuedObject(GOGUARDNAME) => [
+        createValuedObject(GO_GUARD_NAME) => [
             scg.declarations += createBoolDeclaration.attach(it)    
         ]
     }
