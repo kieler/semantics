@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isEntryBlock <em>Entry Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDeadBlock <em>Dead Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isTermBlock <em>Term Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
  *
@@ -203,6 +204,32 @@ public interface BasicBlock extends EObject {
      * @generated
      */
     void setDeadBlock(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Term Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Term Block</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Term Block</em>' attribute.
+     * @see #setTermBlock(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_TermBlock()
+     * @model
+     * @generated
+     */
+    boolean isTermBlock();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#isTermBlock <em>Term Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Term Block</em>' attribute.
+     * @see #isTermBlock()
+     * @generated
+     */
+    void setTermBlock(boolean value);
 
     /**
      * Returns the value of the '<em><b>Pre Guard</b></em>' reference.

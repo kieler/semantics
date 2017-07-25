@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isEntryBlock <em>Entry Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isDeadBlock <em>Dead Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isTermBlock <em>Term Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
  *
@@ -169,6 +170,26 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * @ordered
      */
     protected boolean deadBlock = DEAD_BLOCK_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isTermBlock() <em>Term Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isTermBlock()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean TERM_BLOCK_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isTermBlock() <em>Term Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isTermBlock()
+     * @generated
+     * @ordered
+     */
+    protected boolean termBlock = TERM_BLOCK_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getPreGuard() <em>Pre Guard</em>}' reference.
@@ -333,6 +354,27 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isTermBlock() {
+        return termBlock;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTermBlock(boolean newTermBlock) {
+        boolean oldTermBlock = termBlock;
+        termBlock = newTermBlock;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__TERM_BLOCK, oldTermBlock, termBlock));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public ValuedObject getPreGuard() {
         if (preGuard != null && preGuard.eIsProxy()) {
             InternalEObject oldPreGuard = (InternalEObject)preGuard;
@@ -404,6 +446,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return isEntryBlock();
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 return isDeadBlock();
+            case ScgPackage.BASIC_BLOCK__TERM_BLOCK:
+                return isTermBlock();
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 if (resolve) return getPreGuard();
                 return basicGetPreGuard();
@@ -443,6 +487,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 setDeadBlock((Boolean)newValue);
                 return;
+            case ScgPackage.BASIC_BLOCK__TERM_BLOCK:
+                setTermBlock((Boolean)newValue);
+                return;
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 setPreGuard((ValuedObject)newValue);
                 return;
@@ -479,6 +526,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 setDeadBlock(DEAD_BLOCK_EDEFAULT);
                 return;
+            case ScgPackage.BASIC_BLOCK__TERM_BLOCK:
+                setTermBlock(TERM_BLOCK_EDEFAULT);
+                return;
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 setPreGuard((ValuedObject)null);
                 return;
@@ -508,6 +558,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return entryBlock != ENTRY_BLOCK_EDEFAULT;
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 return deadBlock != DEAD_BLOCK_EDEFAULT;
+            case ScgPackage.BASIC_BLOCK__TERM_BLOCK:
+                return termBlock != TERM_BLOCK_EDEFAULT;
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 return preGuard != null;
         }
@@ -534,6 +586,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
         result.append(entryBlock);
         result.append(", deadBlock: ");
         result.append(deadBlock);
+        result.append(", termBlock: ");
+        result.append(termBlock);
         result.append(')');
         return result.toString();
     }

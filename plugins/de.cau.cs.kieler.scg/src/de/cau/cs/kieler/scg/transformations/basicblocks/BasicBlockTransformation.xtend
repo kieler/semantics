@@ -48,6 +48,7 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.Exit
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -444,6 +445,10 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         }
         if (nodeList.head instanceof Entry) { 
             basicBlock.entryBlock = true
+        }
+        if (nodeList.last instanceof Exit) {
+            val finalNode = nodeList.last as Exit
+            if (finalNode.next == null) basicBlock.termBlock = true
         }
  
  		// Add the guard object.

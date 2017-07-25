@@ -1638,6 +1638,10 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
                         ]
                         sbContainer.KRendering.background = SCHEDULING_DEADCODE.copy
                         sbContainer.KRendering.background.alpha = 128
+                    } else if (basicBlock.termBlock) {
+                        sbContainer.getData(KRoundedRectangle) => [
+                            it.lineWidth = 2.0f
+                        ]
                     }
                 }
         }
