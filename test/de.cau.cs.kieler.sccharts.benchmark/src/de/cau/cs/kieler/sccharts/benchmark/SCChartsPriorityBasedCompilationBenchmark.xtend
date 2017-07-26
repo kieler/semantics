@@ -12,18 +12,22 @@
  */
 package de.cau.cs.kieler.sccharts.benchmark
 
-import com.mongodb.BasicDBObject
+import com.google.inject.Inject
 import de.cau.cs.kieler.benchmark.common.AbstractXTextModelBenchmark
+import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.test.common.repository.TestModelData
-import de.cau.cs.kieler.scg.SCGraph
-import org.bson.Document
-import de.cau.cs.kieler.kico.CompilationResult
-import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import java.awt.font.NumericShaper
+import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.test.common.repository.TestModelData
+import java.util.Set
+import org.bson.Document
 
 /**
  * @author lpe
@@ -33,6 +37,8 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
     
     @Inject
     extension SCChartsExtension
+    @Inject
+    extension SCGThreadExtensions
     
     // List of all transformations
     // in an order that respects dependencies.
@@ -89,7 +95,7 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail") 
-                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc")
+                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc") && modelData.modelProperties.contains("test")
     }
     
     /**
@@ -146,8 +152,8 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
             } else {
                 result = null;
                 
-                throw new Exception("Could not compile SCCharts model into Core SCCharts form. Compilation error occurred!
-                                        At " + modelData.modelPath, result.postponedErrors.head)                
+//                throw new Exception("Could not compile SCCharts model into Core SCCharts form. Compilation error occurred!
+//                                        At " + modelData.modelPath, result.postponedErrors.head)                
             }
             
             averageDownstreamDuration += duration/NUMBER_OF_RUNS
@@ -173,15 +179,27 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
             for(declarations : scg.declarations) {
                 numberOfVariables += declarations.valuedObjects.size
             }
+            var numberOfDependencies = 0
+            for(n : scg.nodes) {
+                numberOfDependencies += n.dependencies.filter[it instanceof DataDependency && (it as DataDependency).isConcurrent
+                                && !(it as DataDependency).isConfluent].size
+            }
+            val maxWidth = calculateMaxWidth(scg.nodes.head as Entry)
+            val scgNodes = scg.nodes.size
             
-            data.put("scgNodes", scg.nodes.size)
+            data.put("scgNodes", scgNodes)
             data.put("normSccNodes", normalizedSCChart.allContainedStatesList.size)
             data.put("duration", overallDuration)
             data.put("unit", "ns")
             data.put("averageDownstreamDuration", averageDownstreamDuration)   
             data.put("nBestDownstreamDuration", nBestDownstreamDuration)     
             data.put("size",(result.object as String).length)    
-            data.put("numberOfVariables", numberOfVariables)            
+            data.put("numberOfVariables", numberOfVariables)
+            data.put("threads", scg.nodes.filter[it instanceof Entry].size)
+            data.put("maxParallelThreads", maxWidth)
+            data.put("dependencies", numberOfDependencies)
+            // Preliminary "complexity" of a model
+            data.put("complexity", numberOfDependencies * numberOfVariables + maxWidth * scgNodes)
         } else {
             data.put("schedulable", "false")
         }
@@ -189,4 +207,21 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
         
         return data
     }
+    
+    
+    private def int calculateMaxWidth(Entry thread) {
+        val forks = thread.shallowThreadNodes.filter[it instanceof Fork]
+        var width = 1
+        
+        for(fork : forks) {
+            var widthOfFork = 0
+            for(forkCF : (fork as Fork).next) {
+                widthOfFork += calculateMaxWidth(forkCF.target as Entry)
+            }
+            width = Math.max(width, widthOfFork)
+        }
+        
+        return width
+    }
+    
 }
