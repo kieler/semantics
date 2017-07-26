@@ -7,6 +7,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.TextExpression;
@@ -138,6 +139,18 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KEffectsPackage.PRINT_CALL_EFFECT: {
+                PrintCallEffect printCallEffect = (PrintCallEffect)theEObject;
+                T result = casePrintCallEffect(printCallEffect);
+                if (result == null) result = caseEffect(printCallEffect);
+                if (result == null) result = casePrintCall(printCallEffect);
+                if (result == null) result = caseAnnotatable(printCallEffect);
+                if (result == null) result = caseCall(printCallEffect);
+                if (result == null) result = caseExpression(printCallEffect);
+                if (result == null) result = caseSchedulable(printCallEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -229,6 +242,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseFunctionCallEffect(FunctionCallEffect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Print Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Print Call Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePrintCallEffect(PrintCallEffect object) {
         return null;
     }
 
@@ -349,6 +377,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseFunctionCall(FunctionCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Print Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Print Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePrintCall(PrintCall object) {
         return null;
     }
 

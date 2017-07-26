@@ -43,7 +43,8 @@ Effect returns keffects::Effect:
 	Emission |
 	HostcodeEffect | 
 	ReferenceCallEffect |
-	FunctionCallEffect;
+	FunctionCallEffect |
+	PrintCallEffect;
 
 // Emission Rule
 // An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -100,8 +101,7 @@ HostcodeEffect returns keffects::HostcodeEffect:
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
      valuedObject=[kexpressions::ValuedObject|PrimeID]
-      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
-    ;
+      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
     
 // Function Call Effect Rule
 // A function call effect works similar to the function call expression. Additionally, it may be
@@ -118,8 +118,11 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    '>')
-    ;    
+    '>');    
+    
+PrintCallEffect returns keffects::PrintCallEffect:
+    (annotations+=Annotation)*
+    'print' parameters += Parameter (',' parameters += Parameter)*;
 
 // ---------------- //
 //  KEffects Enums  // 

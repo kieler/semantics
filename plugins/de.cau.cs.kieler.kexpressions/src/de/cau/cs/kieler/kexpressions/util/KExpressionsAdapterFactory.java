@@ -154,6 +154,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createFunctionCallAdapter();
             }
             @Override
+            public Adapter casePrintCall(PrintCall object) {
+                return createPrintCallAdapter();
+            }
+            @Override
             public Adapter caseReferenceable(Referenceable object) {
                 return createReferenceableAdapter();
             }
@@ -410,6 +414,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createFunctionCallAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.PrintCall <em>Print Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.PrintCall
+     * @generated
+     */
+    public Adapter createPrintCallAdapter() {
         return null;
     }
 
