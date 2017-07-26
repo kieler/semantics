@@ -65,7 +65,7 @@ class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
                                     for (recvComponent : recvComponents) {
                                         val connection = component.connectTo(recvComponent)
                                         connection.label = msgId
-                                        connection.tooltip = msgId
+                                        connection.tooltip = "<<< " + msgId + " >>>\n\nfrom " + component.name + " to " + recvComponent.name
                                         returnList.add(connection)
                                     }
                                 }
