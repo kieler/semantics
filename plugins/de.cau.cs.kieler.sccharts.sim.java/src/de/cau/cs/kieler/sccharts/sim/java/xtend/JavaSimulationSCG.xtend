@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Transformation from SCG to wrapper code for the simulation.
@@ -96,7 +97,7 @@ void readInputs() {
 
     object = cJSON_Parse(buffer);
     
-    «FOR valuedObject : scg.getValuedObjects().filter[ isInput ]» 
+    «FOR valuedObject : scg.declarations.filter(VariableDeclaration).filter[ input ].map[valuedObjects].flatten» 
     child = cJSON_GetObjectItem(object, "«valuedObject.name»");
     if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -132,7 +133,7 @@ void readInputs() {
    	'''
 void writeOutputs() {
     cJSON* value;;
-	«FOR output : scg.getValuedObjects().filter[ !isInput ]»
+	«FOR output : scg.declarations.filter(VariableDeclaration).filter[ input ].map[valuedObjects].flatten»
 	«System.out.println("=====> " + output.name)»
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
