@@ -1,33 +1,3 @@
-<<<<<<< HEAD
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: KIELER C to SCCharts Transformation
-Bundle-SymbolicName: de.cau.cs.kieler.c.sccharts;singleton:=true
-Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: Kiel University
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.xtend.lib,
- de.cau.cs.kieler.sccharts.text,
- com.google.inject,
- org.eclipse.emf.workspace,
- org.eclipse.cdt.core;bundle-version="5.9.1",
- org.eclipse.cdt.ui;bundle-version="5.9.0",
- de.cau.cs.kieler.klighd.ui.view,
- de.cau.cs.kieler.klighd,
- de.cau.cs.kieler.sccharts.klighd,
- org.eclipse.ui.editors;bundle-version="3.8.200",
- org.eclipse.core.runtime,
- org.eclipse.ui,
- org.eclipse.jface.text,
- de.cau.cs.kieler.kico;bundle-version="0.2.0",
- de.cau.cs.kieler.kico.klighd,
- de.cau.cs.kieler.kico.ui;bundle-version="0.2.0"
-Export-Package: de.cau.cs.kieler.c.sccharts,
- de.cau.cs.kieler.c.sccharts.controller,
- de.cau.cs.kieler.c.sccharts.synthesis
-Bundle-activationPolicy: lazy
-
-=======
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER C to SCCharts Transformation
@@ -55,5 +25,3 @@ Require-Bundle: org.eclipse.xtend.lib,
  de.cau.cs.kieler.kico.ui,
  org.eclipse.ui.editors;bundle-version="3.8.200"
 Export-Package: de.cau.cs.kieler.c.sccharts
-
->>>>>>> master

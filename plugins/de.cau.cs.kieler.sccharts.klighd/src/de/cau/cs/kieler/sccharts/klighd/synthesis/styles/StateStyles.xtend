@@ -264,15 +264,9 @@ class StateStyles {
                 while (entries.hasNext) {
                 	val entry = entries.next
                 	if (builder.length > 0 && keyword != entry.value) {
-// I'm not sure about this. I take the master version. Please check.
-//<<<<<<< HEAD
-//                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
-//		                ktext = it.addText(builder.append(possibleSpace).toString)
-//=======
 		                ktext = it.addText(builder.append(" ").toString) => [
                             horizontalAlignment = H_LEFT
                         ]
-//>>>>>>> master
 		                if (keyword) {
 		                	ktext.highlightKeyword
 		                }                		
