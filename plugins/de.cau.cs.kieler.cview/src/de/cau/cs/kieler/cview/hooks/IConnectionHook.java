@@ -25,6 +25,14 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection;
 public interface IConnectionHook {
 
     /**
+     * Initialize this connection hook. Called once for all components before createConnections have
+     * been called.
+     * 
+     * @param model
+     */
+    void initialize(CViewModel model);
+
+    /**
      * Create more connections based on the traversed component and the overall model. Return null
      * if no connections shall be created.
      * 
@@ -33,5 +41,13 @@ public interface IConnectionHook {
      * @return
      */
     List<Connection> createConnections(Component component, CViewModel model);
-    
+
+    /**
+     * Wrapup this connection hook. Called once for all components after createConnections have been
+     * called.
+     * 
+     * @param model
+     */
+    void wrapup(CViewModel model);
+
 }

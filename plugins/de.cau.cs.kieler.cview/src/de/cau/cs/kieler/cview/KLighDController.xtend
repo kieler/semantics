@@ -35,7 +35,6 @@ class KLighDController extends AbstractKLighDController {
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
 
-
     def int countModel(CViewModel model, Object element) {
         var i = 1;
         var filePath = getFilePath(element);
@@ -64,24 +63,21 @@ class KLighDController extends AbstractKLighDController {
         return i;
     }
 
-
-
     def Component addToModel(CViewModel model, Object element, IProgressMonitor monitor) {
         return model.addToModel(element, monitor, null)
     }
 
-    def Component addToModel(CViewModel model, Object element, IProgressMonitor monitor, Component parent ) {
+    def Component addToModel(CViewModel model, Object element, IProgressMonitor monitor, Component parent) {
         var filePath = getFilePath(element);
         var folderPath = getDirPath(element);
         val projectPath = getProjectPath(element);
-        
+
         if (monitor.canceled) {
             return null;
         }
 
         monitor.worked(1)
-        //monitor.beginTask("Processing file '"+element.toString+"'", 0);
-        
+        // monitor.beginTask("Processing file '"+element.toString+"'", 0);
         if (element instanceof File) {
             if (!element.isDirectory) {
                 filePath = element.absolutePath
@@ -127,7 +123,7 @@ class KLighDController extends AbstractKLighDController {
             file.location = filePath;
             file.name = element.toString.componentName
             model.components.add(file);
-            
+
             // Add all functions to the file
             fillFileWithFunctions(file, monitor)
 
@@ -162,8 +158,7 @@ class KLighDController extends AbstractKLighDController {
             return componentPath;
         }
     }
-    
-    
+
     def extractTooltip(String data) {
         // TODO: Make this available as an extension point for other plugins to contribute
         val iStart1 = data.indexOf("/*");
@@ -174,14 +169,14 @@ class KLighDController extends AbstractKLighDController {
 
         var altTooltip1 = "";
         if (iStart1 > -1 && iEnd1 > -1 && iEnd1 > iStart1) {
-            altTooltip1 = data.substring(iStart1, iEnd1+2);
+            altTooltip1 = data.substring(iStart1, iEnd1 + 2);
         }
-        
+
         var altTooltip2 = "";
         if (iStart2 > -1 && iEnd2 > -1 && iEnd2 > iStart2) {
-            altTooltip2 = data.substring(iStart2, iEnd2+2);
+            altTooltip2 = data.substring(iStart2, iEnd2 + 2);
         }
-        
+
         if (altTooltip1.length > altTooltip2.length) {
             return altTooltip1
         }
@@ -205,14 +200,16 @@ class KLighDController extends AbstractKLighDController {
                         if (binding instanceof IFunction) {
                             if (name.definition) {
                                 val functionComponent = cViewModelExtensions.createFunc
-                                model.addToModel(functionComponent, monitor)
+                                // model.addToModel(functionComponent, monitor, fileComponent)
+                                model.components.add(functionComponent)
                                 functionComponent.name = name.toString()
+                                functionComponent.rawdata = "";
                                 functionComponent.location = fileComponent.location
                                 fileComponent.children.add(functionComponent)
                                 functionComponent.parent = fileComponent
-                                System.out.println("- D " + name.toString() + " ");
+                            // System.out.println("- D " + name.toString() + " ");
                             } else if (name.reference) {
-                                System.out.println("- R " + name.toString() + " ");
+                                // System.out.println("- R " + name.toString() + " ");
                             }
                         }
                     }
@@ -234,24 +231,33 @@ class KLighDController extends AbstractKLighDController {
         return i;
     }
 
-
     override calculateModel(Object[] allselections, IProgressMonitor monitor) {
         model = CViewModelFactory.eINSTANCE.createCViewModel();
         for (Object element : allselections) {
             val component = model.addToModel(element, monitor)
         }
-        
-        // Now call connections extensions
-        for (Component component: model.components) {
-           val connectionHooks = CViewPlugin.getRegisteredConnectionHooks(false)
-           for (connectionHook : connectionHooks) {
-              val connectionsToAdd = connectionHook.createConnections(component, model)
-              if (!connectionsToAdd.nullOrEmpty) {
-                  model.connections.addAll(connectionsToAdd)
-              }
-           }
+
+        val connectionHooks = CViewPlugin.getRegisteredConnectionHooks(false)
+        // Initialize
+        for (connectionHook : connectionHooks) {
+            connectionHook.initialize(model);
         }
-        
+        // Now call connections extensions
+        // println("MODEL: components=" + model.components.size);
+        for (Component component : model.components) {
+            // println("COMPONENT:" + component.type.getName().toString());
+            for (connectionHook : connectionHooks) {
+                val connectionsToAdd = connectionHook.createConnections(component, model)
+                if (!connectionsToAdd.nullOrEmpty) {
+                    model.connections.addAll(connectionsToAdd)
+                }
+            }
+            // Wrapup
+            for (connectionHook : connectionHooks) {
+                connectionHook.wrapup(model);
+            }
+        }
+
         return model;
     }
 
