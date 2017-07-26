@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.esterel.feature" label="KIELER Esterel" version="0.12.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.esterel.ui">
+<feature id="de.cau.cs.kieler.esterel.feature" label="KIELER Esterel" version="0.12.1.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.esterel.ui">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER Esterel feature contains an Xtext based full featured textual Esterel editor including syntaxt highlighting and code completion and a bundled version of the Columbia Esterel Compiler (CEC) for simulation. During simulation there is also debug mode available that is able to highlight active Esterel statements.

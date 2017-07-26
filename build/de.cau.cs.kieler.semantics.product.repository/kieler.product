@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
-<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.12.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.12.1.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.cau.cs.kieler.core.product/images/about.png"/>

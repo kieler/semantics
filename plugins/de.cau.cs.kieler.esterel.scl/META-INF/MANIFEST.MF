@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Esterel to SCL ransformation
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.scl;singleton:=true
-Bundle-Version: 0.12.0.qualifier
+Bundle-Version: 0.12.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.scl.EsterelToSclPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

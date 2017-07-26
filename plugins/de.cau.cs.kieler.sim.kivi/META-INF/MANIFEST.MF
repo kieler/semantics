@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation Visualization Data Component
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kivi
-Bundle-Version: 0.12.0.qualifier
+Bundle-Version: 0.12.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kivi.SimKiViPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.elk.graph,

@@ -8,6 +8,6 @@
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.core.perspectives</artifactId>
-  <version>0.12.0-SNAPSHOT</version>
+  <version>0.12.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

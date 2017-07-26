@@ -14,7 +14,7 @@
          </property>
          <property name="startupProgressRect" value="19,301,207,15">
          </property>
-         <property name="version" value="0.12.0">
+         <property name="version" value="0.12.1">
          </property>
          <property name="windowImages" value="icons/foerde-logo-16.gif,icons/foerde-logo-32.gif,icons/foerde-logo-48.gif,icons/foerde-logo-64.gif,icons/foerde-logo-128.gif">
          </property>
