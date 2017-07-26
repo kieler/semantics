@@ -12,11 +12,12 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import com.google.common.io.Files
 import com.google.common.util.concurrent.SimpleTimeLimiter
+import com.google.common.util.concurrent.UncheckedTimeoutException
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
-import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.Simulator
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -25,8 +26,8 @@ import java.io.PrintStream
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Path
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.util.concurrent.UncheckedTimeoutException
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -35,12 +36,13 @@ import com.google.common.util.concurrent.UncheckedTimeoutException
  * @author aas
  *
  */
-class ExecutableSimulator extends DefaultDataHandler implements Simulator {
+class ExecutableSimulator extends DefaultSimulator {
+    
+    public val executablePath = new ConfigurableAttribute("executable", null, true)
     
     @Accessors
-    private var IFile executable
-    
-    private var String modelName
+    private var IFile executableFile
+    protected var String modelName
     
     private var Process process
     private var BufferedReader processReader
@@ -54,10 +56,11 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         val currentDir = "." + File.separator
         // Execute jar file or binary
         var ProcessBuilder pBuilder
-        if(executable.name.endsWith(".jar"))
+        if(executable.name.endsWith(".jar")) {
             pBuilder = new ProcessBuilder(#["java", "-jar", currentDir+executable.name])
-        else
-            pBuilder = new ProcessBuilder(#[executable.location.toOSString])
+        } else {
+            pBuilder = new ProcessBuilder(#[executable.location.toOSString])    
+        }
         pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
         process = pBuilder.start()
         
@@ -68,8 +71,8 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         
         // Read json data
         var String line = waitForJSONOutput(processReader)
-
-        modelName = getUniqueModelName(executable.name, pool, 0)
+    
+        modelName = getUniqueModelName(pool, Files.getNameWithoutExtension(executableFile.name))
         val model = Model.createFromJson(modelName, line)
         pool.addModel(model)
     }
@@ -91,7 +94,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         // Let the process perform tick and wait for output
         val line = waitForJSONOutput(processReader)
         val newModel = Model.createFromJson(modelName, line)
-        pool.models.remove(model)
+        pool.removeModel(model)
         pool.addModel(newModel)        
     }
     
@@ -105,11 +108,8 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         }
     }
     
-    /**
-     * Returns the name of the executable.
-     */
-    public def String getModelName() {
-        return executable.name
+    override getName() {
+        return "sim"
     }
     
     /**
@@ -142,23 +142,25 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         return line
     }
     
-    private def String getUniqueModelName(String name, DataPool pool, int suffix) {
-        val uniqueName = if(suffix > 0)
-                             name+"_"+suffix
-                         else
-                             name
-        val modelWithThisName = pool.models.findFirst[it.name.equals(uniqueName)]
-        if(modelWithThisName == null) {
-            return uniqueName
-        } else {
-            return getUniqueModelName(name, pool, suffix+1)
+    private def IFile getExecutable() {
+        if(executableFile == null) {
+            if(executablePath.stringValue.isNullOrEmpty) {
+                throw new Exception("Executable of simulator cannot be null")
+            }
+            val path = new Path(executablePath.stringValue)
+            executableFile = getFile(path)
         }
+        return executableFile
     }
     
     /**
      * {@inheritDoc}
      */
     override String toString() {
-        return "Simulator for "+modelName
+        if(modelName.isNullOrEmpty) {
+            return "Simulator '"+executablePath.stringValue+"'"
+        } else {
+            return "Simulator '"+modelName+"'"
+        }
     }
 }

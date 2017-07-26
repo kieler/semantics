@@ -11,10 +11,31 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- com.google.gson;bundle-version="2.7.0"
+ org.eclipse.xtext.generator;bundle-version="2.10.0",
+ org.eclipse.xtext;bundle-version="2.10.0",
+ com.google.gson;bundle-version="2.7.0",
+ org.eclipse.debug.core;bundle-version="3.10.100",
+ de.cau.cs.kieler.prom;bundle-version="0.12.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ de.cau.cs.kieler.kexpressions,
+ de.cau.cs.kieler.sim.eso
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.simulation,
  de.cau.cs.kieler.simulation.core,
- de.cau.cs.kieler.simulation.handlers
-
+ de.cau.cs.kieler.simulation.formatting,
+ de.cau.cs.kieler.simulation.handlers,
+ de.cau.cs.kieler.simulation.kisim,
+ de.cau.cs.kieler.simulation.kisim.impl,
+ de.cau.cs.kieler.simulation.kisim.util,
+ de.cau.cs.kieler.simulation.launch,
+ de.cau.cs.kieler.simulation.parser.antlr,
+ de.cau.cs.kieler.simulation.parser.antlr.internal,
+ de.cau.cs.kieler.simulation.scoping,
+ de.cau.cs.kieler.simulation.serializer,
+ de.cau.cs.kieler.simulation.services,
+ de.cau.cs.kieler.simulation.validation
+Import-Package: org.apache.log4j

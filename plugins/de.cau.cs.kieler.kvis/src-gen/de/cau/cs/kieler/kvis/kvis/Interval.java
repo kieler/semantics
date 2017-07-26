@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
-import de.cau.cs.kieler.kexpressions.Value;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -34,12 +32,12 @@ public interface Interval extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>From</em>' containment reference.
-   * @see #setFrom(Value)
+   * @see #setFrom(EObject)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getInterval_From()
    * @model containment="true"
    * @generated
    */
-  Value getFrom();
+  EObject getFrom();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Interval#getFrom <em>From</em>}' containment reference.
@@ -49,7 +47,7 @@ public interface Interval extends EObject
    * @see #getFrom()
    * @generated
    */
-  void setFrom(Value value);
+  void setFrom(EObject value);
 
   /**
    * Returns the value of the '<em><b>To</b></em>' containment reference.
@@ -60,12 +58,12 @@ public interface Interval extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>To</em>' containment reference.
-   * @see #setTo(Value)
+   * @see #setTo(EObject)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getInterval_To()
    * @model containment="true"
    * @generated
    */
-  Value getTo();
+  EObject getTo();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.Interval#getTo <em>To</em>}' containment reference.
@@ -75,6 +73,6 @@ public interface Interval extends EObject
    * @see #getTo()
    * @generated
    */
-  void setTo(Value value);
+  void setTo(EObject value);
 
 } // Interval

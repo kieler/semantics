@@ -1,12 +1,13 @@
 package de.cau.cs.kieler.simulation.ui;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.simulation.ui.internal.KiSimActivator;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class SimulationUiPlugin extends AbstractUIPlugin {
+public class SimulationUiPlugin extends KiSimActivator {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.simulation.ui"; //$NON-NLS-1$

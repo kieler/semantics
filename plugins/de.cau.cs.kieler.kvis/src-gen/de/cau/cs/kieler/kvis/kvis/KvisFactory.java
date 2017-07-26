@@ -23,13 +23,13 @@ public interface KvisFactory extends EFactory
   KvisFactory eINSTANCE = de.cau.cs.kieler.kvis.kvis.impl.KvisFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Visualization</em>'.
+   * Returns a new object of class '<em>Visualization Configuration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Visualization</em>'.
+   * @return a new object of class '<em>Visualization Configuration</em>'.
    * @generated
    */
-  Visualization createVisualization();
+  VisualizationConfiguration createVisualizationConfiguration();
 
   /**
    * Returns a new object of class '<em>Element</em>'.
@@ -156,33 +156,6 @@ public interface KvisFactory extends EFactory
    * @generated
    */
   BooleanOperator createBooleanOperator();
-
-  /**
-   * Returns a new object of class '<em>Literal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Literal</em>'.
-   * @generated
-   */
-  Literal createLiteral();
-
-  /**
-   * Returns a new object of class '<em>Signed Float</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signed Float</em>'.
-   * @generated
-   */
-  SignedFloat createSignedFloat();
-
-  /**
-   * Returns a new object of class '<em>Signed Int</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signed Int</em>'.
-   * @generated
-   */
-  SignedInt createSignedInt();
 
   /**
    * Returns a new object of class '<em>And Expression</em>'.

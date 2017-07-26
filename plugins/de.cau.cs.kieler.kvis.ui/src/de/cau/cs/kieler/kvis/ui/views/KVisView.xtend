@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.kvis.ui.views
 
 import com.google.common.io.Files
-import de.cau.cs.kieler.kvis.kvis.Visualization
+import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration
 import de.cau.cs.kieler.kvis.ui.KVisUiModule
 import de.cau.cs.kieler.kvis.ui.animations.AnimationHandler
 import de.cau.cs.kieler.kvis.ui.animations.ColorAnimation
@@ -23,14 +23,16 @@ import de.cau.cs.kieler.kvis.ui.animations.TextAnimation
 import de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation
 import de.cau.cs.kieler.kvis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kvis.ui.svg.KVisCanvas
-import de.cau.cs.kieler.prom.common.ModelImporter
-import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
+import java.awt.geom.AffineTransform
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -56,7 +58,7 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.awt.geom.AffineTransform
+import de.cau.cs.kieler.simulation.core.SimulationEventType
 
 /**
  * @author aas
@@ -82,13 +84,15 @@ class KVisView extends ViewPart {
     private var IResourceChangeListener resourceChangeListener
     private var boolean updateAfterRendering
     private var boolean isImageUnchanged
-    private var Visualization kvisConfig
+    private var VisualizationConfiguration kvisConfig
     private var IFile kvisFile
     private var IFile svgImage
     @Accessors(PUBLIC_GETTER)
     private var DataPool lastPool
     private var boolean linkWithSimulation = true
     private var AffineTransform lastRenderingTransform
+    
+    private var LabelContribution currentFileLabel
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -101,8 +105,10 @@ class KVisView extends ViewPart {
         createCanvas(parent)
  
         // Create menu and toolbars.
-        createMenu()
-        createToolbar()
+        createMenu
+        createToolbar
+        // Create status line
+        createStatusLine
     }
 
     /**
@@ -131,7 +137,7 @@ class KVisView extends ViewPart {
             }
             val model = ModelImporter.load(file)
             if (model != null) {
-                if (model instanceof Visualization) {
+                if (model instanceof VisualizationConfiguration) {
                     kvisConfig = model
                     kvisFile = file
                     saveUsedKvisFile(kvisFile)
@@ -150,6 +156,9 @@ class KVisView extends ViewPart {
                     
                     // Register resource change listener for the files
                     registerResourceChangeListener(file, svgImage)
+                    
+                    // Set label of currently loaded file
+                    PromUIPlugin.asyncExecInUI[currentFileLabel.text = kvisFile.name]
                 }
             } else {
                 throw new IllegalArgumentException("Could not load kvis file. Please check if the file contains errors.")
@@ -159,7 +168,7 @@ class KVisView extends ViewPart {
         }
     }
     
-    private def void createInteractionHandlers(Visualization model) {
+    private def void createInteractionHandlers(VisualizationConfiguration model) {
         interactionHandlers = newArrayList
         for(interaction : model.interactions) {
             val interactionHandler = new InteractionHandler(interaction)
@@ -167,7 +176,7 @@ class KVisView extends ViewPart {
         }
     }
     
-    private def void createAnimationHandlers(Visualization model) {
+    private def void createAnimationHandlers(VisualizationConfiguration model) {
         animationHandlers = newArrayList
         for (element : model.elements) {
             for (animation : element.animations) {
@@ -353,7 +362,7 @@ class KVisView extends ViewPart {
     }
 
     private def void createMenu() {
-        val mgr = getViewSite().getActionBars().getMenuManager();
+//        val mgr = getViewSite().getActionBars().getMenuManager();
     }
 
     private def void createToolbar() {
@@ -417,6 +426,18 @@ class KVisView extends ViewPart {
             }
         })
     }
+    
+    private def void createStatusLine() {
+        val bars = getViewSite().getActionBars()
+        if(bars != null) {
+            val statusLineManager = bars.getStatusLineManager()
+            // Add name of currently loaded document to status line
+            currentFileLabel = new LabelContribution("de.cau.cs.kieler.kvis.ui.currentFileLabel",
+                                                     "",
+                                                     "Currently loaded visualization")
+            statusLineManager.add(currentFileLabel)
+        }
+    }
 
     /**
      * Updates the image with the loaded configuration.
@@ -468,10 +489,10 @@ class KVisView extends ViewPart {
     }
     
     private def void setStatusBarMessage(String message) {
-        val bars = getViewSite().getActionBars();
+        val bars = getViewSite().getActionBars()
         if(bars != null) {
             val statusLineManager = bars.getStatusLineManager()
-            PromPlugin.asyncExecInUI[statusLineManager.setMessage(message)]
+            PromUIPlugin.asyncExecInUI[statusLineManager.message = message]
         }
     }
     
@@ -488,16 +509,17 @@ class KVisView extends ViewPart {
         }
         val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
         StatusManager.getManager().handle(s, StatusManager.SHOW);
-        
-        statusBarMessage = e.message
     }
     
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
-                if(KVisView.instance != null && KVisView.instance.lastPool !== e.newPool) {
-                    // Update the view in the UI thread
-                    PromPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
+                if(e.type != SimulationEventType.TRACE
+                && e.type != SimulationEventType.VARIABLE_CHANGE) {
+                    if(KVisView.instance != null && KVisView.instance.lastPool !== e.pool) {
+                        // Update the view in the UI thread
+                        PromUIPlugin.asyncExecInUI[KVisView.instance?.update(SimulationManager.instance?.currentPool)]
+                    }
                 }
             }
         }

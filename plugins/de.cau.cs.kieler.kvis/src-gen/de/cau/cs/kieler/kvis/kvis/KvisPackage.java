@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -58,14 +60,14 @@ public interface KvisPackage extends EPackage
   KvisPackage eINSTANCE = de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl <em>Visualization</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl <em>Visualization Configuration</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl
-   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl
+   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualizationConfiguration()
    * @generated
    */
-  int VISUALIZATION = 0;
+  int VISUALIZATION_CONFIGURATION = 0;
 
   /**
    * The feature id for the '<em><b>Image</b></em>' attribute.
@@ -74,7 +76,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VISUALIZATION__IMAGE = 0;
+  int VISUALIZATION_CONFIGURATION__IMAGE = 0;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list.
@@ -83,7 +85,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VISUALIZATION__ELEMENTS = 1;
+  int VISUALIZATION_CONFIGURATION__ELEMENTS = 1;
 
   /**
    * The feature id for the '<em><b>Interactions</b></em>' containment reference list.
@@ -92,16 +94,16 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VISUALIZATION__INTERACTIONS = 2;
+  int VISUALIZATION_CONFIGURATION__INTERACTIONS = 2;
 
   /**
-   * The number of structural features of the '<em>Visualization</em>' class.
+   * The number of structural features of the '<em>Visualization Configuration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION_FEATURE_COUNT = 3;
+  int VISUALIZATION_CONFIGURATION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ElementImpl <em>Element</em>}' class.
@@ -335,13 +337,49 @@ public interface KvisPackage extends EPackage
   int ATTRIBUTE_MAPPING = 6;
 
   /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__NAME = KibuildPackage.ATTRIBUTE_MAPPING__NAME;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__VALUE = KibuildPackage.ATTRIBUTE_MAPPING__VALUE;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__VALUES = KibuildPackage.ATTRIBUTE_MAPPING__VALUES;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE_MAPPING__ATTRIBUTES = KibuildPackage.ATTRIBUTE_MAPPING__ATTRIBUTES;
+
+  /**
    * The feature id for the '<em><b>Attribute</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__ATTRIBUTE = 0;
+  int ATTRIBUTE_MAPPING__ATTRIBUTE = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Literal</b></em>' containment reference.
@@ -350,7 +388,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__LITERAL = 1;
+  int ATTRIBUTE_MAPPING__LITERAL = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
@@ -359,7 +397,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__MAPPINGS = 2;
+  int ATTRIBUTE_MAPPING__MAPPINGS = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Attribute Mapping</em>' class.
@@ -368,7 +406,7 @@ public interface KvisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING_FEATURE_COUNT = 3;
+  int ATTRIBUTE_MAPPING_FEATURE_COUNT = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.MappingImpl <em>Mapping</em>}' class.
@@ -649,108 +687,6 @@ public interface KvisPackage extends EPackage
   int BOOLEAN_OPERATOR_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.LiteralImpl <em>Literal</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.kvis.impl.LiteralImpl
-   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getLiteral()
-   * @generated
-   */
-  int LITERAL = 15;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LITERAL__VALUE = 0;
-
-  /**
-   * The number of structural features of the '<em>Literal</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LITERAL_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.SignedFloatImpl <em>Signed Float</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.kvis.impl.SignedFloatImpl
-   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSignedFloat()
-   * @generated
-   */
-  int SIGNED_FLOAT = 16;
-
-  /**
-   * The feature id for the '<em><b>Sign</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNED_FLOAT__SIGN = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNED_FLOAT__VALUE = 1;
-
-  /**
-   * The number of structural features of the '<em>Signed Float</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNED_FLOAT_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.SignedIntImpl <em>Signed Int</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.kvis.impl.SignedIntImpl
-   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSignedInt()
-   * @generated
-   */
-  int SIGNED_INT = 17;
-
-  /**
-   * The feature id for the '<em><b>Sign</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNED_INT__SIGN = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNED_INT__VALUE = 1;
-
-  /**
-   * The number of structural features of the '<em>Signed Int</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNED_INT_FEATURE_COUNT = 2;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl <em>And Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -758,7 +694,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getAndExpression()
    * @generated
    */
-  int AND_EXPRESSION = 18;
+  int AND_EXPRESSION = 15;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -804,7 +740,7 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getDOMEvent()
    * @generated
    */
-  int DOM_EVENT = 19;
+  int DOM_EVENT = 16;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.SimulationOperation <em>Simulation Operation</em>}' enum.
@@ -814,61 +750,51 @@ public interface KvisPackage extends EPackage
    * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSimulationOperation()
    * @generated
    */
-  int SIMULATION_OPERATION = 20;
+  int SIMULATION_OPERATION = 17;
+
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kvis.kvis.Sign <em>Sign</em>}' enum.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration <em>Visualization Configuration</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kvis.kvis.Sign
-   * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSign()
+   * @return the meta object for class '<em>Visualization Configuration</em>'.
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration
    * @generated
    */
-  int SIGN = 21;
-
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Visualization <em>Visualization</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Visualization</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization
-   * @generated
-   */
-  EClass getVisualization();
+  EClass getVisualizationConfiguration();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getImage <em>Image</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getImage <em>Image</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Image</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization#getImage()
-   * @see #getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getImage()
+   * @see #getVisualizationConfiguration()
    * @generated
    */
-  EAttribute getVisualization_Image();
+  EAttribute getVisualizationConfiguration_Image();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getElements <em>Elements</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Elements</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization#getElements()
-   * @see #getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getElements()
+   * @see #getVisualizationConfiguration()
    * @generated
    */
-  EReference getVisualization_Elements();
+  EReference getVisualizationConfiguration_Elements();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions <em>Interactions</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getInteractions <em>Interactions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Interactions</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization#getInteractions()
-   * @see #getVisualization()
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration#getInteractions()
+   * @see #getVisualizationConfiguration()
    * @generated
    */
-  EReference getVisualization_Interactions();
+  EReference getVisualizationConfiguration_Interactions();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Element <em>Element</em>}'.
@@ -1352,91 +1278,6 @@ public interface KvisPackage extends EPackage
   EAttribute getBooleanOperator_AND();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.Literal <em>Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Literal</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Literal
-   * @generated
-   */
-  EClass getLiteral();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kvis.kvis.Literal#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Literal#getValue()
-   * @see #getLiteral()
-   * @generated
-   */
-  EReference getLiteral_Value();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.SignedFloat <em>Signed Float</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Signed Float</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.SignedFloat
-   * @generated
-   */
-  EClass getSignedFloat();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.SignedFloat#getSign <em>Sign</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Sign</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.SignedFloat#getSign()
-   * @see #getSignedFloat()
-   * @generated
-   */
-  EAttribute getSignedFloat_Sign();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.SignedFloat#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.SignedFloat#getValue()
-   * @see #getSignedFloat()
-   * @generated
-   */
-  EAttribute getSignedFloat_Value();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.SignedInt <em>Signed Int</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Signed Int</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.SignedInt
-   * @generated
-   */
-  EClass getSignedInt();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.SignedInt#getSign <em>Sign</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Sign</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.SignedInt#getSign()
-   * @see #getSignedInt()
-   * @generated
-   */
-  EAttribute getSignedInt_Sign();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kvis.kvis.SignedInt#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.SignedInt#getValue()
-   * @see #getSignedInt()
-   * @generated
-   */
-  EAttribute getSignedInt_Value();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kvis.kvis.AndExpression <em>And Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1500,16 +1341,6 @@ public interface KvisPackage extends EPackage
   EEnum getSimulationOperation();
 
   /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.kvis.kvis.Sign <em>Sign</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Sign</em>'.
-   * @see de.cau.cs.kieler.kvis.kvis.Sign
-   * @generated
-   */
-  EEnum getSign();
-
-  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1533,14 +1364,14 @@ public interface KvisPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl <em>Visualization</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl <em>Visualization Configuration</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationImpl
-     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualization()
+     * @see de.cau.cs.kieler.kvis.kvis.impl.VisualizationConfigurationImpl
+     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getVisualizationConfiguration()
      * @generated
      */
-    EClass VISUALIZATION = eINSTANCE.getVisualization();
+    EClass VISUALIZATION_CONFIGURATION = eINSTANCE.getVisualizationConfiguration();
 
     /**
      * The meta object literal for the '<em><b>Image</b></em>' attribute feature.
@@ -1548,7 +1379,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VISUALIZATION__IMAGE = eINSTANCE.getVisualization_Image();
+    EAttribute VISUALIZATION_CONFIGURATION__IMAGE = eINSTANCE.getVisualizationConfiguration_Image();
 
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
@@ -1556,7 +1387,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VISUALIZATION__ELEMENTS = eINSTANCE.getVisualization_Elements();
+    EReference VISUALIZATION_CONFIGURATION__ELEMENTS = eINSTANCE.getVisualizationConfiguration_Elements();
 
     /**
      * The meta object literal for the '<em><b>Interactions</b></em>' containment reference list feature.
@@ -1564,7 +1395,7 @@ public interface KvisPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VISUALIZATION__INTERACTIONS = eINSTANCE.getVisualization_Interactions();
+    EReference VISUALIZATION_CONFIGURATION__INTERACTIONS = eINSTANCE.getVisualizationConfiguration_Interactions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.ElementImpl <em>Element</em>}' class.
@@ -1955,76 +1786,6 @@ public interface KvisPackage extends EPackage
     EAttribute BOOLEAN_OPERATOR__AND = eINSTANCE.getBooleanOperator_AND();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.LiteralImpl <em>Literal</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.kvis.impl.LiteralImpl
-     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getLiteral()
-     * @generated
-     */
-    EClass LITERAL = eINSTANCE.getLiteral();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LITERAL__VALUE = eINSTANCE.getLiteral_Value();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.SignedFloatImpl <em>Signed Float</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.kvis.impl.SignedFloatImpl
-     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSignedFloat()
-     * @generated
-     */
-    EClass SIGNED_FLOAT = eINSTANCE.getSignedFloat();
-
-    /**
-     * The meta object literal for the '<em><b>Sign</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SIGNED_FLOAT__SIGN = eINSTANCE.getSignedFloat_Sign();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SIGNED_FLOAT__VALUE = eINSTANCE.getSignedFloat_Value();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.SignedIntImpl <em>Signed Int</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.kvis.impl.SignedIntImpl
-     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSignedInt()
-     * @generated
-     */
-    EClass SIGNED_INT = eINSTANCE.getSignedInt();
-
-    /**
-     * The meta object literal for the '<em><b>Sign</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SIGNED_INT__SIGN = eINSTANCE.getSignedInt_Sign();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SIGNED_INT__VALUE = eINSTANCE.getSignedInt_Value();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.impl.AndExpressionImpl <em>And Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2077,16 +1838,6 @@ public interface KvisPackage extends EPackage
      * @generated
      */
     EEnum SIMULATION_OPERATION = eINSTANCE.getSimulationOperation();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kvis.kvis.Sign <em>Sign</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kvis.kvis.Sign
-     * @see de.cau.cs.kieler.kvis.kvis.impl.KvisPackageImpl#getSign()
-     * @generated
-     */
-    EEnum SIGN = eINSTANCE.getSign();
 
   }
 

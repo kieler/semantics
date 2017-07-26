@@ -18,7 +18,7 @@ public class KVisStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.prom.KiBuildStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

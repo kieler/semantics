@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
+import de.cau.cs.kieler.prom.kibuild.Literal;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**

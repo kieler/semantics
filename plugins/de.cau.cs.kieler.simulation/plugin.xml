@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension-point id="dataHandler" name="DataHandler" schema="schema/dataHandler.exsd"/>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cau.de/cs/kieler/simulation/KiSim" 
+       class = "de.cau.cs.kieler.simulation.kisim.KisimPackage"
+       genModel = "model/generated/KiSim.genmodel" /> 
+	
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.simulation.dataHandler">
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.ExecutableSimulator"
+           name="sim">
+     </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.Redirect"
+           name="redirect">
+     </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.SimulationInputFileHandler"
+           name="simin">
+     </dataHandler>
+     <dataHandler
+           class="de.cau.cs.kieler.simulation.handlers.SimulationOutputFileHandler"
+           name="simout">
+     </dataHandler>
+  </extension>
+  <extension
+        point="org.eclipse.debug.core.launchConfigurationTypes">
+     <launchConfigurationType
+           delegate="de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig"
+           id="de.cau.cs.kieler.simulation.simulationLaunchConfig"
+           modes="run,debug"
+           name="KIELER Simulation"
+           public="true">
+     </launchConfigurationType>
+  </extension>
+
+
+
+
+</plugin>

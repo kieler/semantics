@@ -12,18 +12,24 @@
  */
 package de.cau.cs.kieler.kvis.validation
 
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.IntValue
+import com.google.inject.Inject
+import de.cau.cs.kieler.kvis.extensions.KVisExtensions
+import de.cau.cs.kieler.kvis.kvis.Interaction
 import de.cau.cs.kieler.kvis.kvis.Interval
 import de.cau.cs.kieler.kvis.kvis.Mapping
+import de.cau.cs.kieler.prom.build.AttributeExtensions
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.kvis.kvis.Interaction
 
 /**
  * @author aas
  * 
  */
 class KVisValidator extends KVisJavaValidator {
+    @Inject
+    extension AttributeExtensions attributeExtensions
+    @Inject
+    extension KVisExtensions kvisExtensions
+    
     @Check
     public def void checkMappingDomains(Mapping mapping) {
         if (mapping.variableDomain.value != null && mapping.attributeDomain.range != null) {
@@ -35,20 +41,10 @@ class KVisValidator extends KVisJavaValidator {
     public def void checkIntervalFromLessOrEqualIntervalTo(Interval interval) {
         val from = interval.from
         val to = interval.to
-        var float low = Float.MIN_VALUE
-        var float high = Float.MAX_VALUE
         if (from != null && to != null) {
-            if(from instanceof IntValue) {
-                low = from.value
-            } else if(from instanceof FloatValue) {
-                low = from.value
-            }
-            if(to instanceof IntValue) {
-                high = to.value
-            } else if(to instanceof FloatValue) {
-                high = to.value
-            }
-            if(low > high) {
+            val fromDouble = from.primitiveValue.doubleValue
+            val toDouble = to.primitiveValue.doubleValue
+            if(fromDouble > toDouble) {
                 error("Lower value of an interval has to be on the left side.", interval, null);
             }
         }

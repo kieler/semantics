@@ -63,7 +63,10 @@ class HistoryColumnLabelProvider extends DataPoolColumnLabelProvider{
     protected static def Image createHistoryGraph(List<Object> history) {
         if(!history.isNullOrEmpty) {
             val firstValue = history.get(0)
-            if(firstValue instanceof Double) {
+            if(firstValue instanceof Integer) {
+                val List<Double> numbers = history.map[(it as Integer).doubleValue]
+                return createNumberGraph(numbers)
+            } else if(firstValue instanceof Double) {
                 val List<Double> numbers = history.map[it as Double]
                 return createNumberGraph(numbers)
             } else if(firstValue instanceof Boolean) {

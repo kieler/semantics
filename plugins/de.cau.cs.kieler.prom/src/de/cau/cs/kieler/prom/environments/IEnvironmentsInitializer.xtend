@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.prom.environments
 
-import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.data.EnvironmentData
 import java.util.List
 
 /**

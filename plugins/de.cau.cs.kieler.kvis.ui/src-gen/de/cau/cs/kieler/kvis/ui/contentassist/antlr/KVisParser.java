@@ -37,13 +37,14 @@ public class KVisParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getVisualizationAccess().getAlternatives_3(), "rule__Visualization__Alternatives_3");
+					put(grammarAccess.getVisualizationConfigurationAccess().getAlternatives_1(), "rule__VisualizationConfiguration__Alternatives_1");
 					put(grammarAccess.getActionAccess().getAlternatives(), "rule__Action__Alternatives");
 					put(grammarAccess.getAttributeMappingAccess().getAlternatives_2(), "rule__AttributeMapping__Alternatives_2");
 					put(grammarAccess.getComparisonAccess().getAlternatives_2(), "rule__Comparison__Alternatives_2");
 					put(grammarAccess.getVariableDomainAccess().getAlternatives(), "rule__VariableDomain__Alternatives");
 					put(grammarAccess.getIntervalAccess().getAlternatives_0(), "rule__Interval__Alternatives_0");
 					put(grammarAccess.getIntervalAccess().getAlternatives_2(), "rule__Interval__Alternatives_2");
+					put(grammarAccess.getTemplateProcessorAccess().getAlternatives(), "rule__TemplateProcessor__Alternatives");
 					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
@@ -67,7 +68,8 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-					put(grammarAccess.getVisualizationAccess().getGroup(), "rule__Visualization__Group__0");
+					put(grammarAccess.getVisualizationConfigurationAccess().getGroup(), "rule__VisualizationConfiguration__Group__0");
+					put(grammarAccess.getVisualizationConfigurationAccess().getGroup_0(), "rule__VisualizationConfiguration__Group_0__0");
 					put(grammarAccess.getElementAccess().getGroup(), "rule__Element__Group__0");
 					put(grammarAccess.getInteractionAccess().getGroup(), "rule__Interaction__Group__0");
 					put(grammarAccess.getInteractionAccess().getGroup_2(), "rule__Interaction__Group_2__0");
@@ -90,6 +92,12 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableReferenceAccess().getGroup(), "rule__VariableReference__Group__0");
 					put(grammarAccess.getVariableReferenceAccess().getGroup_2(), "rule__VariableReference__Group_2__0");
 					put(grammarAccess.getModelReferenceAccess().getGroup(), "rule__ModelReference__Group__0");
+					put(grammarAccess.getBuildConfigurationAccess().getGroup(), "rule__BuildConfiguration__Group__0");
+					put(grammarAccess.getModelCompilerAccess().getGroup(), "rule__ModelCompiler__Group__0");
+					put(grammarAccess.getSimulationCompilerAccess().getGroup(), "rule__SimulationCompiler__Group__0");
+					put(grammarAccess.getNormalTemplateProcessorAccess().getGroup(), "rule__NormalTemplateProcessor__Group__0");
+					put(grammarAccess.getSimulationTemplateProcessorAccess().getGroup(), "rule__SimulationTemplateProcessor__Group__0");
+					put(grammarAccess.getWrapperCodeTemplateProcessorAccess().getGroup(), "rule__WrapperCodeTemplateProcessor__Group__0");
 					put(grammarAccess.getSignedFloatAccess().getGroup(), "rule__SignedFloat__Group__0");
 					put(grammarAccess.getSignedIntAccess().getGroup(), "rule__SignedInt__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
@@ -159,9 +167,9 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-					put(grammarAccess.getVisualizationAccess().getImageAssignment_2(), "rule__Visualization__ImageAssignment_2");
-					put(grammarAccess.getVisualizationAccess().getElementsAssignment_3_0(), "rule__Visualization__ElementsAssignment_3_0");
-					put(grammarAccess.getVisualizationAccess().getInteractionsAssignment_3_1(), "rule__Visualization__InteractionsAssignment_3_1");
+					put(grammarAccess.getVisualizationConfigurationAccess().getImageAssignment_0_2(), "rule__VisualizationConfiguration__ImageAssignment_0_2");
+					put(grammarAccess.getVisualizationConfigurationAccess().getElementsAssignment_1_0(), "rule__VisualizationConfiguration__ElementsAssignment_1_0");
+					put(grammarAccess.getVisualizationConfigurationAccess().getInteractionsAssignment_1_1(), "rule__VisualizationConfiguration__InteractionsAssignment_1_1");
 					put(grammarAccess.getElementAccess().getNameAssignment_1(), "rule__Element__NameAssignment_1");
 					put(grammarAccess.getElementAccess().getAnimationsAssignment_3(), "rule__Element__AnimationsAssignment_3");
 					put(grammarAccess.getInteractionAccess().getEventAssignment_2_1(), "rule__Interaction__EventAssignment_2_1");
@@ -199,13 +207,27 @@ public class KVisParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableReferenceAccess().getIndicesAssignment_2_1(), "rule__VariableReference__IndicesAssignment_2_1");
 					put(grammarAccess.getModelReferenceAccess().getNameAssignment_0(), "rule__ModelReference__NameAssignment_0");
 					put(grammarAccess.getAndOperatorAccess().getANDAssignment(), "rule__AndOperator__ANDAssignment");
+					put(grammarAccess.getBuildConfigurationAccess().getAttributesAssignment_0(), "rule__BuildConfiguration__AttributesAssignment_0");
+					put(grammarAccess.getBuildConfigurationAccess().getModelCompilersAssignment_1(), "rule__BuildConfiguration__ModelCompilersAssignment_1");
+					put(grammarAccess.getBuildConfigurationAccess().getSimulationCompilersAssignment_2(), "rule__BuildConfiguration__SimulationCompilersAssignment_2");
+					put(grammarAccess.getBuildConfigurationAccess().getTemplateProcessorsAssignment_3(), "rule__BuildConfiguration__TemplateProcessorsAssignment_3");
+					put(grammarAccess.getModelCompilerAccess().getNameAssignment_2(), "rule__ModelCompiler__NameAssignment_2");
+					put(grammarAccess.getModelCompilerAccess().getAttributesAssignment_4(), "rule__ModelCompiler__AttributesAssignment_4");
+					put(grammarAccess.getModelCompilerAccess().getSimulationProcessorAssignment_5(), "rule__ModelCompiler__SimulationProcessorAssignment_5");
+					put(grammarAccess.getSimulationCompilerAccess().getNameAssignment_2(), "rule__SimulationCompiler__NameAssignment_2");
+					put(grammarAccess.getSimulationCompilerAccess().getAttributesAssignment_4(), "rule__SimulationCompiler__AttributesAssignment_4");
+					put(grammarAccess.getNormalTemplateProcessorAccess().getAttributesAssignment_4(), "rule__NormalTemplateProcessor__AttributesAssignment_4");
+					put(grammarAccess.getSimulationTemplateProcessorAccess().getAttributesAssignment_5(), "rule__SimulationTemplateProcessor__AttributesAssignment_5");
+					put(grammarAccess.getWrapperCodeTemplateProcessorAccess().getAttributesAssignment_5(), "rule__WrapperCodeTemplateProcessor__AttributesAssignment_5");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_0(), "rule__Literal__ValueAssignment_0");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_1(), "rule__Literal__ValueAssignment_1");
 					put(grammarAccess.getLiteralAccess().getValueAssignment_2(), "rule__Literal__ValueAssignment_2");
+					put(grammarAccess.getLiteralAccess().getValueAssignment_3(), "rule__Literal__ValueAssignment_3");
 					put(grammarAccess.getSignedFloatAccess().getSignAssignment_0(), "rule__SignedFloat__SignAssignment_0");
 					put(grammarAccess.getSignedFloatAccess().getValueAssignment_1(), "rule__SignedFloat__ValueAssignment_1");
 					put(grammarAccess.getSignedIntAccess().getSignAssignment_0(), "rule__SignedInt__SignAssignment_0");
 					put(grammarAccess.getSignedIntAccess().getValueAssignment_1(), "rule__SignedInt__ValueAssignment_1");
+					put(grammarAccess.getTextValueAccess().getValueAssignment(), "rule__TextValue__ValueAssignment");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1");
@@ -286,7 +308,7 @@ public class KVisParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			de.cau.cs.kieler.kvis.ui.contentassist.antlr.internal.InternalKVisParser typedParser = (de.cau.cs.kieler.kvis.ui.contentassist.antlr.internal.InternalKVisParser) parser;
-			typedParser.entryRuleVisualization();
+			typedParser.entryRuleVisualizationConfiguration();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);
