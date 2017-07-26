@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/">Update site for the KIELER Semantics project nightly builds.</description>
+  <description name="KIELER Semantics (Release 0.12.1)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.1/">Update site for the KIELER Semantics release 0.12.1.</description>
   <!-- CATEGORY DEFINITIONS -->
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
@@ -28,7 +28,8 @@
   <!-- Repository references to associated sites -->
   <repository-reference location="http://download.eclipse.org/releases/neon" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" enabled="true"/>
-  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-01/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.2.1/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170307180635/repository/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-03/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.2.2/" enabled="true"/>
   <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
 </site>

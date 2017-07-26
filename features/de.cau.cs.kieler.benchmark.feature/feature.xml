@@ -210,7 +210,7 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/"/>
+      <update label="KIELER Release 0.12.1" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.1/"/>
    </url>
 
    <plugin id="de.cau.cs.kieler.test.common" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
