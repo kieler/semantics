@@ -1,0 +1,35 @@
+outputFolder: kieler-gen
+
+// Compile models to C code
+model compiler kico {
+  compileChain: s.c
+  fileExtension: c
+  // whitelist: ".sct" // Only compile the models matching this regular expression
+  
+  // Generate C simulation from output of compilation
+  process simulation template {
+    snippetFolder: snippets
+    file: Simulation.ftl
+  }
+}
+
+// Compile C simulation via gcc
+simulation compiler c {
+  libFolder: kieler-gen/sim/lib
+  outputFolder: kieler-gen/sim/bin
+  command: "gcc -std=c99 -o ./${outputFolder}/${executable_name}"
+}
+
+// Process a simple template
+//process template {
+// file: Template.ftl
+// target: Output.txt
+//}
+
+// Process a template to generate a main file that can be deployed.
+//process wrapper template {
+//  snippetFolder: snippets
+//  file: Main.ftl
+//  target: kieler-gen/Main.c
+//  modelFile: MyModel.sct
+//}

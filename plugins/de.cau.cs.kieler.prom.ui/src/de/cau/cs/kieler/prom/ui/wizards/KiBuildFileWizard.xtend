@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kvis.ui.wizards
+package de.cau.cs.kieler.prom.ui.wizards
 
 import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileCreationPage
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -19,12 +19,10 @@ import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 
 /**
- * Implementation of a newWizard which contains a page to create a kvis file with default content. 
- * 
  * @author aas
  *
  */
-class KVisFileWizard extends Wizard implements INewWizard {
+class KiBuildFileWizard extends Wizard implements INewWizard {
 
     /**
      * The workbench from the init(...) method.
@@ -37,25 +35,25 @@ class KVisFileWizard extends Wizard implements INewWizard {
     private var IStructuredSelection selection
     
     /**
-     * Page to create an sct file.
+     * Page to create a file.
      */
     private AdvancedNewFileCreationPage filePage
     
     /**
-     * Instantiates and adds the sct file creation page to this wizard.
+     * Instantiates and adds the file creation page to this wizard.
      */
     override addPages(){
-        filePage = new AdvancedNewFileCreationPage("KVis File", selection, false);
-        filePage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.kvis.ui/resources/default.kvis"
-        filePage.fileName = "NewVisualization.kvis"
-        filePage.fileExtension = "kvis"
-        filePage.description = "Create a new KVis file to configure simulation visualization."
+        filePage = new AdvancedNewFileCreationPage("KiBuild File", selection, false);
+        filePage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.prom/resources/default.kibuild"
+        filePage.fileName = "NewBuildConfig.kibuild"
+        filePage.fileExtension = "kibuild"
+        filePage.description = "Create a new build configuration."
         
         addPage(filePage);
     }
     
     /**
-     * Creates the kvis file with the settings from the file creation page.
+     * Creates the file with the settings from the wizard page.
      * The method is called when the finish button is clicked.
      */
     override performFinish() {
@@ -69,7 +67,7 @@ class KVisFileWizard extends Wizard implements INewWizard {
         this.workbench = workbench
         this.selection = selection
         
-        windowTitle = "New KVis File"
+        windowTitle = "New KiBuild File"
         helpAvailable = false
     }
 }

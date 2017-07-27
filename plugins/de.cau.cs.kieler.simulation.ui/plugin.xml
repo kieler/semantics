@@ -199,6 +199,21 @@
             name="Stop Simulation">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            category="de.cau.cs.kieler.sccharts"
+            class="de.cau.cs.kieler.simulation.ui.wizards.KiSimFileWizard"
+            finalPerspective="de.cau.cs.kieler.simulation"
+            id="de.cau.cs.kieler.simulation.ui.wizards.kisimFile"
+            name="KiSim File"
+            project="false">
+         <description>
+            Create a new KiSim file to configure how models are simulated.
+         </description>
+      </wizard>
+   </extension>
    
    
    

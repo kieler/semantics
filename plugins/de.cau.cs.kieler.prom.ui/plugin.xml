@@ -78,6 +78,19 @@
             Create a new FTL file.
          </description>
       </wizard>
+      <wizard
+            canFinishEarly="false"
+            category="de.cau.cs.kieler.sccharts"
+            class="de.cau.cs.kieler.prom.ui.wizards.KiBuildFileWizard"
+            finalPerspective="de.cau.cs.kieler.Modeling"
+            hasPages="true"
+            id="de.cau.cs.kieler.prom.ui.wizards.kibuildFile"
+            name="KiBuild File"
+            project="false">
+         <description>
+            Create a new KiBuild file to configure the automatic build of models and templates.
+         </description>
+      </wizard>
    </extension>
    
    
