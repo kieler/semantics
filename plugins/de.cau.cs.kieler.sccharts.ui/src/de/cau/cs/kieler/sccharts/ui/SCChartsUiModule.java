@@ -3,18 +3,13 @@
  */
 package de.cau.cs.kieler.sccharts.ui;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import de.cau.cs.kieler.sccharts.ui.text.SCTXUiModule;
+import de.cau.cs.kieler.sccharts.ui.text.internal.SCTXActivator;
 
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class SCChartsUIiModule extends SCTXUiModule {
+public class SCChartsUiModule extends SCTXActivator {
     
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.ui"; //$NON-NLS-1$
     
-	public SCChartsUIiModule(AbstractUIPlugin plugin) {
-		super(plugin);
-	}
-
 }

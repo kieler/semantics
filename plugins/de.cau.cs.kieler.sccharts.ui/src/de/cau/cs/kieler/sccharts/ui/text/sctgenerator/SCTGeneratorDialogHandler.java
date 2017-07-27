@@ -37,7 +37,7 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
 
     /** ID of the open dialog command */
     public static final String SCT_GENERATOR_OPENDIALOG_COMMAND =
-            "de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.openDialog";
+            "de.cau.cs.kieler.sccharts.ui.text.SCTGenerator.openDialog";
 
     /** The SCT injector */
     private static Injector injector =

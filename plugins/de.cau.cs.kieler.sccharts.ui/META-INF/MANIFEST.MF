@@ -52,4 +52,4 @@ Export-Package: de.cau.cs.kieler.sccharts.ui,
  de.cau.cs.kieler.sccharts.ui.text.sctgenerator,
  de.cau.cs.kieler.sccharts.ui.text.sctgenerator.extensions
 Import-Package: org.apache.log4j
-Bundle-Activator: de.cau.cs.kieler.sccharts.ui.SCTXUiModule
+Bundle-Activator: de.cau.cs.kieler.sccharts.ui.SCChartsUiModule
