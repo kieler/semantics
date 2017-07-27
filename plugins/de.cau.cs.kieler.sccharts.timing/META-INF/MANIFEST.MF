@@ -22,14 +22,15 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.scg.s;bundle-version="0.1.1",
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg;bundle-version="0.1.1",
- de.cau.cs.kieler.sccharts.klighd;bundle-version="0.1.1",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sccharts.preferences,
- de.cau.cs.kieler.kexpressions
+ de.cau.cs.kieler.kexpressions,
+ de.cau.cs.kieler.sccharts.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg,
+ de.cau.cs.kieler.sccharts.ui.synthesis.hooks,
  de.cau.cs.kieler.scg.s.transformations
 Export-Package: de.cau.cs.kieler.sccharts.timing,
  de.cau.cs.kieler.sccharts.timing.transformation
