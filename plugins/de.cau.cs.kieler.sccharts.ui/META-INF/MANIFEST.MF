@@ -28,7 +28,8 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  org.eclipse.ui.editors,
  org.eclipse.ui,
  org.eclipse.xtext.xtext.ui,
- de.cau.cs.kieler.sccharts
+ de.cau.cs.kieler.sccharts,
+ org.eclipse.xtext.xbase.lib
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.ui,

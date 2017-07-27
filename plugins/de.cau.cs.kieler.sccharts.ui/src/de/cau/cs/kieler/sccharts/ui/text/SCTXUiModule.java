@@ -5,7 +5,7 @@ package de.cau.cs.kieler.sccharts.ui.text;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import de.cau.cs.kieler.sccharts.ui.text.quickfix.SCTXQuickfixProviderX;
+import de.cau.cs.kieler.sccharts.ui.text.quickfix.SCTXQuickfixProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -16,7 +16,7 @@ public class SCTXUiModule extends de.cau.cs.kieler.sccharts.ui.text.AbstractSCTX
 	}
 	
     public Class<? extends  org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
-        return SCTXQuickfixProviderX.class;
+        return SCTXQuickfixProvider.class;
     }
     
     /* introduces new highlighting profiles (e.g. annotationKey) */

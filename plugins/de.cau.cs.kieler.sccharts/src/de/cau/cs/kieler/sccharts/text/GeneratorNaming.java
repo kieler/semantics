@@ -19,6 +19,8 @@ import org.eclipse.xtext.generator.Naming;
 
 /**
  * @author ssm
+ * @kieler.design 2017-07-27 proposed 
+ * @kieler.rating 2017-07-27 proposed yellow 
  *
  */
 public class GeneratorNaming extends Naming {
