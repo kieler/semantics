@@ -28,6 +28,10 @@ public class CViewPlugin implements BundleActivator {
     /** The Constant EXTENSION_POINT_ID. */
     public static final String CONNECTION_HOOK_EXTENSION_POINT_ID =
             "de.cau.cs.kieler.cview.connection";
+    
+    // The plug-in ID
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.cview"; //$NON-NLS-1$
+    
 
     static ArrayList<IConnectionHook> connectionHooks = null; 
     
@@ -76,6 +80,19 @@ public class CViewPlugin implements BundleActivator {
                     .showView(KLIGHD_MODEL_VIEW);
         } catch (PartInitException e) {
             e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    
+    public static void clearSelectionHooks() {
+        connectionHooks = null;
+    }
+    
+    public static List<String> getRegisteredConnectionHookIds() {
+        List<IConnectionHook> hooks = getRegisteredConnectionHooks(true);
+        for (IConnectionHook hook: hooks) {
+            hook.getId()
         }
     }
 

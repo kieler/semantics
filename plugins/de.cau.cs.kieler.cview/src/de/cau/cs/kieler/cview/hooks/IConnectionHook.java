@@ -25,6 +25,20 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection;
 public interface IConnectionHook {
 
     /**
+     * Define the name for this connection hook.
+     * 
+     * @return the name
+     */
+    String getName();
+
+    /**
+     * Define an id for this connection hook.
+     * 
+     * @return the name
+     */
+    String getId();
+
+    /**
      * Initialize this connection hook. Called once for all components before createConnections have
      * been called.
      * 

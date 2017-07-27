@@ -1,16 +1,22 @@
-package de.cau.cs.kieler.cview;
+package de.cau.cs.kieler.cview.ui;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
 
+import de.cau.cs.kieler.cview.CViewPlugin;
+import de.cau.cs.kieler.cview.DiagramSynthesis;
+import de.cau.cs.kieler.cview.KLighDController;
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 
 public class CommandToggleHandler implements IHandler {
 
     public int lastExpandedSliderValue = DiagramSynthesis.DEFAULT_EXPANDED_VALUE;
 
+    public static String CMD_SELECT_ID = "de.cau.cs.kieler.cview.command.select";
+    public static String CMD_FILTER_ID = "de.cau.cs.kieler.cview.command.filter";
+    
     @Override
     public void addHandlerListener(IHandlerListener handlerListener) {
     }
@@ -21,6 +27,25 @@ public class CommandToggleHandler implements IHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+        
+        String commandId = event.getCommand().getId();
+        
+        if (commandId.equals(CMD_SELECT_ID)) {
+            //SelectDialog.optionList = {};
+            String getName();
+
+            SelectDialog.itemList = ;
+            boolean ok = SelectDialog.showSelectDialog();
+                    
+            if (ok) {
+                // Save
+                
+                CViewPlugin.clearSelectionHooks();
+            }
+            
+            return null;
+        }
+
 
         boolean changedExpandedSliderValue = false;
         int currentExpandedSliderValue = KLighDController.getSynthesisOptionIntValue(DiagramSynthesis.EXPANDED_SLIDER);

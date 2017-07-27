@@ -102,5 +102,12 @@ class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
     override wrapup(CViewModel model) {
         // throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
+    
+    override getName() {
+        return "eCIDS OAL Messages";
+    }
 
+    override getId() {
+        return "de.cau.cs.kieler.cview.ecids";
+    }
 }
