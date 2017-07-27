@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.sccharts.ui.hooks" name="Synthesis Hooks" schema="schema/hooks.exsd"/>
+   <extension-point id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks" name="Synthesis Hooks" schema="schema/hooks.exsd"/>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
@@ -57,7 +57,7 @@
       </diagramSynthesis>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sccharts.ui.hooks">
+         point="de.cau.cs.kieler.sccharts.ui.synthesis.hooks">
       <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.DeclarationsHook">
       </hook>
