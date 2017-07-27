@@ -19,12 +19,12 @@ import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.FileData
 import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.templates.FreemarkerConfiguration
 import freemarker.template.Template
 import java.io.File
 import java.io.FileFilter
 import java.io.StringWriter
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.List
 import java.util.Map
 import org.eclipse.core.resources.IProject
@@ -33,7 +33,6 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.freemarker.FreeMarkerPlugin
 
 /**
  * This class generates wrapper code for models.
@@ -150,9 +149,9 @@ class WrapperCodeGenerator {
         
         // Check consistency of path
         if (!templatePath.isNullOrEmpty()) {
-            FreeMarkerPlugin.newConfiguration(project.location.toOSString)
+            FreemarkerConfiguration.newConfiguration(project.location.toOSString)
             
-            val template = FreeMarkerPlugin.configuration.getTemplate(templatePath)
+            val template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
 
             val writer = new StringWriter()
             template.process(additionalMappings, writer)
@@ -199,7 +198,7 @@ class WrapperCodeGenerator {
         
         // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
-
+        
         // Add name of model 
         if(!map.containsKey(MODEL_NAME_VARIABLE) && !annotationDatas.isNullOrEmpty) {
             val modelName = annotationDatas.get(0).modelName
@@ -218,8 +217,8 @@ class WrapperCodeGenerator {
         map.putAll(additionalMappings)
         
         // Inject macro calls in input template
-        FreeMarkerPlugin.newConfiguration(project.location.toOSString)
-        val template = FreeMarkerPlugin.configuration.getTemplate(templatePath)
+        FreemarkerConfiguration.newConfiguration(project.location.toOSString)
+        val template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
 
         val writer = new StringWriter()
         template.process(map, writer)
@@ -245,11 +244,11 @@ class WrapperCodeGenerator {
                 snippetDirectoryLocation = new File(project.location + File.separator + resolvedWrapperCodeSnippetDirectory)
                 
             // Set the snippets directory to implicitly load the macro definitions
-            FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
+            FreemarkerConfiguration.newConfiguration(snippetDirectoryLocation.absolutePath)
     
             // Add implicit include of assignment macros such as <@init> and <@output>
-            FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
-            FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
+            FreemarkerConfiguration.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
+            FreemarkerConfiguration.configuration.addAutoInclude("assignmentMacros")
     
             // Add implicit include of snippet definitions
             val snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
@@ -257,12 +256,12 @@ class WrapperCodeGenerator {
                 // FreeMarker needs paths relative to the template directory.
                 // We calculate this via the URI class.
                 val relativeURI = snippetDirectoryLocation.toURI().relativize(snippetFile.toURI())
-                FreeMarkerPlugin.configuration.addAutoInclude(relativeURI.getPath())
+                FreemarkerConfiguration.configuration.addAutoInclude(relativeURI.getPath())
             }
         }
         
         // Process template with macro calls and now implicitly loaded snippet definitions.
-        val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
+        val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreemarkerConfiguration.configuration)
 
         // Process template and write output in string
         val writer = new StringWriter()
@@ -481,7 +480,7 @@ class WrapperCodeGenerator {
         getWrapperCodeAnnotationData(model, annotationDatas)
         return annotationDatas
     }
-    
+
     /**
      * Adds wrapper code data objects to the annotationDatas list,
      * which where found in the given files.

@@ -105,19 +105,26 @@ class ControlflowRegionStyles {
      * Adds an area for inner states and a container for declarations.<br>
      * Incompatible with {@link addStatesArea}.
      */
-    def addStatesAndDeclarationsArea(KContainerRendering container, boolean useHeaderSpace) {
+    def addStatesAndDeclarationsArea(KContainerRendering container, boolean useHeaderSpace, boolean horizontal) {
         container.addRectangle => [
-            invisible = true;
-            setGridPlacement(1);
+            invisible = true
+            setGridPlacement(if (horizontal) 2 else 1)
             // Declarations Area
-            val declarationsArea = addRectangle => [
-                invisible = true;
-                setGridPlacement(1);
-                setGridPlacementData().from(LEFT, 3, 0, TOP, 16, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0);
+            addRectangle => [
+                setGridPlacementData().from(LEFT, 3, 0, TOP, 20, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0)
+                invisible = true
+                addRectangle => [
+                    setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                    invisible = true
+                    setGridPlacement(1)
+                    container.setProperty(DECLARATIONS_CONTAINER, it)
+                ]
             ]
-            container.setProperty(DECLARATIONS_CONTAINER, declarationsArea);
             // States Area
-            addChildArea().setGridPlacementData().from(LEFT, -2, 0, TOP, -8, 0).to(RIGHT, -2, 0, BOTTOM, 3, 0);
+            addChildArea()
+            // SubGraph padding
+            container.containerNode.addLayoutParam(CoreOptions.PADDING, 
+                new ElkPadding(if (useHeaderSpace && horizontal) 20 else 10, 10, 10, 10))
         ]
     }
 
