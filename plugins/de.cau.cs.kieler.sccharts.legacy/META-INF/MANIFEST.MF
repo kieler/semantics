@@ -28,8 +28,7 @@ Require-Bundle: com.google.guava,
  de.cau.cs.kieler.kitt,
  org.eclipse.emf.common,
  de.cau.cs.kieler.core.model,
- de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.text
+ de.cau.cs.kieler.sccharts
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
 Export-Package: de.cau.cs.kieler.sccharts.legacy,
