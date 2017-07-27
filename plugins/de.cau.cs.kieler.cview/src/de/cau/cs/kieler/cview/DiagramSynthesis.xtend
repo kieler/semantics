@@ -102,6 +102,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
+    public static final SynthesisOption ANONYMIZE = SynthesisOption.createCheckOption("Anonymize", false);
+
     // public static final SynthesisOption FILTER_FILES = SynthesisOption.create RangeOption("Expanded Layers", MIN_EXPANDED_VALUE, MAX_EXPANDED_VALUE+1, DEFAULT_EXPANDED_VALUE);
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
@@ -112,6 +114,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         options.addAll(INTERLEVEL_CONNECTIONS);
         options.addAll(HIDE_CONNECTIONS);
         options.addAll(HIDE_UNCONNECTED);
+        options.addAll(ANONYMIZE);
         return options.toList;
     }
 
@@ -274,6 +277,44 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         return component.parent
     }
+    
+    
+    def static String fixId(String name) {
+        if (name == null) {
+            return "Empty"
+        }
+        var returnName = name
+        returnName = returnName.replace(".", "_")
+        returnName = returnName.replace("#", "_")
+        returnName = returnName.replace("&", "")
+        returnName = returnName.replace(">", "")
+        returnName = returnName.replace("<", "")
+        returnName = returnName.replace(":", "")
+        returnName = returnName.replace(";", "")
+        returnName = returnName.replace(",", "_")
+        returnName = returnName.replace(" ", "")
+        returnName = returnName.replace("-", "")
+        returnName = returnName.replace("*", "")
+        returnName = returnName.replace("/", "")
+        returnName = returnName.replace("\\", "")
+        returnName = returnName.replace("\"", "")
+        returnName = returnName.replace("'", "")
+        returnName = returnName.replace("=", "Equals")
+        return returnName
+    }
+    
+    val static LOREIPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.".fixId
+    
+    def String loreipsum(int length) {
+        return LOREIPSUM.substring(0, length-1);
+    }
+    
+    def String possiblyAnonymize(String text) {
+        if (ANONYMIZE.booleanValue) {
+            return (text.length.loreipsum) 
+        }
+        return text
+    }
 
     def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts, KColor color, boolean addLabel) {
         connectedComponents.add(connection.src)
@@ -294,7 +335,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         // if (connection.src == null && connection.dst == null) 
         if (addLabel) {
             // Add Label only if top-most layer for this connection
-            edge.addLabel(connection.label).associateWith(connection);
+            edge.addLabel(connection.label.possiblyAnonymize).associateWith(connection);
         }
         if (connection.tooltip != null) {
             edge.setProperty(KlighdProperties::TOOLTIP, connection.tooltip);
@@ -380,7 +421,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     def KNode transformItemFunc(Component item, int depth) {
         val childNode = item.createNode().associateWith(item);
         val childRect = childNode.addRoundedRectangle(4, 4, 2);
-        val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+        val label = childNode.addInsideCenteredNodeLabel(item.name.possiblyAnonymize, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
@@ -396,7 +437,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     def KNode transformItemFile(Component item, int depth) {
         val childNode = item.createNode().associateWith(item);
         val childRect = childNode.addRoundedRectangle(4, 4, 2);
-        val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+        val label = childNode.addInsideCenteredNodeLabel(item.name.possiblyAnonymize, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
@@ -440,7 +481,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
-        val itemLabel = item.name
+        val itemLabel = item.name.possiblyAnonymize
         val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
@@ -503,7 +544,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
             EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
-        val itemLabel = item.name
+        val itemLabel = item.name.possiblyAnonymize
         val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
             KlighdConstants.DEFAULT_FONT_NAME);
         label.associateWith(item)
