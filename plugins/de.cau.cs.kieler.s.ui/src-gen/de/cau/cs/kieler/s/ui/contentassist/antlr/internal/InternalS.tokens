@@ -1,6 +1,6 @@
 '!'=20
 '!='=51
-'#'=93
+'#'=94
 '%'=24
 '%='=38
 '&&'=28
@@ -29,9 +29,9 @@
 '=='=46
 '>'=49
 '>='=50
-'@'=92
+'@'=93
 '['=69
-'\''=91
+'\''=92
 ']'=70
 '^='=41
 'abort'=81
@@ -40,7 +40,7 @@
 'combine'=90
 'conflict'=31
 'confluent'=32
-'const'=94
+'const'=95
 'emit'=80
 'expression'=85
 'extern'=88
@@ -49,7 +49,7 @@
 'halt'=78
 'host'=58
 'if'=82
-'input'=95
+'input'=96
 'int'=55
 'join'=75
 'max'=60
@@ -57,9 +57,10 @@
 'min'=61
 'min='=42
 'none'=59
-'output'=96
+'output'=97
 'pause'=76
 'pre'=17
+'print'=91
 'prio'=71
 'pure'=52
 'ref'=87
@@ -67,7 +68,7 @@
 'scope'=84
 'signal'=79
 'state'=65
-'static'=97
+'static'=98
 'string'=57
 'synchronous program'=62
 'term'=77
@@ -173,3 +174,4 @@ T__94=94
 T__95=95
 T__96=96
 T__97=97
+T__98=98

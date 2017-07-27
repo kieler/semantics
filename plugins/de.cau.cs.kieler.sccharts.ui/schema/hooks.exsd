@@ -3,7 +3,7 @@
 <schema targetNamespace="de.cau.cs.kieler.sccharts.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.sccharts.ui" id="de.cau.cs.kieler.sccharts.ui.hooks" name="Synthesis Hooks"/>
+         <meta.schema plugin="de.cau.cs.kieler.sccharts.ui" id="synthesis.hooks" name="Synthesis Hooks"/>
       </appinfo>
       <documentation>
          This extension point is to be used to register a hook for the SCCharts diagram synthesis.

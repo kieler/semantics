@@ -110,7 +110,9 @@ Workflow {
 			// }
 			
 			// quickfix API 
-			fragment = quickfix.QuickfixProviderFragment {}
+			fragment = quickfix.QuickfixProviderFragment {
+			    generateXtendStub = true
+			}
 			
 			fragment = refactoring.RefactorElementNameFragment {}
 		}

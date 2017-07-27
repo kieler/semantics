@@ -14,7 +14,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
  * with a more concrete subtype. 
  */
 @SuppressWarnings("all")
-public class AbstractSCTXProposalProvider extends de.cau.cs.kieler.kexpressions.kext.ui.contentassist.KExtProposalProvider {
+public class AbstractSCTXProposalProvider extends de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider {
 		
 	public void completeSCCharts_Pragmas(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
