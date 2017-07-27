@@ -5,6 +5,7 @@ package de.cau.cs.kieler.sccharts.text;
 
 import org.eclipse.xtext.linking.ILinker;
 
+import de.cau.cs.kieler.sccharts.text.formatting2.SCTXValueConverter;
 import de.cau.cs.kieler.sccharts.text.scoping.SCTXQualifiedNameProvider;
 
 /**
@@ -34,6 +35,9 @@ public class SCTXRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSC
         return de.cau.cs.kieler.sccharts.text.parser.SCTXParser.class;
     }
     
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return SCTXValueConverter.class;
+    }     
     
 //    public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
 //        return org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider.class;
