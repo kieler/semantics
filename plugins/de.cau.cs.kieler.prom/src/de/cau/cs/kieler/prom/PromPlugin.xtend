@@ -69,6 +69,11 @@ class PromPlugin implements BundleActivator  {
     /**
      * Qualifier used to set the environment name property of a project.
      */
+    public static val BUILD_CONFIGURATION_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "build.configuration")
+    
+    /**
+     * Qualifier used to set the environment name property of a project.
+     */
     public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.PLUGIN_ID, "environment")
     
     /**

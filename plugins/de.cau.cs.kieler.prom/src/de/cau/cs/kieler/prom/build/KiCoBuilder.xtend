@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
 import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
@@ -118,19 +117,19 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     /**
      * Creates a marker for a file in the Eclipse workspace.
      */
-    private static def IMarker createMarker(IFile file, String message) {
-        val marker = file.createMarker(KICO_PROBLEM_MARKER_TYPE)
+    private static def IMarker createMarker(IResource res, String message) {
+        val marker = res.createMarker(KICO_PROBLEM_MARKER_TYPE)
         marker.setAttribute(IMarker.LINE_NUMBER, 1);
         marker.setAttribute(IMarker.MESSAGE, message);
-        marker.setAttribute(IMarker.LOCATION, file.projectRelativePath.toOSString);
+        marker.setAttribute(IMarker.LOCATION, res.projectRelativePath.toOSString);
         return marker
     }
     
     /**
      * Creates a warnin marker for a file in the Eclipse workspace.
      */
-    public static def IMarker createWarningMarker(IFile file, String message) {
-        val marker = createMarker(file, message)
+    public static def IMarker createWarningMarker(IResource res, String message) {
+        val marker = createMarker(res, message)
         marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
         return marker
@@ -139,8 +138,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     /**
      * Creates an error marker for a file in the Eclipse workspace.
      */
-    public static def IMarker createErrorMarker(IFile file, String message) {
-        val marker = createMarker(file, message)
+    public static def IMarker createErrorMarker(IResource res, String message) {
+        val marker = createMarker(res, message)
         marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
         return marker
@@ -240,6 +239,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                                 fullBuild
                                 // No need to check further files, because we do a full build
                                 return false
+                            }
+                            default : {
+                                // Ignore other files
                             }
                         }
                     } else if(res.type == IResource.FOLDER) {
@@ -389,20 +391,19 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         modelCompilers.clear
         simulationCompilers.clear
         templateProcessors.clear
-        // Create either default configuration or load from file
-        val configurationFiles = PromPlugin.findFiles(project.members, "kibuild")
-        switch(configurationFiles.size) {
-            case 0:
-                initializeDefaultConfiguration
-            case 1: {
-                val configFile = configurationFiles.get(0)
-                initializeConfiguration(configFile)
-            }
-            default: {
-                val configFile = configurationFiles.get(0)
-                PromConsole.print("There is more than one build configuration."
-                                + " The build uses the first one in the list:"+configFile.name)
-                initializeConfiguration(configFile)
+        // Load configuration file
+        deleteMarkers(project)
+        val configFilePath = project.getPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER)
+        if (configFilePath.isNullOrEmpty) {
+            // Add warning marker because no build configuration was found
+            createWarningMarker(project, "No kibuild file has been set in the project properties.\n"
+                                       + "Use a kibuild file "
+                                       + "to define how model files are compiled.")
+        } else {
+            try {
+                initializeConfiguration(project.getFile(configFilePath))    
+            } catch (Exception e) {
+                createErrorMarker(project, e.message)
             }
         }
         
@@ -417,71 +418,72 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
-    private def void initializeDefaultConfiguration() {
-        if(PromPlugin.isJavaProject(project)) {
-            initializeDefaultJavaConfiguration
-        } else {
-            initializeDefaultCConfiguration
-        }
-    }
+//    private def void initializeDefaultConfiguration() {
+//        if(PromPlugin.isJavaProject(project)) {
+//            initializeDefaultJavaConfiguration
+//        } else {
+//            initializeDefaultCConfiguration
+//        }
+//    }
     
-    private def void initializeDefaultCConfiguration() {
-        // Create Simulation compilers
-        val cCompiler = new CSimulationCompiler
-        cCompiler.monitor = monitor
-        simulationCompilers.add(cCompiler)
-        
-        // Create KiCo model compiler
-        val kicoModelCompiler = new KiCoModelCompiler
-        modelCompilers.add(kicoModelCompiler)
-        kicoModelCompiler.outputFolder = outputFolder.stringValue
-        kicoModelCompiler.monitor = monitor
-        kicoModelCompiler.compileChain.value = "s.c"
-        kicoModelCompiler.fileExtension.value = "c"
-        
-        // Create simulation template processor
-        val simTemplate = project.getFile("Simulation.ftl")
-        if(simTemplate.exists) {
-            val simProcessor = new SimulationTemplateProcessor
-            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
-            // Add simulation generator to model compiler
-            kicoModelCompiler.simulationProcessor = simProcessor
-        }
-    }
-    
-    private def void initializeDefaultJavaConfiguration() {
-        // Create Simulation compilers
-        val javaCompiler = new JavaSimulationCompiler
-        javaCompiler.monitor = monitor
-        simulationCompilers.add(javaCompiler)
-        
-        // Create KiCo model compiler
-        val kicoModelCompiler = new KiCoModelCompiler
-        modelCompilers.add(kicoModelCompiler)
-        kicoModelCompiler.outputFolder = outputFolder.stringValue
-        kicoModelCompiler.monitor = monitor
-        kicoModelCompiler.fileExtension.value = "java"
-        kicoModelCompiler.compileChain.value = "s.java"
-        kicoModelCompiler.outputTemplate.value = "src/TargetTemplate.ftl"
-        
-        // Create simulation template processor
-        val simTemplate = project.getFile("src/JavaSimulation.ftl")
-        if(simTemplate.exists) {
-            val simProcessor = new SimulationTemplateProcessor
-            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
-            // Add simulation generator to model compiler
-            kicoModelCompiler.simulationProcessor = simProcessor
-        }
-    }
+//    private def void initializeDefaultCConfiguration() {
+//        // Create Simulation compilers
+//        val cCompiler = new CSimulationCompiler
+//        cCompiler.monitor = monitor
+//        simulationCompilers.add(cCompiler)
+//        
+//        // Create KiCo model compiler
+//        val kicoModelCompiler = new KiCoModelCompiler
+//        modelCompilers.add(kicoModelCompiler)
+//        kicoModelCompiler.outputFolder = outputFolder.stringValue
+//        kicoModelCompiler.monitor = monitor
+//        kicoModelCompiler.compileChain.value = "s.c"
+//        kicoModelCompiler.fileExtension.value = "c"
+//        
+//        // Create simulation template processor
+//        val simTemplate = project.getFile("Simulation.ftl")
+//        if(simTemplate.exists) {
+//            val simProcessor = new SimulationTemplateProcessor
+//            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
+//            // Add simulation generator to model compiler
+//            kicoModelCompiler.simulationProcessor = simProcessor
+//        }
+//    }
+//    
+//    private def void initializeDefaultJavaConfiguration() {
+//        // Create Simulation compilers
+//        val javaCompiler = new JavaSimulationCompiler
+//        javaCompiler.monitor = monitor
+//        simulationCompilers.add(javaCompiler)
+//        
+//        // Create KiCo model compiler
+//        val kicoModelCompiler = new KiCoModelCompiler
+//        modelCompilers.add(kicoModelCompiler)
+//        kicoModelCompiler.outputFolder = outputFolder.stringValue
+//        kicoModelCompiler.monitor = monitor
+//        kicoModelCompiler.fileExtension.value = "java"
+//        kicoModelCompiler.compileChain.value = "s.java"
+//        kicoModelCompiler.outputTemplate.value = "src/TargetTemplate.ftl"
+//        
+//        // Create simulation template processor
+//        val simTemplate = project.getFile("src/JavaSimulation.ftl")
+//        if(simTemplate.exists) {
+//            val simProcessor = new SimulationTemplateProcessor
+//            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
+//            // Add simulation generator to model compiler
+//            kicoModelCompiler.simulationProcessor = simProcessor
+//        }
+//    }
     
     private def void initializeConfiguration(IFile file) {
         val model = ModelImporter.load(file)
-        if(model instanceof BuildConfiguration) {
+        if(model != null && model instanceof BuildConfiguration) {
+            val buildConfig = model as BuildConfiguration
             // Update attributes
-            this.updateConfigurableAttributes(model.attributes)
+            this.updateConfigurableAttributes(buildConfig.attributes)
             
             // Create model compilers
-            for(config : model.modelCompilers) {
+            for(config : buildConfig.modelCompilers) {
                 val name = config.name
                 val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
                 val configurations = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.prom.modelCompiler",
@@ -501,7 +503,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             }
             
             // Create simulation compilers
-            for(config : model.simulationCompilers) {
+            for(config : buildConfig.simulationCompilers) {
                 val name = config.name
                 val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
                 val configurations = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.prom.simulationCompiler",
@@ -519,7 +521,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 }
             }
             
-            for(config : model.templateProcessors) {
+            for(config : buildConfig.templateProcessors) {
                 var TemplateProcessor processor
                 if(config instanceof NormalTemplateProcessor) {
                     processor = new SimpleTemplateProcessor
@@ -538,7 +540,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 }
             }
         } else {
-            throw new Exception("Build configuration could not be loaded")
+            throw new Exception("Build configuration '" + file.projectRelativePath + "' could not be loaded")
         }
     }
 

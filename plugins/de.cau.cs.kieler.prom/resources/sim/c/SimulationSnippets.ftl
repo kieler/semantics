@@ -1,8 +1,8 @@
-
+<#--
 /*****************************************************************************/
 /* MACROS TO SEND / RECEIVE A VARIABLE
 /*****************************************************************************/
-
+-->
 <#macro Simulate isInput isOutput indices...>
     <@input>
         // Receive ${varname}
@@ -12,8 +12,10 @@
             <#if indices?has_content>
             cJSON *array_values = cJSON_GetObjectItemCaseSensitive(value_item, "values");
             int oneDimIndex = 0;
+            <#assign index = 0>
             <#list indices as s>
-            for(int i${s?index} = 0; i${s?index} < ${s}; i${s?index}++) {
+            for(int i${index} = 0; i${index} < ${s}; i${index}++) {
+            <#assign index = index+1>
             </#list>
                 cJSON *array_value = cJSON_GetArrayItem(array_values, oneDimIndex);
                 <@array_elem indices /> = <@value_of_item "array_value" />
@@ -47,8 +49,10 @@
             // Add values of (multidimensional) array in single row.
             arrValues = cJSON_CreateArray();
             cJSON_AddItemToObject(arr, "values", arrValues);
+            <#assign index = 0>
             <#list indices as s>
-            for(int i${s?index} = 0; i${s?index} < ${s}; i${s?index}++) {
+            for(int i${index} = 0; i${index} < ${s}; i${index}++) {
+            <#assign index = index+1>
             </#list>
                 cJSON_AddItemToArray(arrValues, <@cJSON_value_method />(<@array_elem indices />));
             <#list indices as s>
@@ -64,7 +68,7 @@
 </#macro>
 
 <#macro array_elem indices>
-${varname}<#list indices as s>[i${s?index}]</#list><#t>
+${varname}<#list indices as s>[i${index}]</#list><#t>
 </#macro>
 
 <#macro cJSON_value var>

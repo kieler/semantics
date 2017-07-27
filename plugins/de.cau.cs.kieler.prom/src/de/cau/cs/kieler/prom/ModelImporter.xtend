@@ -40,13 +40,13 @@ class ModelImporter {
     
     public static def EObject load(IFile file, ResourceSet resourceSet) {
         val resource = getResource(file, resourceSet)
-        reload(resource, resourceSet)
-        
-        if(!resource.getContents().isEmpty) {
-            return resource.getContents().get(0)
-        } else {
-            return null
+        if(resource != null) {
+            reload(resource, resourceSet)
+            if(!resource.getContents().isEmpty) {
+                return resource.getContents().get(0)
+            }
         }
+        return null
     }
     
     public static def void reload(Resource res, ResourceSet resourceSet) {
@@ -56,8 +56,11 @@ class ModelImporter {
     
     public static def Resource getResource(IFile file, ResourceSet resourceSet) {
         val uri = URI.createFileURI(file.location.toOSString)
-        val resource = resourceSet.getResource(uri, true)
-        return resource
+        try {
+            return resourceSet.getResource(uri, true)
+        } catch(Exception e) {
+            return null
+        }
     }
     
     public static def EObject getEObject(IFile file, ResourceSet resourceSet) {

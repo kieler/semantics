@@ -13,18 +13,15 @@
 package de.cau.cs.kieler.prom.ui.build
 
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.data.EnvironmentData
-import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.UIUtil
-import java.util.ArrayList
+import java.util.EnumSet
+import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.QualifiedName
-import org.eclipse.jface.viewers.ComboViewer
-import org.eclipse.jface.viewers.ISelectionChangedListener
-import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.viewers.SelectionChangedEvent
-import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.swt.events.ModifyEvent
+import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.PropertyPage
 
 /**
@@ -34,34 +31,24 @@ import org.eclipse.ui.dialogs.PropertyPage
 class PromProjectProperties extends PropertyPage {
     
     /**
-     * The quialifier for prom project properties.
+     * Widget to select the build configuration
      */
-    public static val QUALIFIER = "de.cau.cs.kieler.prom"
-    /**
-     * The name of the property for environments
-     */
-    public static val ATTR_ENVIRONMENT = "environment"
-    
-    /**
-     * Widget to select the environment
-     */
-    ComboViewer environment;
+    Text buildConfigFile;
     
     /**
      * {@inheritDocs}
      */
     override protected createContents(Composite parent) {
-        val store = PromUIPlugin.getDefault().preferenceStore
-        val environments = EnvironmentData.loadAllFromPreferenceStore(store)
-        
-        // Create environment combo box
-        environment = UIUtil.createEnvironmentsCombo(parent, environments)
-        environment.addSelectionChangedListener(new ISelectionChangedListener() {
-            override void selectionChanged(SelectionChangedEvent event) {
-                setProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, getSelectedEnvironment().identifier)
+        val group = UIUtil.createGroup(parent, "kibuild file", 2)
+        // Create the text field for the config file
+        buildConfigFile = UIUtil.createTextField(group, null,
+                                                 EnumSet.of(UIUtil.Buttons.RESOURCE_BUTTON),
+                                                 [return resource as IProject])
+        buildConfigFile.addModifyListener(new ModifyListener() {
+             override modifyText(ModifyEvent e) {
+                setProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER, buildConfigFile.text)
             }
         });
-        
         loadSettings()
         
         return parent
@@ -96,53 +83,12 @@ class PromProjectProperties extends PropertyPage {
     }
     
     /**
-     * Sets a property on the resource
-     * 
-     * @param localName The name of the property. The qualified name is constructed from this.
-     * @param value The value of the property
-     */
-    def void setProperty(String localName, String value) {
-        resource.setPersistentProperty(new QualifiedName(QUALIFIER, localName), value)
-    }
-    
-    /**
-     * Returns a property of the resource
-     * 
-     * @param localName The name of the property. The qualified name is constructed from this.
-     * @return the value of the property
-     */
-    def String getProperty(String localName) {
-        return resource.getPersistentProperty(new QualifiedName(QUALIFIER, localName))
-    }
-    
-    /**
      * Updates the UI with the values of the resource
      */
     private def void loadSettings() {
-        // Load environment
-        if (environment.input != null) {
-            val loadedEnvironmentName = getProperty(PromPlugin.ENVIRIONMENT_QUALIFIER)
-            for (env : environment.input as ArrayList<EnvironmentData>) {
-                if (env.name == loadedEnvironmentName) {
-                    environment.selection = new StructuredSelection(env)
-                }
-            }
-        }
-    }
-    
-    /**
-     * Returns the selected environment.
-     * 
-     * @return the environment selected in the combobox<br />
-     *         or null if there is no selection.
-     */
-    public def EnvironmentData getSelectedEnvironment() {
-        val selection = environment.getSelection();
-        if (!selection.isEmpty()) {
-            val structuredSelection = selection as IStructuredSelection
-            return structuredSelection.getFirstElement() as EnvironmentData
-        } else {
-            return null
+        val loadedFilePath = getProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER)
+        if (!loadedFilePath.isNullOrEmpty) {
+            buildConfigFile.text = loadedFilePath
         }
     }
 }
