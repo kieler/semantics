@@ -230,6 +230,7 @@
           <version>${xtend-version}</version>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
+            <javaSourceVersion>1.8</javaSourceVersion>
           </configuration>
         </plugin>
         <!-- add src-gen and xtend-gen to source-directories -->
