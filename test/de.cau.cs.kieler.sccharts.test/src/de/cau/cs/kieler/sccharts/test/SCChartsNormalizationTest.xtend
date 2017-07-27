@@ -68,7 +68,7 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<SCChart
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("sccharts")
+        return modelData.modelProperties.contains("scchartsX")
         && !modelData.additionalProperties.containsKey("testSerializability")
         && !modelData.modelProperties.contains("must-fail")
     }

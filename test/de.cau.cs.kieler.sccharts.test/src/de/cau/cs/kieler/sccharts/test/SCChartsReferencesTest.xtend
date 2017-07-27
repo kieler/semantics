@@ -54,7 +54,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("sccharts") && !modelData.resourceSetID.nullOrEmpty
+        return modelData.modelProperties.contains("scchartsX") && !modelData.resourceSetID.nullOrEmpty
     }
     
     @Test
