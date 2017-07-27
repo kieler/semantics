@@ -1598,9 +1598,10 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
                         val exp = guard.expression.copy
                     	expText = serializeHR(exp) as String
                     }
-					bbName = bbName + "\n" + expText                	
+					bbName = bbName + "\n" + expText
                 }
                 
+    			bbName = bbName.replaceAll("_g", "g")                	
                 bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = BASICBLOCKBORDER.copy
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
@@ -1626,7 +1627,8 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
 					}
             	    
             	    if (!SHOW_BASICBLOCKS.booleanValue) {
-                	   sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
+            	        sbName = sbName.replaceAll("_g", "g")
+                	    sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
                	    }
                 	
                     if (basicBlock.deadBlock) {
@@ -1636,6 +1638,10 @@ class SCGraphsDiagramSynthesis extends AbstractDiagramSynthesis<SCGraphs> {
                         ]
                         sbContainer.KRendering.background = SCHEDULING_DEADCODE.copy
                         sbContainer.KRendering.background.alpha = 128
+                    } else if (basicBlock.termBlock) {
+                        sbContainer.getData(KRoundedRectangle) => [
+                            it.lineWidth = 2.0f
+                        ]
                     }
                 }
         }

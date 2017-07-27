@@ -17,6 +17,9 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 
 /**
+ * Abstract class for code generator modules
+ * Modules are intended to be fulfill a specific code generation task and can be linked together.  
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 
@@ -36,8 +39,13 @@ abstract class CodeGeneratorModule {
         
     }
     
-    new(String baseName) {
-        this.baseName = baseName       
+    protected def indent() {
+        code.append(indentation)
     }
     
+    protected def indent(int n) {
+        for (i : 1..n) {
+            code.append(indentation)
+        }
+    }
 }

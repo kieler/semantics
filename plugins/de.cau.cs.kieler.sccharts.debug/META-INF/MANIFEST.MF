@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.klighd,
+ de.cau.cs.kieler.sccharts.ui,
  de.cau.cs.kieler.klighd.krendering.extensions
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

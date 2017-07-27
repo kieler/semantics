@@ -43,7 +43,7 @@ class SchedulerWrapper extends Processor<SCGraphs, SCGraphs> {
     override process() {
         val wrappedTransformation = injector.getInstance(SimpleGuardScheduler)
         for (scg : getModel.scgs) {
-            wrappedTransformation.transform(scg)                               
+            wrappedTransformation.transform(scg, null)                               
         }        
     }
     

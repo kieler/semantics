@@ -237,6 +237,15 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.PRINT_CALL: {
+                PrintCall printCall = (PrintCall)theEObject;
+                T result = casePrintCall(printCall);
+                if (result == null) result = caseCall(printCall);
+                if (result == null) result = caseExpression(printCall);
+                if (result == null) result = caseSchedulable(printCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.REFERENCEABLE: {
                 Referenceable referenceable = (Referenceable)theEObject;
                 T result = caseReferenceable(referenceable);
@@ -490,6 +499,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseFunctionCall(FunctionCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Print Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Print Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePrintCall(PrintCall object) {
         return null;
     }
 

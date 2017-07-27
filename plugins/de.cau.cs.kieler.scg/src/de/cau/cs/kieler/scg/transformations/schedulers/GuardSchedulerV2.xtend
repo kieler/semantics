@@ -245,7 +245,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
                         
                         // Add the guarded scheduling blocks to the list of needed scheduling blocks
                         guard.expression.getAllReferences.forEach[
-                            if (!it.valuedObject.name.equals(AbstractGuardExpressions.GOGUARDNAME)) {
+                            if (!it.valuedObject.name.equals(AbstractGuardExpressions.GO_GUARD_NAME)) {
                                 if (it.valuedObject != null) {
                                     val sb = schedulingBlockVOCache.get(it.valuedObject)
                                     if (sb != null) {

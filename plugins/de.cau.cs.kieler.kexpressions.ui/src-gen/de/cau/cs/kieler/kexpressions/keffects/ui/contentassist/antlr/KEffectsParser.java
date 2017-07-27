@@ -94,6 +94,8 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1(), "rule__FunctionCallEffect__Group_1__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0(), "rule__FunctionCallEffect__Group_1_2_0__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0_2(), "rule__FunctionCallEffect__Group_1_2_0_2__0");
+					put(grammarAccess.getPrintCallEffectAccess().getGroup(), "rule__PrintCallEffect__Group__0");
+					put(grammarAccess.getPrintCallEffectAccess().getGroup_3(), "rule__PrintCallEffect__Group_3__0");
 					put(grammarAccess.getExpressionAccess().getGroup(), "rule__Expression__Group__0");
 					put(grammarAccess.getExpressionAccess().getGroup_1(), "rule__Expression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
@@ -213,6 +215,9 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_1_1(), "rule__FunctionCallEffect__FunctionNameAssignment_1_1");
 					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_1");
 					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_2_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_2_1");
+					put(grammarAccess.getPrintCallEffectAccess().getAnnotationsAssignment_0(), "rule__PrintCallEffect__AnnotationsAssignment_0");
+					put(grammarAccess.getPrintCallEffectAccess().getParametersAssignment_2(), "rule__PrintCallEffect__ParametersAssignment_2");
+					put(grammarAccess.getPrintCallEffectAccess().getParametersAssignment_3_1(), "rule__PrintCallEffect__ParametersAssignment_3_1");
 					put(grammarAccess.getExpressionAccess().getScheduleAssignment_1_1(), "rule__Expression__ScheduleAssignment_1_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");

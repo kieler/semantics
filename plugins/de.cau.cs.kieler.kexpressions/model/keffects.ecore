@@ -37,4 +37,5 @@
   <eClassifiers xsi:type="ecore:EClass" name="HostcodeEffect" eSuperTypes="#//Effect kexpressions.ecore#//TextExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//ReferenceCall"/>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//FunctionCall"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrintCallEffect" eSuperTypes="#//Effect kexpressions.ecore#//PrintCall"/>
 </ecore:EPackage>

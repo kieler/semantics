@@ -12,17 +12,15 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 
-import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.scg.SCGraph
-import java.util.Map
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.codegen.SCG2CSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import com.google.inject.Inject
 
 /**
+ * C Code Generator Struct Module
+ * 
+ * Handles the creation of the data struct.
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 
@@ -30,19 +28,18 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
  */
 class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
-    @Inject extension SCG2CSerializeHRExtensions
+    @Inject extension CCodeSerializeHRExtensions
     
-    val structName = "TickData"
-    val guardType = "char"
-    
-    new(String baseName, SCGraphs sCGraphs, SCGraph scg, Processor<SCGraphs, CodeContainer> processorInstance, 
-        Map<SCGraph, SCGCodeGeneratorModule> codeGeneratorModuleMap
-    ) {
-        super(baseName, sCGraphs, scg, processorInstance, codeGeneratorModuleMap)
+    public static val STRUCT_NAME = "TickData"
+    public static val STRUCT_VARIABLE_NAME = "d"
+    public static val STRUCT_PRE_PREFIX = "_p"
+  
+    def getName() {
+        STRUCT_NAME + baseName + suffix
     }
     
-    def getName() {
-        structName + baseName + suffix
+    def getVariableName() {
+        STRUCT_VARIABLE_NAME
     }
     
     override generateInit() {
@@ -50,10 +47,15 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     }
     
     override generate() {
+        
+        // Add the declarations of the model.
         for (declaration : scg.declarations) {
-            if (declaration instanceof VariableDeclaration) {
-                code.append(indentation + declaration.type)
-                code.append(";\n")
+            for (valuedObject : declaration.valuedObjects) {
+                if (declaration instanceof VariableDeclaration) {
+                    code.append(indentation + declaration.type.serializeHR + " ")
+                    code.append(valuedObject.name)
+                    code.append(";\n")
+                }
             }
         }
     }

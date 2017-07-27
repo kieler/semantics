@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer
+import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -42,9 +43,11 @@ class SequentializerWrapper extends Processor<SCGraphs, SCGraphs> {
     
     override process() {
         val wrappedTransformation = injector.getInstance(SimpleGuardSequentializer)
+        val SCGGraphs = ScgFactory.eINSTANCE.createSCGraphs
         for (scg : getModel.scgs) {
-            wrappedTransformation.transform(scg)                               
+            SCGGraphs.scgs += wrappedTransformation.transform(scg, null)                               
         }        
+        setModel(SCGGraphs)
     }
     
     override getType() {

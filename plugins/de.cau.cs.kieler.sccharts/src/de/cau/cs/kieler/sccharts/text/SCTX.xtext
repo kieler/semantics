@@ -1,0 +1,193 @@
+grammar de.cau.cs.kieler.sccharts.text.SCTX with de.cau.cs.kieler.kexpressions.kext.KExt
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
+
+//generate sct3 "http://kieler.cs.cau.de/sccharts/textual3/0.1.0"
+
+// ---------------- //
+//  SCCharts Rules  // 
+// ---------------- //
+
+SCCharts returns sccharts::SCCharts:
+    pragmas+=Pragma*
+    rootStates+=RootState*;
+
+// ------------- //
+//  State Rules  // 
+// ------------- //
+
+
+RootState returns sccharts::State:
+	annotations+=Annotation*
+	'scchart' name=ExtendedID label=STRING?
+	'{'
+		declarations+=DeclarationWOSemicolon*
+		actions+=LocalAction*
+		(regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region*)
+	'}';
+    
+
+State returns sccharts::State:
+	annotations+=Annotation*
+	initial?='initial'?
+	final?='final'?
+	violation?='violation'?
+	connector?='connector'?
+	'state' name=ID label=STRING?
+	((
+	    'is' reference = ScopeCall
+	)|('{'
+		declarations+=DeclarationWOSemicolon*
+		actions+=LocalAction*
+		(regions+=ImplicitControlflowRegion | regions+=ImplicitDataflowRegion | regions+=Region*)
+	'}'))?
+	outgoingTransitions+=Transition*;
+	
+
+ImplicitState returns sccharts::State:
+    {sccharts::State}
+    (regions+=Region+);
+
+	
+ScopeCall returns sccharts::ScopeCall:
+    scope = [sccharts::State|ID]
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '(' ')')?;
+    
+Parameter returns kexpressions::Parameter:
+    ((pureOutput ?= '!')? callByReference ?= '&')?
+    expression = Expression
+    ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
+    ;    
+    
+// ------------------ //
+//  Transition Rules  // 
+// ------------------ //
+
+Transition returns sccharts::Transition:
+	annotations+=RestrictedTypeAnnotation*
+	preemption=(PreemptionType | PreemptionTypeLegacy)
+	targetState=[sccharts::State|ID]
+	delay=DelayType?
+	deferred?='deferred'?
+	history=HistoryType?
+	(
+		//                      -> This alternative is only for the serializer to enable forcing of brackets
+		('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
+		|
+		('if' label=STRING)
+	)?;
+	
+// -------------- //
+//  Region Rules  // 
+// -------------- //
+
+Region returns sccharts::Region:
+    ControlflowRegion | NestedControlflowRegion | DataflowRegion;
+
+ImplicitControlflowRegion returns sccharts::ControlflowRegion:
+    {sccharts::ControlflowRegion}
+    (states+=State)+;
+
+
+ImplicitDataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
+    (equations += Equation)+;
+
+
+ControlflowRegion returns sccharts::ControlflowRegion:
+    {sccharts::ControlflowRegion}
+    annotations+=Annotation*
+    'region' name=ExtendedID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    states+=State+;
+
+    
+NestedControlflowRegion returns sccharts::ControlflowRegion:
+    {sccharts::ControlflowRegion}
+    annotations+=Annotation*
+    'region' name=ExtendedID? label=STRING? '{'
+    declarations+=DeclarationWOSemicolon*
+    (states+=ImplicitState | states+=State+)
+    '}'
+;
+
+
+DataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
+    annotations+=Annotation*
+    'dataflow' name=ExtendedID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    equations+=Equation+;
+	
+// -------------- //
+//  Action Rules  // 
+// -------------- //
+	
+LocalAction returns sccharts::LocalAction:
+    EntryAction | DuringAction | ExitAction | SuspendAction | PrecedingAction | SucceedingAction;    
+
+EntryAction returns sccharts::EntryAction:
+	{sccharts::EntryAction}
+   'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+         
+DuringAction returns sccharts::DuringAction:
+	{sccharts::DuringAction}
+    delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+         
+ExitAction returns sccharts::ExitAction:
+	{sccharts::ExitAction}
+	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+       
+SuspendAction returns sccharts::SuspendAction:
+	{sccharts::SuspendAction}
+	delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)?;
+      
+PrecedingAction returns sccharts::PrecedingAction:
+	{sccharts::PrecedingAction}
+   'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+         
+SucceedingAction returns sccharts::SucceedingAction:
+	{sccharts::SucceedingAction}
+	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+
+
+// ---------------- //
+//  Equation Rules  // 
+// ---------------- //
+
+DFAssignment returns keffects::Assignment:
+    annotations+=Annotation*    
+	valuedObject=[kexpressions::ValuedObject]
+	('[' indices+=Expression ']')*
+	 operator=AssignOperator expression = Expression;
+
+Equation returns keffects::Assignment:
+    SubReferenceAssignment;
+
+// ------------ //
+//  Enum Rules  // 
+// ------------ //
+
+enum PreemptionType returns sccharts::PreemptionType:
+	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
+
+enum PreemptionTypeLegacy returns sccharts::PreemptionType:
+    WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
+    
+enum DelayType returns sccharts::DelayType:
+    UNDEFINED = 'undefined' | DELAYED = 'delayed' | IMMEDIATE = 'immediate' | AUTOMATIC = 'auto';    
+
+enum HistoryType returns sccharts::HistoryType:
+    RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
+	
+// -------------- //
+//  Helper Rules  // 
+// -------------- //
+
+// These are implicit keywords due to rules such as 'go to'
+HiddenKeywords: 'go' | 'abort' | 'join' | 'shallow';

@@ -123,7 +123,7 @@
       </perspectiveExtension>
     </extension>
     <extension
-          point="de.cau.cs.kieler.sccharts.klighd.hooks">
+          point="de.cau.cs.kieler.sccharts.ui.hooks">
        <hook
              class="de.cau.cs.kieler.sccharts.debug.ui.BreakpointVisualizationHook">
        </hook>

@@ -23,6 +23,19 @@
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
             genModel="model/sccharts.genmodel"/>
    </extension>
+   
+   <extension-point id="text.generator.extension" 
+        name="SCT Generator Extension" 
+        schema="schema/de.cau.cs.kieler.sccharts.text.generator.extension.exsd"/>
+   <extension
+         point="de.cau.cs.kieler.sccharts.text.generator.extension">
+      <SCTGeneratorExtension
+            class="de.cau.cs.kieler.sccharts.text.sctgenerator.extensions.AbortExtension">
+      </SCTGeneratorExtension>
+      <SCTGeneratorExtension
+            class="de.cau.cs.kieler.sccharts.text.sctgenerator.extensions.ActionExtension">
+      </SCTGeneratorExtension>
+   </extension>   
 
      <extension
            point="de.cau.cs.kieler.kico.extension">

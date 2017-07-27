@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
 import de.cau.cs.kieler.kexpressions.Parameter;
+import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
@@ -163,6 +164,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass functionCallEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass printCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -735,6 +743,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getPrintCall() {
+        return printCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getReferenceable() {
         return referenceableEClass;
     }
@@ -999,6 +1016,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         functionCallEClass = createEClass(FUNCTION_CALL);
         createEAttribute(functionCallEClass, FUNCTION_CALL__FUNCTION_NAME);
 
+        printCallEClass = createEClass(PRINT_CALL);
+
         referenceableEClass = createEClass(REFERENCEABLE);
 
         schedulableEClass = createEClass(SCHEDULABLE);
@@ -1063,6 +1082,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         referenceCallEClass.getESuperTypes().add(this.getValuedObjectReference());
         referenceCallEClass.getESuperTypes().add(this.getCall());
         functionCallEClass.getESuperTypes().add(this.getCall());
+        printCallEClass.getESuperTypes().add(this.getCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1143,6 +1163,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(printCallEClass, PrintCall.class, "PrintCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(referenceableEClass, Referenceable.class, "Referenceable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

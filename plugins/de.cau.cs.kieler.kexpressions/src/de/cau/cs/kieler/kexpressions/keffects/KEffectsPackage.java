@@ -407,6 +407,52 @@ public interface KEffectsPackage extends EPackage {
     int FUNCTION_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 2;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl <em>Print Call Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getPrintCallEffect()
+     * @generated
+     */
+    int PRINT_CALL_EFFECT = 6;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL_EFFECT__SCHEDULE = EFFECT__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Print Call Effect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -414,7 +460,7 @@ public interface KEffectsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getAssignOperator()
      * @generated
      */
-    int ASSIGN_OPERATOR = 6;
+    int ASSIGN_OPERATOR = 7;
 
 
     /**
@@ -553,6 +599,16 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EClass getFunctionCallEffect();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect <em>Print Call Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Print Call Effect</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+     * @generated
+     */
+    EClass getPrintCallEffect();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}'.
@@ -701,6 +757,16 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EClass FUNCTION_CALL_EFFECT = eINSTANCE.getFunctionCallEffect();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl <em>Print Call Effect</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.PrintCallEffectImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getPrintCallEffect()
+         * @generated
+         */
+        EClass PRINT_CALL_EFFECT = eINSTANCE.getPrintCallEffect();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.

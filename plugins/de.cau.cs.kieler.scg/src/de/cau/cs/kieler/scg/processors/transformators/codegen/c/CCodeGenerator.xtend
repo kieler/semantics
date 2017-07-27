@@ -18,14 +18,20 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import com.google.inject.Inject
+import com.google.inject.Injector
 
 /**
+ * C Code Processor
+ * 
  * @author ssm
  * @kieler.design 2017-07-21 proposed 
  * @kieler.rating 2017-07-21 proposed yellow 
  * 
  */
 class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
+    
+    @Inject Injector injector
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.codegen.c"
@@ -43,10 +49,12 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         val graphs = getModel
         val result = new CodeContainer
         
+        // Create a c code generator module for each SCG.
         val scgModuleMap = <SCGraph, SCGCodeGeneratorModule> newHashMap
         for (scg : graphs.scgs) {
-            scgModuleMap.put(scg, new CCodeGeneratorModule("", graphs, scg, this, scgModuleMap))
-            scgModuleMap.get(scg).suffix = hostcodeSafeName(scg.name)
+            val generatorModule = injector.getInstance(CCodeGeneratorModule).configure("", graphs, scg, this, scgModuleMap, null)
+            scgModuleMap.put(scg, generatorModule)
+            generatorModule.suffix = hostcodeSafeName(scg.name)
         }
         
         for (scg : graphs.scgs) {
@@ -75,3 +83,4 @@ class CCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     }
 
 }
+

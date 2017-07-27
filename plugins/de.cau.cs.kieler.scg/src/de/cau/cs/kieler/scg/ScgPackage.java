@@ -1158,13 +1158,22 @@ public interface ScgPackage extends EPackage {
 	int BASIC_BLOCK__DEAD_BLOCK = 6;
 
 	/**
+     * The feature id for the '<em><b>Term Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASIC_BLOCK__TERM_BLOCK = 7;
+
+    /**
      * The feature id for the '<em><b>Pre Guard</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK__PRE_GUARD = 7;
+	int BASIC_BLOCK__PRE_GUARD = 8;
 
 	/**
      * The number of structural features of the '<em>Basic Block</em>' class.
@@ -1173,7 +1182,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int BASIC_BLOCK_FEATURE_COUNT = 8;
+	int BASIC_BLOCK_FEATURE_COUNT = 9;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.
@@ -2265,6 +2274,17 @@ public interface ScgPackage extends EPackage {
 	EAttribute getBasicBlock_DeadBlock();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isTermBlock <em>Term Block</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Term Block</em>'.
+     * @see de.cau.cs.kieler.scg.BasicBlock#isTermBlock()
+     * @see #getBasicBlock()
+     * @generated
+     */
+    EAttribute getBasicBlock_TermBlock();
+
+    /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.BasicBlock#getPreGuard <em>Pre Guard</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2913,6 +2933,14 @@ public interface ScgPackage extends EPackage {
 		EAttribute BASIC_BLOCK__DEAD_BLOCK = eINSTANCE.getBasicBlock_DeadBlock();
 
 		/**
+         * The meta object literal for the '<em><b>Term Block</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BASIC_BLOCK__TERM_BLOCK = eINSTANCE.getBasicBlock_TermBlock();
+
+        /**
          * The meta object literal for the '<em><b>Pre Guard</b></em>' reference feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
