@@ -132,6 +132,21 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     override KNode transform(CViewModel model) {
         instance = this
         connectedComponents.clear
+        
+        if (ANONYMIZE.booleanValue) {
+            // anonymize the model
+            for (component : model.components) {
+                component.name =  component.name.possiblyAnonymize(true)
+                component.location = component.location.possiblyAnonymize(true)
+                component.tooltip = component.tooltip.possiblyAnonymize(false)
+                component.rawdata = component.rawdata.possiblyAnonymize(false)
+            }
+            for (connection : model.connections) {
+                connection.label = connection.label.possiblyAnonymize(true)
+                connection.tooltip = connection.tooltip.possiblyAnonymize(false)
+            }
+        }
+        
 
         val root = model.createNode().associateWith(model);
         val depth = 1;
@@ -277,9 +292,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         return component.parent
     }
-    
-    
-    def static String fixId(String name) {
+
+    def static String fixId(String name, boolean nospaces) {
         if (name == null) {
             return "Empty"
         }
@@ -292,102 +306,135 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         returnName = returnName.replace(":", "")
         returnName = returnName.replace(";", "")
         returnName = returnName.replace(",", "_")
-        returnName = returnName.replace(" ", "")
+        if (nospaces) {
+            returnName = returnName.replace(" ", "_")
+        }
         returnName = returnName.replace("-", "")
         returnName = returnName.replace("*", "")
         returnName = returnName.replace("/", "")
         returnName = returnName.replace("\\", "")
         returnName = returnName.replace("\"", "")
         returnName = returnName.replace("'", "")
-        returnName = returnName.replace("=", "Equals")
+        returnName = returnName.replace("=",
+            "Equals")
         return returnName
     }
-    
-    val static LOREIPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.".fixId
-    
-    def String loreipsum(int length) {
-        return LOREIPSUM.substring(0, length-1);
-    }
-    
-    def String possiblyAnonymize(String text) {
-        if (ANONYMIZE.booleanValue) {
-            return (text.length.loreipsum) 
-        }
-        return text
-    }
 
-    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts, KColor color, boolean addLabel) {
-        connectedComponents.add(connection.src)
-        connectedComponents.add(connection.dst)
-        connection.src.addConnectedParents
-        connection.dst.addConnectedParents
-        val connectionObject = (connection.hashCode + srcNode.hashCode)
-        val edge = connectionObject.createEdge()
-//        edge.associateWith(connection)
-        val arrowRendering = edge.addPolyline(2).addHeadArrowDecorator();
-        arrowRendering.background = color.copy
-        arrowRendering.foreground = color.copy
-        edge.source = srcNode
-        edge.target = dstNode
-        // Basic spline
-        edge.addConnectionSpline();
-        edge.line.foreground = color.copy
-        // if (connection.src == null && connection.dst == null) 
-        if (addLabel) {
-            // Add Label only if top-most layer for this connection
-            edge.addLabel(connection.label.possiblyAnonymize).associateWith(connection);
-        }
-        if (connection.tooltip != null) {
-            edge.setProperty(KlighdProperties::TOOLTIP, connection.tooltip);
-            if (edge.labels.size > 0) {
-                edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, connection.tooltip);
+    val static LOREIPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.".
+        fixId(
+            false)
+    val static LOREIPSUM_NOSPACE = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.".
+            fixId(true)
+
+        def String loreipsum(int start, int length, boolean nospace) {
+            if (nospace) {
+                return LOREIPSUM_NOSPACE.substring(start, start + length);
+            } else {
+                return LOREIPSUM.substring(start, start + length);
             }
         }
 
-        connection.src.rootComponent.node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-        connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
-        connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-        connection.src.rootComponent.node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
-
-        if (usePorts) {
-            // Add the connection
-            val portId = connection.hashCode.toString
-            // val portId = (connection.hashCode + srcNode.hashCode).toString
-            val srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
-            val dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
-            edge.sourcePort = srcPort
-            edge.targetPort = dstPort
-            edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
-            edge.line.setSelectionBackground(SELECTION_CONNECTION_COLOR.color)
-            edge.line.foreground.propagateToChildren = true;
-            edge.line.background.propagateToChildren = true;
+        def String possiblyAnonymize(String text, boolean nospace) {
+            if (text != null && ANONYMIZE.booleanValue) {
+//                println("START ---------------------------------------------------")
+//                println(text)
+                val lipsumLength = LOREIPSUM.length
+                var length = text.trim.length
+                if (length > lipsumLength) {
+                    length = lipsumLength - 1
+                }
+                var div = (lipsumLength - length)
+                if (div <= 0) {
+                    div = 1
+                }
+                var startIndex = (text.hashCode % div) - length
+                if (startIndex < 0) {
+                    startIndex = 0;
+                }
+                if (startIndex + length > lipsumLength) {
+                    length = lipsumLength - startIndex
+                }
+                var returnText = startIndex.loreipsum(length, nospace)
+//                println("DONE ---------------------------------------------------")
+                return returnText.trim
+            }
+            return text
         }
-    }
 
-    def KPort addPort(KNode node, Connection connection, Object mapping, float x, float y, int size, PortSide side,
-        KColor color) {
-        val returnPort = node.createPort(mapping);
+        def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts,
+            KColor color, boolean addLabel) {
+            connectedComponents.add(connection.src)
+            connectedComponents.add(connection.dst)
+            connection.src.addConnectedParents
+            connection.dst.addConnectedParents
+            val connectionObject = (connection.hashCode + srcNode.hashCode)
+            val edge = connectionObject.createEdge()
+//        edge.associateWith(connection)
+            val arrowRendering = edge.addPolyline(2).addHeadArrowDecorator();
+            arrowRendering.background = color.copy
+            arrowRendering.foreground = color.copy
+            edge.source = srcNode
+            edge.target = dstNode
+            // Basic spline
+            edge.addConnectionSpline();
+            edge.line.foreground = color.copy
+            // if (connection.src == null && connection.dst == null) 
+            if (addLabel) {
+                // Add Label only if top-most layer for this connection
+                edge.addLabel(connection.label).associateWith(connection);
+            }
+            if (connection.tooltip != null) {
+                val tooltipText = connection.tooltip
+                edge.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+                if (edge.labels.size > 0) {
+                    edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
+                }
+            }
+
+            connection.src.rootComponent.node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+            connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+            connection.src.rootComponent.node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
+
+            if (usePorts) {
+                // Add the connection
+                val portId = connection.hashCode.toString
+                // val portId = (connection.hashCode + srcNode.hashCode).toString
+                val srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
+                val dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
+                edge.sourcePort = srcPort
+                edge.targetPort = dstPort
+                edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
+                edge.line.setSelectionBackground(SELECTION_CONNECTION_COLOR.color)
+                edge.line.foreground.propagateToChildren = true;
+                edge.line.background.propagateToChildren = true;
+            }
+        }
+
+        def KPort addPort(KNode node, Connection connection, Object mapping, float x, float y, int size, PortSide side,
+            KColor color) {
+            val returnPort = node.createPort(mapping);
 //        val returnPort = mapping.createPort(node);
-        if (side != null) {
-            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            returnPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
-        }
-        val rect = returnPort.addRectangle
-        node.addLayoutParam(CoreOptions::PORT_ANCHOR, new KVector(0, 100));
-        // returnPort.addLayoutParam(CoreOptions::PORT_ANCHOR, new KVector(0,0) );
-        rect.background = color.copy
-        rect.foreground = "White".color
-        rect.selectionBackground = SELECTION_CONNECTION_COLOR.color
-        rect.selectionForeground = SELECTION_CONNECTION_COLOR.color
-        rect.associateWith(connection)
-        rect.associateWith(connection)
-        returnPort.associateWith(connection)
+            if (side != null) {
+                node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+                returnPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
+            }
+            val rect = returnPort.addRectangle
+            node.addLayoutParam(CoreOptions::PORT_ANCHOR, new KVector(0, 100));
+            // returnPort.addLayoutParam(CoreOptions::PORT_ANCHOR, new KVector(0,0) );
+            rect.background = color.copy
+            rect.foreground = "White".color
+            rect.selectionBackground = SELECTION_CONNECTION_COLOR.color
+            rect.selectionForeground = SELECTION_CONNECTION_COLOR.color
+            rect.associateWith(connection)
+            rect.associateWith(connection)
+            returnPort.associateWith(connection)
 
-        returnPort.setSize(size, size)
-        returnPort.addRectangle.invisible = true;
-        node.ports += returnPort
-        return returnPort
-    }
+            returnPort.setSize(size, size)
+            returnPort.addRectangle.invisible = true;
+            node.ports += returnPort
+            return returnPort
+        }
 
 //    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
 //        val edge = createEdge().associateWith(connection)
@@ -404,218 +451,221 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //        srcNode.outgoingEdges.add(edge)
 //    // srcNode.port.edges.add(edge)
 //    }
-    def KNode transformItem(Component item, int depth) {
-        if (item.isFile) {
-            if (SHOW_FUNCTIONS.booleanValue) {
-                return item.transformItemFileWithFunctions(depth)
-            } else {
-                return item.transformItemFile(depth)
+        def KNode transformItem(Component item, int depth) {
+            if (item.isFile) {
+                if (SHOW_FUNCTIONS.booleanValue) {
+                    return item.transformItemFileWithFunctions(depth)
+                } else {
+                    return item.transformItemFile(depth)
+                }
+            } else if (item.isDir) {
+                return item.transformItemDir(depth)
+            } else if (item.isFunc) {
+                return item.transformItemFunc(depth)
             }
-        } else if (item.isDir) {
-            return item.transformItemDir(depth)
-        } else if (item.isFunc) {
-            return item.transformItemFunc(depth)
-        }
-    }
-
-    def KNode transformItemFunc(Component item, int depth) {
-        val childNode = item.createNode().associateWith(item);
-        val childRect = childNode.addRoundedRectangle(4, 4, 2);
-        val label = childNode.addInsideCenteredNodeLabel(item.name.possiblyAnonymize, KlighdConstants.DEFAULT_FONT_SIZE,
-            KlighdConstants.DEFAULT_FONT_NAME);
-        childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-        childRect.background = "LIGHTBLUE".color;
-        childRect.selectionBackground = "LIGHTBLUE".color;
-        childRect.addDoubleClickAction(OpenEditorAction.ID);
-        label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
-        label.firstText.selectionBackground = "LIGHTBLUE".color;
-
-        return childNode
-    }
-
-    def KNode transformItemFile(Component item, int depth) {
-        val childNode = item.createNode().associateWith(item);
-        val childRect = childNode.addRoundedRectangle(4, 4, 2);
-        val label = childNode.addInsideCenteredNodeLabel(item.name.possiblyAnonymize, KlighdConstants.DEFAULT_FONT_SIZE,
-            KlighdConstants.DEFAULT_FONT_NAME);
-        childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-        childRect.background = item.getFileColor
-        childRect.selectionBackground = item.getFileColor
-        childRect.addDoubleClickAction(OpenEditorAction.ID);
-        label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
-        label.firstText.selectionBackground = item.getFileColor
-
-        if (item.tooltip != null) {
-            childRect.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
-            label.firstText.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
         }
 
-        return childNode
-    }
+        def KNode transformItemFunc(Component item, int depth) {
+            val childNode = item.createNode().associateWith(item);
+            val childRect = childNode.addRoundedRectangle(4, 4, 2);
+            val label = childNode.addInsideCenteredNodeLabel(item.name,
+                KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME);
+            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+            childRect.background = "LIGHTBLUE".color;
+            childRect.selectionBackground = "LIGHTBLUE".color;
+            childRect.addDoubleClickAction(OpenEditorAction.ID);
+            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+            label.firstText.selectionBackground = "LIGHTBLUE".color;
 
-    def KColor getFileColor(Component item) {
-        if (item.hieararchical) {
-            return "WHITE".color;
-        } else {
-            return "LIGHTGRAY".color;
-        }
-    }
-
-    def KNode transformItemFileWithFunctions(Component item, int depth) {
-        val childNodeOuter = item.createNode().associateWith(item);
-
-        val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
-        rectCol.background = item.getFileColor
-        rectCol.selectionBackground = item.getFileColor
-        rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        // rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectCol.addDoubleClickAction(OpenEditorAction.ID);
-        val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
-        rectExp.background = item.getFileColor
-        rectExp.selectionBackground = item.getFileColor
-        rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        // rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectExp.addDoubleClickAction(OpenEditorAction.ID);
-        childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-
-        val itemLabel = item.name.possiblyAnonymize
-        val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
-            KlighdConstants.DEFAULT_FONT_NAME);
-        label.associateWith(item)
-
-        if (item.tooltip != null) {
-            rectCol.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
-            rectExp.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
-            label.firstText.setProperty(KlighdProperties::TOOLTIP, item.tooltip);
+            return childNode
         }
 
-        label.firstText.addDoubleClickAction(OpenEditorAction.ID);
-
-        if (item.hieararchical) {
-            // Hierarchical case
-            label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            // label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        def KNode transformItemFile(Component item, int depth) {
+            val childNode = item.createNode().associateWith(item);
+            val childRect = childNode.addRoundedRectangle(4, 4, 2);
+            val label = childNode.addInsideCenteredNodeLabel(item.name,
+                KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME);
+            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+            childRect.background = item.getFileColor
+            childRect.selectionBackground = item.getFileColor
+            childRect.addDoubleClickAction(OpenEditorAction.ID);
+            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
             label.firstText.selectionBackground = item.getFileColor
+
+            if (item.tooltip != null) {
+                val tooltipText = item.tooltip
+                childRect.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+                label.firstText.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+            }
+
+            return childNode
         }
 
-        if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
-            val childArea = item.children.createNode().associateWith(item)
-            val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
-            childAreaRect.background = "WHITE".color;
-            childAreaRect.selectionBackground = "WHITE".color;
-            childAreaRect.foreground = "GRAY".color;
-            label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-            childNodeOuter.children.add(childArea)
-            childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-
-            val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
-
-            childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
-
-            if (!FLATTEN_HIERARCHY.booleanValue) {
-                for (child : item.children) {
-                    childArea.children += child.transformItem(depth + 1);
-                }
+        def KColor getFileColor(Component item) {
+            if (item.hieararchical) {
+                return "WHITE".color;
+            } else {
+                return "LIGHTGRAY".color;
             }
         }
 
-        return childNodeOuter
-    }
+        def KNode transformItemFileWithFunctions(Component item, int depth) {
+            val childNodeOuter = item.createNode().associateWith(item);
 
-    def KNode transformItemDir(Component item, int depth) {
-        val childNodeOuter = item.createNode().associateWith(item);
-
-        val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
-        rectCol.background = "YELLOW".color;
-        rectCol.selectionBackground = "YELLOW".color;
-        rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        // rectCol.addDoubleClickAction(OpenEditorAction.ID);
-        val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
-        rectExp.background = "YELLOW".color;
-        rectExp.selectionBackground = "YELLOW".color;
-        rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-        // rectExp.addDoubleClickAction(OpenEditorAction.ID);
-        childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-            EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-
-        val itemLabel = item.name.possiblyAnonymize
-        val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
-            KlighdConstants.DEFAULT_FONT_NAME);
-        label.associateWith(item)
-        label.firstText.selectionBackground = "YELLOW".color;
-
-        if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
-            // Hierarchical case
-            label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            // label.firstText.addDoubleClickAction(OpenEditorAction.ID);
-            val childArea = item.children.createNode().associateWith(item)
-            val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
-            childAreaRect.background = "WHITE".color;
-            childAreaRect.selectionBackground = "WHITE".color;
-            childAreaRect.foreground = "GRAY".color;
-            label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-            childNodeOuter.children.add(childArea)
-            childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+            val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectCol.background = item.getFileColor
+            rectCol.selectionBackground = item.getFileColor
+            rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            rectCol.addDoubleClickAction(OpenEditorAction.ID);
+            val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectExp.background = item.getFileColor
+            rectExp.selectionBackground = item.getFileColor
+            rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            rectExp.addDoubleClickAction(OpenEditorAction.ID);
+            childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
-            val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
+            val itemLabel = item.name
+            val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
+                KlighdConstants.DEFAULT_FONT_NAME);
+            label.associateWith(item)
 
-            childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
+            if (item.tooltip != null) {
+                val tooltipText = item.tooltip
+                rectCol.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+                rectExp.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+                label.firstText.setProperty(KlighdProperties::TOOLTIP, tooltipText);
+            }
 
-            if (!FLATTEN_HIERARCHY.booleanValue) {
-                for (child : item.children) {
-                    childArea.children += child.transformItem(depth + 1);
+            label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+
+            if (item.hieararchical) {
+                // Hierarchical case
+                label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                // label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                label.firstText.selectionBackground = item.getFileColor
+            }
+
+            if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+                val childArea = item.children.createNode().associateWith(item)
+                val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
+                childAreaRect.background = "WHITE".color;
+                childAreaRect.selectionBackground = "WHITE".color;
+                childAreaRect.foreground = "GRAY".color;
+                label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
+                childNodeOuter.children.add(childArea)
+                childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                    EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+
+                val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
+
+                childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
+
+                if (!FLATTEN_HIERARCHY.booleanValue) {
+                    for (child : item.children) {
+                        childArea.children += child.transformItem(depth + 1);
+                    }
                 }
             }
+
+            return childNodeOuter
         }
 
-        return childNodeOuter
-    }
+        def KNode transformItemDir(Component item, int depth) {
+            val childNodeOuter = item.createNode().associateWith(item);
 
-    private def line(KEdge edge) {
-        return edge.getKContainerRendering as KPolyline;
-    }
+            val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectCol.background = "YELLOW".color;
+            rectCol.selectionBackground = "YELLOW".color;
+            rectCol.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // rectCol.addDoubleClickAction(OpenEditorAction.ID);
+            val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectExp.background = "YELLOW".color;
+            rectExp.selectionBackground = "YELLOW".color;
+            rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // rectExp.addDoubleClickAction(OpenEditorAction.ID);
+            childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
-    def setGrayStyle(KEdge edge) {
-        edge.line => [
-            foreground = Colors.GRAY_50
-        ]
-    }
+            val itemLabel = item.name
+            val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
+                KlighdConstants.DEFAULT_FONT_NAME);
+            label.associateWith(item)
+            label.firstText.selectionBackground = "YELLOW".color;
 
-    def KSpline addConnectionSpline(KEdge edge) {
-        edge.addSpline => [
-            lineWidth = 2;
-        ]
-    }
+            if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+                // Hierarchical case
+                label.firstText.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                // label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+                val childArea = item.children.createNode().associateWith(item)
+                val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
+                childAreaRect.background = "WHITE".color;
+                childAreaRect.selectionBackground = "WHITE".color;
+                childAreaRect.foreground = "GRAY".color;
+                label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
+                childNodeOuter.children.add(childArea)
+                childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                    EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
-    private static val float CONNECTION_DASH_BLACK = 7;
-    private static val float CONNECTION_DASH_WHITE = 3;
-    private static val List<Float> CONNECTION_DASH_PATTERN = newArrayList(CONNECTION_DASH_BLACK, CONNECTION_DASH_WHITE);
+                val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
 
-    def setDashedStyle(KEdge edge) {
-        edge.line => [
-            lineStyle = LineStyle::CUSTOM;
-            lineStyle.dashPattern.clear;
-            lineStyle.dashPattern += CONNECTION_DASH_PATTERN;
-        ]
-    }
+                childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
 
-    def KLabel addLabel(KEdge edge, String text) {
-        val label = edge.createLabel;
-        label.configureCenterEdgeLabel(text); // Add text
-        label.getKRendering => [ // Configure text
-            fontSize = 11;
-            fontBold = true;
-        ]
-        return label;
-    }
+                if (!FLATTEN_HIERARCHY.booleanValue) {
+                    for (child : item.children) {
+                        childArea.children += child.transformItem(depth + 1);
+                    }
+                }
+            }
+
+            return childNodeOuter
+        }
+
+        private def line(KEdge edge) {
+            return edge.getKContainerRendering as KPolyline;
+        }
+
+        def setGrayStyle(KEdge edge) {
+            edge.line => [
+                foreground = Colors.GRAY_50
+            ]
+        }
+
+        def KSpline addConnectionSpline(KEdge edge) {
+            edge.addSpline => [
+                lineWidth = 2;
+            ]
+        }
+
+        private static val float CONNECTION_DASH_BLACK = 7;
+        private static val float CONNECTION_DASH_WHITE = 3;
+        private static val List<Float> CONNECTION_DASH_PATTERN = newArrayList(CONNECTION_DASH_BLACK,
+            CONNECTION_DASH_WHITE);
+
+        def setDashedStyle(KEdge edge) {
+            edge.line => [
+                lineStyle = LineStyle::CUSTOM;
+                lineStyle.dashPattern.clear;
+                lineStyle.dashPattern += CONNECTION_DASH_PATTERN;
+            ]
+        }
+
+        def KLabel addLabel(KEdge edge, String text) {
+            val label = edge.createLabel;
+            label.configureCenterEdgeLabel(text); // Add text
+            label.getKRendering => [ // Configure text
+                fontSize = 11;
+                fontBold = true;
+            ]
+            return label;
+        }
 
 //        val poly = kPort.addPolygon()
 //        poly.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
@@ -808,4 +858,5 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //    }
 //    public static val List<KNode> allNodes = newArrayList
 //    public static val List<KChildAreaNode> allChildAreas = newArrayList
-}
+    }
+    
