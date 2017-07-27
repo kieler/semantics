@@ -93,9 +93,9 @@ public abstract class AbstractKExpressionsRuntimeModule extends org.eclipse.xtex
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.esterel.kexpressions.validation.KExpressionsJavaValidator> bindKExpressionsJavaValidator() {
-		return de.cau.cs.kieler.esterel.kexpressions.validation.KExpressionsJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.esterel.kexpressions.validation.KExpressionsValidator> bindKExpressionsValidator() {
+		return de.cau.cs.kieler.esterel.kexpressions.validation.KExpressionsValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

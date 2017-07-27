@@ -625,14 +625,9 @@ public class KiCoUtil {
                     Class<?>[] parameters = m.getParameterTypes();
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
-//<<<<<<< HEAD
-//                        if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-//                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
-//=======
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")
                                 && parameter.isInstance(transformationObject)) {
                             // System.out.println(m.getName() + " (" + parameter.getName() + ")");
-//>>>>>>> ssm/dataflow
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {

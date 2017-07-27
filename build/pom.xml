@@ -10,7 +10,7 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <tycho-version>0.26.0</tycho-version>
-    <xtend-version>2.9.2</xtend-version>
+    <xtend-version>2.10.0</xtend-version>
     <targetJdk>1.8</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->

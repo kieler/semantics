@@ -11,7 +11,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.ui.editors,
  de.cau.cs.kieler.sccharts.legacy,
- org.eclipse.xtext.builder
+ org.eclipse.xtext.builder,
+ de.cau.cs.kieler.klighd;bundle-version="0.42.4",
+ de.cau.cs.kieler.klighd.krendering.extensions;bundle-version="0.42.0",
+ org.eclipse.elk.alg.layered;bundle-version="0.2.1",
+ org.eclipse.elk.core;bundle-version="0.2.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.legacy.annotations.ui.contentassist,

@@ -224,28 +224,28 @@
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.esterel.kexpressions.KExpressions -->
-    <extension
-            id="kexpressions.check.fast"
-            name="KExpressions Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kexpressions.check.normal"
-            name="KExpressions Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kexpressions.check.expensive"
-            name="KExpressions Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
+	<!-- marker definitions for de.cau.cs.kieler.esterel.kexpressions.KExpressions -->
+	<extension
+	        id="kexpressions.check.fast"
+	        name="KExpressions Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.fast"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kexpressions.check.normal"
+	        name="KExpressions Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.normal"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kexpressions.check.expensive"
+	        name="KExpressions Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.expensive"/>
+	    <persistent value="true"/>
+	</extension>
 
 	<!-- Quick Outline -->
 	<extension
