@@ -36,7 +36,7 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.ui.SCChartsUIiModule;
+import de.cau.cs.kieler.sccharts.ui.SCChartsUiModule;
 
 /**
  * This class provides new instances of all available hooks for the {@link SRTGSynthesis}.
@@ -98,7 +98,7 @@ public class SynthesisHooks implements ISynthesisHooks {
                     registeredHooks.add(hookClass);
                 } catch (final Exception exception) {
                     StatusManager.getManager().handle(
-                            new Status(IStatus.ERROR, SCChartsUIiModule.PLUGIN_ID,
+                            new Status(IStatus.ERROR, SCChartsUiModule.PLUGIN_ID,
                                     SynthesisHooks.class.getName()
                                             + ": Error while parsing hook extension point",
                                     exception));
