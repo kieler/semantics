@@ -82,7 +82,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
 					put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
-					put(grammarAccess.getExtendedIDAccess().getAlternatives_1(), "rule__ExtendedID__Alternatives_1");
+					put(grammarAccess.getExtendedIDAccess().getAlternatives_1_0(), "rule__ExtendedID__Alternatives_1_0");
 					put(grammarAccess.getPreemptionTypeAccess().getAlternatives(), "rule__PreemptionType__Alternatives");
 					put(grammarAccess.getPreemptionTypeLegacyAccess().getAlternatives(), "rule__PreemptionTypeLegacy__Alternatives");
 					put(grammarAccess.getDelayTypeAccess().getAlternatives(), "rule__DelayType__Alternatives");
@@ -274,7 +274,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup(), "rule__QuotedTypedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6(), "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
-					put(grammarAccess.getExtendedIDAccess().getGroup_1_1(), "rule__ExtendedID__Group_1_1__0");
+					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
 					put(grammarAccess.getQualifiedIDAccess().getGroup(), "rule__QualifiedID__Group__0");
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");

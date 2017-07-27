@@ -2474,7 +2474,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalAnnotations.g:1052:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalAnnotations.g:1052:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2486,11 +2486,11 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalAnnotations.g:1055:28: ( (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalAnnotations.g:1056:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalAnnotations.g:1055:28: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalAnnotations.g:1056:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalAnnotations.g:1056:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalAnnotations.g:1056:6: this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalAnnotations.g:1056:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalAnnotations.g:1056:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_10); 
 
@@ -2499,76 +2499,96 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
              
                 newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                 
-            // InternalAnnotations.g:1063:1: (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )*
-            loop11:
+            // InternalAnnotations.g:1063:1: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            loop12:
             do {
-                int alt11=3;
-                int LA11_0 = input.LA(1);
+                int alt12=2;
+                int LA12_0 = input.LA(1);
 
-                if ( (LA11_0==22) ) {
-                    int LA11_2 = input.LA(2);
+                if ( (LA12_0==22) ) {
+                    int LA12_2 = input.LA(2);
 
-                    if ( (LA11_2==RULE_ID) ) {
-                        alt11=2;
+                    if ( (LA12_2==RULE_ID) ) {
+                        alt12=1;
                     }
 
 
                 }
-                else if ( (LA11_0==21) ) {
-                    alt11=1;
+                else if ( (LA12_0==21) ) {
+                    alt12=1;
                 }
 
 
-                switch (alt11) {
+                switch (alt12) {
             	case 1 :
-            	    // InternalAnnotations.g:1064:2: kw= '.'
+            	    // InternalAnnotations.g:1063:2: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    kw=(Token)match(input,21,FollowSets000.FOLLOW_10); 
+            	    // InternalAnnotations.g:1063:2: (kw= '.' | kw= '-' )
+            	    int alt11=2;
+            	    int LA11_0 = input.LA(1);
 
-            	            current.merge(kw);
-            	            newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
-            	        
+            	    if ( (LA11_0==21) ) {
+            	        alt11=1;
+            	    }
+            	    else if ( (LA11_0==22) ) {
+            	        alt11=2;
+            	    }
+            	    else {
+            	        NoViableAltException nvae =
+            	            new NoViableAltException("", 11, 0, input);
+
+            	        throw nvae;
+            	    }
+            	    switch (alt11) {
+            	        case 1 :
+            	            // InternalAnnotations.g:1064:2: kw= '.'
+            	            {
+            	            kw=(Token)match(input,21,FollowSets000.FOLLOW_3); 
+
+            	                    current.merge(kw);
+            	                    newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
+            	                
+
+            	            }
+            	            break;
+            	        case 2 :
+            	            // InternalAnnotations.g:1071:2: kw= '-'
+            	            {
+            	            kw=(Token)match(input,22,FollowSets000.FOLLOW_3); 
+
+            	                    current.merge(kw);
+            	                    newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
+            	                
+
+            	            }
+            	            break;
 
             	    }
-            	    break;
-            	case 2 :
-            	    // InternalAnnotations.g:1070:6: (kw= '-' this_ID_3= RULE_ID )
-            	    {
-            	    // InternalAnnotations.g:1070:6: (kw= '-' this_ID_3= RULE_ID )
-            	    // InternalAnnotations.g:1071:2: kw= '-' this_ID_3= RULE_ID
-            	    {
-            	    kw=(Token)match(input,22,FollowSets000.FOLLOW_3); 
 
-            	            current.merge(kw);
-            	            newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); 
-            	        
             	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_10); 
 
             	    		current.merge(this_ID_3);
             	        
             	     
-            	        newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); 
+            	        newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             	        
-
-            	    }
-
 
             	    }
             	    break;
 
             	default :
-            	    break loop11;
+            	    break loop12;
                 }
             } while (true);
 
-            // InternalAnnotations.g:1083:4: (kw= '#' this_INT_5= RULE_INT )?
-            int alt12=2;
-            int LA12_0 = input.LA(1);
+            // InternalAnnotations.g:1083:3: (kw= '#' this_INT_5= RULE_INT )?
+            int alt13=2;
+            int LA13_0 = input.LA(1);
 
-            if ( (LA12_0==17) ) {
-                alt12=1;
+            if ( (LA13_0==17) ) {
+                alt13=1;
             }
-            switch (alt12) {
+            switch (alt13) {
                 case 1 :
                     // InternalAnnotations.g:1084:2: kw= '#' this_INT_5= RULE_INT
                     {
@@ -2664,13 +2684,13 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // InternalAnnotations.g:1119:2: (kw= '-' )? this_INT_1= RULE_INT
             {
             // InternalAnnotations.g:1119:2: (kw= '-' )?
-            int alt13=2;
-            int LA13_0 = input.LA(1);
+            int alt14=2;
+            int LA14_0 = input.LA(1);
 
-            if ( (LA13_0==22) ) {
-                alt13=1;
+            if ( (LA14_0==22) ) {
+                alt14=1;
             }
-            switch (alt13) {
+            switch (alt14) {
                 case 1 :
                     // InternalAnnotations.g:1120:2: kw= '-'
                     {
@@ -2766,13 +2786,13 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // InternalAnnotations.g:1153:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
             // InternalAnnotations.g:1153:2: (kw= '-' )?
-            int alt14=2;
-            int LA14_0 = input.LA(1);
+            int alt15=2;
+            int LA15_0 = input.LA(1);
 
-            if ( (LA14_0==22) ) {
-                alt14=1;
+            if ( (LA15_0==22) ) {
+                alt15=1;
             }
-            switch (alt14) {
+            switch (alt15) {
                 case 1 :
                     // InternalAnnotations.g:1154:2: kw= '-'
                     {
@@ -2818,9 +2838,9 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
     protected DFA1 dfa1 = new DFA1(this);
     static final String dfa_1s = "\14\uffff";
-    static final String dfa_2s = "\3\uffff\2\10\5\uffff\2\10";
-    static final String dfa_3s = "\1\4\1\uffff\1\7\2\5\1\7\1\10\3\uffff\2\5";
-    static final String dfa_4s = "\1\20\1\uffff\1\7\2\26\1\11\1\10\3\uffff\2\26";
+    static final String dfa_2s = "\3\uffff\1\10\6\uffff\2\10";
+    static final String dfa_3s = "\1\4\1\uffff\1\7\1\5\2\7\1\10\3\uffff\2\5";
+    static final String dfa_4s = "\1\20\1\uffff\1\7\1\26\1\7\1\11\1\10\3\uffff\2\26";
     static final String dfa_5s = "\1\uffff\1\1\5\uffff\1\3\1\4\1\2\2\uffff";
     static final String dfa_6s = "\14\uffff}>";
     static final String[] dfa_7s = {
@@ -2828,7 +2848,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             "",
             "\1\3",
             "\5\11\7\uffff\1\6\1\uffff\1\7\1\uffff\1\4\1\5",
-            "\5\11\7\uffff\1\6\1\uffff\1\7\1\uffff\1\4\1\5",
+            "\1\12",
             "\1\12\2\11",
             "\1\13",
             "",

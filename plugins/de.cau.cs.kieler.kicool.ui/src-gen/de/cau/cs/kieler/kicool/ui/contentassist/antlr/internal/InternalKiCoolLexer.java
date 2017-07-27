@@ -82,11 +82,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:12:7: ( 'system' )
-            // InternalKiCool.g:12:9: 'system'
+            // InternalKiCool.g:12:7: ( '-' )
+            // InternalKiCool.g:12:9: '-'
             {
-            match("system"); 
-
+            match('-'); 
 
             }
 
@@ -103,10 +102,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:13:7: ( 'version' )
-            // InternalKiCool.g:13:9: 'version'
+            // InternalKiCool.g:13:7: ( 'system' )
+            // InternalKiCool.g:13:9: 'system'
             {
-            match("version"); 
+            match("system"); 
 
 
             }
@@ -124,10 +123,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:14:7: ( 'label' )
-            // InternalKiCool.g:14:9: 'label'
+            // InternalKiCool.g:14:7: ( 'version' )
+            // InternalKiCool.g:14:9: 'version'
             {
-            match("label"); 
+            match("version"); 
 
 
             }
@@ -145,10 +144,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:15:7: ( 'input' )
-            // InternalKiCool.g:15:9: 'input'
+            // InternalKiCool.g:15:7: ( 'label' )
+            // InternalKiCool.g:15:9: 'label'
             {
-            match("input"); 
+            match("label"); 
 
 
             }
@@ -166,10 +165,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:16:7: ( 'intermediate' )
-            // InternalKiCool.g:16:9: 'intermediate'
+            // InternalKiCool.g:16:7: ( 'input' )
+            // InternalKiCool.g:16:9: 'input'
             {
-            match("intermediate"); 
+            match("input"); 
 
 
             }
@@ -187,10 +186,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:17:7: ( 'alias' )
-            // InternalKiCool.g:17:9: 'alias'
+            // InternalKiCool.g:17:7: ( 'intermediate' )
+            // InternalKiCool.g:17:9: 'intermediate'
             {
-            match("alias"); 
+            match("intermediate"); 
 
 
             }
@@ -208,10 +207,11 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:18:7: ( '[' )
-            // InternalKiCool.g:18:9: '['
+            // InternalKiCool.g:18:7: ( 'alias' )
+            // InternalKiCool.g:18:9: 'alias'
             {
-            match('['); 
+            match("alias"); 
+
 
             }
 
@@ -228,10 +228,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:19:7: ( ']' )
-            // InternalKiCool.g:19:9: ']'
+            // InternalKiCool.g:19:7: ( '[' )
+            // InternalKiCool.g:19:9: '['
             {
-            match(']'); 
+            match('['); 
 
             }
 
@@ -248,11 +248,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:20:7: ( 'pre' )
-            // InternalKiCool.g:20:9: 'pre'
+            // InternalKiCool.g:20:7: ( ']' )
+            // InternalKiCool.g:20:9: ']'
             {
-            match("pre"); 
-
+            match(']'); 
 
             }
 
@@ -269,10 +268,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:21:7: ( 'set' )
-            // InternalKiCool.g:21:9: 'set'
+            // InternalKiCool.g:21:7: ( 'pre' )
+            // InternalKiCool.g:21:9: 'pre'
             {
-            match("set"); 
+            match("pre"); 
 
 
             }
@@ -290,10 +289,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:22:7: ( 'post' )
-            // InternalKiCool.g:22:9: 'post'
+            // InternalKiCool.g:22:7: ( 'set' )
+            // InternalKiCool.g:22:9: 'set'
             {
-            match("post"); 
+            match("set"); 
 
 
             }
@@ -311,10 +310,11 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:23:7: ( '|' )
-            // InternalKiCool.g:23:9: '|'
+            // InternalKiCool.g:23:7: ( 'post' )
+            // InternalKiCool.g:23:9: 'post'
             {
-            match('|'); 
+            match("post"); 
+
 
             }
 
@@ -331,10 +331,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:24:7: ( '@' )
-            // InternalKiCool.g:24:9: '@'
+            // InternalKiCool.g:24:7: ( '|' )
+            // InternalKiCool.g:24:9: '|'
             {
-            match('@'); 
+            match('|'); 
 
             }
 
@@ -351,10 +351,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:25:7: ( '#' )
-            // InternalKiCool.g:25:9: '#'
+            // InternalKiCool.g:25:7: ( '@' )
+            // InternalKiCool.g:25:9: '@'
             {
-            match('#'); 
+            match('@'); 
 
             }
 
@@ -371,10 +371,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:26:7: ( ',' )
-            // InternalKiCool.g:26:9: ','
+            // InternalKiCool.g:26:7: ( '#' )
+            // InternalKiCool.g:26:9: '#'
             {
-            match(','); 
+            match('#'); 
 
             }
 
@@ -391,10 +391,10 @@ public class InternalKiCoolLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKiCool.g:27:7: ( '-' )
-            // InternalKiCool.g:27:9: '-'
+            // InternalKiCool.g:27:7: ( ',' )
+            // InternalKiCool.g:27:9: ','
             {
-            match('-'); 
+            match(','); 
 
             }
 
@@ -1588,29 +1588,29 @@ public class InternalKiCoolLexer extends Lexer {
         }
     }
     static final String DFA23_eotS =
-        "\2\uffff\5\34\2\uffff\1\34\5\uffff\1\34\1\30\1\55\2\34\2\30\4\uffff\2\34\1\uffff\4\34\2\uffff\2\34\5\uffff\1\34\3\uffff\1\55\1\uffff\2\34\2\uffff\1\34\1\105\5\34\1\113\1\34\1\115\4\uffff\3\34\1\uffff\5\34\1\uffff\1\126\1\uffff\1\127\3\34\1\133\1\134\1\34\1\136\2\uffff\1\127\1\137\1\34\2\uffff\1\34\2\uffff\1\142\1\34\1\uffff\4\34\1\150\1\uffff";
+        "\3\uffff\5\35\2\uffff\1\35\4\uffff\1\35\1\30\1\55\2\35\2\30\5\uffff\2\35\1\uffff\4\35\2\uffff\2\35\4\uffff\1\35\3\uffff\1\55\1\uffff\2\35\2\uffff\1\35\1\105\5\35\1\113\1\35\1\115\4\uffff\3\35\1\uffff\5\35\1\uffff\1\126\1\uffff\1\127\3\35\1\133\1\134\1\35\1\136\2\uffff\1\127\1\137\1\35\2\uffff\1\35\2\uffff\1\142\1\35\1\uffff\4\35\1\150\1\uffff";
     static final String DFA23_eofS =
         "\151\uffff";
     static final String DFA23_minS =
-        "\1\0\1\uffff\2\145\1\141\1\156\1\154\2\uffff\1\157\5\uffff\1\145\1\52\1\56\1\162\1\141\1\0\1\101\4\uffff\1\163\1\164\1\uffff\1\162\1\142\1\160\1\151\2\uffff\1\145\1\163\5\uffff\1\171\2\0\1\uffff\1\56\1\uffff\1\165\1\154\2\uffff\1\164\1\60\1\163\1\145\1\165\1\145\1\141\1\60\1\164\1\60\4\uffff\1\145\1\163\1\145\1\uffff\1\151\1\154\1\164\1\162\1\163\1\uffff\1\60\1\uffff\1\60\1\145\1\155\1\157\2\60\1\155\1\60\2\uffff\2\60\1\156\2\uffff\1\145\2\uffff\1\60\1\144\1\uffff\1\151\1\141\1\164\1\145\1\60\1\uffff";
+        "\1\0\2\uffff\2\145\1\141\1\156\1\154\2\uffff\1\157\4\uffff\1\145\1\52\1\56\1\162\1\141\1\0\1\101\5\uffff\1\163\1\164\1\uffff\1\162\1\142\1\160\1\151\2\uffff\1\145\1\163\4\uffff\1\171\2\0\1\uffff\1\56\1\uffff\1\165\1\154\2\uffff\1\164\1\60\1\163\1\145\1\165\1\145\1\141\1\60\1\164\1\60\4\uffff\1\145\1\163\1\145\1\uffff\1\151\1\154\1\164\1\162\1\163\1\uffff\1\60\1\uffff\1\60\1\145\1\155\1\157\2\60\1\155\1\60\2\uffff\2\60\1\156\2\uffff\1\145\2\uffff\1\60\1\144\1\uffff\1\151\1\141\1\164\1\145\1\60\1\uffff";
     static final String DFA23_maxS =
-        "\1\uffff\1\uffff\1\171\1\145\1\141\1\156\1\154\2\uffff\1\162\5\uffff\1\145\1\57\1\146\1\162\1\141\1\uffff\1\172\4\uffff\1\163\1\164\1\uffff\1\162\1\142\1\164\1\151\2\uffff\1\145\1\163\5\uffff\1\171\2\uffff\1\uffff\1\146\1\uffff\1\165\1\154\2\uffff\1\164\1\172\1\163\1\145\1\165\1\145\1\141\1\172\1\164\1\172\4\uffff\1\145\1\163\1\145\1\uffff\1\151\1\154\1\164\1\162\1\163\1\uffff\1\172\1\uffff\1\172\1\145\1\155\1\157\2\172\1\155\1\172\2\uffff\2\172\1\156\2\uffff\1\145\2\uffff\1\172\1\144\1\uffff\1\151\1\141\1\164\1\145\1\172\1\uffff";
+        "\1\uffff\2\uffff\1\171\1\145\1\141\1\156\1\154\2\uffff\1\162\4\uffff\1\145\1\57\1\146\1\162\1\141\1\uffff\1\172\5\uffff\1\163\1\164\1\uffff\1\162\1\142\1\164\1\151\2\uffff\1\145\1\163\4\uffff\1\171\2\uffff\1\uffff\1\146\1\uffff\1\165\1\154\2\uffff\1\164\1\172\1\163\1\145\1\165\1\145\1\141\1\172\1\164\1\172\4\uffff\1\145\1\163\1\145\1\uffff\1\151\1\154\1\164\1\162\1\163\1\uffff\1\172\1\uffff\1\172\1\145\1\155\1\157\2\172\1\155\1\172\2\uffff\2\172\1\156\2\uffff\1\145\2\uffff\1\172\1\144\1\uffff\1\151\1\141\1\164\1\145\1\172\1\uffff";
     static final String DFA23_acceptS =
-        "\1\uffff\1\1\5\uffff\1\10\1\11\1\uffff\1\15\1\16\1\17\1\20\1\21\7\uffff\1\33\1\34\1\35\1\1\2\uffff\1\33\4\uffff\1\10\1\11\2\uffff\1\15\1\16\1\17\1\20\1\21\3\uffff\1\27\1\uffff\1\30\2\uffff\1\32\1\34\12\uffff\1\23\1\24\1\25\1\26\3\uffff\1\13\5\uffff\1\12\1\uffff\1\22\10\uffff\1\14\1\31\3\uffff\1\4\1\5\1\uffff\1\7\1\2\2\uffff\1\3\5\uffff\1\6";
+        "\1\uffff\1\1\1\2\5\uffff\1\11\1\12\1\uffff\1\16\1\17\1\20\1\21\7\uffff\1\33\1\34\1\35\1\1\1\2\2\uffff\1\33\4\uffff\1\11\1\12\2\uffff\1\16\1\17\1\20\1\21\3\uffff\1\27\1\uffff\1\30\2\uffff\1\32\1\34\12\uffff\1\23\1\24\1\25\1\26\3\uffff\1\14\5\uffff\1\13\1\uffff\1\22\10\uffff\1\15\1\31\3\uffff\1\5\1\6\1\uffff\1\10\1\3\2\uffff\1\4\5\uffff\1\7";
     static final String DFA23_specialS =
-        "\1\2\23\uffff\1\1\26\uffff\1\0\1\3\74\uffff}>";
+        "\1\0\23\uffff\1\2\26\uffff\1\1\1\3\74\uffff}>";
     static final String[] DFA23_transitionS = {
-            "\11\30\2\27\2\30\1\27\22\30\1\27\1\30\1\24\1\14\10\30\1\15\1\16\1\1\1\20\12\21\6\30\1\13\32\26\1\7\1\30\1\10\1\25\1\26\1\30\1\6\4\26\1\23\2\26\1\5\1\26\1\17\1\4\3\26\1\11\2\26\1\2\1\22\1\26\1\3\4\26\1\30\1\12\uff83\30",
+            "\11\30\2\27\2\30\1\27\22\30\1\27\1\30\1\24\1\15\10\30\1\16\1\2\1\1\1\20\12\21\6\30\1\14\32\26\1\10\1\30\1\11\1\25\1\26\1\30\1\7\4\26\1\23\2\26\1\6\1\26\1\17\1\5\3\26\1\12\2\26\1\3\1\22\1\26\1\4\4\26\1\30\1\13\uff83\30",
             "",
-            "\1\33\23\uffff\1\32",
-            "\1\35",
+            "",
+            "\1\34\23\uffff\1\33",
             "\1\36",
             "\1\37",
             "\1\40",
+            "\1\41",
             "",
             "",
-            "\1\44\2\uffff\1\43",
-            "",
+            "\1\45\2\uffff\1\44",
             "",
             "",
             "",
@@ -1621,7 +1621,8 @@ public class InternalKiCoolLexer extends Lexer {
             "\1\60",
             "\1\61",
             "\0\62",
-            "\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\32\35\4\uffff\1\35\1\uffff\32\35",
+            "",
             "",
             "",
             "",
@@ -1641,7 +1642,6 @@ public class InternalKiCoolLexer extends Lexer {
             "",
             "",
             "",
-            "",
             "\1\75",
             "\52\77\1\76\uffd5\77",
             "\52\101\1\100\uffd5\101",
@@ -1653,15 +1653,15 @@ public class InternalKiCoolLexer extends Lexer {
             "",
             "",
             "\1\104",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "\1\106",
             "\1\107",
             "\1\110",
             "\1\111",
             "\1\112",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "\1\114",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "",
             "",
             "",
@@ -1676,34 +1676,34 @@ public class InternalKiCoolLexer extends Lexer {
             "\1\124",
             "\1\125",
             "",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "\1\130",
             "\1\131",
             "\1\132",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "\1\135",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "",
             "",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "\1\140",
             "",
             "",
             "\1\141",
             "",
             "",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             "\1\143",
             "",
             "\1\144",
             "\1\145",
             "\1\146",
             "\1\147",
-            "\12\34\7\uffff\32\34\4\uffff\1\34\1\uffff\32\34",
+            "\12\35\7\uffff\32\35\4\uffff\1\35\1\uffff\32\35",
             ""
     };
 
@@ -1744,56 +1744,36 @@ public class InternalKiCoolLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA23_43 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA23_43=='*') ) {s = 62;}
-
-                        else if ( ((LA23_43>='\u0000' && LA23_43<=')')||(LA23_43>='+' && LA23_43<='\uFFFF')) ) {s = 63;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA23_20 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA23_20>='\u0000' && LA23_20<='\uFFFF')) ) {s = 50;}
-
-                        else s = 24;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA23_0 = input.LA(1);
 
                         s = -1;
                         if ( (LA23_0=='.') ) {s = 1;}
 
-                        else if ( (LA23_0=='s') ) {s = 2;}
+                        else if ( (LA23_0=='-') ) {s = 2;}
 
-                        else if ( (LA23_0=='v') ) {s = 3;}
+                        else if ( (LA23_0=='s') ) {s = 3;}
 
-                        else if ( (LA23_0=='l') ) {s = 4;}
+                        else if ( (LA23_0=='v') ) {s = 4;}
 
-                        else if ( (LA23_0=='i') ) {s = 5;}
+                        else if ( (LA23_0=='l') ) {s = 5;}
 
-                        else if ( (LA23_0=='a') ) {s = 6;}
+                        else if ( (LA23_0=='i') ) {s = 6;}
 
-                        else if ( (LA23_0=='[') ) {s = 7;}
+                        else if ( (LA23_0=='a') ) {s = 7;}
 
-                        else if ( (LA23_0==']') ) {s = 8;}
+                        else if ( (LA23_0=='[') ) {s = 8;}
 
-                        else if ( (LA23_0=='p') ) {s = 9;}
+                        else if ( (LA23_0==']') ) {s = 9;}
 
-                        else if ( (LA23_0=='|') ) {s = 10;}
+                        else if ( (LA23_0=='p') ) {s = 10;}
 
-                        else if ( (LA23_0=='@') ) {s = 11;}
+                        else if ( (LA23_0=='|') ) {s = 11;}
 
-                        else if ( (LA23_0=='#') ) {s = 12;}
+                        else if ( (LA23_0=='@') ) {s = 12;}
 
-                        else if ( (LA23_0==',') ) {s = 13;}
+                        else if ( (LA23_0=='#') ) {s = 13;}
 
-                        else if ( (LA23_0=='-') ) {s = 14;}
+                        else if ( (LA23_0==',') ) {s = 14;}
 
                         else if ( (LA23_0=='k') ) {s = 15;}
 
@@ -1814,6 +1794,26 @@ public class InternalKiCoolLexer extends Lexer {
                         else if ( ((LA23_0>='\t' && LA23_0<='\n')||LA23_0=='\r'||LA23_0==' ') ) {s = 23;}
 
                         else if ( ((LA23_0>='\u0000' && LA23_0<='\b')||(LA23_0>='\u000B' && LA23_0<='\f')||(LA23_0>='\u000E' && LA23_0<='\u001F')||LA23_0=='!'||(LA23_0>='$' && LA23_0<='+')||(LA23_0>=':' && LA23_0<='?')||LA23_0=='\\'||LA23_0=='`'||LA23_0=='{'||(LA23_0>='}' && LA23_0<='\uFFFF')) ) {s = 24;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA23_43 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA23_43=='*') ) {s = 62;}
+
+                        else if ( ((LA23_43>='\u0000' && LA23_43<=')')||(LA23_43>='+' && LA23_43<='\uFFFF')) ) {s = 63;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA23_20 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA23_20>='\u0000' && LA23_20<='\uFFFF')) ) {s = 50;}
+
+                        else s = 24;
 
                         if ( s>=0 ) return s;
                         break;

@@ -71,10 +71,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalAnnotations.g:12:7: ( '@' )
-            // InternalAnnotations.g:12:9: '@'
+            // InternalAnnotations.g:12:7: ( '-' )
+            // InternalAnnotations.g:12:9: '-'
             {
-            match('@'); 
+            match('-'); 
 
             }
 
@@ -91,10 +91,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalAnnotations.g:13:7: ( '#' )
-            // InternalAnnotations.g:13:9: '#'
+            // InternalAnnotations.g:13:7: ( '@' )
+            // InternalAnnotations.g:13:9: '@'
             {
-            match('#'); 
+            match('@'); 
 
             }
 
@@ -111,10 +111,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalAnnotations.g:14:7: ( ',' )
-            // InternalAnnotations.g:14:9: ','
+            // InternalAnnotations.g:14:7: ( '#' )
+            // InternalAnnotations.g:14:9: '#'
             {
-            match(','); 
+            match('#'); 
 
             }
 
@@ -131,10 +131,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalAnnotations.g:15:7: ( '[' )
-            // InternalAnnotations.g:15:9: '['
+            // InternalAnnotations.g:15:7: ( ',' )
+            // InternalAnnotations.g:15:9: ','
             {
-            match('['); 
+            match(','); 
 
             }
 
@@ -151,10 +151,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalAnnotations.g:16:7: ( ']' )
-            // InternalAnnotations.g:16:9: ']'
+            // InternalAnnotations.g:16:7: ( '[' )
+            // InternalAnnotations.g:16:9: '['
             {
-            match(']'); 
+            match('['); 
 
             }
 
@@ -171,10 +171,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalAnnotations.g:17:7: ( '-' )
-            // InternalAnnotations.g:17:9: '-'
+            // InternalAnnotations.g:17:7: ( ']' )
+            // InternalAnnotations.g:17:9: ']'
             {
-            match('-'); 
+            match(']'); 
 
             }
 
@@ -1282,7 +1282,7 @@ public class InternalAnnotationsLexer extends Lexer {
     static final String DFA23_specialS =
         "\1\0\13\uffff\1\2\13\uffff\1\1\1\3\22\uffff}>";
     static final String[] DFA23_transitionS = {
-            "\11\20\2\17\2\20\1\17\22\20\1\17\1\20\1\14\1\3\10\20\1\4\1\7\1\1\1\10\12\11\6\20\1\2\32\16\1\5\1\20\1\6\1\15\1\16\1\20\5\16\1\13\15\16\1\12\6\16\uff85\20",
+            "\11\20\2\17\2\20\1\17\22\20\1\17\1\20\1\14\1\4\10\20\1\5\1\2\1\1\1\10\12\11\6\20\1\3\32\16\1\6\1\20\1\7\1\15\1\16\1\20\5\16\1\13\15\16\1\12\6\16\uff85\20",
             "",
             "",
             "",
@@ -1370,17 +1370,17 @@ public class InternalAnnotationsLexer extends Lexer {
                         s = -1;
                         if ( (LA23_0=='.') ) {s = 1;}
 
-                        else if ( (LA23_0=='@') ) {s = 2;}
+                        else if ( (LA23_0=='-') ) {s = 2;}
 
-                        else if ( (LA23_0=='#') ) {s = 3;}
+                        else if ( (LA23_0=='@') ) {s = 3;}
 
-                        else if ( (LA23_0==',') ) {s = 4;}
+                        else if ( (LA23_0=='#') ) {s = 4;}
 
-                        else if ( (LA23_0=='[') ) {s = 5;}
+                        else if ( (LA23_0==',') ) {s = 5;}
 
-                        else if ( (LA23_0==']') ) {s = 6;}
+                        else if ( (LA23_0=='[') ) {s = 6;}
 
-                        else if ( (LA23_0=='-') ) {s = 7;}
+                        else if ( (LA23_0==']') ) {s = 7;}
 
                         else if ( (LA23_0=='/') ) {s = 8;}
 

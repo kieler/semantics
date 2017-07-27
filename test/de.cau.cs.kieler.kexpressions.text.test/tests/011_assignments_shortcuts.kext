@@ -9,111 +9,111 @@ int I1[5];
 
 /////////////////// SHORTCUT ASSIGNMENTS ///////////////////
 
-@check assignment.assign.add.literal
+@check "assignment.assign.add.literal"
 I += 1
 
-@check assignment.assign.sub.literal
+@check "assignment.assign.sub.literal"
 I -= 1
 
-@check assignment.assign.mul.literal
+@check "assignment.assign.mul.literal"
 I *= 2
 
-@check assignment.assign.div.literal
+@check "assignment.assign.div.literal"
 I /= 2
 
-@check assignment.assign.mod.literal
+@check "assignment.assign.mod.literal"
 I %= 2
 
-@check assignment.assign.and.literal
+@check "assignment.assign.and.literal"
 A &= true
 
-@check assignment.assign.or.literal
+@check "assignment.assign.or.literal"
 A |= true
 
-@check assignment.assign.xor.literal
+@check "assignment.assign.xor.literal"
 A ^= true
 
 
 
-@check assignment.assign.add.reference
+@check "assignment.assign.add.reference"
 I += I
 
-@check assignment.assign.sub.reference
+@check "assignment.assign.sub.reference"
 I -= I
 
-@check assignment.assign.mul.reference
+@check "assignment.assign.mul.reference"
 I *= I
 
-@check assignment.assign.div.reference
+@check "assignment.assign.div.reference"
 I /= I
 
-@check assignment.assign.mod.reference
+@check "assignment.assign.mod.reference"
 I %= I
 
-@check assignment.assign.and.reference
+@check "assignment.assign.and.reference"
 A &= A
 
-@check assignment.assign.or.reference
+@check "assignment.assign.or.reference"
 A |= A
 
-@check assignment.assign.xor.reference
+@check "assignment.assign.xor.reference"
 A ^= A
 
 
-@check assignment.assign.add.operator.unary.reference
+@check "assignment.assign.add.operator.unary.reference"
 @strict
 I += pre(I)
 
-@check assignment.assign.sub.operator.unary.reference
+@check "assignment.assign.sub.operator.unary.reference"
 @strict
 I -= pre(I)
 
-@check assignment.assign.mul.operator.unary.reference
+@check "assignment.assign.mul.operator.unary.reference"
 @strict
 I *= pre(I)
 
-@check assignment.assign.div.operator.unary.reference
+@check "assignment.assign.div.operator.unary.reference"
 @strict
 I /= pre(I)
 
-@check assignment.assign.mod.operator.unary.reference
+@check "assignment.assign.mod.operator.unary.reference"
 @strict
 I %= pre(I)
 
-@check assignment.assign.and.operator.unary.reference
+@check "assignment.assign.and.operator.unary.reference"
 @strict
 A &= pre(A)
 
-@check assignment.assign.or.operator.unary.reference
+@check "assignment.assign.or.operator.unary.reference"
 @strict
 A |= pre(A)
 
-@check assignment.assign.xor.operator.unary.reference
+@check "assignment.assign.xor.operator.unary.reference"
 @strict
 A ^= pre(A)
 
 
 
-@check assignment.assign.add.operator.binary.reference
+@check "assignment.assign.add.operator.binary.reference"
 I += I + I
 
-@check assignment.assign.sub.operator.binary.reference
+@check "assignment.assign.sub.operator.binary.reference"
 I -= I + I
 
-@check assignment.assign.mul.operator.binary.reference
+@check "assignment.assign.mul.operator.binary.reference"
 I *= I + I
 
-@check assignment.assign.div.operator.binary.reference
+@check "assignment.assign.div.operator.binary.reference"
 I /= I + I
 
-@check assignment.assign.mod.operator.binary.reference
+@check "assignment.assign.mod.operator.binary.reference"
 I %= I + I
 
-@check assignment.assign.and.operator.binary.reference
+@check "assignment.assign.and.operator.binary.reference"
 A &= A & A
 
-@check assignment.assign.or.operator.binary.reference
+@check "assignment.assign.or.operator.binary.reference"
 A |= A & A
 
-@check assignment.assign.xor.operator.binary.reference
+@check "assignment.assign.xor.operator.binary.reference"
 A ^= A & A

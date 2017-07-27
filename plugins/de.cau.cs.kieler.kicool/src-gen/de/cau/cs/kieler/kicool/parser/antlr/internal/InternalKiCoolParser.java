@@ -4601,7 +4601,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalKiCool.g:1693:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalKiCool.g:1693:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -4613,11 +4613,11 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKiCool.g:1696:28: ( (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalKiCool.g:1697:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalKiCool.g:1696:28: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalKiCool.g:1697:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalKiCool.g:1697:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalKiCool.g:1697:6: this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalKiCool.g:1697:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalKiCool.g:1697:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_25); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -4630,53 +4630,77 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // InternalKiCool.g:1704:1: (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )*
-            loop24:
+            // InternalKiCool.g:1704:1: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            loop25:
             do {
-                int alt24=3;
-                int LA24_0 = input.LA(1);
+                int alt25=2;
+                int LA25_0 = input.LA(1);
 
-                if ( (LA24_0==33) ) {
-                    int LA24_2 = input.LA(2);
+                if ( (LA25_0==33) ) {
+                    int LA25_2 = input.LA(2);
 
-                    if ( (LA24_2==RULE_ID) ) {
-                        alt24=2;
+                    if ( (LA25_2==RULE_ID) ) {
+                        alt25=1;
                     }
 
 
                 }
-                else if ( (LA24_0==32) ) {
-                    alt24=1;
+                else if ( (LA25_0==32) ) {
+                    alt25=1;
                 }
 
 
-                switch (alt24) {
+                switch (alt25) {
             	case 1 :
-            	    // InternalKiCool.g:1705:2: kw= '.'
+            	    // InternalKiCool.g:1704:2: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    kw=(Token)match(input,32,FollowSets000.FOLLOW_25); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
+            	    // InternalKiCool.g:1704:2: (kw= '.' | kw= '-' )
+            	    int alt24=2;
+            	    int LA24_0 = input.LA(1);
 
-            	              current.merge(kw);
-            	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
-            	          
+            	    if ( (LA24_0==32) ) {
+            	        alt24=1;
+            	    }
+            	    else if ( (LA24_0==33) ) {
+            	        alt24=2;
+            	    }
+            	    else {
+            	        if (state.backtracking>0) {state.failed=true; return current;}
+            	        NoViableAltException nvae =
+            	            new NoViableAltException("", 24, 0, input);
+
+            	        throw nvae;
+            	    }
+            	    switch (alt24) {
+            	        case 1 :
+            	            // InternalKiCool.g:1705:2: kw= '.'
+            	            {
+            	            kw=(Token)match(input,32,FollowSets000.FOLLOW_3); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+            	        case 2 :
+            	            // InternalKiCool.g:1712:2: kw= '-'
+            	            {
+            	            kw=(Token)match(input,33,FollowSets000.FOLLOW_3); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+
             	    }
 
-            	    }
-            	    break;
-            	case 2 :
-            	    // InternalKiCool.g:1711:6: (kw= '-' this_ID_3= RULE_ID )
-            	    {
-            	    // InternalKiCool.g:1711:6: (kw= '-' this_ID_3= RULE_ID )
-            	    // InternalKiCool.g:1712:2: kw= '-' this_ID_3= RULE_ID
-            	    {
-            	    kw=(Token)match(input,33,FollowSets000.FOLLOW_3); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	              current.merge(kw);
-            	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); 
-            	          
-            	    }
             	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_25); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
@@ -4685,29 +4709,26 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    }
             	    if ( state.backtracking==0 ) {
             	       
-            	          newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); 
+            	          newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             	          
             	    }
-
-            	    }
-
 
             	    }
             	    break;
 
             	default :
-            	    break loop24;
+            	    break loop25;
                 }
             } while (true);
 
-            // InternalKiCool.g:1724:4: (kw= '#' this_INT_5= RULE_INT )?
-            int alt25=2;
-            int LA25_0 = input.LA(1);
+            // InternalKiCool.g:1724:3: (kw= '#' this_INT_5= RULE_INT )?
+            int alt26=2;
+            int LA26_0 = input.LA(1);
 
-            if ( (LA25_0==30) ) {
-                alt25=1;
+            if ( (LA26_0==30) ) {
+                alt26=1;
             }
-            switch (alt25) {
+            switch (alt26) {
                 case 1 :
                     // InternalKiCool.g:1725:2: kw= '#' this_INT_5= RULE_INT
                     {
@@ -4827,17 +4848,17 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
                   
             }
             // InternalKiCool.g:1765:1: (kw= '.' this_ID_2= RULE_ID )*
-            loop26:
+            loop27:
             do {
-                int alt26=2;
-                int LA26_0 = input.LA(1);
+                int alt27=2;
+                int LA27_0 = input.LA(1);
 
-                if ( (LA26_0==32) ) {
-                    alt26=1;
+                if ( (LA27_0==32) ) {
+                    alt27=1;
                 }
 
 
-                switch (alt26) {
+                switch (alt27) {
             	case 1 :
             	    // InternalKiCool.g:1766:2: kw= '.' this_ID_2= RULE_ID
             	    {
@@ -4864,7 +4885,7 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop26;
+            	    break loop27;
                 }
             } while (true);
 
@@ -4948,13 +4969,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:1799:2: (kw= '-' )? this_INT_1= RULE_INT
             {
             // InternalKiCool.g:1799:2: (kw= '-' )?
-            int alt27=2;
-            int LA27_0 = input.LA(1);
+            int alt28=2;
+            int LA28_0 = input.LA(1);
 
-            if ( (LA27_0==33) ) {
-                alt27=1;
+            if ( (LA28_0==33) ) {
+                alt28=1;
             }
-            switch (alt27) {
+            switch (alt28) {
                 case 1 :
                     // InternalKiCool.g:1800:2: kw= '-'
                     {
@@ -5062,13 +5083,13 @@ public class InternalKiCoolParser extends AbstractInternalAntlrParser {
             // InternalKiCool.g:1833:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
             // InternalKiCool.g:1833:2: (kw= '-' )?
-            int alt28=2;
-            int LA28_0 = input.LA(1);
+            int alt29=2;
+            int LA29_0 = input.LA(1);
 
-            if ( (LA28_0==33) ) {
-                alt28=1;
+            if ( (LA29_0==33) ) {
+                alt29=1;
             }
-            switch (alt28) {
+            switch (alt29) {
                 case 1 :
                     // InternalKiCool.g:1834:2: kw= '-'
                     {

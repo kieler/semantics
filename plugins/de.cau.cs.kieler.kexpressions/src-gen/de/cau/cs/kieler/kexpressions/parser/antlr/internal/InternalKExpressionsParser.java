@@ -9330,7 +9330,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalKExpressions.g:3368:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalKExpressions.g:3368:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -9342,11 +9342,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalKExpressions.g:3371:28: ( (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalKExpressions.g:3372:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalKExpressions.g:3371:28: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalKExpressions.g:3372:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalKExpressions.g:3372:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalKExpressions.g:3372:6: this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalKExpressions.g:3372:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalKExpressions.g:3372:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_35); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -9359,53 +9359,77 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // InternalKExpressions.g:3379:1: (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )*
-            loop51:
+            // InternalKExpressions.g:3379:1: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            loop52:
             do {
-                int alt51=3;
-                int LA51_0 = input.LA(1);
+                int alt52=2;
+                int LA52_0 = input.LA(1);
 
-                if ( (LA51_0==23) ) {
-                    int LA51_2 = input.LA(2);
+                if ( (LA52_0==23) ) {
+                    int LA52_2 = input.LA(2);
 
-                    if ( (LA51_2==RULE_ID) ) {
-                        alt51=2;
+                    if ( (LA52_2==RULE_ID) ) {
+                        alt52=1;
                     }
 
 
                 }
-                else if ( (LA51_0==32) ) {
-                    alt51=1;
+                else if ( (LA52_0==32) ) {
+                    alt52=1;
                 }
 
 
-                switch (alt51) {
+                switch (alt52) {
             	case 1 :
-            	    // InternalKExpressions.g:3380:2: kw= '.'
+            	    // InternalKExpressions.g:3379:2: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    kw=(Token)match(input,32,FollowSets000.FOLLOW_35); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
+            	    // InternalKExpressions.g:3379:2: (kw= '.' | kw= '-' )
+            	    int alt51=2;
+            	    int LA51_0 = input.LA(1);
 
-            	              current.merge(kw);
-            	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
-            	          
+            	    if ( (LA51_0==32) ) {
+            	        alt51=1;
+            	    }
+            	    else if ( (LA51_0==23) ) {
+            	        alt51=2;
+            	    }
+            	    else {
+            	        if (state.backtracking>0) {state.failed=true; return current;}
+            	        NoViableAltException nvae =
+            	            new NoViableAltException("", 51, 0, input);
+
+            	        throw nvae;
+            	    }
+            	    switch (alt51) {
+            	        case 1 :
+            	            // InternalKExpressions.g:3380:2: kw= '.'
+            	            {
+            	            kw=(Token)match(input,32,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+            	        case 2 :
+            	            // InternalKExpressions.g:3387:2: kw= '-'
+            	            {
+            	            kw=(Token)match(input,23,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+
             	    }
 
-            	    }
-            	    break;
-            	case 2 :
-            	    // InternalKExpressions.g:3386:6: (kw= '-' this_ID_3= RULE_ID )
-            	    {
-            	    // InternalKExpressions.g:3386:6: (kw= '-' this_ID_3= RULE_ID )
-            	    // InternalKExpressions.g:3387:2: kw= '-' this_ID_3= RULE_ID
-            	    {
-            	    kw=(Token)match(input,23,FollowSets000.FOLLOW_4); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	              current.merge(kw);
-            	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); 
-            	          
-            	    }
             	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_35); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
@@ -9414,29 +9438,26 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             	    }
             	    if ( state.backtracking==0 ) {
             	       
-            	          newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); 
+            	          newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             	          
             	    }
-
-            	    }
-
 
             	    }
             	    break;
 
             	default :
-            	    break loop51;
+            	    break loop52;
                 }
             } while (true);
 
-            // InternalKExpressions.g:3399:4: (kw= '#' this_INT_5= RULE_INT )?
-            int alt52=2;
-            int LA52_0 = input.LA(1);
+            // InternalKExpressions.g:3399:3: (kw= '#' this_INT_5= RULE_INT )?
+            int alt53=2;
+            int LA53_0 = input.LA(1);
 
-            if ( (LA52_0==40) ) {
-                alt52=1;
+            if ( (LA53_0==40) ) {
+                alt53=1;
             }
-            switch (alt52) {
+            switch (alt53) {
                 case 1 :
                     // InternalKExpressions.g:3400:2: kw= '#' this_INT_5= RULE_INT
                     {
@@ -9544,13 +9565,13 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // InternalKExpressions.g:3435:2: (kw= '-' )? this_INT_1= RULE_INT
             {
             // InternalKExpressions.g:3435:2: (kw= '-' )?
-            int alt53=2;
-            int LA53_0 = input.LA(1);
+            int alt54=2;
+            int LA54_0 = input.LA(1);
 
-            if ( (LA53_0==23) ) {
-                alt53=1;
+            if ( (LA54_0==23) ) {
+                alt54=1;
             }
-            switch (alt53) {
+            switch (alt54) {
                 case 1 :
                     // InternalKExpressions.g:3436:2: kw= '-'
                     {
@@ -9658,13 +9679,13 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // InternalKExpressions.g:3469:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
             // InternalKExpressions.g:3469:2: (kw= '-' )?
-            int alt54=2;
-            int LA54_0 = input.LA(1);
+            int alt55=2;
+            int LA55_0 = input.LA(1);
 
-            if ( (LA54_0==23) ) {
-                alt54=1;
+            if ( (LA55_0==23) ) {
+                alt55=1;
             }
-            switch (alt54) {
+            switch (alt55) {
                 case 1 :
                     // InternalKExpressions.g:3470:2: kw= '-'
                     {
@@ -9732,47 +9753,47 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // InternalKExpressions.g:3493:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             {
             // InternalKExpressions.g:3493:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
-            int alt55=6;
+            int alt56=6;
             switch ( input.LA(1) ) {
             case 41:
                 {
-                alt55=1;
+                alt56=1;
                 }
                 break;
             case 36:
                 {
-                alt55=2;
+                alt56=2;
                 }
                 break;
             case 42:
                 {
-                alt55=3;
+                alt56=3;
                 }
                 break;
             case 37:
                 {
-                alt55=4;
+                alt56=4;
                 }
                 break;
             case 43:
                 {
-                alt55=5;
+                alt56=5;
                 }
                 break;
             case 44:
                 {
-                alt55=6;
+                alt56=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 55, 0, input);
+                    new NoViableAltException("", 56, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt55) {
+            switch (alt56) {
                 case 1 :
                     // InternalKExpressions.g:3493:2: (enumLiteral_0= '==' )
                     {

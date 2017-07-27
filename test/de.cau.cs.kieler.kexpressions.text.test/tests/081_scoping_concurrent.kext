@@ -25,188 +25,188 @@ scope Y {
 	bool @alias "YE" E;
 	bool @alias "YF" F;
 
-	@check scoping.concurrent.Y.literal.global
+	@check "scoping.concurrent.Y.literal.global"
 	global = true
 
-	@check scoping.concurrent.Y.literal.local
+	@check "scoping.concurrent.Y.literal.local"
 	local = true
 
-	@check scoping.concurrent.Y.literal.A
+	@check "scoping.concurrent.Y.literal.A"
 	@aliasCheck A, YA
 	A = false
 
-	@check scoping.concurrent.Y.literal.E
+	@check "scoping.concurrent.Y.literal.E"
 	@aliasCheck B, YB
 	B = false
 
-	@check scoping.concurrent.Y.literal.globalC
+	@check "scoping.concurrent.Y.literal.globalC"
 	@aliasCheck C, globalC
 	C = false
 
-	@check scoping.concurrent.Y.reference.A
+	@check "scoping.concurrent.Y.reference.A"
 	@aliasCheck A, YA
 	global = A
 
-	@check scoping.concurrent.Y.reference.E
+	@check "scoping.concurrent.Y.reference.E"
 	@aliasCheck E, YE
 	global = E
 	
-	@check scoping.concurrent.Y.reference.globalC
+	@check "scoping.concurrent.Y.reference.globalC"
 	@aliasCheck C, globalC
 	global = C
 
-	@check scoping.concurrent.Y.reference.AToLocal
+	@check "scoping.concurrent.Y.reference.AToLocal"
 	@aliasCheck A, YA
 	local = A
 
-	@check scoping.concurrent.Y.reference.EToLocal
+	@check "scoping.concurrent.Y.reference.EToLocal"
 	@aliasCheck E, YE
 	local = E
 	
-	@check scoping.concurrent.Y.reference.globalCToLocal
+	@check "scoping.concurrent.Y.reference.globalCToLocal"
 	@aliasCheck C, globalC
 	local = C
 
 	// overridden, overridden
-	@check scoping.concurrent.Y.reference.BToA
+	@check "scoping.concurrent.Y.reference.BToA"
 	@aliasCheck A, YA
 	@aliasCheck B, YB
 	A = B
 
 	// overridden, new local
-	@check scoping.concurrent.Y.reference.EToA
+	@check "scoping.concurrent.Y.reference.EToA"
 	@aliasCheck A, YA
 	@aliasCheck E, YE
 	A = E
 
 	// overridden, parent
-	@check scoping.concurrent.Y.reference.CToA
+	@check "scoping.concurrent.Y.reference.CToA"
 	@aliasCheck C, globalC
 	@aliasCheck A, YA
 	A = C
 	
 	// parent, new local
-	@check scoping.concurrent.Y.reference.EToC
+	@check "scoping.concurrent.Y.reference.EToC"
 	@aliasCheck C, globalC
 	@aliasCheck E, YE
 	C = E
 	
 	// parent, parent
-	@check scoping.concurrent.Y.reference.CToD
+	@check "scoping.concurrent.Y.reference.CToD"
 	@aliasCheck C, globalC
 	@aliasCheck D, globalD
 	D = C
 
 	// parent, overridden
-	@check scoping.concurrent.Y.reference.AToD
+	@check "scoping.concurrent.Y.reference.AToD"
 	@aliasCheck A, YA
 	@aliasCheck D, globalD
 	D = A
 
 	// new local, new local
-	@check scoping.concurrent.Y.reference.FToE
+	@check "scoping.concurrent.Y.reference.FToE"
 	@aliasCheck E, YE
 	@aliasCheck F, YF
 	E = F
 	
 	// new local, parent
-	@check scoping.concurrent.Y.reference.DToE
+	@check "scoping.concurrent.Y.reference.DToE"
 	@aliasCheck E, YE
 	@aliasCheck D, globalD
 	E = D
 
 	// new local, overridden
-	@check scoping.concurrent.Y.reference.AToE
+	@check "scoping.concurrent.Y.reference.AToE"
 	@aliasCheck E, YE
 	@aliasCheck A, YA
 	E = A
 	
 	// operator new local
-	@check scoping.concurrent.Y.reference.operator.unary.local
+	@check "scoping.concurrent.Y.reference.operator.unary.local"
 	@aliasCheck F, YF
 	@strict
 	local = pre(F)
 	
 	// operator parent
-	@check scoping.concurrent.Y.reference.operator.unary.parent
+	@check "scoping.concurrent.Y.reference.operator.unary.parent"
 	@aliasCheck D, globalD
 	@strict
 	local = pre(D)
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.unary.overridden
+	@check "scoping.concurrent.Y.reference.operator.unary.overridden"
 	@aliasCheck A, YA
 	@strict
 	local = pre(A)
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.LL
+	@check "scoping.concurrent.Y.reference.operator.binary.LL"
 	@aliasCheck E, YE
 	@aliasCheck F, YF
 	local = E & F
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.LL#002
+	@check "scoping.concurrent.Y.reference.operator.binary.LL#002"
 	@aliasCheck E, YE
 	@aliasCheck F, YF
 	local = F & E
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.LP
+	@check "scoping.concurrent.Y.reference.operator.binary.LP"
 	@aliasCheck C, globalC
 	@aliasCheck F, YF
 	local = C & F
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.PL
+	@check "scoping.concurrent.Y.reference.operator.binary.PL"
 	@aliasCheck C, globalC
 	@aliasCheck F, YF
 	local = F & C
 	
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.PP
+	@check "scoping.concurrent.Y.reference.operator.binary.PP"
 	@aliasCheck C, globalC
 	@aliasCheck D, globalD
 	local = C & D
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.PP#002
+	@check "scoping.concurrent.Y.reference.operator.binary.PP#002"
 	@aliasCheck C, globalC
 	@aliasCheck D, globalD
 	local = D & C
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.LO
+	@check "scoping.concurrent.Y.reference.operator.binary.LO"
 	@aliasCheck A, YA
 	@aliasCheck F, YF
 	local = A & F
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.OL
+	@check "scoping.concurrent.Y.reference.operator.binary.OL"
 	@aliasCheck A, YA
 	@aliasCheck F, YF
 	local = F & A
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.OO
+	@check "scoping.concurrent.Y.reference.operator.binary.OO"
 	@aliasCheck A, YA
 	@aliasCheck B, YB
 	local = A & B
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.OO#002
+	@check "scoping.concurrent.Y.reference.operator.binary.OO#002"
 	@aliasCheck A, YA
 	@aliasCheck B, YB
 	local = B & A
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.PO
+	@check "scoping.concurrent.Y.reference.operator.binary.PO"
 	@aliasCheck A, YA
 	@aliasCheck C, globalC
 	local = A & C
 
 	// operator overridden
-	@check scoping.concurrent.Y.reference.operator.binary.OP
+	@check "scoping.concurrent.Y.reference.operator.binary.OP"
 	@aliasCheck A, YA
 	@aliasCheck C, globalC
 	local = C & A	

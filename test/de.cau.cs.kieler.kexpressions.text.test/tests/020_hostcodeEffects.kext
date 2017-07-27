@@ -8,53 +8,53 @@ string S;
 int I;
 bool A;
 
-@check hostcode#001
+@check "hostcode#001"
 expression `printf("Hallo Welt!");`
 
-@check hostcode#002
+@check "hostcode#002"
 expression `x = printf("Hallo Welt!");`
 
-@check hostcode#003
+@check "hostcode#003"
 expression `x = printf("Hallo Welt! %s", charr);`
 
-@check hostcode#004
+@check "hostcode#004"
 expression `halt();`
 
-@check hostcode#005
+@check "hostcode#005"
 expression `expression`
 
 
 
-@check hostcode.assign#001
+@check "hostcode.assign#001"
 S = `printf("Hallo Welt!");`
 
-@check hostcode.assign#002
+@check "hostcode.assign#002"
 S = `x = printf("Hallo Welt!");`
 
-@check hostcode.assign#003
+@check "hostcode.assign#003"
 I = `2`
 
-@check hostcode.assign#004
+@check "hostcode.assign#004"
 I = `2 + x`
 
-@check hostcode.assign#005
+@check "hostcode.assign#005"
 A = `true`
 
 
 
-@check hostcode.operator#001
+@check "hostcode.operator#001"
 A = A & `x`
 
-@check hostcode.operator#002
+@check "hostcode.operator#002"
 A = A & `x` & A
 
-@check hostcode.operator#003
+@check "hostcode.operator#003"
 A = `x` & `x`
 
-@check hostcode.operator#004
+@check "hostcode.operator#004"
 A = `x` & `x` & `x`
 
-@check hostcode.operator#005
+@check "hostcode.operator#005"
 @expect "A = (`x` & `x`) | `z`"
 @readable "A = `x` & `x` | `z`"
 A = `x` & `x` | `z`
