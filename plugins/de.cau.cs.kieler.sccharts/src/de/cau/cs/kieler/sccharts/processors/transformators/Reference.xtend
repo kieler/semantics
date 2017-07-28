@@ -111,6 +111,9 @@ class Reference extends SCChartsProcessor {
         for (transition : stateWithReference.outgoingTransitions.immutableCopy) {
             transition.sourceState = newState
         }
+        for (transition : stateWithReference.incomingTransitions.immutableCopy) {
+            transition.targetState = newState
+        }
         
         stateWithReference.remove
         
