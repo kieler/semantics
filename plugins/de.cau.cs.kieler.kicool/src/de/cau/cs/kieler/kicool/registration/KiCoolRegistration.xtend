@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.osgi.framework.Bundle
 
 import static com.google.common.base.Preconditions.*
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
+import org.eclipse.xtext.resource.XtextResourceSet
 
 /**
  * Main class for the registration of systems and processors.
@@ -44,6 +46,7 @@ class KiCoolRegistration {
     public static val EXTENSION_POINT_PROCESSOR = "de.cau.cs.kieler.kicool.processor"
     
     private static val injector = Guice.createInjector
+    private static val kicoolXtextInjector = KiCoolStandaloneSetup.doSetup
     
     private static val Map<String, System> modelsMap = new HashMap<String, System>()
     private static val Map<String, System> modelsIdMap = new HashMap<String, System>()
@@ -112,8 +115,8 @@ class KiCoolRegistration {
         val URL bundleFileUrl = bundle.getEntry(resourceLocation.toString()); 
         
         val uri = URI.createURI(bundleFileUrl.toString, false)
-        val Resource resource = new ResourceSetImpl().createResource(uri);
-        resource.load(Collections.EMPTY_MAP);
+        val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
+        val Resource resource = resourceSet.getResource(uri, true)
         if (resource != null && resource.getContents() != null && resource.getContents().size() > 0) {
             val eobject = resource.getContents().get(0)
             return eobject
