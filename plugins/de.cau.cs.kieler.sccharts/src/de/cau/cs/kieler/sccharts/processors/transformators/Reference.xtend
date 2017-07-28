@@ -120,7 +120,7 @@ class Reference extends SCChartsProcessor {
         
         stateWithReference.remove
         
-        newState.declarations.removeIf[ if (it instanceof VariableDeclaration) input || output else false ]
+        newState.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
         
         snapshot
     } 
