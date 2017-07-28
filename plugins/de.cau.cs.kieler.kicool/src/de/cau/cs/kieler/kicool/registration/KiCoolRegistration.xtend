@@ -12,23 +12,24 @@
  */
 package de.cau.cs.kieler.kicool.registration
 
-import org.eclipse.core.runtime.Platform
-import org.eclipse.emf.ecore.resource.Resource
-import java.io.IOException
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import java.util.Collections
-import org.eclipse.emf.common.util.URI
-import org.osgi.framework.Bundle
-import java.net.URL
-import de.cau.cs.kieler.kicool.KiCoolActivator
-import java.util.Map
-import java.util.HashMap
-import java.util.List
+import com.google.inject.Guice
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Processor
-import com.google.inject.Guice
-import static extension com.google.common.base.Preconditions.*
+import java.io.IOException
+import java.net.URL
+import java.util.Collections
+import java.util.HashMap
+import java.util.List
+import java.util.Map
+import org.eclipse.core.runtime.Platform
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.osgi.framework.Bundle
+
+import static com.google.common.base.Preconditions.*
+
 /**
  * Main class for the registration of systems and processors.
  * 
