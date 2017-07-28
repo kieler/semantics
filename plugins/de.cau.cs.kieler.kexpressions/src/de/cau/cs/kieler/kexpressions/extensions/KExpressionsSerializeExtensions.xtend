@@ -48,7 +48,7 @@ class KExpressionsSerializeExtensions {
     }
 
     def dispatch CharSequence serialize(TextExpression hostCodeString) {
-        "'" + hostCodeString.text + "'"
+        "`" + hostCodeString.text + "`"
     }
     
 //      ssm: old c code serialization, remove these lines after creating specific serialization for the 

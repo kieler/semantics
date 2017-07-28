@@ -24,9 +24,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions {	
 
     protected def CharSequence humanReadable(String s) {
-//        if (s == null) {
-//            return null
-//        }
         if (s.startsWith("(") && s.endsWith(")")) {
             var counter = 1
             for(var i=1; i<s.length()-1; i++) {
