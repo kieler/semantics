@@ -2,6 +2,7 @@ system de.cau.cs.kieler.sccharts.netlist
 	version 1 
 	label "Netlist-based Compilation"
 	
+de.cau.cs.kieler.sccharts.processors.transformators.reference	
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.transformators.signal
 	de.cau.cs.kieler.sccharts.processors.transformators.^pre
