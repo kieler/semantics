@@ -70,7 +70,6 @@ public class KVisCanvas extends Composite implements ISelectionListener {
     private IFile svgFile;
     private URI svgURI; // required if RCP does not support IFiles
 
-    private JLabel statusLabel;
     private Frame frame;
 
     private KVisUserAgent userAgent;
@@ -96,17 +95,7 @@ public class KVisCanvas extends Composite implements ISelectionListener {
     }
 
     public KVisCanvas(Composite parent, int style, boolean showScrollbars) {
-        super(parent, SWT.EMBEDDED);
-
-        parent.setLayout(new FillLayout());
-        statusLabel = new JLabel("Status");
-        statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        statusLabel.setBackground(java.awt.Color.BLACK);
-        statusLabel.setForeground(java.awt.Color.WHITE);
-        statusLabel.setFont(new Font("helvetica", Font.BOLD, 12));
-        statusLabel.setOpaque(true);
-        statusLabel.setVisible(false);
-
+        super(parent, style);
         /*
          * Set a Windows specific AWT property that prevents heavyweight components from erasing
          * their background. Note that this is a global property and cannot be scoped. It might not

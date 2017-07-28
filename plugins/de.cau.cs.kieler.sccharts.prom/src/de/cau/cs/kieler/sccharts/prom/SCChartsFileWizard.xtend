@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
+import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileCreationPage
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
 import org.eclipse.ui.INewWizard

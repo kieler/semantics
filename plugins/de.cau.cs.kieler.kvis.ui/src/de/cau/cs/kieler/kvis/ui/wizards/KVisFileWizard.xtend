@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.kvis.ui.wizards
 
-import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
+import de.cau.cs.kieler.prom.ui.wizards.AdvancedNewFileCreationPage
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
 import org.eclipse.ui.INewWizard
@@ -49,7 +49,7 @@ class KVisFileWizard extends Wizard implements INewWizard {
         filePage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.kvis.ui/resources/default.kvis"
         filePage.fileName = "NewVisualization.kvis"
         filePage.fileExtension = "kvis"
-        filePage.description = "Create a new file to configure simulation visualization."
+        filePage.description = "Create a new KVis file to configure simulation visualization."
         
         addPage(filePage);
     }

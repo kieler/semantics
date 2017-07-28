@@ -43,28 +43,34 @@ class VariableSerializer implements JsonSerializer<Variable> , JsonDeserializer<
     override deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         val object = json.asJsonObject
         
-        val name = object.get("name").getAsString()
+        val name = object.get("name")?.getAsString()
         val jsonValue = object.get("value")
         val value = context.deserialize(jsonValue, jsonValue.class)
-        val isInput = object.get("in").asBoolean
-        val isOutput = object.get("out").asBoolean
+        val isInput = object.get("in")?.asBoolean
+        val isOutput = object.get("out")?.asBoolean
         
-        val variable = new Variable(name)
-        if(value instanceof JsonPrimitive) {
-            val primitive = JsonManager.jsonAsObject(value)
-            variable.value = primitive
-            // Use Integer instead Double if possible
-            if(primitive instanceof Double) {
-                if(primitive == primitive.intValue) {
-                    variable.value = primitive.intValue
+        if(name != null) {
+            val variable = new Variable(name)
+            if(value instanceof JsonPrimitive) {
+                if(value != null) {
+                    val primitive = JsonManager.jsonAsObject(value)
+                    variable.value = primitive
+                    // Use Integer instead Double if possible
+                    if(primitive instanceof Double) {
+                        if(primitive == primitive.intValue) {
+                            variable.value = primitive.intValue
+                        }
+                    }
                 }
+            } else if (value instanceof JsonObject){
+                val array = context.deserialize(value, typeof(NDimensionalArray))
+                variable.value = array
             }
-        } else if (value instanceof JsonObject){
-            val array = context.deserialize(value, typeof(NDimensionalArray))
-            variable.value = array
+            variable.isInput = isInput
+            variable.isOutput = isOutput
+            return variable
+        } else {
+            throw new Exception("Variable name cannot be null")
         }
-        variable.isInput = isInput
-        variable.isOutput = isOutput
-        return variable
     }
 }

@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 
@@ -22,9 +23,16 @@ import org.w3c.dom.Element
  */
 class ColorAnimation extends AnimationHandler {
     
+    public val fillColor = new ConfigurableAttribute("fillColor")
+    public val strokeColor = new ConfigurableAttribute("strokeColor")
+    public val strokeWidth = new ConfigurableAttribute("strokeWidth")
+    public val opacity = new ConfigurableAttribute("opacity")
+    public val fillOpacity = new ConfigurableAttribute("fillOpacity")
+    public val strokeOpacity = new ConfigurableAttribute("strokeOpacity")
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        addAttributes("fillColor", "strokeColor", "strokeWidth", "opacity", "fillOpacity", "strokeOpacity")
+        initialize
     }
     
     override getName() {

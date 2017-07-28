@@ -25,7 +25,7 @@ public class KVisParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPars
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Visualization";
+		return "VisualizationConfiguration";
 	}
 	
 	public KVisGrammarAccess getGrammarAccess() {

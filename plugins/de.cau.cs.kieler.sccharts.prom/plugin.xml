@@ -10,7 +10,7 @@
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
             icon="icons/sccharts_icon16.png"
-            id="de.cau.cs.kieler.sccharts.prom.filewizard"
+            id="de.cau.cs.kieler.sccharts.prom.sctWizard"
             name="SCT File"
             project="false">
          <description>
@@ -23,7 +23,7 @@
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.sccharts.prom.projectwizard"
+            id="de.cau.cs.kieler.sccharts.prom.scchartsProject"
             name="SCCharts Project"
             project="true">
          <description>
@@ -34,7 +34,7 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchShortcut"
+            class="de.cau.cs.kieler.prom.ui.launch.KiCoLaunchShortcut"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.sccharts.prom.kiCoLaunchShortcut"
             label="KiCo Compilation"
@@ -98,12 +98,12 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <commonWizard
             type="new"
-            wizardId="de.cau.cs.kieler.sccharts.prom.projectwizard">
+            wizardId="de.cau.cs.kieler.sccharts.prom.sctWizard">
          <enablement></enablement>
       </commonWizard>
       <commonWizard
             type="new"
-            wizardId="de.cau.cs.kieler.sccharts.prom.filewizard">
+            wizardId="de.cau.cs.kieler.sccharts.prom.scchartsProject">
          <enablement></enablement>
       </commonWizard>
    </extension>

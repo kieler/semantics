@@ -149,7 +149,7 @@ class Variable implements Cloneable {
     
     public def void setUserValue(Object value) {
         var boolean eq = true
-        if(value != userValue) {
+        if(value !== userValue) {
             eq = false
         } else if(value != null) {
             eq = value.equals(userValue) 
@@ -157,10 +157,85 @@ class Variable implements Cloneable {
             eq = userValue.equals(value)
         }
         if(!eq) {
+            // Mark the modification in the model
+            model.setModifiedVariable
+            // Set the user value
             userValue = value
             // Notify simulation listeners that value changed
-            SimulationManager.instance?.notifyListeners(SimulationEventType.VARIABLE_CHANGE, this) 
+            SimulationManager.instance?.fireEvent(SimulationEventType.VARIABLE_CHANGE, this) 
         }
+    }
+    
+    /**
+     * Applies user made changes to variable values.
+     */
+    public def void applyUserValues() {
+        if(!isDirty) {
+            return
+        }
+        
+        // Apply user value of changed array elements
+        if(userValue instanceof NDimensionalArray) {
+            val arr = userValue as NDimensionalArray
+            for(elem : arr.elements) {
+                if(elem.isDirty) {
+                    elem.value = elem.userValue
+                }
+            }
+        }
+        // Apply user value
+        value = userValue
+    }
+    
+    public def void setPresent() {
+        if(value instanceof Boolean) {
+           value = true 
+        } else if(value instanceof Number) {
+           value = 1
+        }
+    }
+    
+    public def void setAbsent() {
+        if(value instanceof Boolean) {
+           value = false 
+        } else if(value instanceof Number) {
+           value = 0
+        }
+    }
+    
+    public def boolean isPresent() {
+        if(value instanceof Boolean) {
+            return value
+        } else if(value instanceof Integer) {
+            return (value != 0)
+        } else {
+            return false
+        }
+    }
+    
+    public def void togglePresentState() {
+        value = toggledPresentState
+    }
+    
+    public def Object toggledPresentState() {
+        if(value instanceof Boolean) {
+            return !value
+        } else if(value instanceof Integer) {
+            if(value == 0) {
+                return 1
+            } else {
+                return 0
+            }
+        } else {
+            throw new Exception("Can't toggle present state of variable "+name+" because it is neither a boolean nor an integer.")
+        }
+    }
+    
+    public def String getFullyQualifiedName() {
+        if(model != null)
+            return model.name+"."+name
+        else
+            return name
     }
     
     /**
@@ -170,10 +245,11 @@ class Variable implements Cloneable {
         val v = new Variable()
         v.name = this.name
         v.type = this.type
-        v.value = this.value
         v.isInput = this.isInput
         v.isOutput = this.isOutput
         v.isSignal = this.isSignal
+        v.value = this.value
+        v.userValue = this.userValue
         return v
     }
     

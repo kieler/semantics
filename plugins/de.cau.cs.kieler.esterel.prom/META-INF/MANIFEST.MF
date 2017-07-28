@@ -5,17 +5,19 @@ Bundle-SymbolicName: de.cau.cs.kieler.esterel.prom;singleton:=true
 Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.prom.EsterelPromPlugin
 Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.debug.ui;bundle-version="3.10.1",
+ org.eclipse.ui,
+ org.eclipse.ui.ide;bundle-version="3.10.1",
+ org.eclipse.ui.navigator;bundle-version="3.6.0",
+ org.eclipse.xtend.lib,
+ org.eclipse.xtext;bundle-version="2.7.2",
+ org.eclipse.emf.common,
  com.google.guava;bundle-version="15.0.0",
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.4",
  de.cau.cs.kieler.prom,
- org.eclipse.debug.ui;bundle-version="3.10.1",
- org.eclipse.ui,
- org.eclipse.ui.ide;bundle-version="3.10.1",
- org.eclipse.xtend.lib,
- org.eclipse.xtext;bundle-version="2.7.2",
- org.eclipse.emf.common,
- org.eclipse.ui.navigator;bundle-version="3.6.0"
+ de.cau.cs.kieler.prom.ui,
+ de.cau.cs.kieler.sccharts
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University

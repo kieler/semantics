@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.kvis.ui.views
 
-import org.eclipse.jface.action.Action
 import de.cau.cs.kieler.kvis.ui.KVisUiModule
-import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import org.eclipse.jface.action.Action
 
 /**
  * @author aas
@@ -42,6 +42,6 @@ class KVisViewToolbarAction extends Action {
             return null
         }
         val path = "icons/" + imageName
-        return PromPlugin.imageDescriptorFromPlugin(KVisUiModule.PLUGIN_ID, path);
+        return PromUIPlugin.imageDescriptorFromPlugin(KVisUiModule.PLUGIN_ID, path);
     }
 }
