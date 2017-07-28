@@ -12,13 +12,14 @@
  */
 package de.cau.cs.kieler.simulation
 
+import com.google.common.io.Files
+import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.build.CSimulationCompiler
 import de.cau.cs.kieler.prom.build.FileGenerationResult
-import de.cau.cs.kieler.prom.build.KiCoModelCompiler
-import de.cau.cs.kieler.prom.build.SimulationTemplateProcessor
 import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
+import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Simulator
 import de.cau.cs.kieler.simulation.core.StepAction
@@ -33,15 +34,17 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
+import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
-import com.google.common.io.Files
+import org.eclipse.xtext.resource.XtextResourceSet
 
 /**
  * @author aas
  *
  */
 class SimulationUtil {
+    static extension KiBuildExtensions kiBuildExtensions = new KiBuildExtensions
+    
     public static def void startSimulation(List<IFile> files) {
         if(files.isNullOrEmpty) {
             return
@@ -266,34 +269,52 @@ class SimulationUtil {
     }
     
     private static def FileGenerationResult compileModelForSimulation(IFile file, EObject model) {
+        val result = new FileGenerationResult
+        // Create required resources if there are none yet
+        createResourcesForSimulation(file.project)
+
+        // Load default kibuild file
+        val defaultKiBuildFile = "platform:/plugin/de.cau.cs.kieler.prom/resources/default.kibuild"
+        val uri = URI.createURI(defaultKiBuildFile);
+        val resourceSet = new XtextResourceSet
+        val resource = resourceSet.getResource(uri, true);
+        if(resource != null && !resource.contents.isEmpty) {
+            val buildConfig = resource.contents.get(0) as BuildConfiguration
+            val modelCompilers = buildConfig.createModelCompilers
+            val simulationCompilers = buildConfig.createSimulationCompilers
+            
+            // Compile model
+            for(modelCompiler : modelCompilers) {
+                val modelCompilationResult = modelCompiler.compile(file, model)
+                if(!modelCompilationResult.createdSimulationFiles.isNullOrEmpty) {
+                    // Compile simulation code to executable
+                    for(simulationCompiler : simulationCompilers) {
+                        for(simFile : modelCompilationResult.createdSimulationFiles) {
+                            val simCompilationResult = simulationCompiler.compile(simFile)
+                            result.createdFiles.addAll(simCompilationResult.createdFiles)
+                            result.problems.addAll(simCompilationResult.problems)
+                        }
+                    }
+                }
+            }
+        }
+        return result
+    }
+    
+    private static def void createResourcesForSimulation(IProject project) {
         // Create resources for simulation
-        val simTemplate = file.project.getFile("Simulation.ftl")
-        val snippetFolder = file.project.getFolder("snippets")
+        val simTemplate = project.getFile("Simulation.ftl")
+        val snippetFolder = project.getFolder("snippets")
         if(!simTemplate.exists) {
             // Create templates for simulation of C code
             val simTemplatePlatformURI = "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/Simulation.ftl"
-            val createdFile = PromPlugin.initializeFile(file.project, "Simulation.ftl", simTemplatePlatformURI)
+            val createdFile = PromPlugin.initializeFile(project, "Simulation.ftl", simTemplatePlatformURI)
             createdFile.project.refreshLocal(1, null)
         }
         if(!snippetFolder.exists) {
             val snippetTemplatePlatformURI = "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/SimulationSnippets.ftl"
-            val createdFile = PromPlugin.initializeFile(file.project, "snippets/SimulationSnippets.ftl", snippetTemplatePlatformURI)
+            val createdFile = PromPlugin.initializeFile(project, "snippets/SimulationSnippets.ftl", snippetTemplatePlatformURI)
             createdFile.project.refreshLocal(1, null)
-        }
-        // Create Simulation compiler
-        val cCompiler = new CSimulationCompiler
-        val modelCompiler = new KiCoModelCompiler
-        // Create simulation template processor
-        val simProcessor = new SimulationTemplateProcessor
-        simProcessor.template.value = simTemplate.projectRelativePath.toOSString
-        modelCompiler.simulationProcessor = simProcessor
-        // Compile model to C code
-        val result = modelCompiler.compile(file, model)
-        if(!result.createdSimulationFiles.isNullOrEmpty) {
-            // Compile simulation code to executable
-            val simFile = result.createdSimulationFiles.get(0)
-            val simCompilationResult = cCompiler.compile(simFile)
-            return simCompilationResult
         }
     }
 }

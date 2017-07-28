@@ -28,6 +28,7 @@ import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationEvent
+import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.awt.event.MouseWheelEvent
@@ -51,14 +52,26 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
+import org.eclipse.swt.events.DisposeEvent
+import org.eclipse.swt.events.DisposeListener
+import org.eclipse.swt.events.MouseAdapter
+import org.eclipse.swt.events.MouseEvent
+import org.eclipse.swt.graphics.Color
+import org.eclipse.swt.graphics.Point
+import org.eclipse.swt.graphics.RGB
+import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.FileDialog
+import org.eclipse.swt.widgets.Label
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.simulation.core.SimulationEventType
+import org.eclipse.swt.layout.FillLayout
+import org.eclipse.swt.layout.RowData
+import org.eclipse.swt.layout.GridData
+import org.eclipse.swt.layout.GridLayout
 
 /**
  * @author aas
@@ -94,21 +107,35 @@ class KVisView extends ViewPart {
     
     private var LabelContribution currentFileLabel
     
+    private Composite control
+    
+    /** The icon for closing the message container. */
+    val CLOSE_ICON = PromUIPlugin.imageDescriptorFromPlugin(KVisUiModule.PLUGIN_ID, "icons/close.png")
+    /** Container for displaying warings and errors. */
+    private Composite messageContainer
+    
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
      */
     override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
-        SimulationManager.addListener(simulationListener)
+        // Remember the parent composite
+        control = new Composite(parent, SWT.NONE)
+        control.layout = new GridLayout(1, true)
         // Create canvas
-        createCanvas(parent)
- 
+        createCanvas(control)
+        // TODO: Set size of canvas to fill the view
+        canvas.size = new Point(300,300)
+        canvas.layoutData = new GridData(GridData.FILL_BOTH)
         // Create menu and toolbars.
         createMenu
         createToolbar
         // Create status line
         createStatusLine
+        
+        // Add simulation listener
+        SimulationManager.addListener(simulationListener)
     }
 
     /**
@@ -132,9 +159,13 @@ class KVisView extends ViewPart {
             return;
         }
         try {
+            // Clear messages
+            disposeMessageComposite
+            // Check if the file is a configuration file
             if (!file.fileExtension.toLowerCase.equals(KVIS_FILE_EXTENSION)) {
                 throw new IllegalArgumentException("Selection is not a kvis file.")
             }
+            // Load the configuration
             val model = ModelImporter.load(file)
             if (model != null) {
                 if (model instanceof VisualizationConfiguration) {
@@ -264,7 +295,7 @@ class KVisView extends ViewPart {
     }    
 
     private def void createCanvas(Composite parent) {
-        canvas = new KVisCanvas(parent, SWT.NONE, false)
+        canvas = new KVisCanvas(parent, SWT.EMBEDDED.bitwiseOr(SWT.NO_BACKGROUND), false)
         canvas.svgCanvas.enableRotateInteractor = false
     
         // Zoom in/out via mouse wheel
@@ -497,18 +528,19 @@ class KVisView extends ViewPart {
     }
     
     private def void showError(Exception e) {
-        e.printStackTrace
-        // Show stack trace to user
-        val sw = new StringWriter();
-        val pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
-        sw.toString();
-        var stackTrace = sw.toString
-        if(stackTrace.length > 500) {
-            stackTrace = stackTrace.substring(0, 500)+"..."
-        }
-        val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
-        StatusManager.getManager().handle(s, StatusManager.SHOW);
+        PromUIPlugin.asyncExecInUI[addMessageComposite(control, e.message)]
+        
+//        // Show stack trace to user
+//        val sw = new StringWriter();
+//        val pw = new PrintWriter(sw);
+//        e.printStackTrace(pw);
+//        sw.toString();
+//        var stackTrace = sw.toString
+//        if(stackTrace.length > 500) {
+//            stackTrace = stackTrace.substring(0, 500)+"..."
+//        }
+//        val s = new Status(IStatus.ERROR, "de.cau.cs.kieler.kvis.ui", e.message + "\n\n" + stackTrace, e);
+//        StatusManager.getManager().handle(s, StatusManager.SHOW);
     }
     
     private static def SimulationListener createSimulationListener() {
@@ -524,5 +556,64 @@ class KVisView extends ViewPart {
             }
         }
         return listener
+    }
+    
+    
+    /**
+     * Shows text in the view.
+     * 
+     * @param parent
+     * @param message
+     */
+    private def void addMessageComposite(Composite parent, String message) {
+        disposeMessageComposite()
+        messageContainer = new Composite(parent, SWT.NONE)
+        // Ignore the message container when layouting the view.
+        // This way it will be positioned above the svg component
+        val gridData = new GridData
+        gridData.exclude = true
+        messageContainer.layoutData = gridData
+        // Position the composite above the canvas, so it is visible
+        messageContainer.moveAbove(canvas)
+        
+        val orange = new Color(canvas.getDisplay(), new RGB(255, 165, 0));
+        messageContainer.setBackground(orange);
+        val close = new Label(messageContainer, SWT.NONE);
+        val closeImage = CLOSE_ICON.createImage();
+        close.setBackground(orange);
+        close.setImage(closeImage);
+        close.setToolTipText("Close");
+        // close action
+        close.addMouseListener(new MouseAdapter() {
+            override mouseUp(MouseEvent event) {
+                messageContainer.dispose();
+            }
+        });
+
+        val warningLabel = new Label(messageContainer, SWT.NO_BACKGROUND);
+        warningLabel.setBackground(orange);
+        warningLabel.setText(message);
+
+        messageContainer.setLocation(10, 10);
+        messageContainer.setLayout(new RowLayout());
+
+        // update composite
+        messageContainer.pack();
+        parent.layout(true, true);
+        // cleanup on dispose
+        messageContainer.addDisposeListener(new DisposeListener() {
+            override widgetDisposed(DisposeEvent e) {
+                orange.dispose();
+                closeImage.dispose();
+            }
+        });
+    }
+    
+    private def void disposeMessageComposite() {
+        if(messageContainer != null) {
+            if(!messageContainer.isDisposed) {
+                messageContainer.dispose
+            }
+        }
     }
 }

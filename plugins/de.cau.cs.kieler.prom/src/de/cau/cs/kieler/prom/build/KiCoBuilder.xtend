@@ -15,11 +15,10 @@ package de.cau.cs.kieler.prom.build
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.internal.Transformation
-import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.KiBuildExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
-import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.HashMap
@@ -34,7 +33,6 @@ import org.eclipse.core.resources.IResourceDelta
 import org.eclipse.core.resources.IResourceDeltaVisitor
 import org.eclipse.core.resources.IncrementalProjectBuilder
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
@@ -70,13 +68,14 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      */
     private static var Set<Transformation> codeGenerationTransformations
 
+    extension KiBuildExtensions kiBuildExtensions 
     extension AttributeExtensions attributeExtensions 
 
     public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen")
 
-    private val List<SimulationCompiler> simulationCompilers = newArrayList
-    private val List<ModelCompiler> modelCompilers = newArrayList
-    private val List<TemplateProcessor> templateProcessors = newArrayList
+    private var List<SimulationCompiler> simulationCompilers = newArrayList
+    private var List<ModelCompiler> modelCompilers = newArrayList
+    private var List<TemplateProcessor> templateProcessors = newArrayList
     
     /**
      * The monitor of the current build process.
@@ -171,6 +170,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     new() {
         super()
         attributeExtensions = new AttributeExtensions
+        kiBuildExtensions = new KiBuildExtensions
     }
     
     /**
@@ -483,61 +483,22 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             this.updateConfigurableAttributes(buildConfig.attributes)
             
             // Create model compilers
-            for(config : buildConfig.modelCompilers) {
-                val name = config.name
-                val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
-                val configurations = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.prom.modelCompiler",
-                                                                                  requiredConfig)
-                if(!configurations.isNullOrEmpty) {
-                    val element = configurations.get(0)
-                    val modelCompiler = ExtensionLookupUtil.instantiateClassFromConfiguration(element) as ModelCompiler
-                    if(!modelCompilers.contains(modelCompiler)) {
-                        modelCompilers.add(modelCompiler)
-                    }
-                    modelCompiler.initialize(config)
-                    modelCompiler.outputFolder = outputFolder.stringValue
-                    modelCompiler.monitor = monitor
-                } else {
-                    throw new Exception("Model compiler with name '"+name+"' could not be instantiated.")
-                }
+//            buildConfig.createModelCompilers
+            modelCompilers = buildConfig.createModelCompilers
+            for(modelCompiler : modelCompilers) {
+                modelCompiler.outputFolder = outputFolder.stringValue
+                modelCompiler.monitor = monitor
             }
-            
             // Create simulation compilers
-            for(config : buildConfig.simulationCompilers) {
-                val name = config.name
-                val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
-                val configurations = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.prom.simulationCompiler",
-                                                                                  requiredConfig)
-                if(!configurations.isNullOrEmpty) {
-                    val element = configurations.get(0)
-                    val simulationCompiler = ExtensionLookupUtil.instantiateClassFromConfiguration(element) as SimulationCompiler
-                    if(!simulationCompilers.contains(simulationCompiler)) {
-                        simulationCompilers.add(simulationCompiler)
-                    }
-                    simulationCompiler.monitor = monitor
-                    simulationCompiler.initialize(config)
-                } else {
-                    throw new Exception("Simulation compiler with name '"+name+"' could not be instantiated.")
-                }
+            simulationCompilers = buildConfig.createSimulationCompilers
+            for(simulationCompiler : simulationCompilers) {
+                simulationCompiler.monitor = monitor
             }
-            
-            for(config : buildConfig.templateProcessors) {
-                var TemplateProcessor processor
-                if(config instanceof NormalTemplateProcessor) {
-                    processor = new SimpleTemplateProcessor
-                } else if(config instanceof de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor) {
-                    processor = new WrapperCodeTemplateProcessor
-                } else if(config instanceof de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor) {
-                    processor = new SimulationTemplateProcessor
-                }
-                if(processor != null) {
-                    if(!templateProcessors.contains(processor)) {
-                        templateProcessors.add(processor)
-                    }
-                    processor.monitor = monitor
-                    processor.project = project
-                    processor.initialize(config)
-                }
+            // Create template processors
+            templateProcessors = buildConfig.createTemplateProcessors
+            for(processor : templateProcessors) {
+                processor.monitor = monitor
+                processor.project = project
             }
         } else {
             throw new Exception("Build configuration '" + file.projectRelativePath + "' could not be loaded")
