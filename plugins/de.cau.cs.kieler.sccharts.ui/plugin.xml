@@ -55,6 +55,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.ui.synthesis.srtg.SRTGSynthesis"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.srtg.SRTGSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis"
+            id="de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis">
+      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.sccharts.ui.synthesis.hooks">

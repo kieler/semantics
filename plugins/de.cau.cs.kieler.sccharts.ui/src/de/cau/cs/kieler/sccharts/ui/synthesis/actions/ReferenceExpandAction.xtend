@@ -33,7 +33,7 @@ import org.eclipse.elk.graph.properties.MapPropertyHolder
 class ReferenceExpandAction extends CollapseExpandAction {
 
     /** The action id */
-    public static val String ID = "de.cau.cs.kieler.sccharts.ui.actions.ReferenceExpandAction"
+    public static val String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction"
 
     override execute(ActionContext context) {
         if (context.KNode.children.empty) {
