@@ -100,9 +100,12 @@ class Reference extends SCChartsProcessor {
             }
         }       
         
-        for (region : newState.regions) {
-            region.replaceValuedObjectReferences(replacements)
-        } 
+        
+//        for (region : newState.regions) {
+//            region.replaceValuedObjectReferences(replacements)
+//        } 
+        
+        newState.replaceValuedObjectReferencesInState(replacements)        
         
         val parent = stateWithReference.eContainer as ControlflowRegion
         
