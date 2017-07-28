@@ -55,7 +55,7 @@ import org.junit.runners.MethodSorters
 @BundleId("de.cau.cs.kieler.kexpressions.text.test")
 @ModelPath("tests/")
 @ModelFilter("*.kext")
-public class KExtTestsXtend {
+public class KExtTest {
 	
 	extension AnnotationsExtensions = AE
     
