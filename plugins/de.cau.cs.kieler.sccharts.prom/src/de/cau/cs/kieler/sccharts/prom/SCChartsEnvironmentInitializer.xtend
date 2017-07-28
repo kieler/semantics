@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -20,6 +20,7 @@ import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
 import de.cau.cs.kieler.prom.common.CommandData
+import de.cau.cs.kieler.prom.common.PromPlugin
 
 /**
  * Returns a list with default environments ready to use.
@@ -56,8 +57,8 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
-        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
         
@@ -89,15 +90,15 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
-        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         
         
         //val javapath = System.getenv("LEJOS_NXT_JAVA_HOME");
         val lejos = System.getenv("NXJ_HOME");
-        val cd1 = new CommandData("Compile leJOS", '''"«lejos»/bin/nxjc" -cp "«lejos»/lib:src:«KiCoLaunchConfig.BUILD_DIRECTORY»" "«KiCoLaunchConfig.BUILD_DIRECTORY»/Main.java"''');
-        val cd2 = new CommandData("Deploy and Run leJOS", '''"«lejos»/bin/nxj" -usb -r -cp "«lejos»/lib:src:«KiCoLaunchConfig.BUILD_DIRECTORY»" -o "Main.nxj" Main''');
+        val cd1 = new CommandData("Compile leJOS", '''"«lejos»/bin/nxjc" -cp "«lejos»/lib:src:«PromPlugin.BUILD_DIRECTORY»" "«PromPlugin.BUILD_DIRECTORY»/Main.java"''');
+        val cd2 = new CommandData("Deploy and Run leJOS", '''"«lejos»/bin/nxj" -usb -r -cp "«lejos»/lib:src:«PromPlugin.BUILD_DIRECTORY»" -o "Main.nxj" Main''');
         launchData.commands.add(cd1);
         launchData.commands.add(cd2);
         
@@ -130,8 +131,8 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
-        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.targetDirectory = PromPlugin.BUILD_DIRECTORY
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "org.lejos.ev3.ldt.launch.LaunchEV3Shortcut"
 
@@ -158,7 +159,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "${project_name}.ftl"
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".ino"
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "it.baeyens.arduino.ui.launchconfig.LaunchShortcut"
         

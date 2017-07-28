@@ -17,13 +17,17 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import java.util.List
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
@@ -41,6 +45,9 @@ import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
  */
 @ViewSynthesisShared
 class ControlflowRegionStyles {
+
+    @Inject
+    extension KNodeExtensions
 
     @Inject
     extension KRenderingExtensions
@@ -88,11 +95,9 @@ class ControlflowRegionStyles {
      */
     def addStatesArea(KContainerRendering container, boolean useHeaderSpace) {
         container.addChildArea() => [
-            if (useHeaderSpace) {
-                setAreaPlacementData().from(LEFT, -2, 0, TOP, -2, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-            } else {
-                setAreaPlacementData().from(LEFT, -2, 0, TOP, 8, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-            }
+            // SubGraph padding
+            container.containerNode.addLayoutParam(CoreOptions.PADDING, 
+                new ElkPadding(if (useHeaderSpace) 20 else 10, 10, 10, 10))
         ]
     }
 
@@ -100,19 +105,26 @@ class ControlflowRegionStyles {
      * Adds an area for inner states and a container for declarations.<br>
      * Incompatible with {@link addStatesArea}.
      */
-    def addStatesAndDeclarationsArea(KContainerRendering container) {
-        container.addRectangle() => [
-            invisible = true;
-            setGridPlacement(1);
+    def addStatesAndDeclarationsArea(KContainerRendering container, boolean useHeaderSpace, boolean horizontal) {
+        container.addRectangle => [
+            invisible = true
+            setGridPlacement(if (horizontal) 2 else 1)
             // Declarations Area
-            val declarationsArea = addRectangle => [
-                invisible = true;
-                setGridPlacement(1);
-                setGridPlacementData().from(LEFT, 3, 0, TOP, 16, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0);
+            addRectangle => [
+                setGridPlacementData().from(LEFT, 3, 0, TOP, 20, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0)
+                invisible = true
+                addRectangle => [
+                    setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                    invisible = true
+                    setGridPlacement(1)
+                    container.setProperty(DECLARATIONS_CONTAINER, it)
+                ]
             ]
-            container.setProperty(DECLARATIONS_CONTAINER, declarationsArea);
             // States Area
-            addChildArea().setGridPlacementData().from(LEFT, -2, 0, TOP, -8, 0).to(RIGHT, -2, 0, BOTTOM, 3, 0);
+            addChildArea()
+            // SubGraph padding
+            container.containerNode.addLayoutParam(CoreOptions.PADDING, 
+                new ElkPadding(if (useHeaderSpace && horizontal) 20 else 10, 10, 10, 10))
         ]
     }
 
@@ -132,4 +144,18 @@ class ControlflowRegionStyles {
             getProperty(KlighdProperties.EXPANDED_RENDERING)
         ].head;
     }
+    
+    /**
+     * Finds the eContainer KNode
+     */
+    private def KNode getContainerNode(KRendering rendering) {
+        var container = rendering.eContainer
+        while (container != null) {
+            if (container instanceof KNode) {
+                return container
+            }
+        }
+        return null
+    }
+    
 }

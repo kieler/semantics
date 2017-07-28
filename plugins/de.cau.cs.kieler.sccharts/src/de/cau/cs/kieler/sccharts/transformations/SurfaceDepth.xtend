@@ -99,6 +99,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
         // Traverse all states
         targetRootState.allStates.toList.forEach [ targetState |
+        targetRootState.allStates.immutableCopy.forEach [ targetState |
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
@@ -162,6 +163,15 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 val noEffects1 = state.outgoingTransitions.get(1).effects.nullOrEmpty
                 // conditional
                 if (immediate0 && !noTrigger0 && noEffects0 && immediate1 && noTrigger1 && noEffects1) {
+                    // This checks if the second transition is the default transition...
+                    // ... however, there may still be other transitions! 
+                    // This would violate the normalized form.
+                    if (numTransition > 2) {
+                        // Further transitions are not reachable! Remove them.
+                        for (var i = 2; i < numTransition; i++) {
+                            state.outgoingTransitions.remove(i)
+                        }
+                    }
                     return
                 }
             }
@@ -281,24 +291,16 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
          * Vergleiche nun rekursiv wieder die eingehenden Kanten von neuen _Pause
          bis TK1 und TK2 ungleich sind.*/
         var stateAfterDepth = depthState
-        
-         // depthState.setId("DEPTHSTATE")
-        //depthState.setLabel("DEPTHSTATE")
 
-
-
+        // System.out.println("stateAfterDepth:" + stateAfterDepth.id);
         var doDTO = true;
-        var cnt = 2;
 
         if (doDTO) {
-//        System.out.println("\n\nDTO START ===================\n");
             var done = false
             while (!done) {
                 done = true
-                if (cnt > 0 && stateAfterDepth.incomingTransitions.size == 2) {
+                if (stateAfterDepth.incomingTransitions.size == 2) {
 
-//                    System.out.println("\nstateAfterDepth:" + stateAfterDepth.id);
-                    
                     // T1 is the incoming node from the surface
                     var T1tmp = stateAfterDepth.incomingTransitions.get(0)
                     if (T1tmp == T2tmp) {
@@ -316,50 +318,52 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                     ).nullOrEmpty) {
                         val TK1s = K1.outgoingTransitions.filter(e|e != T1)
                         val TK2s = K2.outgoingTransitions.filter(e|e != T2)
-                        if (TK1s.size == 1 && TK2s.size == 1) {
+                        if (TK1s.size > 0 && TK2s.size > 0) {
                             val TK1 = TK1s.get(0)
                             val TK2 = TK2s.get(0)
-
-//                                if (TK1.label != null) {
-//                                    System.out.println(" > K1: " + K1.id + " (" + K1.label + " )");
-//                                } else {
-//                                    System.out.println(" > K1:" + K1.id + " (no label)");
-//                                }
-//                                if (TK2.label != null) {
-//                                    System.out.println(" > K2: " + K2.id + " (" + K2.label + " )");
-//                                } else {
-//                                    System.out.println(" > K2:" + K2.id + " (no label)");
-//                                }
-                            
-//                                K1.setLabel(K1.id + "_SURVIVED") 
-//                                K1.setId(K1.id + "*")
-//                                K1.setLabel(K1.label + "*")
-//                                //stateAfterDepth.setLabel("K1_" + cnt)
-//                                K2.setLabel(K2.id + "_DELETED")
-
-                            
-                            
-                            if ((K1.incomingTransitions.size == 1 && K2.incomingTransitions.size == 1) &&
-                                (TK1.isImmediate2 && TK2.isImmediate2) &&
-                                (TK1.targetState == TK2.targetState) && // TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
+                            if ((TK1.targetState == TK2.targetState) && // TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
                             ((TK1.trigger == TK2.trigger) ||
                                 (TK2.trigger != null && TK1.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
                                 stateAfterDepth = K1
-//                                if (stateAfterDepth.label != null) {
-//                                    System.out.println("NEXT stateAfterDepth:" + stateAfterDepth.id + " (" + stateAfterDepth.label + " )");
-//                                } else {
-//                                    System.out.println("NEXT stateAfterDepth:" + stateAfterDepth.id + " (no label)");
-//                                }
-//                                cnt--;
+                    if (K1.outgoingTransitions.exists[it != T1]
+                        && K2.outgoingTransitions.exists[it != T2]
+                        && K1 != K2
+                    ) {
+                        val TK1 = K1.outgoingTransitions.findFirst[it != T1]
+                        val TK2 = K2.outgoingTransitions.findFirst[it != T2]
+                        if ((TK1.targetState == TK2.targetState)
+                                && ((TK1.trigger == TK2.trigger)
+                            || (TK2.trigger !== null && TK1.trigger !== null
+                                && (TK1.trigger.equals2(TK2.trigger))
+                            ))) {// TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
+                            stateAfterDepth = K1
 
 
-//                                //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
                                 val t = K2.incomingTransitions.get(0)
                                 t.setTargetState(stateAfterDepth)
-//                                System.out.println("t.setTargetState(stateAfterDepth):");
-//                                System.out.println("   " + t.sourceState.id + "(" +t.sourceState.label+ ") --> " + t.targetState.id + "(" +t.targetState.label+ ")" );
-//                                
-//                                
                                 for (transition : K2.outgoingTransitions) {
                                     stateAfterDepth.trace(transition) // KITT: Redirect tracing before removing
                                     transition.targetState.incomingTransitions.remove(transition)
@@ -368,8 +372,27 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                                 K2.parentRegion.states.remove(K2)
                                 done = false
                                 T2tmp = t
-//                                System.out.println("NEXT T2tmp:" + T2tmp.sourceState.id + "(" +T2tmp.sourceState.label+ ") --> " + T2tmp.targetState.id + "(" +T2tmp.targetState.label+ ")" );
+                            val t = K2.incomingTransitions.get(0)
+                            t.setTargetState(stateAfterDepth)
+                            for (transition : K2.outgoingTransitions) {
+                                stateAfterDepth.trace(transition) // KITT: Redirect tracing before removing
+                                transition.targetState.incomingTransitions.remove(transition)
+
+
+
+
+
+
+
+
+
+
+
                             }
+                            stateAfterDepth.trace(K2) // KITT: Redirect tracing before removing
+                            K2.parentRegion.states.remove(K2)
+                            done = false
+                            T2tmp = t
                         }
                     }
                 }
@@ -379,10 +402,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             // outgoing transition.
             // There should not be any other outgoing transition.
             }
-//        System.out.println("\nDTO END ===================\n\n");
         }
-        
-        
     }
 
 }

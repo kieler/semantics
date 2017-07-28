@@ -41,40 +41,6 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import java.util.WeakHashMap
 
-
-//import com.google.inject.Inject
-//
-//import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-//import de.cau.cs.kieler.annotations.Annotatable
-//import de.cau.cs.kieler.annotations.Annotation
-//import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-//import de.cau.cs.kieler.sccharts.ControlflowRegion
-//import de.cau.cs.kieler.sccharts.Region
-//import de.cau.cs.kieler.sccharts.Scope
-//import de.cau.cs.kieler.sccharts.State
-//import de.cau.cs.kieler.sccharts.Transition
-//import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-//import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
-//import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
-//import org.eclipse.elk.core.data.LayoutMetaDataService
-//import org.eclipse.elk.core.options.CoreOptions
-//import org.eclipse.elk.core.options.Direction
-//import org.eclipse.elk.graph.properties.IProperty
-//import org.eclipse.elk.graph.properties.Property
-//
-//import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-//import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-//import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
-//import java.util.WeakHashMap
-//import de.cau.cs.kieler.klighd.SynthesisOption
-//import de.cau.cs.kieler.klighd.kgraph.KNode
-//import de.cau.cs.kieler.klighd.kgraph.KGraphElement
-//import de.cau.cs.kieler.klighd.kgraph.KEdge
-
-//import org.eclipse.elk.graph.KNode
-//import org.eclipse.elk.graph.KGraphElement
-//import org.eclipse.elk.graph.KEdge
-
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
  * 
@@ -177,7 +143,6 @@ class LayoutHook extends SynthesisActionHook {
         }
     }
 
-    
     def void setSidebarDirection(KNode node) {
         switch (LAYOUT_DIRECTION.objectValue) {
             case "HV": node.setDepthDirection(true, 0)
@@ -187,6 +152,13 @@ class LayoutHook extends SynthesisActionHook {
             default: return
         }
         node.setProperty(DEFAULT_DIRECTION, true)        
+    }
+
+    override processRegion(Region region, KNode node) {
+        val regions = region.parentState?.regions
+        if (region != null) {
+            node.setLayoutOption(CoreOptions.PRIORITY, regions.size - regions.indexOf(region))
+        }
     }
 
     override processTransition(Transition transition, KEdge edge) {

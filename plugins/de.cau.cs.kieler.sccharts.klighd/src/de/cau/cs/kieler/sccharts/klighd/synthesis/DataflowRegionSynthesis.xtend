@@ -49,6 +49,7 @@ import de.cau.cs.kieler.sccharts.ReferenceNode
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
@@ -124,7 +125,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100);
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
 
-        node.setLayoutOption(KlighdProperties::EXPAND, true);
+        // Do not set! This is handled by the ExpandCollapseHook
+        // node.setLayoutOption(KlighdProperties::EXPAND, true);
 
         val label = if(region.label.nullOrEmpty) "" else " " + region.label;
 
@@ -134,7 +136,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             if (region.declarations.empty) {
                 addStatesArea(label.nullOrEmpty);
             } else {
-                addStatesAndDeclarationsArea();
+                addStatesAndDeclarationsArea(false, false);
                 // Add declarations
                 // TODO display declaration otherwise
                 for (declaration : region.declarations) {
@@ -146,13 +148,13 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 }
             }
             // Add Button after area to assure correct overlapping
-            addButton("[-]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            addButton("[-]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
         ]
 
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
-            addButton("[+]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            addButton("[+]" + label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
         ]
         
 

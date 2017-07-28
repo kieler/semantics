@@ -250,7 +250,9 @@ class StateStyles {
                 while (entries.hasNext) {
                 	val entry = entries.next
                 	if (builder.length > 0 && keyword != entry.value) {
-		                ktext = it.addText(builder.append(" ").toString)
+		                ktext = it.addText(builder.append(" ").toString) => [
+                            horizontalAlignment = H_LEFT
+                        ]
 		                if (keyword) {
 		                	ktext.highlightKeyword
 		                }                		
@@ -263,7 +265,9 @@ class StateStyles {
                 	builder.append(entry.key)
                 	keyword = entry.value
                 }
-                ktext = addText(builder.toString)
+                ktext = addText(builder.toString) => [
+                    horizontalAlignment = H_LEFT
+                ]
                 if (keyword) {
                 	ktext.highlightKeyword
                 }

@@ -28,7 +28,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * SCCharts Const Transformation.
@@ -84,27 +87,32 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     // --                           C O N S T                                 --
     // -------------------------------------------------------------------------
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
+        var targetRootState = rootState
 
         targetRootState.transformValuedObjectRise
 
         // Traverse all states
-        for (states : targetRootState.getAllStates.immutableCopy) {
-            states.transformConst
+        for (scopes : targetRootState.getAllScopes.immutableCopy) {
+            scopes.transformConst
         }
         targetRootState;
     }
 
-    def void transformConst(State state) {
-        val constObjects = state.valuedObjects.filter[isConst && initialValue != null]
+    def void transformConst(Scope scope) {
+        val constObjects = scope.valuedObjects.filter[isConst && initialValue != null].toList
 
-        for (const : constObjects.toList.immutableCopy) {
+        for (const : constObjects) {
             val replacement = const.initialValue
             replacement.trace(const)
             replacement.trace(const.declaration)
-            state.replaceAllReferencesWithCopy(const, replacement)
+            
+            // Replace references
+            for (vor : scope.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const].immutableCopy) {
+                vor.replace(replacement.copy)
+            }
+            
             if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
-                state.eAllContents.filter(typeof(TextExpression)).forEach [
+                scope.eAllContents.filter(typeof(TextExpression)).forEach [
                     var replacementString = ""
                     if (replacement instanceof IntValue)
                         replacementString = (replacement as IntValue).value.toString
@@ -119,8 +127,9 @@ class Const extends AbstractExpansionTransformation implements Traceable {
                     text = text.replaceAll(const.name, replacementString)
                 ]
             }
-            const.deleteAndCleanup
+            
         }
+        constObjects.forEach[deleteAndCleanup]
 
     }
 

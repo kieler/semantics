@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom.launchconfig
 
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 
 /**
  * @author aas
@@ -29,10 +30,10 @@ interface IWrapperCodeAnnotationAnalyzer {
      */
     public def List<WrapperCodeAnnotationData> getAnnotations(EObject model)
     
-    /**
-     * Returns the name for a model (e.g. the name of an SCChart) or null if there is none.
+   /**
+     * Searches for variables (inputs / outputs) in the model that can be used in the simulation. 
      * 
-     * @param model The model to fetch the name from 
+     * @param model The model
      */
-    public def String getModelName(EObject model)    
+    public def List<WrapperCodeAnnotationData> getSimulationInterface(EObject model)
 }

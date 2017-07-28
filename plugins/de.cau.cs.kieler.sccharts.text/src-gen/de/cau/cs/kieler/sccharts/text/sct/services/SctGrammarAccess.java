@@ -1303,19 +1303,29 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cFormalValuedObjectCrossReference_1_0 = (CrossReference)cFormalAssignment_1.eContents().get(0);
 		private final RuleCall cFormalValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cFormalValuedObjectCrossReference_1_0.eContents().get(1);
 		private final Keyword cToKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cActualAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cActualValuedObjectCrossReference_3_0 = (CrossReference)cActualAssignment_3.eContents().get(0);
-		private final RuleCall cActualValuedObjectIDTerminalRuleCall_3_0_1 = (RuleCall)cActualValuedObjectCrossReference_3_0.eContents().get(1);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Assignment cActualAssignment_3_0_0 = (Assignment)cGroup_3_0.eContents().get(0);
+		private final CrossReference cActualValuedObjectCrossReference_3_0_0_0 = (CrossReference)cActualAssignment_3_0_0.eContents().get(0);
+		private final RuleCall cActualValuedObjectIDTerminalRuleCall_3_0_0_0_1 = (RuleCall)cActualValuedObjectCrossReference_3_0_0_0.eContents().get(1);
+		private final Group cGroup_3_0_1 = (Group)cGroup_3_0.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_3_0_1_0 = (Keyword)cGroup_3_0_1.eContents().get(0);
+		private final Assignment cIndicesAssignment_3_0_1_1 = (Assignment)cGroup_3_0_1.eContents().get(1);
+		private final RuleCall cIndicesExpressionParserRuleCall_3_0_1_1_0 = (RuleCall)cIndicesAssignment_3_0_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_3_0_1_2 = (Keyword)cGroup_3_0_1.eContents().get(2);
+		private final Assignment cValueAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cValueAnyValueParserRuleCall_3_1_0 = (RuleCall)cValueAssignment_3_1.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Binding sccharts::Binding:
 		//	annotations+=Annotation*
 		//	formal=[kexpressions::ValuedObject]
-		//	'to'
-		//	actual=[kexpressions::ValuedObject]
+		//	'to' (actual=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+		//	| value=AnyValue)
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* formal=[kexpressions::ValuedObject] 'to' actual=[kexpressions::ValuedObject]
+		//annotations+=Annotation* formal=[kexpressions::ValuedObject] 'to' (actual=[kexpressions::ValuedObject] ('['
+		//indices+=Expression ']')* | value=AnyValue)
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -1336,14 +1346,41 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//'to'
 		public Keyword getToKeyword_2() { return cToKeyword_2; }
 
+		//(actual=[kexpressions::ValuedObject] ('[' indices+=Expression ']')* | value=AnyValue)
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
+		//actual=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+		public Group getGroup_3_0() { return cGroup_3_0; }
+
 		//actual=[kexpressions::ValuedObject]
-		public Assignment getActualAssignment_3() { return cActualAssignment_3; }
+		public Assignment getActualAssignment_3_0_0() { return cActualAssignment_3_0_0; }
 
 		//[kexpressions::ValuedObject]
-		public CrossReference getActualValuedObjectCrossReference_3_0() { return cActualValuedObjectCrossReference_3_0; }
+		public CrossReference getActualValuedObjectCrossReference_3_0_0_0() { return cActualValuedObjectCrossReference_3_0_0_0; }
 
 		//ID
-		public RuleCall getActualValuedObjectIDTerminalRuleCall_3_0_1() { return cActualValuedObjectIDTerminalRuleCall_3_0_1; }
+		public RuleCall getActualValuedObjectIDTerminalRuleCall_3_0_0_0_1() { return cActualValuedObjectIDTerminalRuleCall_3_0_0_0_1; }
+
+		//('[' indices+=Expression ']')*
+		public Group getGroup_3_0_1() { return cGroup_3_0_1; }
+
+		//'['
+		public Keyword getLeftSquareBracketKeyword_3_0_1_0() { return cLeftSquareBracketKeyword_3_0_1_0; }
+
+		//indices+=Expression
+		public Assignment getIndicesAssignment_3_0_1_1() { return cIndicesAssignment_3_0_1_1; }
+
+		//Expression
+		public RuleCall getIndicesExpressionParserRuleCall_3_0_1_1_0() { return cIndicesExpressionParserRuleCall_3_0_1_1_0; }
+
+		//']'
+		public Keyword getRightSquareBracketKeyword_3_0_1_2() { return cRightSquareBracketKeyword_3_0_1_2; }
+
+		//value=AnyValue
+		public Assignment getValueAssignment_3_1() { return cValueAssignment_3_1; }
+
+		//AnyValue
+		public RuleCall getValueAnyValueParserRuleCall_3_1_0() { return cValueAnyValueParserRuleCall_3_1_0; }
 	}
 	
 	
@@ -1747,8 +1784,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//Binding sccharts::Binding:
 	//	annotations+=Annotation*
 	//	formal=[kexpressions::ValuedObject]
-	//	'to'
-	//	actual=[kexpressions::ValuedObject]
+	//	'to' (actual=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+	//	| value=AnyValue)
 	public BindingElements getBindingAccess() {
 		return pBinding;
 	}
@@ -1938,7 +1975,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
-	//	name=ID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=ID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
@@ -2052,7 +2089,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max=";
 	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
 		return gaKEffects.getAssignOperatorAccess();
 	}
@@ -2102,7 +2139,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression)+)?
+	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
@@ -2116,7 +2153,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression)+)?
+	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return gaKExpressions.getLogicalAndExpressionAccess();
 	}
@@ -2130,7 +2167,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseAndExpression)+)?
+	//	subExpressions+=BitwiseAndExpression) ('|' subExpressions+=BitwiseAndExpression)*)?
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return gaKExpressions.getBitwiseOrExpressionAccess();
 	}
@@ -2144,7 +2181,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation)+)?
+	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return gaKExpressions.getBitwiseAndExpressionAccess();
 	}
@@ -2212,7 +2249,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
 	//AddExpression Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
+	//	subExpressions+=SubExpression)*)?
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -2226,7 +2264,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: var(A) - i
 	//SubExpression Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
+	//	('-' subExpressions+=MultExpression)*)?
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -2240,7 +2279,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)
+	//	('*' subExpressions+=DivExpression)*)?
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -2255,7 +2295,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: 2 / 4
 	//DivExpression Expression:
 	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=super::DivOperator
-	//	subExpressions+=ModExpression)+)?
+	//	subExpressions+=ModExpression) ('/' subExpressions+=ModExpression)*)?
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -2270,7 +2310,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: i % j
 	//ModExpression Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)+)?
+	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}
@@ -2452,6 +2492,16 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
+	}
+
+	//AnyValue Value:
+	//	IntValue | FloatValue | BoolValue | StringValue
+	public KExpressionsGrammarAccess.AnyValueElements getAnyValueAccess() {
+		return gaKExpressions.getAnyValueAccess();
+	}
+	
+	public ParserRule getAnyValueRule() {
+		return getAnyValueAccess().getRule();
 	}
 
 	//enum CompareOperator returns OperatorType:

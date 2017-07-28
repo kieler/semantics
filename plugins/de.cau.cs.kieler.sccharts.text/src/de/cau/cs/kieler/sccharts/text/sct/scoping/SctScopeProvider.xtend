@@ -37,6 +37,10 @@ import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
@@ -239,4 +243,113 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
         return new SimpleScope(l)
     }
+    
+
+    //
+    // The following lines are a work-around for the railway project and borrowed from the new SCCharts 2.0 scope providers.
+    // As the actual (old) scope provider resolves the declaration by itself (instead of using the declaration scope of
+    // KEXT in the new version),  the already new kexpressions almost always 
+    // use the delegate to the resource scope provider. This is incredibly slow.
+    // The following methods are parts of the new KEXT scope provider which resolves these references directly.  
+    //
+    
+    override IScope getScope(EObject context, EReference reference) {
+        if (context instanceof ValuedObjectReference) {
+            return getScopeForValuedObjectReference(context, reference)
+        }  else if (context instanceof Assignment) {
+            return getScopeForAssignment(context, reference)
+        }
+        
+        else if (reference == KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) {
+            return getScopeForValuedObject(context, reference)
+        } else if (reference == KEffectsPackage.Literals.EMISSION__VALUED_OBJECT) {
+            return getScopeForValuedObject(context, reference)
+        }
+        
+        var IScope scope = polymorphicFindScopeForReferenceName(context, reference);
+        if (scope == null) {
+            scope = polymorphicFindScopeForClassName(context, reference);
+            if (scope == null) {
+                scope = delegateGetScope(context, reference);
+//                println("CTX: " + context.toString + " || REF: " + reference.toString)
+            }
+        }
+        return scope;
+    }    
+    
+    protected def IScope getScopeForAssignment(EObject context, EReference reference) {
+        return context.getScopeHierarchical(reference)
+    }
+    
+    protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {
+        if (reference.eContainer instanceof ValuedObjectReference) {
+            val parentVOR = reference.eContainer as ValuedObjectReference
+            val declaration = parentVOR.valuedObject.eContainer as Declaration
+        } else if (context.eContainer instanceof ValuedObjectReference) {
+            // The context is a subreference!
+            var parentVO = context.eContainer as ValuedObjectReference
+            return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
+        } else if (context instanceof ValuedObjectReference) {
+            if (context.eContainer instanceof Assignment) {
+                // The context is a subreference inside of an assignment!
+                if (context != (context.eContainer as Assignment).expression) {
+                  return context.eContainer.getScopeForReferencedDeclarationFromAssignment(reference)
+                }
+            }
+        }
+        return context.getScopeHierarchical(reference)
+    }
+    
+     protected def IScope getScopeForReferencedDeclarationFromAssignment(EObject context, EReference reference) {
+        if (context instanceof Assignment) {
+            if (context.valuedObject != null) {
+                if (context.valuedObject.eContainer != null) {
+                }
+            }
+        }
+        return context.getScopeHierarchical(reference)      
+    }
+    
+    protected def IScope getScopeForReferencedDeclarationFromSubReference(EObject context, EReference reference) {
+        if (context instanceof ValuedObjectReference) {
+            if (context.valuedObject != null) {
+                if (context.eContainer != null) {
+                    var parentVO = context as ValuedObjectReference
+                    while(parentVO.eContainer instanceof ValuedObjectReference) {
+                        parentVO = parentVO.eContainer as ValuedObjectReference
+                    }
+                }
+            }
+        }
+        return context.getScopeHierarchical(reference)      
+    }
+    
+    protected def IScope getScopeForValuedObject(EObject context, EReference reference) {
+        return context.getScopeHierarchical(reference)
+    }
+    
+    protected def IScope getScopeHierarchical(EObject context, EReference reference) {
+        val candidates = <ValuedObject> newArrayList
+        var declarationScope = context.nextDeclarationScope
+        while (declarationScope != null) {
+            for(declaration : declarationScope.declarations) {
+                for(VO : declaration.valuedObjects) {
+                    candidates += VO
+                }
+            }               
+            declarationScope = declarationScope.nextDeclarationScope
+        }
+        return Scopes.scopeFor(candidates)
+    }
+    
+    
+    protected def Scope getNextDeclarationScope(EObject eObject) {
+        var eO = eObject
+        while(eO != null) {
+            eO = eO.eContainer
+            if (eO instanceof Scope) return eO 
+        }
+        return null
+    }
+    
 }

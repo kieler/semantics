@@ -298,7 +298,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     Binding returns Binding
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* formal=[ValuedObject|ID] actual=[ValuedObject|ID])
+	 *     (annotations+=Annotation* formal=[ValuedObject|ID] ((actual=[ValuedObject|ID] indices+=Expression*) | value=AnyValue))
 	 */
 	protected void sequence_Binding(ISerializationContext context, Binding semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

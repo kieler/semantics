@@ -48,6 +48,7 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.s.sc.S2SCPlugin
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Transformation of S code into Arduino "C" code for be executed
@@ -60,6 +61,9 @@ class S2Arduino {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+    
+    @Inject
+    extension KExpressionsValueExtensions      
 
     @Inject
     extension SExtension

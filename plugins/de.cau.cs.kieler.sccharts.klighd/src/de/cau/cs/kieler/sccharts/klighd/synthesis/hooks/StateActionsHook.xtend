@@ -17,8 +17,12 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KGridPlacement
+import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
@@ -28,6 +32,7 @@ import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+
 /**
  * Shows or hides state actions.
  * 
@@ -44,32 +49,63 @@ class StateActionsHook extends SynthesisActionHook {
 
     @Inject
     extension KRenderingExtensions
+    @Inject
+    extension KContainerRenderingExtensions
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
     /** Action ID */
-    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook";
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook"
     /** The related synthesis option */
     public static final SynthesisOption SHOW_STATE_ACTIONS = SynthesisOption.createCheckOption("State actions", true).
     	setCategory(GeneralSynthesisOptions::APPEARANCE).setUpdateAction(StateActionsHook.ID); // Register this action as updater
+    /** The to break lines in effect chain */
+    public static final SynthesisOption LINEBREAKS_IN_EFFECTS = SynthesisOption.createCheckOption("Linebreaks between action effects", false).
+        setCategory(GeneralSynthesisOptions::APPEARANCE)
     /** Property to save position of the container */
     private static final IProperty<Integer> INDEX = new Property<Integer>(
-        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.index", 0);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.index", 0)
 
     override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_STATE_ACTIONS);
+        return newLinkedList(SHOW_STATE_ACTIONS, LINEBREAKS_IN_EFFECTS)
     }
 
     override processState(State state, KNode node) {
-        if (!state.localActions.empty && !SHOW_STATE_ACTIONS.booleanValue) {
-            val container = node.contentContainer;
-            val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER);
+        if (!state.localActions.empty) {
+            val container = node.contentContainer
+            val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
 
-            // Hide actions
             if (actions != null) {
-                val idx = container.children.indexOf(actions)
-                actions.setProperty(INDEX, idx);
-                container.children.remove(actions);
-                container.addInvisiblePlaceholder(idx);
+                // Break Effect chains
+                if (LINEBREAKS_IN_EFFECTS.booleanValue) {
+                    for (actionContainer : actions.children.filter(KRectangle).map[children.filter(KRectangle).head].filterNull) {
+                        val collumns = (actionContainer.childPlacement as KGridPlacement).numColumns
+                        var kText = actionContainer.children.filter(KText).last
+                        // Split effect lines
+                        val lines = kText.text.split(";")
+                        if (lines.length > 1) {
+                            kText.text = lines.head.trim + ";"
+                            for (var i = 1; i < lines.length; i++) {
+                                // Create invisible placeholders to align lines
+                                for (var j = 0 ; j < (collumns - 1) ; j++) {
+                                    actionContainer.addRectangle => [
+                                        invisible = true
+                                    ]
+                                }
+                                // Add separate line
+                                actionContainer.addText(lines.get(i).trim + if (i < (lines.length - 1)) ";" else "") => [
+                                    horizontalAlignment = H_LEFT
+                                ]
+                            }
+                        }
+                    }
+                }
+                // Hide actions
+                if (!SHOW_STATE_ACTIONS.booleanValue) {
+                    val idx = container.children.indexOf(actions)
+                    actions.setProperty(INDEX, idx)
+                    container.children.remove(actions)
+                    container.addInvisiblePlaceholder(idx)
+                }
             }
         }
     }
@@ -77,27 +113,27 @@ class StateActionsHook extends SynthesisActionHook {
     override executeAction(KNode rootNode) {
         for (KNode node : rootNode.eAllContentsOfType(KNode).toIterable) {
             if (usedContext.getSourceElement(node) instanceof State) {
-                val state = usedContext.getSourceElement(node) as State;
-                val container = node.contentContainer;
-                val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER);
+                val state = usedContext.getSourceElement(node) as State
+                val container = node.contentContainer
+                val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
 
                 // Show or hide actions
                 if (actions != null) {
                     if (SHOW_STATE_ACTIONS.booleanValue && !state.localActions.empty) {
                         // Insert actions in correct position
-                        val pos = actions.getProperty(INDEX);
-                        container.children.remove(pos);
-                        container.children.add(pos, actions);
+                        val pos = actions.getProperty(INDEX)
+                        container.children.remove(pos)
+                        container.children.add(pos, actions)
                     } else {
                         val idx = container.children.indexOf(actions)
-                        actions.setProperty(INDEX, idx);
-                        container.children.remove(actions);
-                        container.addInvisiblePlaceholder(idx);
+                        actions.setProperty(INDEX, idx)
+                        container.children.remove(actions)
+                        container.addInvisiblePlaceholder(idx)
                     }
                 }
             }
         }
-        return ActionResult.createResult(true);
+        return ActionResult.createResult(true)
     }
 
     /** 
@@ -105,8 +141,8 @@ class StateActionsHook extends SynthesisActionHook {
      */
     private def addInvisiblePlaceholder(KContainerRendering container, int index) {
         val rendering = createKRectangle() => [
-            invisible = true;
+            invisible = true
         ]
-        container.children.add(index, rendering);
+        container.children.add(index, rendering)
     }
 }

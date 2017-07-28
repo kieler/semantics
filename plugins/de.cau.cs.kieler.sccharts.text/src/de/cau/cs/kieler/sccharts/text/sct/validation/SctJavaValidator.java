@@ -65,16 +65,10 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String MINMAX_COMBINE = "Min or max combine operators are currently not supported";
     public static final String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
-    public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
-    public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
-    
     public static final String STRONG_ABORT_WITH_LOW_PRIORITY = "Causality problem! Strong abort transitions must have a higher priority than weak abort or termination transitions.";
     public static final String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger";
     
     public static final String MISSING_BINDING_FOR = "Missing binding for variable: ";
-
-    //TODO: fix this or move this check to the simulation component only
-    public static final String INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR = "Variables that war input AND output at the same time are currently not supported by the simulator";
 
     public static final String VALUEDOBJECT_TRANSITION_SCOPE_WRONG = "Variable or signal used out of its scope. Declare it one hierarchy layer up!";
 
@@ -211,43 +205,5 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
             }
         }
     }
-    
-    
-    /**
-     *
-     * @param state the state
-     */
-    @Check
-    public void checkAssignmentToConst(final de.cau.cs.kieler.kexpressions.keffects.Assignment assignment) {
-    	if (assignment.getValuedObject() != null) {
-    		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
-    		if (declaration.isConst()) {
-    			error(ASSIGNMENT_TO_CONST, assignment, null, -1);
-    		}
-    	}
-    }
-    
-    /**
-    *
-    * @param state the state
-    */
-   @Check
-   public void checkConstBinding(final de.cau.cs.kieler.sccharts.State state) {
-	   for(Declaration declaration : state.getDeclarations()) {
-		   if (declaration.isConst()) {
-			   for (ValuedObject valuedObject : declaration.getValuedObjects()) {
-				   Expression initialValue = valuedObject.getInitialValue();
-				   if (initialValue != null && 
-						   !(initialValue instanceof BoolValue
-						   || initialValue instanceof IntValue
-						   || initialValue instanceof FloatValue
-						   || initialValue instanceof DoubleValue
-						   || initialValue instanceof TextExpression
-						   )) {
-					   error(NO_CONST_LITERAL, valuedObject, null, -1);
-				   }
-			   }
-		   }
-	   }
-   }    
+       
 }

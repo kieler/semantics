@@ -35,6 +35,7 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import java.util.HashMap
 
 /**
  * SCCharts Pre Transformation.
@@ -97,10 +98,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        // FIXME: getAllStates will return (at least!) the root state twice! fix this!
-        // Woraround now: convert to a set
-        for (targetState : targetRootState.getAllStates.toSet.immutableCopy) {
-            //System.out.println("STATE: " + targetState + ", " + targetState.id)
+        for (targetState : targetRootState.getAllStates.immutableCopy) {
             targetState.transformPre(targetRootState);
         }
 
@@ -113,19 +111,17 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         
         // If the state has outgoing terminations, we need to finalize the during
         // actions in case we end the states over these transitions
-         val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
-         val hasOutgoingTerminations = outgoingTerminations.length > 0
-         val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
+        val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+        val hasOutgoingTerminations = outgoingTerminations.length > 0
+        val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
 
 
-        var ControlflowRegion preRegion = null;
-        var State preInit = null;
-        var State preWait = null;
-        var Transition transInitWait = null;
-        var Transition transWaitInit = null;
-
+        // The transition with the assignment of the pre variables
+        var HashMap<String, Transition> transitions = newHashMap();
+        var Transition transInitWait
+        
         // This list keeps track of the very last auxiliary pre variable of a nested pre
-        // (e.g. some 'int _pre__pre__pre_x') to remove their initialization as optimization.
+        // (e.g. some 'int _pre__pre__pre_x') to remove its initialization as optimization.
         var List<ValuedObject> lastPreVariablesOfNestedPre = newArrayList()
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList;
@@ -139,29 +135,35 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                             action.getPreExpression(valuedObject).hasNext ||
                                 action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
     
-            // Initialize sccharts elements that are used instead pre
-            if(!allPreValuedObjects.isNullOrEmpty&& (preRegion == null || preInit == null || preWait == null)) {
-                allPreValuedObjects.setDefaultTrace
-                
-                preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
-                preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
-                preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
-                if (complexPre) {
-                    preWait.setFinal
-                    preInit.setFinal
-                }
-                
-                transInitWait = preInit.createImmediateTransitionTo(preWait);
-                transWaitInit = preWait.createTransitionTo(preInit);
-            }
-            
             // Remove pre statement
     		for (preValuedObject : allPreValuedObjects.immutableCopy) {
     		    // Is the valued object a variable that was introduced by the pre trafo itself?
-                val isValuedObjectOfNestedPre = preValuedObject.name.startsWith(GENERATED_PREFIX + "pre")
+    		    val name = preValuedObject.name
+                val isValuedObjectOfNestedPre = name.startsWith(GENERATED_PREFIX + "pre")
                 
-    		    // Tracing
+                // Tracing
                 preValuedObject.setDefaultTrace
+                
+                // Initialize sccharts elements that are used instead pre
+                if(!isValuedObjectOfNestedPre) {
+                    allPreValuedObjects.setDefaultTrace
+                    
+                    val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
+                    val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
+                    val preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
+                    if (complexPre) {
+                        preWait.setFinal
+                        preInit.setFinal
+                    }
+
+                    // Immediate transition for assignments
+                    transInitWait = preInit.createImmediateTransitionTo(preWait)
+                    transitions.put(name, transInitWait);
+                    // Delayed transition back to init state
+                    preWait.createTransitionTo(preInit);
+                } else {
+                    transInitWait = transitions.get(name.replaceAll(GENERATED_PREFIX + "pre" + GENERATED_PREFIX, ""));
+                }
                 
                 // New register variable
                 var ValuedObject newAux
@@ -176,7 +178,6 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                     + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
                 newPre.copyAttributes(preValuedObject)
                 
-                //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
                 if(isValuedObjectOfNestedPre) {
                     transInitWait.addEffectBefore(newPre.assign(preValuedObject.reference))
                     newPre.initialValue = preValuedObject.reference
@@ -191,9 +192,6 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                 // This could be the last auxiliary pre variable.
                 lastPreVariablesOfNestedPre.add(newPre)
     
-                //            val transWaitDone = preWait.createTransitionTo(preDone)
-                //            transWaitDone.setTrigger()
-                //            val transInitDone = preInit.createTransitionTo(preDone)
                 // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
                 // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
                 for (action : allActions) {

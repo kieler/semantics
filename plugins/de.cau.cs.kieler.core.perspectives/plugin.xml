@@ -77,6 +77,12 @@
          <newWizardShortcut
                id="org.eclipse.ui.wizards.new.file">
          </newWizardShortcut>
+         <view
+               id="de.cau.cs.kieler.simulation.ui.dataPoolView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView">
+         </view>
       </perspectiveExtension>
    </extension>
    <extension

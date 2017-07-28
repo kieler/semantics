@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -44,6 +44,12 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         } else 
         if (operator == AssignOperator::ASSIGNDIV) {
             return " /= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMIN) {
+            return " min= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMAX) {
+            return " max= " 
         } else 
         if (operator == AssignOperator::POSTFIXADD) {
             return "++"

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -17,12 +17,12 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl
 import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
-import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData
 import java.io.File
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.
@@ -30,12 +30,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
     
-    override getModelName(EObject model) {
-        if (model instanceof ProgramImpl) {
-            val modules = model.modules
-            if(!modules.isNullOrEmpty)
-                return modules.get(0).name
-        }
+    override getSimulationInterface(EObject model) {
         return null
     }
     
@@ -73,6 +68,14 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
         // The returned list
         val datas = newArrayList() 
         
+        // Get model name
+        var modelName = ""
+        if (model instanceof ProgramImpl) {
+            val modules = model.modules
+            if(!modules.isNullOrEmpty)
+                modelName = modules.get(0).name
+        }
+        
         // Load text from model
         val path = model.eResource.URI.path
         val file = new File(path)
@@ -82,6 +85,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
         for(line : lines) {
             val anno = parseLineAndGetWrapperCodeAnnotation(line)
             if(anno != null) {
+                anno.modelName = modelName
                 annotations += anno
             } else {
                 val inputOutput = parseInputOutputDeclaration(line)
@@ -177,5 +181,5 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
             this.name = name
             this.type = type
         }
-    }
+    }    
 }

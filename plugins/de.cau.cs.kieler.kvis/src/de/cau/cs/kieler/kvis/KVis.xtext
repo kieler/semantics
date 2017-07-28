@@ -1,0 +1,130 @@
+grammar de.cau.cs.kieler.kvis.KVis with de.cau.cs.kieler.kexpressions.KExpressions
+
+generate kvis "http://www.cau.de/cs/kieler/kvis/KVis"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
+
+Visualization:
+	'image' ':' image=STRING
+	(elements += Element | interactions += Interaction)*
+;
+
+Element:
+	'animate' name=ID '{'
+        (animations+=Animation)+
+	'}'
+;
+
+Interaction:
+    {Interaction}
+    'perform' ('on' event=Event)? '{'
+        (actions+=Action)*
+    '}' ('when' condition=AndExpression)?
+;
+
+Event:
+    event=DOMEvent 'from' element=ID
+;
+
+Action returns Action:
+    VariableAssignment | SimulationAction
+;
+
+VariableAssignment returns Action:
+    variable=VariableReference '=' value=Literal
+;
+
+SimulationAction returns Action:
+    operation=SimulationOperation 'simulation'
+;
+
+Animation:
+    'apply' type=ID ('using' variable=VariableReference)? '{'
+        (attributeMappings+=AttributeMapping)*
+    '}' ('when' condition=AndExpression)?
+;
+
+AttributeMapping:
+    attribute=ID ':' (literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
+;
+
+Mapping:
+    variableDomain = VariableDomain 'is' attributeDomain = AttributeDomain
+;
+
+AndExpression returns Condition:
+    Comparison 
+    (({AndExpression.left=current} operator="and") right=Comparison)*
+;
+
+Comparison:
+    left=VariableReference
+    relation=CompareOperator
+    (right=Literal | right=VariableReference)
+;
+
+VariableDomain returns Domain:
+    value = Literal
+    | range = Interval
+;
+
+Interval:
+    (from=IntValue | from=FloatValue)
+    Range
+    (to=IntValue | to=FloatValue)
+;
+
+AttributeDomain returns Domain:
+    VariableDomain
+;
+
+VariableReference:
+    (model=ModelReference)?
+    name=ID
+    ('[' indices+=INT ']')*
+;
+
+ModelReference:
+    name=ID '.'
+;
+
+AndOperator returns BooleanOperator:
+    AND='and'
+;
+
+Literal:
+    value = SignedInt | value = SignedFloat | (value = AnyValue)
+;
+
+enum DOMEvent:
+    CLICK='click'
+    | MOUSEDOWN='mousedown' | MOUSEUP='mouseup'
+    | MOUSEMOVE='mousemove'
+    // The following events do not work very well (or not at all) with the JSVGCanvas
+//    | DOUBLECLICK='dblclick'
+//    | MOUSEOVER='mouseover' | MOUSEOUT='mouseout'
+//    | MOUSEENTER='mouseenter' | MOUSELEAVE='mouseleave'
+;
+
+enum SimulationOperation:
+    STEP='step' | STOP='stop' | PAUSE='pause' | PLAY='play'
+;
+
+enum Sign:
+    POSITIVE='+' | NEGATIVE='-'
+;
+
+Range:
+    '-' // Alternative would be '..'
+;
+
+SignedFloat:
+    (sign = Sign)?
+    value = FLOAT
+;
+
+SignedInt:
+    (sign = Sign)?
+    value = INT
+;

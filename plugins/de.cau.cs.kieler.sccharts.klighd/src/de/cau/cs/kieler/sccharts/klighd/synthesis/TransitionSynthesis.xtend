@@ -30,8 +30,8 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.annotations.IntAnnotation
+import org.eclipse.elk.core.options.EdgeLabelPlacement
+import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.CommentHook
 
@@ -68,7 +68,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         val edge = transition.createEdge().associateWith(transition);
 
         if (USE_KLAY.booleanValue) {
-            edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0);
+            edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0)
         } else {
             edge.setLayoutOption(CoreOptions::SPACING_EDGE_LABEL, 2.0);
         }

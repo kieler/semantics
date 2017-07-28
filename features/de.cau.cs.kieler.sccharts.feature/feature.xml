@@ -310,6 +310,9 @@ litigation.
 
    <plugin id="de.cau.cs.kieler.sim.kiem.toolbar" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
+   <plugin id="de.cau.cs.kieler.simulation" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.simulation.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.sim.instructions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
@@ -394,14 +397,14 @@ litigation.
 
    <plugin id="de.cau.cs.kieler.esterel.examples" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
          
-  <plugin id="de.cau.cs.kieler.esterel.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>          
+   <plugin id="de.cau.cs.kieler.esterel.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>  
+
+   <plugin id="de.cau.cs.kieler.esterel.sim.c" download-size="0" install-size="0" version="0.0.0" unpack="false"/>         
 
    <plugin id="de.cau.cs.kieler.sim.signals" download-size="0" install-size="0" version="0.0.0"/>
 
    <plugin id="de.cau.cs.kieler.sim.signals.ui" download-size="0" install-size="0" version="0.0.0"/>
 
    <plugin id="de.cau.cs.kieler.synccharts" download-size="0" install-size="0" version="0.0.0"/>
-
-   <plugin id="org.freemarker" download-size="0" install-size="0" version="0.0.0"/>
 
 </feature>
