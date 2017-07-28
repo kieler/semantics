@@ -28,7 +28,7 @@ import java.util.List
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Processor
 import com.google.inject.Guice
-
+import static extension com.google.common.base.Preconditions.*
 /**
  * Main class for the registration of systems and processors.
  * 
@@ -65,10 +65,12 @@ class KiCoolRegistration {
     }
     
     static def getSystemByResource(String res) {
+        checkArgument(modelsMap.containsKey(res), "No processor system registered for resource: " + res)
         modelsMap.get(res)
     }
     
     static def getSystemById(String id) {
+        checkArgument(modelsIdMap.containsKey(id), "No processor system registered with id: " + id)
         modelsIdMap.get(id)
     }
     
