@@ -105,7 +105,7 @@ public class SCTXResource extends LazyLinkingResource {
         val scc = rootObject.get(0) as SCCharts
         val ownR = scc.eResource
         val segments = ownR.URI.segments
-        val base = "platform:/" + String.join("/", segments.subList(0, segments.length - 1)) + "/"
+        val base = ownR.URI.scheme + ":/" + String.join("/", segments.subList(0, segments.length - 1)) + "/"
         
         val rSet = this.getResourceSet
         
@@ -166,31 +166,5 @@ public class SCTXResource extends LazyLinkingResource {
         }
         return false
     }
-
-//    /**
-//     * Iterates on the parsed model and delegates to {@link #setupTickSignal(Region)},
-//     * {@link #setupScopeID(Scope, HashSet)} and {@link #setupPriorities(State)}.
-//     */
-//    private void consolidateModel() {
-//
-//        EObject o = null;
-//        for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
-//            o = i.next();
-//            if (SCChartsPackage.eINSTANCE.getScope().isInstance(o)) {
-//                setupScopeLabel((Scope) o);
-//            }
-//        }
-//    }
-//    
-//    /**
-//     * Sets implicit scope labels.
-//     */
-//    private void setupScopeLabel(Scope scope) {
-//        if (scope.getLabel() == null) {
-//            scope.setLabel(scope.getId());
-//        }
-//    }
-
-    
 
 }
