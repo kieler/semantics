@@ -23,6 +23,7 @@ public class CViewPlugin implements BundleActivator {
 
     static public String CVIEW_PREFERENCE_ID = "de.cau.cs.kieler.cview.preferences.active";
     static public String CVIEW_PREFERENCE_ENABLED = "active";
+    static public String CVIEW_PREFERENCE_FILTER = "filter";
     static public String KLIGHD_MODEL_VIEW = "de.cau.cs.kieler.klighd.ui.view.diagram";
 
     /** The Constant EXTENSION_POINT_ID. */
@@ -43,6 +44,45 @@ public class CViewPlugin implements BundleActivator {
 
     @Override
     public void stop(BundleContext context) throws Exception {
+    }
+
+    // -------------------------------------------------------------------------
+    
+    public static boolean isEnabled(String hookId) {
+        Preferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
+        return (preferences.get(CVIEW_PREFERENCE_ENABLED + hookId, "enabled").equals("enabled"));
+    }
+
+    
+    public static void setEnabled(String hookId, boolean enabled) {
+        IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
+
+        if (enabled) {
+            preferences.put(CVIEW_PREFERENCE_ENABLED + hookId, "enabled");
+        } else {
+            preferences.put(CVIEW_PREFERENCE_ENABLED + hookId, "disabled");
+        }
+        try {
+            preferences.flush();
+        } catch (Exception e) {
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static void setFilter(String filter) {
+        IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
+
+        preferences.put(CVIEW_PREFERENCE_FILTER, filter);
+        try {
+            preferences.flush();
+        } catch (Exception e) {
+        }
+    }
+
+    public static String getFilter() {
+        Preferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
+        return (preferences.get(CVIEW_PREFERENCE_FILTER, ""));
     }
 
     // -------------------------------------------------------------------------
@@ -89,11 +129,40 @@ public class CViewPlugin implements BundleActivator {
         connectionHooks = null;
     }
     
-    public static List<String> getRegisteredConnectionHookIds() {
+    public static String extractId(String item) {
+        int start = item.lastIndexOf("(");
+        if (start >= 0) {
+            int end = item.lastIndexOf(")");
+            if (end > start) {
+                return item.substring(start+1, end);
+            }
+        }
+        return "";
+    }
+
+    public static List<String> filterSelectedRegisteredConnectionHookIds(List<String> inputList) {
+        ArrayList returnList = new ArrayList<String>();
         List<IConnectionHook> hooks = getRegisteredConnectionHooks(true);
         for (IConnectionHook hook: hooks) {
-            hook.getId()
+            for (String item : inputList) {
+                String hookId = extractId(item);
+                if (hookId.equals(hook.getId())) {
+                    if (CViewPlugin.isEnabled(hook.getId())) {
+                        returnList.add(item);
+                    }
+                }
+            }
         }
+        return returnList;
+    }
+
+    public static List<String> getAllRegisteredConnectionHookIds() {
+        ArrayList returnList = new ArrayList<String>();
+        List<IConnectionHook> hooks = getRegisteredConnectionHooks(true);
+        for (IConnectionHook hook: hooks) {
+                returnList.add(hook.getName() + " (" + hook.getId() + ")");
+        }
+        return returnList;
     }
 
     // -------------------------------------------------------------------------

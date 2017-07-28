@@ -27,11 +27,16 @@ import de.cau.cs.kieler.cview.hooks.IConnectionHook
 import java.util.ArrayList
 import org.eclipse.core.runtime.IProgressMonitor
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import com.google.inject.Inject
+
 /**
  * @author cmot
  * 
  */
 class KLighDController extends AbstractKLighDController {
+
+    @Inject extension CViewModelExtensions
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
 
@@ -237,24 +242,45 @@ class KLighDController extends AbstractKLighDController {
             val component = model.addToModel(element, monitor)
         }
 
+        // Apply filter
+        if (CViewPlugin.filter.length > 0) {
+//            val List<Component> copyList = new ArrayList
+            // //scope.eAllContents().filter(typeof(State))
+            for (component : model.eAllContents.filter(typeof(Component)).toList) {
+                val cDepth =component.depth 
+                val selDepth = DiagramSynthesis.selectedExpandLevel
+                if (cDepth  > 1) {
+                    if (!component.name.matches(CViewPlugin.filter)) {
+                        model.components.remove(component)
+                    }
+                }
+            }
+        }
+
         val connectionHooks = CViewPlugin.getRegisteredConnectionHooks(false)
         // Initialize
         for (connectionHook : connectionHooks) {
-            connectionHook.initialize(model);
+            if (CViewPlugin.isEnabled(connectionHook.id)) {
+                connectionHook.initialize(model);
+            }
         }
         // Now call connections extensions
         // println("MODEL: components=" + model.components.size);
         for (Component component : model.components) {
             // println("COMPONENT:" + component.type.getName().toString());
             for (connectionHook : connectionHooks) {
-                val connectionsToAdd = connectionHook.createConnections(component, model)
-                if (!connectionsToAdd.nullOrEmpty) {
-                    model.connections.addAll(connectionsToAdd)
+                if (CViewPlugin.isEnabled(connectionHook.id)) {
+                    val connectionsToAdd = connectionHook.createConnections(component, model)
+                    if (!connectionsToAdd.nullOrEmpty) {
+                        model.connections.addAll(connectionsToAdd)
+                    }
                 }
             }
             // Wrapup
             for (connectionHook : connectionHooks) {
-                connectionHook.wrapup(model);
+                if (CViewPlugin.isEnabled(connectionHook.id)) {
+                    connectionHook.wrapup(model);
+                }
             }
         }
 

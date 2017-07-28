@@ -73,10 +73,10 @@ public class SelectDialog extends Dialog {
     public static List<String> optionListSelected = new ArrayList<String>();
 
     /** The list that holds the currently selected item list. */
-    public static List<String> itemList = new ArrayList<String>();
+    public static List<String> itemListSelected = new ArrayList<String>();
 
     /** The list that holds the list of all items. */
-    private static List<String> itemAllList = new ArrayList<String>();
+    public static List<String> itemListAll = new ArrayList<String>();
 
     /** The Constant for the keyboard delete key. */
     private static final int KEYBOARD_DELETE = 127;
@@ -114,17 +114,12 @@ public class SelectDialog extends Dialog {
      */
     public int open() {
         // Make a copy
-        itemAllList.clear();
         optionListSelected.clear();
-
-        for (String sm : itemList) {
-            itemAllList.add(sm);
-        }
 
         int returnValue = super.open();
 
         if (returnValue != RETURN_VALUE_OK) {
-            itemList.clear();
+            itemListSelected.clear();
         }
 
         dispose();
@@ -311,12 +306,12 @@ public class SelectDialog extends Dialog {
      * Update table.
      */
     private void updateTable() {
-        for (String item : itemAllList) {
+        for (String item : itemListAll) {
             if (!tableContains(item)) {
-                this.addToTable(item, false);
+                this.addToTable(item, (itemListSelected.contains(item)));
             }
         }
-        itemList = getCheckedList();
+        itemListSelected = getCheckedList();
     }
 
     // -------------------------------------------------------------------------

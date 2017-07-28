@@ -94,7 +94,7 @@
               commandId="de.cau.cs.kieler.cview.command"
               icon="icon/refresh.gif"
               id="de.cau.cs.kieler.cview.command.refresh"
-              label="Refresh"
+              label="Refresh  C View"
               style="push">
         </command>
         <separator name="additions" visible="true">

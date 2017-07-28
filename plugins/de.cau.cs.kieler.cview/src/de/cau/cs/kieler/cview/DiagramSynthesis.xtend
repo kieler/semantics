@@ -75,6 +75,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KColorExtensions
     @Inject extension CViewModelExtensions
 
+    public static int selectedExpandLevel = 1;
+
     public static DiagramSynthesis instance = null;
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
@@ -146,7 +148,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 connection.tooltip = connection.tooltip.possiblyAnonymize(false)
             }
         }
-        
+
+        selectedExpandLevel = EXPANDED_SLIDER.intValue        
 
         val root = model.createNode().associateWith(model);
         val depth = 1;
