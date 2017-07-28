@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Ecids
+Bundle-Name: eCIDS POSIX OAL Analysis (CView)
 Bundle-SymbolicName: de.cau.cs.kieler.cview.ecids;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -10,6 +10,7 @@ Require-Bundle: de.cau.cs.kieler.cview,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- com.google.inject;bundle-version="3.0.0",
+ com.google.inject,
  org.eclipse.emf.ecore
+Bundle-Vendor: Philotech Software
 

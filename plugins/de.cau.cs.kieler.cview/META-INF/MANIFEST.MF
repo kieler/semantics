@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Cview
+Bundle-Name: C View Framework (Main Plugin)
 Bundle-SymbolicName: de.cau.cs.kieler.cview;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -25,3 +25,4 @@ Import-Package: org.eclipse.cdt.core,
  org.eclipse.cdt.core.dom,
  org.eclipse.cdt.core.parser
 Export-Package: de.cau.cs.kieler.cview.hooks
+Bundle-Vendor: Kiel University

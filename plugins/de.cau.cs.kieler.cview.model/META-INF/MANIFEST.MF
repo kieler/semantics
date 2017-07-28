@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.cview.model
+Bundle-Name: CView Model
 Bundle-Vendor: Kiel University
 Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.cview.model; singleton:=true
