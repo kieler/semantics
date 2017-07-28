@@ -61,7 +61,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
 
         if (transition.trigger != null) {
             if (transition.triggerDelay > 1) {
-                label.append(transition.delay.toString).append(" ");
+                label.append(transition.triggerDelay).append(" ");
             }
             if (hr) {
                 label.append(transition.trigger.serializeHR);
