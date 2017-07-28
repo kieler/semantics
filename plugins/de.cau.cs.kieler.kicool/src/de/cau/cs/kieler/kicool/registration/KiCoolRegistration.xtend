@@ -108,7 +108,6 @@ class KiCoolRegistration {
     }
     
     static def EObject loadEObjectFromResourceLocation(String resourceLocation, String bundleId) throws IOException {
-        println("/%s/%s".format(bundleId, resourceLocation))
         val uri = URI.createPlatformPluginURI("/%s/%s".format(bundleId, resourceLocation), false)
         val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
         val Resource resource = resourceSet.getResource(uri, true)
