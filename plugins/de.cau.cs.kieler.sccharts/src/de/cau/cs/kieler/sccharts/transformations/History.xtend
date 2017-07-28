@@ -87,7 +87,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
     private val nameCache = new UniqueNameCache
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "_H"
 
     //-------------------------------------------------------------------------
     //--                        H I S T O R Y                                --
