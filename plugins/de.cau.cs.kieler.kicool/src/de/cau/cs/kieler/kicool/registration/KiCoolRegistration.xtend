@@ -13,11 +13,10 @@
 package de.cau.cs.kieler.kicool.registration
 
 import com.google.inject.Guice
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Processor
 import java.io.IOException
-import java.net.URL
-import java.util.Collections
 import java.util.HashMap
 import java.util.List
 import java.util.Map
@@ -25,12 +24,11 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.osgi.framework.Bundle
+import org.eclipse.xtext.resource.XtextResourceSet
 
 import static com.google.common.base.Preconditions.*
-import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
-import org.eclipse.xtext.resource.XtextResourceSet
+
+import static extension java.lang.String.format
 
 /**
  * Main class for the registration of systems and processors.
@@ -110,11 +108,7 @@ class KiCoolRegistration {
     }
     
     static def EObject loadEObjectFromResourceLocation(String resourceLocation, String bundleId) throws IOException {
-        
-        val Bundle bundle = Platform.getBundle(bundleId);
-        val URL bundleFileUrl = bundle.getEntry(resourceLocation.toString()); 
-        
-        val uri = URI.createURI(bundleFileUrl.toString, false)
+        val uri = URI.createPlatformPluginURI("/%s/%s".format(bundleId, resourceLocation), false)
         val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
         val Resource resource = resourceSet.getResource(uri, true)
         if (resource != null && resource.getContents() != null && resource.getContents().size() > 0) {
