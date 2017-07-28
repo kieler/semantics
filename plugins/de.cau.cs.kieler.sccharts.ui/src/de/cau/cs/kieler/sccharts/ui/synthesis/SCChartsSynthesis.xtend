@@ -65,19 +65,16 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
     static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
     static val PRAGMA_FONT = "font"        
     static val PRAGMA_SKINPATH = "skinpath"
+          
+    val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
     
-    public static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
-        setCategory(GeneralSynthesisOptions::APPEARANCE)
-        
+    @Accessors private var String skinPath = ""
+    
     override getDisplayedActions() {
         return newLinkedList => [ list |
             hooks.allHooks.forEach[list.addAll(getDisplayedActions)];
         ]
     }
-
-    val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
-    
-    @Accessors private var String skinPath = ""
        
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet()

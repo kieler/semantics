@@ -59,7 +59,7 @@ public class SynthesisHooks implements ISynthesisHooks {
     };
 
     /** Identifier of the extension point for hooks. */
-    private static final String EXTP_ID_HOOKS = "de.cau.cs.kieler.sccharts.ui.hooks";
+    private static final String EXTP_ID_HOOKS = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks";
 
     /** Name of the 'hook' element. */
     private static final String ELEMENT_HOOK = "hook";

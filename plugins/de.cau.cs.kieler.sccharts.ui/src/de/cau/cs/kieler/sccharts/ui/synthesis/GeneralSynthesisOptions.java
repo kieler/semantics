@@ -54,5 +54,8 @@ public final class GeneralSynthesisOptions {
     /** Option for enabling adaptive zoom */
     public static final SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption.createCheckOption(
             "Adaptive Zoom", false).setCategory(APPEARANCE);
+    
+    public static final SynthesisOption SHOW_ALL_SCCHARTS =
+            SynthesisOption.createCheckOption("Show all SCCharts", false).setCategory(APPEARANCE);
 
 }
