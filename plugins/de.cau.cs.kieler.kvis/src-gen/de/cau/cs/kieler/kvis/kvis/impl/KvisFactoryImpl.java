@@ -65,7 +65,7 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
   {
     switch (eClass.getClassifierID())
     {
-      case KvisPackage.VISUALIZATION: return createVisualization();
+      case KvisPackage.VISUALIZATION_CONFIGURATION: return createVisualizationConfiguration();
       case KvisPackage.ELEMENT: return createElement();
       case KvisPackage.INTERACTION: return createInteraction();
       case KvisPackage.EVENT: return createEvent();
@@ -80,9 +80,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
       case KvisPackage.VARIABLE_REFERENCE: return createVariableReference();
       case KvisPackage.MODEL_REFERENCE: return createModelReference();
       case KvisPackage.BOOLEAN_OPERATOR: return createBooleanOperator();
-      case KvisPackage.LITERAL: return createLiteral();
-      case KvisPackage.SIGNED_FLOAT: return createSignedFloat();
-      case KvisPackage.SIGNED_INT: return createSignedInt();
       case KvisPackage.AND_EXPRESSION: return createAndExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -103,8 +100,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
         return createDOMEventFromString(eDataType, initialValue);
       case KvisPackage.SIMULATION_OPERATION:
         return createSimulationOperationFromString(eDataType, initialValue);
-      case KvisPackage.SIGN:
-        return createSignFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -124,8 +119,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
         return convertDOMEventToString(eDataType, instanceValue);
       case KvisPackage.SIMULATION_OPERATION:
         return convertSimulationOperationToString(eDataType, instanceValue);
-      case KvisPackage.SIGN:
-        return convertSignToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -136,10 +129,10 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Visualization createVisualization()
+  public VisualizationConfiguration createVisualizationConfiguration()
   {
-    VisualizationImpl visualization = new VisualizationImpl();
-    return visualization;
+    VisualizationConfigurationImpl visualizationConfiguration = new VisualizationConfigurationImpl();
+    return visualizationConfiguration;
   }
 
   /**
@@ -301,39 +294,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Literal createLiteral()
-  {
-    LiteralImpl literal = new LiteralImpl();
-    return literal;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SignedFloat createSignedFloat()
-  {
-    SignedFloatImpl signedFloat = new SignedFloatImpl();
-    return signedFloat;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SignedInt createSignedInt()
-  {
-    SignedIntImpl signedInt = new SignedIntImpl();
-    return signedInt;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public AndExpression createAndExpression()
   {
     AndExpressionImpl andExpression = new AndExpressionImpl();
@@ -380,28 +340,6 @@ public class KvisFactoryImpl extends EFactoryImpl implements KvisFactory
    * @generated
    */
   public String convertSimulationOperationToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Sign createSignFromString(EDataType eDataType, String initialValue)
-  {
-    Sign result = Sign.get(initialValue);
-    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertSignToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

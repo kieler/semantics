@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.emf.common,
  org.antlr.runtime,
  de.cau.cs.kieler.simulation,
- de.cau.cs.kieler.kexpressions;bundle-version="0.12.0"
+ de.cau.cs.kieler.kexpressions;bundle-version="0.12.0",
+ de.cau.cs.kieler.prom,
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kvis,
  de.cau.cs.kieler.kvis.extensions,

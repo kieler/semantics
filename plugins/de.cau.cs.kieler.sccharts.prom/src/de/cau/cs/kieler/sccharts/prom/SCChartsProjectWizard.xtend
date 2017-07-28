@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
+import de.cau.cs.kieler.prom.ui.wizards.PromProjectWizard
 
 /**
  * Implementation of a project wizard that creates a project via environments

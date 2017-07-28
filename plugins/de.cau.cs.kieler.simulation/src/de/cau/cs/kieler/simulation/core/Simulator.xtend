@@ -19,9 +19,11 @@ package de.cau.cs.kieler.simulation.core
  *
  */
 interface Simulator extends DataHandler {
-    
     /**
      * Initialize the simulation and add variables of the simulation to the given pool.
      */
     public def void initialize(DataPool pool)
+    
+    public def void setBaseModelName(String value)
+    public def String getBaseModelName()
 }

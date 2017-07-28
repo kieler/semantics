@@ -21,9 +21,9 @@ import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
-import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
-import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
+import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.launch.IWrapperCodeAnnotationAnalyzer
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
@@ -37,6 +37,15 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer{
     
     private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getModelName(EObject model) {
+        if (model instanceof State) {
+            return model.name
+        }
+    }
     
     /**
      * {@inheritDoc}
@@ -61,7 +70,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                     // that is neither input nor output
                     for (annotation : decl.annotations) {
                          if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
-                             KiCoLaunchConfig.writeToConsole('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
+                             PromConsole.print('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
                          }
                     }
                 }
@@ -84,7 +93,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                 for(decl : model.declarations.filter(VariableDeclaration)) {
                     for(valuedObject : decl.valuedObjects) {
                         // At the moment, send only inputs and outputs
-                        if(decl.input || decl.output) {
+//                        if(decl.input || decl.output) {
                             val data = new WrapperCodeAnnotationData();
                             data.arguments.add(String.valueOf(decl.input))
                             data.arguments.add(String.valueOf(decl.output))
@@ -114,8 +123,19 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                             data.varType = decl.type.literal
                             data.varName = valuedObject.name
                             
+                            // Set interface type
+                            if(decl.input) {
+                                data.interfaceTypes.add("input")
+                            }
+                            if(decl.output) {
+                                data.interfaceTypes.add("output")
+                            }
+                            if(!decl.input && !decl.output) {
+                                data.interfaceTypes.add("internal")
+                            }
+                            
                             annotationDatas.add(data)
-                        }
+//                        }
                     }
                 }
             }

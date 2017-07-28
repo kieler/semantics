@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kvis.kvis.Animation
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kvis.ui.views.KVisView
+import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import java.util.List
 import org.w3c.dom.Element
@@ -28,7 +30,9 @@ import org.w3c.dom.svg.SVGDocument
  */
 abstract class AnimationHandler {
     
-    protected val List<AnimationHandlerAttribute> attributes = newArrayList
+    public val recursive = new ConfigurableAttribute("recursive", false)
+    
+    protected val List<ConfigurableAttribute> attributes = newArrayList
     protected var String svgElementId
     protected var Animation animation
     protected var Object variableValue
@@ -36,6 +40,9 @@ abstract class AnimationHandler {
     
     abstract public def String getName()
     abstract protected def void doApply(DataPool pool, Element element)
+    
+    @Extension
+    protected AttributeExtensions attributeExtensions
     
     @Extension
     protected KVisExtensions kvisExtensions
@@ -47,11 +54,29 @@ abstract class AnimationHandler {
         this.svgElementId = svgElementId
         this.animation = animation
         // Initialize extension methods
+        attributeExtensions = new AttributeExtensions
         kvisExtensions = new KVisExtensions
         svgExtensions = new SVGExtensions
-        // Add attribute to determine if everything of this animation should be applied recursively
-        // to child elements of this animation's svg element.
-        addAttribute("recursive")
+    }
+    
+    /**
+     * Initializes the attributes of this animation handler using Java reflection.
+     * 
+     * This method has to be called in the constructor of the highest class
+     * to ensure that all fields are initialized
+     * and because Java reflection includes the fields of superclasses.
+     */
+    protected def void initialize() {
+        // Collect attributes via reflection
+        attributes.clear
+        for(f : class.fields) {
+            if(f.type == typeof(ConfigurableAttribute)) {
+                val attr = f.get(this) as ConfigurableAttribute
+                if(attr != null) {
+                    attributes.add(attr)
+                }
+            }
+        }
     }
     
     public def void apply(DataPool pool) {
@@ -69,24 +94,26 @@ abstract class AnimationHandler {
                 val attributeName = attributeMapping.attribute
                 val attr = getAttribute(attributeName)
                 if(attr != null) {
-                    attr.value = getMappedValue(attributeMapping, variableValue)
+                    val newValue = getMappedValue(attributeMapping, variableValue)
+                    if(newValue != null) {
+                        attr.value = newValue    
+                    }
                 } else {
-                    throw new IllegalArgumentException("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
-                                                     + "Handled attributes are:\n"
-                                                     +  attributes.map[it.name].toList())
+                    throw new Exception("Attribute '"+attributeName+"' is not handled in "+name+" animation.\n"
+                                      + "Handled attributes are:\n"
+                                      +  attributes.map[it.name].toList())
                 }
             }
             // Check if all mandatory attributes have been set
             for(attr : attributes.filter[it.isMandatory]) {
                 if(attr.value == null) {
-                    throw new IllegalArgumentException("The attribute '" + attr.name+ "' "
-                                                 + "of the " + name + " animation must be set.")                                 
+                    throw new Exception("The attribute '" + attr.name+ "' "
+                                      + "of the " + name + " animation must be set.")                                 
                 }
             }
             // Apply
             val element = findElement(true)
-            val recursiveAttr = getAttribute("recursive")
-            if(recursiveAttr == null || recursiveAttr.value == null || !recursiveAttr.boolValue) {
+            if(recursive == null || !recursive.boolValue) {
                 // Don't apply this animation recursively
                 doApply(pool, element)
             } else {
@@ -151,30 +178,15 @@ abstract class AnimationHandler {
         }
     }
     
+    protected def ConfigurableAttribute getAttribute(String name) {
+        return attributes.getAttribute(name)
+    }
+    
     protected def boolean isActive(DataPool pool) {
         if(animation.condition == null) {
             return true
         } else {
             return animation.condition.eval(pool)
         }
-    }
-    
-    protected def void addAttributes(String... name) {
-        for(n : name) {
-            addAttribute(n)
-        }
-    }
-    
-    protected def AnimationHandlerAttribute addAttribute(String name) {
-        var AnimationHandlerAttribute attr = getAttribute(name)
-        if(attr == null) {
-            attr = new AnimationHandlerAttribute(name)
-            attributes.add(attr)
-        }
-        return attr
-    }
-    
-    protected def AnimationHandlerAttribute getAttribute(String name) {
-        return attributes.findFirst[it.name == name]
     }
 }

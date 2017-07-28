@@ -18,7 +18,7 @@ public class KVisStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.prom.KiBuildStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
@@ -39,7 +39,6 @@ public class KVisStandaloneSetupGenerated implements ISetup {
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("kvis", resourceFactory);
 		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("kvis", serviceProvider);
 		
-
 
 
 	}

@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGLocatable
@@ -22,12 +23,12 @@ import org.w3c.dom.svg.SVGLocatable
  *
  */
 class MoveAnimation extends AnimationHandler {
-    var double posX
-    var double posY
+    public val posX = new ConfigurableAttribute("x", 0)
+    public val posY = new ConfigurableAttribute("y", 0)
     
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        addAttributes("x", "y")
+        initialize
     }
     
     override getName() {
@@ -35,23 +36,13 @@ class MoveAnimation extends AnimationHandler {
     }
     
     override doApply(DataPool pool, Element elem) {
-        // Get mapped value
-        val newX = getAttribute("x").floatValue
-        val newY = getAttribute("y").floatValue
-        if(newX != null) {
-            posX = newX.doubleValue
-        }
-        if(newY != null) {
-            posY = newY.doubleValue
-        }
-
         // Compute position
         if(elem instanceof SVGLocatable) {
             // Position and size of the element
 //            val SVGLocatable locatable = elem as SVGLocatable
 //            val box = locatable.getBBox()
             // Set new transform
-            var translation = posX + "," + posY
+            var translation = posX.floatValue + "," + posY.floatValue
             elem.setAttributeFunction("transform", "translate", translation)
         } else {
             throw new Exception("The element '"+svgElementId+"' is not an SVGLocatable.")

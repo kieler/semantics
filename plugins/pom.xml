@@ -78,6 +78,7 @@
     <module>de.cau.cs.kieler.sccharts.ui</module>
     <module>de.cau.cs.kieler.sccharts.preferences</module>
     <module>de.cau.cs.kieler.sccharts.prom</module>
+    <module>de.cau.cs.kieler.sccharts.prom.ui</module>
     <module>de.cau.cs.kieler.sccharts.s</module>
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.sim.c</module>
