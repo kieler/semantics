@@ -33563,7 +33563,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalEsterel.g:12090:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalEsterel.g:12090:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -33575,11 +33575,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // InternalEsterel.g:12093:28: ( (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalEsterel.g:12094:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalEsterel.g:12093:28: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalEsterel.g:12094:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalEsterel.g:12094:1: (this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalEsterel.g:12094:6: this_ID_0= RULE_ID (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalEsterel.g:12094:1: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalEsterel.g:12094:6: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FOLLOW_95); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -33592,53 +33592,77 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // InternalEsterel.g:12101:1: (kw= '.' | (kw= '-' this_ID_3= RULE_ID ) )*
-            loop164:
+            // InternalEsterel.g:12101:1: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            loop165:
             do {
-                int alt164=3;
-                int LA164_0 = input.LA(1);
+                int alt165=2;
+                int LA165_0 = input.LA(1);
 
-                if ( (LA164_0==79) ) {
-                    int LA164_2 = input.LA(2);
+                if ( (LA165_0==79) ) {
+                    int LA165_2 = input.LA(2);
 
-                    if ( (LA164_2==RULE_ID) ) {
-                        alt164=2;
+                    if ( (LA165_2==RULE_ID) ) {
+                        alt165=1;
                     }
 
 
                 }
-                else if ( (LA164_0==22) ) {
-                    alt164=1;
+                else if ( (LA165_0==22) ) {
+                    alt165=1;
                 }
 
 
-                switch (alt164) {
+                switch (alt165) {
             	case 1 :
-            	    // InternalEsterel.g:12102:2: kw= '.'
+            	    // InternalEsterel.g:12101:2: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    kw=(Token)match(input,22,FOLLOW_95); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
+            	    // InternalEsterel.g:12101:2: (kw= '.' | kw= '-' )
+            	    int alt164=2;
+            	    int LA164_0 = input.LA(1);
 
-            	              current.merge(kw);
-            	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
-            	          
+            	    if ( (LA164_0==22) ) {
+            	        alt164=1;
+            	    }
+            	    else if ( (LA164_0==79) ) {
+            	        alt164=2;
+            	    }
+            	    else {
+            	        if (state.backtracking>0) {state.failed=true; return current;}
+            	        NoViableAltException nvae =
+            	            new NoViableAltException("", 164, 0, input);
+
+            	        throw nvae;
+            	    }
+            	    switch (alt164) {
+            	        case 1 :
+            	            // InternalEsterel.g:12102:2: kw= '.'
+            	            {
+            	            kw=(Token)match(input,22,FOLLOW_4); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0_0()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+            	        case 2 :
+            	            // InternalEsterel.g:12109:2: kw= '-'
+            	            {
+            	            kw=(Token)match(input,79,FOLLOW_4); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_0_1()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+
             	    }
 
-            	    }
-            	    break;
-            	case 2 :
-            	    // InternalEsterel.g:12108:6: (kw= '-' this_ID_3= RULE_ID )
-            	    {
-            	    // InternalEsterel.g:12108:6: (kw= '-' this_ID_3= RULE_ID )
-            	    // InternalEsterel.g:12109:2: kw= '-' this_ID_3= RULE_ID
-            	    {
-            	    kw=(Token)match(input,79,FOLLOW_4); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	              current.merge(kw);
-            	              newLeafNode(kw, grammarAccess.getExtendedIDAccess().getHyphenMinusKeyword_1_1_0()); 
-            	          
-            	    }
             	    this_ID_3=(Token)match(input,RULE_ID,FOLLOW_95); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
@@ -33647,29 +33671,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	    }
             	    if ( state.backtracking==0 ) {
             	       
-            	          newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1_1()); 
+            	          newLeafNode(this_ID_3, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             	          
             	    }
-
-            	    }
-
 
             	    }
             	    break;
 
             	default :
-            	    break loop164;
+            	    break loop165;
                 }
             } while (true);
 
-            // InternalEsterel.g:12121:4: (kw= '#' this_INT_5= RULE_INT )?
-            int alt165=2;
-            int LA165_0 = input.LA(1);
+            // InternalEsterel.g:12121:3: (kw= '#' this_INT_5= RULE_INT )?
+            int alt166=2;
+            int LA166_0 = input.LA(1);
 
-            if ( (LA165_0==35) ) {
-                alt165=1;
+            if ( (LA166_0==35) ) {
+                alt166=1;
             }
-            switch (alt165) {
+            switch (alt166) {
                 case 1 :
                     // InternalEsterel.g:12122:2: kw= '#' this_INT_5= RULE_INT
                     {
@@ -33777,13 +33798,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             // InternalEsterel.g:12157:2: (kw= '-' )? this_INT_1= RULE_INT
             {
             // InternalEsterel.g:12157:2: (kw= '-' )?
-            int alt166=2;
-            int LA166_0 = input.LA(1);
+            int alt167=2;
+            int LA167_0 = input.LA(1);
 
-            if ( (LA166_0==79) ) {
-                alt166=1;
+            if ( (LA167_0==79) ) {
+                alt167=1;
             }
-            switch (alt166) {
+            switch (alt167) {
                 case 1 :
                     // InternalEsterel.g:12158:2: kw= '-'
                     {
@@ -33891,13 +33912,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             // InternalEsterel.g:12191:2: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
             // InternalEsterel.g:12191:2: (kw= '-' )?
-            int alt167=2;
-            int LA167_0 = input.LA(1);
+            int alt168=2;
+            int LA168_0 = input.LA(1);
 
-            if ( (LA167_0==79) ) {
-                alt167=1;
+            if ( (LA168_0==79) ) {
+                alt168=1;
             }
-            switch (alt167) {
+            switch (alt168) {
                 case 1 :
                     // InternalEsterel.g:12192:2: kw= '-'
                     {
@@ -33965,47 +33986,47 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             // InternalEsterel.g:12215:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
             {
             // InternalEsterel.g:12215:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
-            int alt168=6;
+            int alt169=6;
             switch ( input.LA(1) ) {
             case 38:
                 {
-                alt168=1;
+                alt169=1;
                 }
                 break;
             case 83:
                 {
-                alt168=2;
+                alt169=2;
                 }
                 break;
             case 84:
                 {
-                alt168=3;
+                alt169=3;
                 }
                 break;
             case 82:
                 {
-                alt168=4;
+                alt169=4;
                 }
                 break;
             case 85:
                 {
-                alt168=5;
+                alt169=5;
                 }
                 break;
             case 81:
                 {
-                alt168=6;
+                alt169=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 168, 0, input);
+                    new NoViableAltException("", 169, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt168) {
+            switch (alt169) {
                 case 1 :
                     // InternalEsterel.g:12215:2: (enumLiteral_0= '=' )
                     {
@@ -34602,57 +34623,57 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             // InternalEsterel.g:12388:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) )
             {
             // InternalEsterel.g:12388:1: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'boolean' ) | (enumLiteral_2= 'unsigned' ) | (enumLiteral_3= 'integer' ) | (enumLiteral_4= 'float' ) | (enumLiteral_5= 'double' ) | (enumLiteral_6= 'string' ) | (enumLiteral_7= 'host' ) )
-            int alt169=8;
+            int alt170=8;
             switch ( input.LA(1) ) {
             case 104:
                 {
-                alt169=1;
+                alt170=1;
                 }
                 break;
             case 105:
                 {
-                alt169=2;
+                alt170=2;
                 }
                 break;
             case 106:
                 {
-                alt169=3;
+                alt170=3;
                 }
                 break;
             case 107:
                 {
-                alt169=4;
+                alt170=4;
                 }
                 break;
             case 108:
                 {
-                alt169=5;
+                alt170=5;
                 }
                 break;
             case 109:
                 {
-                alt169=6;
+                alt170=6;
                 }
                 break;
             case 110:
                 {
-                alt169=7;
+                alt170=7;
                 }
                 break;
             case 111:
                 {
-                alt169=8;
+                alt170=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 169, 0, input);
+                    new NoViableAltException("", 170, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt169) {
+            switch (alt170) {
                 case 1 :
                     // InternalEsterel.g:12388:2: (enumLiteral_0= 'pure' )
                     {
@@ -34847,57 +34868,57 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             // InternalEsterel.g:12443:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) )
             {
             // InternalEsterel.g:12443:1: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= 'or' ) | (enumLiteral_6= 'and' ) | (enumLiteral_7= 'host' ) )
-            int alt170=8;
+            int alt171=8;
             switch ( input.LA(1) ) {
             case 112:
                 {
-                alt170=1;
+                alt171=1;
                 }
                 break;
             case 78:
                 {
-                alt170=2;
+                alt171=2;
                 }
                 break;
             case 77:
                 {
-                alt170=3;
+                alt171=3;
                 }
                 break;
             case 113:
                 {
-                alt170=4;
+                alt171=4;
                 }
                 break;
             case 114:
                 {
-                alt170=5;
+                alt171=5;
                 }
                 break;
             case 88:
                 {
-                alt170=6;
+                alt171=6;
                 }
                 break;
             case 87:
                 {
-                alt170=7;
+                alt171=7;
                 }
                 break;
             case 111:
                 {
-                alt170=8;
+                alt171=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 170, 0, input);
+                    new NoViableAltException("", 171, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt170) {
+            switch (alt171) {
                 case 1 :
                     // InternalEsterel.g:12443:2: (enumLiteral_0= 'none' )
                     {
