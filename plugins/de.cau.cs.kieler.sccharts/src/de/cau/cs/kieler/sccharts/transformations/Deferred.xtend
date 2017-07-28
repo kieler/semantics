@@ -15,20 +15,27 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Deferred Transformation.
@@ -63,23 +70,20 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     //-------------------------------------------------------------------------
     //--             D E F E R R E D     T R A N S I T I O N                 --
@@ -92,13 +96,12 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
     // transition in case deferVariable is set to TRUE, i.e., the state was entered
     // by a deferred transition.
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all states
-        targetRootState.allStates.forEach [ targetTransition |
+        rootState.allStates.forEach [ targetTransition |
             targetTransition.transformDeferredState;
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     def void transformDeferredState(State state) {
@@ -116,20 +119,20 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
             // Add a new deferVariable to the outer state, set it initially to FALSE and
             // add a during action in the state to reset it to FALSE
             val deferVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "deferred", createBoolDeclaration).
-                uniqueName
+                uniqueName(nameCache)
             deferVariable.setInitialValue(FALSE)
             val resetDeferSignalAction = state.createDuringAction
-            resetDeferSignalAction.addEffect(deferVariable.assign(FALSE))
+            resetDeferSignalAction.addEffect(deferVariable.createAssignment(FALSE))
 
             // For all incoming deferred transitions, reset the defer flag and add an assignment
             // setting the deferVariable to true when entering the state 
             for (transition : incomingDeferredTransitions) {
                 transition.setDeferred(false)
-                transition.addEffect(deferVariable.assign(TRUE)).trace(state, transition)
+                transition.addEffect(deferVariable.createAssignment(TRUE)).trace(state, transition)
             }
             // Set all others to false explicitly (just to make sure in case the superstate was strongly immediate aborted)
             for (transition : incomingNonDeferredTransitions) {
-                transition.addEffect(deferVariable.assign(FALSE)).trace(state, transition)
+                transition.addEffect(deferVariable.createAssignment(FALSE)).trace(state, transition)
             }
 
             // Only do this for outgoing immediate transitions!
@@ -147,4 +150,27 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
         }
     }
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
+
+//       
+// -- FORMER IMPLEMENTATION --
+// 
+// For all deferred transitions T from S1 to S2, create a new State _S
+// create a new transition _T from _S to S2 and change T's target to _S.
+// Remove the deferred flag from T.
+//
+//     def void transformDeferred(Transition transition) {
+//         if (transition.deferred) {
+//             // Create a new state _S
+//             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
+//             // Create a new transition _T
+//             _S.createTransitionTo(transition.targetState)
+//             // Re-target transition T
+//             transition.setTargetState(_S)
+//             // Remove deferred flag
+//             transition.setDeferred(false)
+//         }
+//     }
 }

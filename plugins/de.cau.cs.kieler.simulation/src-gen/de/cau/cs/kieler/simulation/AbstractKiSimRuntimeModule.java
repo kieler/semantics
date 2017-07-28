@@ -93,9 +93,9 @@ public abstract class AbstractKiSimRuntimeModule extends org.eclipse.xtext.servi
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.simulation.validation.KiSimJavaValidator> bindKiSimJavaValidator() {
-		return de.cau.cs.kieler.simulation.validation.KiSimJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.simulation.validation.KiSimValidator> bindKiSimValidator() {
+		return de.cau.cs.kieler.simulation.validation.KiSimValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

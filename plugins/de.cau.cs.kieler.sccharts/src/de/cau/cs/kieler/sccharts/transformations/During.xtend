@@ -17,14 +17,20 @@ import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts During Transformation.
@@ -61,11 +67,17 @@ class During extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
 
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     //-------------------------------------------------------------------------
     //--                     D U R I N G       A C T I O N                   --
@@ -75,13 +87,12 @@ class During extends AbstractExpansionTransformation implements Traceable {
     //
     // Transforming During Actions.
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all states
-        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
-            targetState.transformDuring(targetRootState);
+        rootState.getAllStates.toList.forEach [ targetState |
+            targetState.transformDuring(rootState)
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
 
@@ -92,7 +103,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
     // This default implementation will create / use a complex final state
     def void transformDuring(State state, State targetRootRegion) {
 
-         val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+         val outgoingTerminations = state.outgoingTransitions.filter[ isTermination ]
          val hasOutgoingTerminations = outgoingTerminations.length > 0
 
         // If the state has outgoing terminations, we need to finalize the during
@@ -101,12 +112,12 @@ class During extends AbstractExpansionTransformation implements Traceable {
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
-        for (duringAction : state.duringActions.immutableCopy) {
+        for (duringAction : state.duringActions.toList) {
             // Tracing
             duringAction.setDefaultTrace;
             
             val immediateDuringAction = duringAction.isImmediate
-            val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
+            val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName(nameCache)
             val initialState = region.createInitialState(GENERATED_PREFIX + "I")
             var Transition duringTransition = null
             if (immediateDuringAction) {
@@ -136,11 +147,13 @@ class During extends AbstractExpansionTransformation implements Traceable {
             }
 
             // After transforming during actions, erase them
-            state.localActions.remove(duringAction)
+            state.actions.remove(duringAction)
         }
 
     }
     
-    // ------------------------------------------------------------------------
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
     
 }

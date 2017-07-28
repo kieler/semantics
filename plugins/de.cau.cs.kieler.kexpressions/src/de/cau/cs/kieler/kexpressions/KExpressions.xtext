@@ -68,8 +68,8 @@ Root returns ecore::EObject:
 // Expression Rule
 // An expression is either a boolean expression or a valued expression.
 Expression returns Expression:
-     BoolExpression  
-     | ValuedExpression;
+     (BoolExpression | ValuedExpression)
+     ('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Boolean Expression Rule
 // Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
@@ -216,6 +216,7 @@ AtomicExpression returns Expression:
     BoolValue
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
+    | ReferenceCall
     | FunctionCall
     | TextExpression;
 
@@ -228,7 +229,7 @@ AtomicValuedExpression returns Expression:
     | FloatValue 
     | StringValue
     | '(' ValuedExpression ')'
-    | AtomicExpression ;
+    | AtomicExpression;
 
 // Valued Object Test Expression Rule
 // This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
@@ -238,18 +239,48 @@ ValuedObjectTestExpression returns Expression:
 	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
 	| ValuedObjectReference;
 
+// ID with primes
+PrimeID returns ecore::EString:
+  ID ("'")*;
+
 // Valued Object Reference Rule
 // References a valued object with arbitrary (including none) indices part.
 // Example: A, B
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
+	valuedObject=[ValuedObject|PrimeID]
+	('[' indices+=Expression ']')*
+	('.' subReference=ValuedObjectReference)?; 
+	
+ScheduleObjectReference returns ScheduleObjectReference:
+    valuedObject=[ValuedObject|PrimeID]
+    priority=INT;	
 
+// Reference Call Rule
+// Calls to references. They may include a parameter list. 
+ReferenceCall returns ReferenceCall:
+    valuedObject=[ValuedObject|PrimeID] 
+    (
+        ('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()'
+    );
+    
 // Function Call Rule
 // Calls to functions are indicated by angle brackets. They may include a parameter list. 
+// Deprecated?
 FunctionCall returns FunctionCall:
-    '<' functionName=ExtendedID 
-        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    '>';
+    ('extern' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    )
+    |
+    ('<' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    '>')
+    ;    
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.
@@ -376,4 +407,4 @@ enum CombineOperator returns CombineOperator:
 // Hostcode Terminals
 // Custom terminal rule allowing to save transition label string as they are
 terminal HOSTCODE returns ecore::EString: 
-	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
+	"`" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"`") )* "`";

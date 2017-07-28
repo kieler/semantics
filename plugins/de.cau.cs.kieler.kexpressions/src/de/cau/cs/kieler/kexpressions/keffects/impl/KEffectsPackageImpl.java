@@ -15,6 +15,8 @@ import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -63,7 +65,21 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass referenceCallEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass functionCallEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass printCallEffectEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -195,6 +211,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getAssignment_SubReference() {
+        return (EReference)assignmentEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getEmission() {
         return emissionEClass;
     }
@@ -231,8 +256,26 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getReferenceCallEffect() {
+        return referenceCallEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getFunctionCallEffect() {
         return functionCallEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getPrintCallEffect() {
+        return printCallEffectEClass;
     }
 
     /**
@@ -279,6 +322,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
         createEReference(assignmentEClass, ASSIGNMENT__INDICES);
         createEAttribute(assignmentEClass, ASSIGNMENT__OPERATOR);
+        createEReference(assignmentEClass, ASSIGNMENT__SUB_REFERENCE);
 
         emissionEClass = createEClass(EMISSION);
         createEReference(emissionEClass, EMISSION__VALUED_OBJECT);
@@ -286,7 +330,11 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         hostcodeEffectEClass = createEClass(HOSTCODE_EFFECT);
 
+        referenceCallEffectEClass = createEClass(REFERENCE_CALL_EFFECT);
+
         functionCallEffectEClass = createEClass(FUNCTION_CALL_EFFECT);
+
+        printCallEffectEClass = createEClass(PRINT_CALL_EFFECT);
 
         // Create enums
         assignOperatorEEnum = createEEnum(ASSIGN_OPERATOR);
@@ -325,21 +373,27 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         // Add supertypes to classes
         effectEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        effectEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
         assignmentEClass.getESuperTypes().add(this.getEffect());
         emissionEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextExpression());
+        referenceCallEffectEClass.getESuperTypes().add(this.getEffect());
+        referenceCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceCall());
         functionCallEffectEClass.getESuperTypes().add(this.getEffect());
         functionCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getFunctionCall());
+        printCallEffectEClass.getESuperTypes().add(this.getEffect());
+        printCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getPrintCall());
 
         // Initialize classes and features; add operations and parameters
-        initEClass(effectEClass, Effect.class, "Effect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(effectEClass, Effect.class, "Effect", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_Indices(), theKExpressionsPackage.getExpression(), null, "indices", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAssignment_Operator(), this.getAssignOperator(), "operator", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAssignment_SubReference(), theKExpressionsPackage.getValuedObjectReference(), null, "subReference", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(emissionEClass, Emission.class, "Emission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEmission_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -347,7 +401,11 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         initEClass(hostcodeEffectEClass, HostcodeEffect.class, "HostcodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+        initEClass(referenceCallEffectEClass, ReferenceCallEffect.class, "ReferenceCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
         initEClass(functionCallEffectEClass, FunctionCallEffect.class, "FunctionCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(printCallEffectEClass, PrintCallEffect.class, "PrintCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(assignOperatorEEnum, AssignOperator.class, "AssignOperator");
@@ -356,6 +414,10 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSUB);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMUL);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNDIV);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMOD);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNAND);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNOR);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNXOR);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXADD);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXSUB);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMIN);

@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.guava,
  org.freemarker,
  de.cau.cs.kieler.sccharts.preferences,
- de.cau.cs.kieler.sccharts.text;bundle-version="0.12.0",
+ de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.scg.s,
  de.cau.cs.kieler.kico,
  org.eclipse.core.resources;bundle-version="3.11.0",
@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- de.cau.cs.kieler.s
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University

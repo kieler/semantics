@@ -24,10 +24,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
@@ -36,6 +34,16 @@ import java.util.List
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import java.util.HashMap
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Pre Transformation.
@@ -71,38 +79,37 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
 
-    @Inject
-    extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions    
+    @Inject extension SCChartsTransformationExtension
+    @Inject extension de.cau.cs.kieler.sccharts.features.Pre
     
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension SCChartsTransformationExtension
-
-    @Inject
-    extension de.cau.cs.kieler.sccharts.features.Pre
+    private val nameCache = new UniqueNameCache
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-
-    private val nameCache = <String>newArrayList
 
     //-------------------------------------------------------------------------
     //--                        P R E -  O P E R A T O R                     --
     //-------------------------------------------------------------------------
     // Transforming PRE Operator.
     def State transform(State rootState) {
-        nameCache.clear();
-        
-        val targetRootState = rootState.fixAllPriorities;
+        nameCache.clear
+                
+        val targetRootState = rootState
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates.immutableCopy) {
+        for (targetState : targetRootState.getAllStates.toList) {
             targetState.transformPre(targetRootState);
         }
 
-        targetRootState.fixAllTextualOrdersByPriorities;
+        targetRootState
     }
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
@@ -111,10 +118,9 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         
         // If the state has outgoing terminations, we need to finalize the during
         // actions in case we end the states over these transitions
-        val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+        val outgoingTerminations = state.outgoingTransitions.filter[ isTermination ]
         val hasOutgoingTerminations = outgoingTerminations.length > 0
         val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
-
 
         // The transition with the assignment of the pre variables
         var HashMap<String, Transition> transitions = newHashMap();
@@ -124,19 +130,31 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         // (e.g. some 'int _pre__pre__pre_x') to remove its initialization as optimization.
         var List<ValuedObject> lastPreVariablesOfNestedPre = newArrayList()
         // Filter all valuedObjects and retrieve those that are referenced
-        val allActions = state.eAllContents.filter(typeof(Action)).toList;
+        val allActions = state.eAllContents.filter(typeof(Action)).toList
+        var hasPre = allActions.map[ eAllContents ].exists[ filter(OperatorExpression).exists[ operator == OperatorType.PRE ] ]
+//        hasPre = true
+        val allValuedObjects = state.declarations.map[valuedObjects].flatten.toList
         var List<ValuedObject> allPreValuedObjects = null
         // Repeat the next steps until no pre occurs anymore (in case of nested pre)
+        if (hasPre)
         do {
-            allPreValuedObjects = state.valuedObjects.filter(
-                valuedObject|
-                    allActions.filter(
-                        action|
-                            action.getPreExpression(valuedObject).hasNext ||
-                                action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
+//            allPreValuedObjects = allValuedObjects.filter(
+//                valuedObject|
+//                    allActions.filter(
+//                        action|
+//                            action.getPreExpression(valuedObject).hasNext ||
+//                                action.getPreValExpression(valuedObject).hasNext).size > 0).toList
+
+            // This is a performance workaround.
+            // You should really restructure the whole transformation and get rid of all the lists and eAllContent calls.
+            // However, even this hot fix is twice as fast.
+            allPreValuedObjects = allValuedObjects.filter[ vo |
+                allActions.map[ eAllContents ].exists[ filter(OperatorExpression).filter[ operator == OperatorType.PRE ].
+                map[ eAllContents ].exists[ filter(ValuedObjectReference).exists[ valuedObject == vo ] ] ]
+            ].toList
     
             // Remove pre statement
-    		for (preValuedObject : allPreValuedObjects.immutableCopy) {
+    		for (preValuedObject : allPreValuedObjects) {
     		    // Is the valued object a variable that was introduced by the pre trafo itself?
     		    val name = preValuedObject.name
                 val isValuedObjectOfNestedPre = name.startsWith(GENERATED_PREFIX + "pre")
@@ -148,9 +166,9 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                 if(!isValuedObjectOfNestedPre) {
                     allPreValuedObjects.setDefaultTrace
                     
-                    val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
-                    val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
-                    val preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
+                    val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueName(nameCache)
+                    val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueName(nameCache)
+                    val preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueName(nameCache)
                     if (complexPre) {
                         preWait.setFinal
                         preInit.setFinal
@@ -169,21 +187,21 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                 var ValuedObject newAux
                 if(!isValuedObjectOfNestedPre) {
                     newAux = state.createVariable(GENERATED_PREFIX + "reg" + GENERATED_PREFIX 
-                        + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
+                        + preValuedObject.name).setType(preValuedObject.getType).uniqueName(nameCache)
                     newAux.copyAttributes(preValuedObject)
                     newAux.setDefaultValue()                    
                 }
                 // New pre variable
                 val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
-                    + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
+                    + preValuedObject.name).setType(preValuedObject.getType).uniqueName(nameCache)
                 newPre.copyAttributes(preValuedObject)
                 
                 if(isValuedObjectOfNestedPre) {
-                    transInitWait.addEffectBefore(newPre.assign(preValuedObject.reference))
+                    transInitWait.addEffectBefore(newPre.createAssignment(preValuedObject.reference))
                     newPre.initialValue = preValuedObject.reference
                 } else {
-                    transInitWait.addEffectBefore(newAux.assign(preValuedObject.reference))
-                    transInitWait.addEffectBefore(newPre.assign(newAux.reference))                    
+                    transInitWait.addEffectBefore(newAux.createAssignment(preValuedObject.reference))
+                    transInitWait.addEffectBefore(newPre.createAssignment(newAux.reference))                    
                     newPre.initialValue = newAux.reference
                 }
 
@@ -257,6 +275,10 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         for(valuedObject : lastPreVariablesOfNestedPre) {
             valuedObject.initialValue = null
         }
+    }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

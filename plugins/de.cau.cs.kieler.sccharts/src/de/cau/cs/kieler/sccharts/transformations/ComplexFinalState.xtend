@@ -15,22 +15,31 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -65,23 +74,23 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     // -------------------------------------------------------------------------
     // --              C O M P L E X   F I N A L   S T A T E                  --
@@ -101,18 +110,16 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     // only a single term signal 
     // (TODO)                
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all parent states that contain at least one region that directly contains a complex final state                    
-        val parentSatesContainingComplexFinalStates = targetRootState.allStates.filter [
+        val parentSatesContainingComplexFinalStates = rootState.allStates.filter [
             isParentContainingComplexFinalState
         ]
         for (targetParentState : parentSatesContainingComplexFinalStates.toList) {
             // val parentState = targetRegion.parentState
             targetParentState.transformComplexFinalState(rootState);
         }
-
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     // Tells if a  state is a parent states that contain at least one region which directly contains a complex final state (or more)
@@ -146,11 +153,11 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         }
         
         // If the parent state is the root state then make an explicit termination transition
-        if (parentState.rootState) {
+        if (parentState.isRootState) {
             rootState.setDefaultTrace
-            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
-            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName
-            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName
+            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName(nameCache)
+            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName(nameCache)
+            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName(nameCache)
             for (mainRegion : parentState.regions.filter(e|e != r).toList.immutableCopy) {
                     i.regions.add(mainRegion)
             }
@@ -168,8 +175,8 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
 
             if (!allStatesFinal) {
                 val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
-                    uniqueName
-                state.createEntryAction.addAssignment(termVariable.assign(FALSE))    
+                    uniqueName(nameCache)
+                state.createEntryAction.addAssignment(termVariable.createAssignment(FALSE))    
                 //termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
                     termVariable.setInitialValue(TRUE)
@@ -178,10 +185,10 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
 
                 for (finalState : finalStates) {
                     for (transition : finalState.incomingTransitions.filter[!sourceState.isFinal]) {
-                        transition.addEffect(termVariable.assign(TRUE))
+                        transition.addEffect(termVariable.createAssignment(TRUE))
                     }
                     for (transition : finalState.outgoingTransitions.filter[!targetState.isFinal]) {
-                        transition.addEffect(termVariable.assign(FALSE))
+                        transition.addEffect(termVariable.createAssignment(FALSE))
                     }
                 }
             }
@@ -194,13 +201,18 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         }
 
         // Modify all termination transitions by weak aborts
-        for (termination : state.outgoingTransitions.filter[isTypeTermination].toList) {
+        for (termination : state.outgoingTransitions.filter[ isTermination ].toList) {
             termination.setTypeWeakAbort
 
             for (termVariable : termVariables) {
                 termination.setTrigger(termination.trigger.and(termVariable.reference))
             }
         }
+    }
+
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

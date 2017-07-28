@@ -41,6 +41,5 @@ public class KiBuildStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

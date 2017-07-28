@@ -18,10 +18,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * SCCharts InputOutputVariable Transformation.
@@ -58,26 +58,27 @@ class InputOutputVariable extends AbstractExpansionTransformation implements Tra
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions    
 
     //-------------------------------------------------------------------------
     //--          I N P U T   O U T P U T   V A R I A B L E                  --
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-
         // Traverse all states
-        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
-            targetTransition.transformInputOutputVariable(targetRootState);
+        for (targetTransition : rootState.getAllStates.toList) {
+            targetTransition.transformInputOutputVariable(rootState);
         }
-        targetRootState;
+        rootState
     }
 
     def void transformInputOutputVariable(State state, State targetRootState) {
         state.setDefaultTrace
         //TODO: Implement this transformation
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

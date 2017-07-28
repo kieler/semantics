@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
@@ -31,6 +30,15 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*im
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts History Transformation.
@@ -65,17 +73,18 @@ class History extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions    
-    
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions    
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
+
+    private val nameCache = new UniqueNameCache
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -87,13 +96,12 @@ class History extends AbstractExpansionTransformation implements Traceable {
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all states
-        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
-            targetState.transformHistory(targetRootState);
+        rootState.getAllStates.toList.forEach [ targetState |
+            targetState.transformHistory(rootState)
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     // Traverse all states and transform macro states that have connecting
@@ -111,17 +119,17 @@ class History extends AbstractExpansionTransformation implements Traceable {
             val List<ValuedObject> stateEnumsDeep = new ArrayList
 
             val regions = state.regions.filter(ControlflowRegion).toList
-            var regionsDeep = state.regions.filter(ControlflowRegion).toList as List<ControlflowRegion>
+            var regionsDeep = state.regions.filter(ControlflowRegion).toList 
             if (historyTransitions.findFirst[isDeepHistory] != null) { // if state has any deep history transition
-                regionsDeep = state.allContainedControlflowRegions
+                regionsDeep = state.allContainedControlflowRegions.toList
             }
 
             for (region : regionsDeep.toList) {
                 var counter = 0
 
                 // FIXME: stateEnum should be static
-                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.id, createIntDeclaration).
-                    uniqueName
+                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.name, createIntDeclaration).
+                    uniqueName(nameCache)
                 stateEnumsAll.add(stateEnum)
                 if (!regions.contains(region)) {
                     stateEnumsDeep.add(stateEnum)
@@ -129,12 +137,12 @@ class History extends AbstractExpansionTransformation implements Traceable {
                 val originalInitialState = region.initialState
                 originalInitialState.setNotInitial
                 val subStates = region.states.immutableCopy
-                val initialState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
+                val initialState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName(nameCache)
 
                 for (subState : subStates) {
                     val transition = initialState.createImmediateTransitionTo(subState)
                     transition.setTrigger(stateEnum.reference.createEQExpression(counter.createIntValue))
-                    subState.createEntryAction.addEffect(stateEnum.assign(counter.createIntValue))
+                    subState.createEntryAction.addEffect(stateEnum.createAssignment(counter.createIntValue))
                     if (subState == originalInitialState) {
                         initialValue = counter
                         stateEnum.setInitialValue(counter.createIntValue)
@@ -148,7 +156,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
 
                     // Reset deepStateEnums
                     for (stateEnum : stateEnumsDeep) {
-                        transition.addEffect(stateEnum.assign(initialValue.createIntValue)).trace(transition)
+                        transition.addEffect(stateEnum.createAssignment(initialValue.createIntValue)).trace(transition)
                     }
                 }
                 transition.setHistory(HistoryType::RESET)
@@ -156,11 +164,15 @@ class History extends AbstractExpansionTransformation implements Traceable {
 
             for (transition : nonHistoryTransitions) {
                 for (stateEnum : stateEnumsAll) {
-                    transition.addEffect(stateEnum.assign(initialValue.createIntValue))
+                    transition.addEffect(stateEnum.createAssignment(initialValue.createIntValue))
                 }
             }
 
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

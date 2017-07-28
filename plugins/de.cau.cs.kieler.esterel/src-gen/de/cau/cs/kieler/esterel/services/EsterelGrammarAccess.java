@@ -332,8 +332,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//EsterelTypeIdentifier kexpressions::TypeIdentifier:
 		//	type=ValueType
 		//	| typeID=ID
-		//	| {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
-		//	operator=CombineOperator))
+		//	| {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] | operator=CombineOperator))
 		@Override public ParserRule getRule() { return rule; }
 
 		//type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
@@ -1593,8 +1592,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExecCaseParserRuleCall_22 = (RuleCall)cAlternatives.eContents().get(22);
 		
 		//StatementContainerInterface StatementContainer:
-		//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance |
-		//	Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | WeakSuspend | Trap |
+		//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do
+		//	| DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | WeakSuspend | Trap |
 		//	TrapHandler | LocalVariable | Exec | ExecCase
 		@Override public ParserRule getRule() { return rule; }
 
@@ -3886,8 +3885,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 
 		//"type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)* | "constant" renamings+=ConstantRenaming (","
-		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* |
-		//"procedure" renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
+		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* | "procedure"
+		//renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
 		//renamings+=TaskRenaming)* | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -6073,8 +6072,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//EsterelTypeIdentifier kexpressions::TypeIdentifier:
 	//	type=ValueType
 	//	| typeID=ID
-	//	| {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
-	//	operator=CombineOperator))
+	//	| {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] | operator=CombineOperator))
 	public EsterelTypeIdentifierElements getEsterelTypeIdentifierAccess() {
 		return pEsterelTypeIdentifier;
 	}
@@ -6355,8 +6353,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//StatementContainerInterface StatementContainer:
-	//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance |
-	//	Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | WeakSuspend | Trap |
+	//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do
+	//	| DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | WeakSuspend | Trap |
 	//	TrapHandler | LocalVariable | Exec | ExecCase
 	public StatementContainerInterfaceElements getStatementContainerInterfaceAccess() {
 		return pStatementContainerInterface;
@@ -7452,8 +7450,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A and B, not C and 42 <= ?D
 	//AndExpression Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
-	//	subExpressions+=CompareOperation)*
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
 	public KExpressionsGrammarAccess.AndExpressionElements getAndExpressionAccess() {
 		return gaKExpressions.getAndExpressionAccess();
 	}
@@ -7893,8 +7890,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// General rule for annotations
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	//Annotation:
-	//	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
@@ -7903,13 +7899,24 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//Pragma:
+	//	StringPragma | PragmaTag;
+	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaAnnotations.getPragmaAccess();
+	}
+	
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
+	}
+
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -7918,20 +7925,32 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedAnnotationAccess().getRule();
 	}
 
-	//// Restiricted Annotation Rule
-	//// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+	//// Restricted Type Annotation Rule
+	//// The restricted type annotation rule does not allow typed string annotations. 
+	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
+	//RestrictedTypeAnnotation Annotation:
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypeAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypeAnnotationRule() {
+		return getRestrictedTypeAnnotationAccess().getRule();
+	}
+
+	//// Quoted String Annotation Rule
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
-	//RestrictedAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
-	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
-		return gaAnnotations.getRestrictedAnnotationAccess();
+	//QuotedStringAnnotation Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getRestrictedAnnotationRule() {
-		return getRestrictedAnnotationAccess().getRule();
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
 	}
 
 	//// CommentAnnotation
@@ -7946,6 +7965,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
+	//CommentAnnotatonSL CommentAnnotation:
+	//	values+=SL_COMMENT_ANNOTATION
+	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
+		return gaAnnotations.getCommentAnnotatonSLAccess();
+	}
+	
+	public ParserRule getCommentAnnotatonSLRule() {
+		return getCommentAnnotatonSLAccess().getRule();
+	}
+
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
@@ -7958,11 +7987,21 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTag Pragma:
+	//	'#' name=ExtendedID
+	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
+		return gaAnnotations.getPragmaTagAccess();
+	}
+	
+	public ParserRule getPragmaTagRule() {
+		return getPragmaTagAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
 	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EString (',' values+=EString)*
+	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -7971,16 +8010,46 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
+	//RestrictedKeyStringValueAnnotation StringAnnotation:
+	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
+		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//StringPragma:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
+		return gaAnnotations.getStringPragmaAccess();
+	}
+	
+	public ParserRule getStringPragmaRule() {
+		return getStringPragmaAccess().getRule();
+	}
+
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
+		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// QuotedKeyStringValueAnnotation
@@ -8009,42 +8078,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// KeyBooleanValueAnnotation    
-	//// e.g.: @visible true;
-	//KeyBooleanValueAnnotation BooleanAnnotation:
-	//	'@' name=ExtendedID value=BOOLEAN
-	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
-		return gaAnnotations.getKeyBooleanValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyBooleanValueAnnotationRule() {
-		return getKeyBooleanValueAnnotationAccess().getRule();
-	}
-
-	//// KeyIntValueAnnotation
-	//// e.g.: @minSpace 10;    
-	//KeyIntValueAnnotation IntAnnotation:
-	//	'@' name=ExtendedID value=Integer
-	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
-		return gaAnnotations.getKeyIntValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyIntValueAnnotationRule() {
-		return getKeyIntValueAnnotationAccess().getRule();
-	}
-
-	//// KeyFloatValueAnnotation
-	//// e.g.: @minSpace 10.0;    
-	//KeyFloatValueAnnotation FloatAnnotation:
-	//	'@' name=ExtendedID value=Floateger
-	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
-		return gaAnnotations.getKeyFloatValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyFloatValueAnnotationRule() {
-		return getKeyFloatValueAnnotationAccess().getRule();
-	}
-
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -8068,17 +8101,37 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringBooleanAccess().getRule();
 	}
 
+	//EStringAllTypes:
+	//	super::STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
+		return gaAnnotations.getEStringAllTypesAccess();
+	}
+	
+	public ParserRule getEStringAllTypesRule() {
+		return getEStringAllTypesAccess().getRule();
+	}
+
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID ("." ID)* ("#" INT)?;
+	//	ID (('.' | '-') ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
 	
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
+	}
+
+	//QualifiedID:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
+		return gaAnnotations.getQualifiedIDAccess();
+	}
+	
+	public ParserRule getQualifiedIDRule() {
+		return getQualifiedIDAccess().getRule();
 	}
 
 	//// Integer
@@ -8117,6 +8170,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
+	//terminal SL_COMMENT_ANNOTATION:
+	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
+		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
+	} 
+
+	//terminal SL_COMMENT:
+	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENTRule() {
+		return gaAnnotations.getSL_COMMENTRule();
+	} 
+
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
@@ -8145,12 +8210,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:

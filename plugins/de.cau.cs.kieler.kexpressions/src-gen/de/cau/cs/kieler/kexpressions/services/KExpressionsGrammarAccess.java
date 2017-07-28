@@ -74,25 +74,44 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.Expression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cBoolExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cBoolExpressionParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cScheduleKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cScheduleAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cScheduleScheduleObjectReferenceParserRuleCall_1_1_0 = (RuleCall)cScheduleAssignment_1_1.eContents().get(0);
 		
 		//// Expression Rule
 		//// An expression is either a boolean expression or a valued expression.
 		//Expression:
-		//	BoolExpression
-		//	| ValuedExpression;
+		//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//BoolExpression | ValuedExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup() { return cGroup; }
+
+		//(BoolExpression | ValuedExpression)
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//BoolExpression
-		public RuleCall getBoolExpressionParserRuleCall_0() { return cBoolExpressionParserRuleCall_0; }
+		public RuleCall getBoolExpressionParserRuleCall_0_0() { return cBoolExpressionParserRuleCall_0_0; }
 
 		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_1() { return cValuedExpressionParserRuleCall_1; }
+		public RuleCall getValuedExpressionParserRuleCall_0_1() { return cValuedExpressionParserRuleCall_0_1; }
+
+		//('schedule' schedule+=ScheduleObjectReference+)?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//'schedule'
+		public Keyword getScheduleKeyword_1_0() { return cScheduleKeyword_1_0; }
+
+		//schedule+=ScheduleObjectReference+
+		public Assignment getScheduleAssignment_1_1() { return cScheduleAssignment_1_1; }
+
+		//ScheduleObjectReference
+		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_1_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_1_1_0; }
 	}
 
 	public class BoolExpressionElements extends AbstractParserRuleElementFinder {
@@ -888,8 +907,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final RuleCall cBoolExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final RuleCall cFunctionCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cReferenceCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cFunctionCallParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cTextExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//// Atomic Expression Rule
 		//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
@@ -899,11 +919,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	BoolValue
 		//	| ValuedObjectTestExpression
 		//	| '(' BoolExpression ')'
+		//	| ReferenceCall
 		//	| FunctionCall
 		//	| TextExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | FunctionCall | TextExpression
+		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | FunctionCall | TextExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//BoolValue
@@ -924,11 +945,14 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 
+		//ReferenceCall
+		public RuleCall getReferenceCallParserRuleCall_3() { return cReferenceCallParserRuleCall_3; }
+
 		//FunctionCall
-		public RuleCall getFunctionCallParserRuleCall_3() { return cFunctionCallParserRuleCall_3; }
+		public RuleCall getFunctionCallParserRuleCall_4() { return cFunctionCallParserRuleCall_4; }
 
 		//TextExpression
-		public RuleCall getTextExpressionParserRuleCall_4() { return cTextExpressionParserRuleCall_4; }
+		public RuleCall getTextExpressionParserRuleCall_5() { return cTextExpressionParserRuleCall_5; }
 	}
 
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -1045,36 +1069,61 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValuedObjectReferenceParserRuleCall_1() { return cValuedObjectReferenceParserRuleCall_1; }
 	}
 
+	public class PrimeIDElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cApostropheKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//// ID with primes
+		//PrimeID:
+		//	ID "'"*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//ID "'"*
+		public Group getGroup() { return cGroup; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+
+		//"'"*
+		public Keyword getApostropheKeyword_1() { return cApostropheKeyword_1; }
+	}
+
 	public class ValuedObjectReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cIndicesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cIndicesExpressionParserRuleCall_1_1_0 = (RuleCall)cIndicesAssignment_1_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cFullStopKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cSubReferenceAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0 = (RuleCall)cSubReferenceAssignment_2_1.eContents().get(0);
 		
 		//// Valued Object Reference Rule
 		//// References a valued object with arbitrary (including none) indices part.
 		//// Example: A, B
 		//ValuedObjectReference:
-		//	valuedObject=[ValuedObject] ('[' indices+=Expression ']')*;
+		//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//valuedObject=[ValuedObject] ('[' indices+=Expression ']')*
+		//valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?
 		public Group getGroup() { return cGroup; }
 
-		//valuedObject=[ValuedObject]
+		//valuedObject=[ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
 
-		//[ValuedObject]
+		//[ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
 
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
 
 		//('[' indices+=Expression ']')*
 		public Group getGroup_1() { return cGroup_1; }
@@ -1090,81 +1139,264 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//']'
 		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//('.' subReference=ValuedObjectReference)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'.'
+		public Keyword getFullStopKeyword_2_0() { return cFullStopKeyword_2_0; }
+
+		//subReference=ValuedObjectReference
+		public Assignment getSubReferenceAssignment_2_1() { return cSubReferenceAssignment_2_1; }
+
+		//ValuedObjectReference
+		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0; }
+	}
+
+	public class ScheduleObjectReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Assignment cPriorityAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPriorityINTTerminalRuleCall_1_0 = (RuleCall)cPriorityAssignment_1.eContents().get(0);
+		
+		//ScheduleObjectReference:
+		//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+		@Override public ParserRule getRule() { return rule; }
+
+		//valuedObject=[ValuedObject|PrimeID] priority=INT
+		public Group getGroup() { return cGroup; }
+
+		//valuedObject=[ValuedObject|PrimeID]
+		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
+
+		//[ValuedObject|PrimeID]
+		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
+
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
+
+		//priority=INT
+		public Assignment getPriorityAssignment_1() { return cPriorityAssignment_1; }
+
+		//INT
+		public RuleCall getPriorityINTTerminalRuleCall_1_0() { return cPriorityINTTerminalRuleCall_1_0; }
+	}
+
+	public class ReferenceCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ReferenceCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cParametersAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_1_0_1_0 = (RuleCall)cParametersAssignment_1_0_1.eContents().get(0);
+		private final Group cGroup_1_0_2 = (Group)cGroup_1_0.eContents().get(2);
+		private final Keyword cCommaKeyword_1_0_2_0 = (Keyword)cGroup_1_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_1_0_2_1 = (Assignment)cGroup_1_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_1_0_2_1_0 = (RuleCall)cParametersAssignment_1_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_0_3 = (Keyword)cGroup_1_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		
+		//// Reference Call Rule
+		//// Calls to references. They may include a parameter list. 
+		//ReferenceCall:
+		//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()');
+		@Override public ParserRule getRule() { return rule; }
+
+		//valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Group getGroup() { return cGroup; }
+
+		//valuedObject=[ValuedObject|PrimeID]
+		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
+
+		//[ValuedObject|PrimeID]
+		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
+
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
+
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_0_0() { return cLeftParenthesisKeyword_1_0_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_1_0_1() { return cParametersAssignment_1_0_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_1_0_1_0() { return cParametersParameterParserRuleCall_1_0_1_0; }
+
+		//(',' parameters+=Parameter)*
+		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
+
+		//','
+		public Keyword getCommaKeyword_1_0_2_0() { return cCommaKeyword_1_0_2_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_1_0_2_1() { return cParametersAssignment_1_0_2_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_1_0_2_1_0() { return cParametersParameterParserRuleCall_1_0_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_1_0_3() { return cRightParenthesisKeyword_1_0_3; }
+
+		//'()'
+		public Keyword getLeftParenthesisRightParenthesisKeyword_1_1() { return cLeftParenthesisRightParenthesisKeyword_1_1; }
 	}
 
 	public class FunctionCallElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.FunctionCall");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cFunctionNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cFunctionNameExtendedIDParserRuleCall_1_0 = (RuleCall)cFunctionNameAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_1_0 = (RuleCall)cParametersAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_2_1_0 = (RuleCall)cParametersAssignment_2_0_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
-		private final Keyword cLeftParenthesisRightParenthesisKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
-		private final Keyword cGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Keyword cExternKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cFunctionNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cFunctionNameIDTerminalRuleCall_0_1_0 = (RuleCall)cFunctionNameAssignment_0_1.eContents().get(0);
+		private final Alternatives cAlternatives_0_2 = (Alternatives)cGroup_0.eContents().get(2);
+		private final Group cGroup_0_2_0 = (Group)cAlternatives_0_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0_2_0_0 = (Keyword)cGroup_0_2_0.eContents().get(0);
+		private final Assignment cParametersAssignment_0_2_0_1 = (Assignment)cGroup_0_2_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_0_2_0_1_0 = (RuleCall)cParametersAssignment_0_2_0_1.eContents().get(0);
+		private final Group cGroup_0_2_0_2 = (Group)cGroup_0_2_0.eContents().get(2);
+		private final Keyword cCommaKeyword_0_2_0_2_0 = (Keyword)cGroup_0_2_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_0_2_0_2_1 = (Assignment)cGroup_0_2_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_0_2_0_2_1_0 = (RuleCall)cParametersAssignment_0_2_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_0_2_0_3 = (Keyword)cGroup_0_2_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_0_2_1 = (Keyword)cAlternatives_0_2.eContents().get(1);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cFunctionNameAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cFunctionNameIDTerminalRuleCall_1_1_0 = (RuleCall)cFunctionNameAssignment_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_1_2 = (Alternatives)cGroup_1.eContents().get(2);
+		private final Group cGroup_1_2_0 = (Group)cAlternatives_1_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1_2_0_0 = (Keyword)cGroup_1_2_0.eContents().get(0);
+		private final Assignment cParametersAssignment_1_2_0_1 = (Assignment)cGroup_1_2_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_1_2_0_1_0 = (RuleCall)cParametersAssignment_1_2_0_1.eContents().get(0);
+		private final Group cGroup_1_2_0_2 = (Group)cGroup_1_2_0.eContents().get(2);
+		private final Keyword cCommaKeyword_1_2_0_2_0 = (Keyword)cGroup_1_2_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_1_2_0_2_1 = (Assignment)cGroup_1_2_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_1_2_0_2_1_0 = (RuleCall)cParametersAssignment_1_2_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_2_0_3 = (Keyword)cGroup_1_2_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_1_2_1 = (Keyword)cAlternatives_1_2.eContents().get(1);
+		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		
 		//// Function Call Rule
 		//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
+		//// Deprecated?
 		//FunctionCall:
-		//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
+		//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()') | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	| '()')
 		//	'>';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')? '>'
-		public Group getGroup() { return cGroup; }
+		//'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') | '<' functionName=ID ('('
+		//parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') '>'
+		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//'<'
-		public Keyword getLessThanSignKeyword_0() { return cLessThanSignKeyword_0; }
+		//'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Group getGroup_0() { return cGroup_0; }
 
-		//functionName=ExtendedID
-		public Assignment getFunctionNameAssignment_1() { return cFunctionNameAssignment_1; }
+		//'extern'
+		public Keyword getExternKeyword_0_0() { return cExternKeyword_0_0; }
 
-		//ExtendedID
-		public RuleCall getFunctionNameExtendedIDParserRuleCall_1_0() { return cFunctionNameExtendedIDParserRuleCall_1_0; }
+		//functionName=ID
+		public Assignment getFunctionNameAssignment_0_1() { return cFunctionNameAssignment_0_1; }
 
-		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		//ID
+		public RuleCall getFunctionNameIDTerminalRuleCall_0_1_0() { return cFunctionNameIDTerminalRuleCall_0_1_0; }
+
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Alternatives getAlternatives_0_2() { return cAlternatives_0_2; }
 
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-		public Group getGroup_2_0() { return cGroup_2_0; }
+		public Group getGroup_0_2_0() { return cGroup_0_2_0; }
 
 		//'('
-		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
+		public Keyword getLeftParenthesisKeyword_0_2_0_0() { return cLeftParenthesisKeyword_0_2_0_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_1() { return cParametersAssignment_2_0_1; }
+		public Assignment getParametersAssignment_0_2_0_1() { return cParametersAssignment_0_2_0_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_1_0() { return cParametersParameterParserRuleCall_2_0_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_0_2_0_1_0() { return cParametersParameterParserRuleCall_0_2_0_1_0; }
 
 		//(',' parameters+=Parameter)*
-		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		public Group getGroup_0_2_0_2() { return cGroup_0_2_0_2; }
 
 		//','
-		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
+		public Keyword getCommaKeyword_0_2_0_2_0() { return cCommaKeyword_0_2_0_2_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_2_1() { return cParametersAssignment_2_0_2_1; }
+		public Assignment getParametersAssignment_0_2_0_2_1() { return cParametersAssignment_0_2_0_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_2_1_0() { return cParametersParameterParserRuleCall_2_0_2_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_0_2_0_2_1_0() { return cParametersParameterParserRuleCall_0_2_0_2_1_0; }
 
 		//')'
-		public Keyword getRightParenthesisKeyword_2_0_3() { return cRightParenthesisKeyword_2_0_3; }
+		public Keyword getRightParenthesisKeyword_0_2_0_3() { return cRightParenthesisKeyword_0_2_0_3; }
 
 		//'()'
-		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
+		public Keyword getLeftParenthesisRightParenthesisKeyword_0_2_1() { return cLeftParenthesisRightParenthesisKeyword_0_2_1; }
+
+		//'<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') '>'
+		public Group getGroup_1() { return cGroup_1; }
+
+		//'<'
+		public Keyword getLessThanSignKeyword_1_0() { return cLessThanSignKeyword_1_0; }
+
+		//functionName=ID
+		public Assignment getFunctionNameAssignment_1_1() { return cFunctionNameAssignment_1_1; }
+
+		//ID
+		public RuleCall getFunctionNameIDTerminalRuleCall_1_1_0() { return cFunctionNameIDTerminalRuleCall_1_1_0; }
+
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		public Alternatives getAlternatives_1_2() { return cAlternatives_1_2; }
+
+		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		public Group getGroup_1_2_0() { return cGroup_1_2_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_2_0_0() { return cLeftParenthesisKeyword_1_2_0_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_1_2_0_1() { return cParametersAssignment_1_2_0_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_1_2_0_1_0() { return cParametersParameterParserRuleCall_1_2_0_1_0; }
+
+		//(',' parameters+=Parameter)*
+		public Group getGroup_1_2_0_2() { return cGroup_1_2_0_2; }
+
+		//','
+		public Keyword getCommaKeyword_1_2_0_2_0() { return cCommaKeyword_1_2_0_2_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_1_2_0_2_1() { return cParametersAssignment_1_2_0_2_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_1_2_0_2_1_0() { return cParametersParameterParserRuleCall_1_2_0_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_1_2_0_3() { return cRightParenthesisKeyword_1_2_0_3; }
+
+		//'()'
+		public Keyword getLeftParenthesisRightParenthesisKeyword_1_2_1() { return cLeftParenthesisRightParenthesisKeyword_1_2_1; }
 
 		//'>'
-		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
+		public Keyword getGreaterThanSignKeyword_1_3() { return cGreaterThanSignKeyword_1_3; }
 	}
 
 	public class ParameterElements extends AbstractParserRuleElementFinder {
@@ -1830,7 +2062,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
+	private final PrimeIDElements pPrimeID;
 	private final ValuedObjectReferenceElements pValuedObjectReference;
+	private final ScheduleObjectReferenceElements pScheduleObjectReference;
+	private final ReferenceCallElements pReferenceCall;
 	private final FunctionCallElements pFunctionCall;
 	private final ParameterElements pParameter;
 	private final TextExpressionElements pTextExpression;
@@ -1893,7 +2128,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
+		this.pPrimeID = new PrimeIDElements();
 		this.pValuedObjectReference = new ValuedObjectReferenceElements();
+		this.pScheduleObjectReference = new ScheduleObjectReferenceElements();
+		this.pReferenceCall = new ReferenceCallElements();
 		this.pFunctionCall = new FunctionCallElements();
 		this.pParameter = new ParameterElements();
 		this.pTextExpression = new TextExpressionElements();
@@ -2009,8 +2247,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Expression Rule
 	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
-	//	BoolExpression
-	//	| ValuedExpression;
+	//	(BoolExpression | ValuedExpression) ('schedule' schedule+=ScheduleObjectReference+)?;
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}
@@ -2238,6 +2475,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	BoolValue
 	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
+	//	| ReferenceCall
 	//	| FunctionCall
 	//	| TextExpression
 	public AtomicExpressionElements getAtomicExpressionAccess() {
@@ -2281,11 +2519,22 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
+	//// ID with primes
+	//PrimeID:
+	//	ID "'"*;
+	public PrimeIDElements getPrimeIDAccess() {
+		return pPrimeID;
+	}
+	
+	public ParserRule getPrimeIDRule() {
+		return getPrimeIDAccess().getRule();
+	}
+
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
 	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return pValuedObjectReference;
 	}
@@ -2294,10 +2543,36 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
+	//ScheduleObjectReference:
+	//	valuedObject=[ValuedObject|PrimeID] priority=INT;
+	public ScheduleObjectReferenceElements getScheduleObjectReferenceAccess() {
+		return pScheduleObjectReference;
+	}
+	
+	public ParserRule getScheduleObjectReferenceRule() {
+		return getScheduleObjectReferenceAccess().getRule();
+	}
+
+	//// Reference Call Rule
+	//// Calls to references. They may include a parameter list. 
+	//ReferenceCall:
+	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public ReferenceCallElements getReferenceCallAccess() {
+		return pReferenceCall;
+	}
+	
+	public ParserRule getReferenceCallRule() {
+		return getReferenceCallAccess().getRule();
+	}
+
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
+	//// Deprecated?
 	//FunctionCall:
-	//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
+	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()') | '<' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()')
 	//	'>';
 	public FunctionCallElements getFunctionCallAccess() {
 		return pFunctionCall;
@@ -2586,7 +2861,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal HOSTCODE:
-	//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
 		return tHOSTCODE;
 	} 
@@ -2601,8 +2876,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// General rule for annotations
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	//Annotation:
-	//	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
@@ -2611,13 +2885,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//Pragma:
+	//	StringPragma | PragmaTag;
+	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaAnnotations.getPragmaAccess();
+	}
+	
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
+	}
+
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
@@ -2626,20 +2911,32 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedAnnotationAccess().getRule();
 	}
 
-	//// Restiricted Annotation Rule
-	//// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+	//// Restricted Type Annotation Rule
+	//// The restricted type annotation rule does not allow typed string annotations. 
+	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
+	//RestrictedTypeAnnotation Annotation:
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypeAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypeAnnotationRule() {
+		return getRestrictedTypeAnnotationAccess().getRule();
+	}
+
+	//// Quoted String Annotation Rule
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//// derived grammars if you don't want to permit unquoted strings. 
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
-	//RestrictedAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
-	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
-		return gaAnnotations.getRestrictedAnnotationAccess();
+	//QuotedStringAnnotation Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getRestrictedAnnotationRule() {
-		return getRestrictedAnnotationAccess().getRule();
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
 	}
 
 	//// CommentAnnotation
@@ -2654,6 +2951,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
+	//CommentAnnotatonSL CommentAnnotation:
+	//	values+=SL_COMMENT_ANNOTATION
+	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
+		return gaAnnotations.getCommentAnnotatonSLAccess();
+	}
+	
+	public ParserRule getCommentAnnotatonSLRule() {
+		return getCommentAnnotatonSLAccess().getRule();
+	}
+
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
@@ -2666,11 +2973,21 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTag Pragma:
+	//	'#' name=ExtendedID
+	public AnnotationsGrammarAccess.PragmaTagElements getPragmaTagAccess() {
+		return gaAnnotations.getPragmaTagAccess();
+	}
+	
+	public ParserRule getPragmaTagRule() {
+		return getPragmaTagAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
 	//KeyStringValueAnnotation StringAnnotation:
-	//	'@' name=ExtendedID values+=EString (',' values+=EString)*
+	//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -2679,16 +2996,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
+	//RestrictedKeyStringValueAnnotation StringAnnotation:
+	//	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
+		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//StringPragma:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+	public AnnotationsGrammarAccess.StringPragmaElements getStringPragmaAccess() {
+		return gaAnnotations.getStringPragmaAccess();
+	}
+	
+	public ParserRule getStringPragmaRule() {
+		return getStringPragmaAccess().getRule();
+	}
+
 	//// TypedKeyStringValueAnnotation
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation TypedStringAnnotation:
-	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
+	//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getRestrictedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
+		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// QuotedKeyStringValueAnnotation
@@ -2717,42 +3064,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// KeyBooleanValueAnnotation    
-	//// e.g.: @visible true;
-	//KeyBooleanValueAnnotation BooleanAnnotation:
-	//	'@' name=ExtendedID value=BOOLEAN
-	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
-		return gaAnnotations.getKeyBooleanValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyBooleanValueAnnotationRule() {
-		return getKeyBooleanValueAnnotationAccess().getRule();
-	}
-
-	//// KeyIntValueAnnotation
-	//// e.g.: @minSpace 10;    
-	//KeyIntValueAnnotation IntAnnotation:
-	//	'@' name=ExtendedID value=Integer
-	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
-		return gaAnnotations.getKeyIntValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyIntValueAnnotationRule() {
-		return getKeyIntValueAnnotationAccess().getRule();
-	}
-
-	//// KeyFloatValueAnnotation
-	//// e.g.: @minSpace 10.0;    
-	//KeyFloatValueAnnotation FloatAnnotation:
-	//	'@' name=ExtendedID value=Floateger
-	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
-		return gaAnnotations.getKeyFloatValueAnnotationAccess();
-	}
-	
-	public ParserRule getKeyFloatValueAnnotationRule() {
-		return getKeyFloatValueAnnotationAccess().getRule();
-	}
-
 	//// EString
 	//// Allow strings without quotes if they don't contain spaces.
 	//// For quoteless strings the ExtendedID rule is used.
@@ -2776,17 +3087,37 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringBooleanAccess().getRule();
 	}
 
+	//EStringAllTypes:
+	//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+	public AnnotationsGrammarAccess.EStringAllTypesElements getEStringAllTypesAccess() {
+		return gaAnnotations.getEStringAllTypesAccess();
+	}
+	
+	public ParserRule getEStringAllTypesRule() {
+		return getEStringAllTypesAccess().getRule();
+	}
+
 	//// ExtendedID
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID ("." ID)* ("#" INT)?;
+	//	ID (('.' | '-') ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
 	
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
+	}
+
+	//QualifiedID:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
+		return gaAnnotations.getQualifiedIDAccess();
+	}
+	
+	public ParserRule getQualifiedIDRule() {
+		return getQualifiedIDAccess().getRule();
 	}
 
 	//// Integer
@@ -2825,6 +3156,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
+	//terminal SL_COMMENT_ANNOTATION:
+	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
+		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
+	} 
+
+	//terminal SL_COMMENT:
+	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENTRule() {
+		return gaAnnotations.getSL_COMMENTRule();
+	} 
+
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
@@ -2859,12 +3202,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:

@@ -31,6 +31,15 @@ public interface KExtFactory extends EFactory {
     Kext createKext();
 
     /**
+     * Returns a new object of class '<em>Scope</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Scope</em>'.
+     * @generated
+     */
+    KExtScope createKExtScope();
+
+    /**
      * Returns a new object of class '<em>Test Entity</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

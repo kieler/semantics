@@ -19,14 +19,24 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -37,15 +47,6 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  */
 class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
-    @Inject
-    extension SCChartsTransformationExtension
-    
-    @Inject
-    extension KExpressionsCreateExtensions
-    
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-    
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
@@ -72,8 +73,20 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
 
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
+    
+    private val nameCache = new UniqueNameCache
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -83,13 +96,12 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all transitions
-        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
-            targetTransition.transformWeakSuspend(targetRootState);
+        for (targetTransition : rootState.getAllStates.toList) {
+            targetTransition.transformWeakSuspend(rootState)
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
 
@@ -98,38 +110,38 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         weakSuspends.setDefaultTrace
         
         if (!weakSuspends.nullOrEmpty) {
-            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
+            val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).uniqueName(nameCache)
             weakSuspendFlag.setInitialValue(FALSE)
  
             for (weakSuspend : weakSuspends.immutableCopy) {
                 weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(weakSuspend.immediate)
-                duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
-                state.localActions.remove(weakSuspend)
+                duringAction.addEffect(weakSuspendFlag.createAssignment(weakSuspend.trigger.copy))
+                state.actions.remove(weakSuspend)
             }
 
             weakSuspends.setDefaultTrace
-            for (region : state.allContainedControlflowRegions.immutableCopy) {
+            for (region : state.allContainedControlflowRegions.toList) {
                 val subStates = region.states.immutableCopy
-                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateBookmark = state.createVariable(GENERATED_PREFIX  + region.parentState.id).setTypeInt.uniqueName
+                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName(nameCache)
+                val stateBookmark = state.createValuedObject(GENERATED_PREFIX  + region.parentState.name, createIntDeclaration).uniqueName(nameCache)
                 // Set the initial value to the (original) initial state
                 stateBookmark.setInitialValue(createIntValue(0))
                 var counter = 0
-                val lastWishDone = state.createVariable(GENERATED_PREFIX + "lastWishDone").setTypeBool.uniqueName
+                val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).uniqueName(nameCache)
 
                 // In each tick reset the lastWish to FALSE
                 val resetLastWishDoneduringAction = state.createDuringAction
                 resetLastWishDoneduringAction.setImmediate(true)
-                resetLastWishDoneduringAction.addAssignment(lastWishDone.assign(FALSE))
+                resetLastWishDoneduringAction.addAssignment(lastWishDone.createAssignment(FALSE))
                 
                 // wsState sets lastWishDone to true
                 val wsStateEntryAction = wsState.createEntryAction
-                wsStateEntryAction.addAssignment(lastWishDone.assignRelative(TRUE))
+                wsStateEntryAction.addAssignment(lastWishDone.createRelativeAssignmentWithOr(TRUE))
                 
                 // Auxiliary initial state for re-entry
-                val initState = region.createState(GENERATED_PREFIX + "Init").uniqueName
+                val initState = region.createState(GENERATED_PREFIX + "Init").uniqueName(nameCache)
                 initState.setInitial(true)
                 val initWSTransition = initState.createTransitionTo(wsState).setImmediate
                 initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference)) 
@@ -140,7 +152,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                     reEnterTransition.setDeferred(true)
                     
                     val entryAction = subState.createEntryAction
-                    entryAction.addEffect(stateBookmark.assign(counter.createIntValue))
+                    entryAction.addEffect(stateBookmark.createAssignment(counter.createIntValue))
                     entryAction.setTrigger(not(weakSuspendFlag.reference))
                     counter = counter + 1
         
@@ -166,7 +178,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
-            val needAuxTermRegion = ((state.outgoingTransitions.filter(e|e.typeTermination).length > 0 || state.isRootState) && state.regionsMayTerminate)
+            val needAuxTermRegion = ((state.outgoingTransitions.filter[ isTermination ].length > 0 || state.isRootState) && state.regionsMayTerminate)
             if (needAuxTermRegion) {
                 val auxTermRegion = state.createControlflowRegion(GENERATED_PREFIX + "wsAuxTermination");
                 val noTermS = auxTermRegion.createInitialState(GENERATED_PREFIX + "wsNoTerm");
@@ -178,6 +190,10 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             }
             
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

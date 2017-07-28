@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.sc.CExecution;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
+import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
@@ -231,7 +232,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     @Override
     public boolean checkModelValidation(final EObject rootEObject)
             throws KiemInitializationException {
-        if (!(rootEObject instanceof State) && !(rootEObject instanceof SCGraph)) {
+        if (!(rootEObject instanceof State) && !(rootEObject instanceof SCGraph)
+                && !(rootEObject instanceof SCCharts)) {
             throw new KiemInitializationException(
                     "SCCharts Simulator can only be used with a SCCharts editor.\n\n", true, null);
         }
@@ -397,8 +399,13 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null && kExpressionValuedObjectExtensions.getValuedObjects(myModel) != null) {
-                for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjects(myModel)) {
+            EObject model = myModel;
+            if (myModel instanceof SCCharts) {
+                model = ((SCCharts) myModel).getRootStates().get(0);
+            }
+            
+            if (model != null && kExpressionValuedObjectExtensions.getValuedObjectsFromEObject(model) != null) {
+                for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjectsFromEObject(model)) {
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
                         if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
                             res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
@@ -628,7 +635,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             // The following should be a state or an SCG
             EObject stateOrSCG = highLeveleCompilationResult.getEObject();
-            if (!((stateOrSCG instanceof State) || (stateOrSCG instanceof SCGraph))) {
+            if (!((stateOrSCG instanceof State) || (stateOrSCG instanceof SCGraph)
+                    || (stateOrSCG instanceof SCCharts))) {
                 // compilation failed
                 throw new KiemInitializationException(
                         "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view:" + highLeveleCompilationResult.getAllErrors(),
@@ -705,6 +713,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         Guice.createInjector().getInstance(CSimulationSCChart.class);
 //                SCChartsSimCPlugin.log("16");
                 cSimulation = cSimulationSCChart.transform((State) stateOrSCG, "10000").toString();
+            } else if (stateOrSCG instanceof SCCharts) {
+                CSimulationSCChart cSimulationSCChart =
+                        Guice.createInjector().getInstance(CSimulationSCChart.class);
+                cSimulation = cSimulationSCChart.transform(((SCCharts) stateOrSCG).getRootStates().get(0), "10000").toString();
             } else if (stateOrSCG instanceof SCGraph) {
 //                SCChartsSimCPlugin.log("15");
                 CSimulationSCG cSimulationSCG =
@@ -744,17 +756,17 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             generatedSCFiles.add("-I " + includePath);
             String modelName = "SCG";
             if (myModel instanceof State) {
-                modelName = ((State) myModel).getId();
+                modelName = ((State) myModel).getName();
             }
             cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
         } catch (RuntimeException e) {
-            throw new KiemInitializationException("Error compiling S program:\n\n "
+            throw new KiemInitializationException("Error compiling C program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         } catch (IOException e) {
-            throw new KiemInitializationException("Error compiling S program:\n\n "
+            throw new KiemInitializationException("Error compiling C program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         } catch (InterruptedException e) {
-            throw new KiemInitializationException("Error compiling S program:\n\n "
+            throw new KiemInitializationException("Error compiling C program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         }
     }

@@ -18,9 +18,12 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts ExposeLocalValuedObject Transformation.
@@ -55,11 +58,13 @@ class ExposeLocalValuedObject extends AbstractExpansionTransformation implements
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsFixExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     //-------------------------------------------------------------------------
     //--        E X P O S E   L O C A L   V A L U E D  O B J E C T           --
@@ -67,14 +72,19 @@ class ExposeLocalValuedObject extends AbstractExpansionTransformation implements
     // Transforming Local ValuedObjects and optionally exposing them as
     // output signals.
     def State transform(State rootState) {
-        val targetRootState = rootState;
+        nameCache.clear
+        val targetRootState = rootState
 
         // Traverse all states
-        for (state : targetRootState.getAllStates.immutableCopy) {
-            state.transformExposeLocalValuedObject(targetRootState, true)
+        for (state : targetRootState.getAllStates.toList) {
+            state.transformExposeLocalValuedObject(targetRootState, true, nameCache)
         }
         
-        targetRootState;
+        targetRootState
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

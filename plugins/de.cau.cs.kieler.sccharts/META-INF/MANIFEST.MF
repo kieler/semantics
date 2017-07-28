@@ -8,11 +8,25 @@ Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.sccharts.enforcer,
  de.cau.cs.kieler.sccharts.extensions,
  de.cau.cs.kieler.sccharts.featuregroups,
  de.cau.cs.kieler.sccharts.features,
  de.cau.cs.kieler.sccharts.impl,
  de.cau.cs.kieler.sccharts.iterators,
+ de.cau.cs.kieler.sccharts.processors,
+ de.cau.cs.kieler.sccharts.processors.transformators,
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.sccharts.text.formatting2,
+ de.cau.cs.kieler.sccharts.text.parser,
+ de.cau.cs.kieler.sccharts.text.parser.antlr,
+ de.cau.cs.kieler.sccharts.text.parser.antlr.internal,
+ de.cau.cs.kieler.sccharts.text.scoping,
+ de.cau.cs.kieler.sccharts.text.sctgenerator,
+ de.cau.cs.kieler.sccharts.text.sctgenerator.extensions,
+ de.cau.cs.kieler.sccharts.text.serializer,
+ de.cau.cs.kieler.sccharts.text.services,
+ de.cau.cs.kieler.sccharts.text.validation,
  de.cau.cs.kieler.sccharts.transformations,
  de.cau.cs.kieler.sccharts.util
 Require-Bundle: org.eclipse.core.runtime,
@@ -26,5 +40,15 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.klighd.piccolo,
  de.cau.cs.kieler.kico,
- de.cau.cs.kieler.kitt
+ de.cau.cs.kieler.kitt,
+ de.cau.cs.kieler.kicool,
+ org.eclipse.xtext,
+ org.eclipse.core.resources,
+ org.eclipse.xtext.generator,
+ org.eclipse.emf.mwe2.launch,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.antlr.runtime
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: de.cau.cs.kieler.sccharts.SCChartsPlugin
+Import-Package: org.apache.log4j

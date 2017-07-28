@@ -19,6 +19,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.Value
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Container class für ValuedObjects
@@ -50,6 +51,11 @@ class ValuedObjectContainer {
             indices += e
         }
     }
+    
+    def set(ValuedObject valuedObject) {
+        this.valuedObject = valuedObject
+        indices.clear
+    }    
     
     
     override equals(Object object) {

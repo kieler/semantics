@@ -44,10 +44,9 @@ Workflow {
             fragment = ecore.EMFGeneratorFragment {} // referencedGenModels = "platform:/resource/de.cau.cs.kieler.kvis/model/kvis.genmodel" }
             
             // the serialization component
-            // Old serializer           
-            //fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-            // New Serializer 2.0
-            fragment = serializer.SerializerFragment {}
+            fragment = serializer.SerializerFragment {
+                generateXtendStub = true
+            }
             
             // a custom ResourceFactory for use with EMF 
             fragment = resourceFactory.ResourceFactoryFragment {
@@ -63,13 +62,7 @@ Workflow {
             }
 
             // java-based API for validation 
-            fragment = validation.JavaValidatorFragment {
-            //    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-            //    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-//                  composedCheck = "de.cau.cs.kieler.sccharts.text.sct.validation.SctValidator"
-//                  composedCheck = "de.cau.cs.kieler.sccharts.text.actions.validation.ActionsJavaValidator"
-//                  composedCheck = "de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator"
-            }
+            fragment = validation.ValidatorFragment {}
             
             // scoping and exporting API
             fragment = scoping.ImportURIScopingFragment {}

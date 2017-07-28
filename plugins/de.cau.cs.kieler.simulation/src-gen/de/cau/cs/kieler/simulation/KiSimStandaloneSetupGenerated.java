@@ -41,6 +41,5 @@ public class KiSimStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

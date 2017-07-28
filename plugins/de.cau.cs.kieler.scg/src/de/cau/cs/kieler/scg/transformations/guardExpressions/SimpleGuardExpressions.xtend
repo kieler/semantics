@@ -159,9 +159,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         val timestamp = System.currentTimeMillis
         compilerContext = context
 
-//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
-//            getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-//        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
+//        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**
@@ -214,7 +212,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             val conditional = p.conditional
             if (conditional != null && !conditionalGuards.keySet.contains(conditional)) {
                 val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
-                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name
+                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name.replaceFirst("^_", "")
 
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = newVO
@@ -461,7 +459,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     // --- CREATE GUARDS: GO BLOCK 
     protected def void createGoBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         guard.setDefaultTrace
-        guard.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
+        guard.expression = scg.findValuedObjectByName(GO_GUARD_NAME).reference
     }
 
     // --- CREATE GUARDS: DEPTH BLOCK 
@@ -633,7 +631,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
 
     protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BranchType blockType, SCGraph scg) {
         val twin = predecessorTwinCache.get(predecessor)
-        predecessorSBCache.get(twin).head
+        predecessorSBCache.get(twin)?.head
     }
 
     private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {

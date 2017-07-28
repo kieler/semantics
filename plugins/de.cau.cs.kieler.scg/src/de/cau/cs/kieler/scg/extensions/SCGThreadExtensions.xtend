@@ -125,25 +125,27 @@ class SCGThreadExtensions {
         }
         
         // Reverse search outgoing from the exit node
-        for(exitNode : exitList) {
-            controlFlows.addAll(exitNode.allPrevious)
-            while(!controlFlows.empty) {
-                var nextNode = controlFlows.head.eContainer as Node
-                controlFlows.remove(0)
-                if (!returnList.contains(nextNode)) returnList.add(nextNode)
-                if (nextNode instanceof Depth) {
-                    nextNode = (nextNode as Depth).surface
+        for(exitNode : exitList) { 
+            if (exitNode != null) {
+                controlFlows.addAll(exitNode.allPrevious)
+                while(!controlFlows.empty) {
+                    var nextNode = controlFlows.head.eContainer as Node
+                    controlFlows.remove(0)
                     if (!returnList.contains(nextNode)) returnList.add(nextNode)
+                    if (nextNode instanceof Depth) {
+                        nextNode = (nextNode as Depth).surface
+                        if (!returnList.contains(nextNode)) returnList.add(nextNode)
+                    }
+                    if (nextNode != null)
+                    nextNode.allPrevious.filter[ 
+                        (!returnList.contains(it.eContainer)) && 
+                        (!controlFlows.contains(it)) ] 
+                            => [ controlFlows.addAll(it) ]
                 }
-                if (nextNode != null)
-                nextNode.allPrevious.filter[ 
-                    (!returnList.contains(it.eContainer)) && 
-                    (!controlFlows.contains(it)) ] 
-                        => [ controlFlows.addAll(it) ]
-            }
-            // Add the exit node.
-            if (!returnList.contains(exitNode)) { 
-                returnList.add(exitNode)
+                // Add the exit node.
+                if (!returnList.contains(exitNode)) { 
+                    returnList.add(exitNode)
+                }
             }
         }
         

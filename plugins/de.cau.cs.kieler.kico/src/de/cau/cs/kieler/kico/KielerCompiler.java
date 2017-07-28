@@ -341,7 +341,7 @@ public class KielerCompiler {
                 // If this is an individual
 
                 // Class<?> parameterType = transformedObject.getClass();
-                Class<?> handledParameterType = transformation.getParameterType();
+                Class<?> handledParameterType = transformation.getParameterType(transformedObject);
                 if (handledParameterType != null) {
                     if (handledParameterType.isInstance(transformedObject)) {
 

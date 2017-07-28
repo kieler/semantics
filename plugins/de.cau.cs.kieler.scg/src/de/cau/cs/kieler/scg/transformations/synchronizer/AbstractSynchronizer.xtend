@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg.transformations.synchronizer
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
@@ -29,6 +30,7 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import java.util.Map
+import java.util.Set
 
 import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
@@ -144,4 +146,19 @@ abstract class AbstractSynchronizer {
     public def getNewGuards() {
         return newGuards
     }
+    
+    protected def Set<Join> getNestedThreads(Entry entry){
+    	val nestedJoins = entry.getThreadNodes.filter(typeof(Join)).toSet
+		val nodesToBeRemoved = newHashSet()
+		
+		nestedJoins.forEach[
+			val entries = entryNodes
+			entries.forEach[
+				nodesToBeRemoved.addAll(getThreadNodes.filter(typeof(Join)).toSet)
+			]
+		]
+		nestedJoins.removeAll(nodesToBeRemoved)		    	
+		nestedJoins
+    }
+    
 }

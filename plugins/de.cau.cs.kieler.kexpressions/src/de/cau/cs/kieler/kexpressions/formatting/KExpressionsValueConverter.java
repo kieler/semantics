@@ -16,11 +16,11 @@ package de.cau.cs.kieler.kexpressions.formatting;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
+import org.eclipse.xtext.conversion.impl.AbstractNullSafeConverter;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.annotations.formatting.AnnotationsValueConverter;
-
-import org.eclipse.xtext.nodemodel.INode;
 
 /**
  * @author chsch
@@ -119,12 +119,18 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
      */
     @ValueConverter(rule = "HOSTCODE")
     public IValueConverter<String> _hostcode() {
-        return new org.eclipse.xtext.conversion.impl.STRINGValueConverter() {
-            public String toString(String value) {
-                if (value == null)
-                    throw new ValueConverterException(
-                            "HOSTCODE may not be 'null'.", null, null);
-                return "'" + value.toString() + "'";
+        return new AbstractNullSafeConverter<String>() {
+
+            @Override
+            public String internalToValue(String string, INode node) throws ValueConverterException {
+                if (string.startsWith("`") && string.endsWith("`")) {
+                    return string.substring(1, string.length() - 1);
+                }
+                throw new ValueConverterException("HOSTCODE is not correctly escaped using \"`\".", null, null);
+            }
+            
+            public String internalToString(String value) throws ValueConverterException {
+                return "`" + value + "`";
             }
         };
     }

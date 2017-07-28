@@ -16,8 +16,8 @@ package de.cau.cs.kieler.sccharts.features
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * SCCharts Connector Feature.
@@ -40,18 +40,24 @@ class Connector extends Feature {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
-            if (state.type == StateType::CONNECTOR) {
+            if (state.isConnector) {
                 return true
             }
         }
         return false
     }
+
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }  
 
 }

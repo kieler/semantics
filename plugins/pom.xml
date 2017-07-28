@@ -51,6 +51,8 @@
     <module>de.cau.cs.kieler.kico</module>
     <module>de.cau.cs.kieler.kico.klighd</module>
     <module>de.cau.cs.kieler.kico.ui</module>
+    <module>de.cau.cs.kieler.kicool</module>
+    <module>de.cau.cs.kieler.kicool.ui</module>
     <module>de.cau.cs.kieler.kico.server.ui</module>
     <module>de.cau.cs.kieler.kico.server</module>
     <module>de.cau.cs.kieler.kitt.klighd</module>
@@ -73,7 +75,7 @@
     <module>de.cau.cs.kieler.sccharts.debug</module>
     <module>de.cau.cs.kieler.sccharts.examples</module>
     <module>de.cau.cs.kieler.sccharts.kivi</module>
-    <module>de.cau.cs.kieler.sccharts.klighd</module>
+    <module>de.cau.cs.kieler.sccharts.ui</module>
     <module>de.cau.cs.kieler.sccharts.preferences</module>
     <module>de.cau.cs.kieler.sccharts.prom</module>
     <module>de.cau.cs.kieler.sccharts.prom.ui</module>
@@ -81,9 +83,9 @@
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.sim.c</module>
     <module>de.cau.cs.kieler.sccharts.sim.java</module>
-    <module>de.cau.cs.kieler.sccharts.text</module>
-    <module>de.cau.cs.kieler.sccharts.text.ui</module>
 	<module>de.cau.cs.kieler.sccharts.timing</module>
+    <module>de.cau.cs.kieler.sccharts.legacy</module>
+    <module>de.cau.cs.kieler.sccharts.legacy.ui</module>
     <module>de.cau.cs.kieler.scg</module>
     <module>de.cau.cs.kieler.scg.circuit</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
@@ -113,7 +115,6 @@
     <module>de.cau.cs.kieler.simulation.ui</module>
     <module>de.cau.cs.kieler.sj</module>
     <module>de.cau.cs.kieler.sjl</module>
-    <module>de.cau.cs.kieler.synccharts</module>
     <module>org.json</module>
   </modules>
 

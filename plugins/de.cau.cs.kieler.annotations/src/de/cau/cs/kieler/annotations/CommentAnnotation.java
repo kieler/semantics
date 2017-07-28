@@ -24,5 +24,5 @@ package de.cau.cs.kieler.annotations;
  * @model
  * @generated
  */
-public interface CommentAnnotation extends StringAnnotation {
+public interface CommentAnnotation extends StringAnnotation, Annotatable {
 } // CommentAnnotation

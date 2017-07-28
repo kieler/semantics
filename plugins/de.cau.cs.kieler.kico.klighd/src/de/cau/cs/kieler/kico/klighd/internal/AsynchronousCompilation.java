@@ -175,8 +175,8 @@ public class AsynchronousCompilation extends Job {
 
                 @Override
                 public IStatus runInUIThread(final IProgressMonitor monitor) {
-                    viewController.update(ChangeEvent.COMPILATION_FINISHED,
-                            AsynchronousCompilation.this);
+//                    viewController.update(ChangeEvent.COMPILATION_FINISHED,
+//                            AsynchronousCompilation.this);
                     return Status.OK_STATUS;
                 }
             }.schedule();

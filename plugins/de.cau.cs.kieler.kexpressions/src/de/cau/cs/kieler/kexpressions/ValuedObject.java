@@ -9,6 +9,7 @@ package de.cau.cs.kieler.kexpressions;
 import org.eclipse.emf.common.util.EList;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +28,6 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}</li>
@@ -37,33 +37,7 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * @model
  * @generated
  */
-public interface ValuedObject extends Annotatable {
-    /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Name</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Name</em>' attribute.
-     * @see #setName(String)
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_Name()
-     * @model required="true"
-     * @generated
-     */
-    String getName();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getName <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Name</em>' attribute.
-     * @see #getName()
-     * @generated
-     */
-    void setName(String value);
-
+public interface ValuedObject extends NamedObject, Annotatable, Referenceable {
     /**
      * Returns the value of the '<em><b>Initial Value</b></em>' containment reference.
      * <!-- begin-user-doc -->

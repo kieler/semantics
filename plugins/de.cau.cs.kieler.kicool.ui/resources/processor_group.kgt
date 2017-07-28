@@ -1,0 +1,58 @@
+knode group {
+    size: width = 36 height = 12
+    properties:
+        org.eclipse.elk.algorithm = org.eclipse.elk.layered
+        org.eclipse.elk.edgeRouting = ORTHOGONAL
+        org.eclipse.elk.direction = RIGHT
+        org.eclipse.elk.layered.nodePlacement.strategy = BRANDES_KOEPF
+        org.eclipse.elk.spacing.nodeNode = 10.0
+        org.eclipse.elk.padding = "[top=6.0,left=6.0,bottom=6.0,right=6.0]"
+        de.cau.cs.kieler.klighd.expand = false
+    
+    kroundedRectangle (1.5, 1.5) collapsed  
+    [de.cau.cs.kieler.klighd.collapsedRendering = true
+    de.cau.cs.kieler.klighd.expandedRendering = false] 
+    {
+        styles:
+            lineWidth = 1.5
+            foreground = 105r,55g,185b,255a 
+            background = 155r,155g,155b,155a
+            
+        actions: doubleClick => de.cau.cs.kieler.klighd.^actions.CollapseExpandAction
+                 
+        ktext ("ID") {
+            pointData:
+              referencePoint=left 2,top 1             
+            styles: 
+                foreground = 0r,0g,0b,255a 
+                background = 255r,255g,255b,0a
+                fontSize = 3pt
+                
+            actions: doubleClick => de.cau.cs.kieler.klighd.^actions.CollapseExpandAction   
+        }   
+        
+    }
+    
+    kroundedRectangle (1.5, 1.5) expanded
+    [de.cau.cs.kieler.klighd.collapsedRendering = false
+    de.cau.cs.kieler.klighd.expandedRendering = true]{
+        styles:
+            lineWidth = 1 
+            foreground = 105r,55g,255b,255a
+            background = 255r,255g,255b,255a
+        
+        actions: doubleClick => de.cau.cs.kieler.klighd.^actions.CollapseExpandAction
+        
+        ktext ("ID") {
+            pointData:
+              referencePoint=left 2,top 1
+            styles: 
+                foreground = 0r,0g,0b,255a 
+                background = 255r,255g,255b,0a
+                fontSize = 3pt
+                
+            actions: doubleClick => de.cau.cs.kieler.klighd.^actions.CollapseExpandAction   
+        }       
+    }
+    
+}

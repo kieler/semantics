@@ -33,7 +33,6 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.IPath
-import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
@@ -137,8 +136,8 @@ class KiCoModelCompiler extends ModelCompiler {
                     val iter = StateIterator.sccAllStates(state)
                     while(iter.hasNext) {
                         val s = iter.next
-                        if(s.referencedScope != null) {
-                            val refResource = s.referencedScope.eResource
+                        if(s.reference != null && s.reference.scope != null) {
+                            val refResource = s.reference.scope.eResource
                             val refFile = ModelImporter.toPlatformResource(refResource)
                             val refNode = dependencies.getOrCreate(refFile)
                             node.addDependency(refNode)
@@ -152,17 +151,17 @@ class KiCoModelCompiler extends ModelCompiler {
     private def List<ValuedObject> getGuards(CompilationResult kicoResult) {
         val List<ValuedObject> valuedObjects = newArrayList
         for(intermediateResult : kicoResult.transformationIntermediateResults) {
-            val intermediateModel = intermediateResult.result
-            if(intermediateModel instanceof Program) {
-                val decls = intermediateModel.declarations
-                for(decl : decls) {
-                    for(valuedObject : decl.valuedObjects) {
-                        if(valuedObject.name.matches("g\\d+")) {
-                            valuedObjects.add(valuedObject)    
-                        }
-                    }
-                }
-            }
+//            val intermediateModel = intermediateResult.result
+//            if(intermediateModel instanceof Program) {
+//                val decls = intermediateModel.declarations
+//                for(decl : decls) {
+//                    for(valuedObject : decl.valuedObjects) {
+//                        if(valuedObject.name.matches("g\\d+")) {
+//                            valuedObjects.add(valuedObject)    
+//                        }
+//                    }
+//                }
+//            }
         }
         return valuedObjects
     }

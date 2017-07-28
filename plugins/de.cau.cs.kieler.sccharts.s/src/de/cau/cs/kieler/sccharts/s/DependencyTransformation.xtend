@@ -16,16 +16,18 @@ package de.cau.cs.kieler.sccharts.s
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
 /** 
  * SCCharts DependencyTransformation Extension builds up a sorted list of dependencies between states
@@ -39,8 +41,10 @@ class DependencyTransformation {
 
     // -------------------------------------------------------------------------
     // SCCharts extensions are necessary   
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
 
     //-------------------------------------------------------------------------
     //--      T R A N S F O R M      T O      D E P E N D E N C I E S        --
@@ -64,7 +68,7 @@ class DependencyTransformation {
 
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
-                if (state.hasInnerStatesOrControlflowRegions) {
+                if (state.controlflowRegionsContainStates) {
 
                     // For hierarchical states additionally create a join-representation
                     val joinDependencyState = (new DependencyNode(state)).map(state, true)
@@ -87,7 +91,7 @@ class DependencyTransformation {
 
 
         for (dependency : dependencies) {
-           SCChartsSPlugin.log("XXXX dependency " + dependency.stateDepending.state.id + " -> " +  dependency.stateToDependOn.state.id);
+           SCChartsSPlugin.log("XXXX dependency " + dependency.stateDepending.state.name + " -> " +  dependency.stateToDependOn.state.name);
         }
 
 
@@ -96,7 +100,7 @@ class DependencyTransformation {
 
         SCChartsSPlugin.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
         for (dependencyNode : dependencyNodes) {
-            SCChartsSPlugin.log("XXXX dependencyNode for " + dependencyNode.state.id + " : p=" + dependencyNode.priority + ", o=" + dependencyNode.order + ", join=" + dependencyNode.isJoin);
+            SCChartsSPlugin.log("XXXX dependencyNode for " + dependencyNode.state.name + " : p=" + dependencyNode.priority + ", o=" + dependencyNode.order + ", join=" + dependencyNode.isJoin);
         }
 
         dependencyGraph
@@ -183,7 +187,7 @@ class DependencyTransformation {
             }
 
             // Hierarchical extension FORK
-            if (transition.targetState.hasInnerStatesOrControlflowRegions) {
+            if (transition.targetState.controlflowRegionsContainStates) {
                 for (region : transition.targetState.regions.filter(ControlflowRegion)) {
                     for (initialState : region.states.filter[isInitial]) {
                         if (state.canReach(state2, initialState)) {
@@ -244,7 +248,7 @@ class DependencyTransformation {
         // Control Flow dependencies
         for (transition : state.incomingTransitions) {
 //            SCChartsSPlugin.log("State: " + state.id + " <- " + transition.sourceState.id);
-            if (state.hasInnerStatesOrControlflowRegions) {
+            if (state.controlflowRegionsContainStates) {
                 for (region : state.regions.filter(ControlflowRegion)) {
                     for (initialState : region.states.filter[isInitial]) {
                         val newControlFlowDependency = new ControlflowDependency(initialState.dependencyNode,
@@ -260,13 +264,13 @@ class DependencyTransformation {
                     }
                 }
             } // else {
-            if (transition.sourceState.hasInnerStatesOrControlflowRegions) {
+            if (transition.sourceState.controlflowRegionsContainStates) {
                 val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                     transition.sourceState.joinDependencyState)
                 dependencies.add(newControlFlowDependency)
 //                SCChartsSPlugin.log("newControlFlowDependency3 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
             } else {
-                if (transition.isImmediate) {
+                if (transition.isImplicitlyImmediate) {
                     val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                         transition.sourceState.dependencyNode)
                     dependencies.add(newControlFlowDependency)
@@ -341,16 +345,6 @@ class DependencyTransformation {
             1
         }
     }
-
-    // Compare two orders.
-    def private int compareOrders(DependencyNode e1, DependencyNode e2) {
-        if (e1.getOrder > e2.getOrder) {
-            -1
-        } else {
-            1
-        }
-    }
-
 
     // Compare two orders but respect a root before all other nodes
     def private int compareOrdersRespectingRoot(DependencyNode e1, DependencyNode e2) {
@@ -451,7 +445,7 @@ class DependencyTransformation {
             // This implicitly forms (splitted-) "basic blocks" of the same priority
             if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0 ||
                 dependencyNode.state.isFinal || dependencyNode.state.isInitial ||
-                dependencyNode.state.hasInnerStatesOrControlflowRegions) {
+                dependencyNode.state.controlflowRegionsContainStates) {
                 tmpPrioAndOrder.incrementPriority
             }
             return // tmpPrioOrder;

@@ -8,14 +8,12 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
-//import org.eclipse.xtext.Constants;
-//import org.eclipse.xtext.resource.SaveOptions;
-//import org.eclipse.xtext.serializer.ISerializer;
+import de.cau.cs.kieler.scg.SCGraph;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -30,7 +28,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
             "de.cau.cs.kieler.sccharts.commands.SCGTransformation";
 
     // Create an injector to load the transformation via guice.
-    private static Injector injector = new SctStandaloneSetup()
+    private static Injector injector = new SCTXStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
     
     // -------------------------------------------------------------------------
@@ -50,13 +48,13 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
         EObject transformed = null;
 
         SCGTransformation transformation =
-        Guice.createInjector().getInstance(SCGTransformation.class);
+                Guice.createInjector().getInstance(SCGTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transform((State) model, null);
+            transformed = (SCGraph) transformation.transform((SCCharts) model, null);
         } 
         return transformed;
     }

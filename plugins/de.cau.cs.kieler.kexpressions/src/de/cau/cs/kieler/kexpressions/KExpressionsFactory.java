@@ -26,15 +26,6 @@ public interface KExpressionsFactory extends EFactory {
     KExpressionsFactory eINSTANCE = de.cau.cs.kieler.kexpressions.impl.KExpressionsFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Expression</em>'.
-     * @generated
-     */
-    Expression createExpression();
-
-    /**
      * Returns a new object of class '<em>Valued Object</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -51,15 +42,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     ValuedObjectReference createValuedObjectReference();
-
-    /**
-     * Returns a new object of class '<em>Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Value</em>'.
-     * @generated
-     */
-    Value createValue();
 
     /**
      * Returns a new object of class '<em>Int Value</em>'.
@@ -107,13 +89,49 @@ public interface KExpressionsFactory extends EFactory {
     TextExpression createTextExpression();
 
     /**
-     * Returns a new object of class '<em>Declaration</em>'.
+     * Returns a new object of class '<em>Variable Declaration</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Declaration</em>'.
+     * @return a new object of class '<em>Variable Declaration</em>'.
      * @generated
      */
-    Declaration createDeclaration();
+    VariableDeclaration createVariableDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Reference Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Reference Declaration</em>'.
+     * @generated
+     */
+    ReferenceDeclaration createReferenceDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Schedule Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Declaration</em>'.
+     * @generated
+     */
+    ScheduleDeclaration createScheduleDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Schedule Priority</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Priority</em>'.
+     * @generated
+     */
+    SchedulePriority createSchedulePriority();
+
+    /**
+     * Returns a new object of class '<em>Schedule Object Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Object Reference</em>'.
+     * @generated
+     */
+    ScheduleObjectReference createScheduleObjectReference();
 
     /**
      * Returns a new object of class '<em>Function Call</em>'.
@@ -123,6 +141,15 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     FunctionCall createFunctionCall();
+
+    /**
+     * Returns a new object of class '<em>Print Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Print Call</em>'.
+     * @generated
+     */
+    PrintCall createPrintCall();
 
     /**
      * Returns a new object of class '<em>Parameter</em>'.
@@ -141,6 +168,15 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     StringValue createStringValue();
+
+    /**
+     * Returns a new object of class '<em>Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Reference Call</em>'.
+     * @generated
+     */
+    ReferenceCall createReferenceCall();
 
     /**
      * Returns the package supported by this factory.

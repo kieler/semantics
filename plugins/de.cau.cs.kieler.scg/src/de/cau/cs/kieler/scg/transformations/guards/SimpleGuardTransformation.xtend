@@ -42,6 +42,11 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 
 /** 
  * @author ssm
@@ -52,10 +57,6 @@ import de.cau.cs.kieler.scg.ControlDependency
 
 class SimpleGuardTransformation extends AbstractGuardTransformation implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
-    
     override getId() {
         return SCGTransformations::GUARDS_ID
     }
@@ -72,33 +73,17 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
     }
 
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    
-    @Inject
-    extension SCGCoreExtensions
-    
-    @Inject 
-    extension SCGDeclarationExtensions
-         
-    @Inject 
-    extension SCGCacheExtensions	
-    
-    @Inject 
-    extension SCGDependencyExtensions	    
 
-    @Inject 
-    extension KExpressionsValuedObjectExtensions 
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension SCGCacheExtensions	
+    @Inject extension SCGDependencyExtensions	    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsComplexCreateExtensions 
+    @Inject extension AnnotationsExtensions
     
-    @Inject
-    extension AnnotationsExtensions
-    
-    // -------------------------------------------------------------------------
-    // -- Guard Transformation
-    // -------------------------------------------------------------------------    
       
-     public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
         
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -109,6 +94,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(SCGFeatures.GUARDS_ID, SCGFeatures.GUARDS_NAME)
         	label = scg.label
+        	scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
         creationalTransformation(scg,newSCG)
@@ -125,6 +111,12 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val VAMap = <ValuedObject, Assignment> newHashMap
         val deadGuards = <Guard> newHashSet
         val guardSchedulingBlockMap = <Guard, SchedulingBlock> newHashMap
+        val mainThreadEntries = <Assignment, String> newHashMap
+        val mainThreadExits = <Assignment> newHashSet
+        
+        val termVO = newSCG.createTERMSignal
+        val termAssignment = ScgFactory::eINSTANCE.createAssignment => [ valuedObject = termVO ]    
+        val termSet = <Assignment> newHashSet    
 
         for (bb : scg.basicBlocks) {
             for (sb : bb.schedulingBlocks) {
@@ -144,7 +136,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         		newSCG.nodes += it
         		GAMap.put(guard, it)
         		VAMap.put(it.valuedObject, it)
-        		
+
         		val sb = guardSchedulingBlockMap.get(guard)
         		if (sb != null) {
         		    it.trace(sb)
@@ -163,6 +155,14 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         		    // Can be null if removed because the bb is dead
             		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
             		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
+                    for(node : sb.nodes) {
+                        if (node instanceof Entry)
+                        if (node.incoming.filter(ControlFlow).empty) 
+                            mainThreadEntries.put(assignment, node.name)
+                        if (node instanceof Exit)
+                        if (node.next == null) 
+                            mainThreadExits += assignment
+                    }
         		}
         		
         		// The first one is superfluous, because it is already handled by the expression dependency.
@@ -176,6 +176,18 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         		lastSB = sb
         		i++
         	}
+        	
+        	// Add term block to term expression
+        	if (bb.termBlock && !bb.deadBlock) {
+        	    val assignment = GAMap.get(bb.schedulingBlocks.head.guards.head)
+        	    termAssignment.expression = termAssignment.expression.or(assignment.valuedObject.reference)
+        	    termSet.add(assignment)
+        	}
+        }
+        
+        // Only add the term assignment if a term block is present.
+        if (termAssignment.expression != null) {
+            newSCG.nodes += termAssignment
         }
         
         // Copy node dependencies
@@ -216,32 +228,51 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 				    expressionDependency.trace(reference)
 				}
 			}
+			
+			// Link to term node
+			if (termSet.contains(assignment)) {
+			    val expressionDependency = assignment.createExpressionDependency(termAssignment)
+			    expressionDependency.trace(assignment)
+			}
         }
         
         // Create guard dependencies
         val AAMap = <Assignment, Assignment> newHashMap
 		for(schedulingBlock : scg.schedulingBlocks) {
 			for(assignment : schedulingBlock.nodes.filter(Assignment)) {
-				val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
 				val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject))
-				newSCG.nodes += newAssignment
-				val guardDependency = guardAssignment.createGuardDependency(newAssignment)
-				AAMap.put(assignment, newAssignment)
-				
-                newAssignment.trace(assignment)
-                guardDependency.trace(guardAssignment)                				
+
+				if (guardAssignment != null) {
+				    val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
+		  		    newSCG.nodes += newAssignment
+    				AAMap.put(assignment, newAssignment)
+                    newAssignment.trace(assignment)
+    				
+	   			    val guardDependency = guardAssignment.createGuardDependency(newAssignment)
+                    guardDependency.trace(guardAssignment)                				
+				}
 			}		
 		}
 		
 		// Restore sequential order in guarded assignments
 		for (assignment : AAMap.keySet) {
-			if ((assignment.next.target instanceof Assignment) &&
+			if (assignment.next != null && (assignment.next.target instanceof Assignment) &&
 			(schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
 				val controlDependency = AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
 				
 				controlDependency.trace(assignment)
 			} 
 		}
+		
+		// Add main thread entry and exit points
+		for(entry : mainThreadEntries.keySet) {
+		   val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it name = mainThreadEntries.get(entry) ]
+           entryNode.createControlDependency(entry)
+		}
+        for(exit : mainThreadExits) {
+           val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it ]
+            exit.createControlDependency(exitNode)
+        }
 
         newSCG     	
     }

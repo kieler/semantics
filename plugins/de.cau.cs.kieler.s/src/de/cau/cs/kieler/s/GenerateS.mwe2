@@ -19,7 +19,7 @@ Workflow {
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.genmodel"
-		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/KEXT.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kext.genmodel"
 	}
 
 	component = DirectoryCleaner {
@@ -35,6 +35,7 @@ Workflow {
 		pathUiProject = "${runtimeProject}.ui"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
+		naming = GeneratorNaming {}
 		
 		language = {
 			uri = grammarURI
@@ -51,7 +52,9 @@ Workflow {
 			// Old serializer			
 			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
 			// New Serializer 2.0
-			fragment = serializer.SerializerFragment {}
+			fragment = serializer.SerializerFragment {
+			    generateXtendStub = true
+			}
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
@@ -67,7 +70,7 @@ Workflow {
 			}
 
 			// java-based API for validation 
-			fragment = validation.JavaValidatorFragment {
+			fragment = validation.ValidatorFragment {
 //				composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
 				//composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 				// registerForImportedPackages = true

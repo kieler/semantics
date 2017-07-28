@@ -193,5 +193,5 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
             this.name = name
             this.type = type
         }
-    }    
+    }
 }

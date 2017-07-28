@@ -22,15 +22,6 @@ public interface KEffectsFactory extends EFactory {
     KEffectsFactory eINSTANCE = de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Effect</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Effect</em>'.
-     * @generated
-     */
-    Effect createEffect();
-
-    /**
      * Returns a new object of class '<em>Assignment</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -58,6 +49,15 @@ public interface KEffectsFactory extends EFactory {
     HostcodeEffect createHostcodeEffect();
 
     /**
+     * Returns a new object of class '<em>Reference Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Reference Call Effect</em>'.
+     * @generated
+     */
+    ReferenceCallEffect createReferenceCallEffect();
+
+    /**
      * Returns a new object of class '<em>Function Call Effect</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -65,6 +65,15 @@ public interface KEffectsFactory extends EFactory {
      * @generated
      */
     FunctionCallEffect createFunctionCallEffect();
+
+    /**
+     * Returns a new object of class '<em>Print Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Print Call Effect</em>'.
+     * @generated
+     */
+    PrintCallEffect createPrintCallEffect();
 
     /**
      * Returns the package supported by this factory.

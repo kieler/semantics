@@ -26,8 +26,9 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  */
 class SCChartsOptimization {
 
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsTransitionExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -43,11 +44,12 @@ class SCChartsOptimization {
         rootState;
     }
 
+    // TODO: at the moment this will not work with referenced valued objects    
     def void optimizeSuperflousImmediateTransitions(State state, State targetRootState) {
-        if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrControlflowRegions) {
+        if (state.outgoingTransitions.size == 1 && !state.controlflowRegionsContainStates) {
             val transition = state.outgoingTransitions.head
             val targetState = transition.targetState
-            if (transition.immediate2) {
+            if (transition.implicitlyImmediate) {
                 if (transition.trigger == null && transition.effects.nullOrEmpty) {
                     targetState.trace(transition) //KITT: Redirect tracing relations before removing
                     targetState.incomingTransitions.remove(transition)
@@ -57,7 +59,7 @@ class SCChartsOptimization {
                     for (incomingTransition : state.incomingTransitions.immutableCopy) {
                         incomingTransition.setTargetState(targetState)
                     }
-                    targetState.setId(state.id)
+                    targetState.setName(state.name)
                     targetState.setLabel(state.label)
                     targetState.trace(state) //KITT: Redirect tracing relations before removing
                     targetState.parentRegion.states.remove(state)
@@ -79,12 +81,13 @@ class SCChartsOptimization {
         rootState;
     }
 
+    // TODO: at the moment this will not work with referenced valued objects    
     def void optimizeSuperflousConditionalStates(State state, State targetRootState) {
-        if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrControlflowRegions) {
+        if (state.outgoingTransitions.size == 2 && !state.controlflowRegionsContainStates) {
             val transition1 = state.outgoingTransitions.get(0)
             val transition2 = state.outgoingTransitions.get(1)
             val targetState2 = transition1.targetState
-            if ((transition1.immediate2) && (transition1.trigger == null)) {
+            if ((transition1.implicitlyImmediate) && (transition1.trigger == null)) {
                 transition1.trace(transition2) //KITT: Redirect tracing relations before removing
                 targetState2.incomingTransitions.remove(transition2)
                 state.outgoingTransitions.remove(transition2)

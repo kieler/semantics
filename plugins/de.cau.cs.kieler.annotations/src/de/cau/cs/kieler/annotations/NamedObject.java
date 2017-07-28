@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.annotations;
 
+import org.eclipse.emf.ecore.EObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +32,7 @@ package de.cau.cs.kieler.annotations;
  * @model
  * @generated
  */
-public interface NamedObject extends Annotatable {
+public interface NamedObject extends EObject {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->

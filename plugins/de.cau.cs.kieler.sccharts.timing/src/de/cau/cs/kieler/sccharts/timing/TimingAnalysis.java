@@ -44,10 +44,11 @@ import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Iterators;
 
-import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -552,11 +553,10 @@ public class TimingAnalysis extends Job {
         // Note that at the moment we will generate globalvar assumptions
         // automatically only from boolean inputs, as the kta tool treats all GlobalVar assumptions
         // as Input
-        EList<Declaration> declarationList = scchart.getDeclarations();
-        Iterator<Declaration> declarationListIterator = declarationList.iterator();
+        Iterator<VariableDeclaration> declarationListIterator = Iterators.filter(scchart.getDeclarations().iterator(), VariableDeclaration.class);
         HashSet<String> inputOutputNameSet = new HashSet<String>();
         while (declarationListIterator.hasNext()) {
-            Declaration currentDeclaration = declarationListIterator.next();
+            VariableDeclaration currentDeclaration = declarationListIterator.next();
             Iterator<ValuedObject> valuedObjectsListIterator =
                     currentDeclaration.getValuedObjects().iterator();
             while (valuedObjectsListIterator.hasNext()) {

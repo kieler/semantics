@@ -27,8 +27,7 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 
 import de.cau.cs.kieler.annotations.ui.AnnotationsSemanticHighlightingCalculator;
-import de.cau.cs.kieler.kexpressions.FunctionCall;
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.util.KExpressionsSwitch;
 
 /**
@@ -63,7 +62,7 @@ public class KExpressionsSemanticHighlightingCalculator extends AnnotationsSeman
         }
 
         @Override
-        public Void caseFunctionCall( FunctionCall object ) {
+        public Void caseReferenceCall( ReferenceCall object ) {
             INode node = NodeModelUtils.findActualNodeFor( object );
 //            INode node = getFirstFeatureNode( object, KExpressionsPackage.eINSTANCE.getFunctionCall_FunctionName() );
             highlightNode( node, KExpressionsHighlightingConfiguration.FUNCTIONCALL );

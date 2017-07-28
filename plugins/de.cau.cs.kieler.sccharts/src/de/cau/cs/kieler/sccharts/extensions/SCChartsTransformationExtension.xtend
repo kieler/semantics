@@ -24,8 +24,9 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.impl.ExpressionImpl
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -37,11 +38,10 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
  */
 class SCChartsTransformationExtension {
 
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -52,9 +52,9 @@ class SCChartsTransformationExtension {
     
     // Test if a state can be immediately aborted
     def boolean canImmediateAborted(State state) {
-        ((state.outgoingTransitions.filter[e|e.typeStrongAbort && e.immediate2].size > 0)
+        ((state.outgoingTransitions.filter[e|e.isStrongAbort && e.implicitlyImmediate].size > 0)
         ||
-        (state.outgoingTransitions.filter[e|e.typeWeakAbort && e.immediate2].size > 0))
+        (state.outgoingTransitions.filter[e|e.isWeakAbort && e.implicitlyImmediate].size > 0))
     }
 
     // Test if for a state ALL regions may possibly terminate immediate
@@ -87,7 +87,7 @@ class SCChartsTransformationExtension {
         if (previousState.initial) {
             return true
         }
-        for (transition : previousState.incomingTransitions.filter[immediate]) {
+        for (transition : previousState.incomingTransitions.filter[implicitlyImmediate]) {
            if (finalState.isImmediatelyReachableHelper(transition.sourceState)) {
                return true
            }
@@ -116,9 +116,9 @@ class SCChartsTransformationExtension {
 
     // Return the declaration of the ValuedObject which is the container of it and may contain 
     // other valued objects.
-    def public Declaration declaration(ValuedObject valuedObject) {
-        if (valuedObject.eContainer instanceof Declaration) {
-            return valuedObject.eContainer as Declaration
+    def public VariableDeclaration declaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof VariableDeclaration) {
+            return valuedObject.eContainer as VariableDeclaration
         }
     }
 
@@ -151,7 +151,7 @@ class SCChartsTransformationExtension {
 //    // ========= ATTRIBUTE GETTER =========
 
     def public ValueType getType(ValuedObject valuedObject) {
-        valuedObject.declaration.type
+        valuedObject.variableDeclaration.type
     }
 
     // Create a ValuedObjectReference to a valuedObject
@@ -163,52 +163,53 @@ class SCChartsTransformationExtension {
 
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
-        valuedObject.declaration.input
+        valuedObject.declaration.isInput
     }
 
+// TODO: getInput/isInput?
     // Return whether the ValuedObject is an input.
     def public boolean isInput(ValuedObject valuedObject) {
-        valuedObject.getInput()
+        valuedObject.declaration.isInput
     }
 
     // Return whether the ValuedObject is an output.
     def public boolean getOutput(ValuedObject valuedObject) {
-        valuedObject.declaration.output
+        valuedObject.declaration.isOutput
     }
 
     // Return whether the ValuedObject is an output.
     def public boolean isOutput(ValuedObject valuedObject) {
-        valuedObject.getOutput()
+        valuedObject.declaration.isOutput
     }
 
     // Return whether the ValuedObject is static.
     def public boolean getStatic(ValuedObject valuedObject) {
-        valuedObject.declaration.static
+        valuedObject.declaration.isStatic
     }
 
     // Return whether the ValuedObject is static.
     def public boolean isStatic(ValuedObject valuedObject) {
-        valuedObject.getStatic()
+        valuedObject.declaration.isStatic
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean getConst(ValuedObject valuedObject) {
-        valuedObject.declaration.const
+        valuedObject.declaration.isConst
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean isConst(ValuedObject valuedObject) {
-        valuedObject.getConst()
+        valuedObject.declaration.isConst
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean getExtern(ValuedObject valuedObject) {
-        valuedObject.declaration.extern
+        valuedObject.declaration.isExtern
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean isExtern(ValuedObject valuedObject) {
-        valuedObject.getExtern()
+        valuedObject.declaration.isExtern
     }
 
     // Return whether the ValuedObject is an array.
@@ -218,12 +219,12 @@ class SCChartsTransformationExtension {
 
     // Return whether the ValuedObject is a signal.
     def public boolean getSignal(ValuedObject valuedObject) {
-        valuedObject.declaration.signal
+        valuedObject.declaration.isSignal
     }
 
     // Return whether the ValuedObject is a signal.
     def public boolean isSignal(ValuedObject valuedObject) {
-        valuedObject.getSignal()
+        valuedObject.declaration.isSignal
     }
 
     // ========= ATTRIBUTE SETTER =========
@@ -447,18 +448,22 @@ class SCChartsTransformationExtension {
     // -------------------------------------------------------------------------
     
     // Creates a new Declaration.
-    def public Declaration createDeclaration() {
-        KExpressionsFactory::eINSTANCE.createDeclaration
+    def public VariableDeclaration createVariableDeclaration() {
+        KExpressionsFactory::eINSTANCE.createVariableDeclaration
     }
 
     // Creates a new Declaration on the basis of an existing declaration if existing. The new declaration
     // has the same attributes than the existing one but will not contain their ValuedObjects.
     // If the exitsingDeclaration is null then createDeclaration(Declaration existingDeclaration) behaves
     // as createDeclaration().
-    def public Declaration createDeclaration(Declaration existingDeclaration) {
-        val newDeclaration = createDeclaration()
+    def public VariableDeclaration createDeclaration(VariableDeclaration existingDeclaration) {
+        val newDeclaration = createVariableDeclaration()
         if (existingDeclaration != null) {
            newDeclaration.copyAttributes(existingDeclaration)
+           val parent = existingDeclaration.eContainer
+           if (parent instanceof Scope) {
+               parent.declarations += newDeclaration
+           }
         } 
         newDeclaration
     }
@@ -472,14 +477,14 @@ class SCChartsTransformationExtension {
         if (valuedObject.eContainer instanceof Declaration) {
             return valuedObject.eContainer as Declaration
         } else {
-            val newDeclaration = createDeclaration;
+            val newDeclaration = createVariableDeclaration;
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }
     }
 
     // copies all attributes from a declaration to a target declaration
-    def private Declaration copyAttributes(Declaration target, Declaration declaration) {
+    def private VariableDeclaration copyAttributes(VariableDeclaration target, VariableDeclaration declaration) {
         target => [
             type = declaration.type
             input = declaration.input
@@ -495,7 +500,7 @@ class SCChartsTransformationExtension {
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
     // new one. 
     // Attention: The declaration of the valuedObject MUST NOT BE NULL.
-    def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
+    def public VariableDeclaration getUniqueDeclaration(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
         if (declaration == null) {
             // ERROR CASE
@@ -541,7 +546,7 @@ class SCChartsTransformationExtension {
     // Add a ValuedObject.
     // The visibility of this method is 'package' to allow the ValuedObjectList to add a ValuedObject.
     def Declaration _addValuedObject(Scope scope, ValuedObject valuedObject) {
-        val declaration = createDeclaration()
+        val declaration = createVariableDeclaration()
         scope.declarations.add(declaration)
         declaration.valuedObjects.add(valuedObject)
         declaration

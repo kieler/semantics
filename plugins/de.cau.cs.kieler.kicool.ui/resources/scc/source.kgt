@@ -1,0 +1,27 @@
+knode source {
+    size: width = 17.5 height = 17.5 
+
+        krectangle {
+            styles: lineStyle = solid
+            foreground = 100r
+            invisible = true            
+        }           
+        
+    knode sourcebody {
+        size: width = 16.5 height = 16.5 
+    
+        properties:
+            org.eclipse.elk.noLayout = true
+            org.eclipse.elk.spacing.border = 1
+            
+        
+        kroundedRectangle (10,10) {
+            styles: lineStyle = solid
+            foreground = 100r,100g,200b
+            background = 222r,222g,255b,255a -> 177r,177g,222b,255a (90)
+        }   
+                    
+    }
+
+
+}

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.Predecessor;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.SCGraphs;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.ScheduleDependency;
@@ -57,6 +58,13 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass scGraphsEClass = null;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -290,6 +298,24 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSCGraphs() {
+        return scGraphsEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSCGraphs_Scgs() {
+        return (EReference)scGraphsEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -379,6 +405,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
     }
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getNode_Schizophrenic() {
+        return (EAttribute)nodeEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -740,11 +775,20 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBasicBlock_TermBlock() {
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	public EReference getBasicBlock_PreGuard() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(7);
+        return (EReference)basicBlockEClass.getEStructuralFeatures().get(8);
     }
 
 	/**
@@ -910,6 +954,9 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         isCreated = true;
 
         // Create classes and their features
+        scGraphsEClass = createEClass(SC_GRAPHS);
+        createEReference(scGraphsEClass, SC_GRAPHS__SCGS);
+
         scGraphEClass = createEClass(SC_GRAPH);
         createEReference(scGraphEClass, SC_GRAPH__NODES);
         createEReference(scGraphEClass, SC_GRAPH__DECLARATIONS);
@@ -921,6 +968,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         createEReference(nodeEClass, NODE__INCOMING);
         createEAttribute(nodeEClass, NODE__IS_INITIAL);
         createEReference(nodeEClass, NODE__DEPENDENCIES);
+        createEAttribute(nodeEClass, NODE__SCHIZOPHRENIC);
 
         conditionalEClass = createEClass(CONDITIONAL);
         createEReference(conditionalEClass, CONDITIONAL__THEN);
@@ -961,6 +1009,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         createEAttribute(basicBlockEClass, BASIC_BLOCK__SYNCHRONIZER_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__ENTRY_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__DEAD_BLOCK);
+        createEAttribute(basicBlockEClass, BASIC_BLOCK__TERM_BLOCK);
         createEReference(basicBlockEClass, BASIC_BLOCK__PRE_GUARD);
 
         schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
@@ -1034,8 +1083,11 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        scGraphsEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
         scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        nodeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         conditionalEClass.getESuperTypes().add(this.getNode());
         surfaceEClass.getESuperTypes().add(this.getNode());
         depthEClass.getESuperTypes().add(this.getNode());
@@ -1057,6 +1109,9 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         scheduleDependencyEClass.getESuperTypes().add(this.getDependency());
 
         // Initialize classes and features; add operations and parameters
+        initEClass(scGraphsEClass, SCGraphs.class, "SCGraphs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getSCGraphs_Scgs(), this.getSCGraph(), null, "scgs", null, 0, -1, SCGraphs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSCGraph_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSCGraph_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1068,6 +1123,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEReference(getNode_Incoming(), this.getLink(), this.getLink_Target(), "incoming", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getNode_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getNode_Dependencies(), this.getDependency(), null, "dependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getNode_Schizophrenic(), ecorePackage.getEBoolean(), "schizophrenic", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getConditional_Then(), this.getControlFlow(), null, "then", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1108,6 +1164,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEAttribute(getBasicBlock_SynchronizerBlock(), ecorePackage.getEBoolean(), "synchronizerBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_EntryBlock(), ecorePackage.getEBoolean(), "entryBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_DeadBlock(), ecorePackage.getEBoolean(), "deadBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBasicBlock_TermBlock(), ecorePackage.getEBoolean(), "termBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_PreGuard(), theKExpressionsPackage.getValuedObject(), null, "preGuard", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

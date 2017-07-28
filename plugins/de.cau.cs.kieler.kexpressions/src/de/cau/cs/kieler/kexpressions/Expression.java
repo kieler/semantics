@@ -22,8 +22,8 @@ import org.eclipse.emf.ecore.EObject;
  *
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getExpression()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
-public interface Expression extends EObject {
+public interface Expression extends Schedulable {
 } // Expression

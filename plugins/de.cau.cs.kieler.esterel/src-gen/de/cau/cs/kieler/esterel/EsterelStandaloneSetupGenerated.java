@@ -41,6 +41,5 @@ public class EsterelStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.prom.launch.IWrapperCodeAnnotationAnalyzer
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * An analyzer for wrapper code annotations in SCT files.
@@ -42,7 +43,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
      */
     override getModelName(EObject model) {
         if (model instanceof State) {
-            return model.id
+            return model.name
         }
     }
     
@@ -54,12 +55,12 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
             val annotationDatas = new ArrayList<WrapperCodeAnnotationData>()
             
             // Iterate over model to get all annotations
-            for (decl : model.declarations) {
+            for (decl : model.declarations.filter(VariableDeclaration)) {
                 // Only consider annotations of inputs and outputs.
                 if (decl.input || decl.output) {
                     for (annotation : decl.annotations) {
                         val data = new WrapperCodeAnnotationData()
-                        data.modelName = model.id
+                        data.modelName = model.name
                         initData(data, decl)
                         initData(data, annotation)
                         annotationDatas += data
@@ -89,7 +90,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
             val annotationDatas = new ArrayList<WrapperCodeAnnotationData>()
             
             if (model instanceof State) {
-                for(decl : model.declarations) {
+                for(decl : model.declarations.filter(VariableDeclaration)) {
                     for(valuedObject : decl.valuedObjects) {
                         // At the moment, send only inputs and outputs
 //                        if(decl.input || decl.output) {
@@ -115,7 +116,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                                 }
                             }
                             
-                            data.modelName = model.id
+                            data.modelName = model.name
                             data.input = true
                             data.output = true
                             data.name = "Simulate"
@@ -148,7 +149,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
     /**
      * Fetches the data for wrapper code generation from a variable declaration of an SCT file.
      */
-    private def void initData(WrapperCodeAnnotationData data, Declaration decl){
+    private def void initData(WrapperCodeAnnotationData data, VariableDeclaration decl){
         data.input = decl.input
         data.output = decl.output
         data.varType = decl.type.literal

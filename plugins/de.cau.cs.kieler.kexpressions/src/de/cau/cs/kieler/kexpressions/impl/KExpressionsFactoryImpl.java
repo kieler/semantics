@@ -61,19 +61,23 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case KExpressionsPackage.EXPRESSION: return createExpression();
             case KExpressionsPackage.VALUED_OBJECT: return createValuedObject();
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
-            case KExpressionsPackage.VALUE: return createValue();
             case KExpressionsPackage.INT_VALUE: return createIntValue();
             case KExpressionsPackage.FLOAT_VALUE: return createFloatValue();
             case KExpressionsPackage.BOOL_VALUE: return createBoolValue();
+            case KExpressionsPackage.STRING_VALUE: return createStringValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
-            case KExpressionsPackage.DECLARATION: return createDeclaration();
-            case KExpressionsPackage.FUNCTION_CALL: return createFunctionCall();
+            case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
+            case KExpressionsPackage.REFERENCE_DECLARATION: return createReferenceDeclaration();
+            case KExpressionsPackage.SCHEDULE_DECLARATION: return createScheduleDeclaration();
+            case KExpressionsPackage.SCHEDULE_PRIORITY: return createSchedulePriority();
+            case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: return createScheduleObjectReference();
             case KExpressionsPackage.PARAMETER: return createParameter();
-            case KExpressionsPackage.STRING_VALUE: return createStringValue();
+            case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
+            case KExpressionsPackage.FUNCTION_CALL: return createFunctionCall();
+            case KExpressionsPackage.PRINT_CALL: return createPrintCall();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -93,6 +97,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return createOperatorTypeFromString(eDataType, initialValue);
             case KExpressionsPackage.VALUE_TYPE:
                 return createValueTypeFromString(eDataType, initialValue);
+            case KExpressionsPackage.SCHEDULE_PRIORITY_TYPE:
+                return createSchedulePriorityTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -112,19 +118,11 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return convertOperatorTypeToString(eDataType, instanceValue);
             case KExpressionsPackage.VALUE_TYPE:
                 return convertValueTypeToString(eDataType, instanceValue);
+            case KExpressionsPackage.SCHEDULE_PRIORITY_TYPE:
+                return convertSchedulePriorityTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Expression createExpression() {
-        ExpressionImpl expression = new ExpressionImpl();
-        return expression;
     }
 
     /**
@@ -145,16 +143,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public ValuedObjectReference createValuedObjectReference() {
         ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
         return valuedObjectReference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Value createValue() {
-        ValueImpl value = new ValueImpl();
-        return value;
     }
 
     /**
@@ -212,9 +200,49 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public Declaration createDeclaration() {
-        DeclarationImpl declaration = new DeclarationImpl();
-        return declaration;
+    public VariableDeclaration createVariableDeclaration() {
+        VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
+        return variableDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ReferenceDeclaration createReferenceDeclaration() {
+        ReferenceDeclarationImpl referenceDeclaration = new ReferenceDeclarationImpl();
+        return referenceDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ScheduleDeclaration createScheduleDeclaration() {
+        ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
+        return scheduleDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SchedulePriority createSchedulePriority() {
+        SchedulePriorityImpl schedulePriority = new SchedulePriorityImpl();
+        return schedulePriority;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ScheduleObjectReference createScheduleObjectReference() {
+        ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
+        return scheduleObjectReference;
     }
 
     /**
@@ -225,6 +253,16 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public FunctionCall createFunctionCall() {
         FunctionCallImpl functionCall = new FunctionCallImpl();
         return functionCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PrintCall createPrintCall() {
+        PrintCallImpl printCall = new PrintCallImpl();
+        return printCall;
     }
 
     /**
@@ -245,6 +283,16 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public StringValue createStringValue() {
         StringValueImpl stringValue = new StringValueImpl();
         return stringValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ReferenceCall createReferenceCall() {
+        ReferenceCallImpl referenceCall = new ReferenceCallImpl();
+        return referenceCall;
     }
 
     /**
@@ -304,6 +352,26 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * @generated
      */
     public String convertValueTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SchedulePriorityType createSchedulePriorityTypeFromString(EDataType eDataType, String initialValue) {
+        SchedulePriorityType result = SchedulePriorityType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertSchedulePriorityTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

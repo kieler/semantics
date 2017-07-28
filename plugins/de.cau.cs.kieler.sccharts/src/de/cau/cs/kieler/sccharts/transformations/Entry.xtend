@@ -19,12 +19,19 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts Entry Transformation.
@@ -59,11 +66,18 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsControlflowRegionExtensions
+    @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
+
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "__EA_"
+    
+    private val nameCache = new UniqueNameCache
 
     //-------------------------------------------------------------------------
     //--                      E N T R Y         A C T I O N                  --
@@ -74,13 +88,13 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
     // entry actions of a state in between these two states.
     // Transforming Entry Actions.
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
+        nameCache.clear
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates.immutableCopy) {
-            targetState.transformEntry(targetRootState);
+        for (targetState : rootState.getAllStates.toList) {
+            targetState.transformEntry(rootState);
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -93,20 +107,20 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
             state.setDefaultTrace //All following states etc. will be traced to state
             
             if (state.final && !state.initial && !state.incomingTransitions.empty) {
-                val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
+                val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName(nameCache).setTypeConnector
                 for (transition : state.incomingTransitions.immutableCopy) {
                     transition.setTargetState(connector)
                 }
                 firstState = connector
                 lastState = state
-            } else if (!state.hasInnerStatesOrControlflowRegions) { // other inner behavior is already expanded
+            } else if (!state.controlflowRegionsContainStates) { // other inner behavior is already expanded
                 state.regions.clear // FIX: need to erase dummy single region
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createState(GENERATED_PREFIX + "Done")
-                lastState.final = state.outgoingTransitions.exists[!isTypeTermination]
+                lastState.final = state.outgoingTransitions.exists[!isTermination]
                 if (!state.outgoingTransitions.empty) {
-                    val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
+                    val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName(nameCache)
                     exitState.final = state.final // propagate final state
                     for (transition : state.outgoingTransitions.immutableCopy) {
                         exitState.outgoingTransitions.add(transition)
@@ -118,9 +132,9 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
                 val region = state.regions.filter(ControlflowRegion).get(0)
                 lastState = region.states.filter[initial].get(0) //every region MUST have an initial state
                 lastState.setNotInitial
-                firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
+                firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName(nameCache)
             } else { // state has several regions
-                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName(nameCache)
                 lastState = region.createState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
                     lastState.regions.add(mainRegion)
@@ -132,12 +146,12 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
 
             val entryRegion = firstState.parentRegion
             val lastEntryAction = state.entryActions.last
-            for (entryAction : state.entryActions.immutableCopy) {
+            for (entryAction : state.entryActions.toList) {
                 entryAction.setDefaultTrace //All following states etc. will be traced to their entryAction
                 
                 var connector = lastState
                 if (entryAction != lastEntryAction) {
-                    connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
+                    connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName(nameCache).setTypeConnector
                 }
                 val transition = firstState.createImmediateTransitionTo(connector)
                 for (effect : entryAction.effects) {
@@ -152,9 +166,13 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
                 firstState = connector
 
                 // After transforming entry actions, erase them
-                state.localActions.remove(entryAction)
+                state.actions.remove(entryAction)
             }
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

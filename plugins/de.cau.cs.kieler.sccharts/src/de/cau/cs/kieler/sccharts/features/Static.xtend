@@ -17,7 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /**
  * SCCharts Static Feature.
@@ -40,21 +41,25 @@ class Static extends Feature {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
         for (state : model.allStates.toIterable) {
-            val staticValuedObjects = state.valuedObjects.filter[isStatic].toList
+            val staticValuedObjects = state.getValuedObjectsFromEObject.filter[isStatic].toList
             if (staticValuedObjects.size > 0) {
                 return true
             }
         }
         return false
     }
+    
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }      
 
 }

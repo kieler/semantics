@@ -1,0 +1,41 @@
+system de.cau.cs.kieler.sccharts.extended.statecharts 
+	version 1 
+	label "SCCharts to C"
+	
+[ label "SyncCharts"	
+	de.cau.cs.kieler.sccharts.extended.synccharts.signal
+	de.cau.cs.kieler.sccharts.extended.synccharts.pre
+	de.cau.cs.kieler.sccharts.extended.synccharts.suspend
+	de.cau.cs.kieler.sccharts.extended.synccharts.countDelay
+]	
+
+[ label "Scade / Quartz / Esterel V7"
+	de.cau.cs.kieler.sccharts.extended.synccharts.weakSuspend
+	de.cau.cs.kieler.sccharts.extended.synccharts.history
+	de.cau.cs.kieler.sccharts.extended.synccharts.deferred
+	de.cau.cs.kieler.sccharts.extended.synccharts.static
+]
+	
+[ label "Statecharts"
+	de.cau.cs.kieler.sccharts.extended.statecharts.duringAction
+	de.cau.cs.kieler.sccharts.extended.statecharts.complexFinalState
+	[ label "Abort"
+		de.cau.cs.kieler.sccharts.extended.statecharts.abort
+		|
+		de.cau.cs.kieler.sccharts.extended.statecharts.abortWTO	
+	]
+	de.cau.cs.kieler.sccharts.extended.statecharts.exitAction
+	de.cau.cs.kieler.sccharts.extended.statecharts.initialization
+	de.cau.cs.kieler.sccharts.extended.statecharts.entryAction
+	de.cau.cs.kieler.sccharts.extended.statecharts.conntector
+]
+
+[ label "SCGraph" 
+	de.cau.cs.kieler.scg.dependencyAnalysis
+	de.cau.cs.kieler.scg.basicBlockAnalysis
+	de.cau.cs.kieler.scg.expressionGenerator
+	de.cau.cs.kieler.scg.netlist
+	de.cau.cs.kieler.scg.scheduling
+	de.cau.cs.kieler.scq.sequentialize	
+]
+de.cau.cs.kieler.scg.c

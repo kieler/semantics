@@ -24,6 +24,8 @@ import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Expression
 import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author ssm
@@ -35,12 +37,27 @@ class KExpressionsValuedObjectExtensions {
     @Inject
     extension KExpressionsDeclarationExtensions
     
-    def public Declaration declaration(ValuedObject valuedObject) {
+    def Declaration declaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
             valuedObject.eContainer as Declaration
         else
             null
+    }
+    
+    def VariableDeclaration variableDeclaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof VariableDeclaration)
+            valuedObject.eContainer as VariableDeclaration
+        else
+            null
     }     
+    
+    def asVariableDeclaration(EObject eObject) {
+        eObject as VariableDeclaration
+    }
+    
+    def asReferenceDeclaration(EObject eObject) {
+        eObject as ReferenceDeclaration
+    }
     
     // Create a ValuedObjectReference to a valuedObject
     def ValuedObjectReference reference(ValuedObject valuedObject) {
@@ -49,51 +66,66 @@ class KExpressionsValuedObjectExtensions {
         ]
     }    
     
-    def public ValueType getType(ValuedObject valuedObject) {
-        valuedObject.declaration.type
+    def boolean isModelReference(ValuedObject valuedObject) {
+        valuedObject.declaration instanceof ReferenceDeclaration
     }
     
-    def public ImmutableList<ValuedObject> getValuedObjects(EObject eObject) {
+    def ValueType getType(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return ValueType::REFERENCE;
+        valuedObject.variableDeclaration.type
+    }
+    
+    def ImmutableList<ValuedObject> getValuedObjectsFromEObject(EObject eObject) {
         ImmutableList.copyOf(<ValuedObject> newArrayList => [ list |
-            eObject.eContents.filter(typeof(Declaration)).forEach[ list += valuedObjects ]
+            eObject.eContents.filter(Declaration).forEach[ list += valuedObjects ]
         ])
     }  
     
-    def public ValuedObject removeValuedObjectFrom(ValuedObject valuedObject, Declaration declaration) {
+    def ValuedObject removeValuedObjectFromDeclaration(ValuedObject valuedObject, Declaration declaration) {
         declaration.valuedObjects -= valuedObject
         valuedObject
     }  
     
-    def public boolean isInput(ValuedObject valuedObject) {
-        valuedObject.declaration.isInput
+    def boolean isInput(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isInput
     }
 
-    def public boolean isOutput(ValuedObject valuedObject) {
-        valuedObject.declaration.isOutput
+    def boolean isOutput(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isOutput
     }
 
-    def public boolean isStatic(ValuedObject valuedObject) {
-        valuedObject.declaration.isStatic
+    def boolean isStatic(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isStatic
     }
 
-    def public boolean isConst(ValuedObject valuedObject) {
-        valuedObject.declaration.isConst
+    def boolean isConst(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isConst
     }
 
-    def public boolean isExtern(ValuedObject valuedObject) {
-        valuedObject.declaration.isExtern
+    def boolean isExtern(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isExtern
     }
 
-    def public boolean isArray(ValuedObject valuedObject) {
+    def boolean isArray(ValuedObject valuedObject) {
         !valuedObject.cardinalities.nullOrEmpty
     }
 
-    def public boolean isSignal(ValuedObject valuedObject) {
-        valuedObject.declaration.isSignal
+    def boolean isSignal(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isSignal
     }   
+    
+    def boolean isPureSignal(ValuedObject valuedObject) {
+        valuedObject.isSignal && valuedObject.type == ValueType::PURE
+    }    
 
     def public boolean isValuedSignal(ValuedObject valuedObject) {
-        valuedObject.declaration.isSignal && valuedObject.type != ValueType::PURE
+        valuedObject.variableDeclaration.isSignal && valuedObject.type != ValueType::PURE
     }   
     
     def ValuedObject createValuedObject() {
@@ -107,10 +139,12 @@ class KExpressionsValuedObjectExtensions {
     }     
 
     def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
-        declaration => [
-            valuedObjects += valuedObject
-        ]
-    }     
+        declaration => [ valuedObjects += valuedObject ]
+    } 
+    
+    def ValuedObject attachTo(ValuedObject valuedObject, Declaration declaration) {
+        valuedObject => [ declaration.valuedObjects += valuedObject ]
+    }         
     
     
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
@@ -139,26 +173,27 @@ class KExpressionsValuedObjectExtensions {
         ]  
     }    
     
-    def void deleteAndCleanup(ValuedObject valuedObject) {
+    def ValuedObject removeFromContainmentAndCleanup(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
         valuedObject.remove
         if (declaration.valuedObjects.nullOrEmpty) { 
             declaration.remove
         }
+        valuedObject
     }
     
-    
-
-
-    def public Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
+    def Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             valuedObject.eContainer as Declaration
         } else {
-            val newDeclaration = createDeclaration;
+            val newDeclaration = createVariableDeclaration;
             newDeclaration.valuedObjects += valuedObject
             newDeclaration
         }
     }
-    
+        
+    def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
+        declaration.valuedObjects.filter[ it.name.equals(name) ]?.head
+    }    
     
 }

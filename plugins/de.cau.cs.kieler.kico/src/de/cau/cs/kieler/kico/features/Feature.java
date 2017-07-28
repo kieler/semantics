@@ -115,23 +115,23 @@ public abstract class Feature implements IFeature {
      *            the model
      * @return true, if successful
      */
-    public final boolean doIsContained(EObject model) {
-        Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId());
-        boolean result;
-        try {
-            if (transformMethod != null && transformMethod.getParameterTypes()[0].isInstance(model)) {
-                result = (Boolean) transformMethod.invoke(this, model);
-                return result;
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+  public final boolean doIsContained(EObject model) {
+  Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId(), model);
+  boolean result;
+  try {
+      if (transformMethod != null && transformMethod.getParameterTypes()[0].isInstance(model)) {
+          result = (Boolean) transformMethod.invoke(this, model);
+          return result;
+      }
+  } catch (IllegalAccessException e) {
+      e.printStackTrace();
+  } catch (IllegalArgumentException e) {
+      e.printStackTrace();
+  } catch (InvocationTargetException e) {
+      e.printStackTrace();
+  }
+  return false;
+}
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------

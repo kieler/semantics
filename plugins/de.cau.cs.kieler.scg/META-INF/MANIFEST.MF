@@ -20,9 +20,9 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.inject,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.kico,
- de.cau.cs.kieler.kitt
+ de.cau.cs.kieler.kitt,
+ de.cau.cs.kieler.kicool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.extensions,

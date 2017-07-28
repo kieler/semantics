@@ -41,6 +41,5 @@ public class KVisStandaloneSetupGenerated implements ISetup {
 		
 
 
-
 	}
 }

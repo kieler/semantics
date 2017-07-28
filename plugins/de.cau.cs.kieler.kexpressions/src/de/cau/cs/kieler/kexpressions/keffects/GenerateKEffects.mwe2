@@ -33,6 +33,7 @@ Workflow {
 		pathUiProject = "${runtimeProject}.ui"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
+		naming = GeneratorNaming {}
 		
 		language = {
 			uri = grammarURI
@@ -44,11 +45,10 @@ Workflow {
 			// generates Java API for the generated EPackages			 
 			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" }			
 			
-			// the serialization component
-			// Old serializer			
-			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-			// New Serializer 2.0
-			fragment = serializer.SerializerFragment {}
+            // the serialization component
+            fragment = serializer.SerializerFragment {
+                generateXtendStub = true
+            }
 			
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
@@ -64,13 +64,12 @@ Workflow {
 			}
 			
 			// java-based API for validation 
-			fragment = validation.JavaValidatorFragment {
-            // composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-            // composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-            }
+			fragment = validation.ValidatorFragment {}
             
 			// scoping and exporting API
-			fragment = scoping.ImportURIScopingFragment {}
+			fragment = scoping.ImportURIScopingFragment {
+			    generateXtendStub = true
+			}
             // fragment = exporting.SimpleNamesFragment {} -- chsch: seems to be abolished
 			
 			// scoping and exporting API 
@@ -79,7 +78,8 @@ Workflow {
 			// fragment = exporting.QualifiedNamesFragment {}
 			
 			// formatter API 
-			fragment = ecore2xtext.FormatterFragment {}
+//			fragment = ecore2xtext.FormatterFragment {}
+            fragment = formatting2.Formatter2Fragment auto-inject {}
 
 			// labeling API 
 			fragment = labeling.LabelProviderFragment {}

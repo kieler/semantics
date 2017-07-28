@@ -19,15 +19,24 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsUniqueNameExtensions
+import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 
 /**
  * SCCharts Suspend Transformation.
@@ -62,23 +71,20 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension SCChartsExtension
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsComplexCreateExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KEffectsExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = new UniqueNameCache
 
     // -------------------------------------------------------------------------
     // --                          S U S P E N D                              --
@@ -96,13 +102,12 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
     // (within the disabledExpression) 
     // Transforming Suspends.
     def State transform(State rootState) {
-        val targetRootState = rootState.fixAllPriorities;
-
+        nameCache.clear
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
-            targetState.transformSuspend(targetRootState);
+        rootState.getAllStates.forEach [ targetState |
+            targetState.transformSuspend(rootState)
         ]
-        targetRootState.fixAllTextualOrdersByPriorities;
+        rootState
     }
 
     def void transformSuspend(State state, State targetRootState) {
@@ -115,10 +120,10 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
         }
 
         // One unique suspend flag
-        val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName
+        val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName(nameCache)
 
         // Do not consider other suspends as actions
-        val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction))
+        val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction)).toList
         for (action : allInnerActions) {
             action.setTrigger(action.trigger.and(suspendFlag.reference))
         }
@@ -128,7 +133,7 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
         val resetDuringAction = state.createDuringAction
         resetDuringAction.setImmediate(true)
         resetDuringAction.setTrigger(null)
-        resetDuringAction.addEffect(suspendFlag.assign(TRUE))
+        resetDuringAction.addEffect(suspendFlag.createAssignment(TRUE))
 
         for (suspension : suspendList) {
             suspension.setDefaultTrace
@@ -141,25 +146,25 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
             val duringAction = state.createDuringAction
             duringAction.setImmediate(immediateSuspension)
             duringAction.setTrigger(null)
-            duringAction.addEffect(suspendFlag.assignRelativeAnd(notSuspendTrigger))
+            duringAction.addEffect(suspendFlag.createRelativeAssignmentWithAnd(notSuspendTrigger))
 
             // remove suspend action
-            state.localActions.remove(suspension)
+            state.actions.remove(suspension)
         }
     }
 
     def void transformSuspendOld(State state, State targetRootState) {
-        for (suspension : state.suspendActions.filter[!weak].toList.immutableCopy) {
+        for (suspension : state.suspendActions.filter[!weak].toList) {
             suspension.setDefaultTrace
             val suspendTrigger = suspension.trigger;
             val notSuspendTrigger = not(suspendTrigger)
             val immediateSuspension = suspension.isImmediate;
 
-            val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName
+            val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName(nameCache)
             suspendFlag.setInitialValue(TRUE)
 
             // Do not consider other suspends as actions
-            val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction))
+            val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction)).toList
             for (action : allInnerActions) {
                 action.setTrigger(action.trigger.and(suspendFlag.reference))
             }
@@ -169,11 +174,15 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
             val duringAction = state.createDuringAction
             duringAction.setImmediate(immediateSuspension)
             duringAction.setTrigger(null)
-            duringAction.addEffect(suspendFlag.assign(notSuspendTrigger))
+            duringAction.addEffect(suspendFlag.createAssignment(notSuspendTrigger))
 
             // remove suspend action
-            state.localActions.remove(suspension)
+            state.actions.remove(suspension)
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

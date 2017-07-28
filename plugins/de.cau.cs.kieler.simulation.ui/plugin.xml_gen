@@ -224,28 +224,28 @@
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.simulation.KiSim -->
-    <extension
-            id="kisim.check.fast"
-            name="KiSim Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kisim.check.normal"
-            name="KiSim Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kisim.check.expensive"
-            name="KiSim Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
+	<!-- marker definitions for de.cau.cs.kieler.simulation.KiSim -->
+	<extension
+	        id="kisim.check.fast"
+	        name="KiSim Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.fast"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kisim.check.normal"
+	        name="KiSim Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.normal"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kisim.check.expensive"
+	        name="KiSim Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.expensive"/>
+	    <persistent value="true"/>
+	</extension>
 
 	<!-- Quick Outline -->
 	<extension

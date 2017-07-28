@@ -57,11 +57,12 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case KEffectsPackage.EFFECT: return createEffect();
             case KEffectsPackage.ASSIGNMENT: return createAssignment();
             case KEffectsPackage.EMISSION: return createEmission();
             case KEffectsPackage.HOSTCODE_EFFECT: return createHostcodeEffect();
+            case KEffectsPackage.REFERENCE_CALL_EFFECT: return createReferenceCallEffect();
             case KEffectsPackage.FUNCTION_CALL_EFFECT: return createFunctionCallEffect();
+            case KEffectsPackage.PRINT_CALL_EFFECT: return createPrintCallEffect();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -102,16 +103,6 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public Effect createEffect() {
-        EffectImpl effect = new EffectImpl();
-        return effect;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public Assignment createAssignment() {
         AssignmentImpl assignment = new AssignmentImpl();
         return assignment;
@@ -142,9 +133,29 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    public ReferenceCallEffect createReferenceCallEffect() {
+        ReferenceCallEffectImpl referenceCallEffect = new ReferenceCallEffectImpl();
+        return referenceCallEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public FunctionCallEffect createFunctionCallEffect() {
         FunctionCallEffectImpl functionCallEffect = new FunctionCallEffectImpl();
         return functionCallEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PrintCallEffect createPrintCallEffect() {
+        PrintCallEffectImpl printCallEffect = new PrintCallEffectImpl();
+        return printCallEffect;
     }
 
     /**

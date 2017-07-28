@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="editor" name="editor" schema="schema/editor.exsd"/>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.c.sccharts.handler.CFileTransformHandler"
+            commandId="de.cau.cs.kieler.c.sccharts.commands.TransformC">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.c.sccharts.commands.TransformC"
+               label="Transform C File"
+               mnemonic="T"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="c">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.editor">
+      <editor
+            controllerID="de.cau.cs.kieler.c.sccharts.controller.CDTUpdateController"
+            editorID="org.eclipse.cdt.ui.editor.CEditor">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.controller">
+      <controller
+            class="de.cau.cs.kieler.c.sccharts.controller.CDTUpdateController">
+      </controller>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sccharts.klighd.hooks">
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <expansionTransformationClass
+            class="de.cau.cs.kieler.c.sccharts.transformation.ImmTransTransformation">
+      </expansionTransformationClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="org.eclipse.cdt.ui.editor.CEditor"
+            features="CbasedSCChart, HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, scg.c, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java"
+            label="ImmediateTransitions  de.cau.cs.kieler.sccharts.text.sct.Sct"
+            preferred="ABORT, INITIALIZATION, scg.basicblock.sc, s.c, sccharts.scg, NOSIMULATIONVISUALIZATION"
+            priority="101">
+      </editor>
+   </extension>>
+</plugin>

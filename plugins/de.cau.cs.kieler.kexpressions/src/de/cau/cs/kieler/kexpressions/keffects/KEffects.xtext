@@ -42,7 +42,9 @@ Effect returns keffects::Effect:
 	PostfixEffect | 
 	Emission |
 	HostcodeEffect | 
-	FunctionCallEffect;
+	ReferenceCallEffect |
+	FunctionCallEffect |
+	PrintCallEffect;
 
 // Emission Rule
 // An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -52,8 +54,9 @@ Effect returns keffects::Effect:
 // Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 // annotations defined in the annotations grammar.		
 Emission returns keffects::Emission:
-    (annotations+=RestrictedAnnotation)*    
-	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
+    (annotations+=QuotedStringAnnotation)*    
+	valuedObject=[kexpressions::ValuedObject|PrimeID] ( "(" newValue = Expression ")" )?
+	('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Assignment Rule
 // An assignment may start with a list of arbitrary annotatations.
@@ -62,9 +65,18 @@ Emission returns keffects::Emission:
 // Example: A = true, I[0] = I[1], I += 1     
 Assignment returns keffects::Assignment:
     (annotations+=Annotation)*    
-	valuedObject=[kexpressions::ValuedObject]
+	valuedObject=[kexpressions::ValuedObject|PrimeID]
 	('[' indices+=Expression ']')*
-	 operator=AssignOperator expression = Expression;
+	 operator=AssignOperator expression = Expression
+	 ('schedule' schedule+=ScheduleObjectReference+)?;
+	 
+SubReferenceAssignment returns keffects::Assignment:
+    (annotations+=Annotation)*    
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
+     operator=AssignOperator expression = Expression
+     ('schedule' schedule+=ScheduleObjectReference+)?;	 
 	 
 // Postfix Effect
 // A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
@@ -72,9 +84,10 @@ Assignment returns keffects::Assignment:
 // Example: I++, I-- 
 PostfixEffect returns keffects::Assignment:
     (annotations+=Annotation)*    
-    valuedObject=[kexpressions::ValuedObject]
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
     ('[' indices+=Expression ']')*
-     operator=PostfixOperator;
+     operator=PostfixOperator
+     ('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Hostcode Effect Rule
 // A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
@@ -82,14 +95,34 @@ HostcodeEffect returns keffects::HostcodeEffect:
     (annotations+=Annotation)*    
  	text=HOSTCODE;
  	
+// Reference Call Effect Rule
+// A reference call effect works similar to the reference call expression. Additionally, it may be
+// preceded by a list of annotations.
+ReferenceCallEffect returns keffects::ReferenceCallEffect:
+    (annotations+=Annotation)*    
+     valuedObject=[kexpressions::ValuedObject|PrimeID]
+      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
+    
 // Function Call Effect Rule
 // A function call effect works similar to the function call expression. Additionally, it may be
 // preceded by a list of annotations.
 FunctionCallEffect returns keffects::FunctionCallEffect:
     (annotations+=Annotation)*    
-    '<' functionName=ExtendedID 
-      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    '>';
+    ('extern' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    )
+    |
+    ('<' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    '>');    
+    
+PrintCallEffect returns keffects::PrintCallEffect:
+    (annotations+=Annotation)*
+    'print' parameters += Parameter (',' parameters += Parameter)*;
 
 // ---------------- //
 //  KEffects Enums  // 
@@ -97,7 +130,9 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
     
 // Assign Operator Enum    
 enum AssignOperator returns keffects::AssignOperator:
-    ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMIN="min=" | ASSIGNMAX="max=";
+    ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" |
+    ASSIGNMOD="%=" | ASSIGNAND="&=" | ASSIGNOR="|=" | ASSIGNXOR="^=" |
+    ASSIGNMIN="min=" | ASSIGNMAX="max=";
 
 // Postfix Operator Enum    
 enum PostfixOperator returns keffects::AssignOperator:

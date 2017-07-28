@@ -30,7 +30,6 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p;
 	protected AbstractElementAlias match_AttributeMapping_ColonKeyword_1_2_0_q;
-	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -43,7 +42,6 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AttributeMapping_ColonKeyword_1_2_0_q = new TokenAlias(false, true, grammarAccess.getAttributeMappingAccess().getColonKeyword_1_2_0());
-		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 	}
 	
 	@Override
@@ -74,8 +72,6 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AttributeMapping_ColonKeyword_1_2_0_q.equals(syntax))
 				emit_AttributeMapping_ColonKeyword_1_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
-				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -85,12 +81,13 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 	 *     ('(' '('*)*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '<' functionName=ExtendedID
+	 *     (rule start) (ambiguity) '<' functionName=ID
+	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
+	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -127,7 +124,8 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '<' functionName=ExtendedID
+	 *     (rule start) (ambiguity) '<' functionName=ID
+	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -136,7 +134,7 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
+	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -189,17 +187,6 @@ public abstract class AbstractKiBuildSyntacticSequencer extends AbstractSyntacti
 	 *     name=ID (ambiguity) '{' attributes+=AttributeMapping
 	 */
 	protected void emit_AttributeMapping_ColonKeyword_1_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     '()'?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     functionName=ExtendedID (ambiguity) '>' (rule end)
-	 */
-	protected void emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

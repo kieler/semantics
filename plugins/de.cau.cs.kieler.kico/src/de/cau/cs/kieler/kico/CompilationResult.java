@@ -430,6 +430,18 @@ public class CompilationResult {
     public boolean removeAuxiliaryData(AbstractKielerCompilerAuxiliaryData data) {
         return auxiliaryData.remove(data);
     }
+    
+    /**
+     * Remove all auxiliary data of a certain type.
+     *
+     * @param data
+     *            to remove from set
+     * @return true if this set contained the specified element
+     */
+    public <T extends AbstractKielerCompilerAuxiliaryData> void removeAllAuxiliaryData(final Class<T> clazz) {
+        List<T> data = new ArrayList<T>((Collection<T>) Collections2.filter(auxiliaryData, Predicates.instanceOf(clazz)));
+        auxiliaryData.removeIf(p -> data.contains(p));
+    }        
 
     // -------------------------------------------------------------------------
 
@@ -453,4 +465,7 @@ public class CompilationResult {
     public Timing getTiming(String timingId) {
     	return compilationDurationData.get(timingId);
     }
+
+
+
 }

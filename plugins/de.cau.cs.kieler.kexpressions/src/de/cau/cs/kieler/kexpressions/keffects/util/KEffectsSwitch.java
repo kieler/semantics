@@ -4,10 +4,15 @@ package de.cau.cs.kieler.kexpressions.keffects.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.PrintCall;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.kexpressions.keffects.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -76,6 +81,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 Effect effect = (Effect)theEObject;
                 T result = caseEffect(effect);
                 if (result == null) result = caseAnnotatable(effect);
+                if (result == null) result = caseSchedulable(effect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -84,6 +90,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 T result = caseAssignment(assignment);
                 if (result == null) result = caseEffect(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
+                if (result == null) result = caseSchedulable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -92,6 +99,7 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 T result = caseEmission(emission);
                 if (result == null) result = caseEffect(emission);
                 if (result == null) result = caseAnnotatable(emission);
+                if (result == null) result = caseSchedulable(emission);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -102,6 +110,20 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseTextExpression(hostcodeEffect);
                 if (result == null) result = caseAnnotatable(hostcodeEffect);
                 if (result == null) result = caseExpression(hostcodeEffect);
+                if (result == null) result = caseSchedulable(hostcodeEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KEffectsPackage.REFERENCE_CALL_EFFECT: {
+                ReferenceCallEffect referenceCallEffect = (ReferenceCallEffect)theEObject;
+                T result = caseReferenceCallEffect(referenceCallEffect);
+                if (result == null) result = caseEffect(referenceCallEffect);
+                if (result == null) result = caseReferenceCall(referenceCallEffect);
+                if (result == null) result = caseAnnotatable(referenceCallEffect);
+                if (result == null) result = caseValuedObjectReference(referenceCallEffect);
+                if (result == null) result = caseCall(referenceCallEffect);
+                if (result == null) result = caseExpression(referenceCallEffect);
+                if (result == null) result = caseSchedulable(referenceCallEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -111,7 +133,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseEffect(functionCallEffect);
                 if (result == null) result = caseFunctionCall(functionCallEffect);
                 if (result == null) result = caseAnnotatable(functionCallEffect);
+                if (result == null) result = caseCall(functionCallEffect);
                 if (result == null) result = caseExpression(functionCallEffect);
+                if (result == null) result = caseSchedulable(functionCallEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KEffectsPackage.PRINT_CALL_EFFECT: {
+                PrintCallEffect printCallEffect = (PrintCallEffect)theEObject;
+                T result = casePrintCallEffect(printCallEffect);
+                if (result == null) result = caseEffect(printCallEffect);
+                if (result == null) result = casePrintCall(printCallEffect);
+                if (result == null) result = caseAnnotatable(printCallEffect);
+                if (result == null) result = caseCall(printCallEffect);
+                if (result == null) result = caseExpression(printCallEffect);
+                if (result == null) result = caseSchedulable(printCallEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -180,6 +216,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Reference Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Reference Call Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceCallEffect(ReferenceCallEffect object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Function Call Effect</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -195,6 +246,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Print Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Print Call Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePrintCallEffect(PrintCallEffect object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -206,6 +272,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedulable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSchedulable(Schedulable object) {
         return null;
     }
 
@@ -240,6 +321,51 @@ public class KEffectsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseValuedObjectReference(ValuedObjectReference object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCall(Call object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceCall(ReferenceCall object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -251,6 +377,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseFunctionCall(FunctionCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Print Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Print Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePrintCall(PrintCall object) {
         return null;
     }
 

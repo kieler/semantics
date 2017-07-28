@@ -12,13 +12,12 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava;bundle-version="15.0.0",
  com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.test.common,
- de.cau.cs.kieler.kico,
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.sccharts.scg
+ de.cau.cs.kieler.sccharts.scg,
+ de.cau.cs.kieler.kicool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 

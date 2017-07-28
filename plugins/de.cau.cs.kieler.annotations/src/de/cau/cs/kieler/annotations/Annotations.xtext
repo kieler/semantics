@@ -30,13 +30,15 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 // The different annotation sub rules are tested in order. Hence, order matters! 
 Annotation returns Annotation:
     CommentAnnotation | 
-    KeyBooleanValueAnnotation |
     KeyStringValueAnnotation |
     TypedKeyStringValueAnnotation |
-    KeyIntValueAnnotation |
-    KeyFloatValueAnnotation |
-    TagAnnotation 
-;
+    TagAnnotation;
+    
+// General rule for pragmas
+// We only have string and tag pragmas.    
+Pragma returns Pragma:
+    StringPragma |
+    PragmaTag;
 
 
 // Valued Annotation Rule
@@ -46,33 +48,38 @@ Annotation returns Annotation:
 ValuedAnnotation returns Annotation:
     CommentAnnotation |
     KeyStringValueAnnotation |
-    TypedKeyStringValueAnnotation |
-    KeyBooleanValueAnnotation |
-    KeyIntValueAnnotation |
-    KeyFloatValueAnnotation
-;
+    TypedKeyStringValueAnnotation;
 
 
-// Restiricted Annotation Rule
-// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+// Restricted Type Annotation Rule
+// The restricted type annotation rule does not allow typed string annotations. 
+// You can use this rule in derived grammars if you don't want to permit typed strings. 
+RestrictedTypeAnnotation returns Annotation:
+    CommentAnnotation |
+    RestrictedKeyStringValueAnnotation |
+    RestrictedTypedKeyStringValueAnnotation |
+    TagAnnotation;
+
+
+// Quoted String Annotation Rule
+// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 // derived grammars if you don't want to permit unquoted strings. 
 // (If you are looking for an example, the keffects grammar uses this rule for their emission
 // rule and to avoid grammar ambiguities.)  
-RestrictedAnnotation returns Annotation:
+QuotedStringAnnotation returns Annotation:
     CommentAnnotation |
     QuotedKeyStringValueAnnotation |
     QuotedTypedKeyStringValueAnnotation |
-    KeyBooleanValueAnnotation |
-    KeyIntValueAnnotation |
-    KeyFloatValueAnnotation |
-    TagAnnotation
-;
+    TagAnnotation;
 
 
 // CommentAnnotation
 // e.g.: /** semantic comment */
 CommentAnnotation returns CommentAnnotation:
     values += COMMENT_ANNOTATION;
+    
+CommentAnnotatonSL returns CommentAnnotation:
+    values += SL_COMMENT_ANNOTATION;
 
 
 // TagAnnotation
@@ -80,19 +87,31 @@ CommentAnnotation returns CommentAnnotation:
 TagAnnotation returns Annotation:
     '@' name=ExtendedID;
     
+PragmaTag returns Pragma:
+    '#' name=ExtendedID;
+    
+    
 // KeyStringValueAnnotation
 // e.g.: @layouter dot
 // You may separate different values via comma.   
 KeyStringValueAnnotation returns StringAnnotation:
-    '@' name=ExtendedID values += EString (',' values += EString)*;
+    '@' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
+    
+RestrictedKeyStringValueAnnotation returns StringAnnotation:
+    '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;    
 
+StringPragma returns StringPragma:
+    '#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 
 // TypedKeyStringValueAnnotation
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringAllTypes (',' values += EStringAllTypes)*;
+
+RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
     '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
-
-
+    
+    
 // QuotedKeyStringValueAnnotation
 // The quoted key string value annotation is a replacement derived grammars may use
 // if they want to disallow quote-less strings in a key string annotation. 
@@ -106,22 +125,6 @@ QuotedKeyStringValueAnnotation returns StringAnnotation:
 QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
     '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 
-// KeyBooleanValueAnnotation    
-// e.g.: @visible true;
-KeyBooleanValueAnnotation returns BooleanAnnotation:
-    '@' name=ExtendedID value=BOOLEAN;   
-
-// KeyIntValueAnnotation
-// e.g.: @minSpace 10;    
-KeyIntValueAnnotation returns IntAnnotation:
-    '@' name=ExtendedID value=Integer;
-
-
-// KeyFloatValueAnnotation
-// e.g.: @minSpace 10.0;    
-KeyFloatValueAnnotation returns FloatAnnotation:
-    '@' name=ExtendedID value=Floateger;
-
 
 // EString
 // Allow strings without quotes if they don't contain spaces.
@@ -131,14 +134,19 @@ EString returns ecore::EString:
 
 EStringBoolean returns ecore::EString:
     STRING | ExtendedID | BOOLEAN;
+    
+EStringAllTypes returns ecore::EString:
+	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
 
 
 // ExtendedID
 // ExtendedID extends the ID rule provided by the terminals grammar.
 // An ID may have dot separated parts and may close with a number separated by a hash mark.
 ExtendedID returns ecore::EString:
-  ID ("."ID)* ("#"INT)?;
+  ID (('.'|'-') ID)* ("#"INT)?;
 
+QualifiedID returns ecore::EString:
+  ID ("." ID)*;
 
 // Integer
 // The integer rule extends the EInt terminal by an optional sign for negative numbers.
@@ -168,6 +176,11 @@ terminal COMMENT_ANNOTATION returns ecore::EString:
 terminal ML_COMMENT returns ecore::EString:
     '/*'!'*' -> '*/';
 
+terminal SL_COMMENT_ANNOTATION returns ecore::EString: 
+    '//*' !('\n'|'\r')* ('\r'? '\n')?;
+
+terminal SL_COMMENT: 
+    '//' !'*' !('\n'|'\r')* ('\r'? '\n')?;
 
 // Number Terminal
 terminal fragment NUMBER :

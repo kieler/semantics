@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.4",
  de.cau.cs.kieler.prom,
  de.cau.cs.kieler.prom.ui,
- de.cau.cs.kieler.sccharts.text
+ de.cau.cs.kieler.sccharts
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University

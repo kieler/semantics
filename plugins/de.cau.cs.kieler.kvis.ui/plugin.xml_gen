@@ -224,28 +224,28 @@
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.kvis.KVis -->
-    <extension
-            id="kvis.check.fast"
-            name="KVis Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.fast"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kvis.check.normal"
-            name="KVis Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.normal"/>
-        <persistent value="true"/>
-    </extension>
-    <extension
-            id="kvis.check.expensive"
-            name="KVis Problem"
-            point="org.eclipse.core.resources.markers">
-        <super type="org.eclipse.xtext.ui.check.expensive"/>
-        <persistent value="true"/>
-    </extension>
+	<!-- marker definitions for de.cau.cs.kieler.kvis.KVis -->
+	<extension
+	        id="kvis.check.fast"
+	        name="KVis Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.fast"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kvis.check.normal"
+	        name="KVis Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.normal"/>
+	    <persistent value="true"/>
+	</extension>
+	<extension
+	        id="kvis.check.expensive"
+	        name="KVis Problem"
+	        point="org.eclipse.core.resources.markers">
+	    <super type="org.eclipse.xtext.ui.check.expensive"/>
+	    <persistent value="true"/>
+	</extension>
 
 	<!-- Quick Outline -->
 	<extension
