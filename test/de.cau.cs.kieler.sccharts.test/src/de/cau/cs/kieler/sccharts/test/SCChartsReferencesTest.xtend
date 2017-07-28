@@ -54,7 +54,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("sccharts") && !modelData.resourceSetID.nullOrEmpty
+        return modelData.modelProperties.contains("scchartsX") && !modelData.resourceSetID.nullOrEmpty
     }
     
     @Test
@@ -67,7 +67,7 @@ class SCChartsReferencesTest extends AbstractXTextModelRepositoryTest<SCCharts> 
                 && grammarElement.eClass.equals(keyword.eClass)
                 && (grammarElement as Keyword).value == keyword.value
             ].forEach[
-                assertTrue("Referenced state " + (semanticElement as State).id + " in " + res.URI.segment(res.URI.segmentCount - 1) + " cannot be resolved",
+                assertTrue("Referenced state " + (semanticElement as State).name + " in " + res.URI.segment(res.URI.segmentCount - 1) + " cannot be resolved",
                     (semanticElement as State).reference.scope !== null)
             ]
         }

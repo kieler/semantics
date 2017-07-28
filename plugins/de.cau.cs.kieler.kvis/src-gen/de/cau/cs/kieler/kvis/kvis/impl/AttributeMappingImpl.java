@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.kvis.kvis.impl;
 
-import de.cau.cs.kieler.kexpressions.Value;
-
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
 import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
+
+import de.cau.cs.kieler.prom.kibuild.Literal;
 
 import java.util.Collection;
 
@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -39,7 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class AttributeMappingImpl extends MinimalEObjectImpl.Container implements AttributeMapping
+public class AttributeMappingImpl extends de.cau.cs.kieler.prom.kibuild.impl.AttributeMappingImpl implements AttributeMapping
 {
   /**
    * The default value of the '{@link #getAttribute() <em>Attribute</em>}' attribute.
@@ -69,7 +68,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * @generated
    * @ordered
    */
-  protected Value literal;
+  protected Literal literal;
 
   /**
    * The cached value of the '{@link #getMappings() <em>Mappings</em>}' containment reference list.
@@ -130,7 +129,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public Value getLiteral()
+  public Literal getLiteral()
   {
     return literal;
   }
@@ -140,9 +139,9 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetLiteral(Value newLiteral, NotificationChain msgs)
+  public NotificationChain basicSetLiteral(Literal newLiteral, NotificationChain msgs)
   {
-    Value oldLiteral = literal;
+    Literal oldLiteral = literal;
     literal = newLiteral;
     if (eNotificationRequired())
     {
@@ -157,7 +156,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLiteral(Value newLiteral)
+  public void setLiteral(Literal newLiteral)
   {
     if (newLiteral != literal)
     {
@@ -240,7 +239,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
         setAttribute((String)newValue);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__LITERAL:
-        setLiteral((Value)newValue);
+        setLiteral((Literal)newValue);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__MAPPINGS:
         getMappings().clear();
@@ -264,7 +263,7 @@ public class AttributeMappingImpl extends MinimalEObjectImpl.Container implement
         setAttribute(ATTRIBUTE_EDEFAULT);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__LITERAL:
-        setLiteral((Value)null);
+        setLiteral((Literal)null);
         return;
       case KvisPackage.ATTRIBUTE_MAPPING__MAPPINGS:
         getMappings().clear();

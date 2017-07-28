@@ -11,37 +11,37 @@ int I;
 @check "functionCall.basic"
 expression <rand()>
 
-@check functionCall.basic.^int
+@check "functionCall.basic.int"
 expression <srand(4)>
 
-@check functionCall.basic.^string
+@check "functionCall.basic.string"
 expression <printf("Hallo Welt!")>
 
-@check functionCall.basic.parameter.^string
+@check "functionCall.basic.parameter.string"
 expression <printf("%s", S)>
 
-@check functionCall.nested
+@check "functionCall.nested"
 expression <srand(<time()>)>
 
-@check functionCall.nested.^string
+@check "functionCall.nested.string"
 expression <printf("%s", <getValue()>)>
 
 
 
 
-@check functionCall.returnValue
+@check "functionCall.returnValue"
 B = <scanf("")>
 
-@check functionCall.returnValue.parameter.byReference
+@check "functionCall.returnValue.parameter.byReference"
 B = <scanf("%d", &I)>
 
-@check functionCall.returnValue.parameter.byPureOutput
+@check "functionCall.returnValue.parameter.byPureOutput"
 B = <scanf("%d", !&I)>
 
-@check functionCall.returnValue.parameter.byReference.nested
+@check "functionCall.returnValue.parameter.byReference.nested"
 B = <scanf("%d", <getValue()>)>
 
-@check functionCall.returnValue.parameter.byPureOutput.hostcode
+@check "functionCall.returnValue.parameter.byPureOutput.hostcode"
 B = <scanf("%d", !&`x`)>
 
 

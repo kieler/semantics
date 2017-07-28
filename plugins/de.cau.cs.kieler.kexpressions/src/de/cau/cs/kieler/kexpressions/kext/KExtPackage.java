@@ -113,13 +113,13 @@ public interface KExtPackage extends EPackage {
     int KEXT_SCOPE__ANNOTATIONS = DECLARATION_SCOPE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int KEXT_SCOPE__ID = DECLARATION_SCOPE_FEATURE_COUNT + 1;
+    int KEXT_SCOPE__NAME = DECLARATION_SCOPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Entities</b></em>' containment reference list.
@@ -177,13 +177,13 @@ public interface KExtPackage extends EPackage {
     int KEXT__ANNOTATIONS = KEXT_SCOPE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int KEXT__ID = KEXT_SCOPE__ID;
+    int KEXT__NAME = KEXT_SCOPE__NAME;
 
     /**
      * The feature id for the '<em><b>Entities</b></em>' containment reference list.

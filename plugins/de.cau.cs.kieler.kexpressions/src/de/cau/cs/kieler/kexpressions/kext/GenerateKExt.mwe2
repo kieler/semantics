@@ -36,6 +36,8 @@ Workflow {
 		pathUiProject = "${runtimeProject}.ui"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
+		naming = GeneratorNaming {}
+		
 		language = {
 			uri = grammarURI
 			fileExtensions = file.extensions

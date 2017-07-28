@@ -17,14 +17,16 @@ package de.cau.cs.kieler.simulation.core
  *
  */
 enum SimulationEventType {
+    ERROR,
+    TRACE,
     VARIABLE_CHANGE,
-    STOP,
-    PAUSE,
-    PLAY,
-    PLAYING,
-    STEP,
-    STEP_BACK,
+    
     SUB_STEP,
-    APPEND_SIMULATION,
+    STEP_BACK,
+    STOP,
+    PLAY,
+    PAUSE,
+    PLAYING,
+    MACRO_STEP,
     INITIALIZED
 }

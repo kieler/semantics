@@ -184,7 +184,7 @@ class SCCharts2STransformation {
         target.setPriority(sortedDependencyStates.get(0).priority);
         
         // Set s program name (as the root state's name)
-        target.setName(rootState.id)
+        target.setName(rootState.name)
         
         target.declarations += rootState.copyToSDeclarations
 

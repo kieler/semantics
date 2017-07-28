@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 /**
  * @author ssm
@@ -65,12 +66,11 @@ class CompilationUpdate extends KiCoolUIObserver {
                         val editor = view.editPartSystemManager.findEditorForSystem(notification.compilationContext.system)
                         var model = notification.environment.getProperty(Environment.MODEL)
                         view.editPartSystemManager.attachCompilationContextToEditorPart(editor, notification.compilationContext)
-//                        if (model instanceof String) {
-//                            model = new Container<String>(model)
-//                        }
                         
                         if (model instanceof String) {
                             model = new CodePlaceHolder(editor.title + ".c", model)
+                        } else if (model instanceof CodeContainer) {
+                            model = new CodePlaceHolder(editor.title + ".c", model.join("\n"))
                         }
                         
                         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)

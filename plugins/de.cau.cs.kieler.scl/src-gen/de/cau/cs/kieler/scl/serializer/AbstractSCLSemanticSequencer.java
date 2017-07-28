@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
@@ -77,8 +78,19 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
-				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
+					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.PRAGMA:
 				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
@@ -143,6 +155,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				return; 
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.PRINT_CALL_EFFECT:
+				sequence_PrintCallEffect(context, (PrintCallEffect) semanticObject); 
 				return; 
 			case KEffectsPackage.REFERENCE_CALL_EFFECT:
 				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 

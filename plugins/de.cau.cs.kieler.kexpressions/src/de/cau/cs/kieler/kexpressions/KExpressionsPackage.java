@@ -444,17 +444,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
      * @generated
      */
-    int REFERENCEABLE = 20;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
-     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
-     * @generated
-     */
-    int IDENTIFIABLE = 21;
+    int REFERENCEABLE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -802,13 +792,22 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_DECLARATION__PRIORITIES = DECLARATION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Global</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DECLARATION__GLOBAL = DECLARATION_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Schedule Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCHEDULE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 2;
+    int SCHEDULE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
@@ -1103,6 +1102,43 @@ public interface KExpressionsPackage extends EPackage {
     int FUNCTION_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.PrintCallImpl <em>Print Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.PrintCallImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPrintCall()
+     * @generated
+     */
+    int PRINT_CALL = 20;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL__SCHEDULE = CALL__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL__PARAMETERS = CALL__PARAMETERS;
+
+    /**
+     * The number of structural features of the '<em>Print Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRINT_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Referenceable</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1110,24 +1146,6 @@ public interface KExpressionsPackage extends EPackage {
      * @ordered
      */
     int REFERENCEABLE_FEATURE_COUNT = 0;
-
-    /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE__ID = 0;
-
-    /**
-     * The number of structural features of the '<em>Identifiable</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE_FEATURE_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
@@ -1599,6 +1617,17 @@ public interface KExpressionsPackage extends EPackage {
     EReference getScheduleDeclaration_Priorities();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Global</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal()
+     * @see #getScheduleDeclaration()
+     * @generated
+     */
+    EAttribute getScheduleDeclaration_Global();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.SchedulePriority <em>Schedule Priority</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1673,6 +1702,16 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getFunctionCall_FunctionName();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.PrintCall <em>Print Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Print Call</em>'.
+     * @see de.cau.cs.kieler.kexpressions.PrintCall
+     * @generated
+     */
+    EClass getPrintCall();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1681,27 +1720,6 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getReferenceable();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Identifiable</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
-     * @generated
-     */
-    EClass getIdentifiable();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Identifiable#getId <em>Id</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable#getId()
-     * @see #getIdentifiable()
-     * @generated
-     */
-    EAttribute getIdentifiable_Id();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
@@ -2250,6 +2268,14 @@ public interface KExpressionsPackage extends EPackage {
         EReference SCHEDULE_DECLARATION__PRIORITIES = eINSTANCE.getScheduleDeclaration_Priorities();
 
         /**
+         * The meta object literal for the '<em><b>Global</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCHEDULE_DECLARATION__GLOBAL = eINSTANCE.getScheduleDeclaration_Global();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.SchedulePriorityImpl <em>Schedule Priority</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2312,6 +2338,16 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute FUNCTION_CALL__FUNCTION_NAME = eINSTANCE.getFunctionCall_FunctionName();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.PrintCallImpl <em>Print Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.PrintCallImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPrintCall()
+         * @generated
+         */
+        EClass PRINT_CALL = eINSTANCE.getPrintCall();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2320,24 +2356,6 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass REFERENCEABLE = eINSTANCE.getReferenceable();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.kexpressions.Identifiable
-         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
-         * @generated
-         */
-        EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
-
-        /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}' class.

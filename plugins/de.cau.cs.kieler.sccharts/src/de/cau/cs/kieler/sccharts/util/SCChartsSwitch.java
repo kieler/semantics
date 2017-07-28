@@ -14,10 +14,10 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.Identifiable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
@@ -101,7 +101,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseScope(scope);
                 if (result == null) result = caseAnnotatable(scope);
                 if (result == null) result = caseDeclarationScope(scope);
-                if (result == null) result = caseIdentifiable(scope);
+                if (result == null) result = caseNamedObject(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -135,7 +135,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(state);
                 if (result == null) result = caseAnnotatable(state);
                 if (result == null) result = caseDeclarationScope(state);
-                if (result == null) result = caseIdentifiable(state);
+                if (result == null) result = caseNamedObject(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -145,7 +145,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(region);
                 if (result == null) result = caseAnnotatable(region);
                 if (result == null) result = caseDeclarationScope(region);
-                if (result == null) result = caseIdentifiable(region);
+                if (result == null) result = caseNamedObject(region);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -156,7 +156,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(controlflowRegion);
                 if (result == null) result = caseAnnotatable(controlflowRegion);
                 if (result == null) result = caseDeclarationScope(controlflowRegion);
-                if (result == null) result = caseIdentifiable(controlflowRegion);
+                if (result == null) result = caseNamedObject(controlflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -167,7 +167,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(dataflowRegion);
                 if (result == null) result = caseAnnotatable(dataflowRegion);
                 if (result == null) result = caseDeclarationScope(dataflowRegion);
-                if (result == null) result = caseIdentifiable(dataflowRegion);
+                if (result == null) result = caseNamedObject(dataflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -523,17 +523,17 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
                 /**
-     * Returns the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIdentifiable(Identifiable object) {
+    public T caseNamedObject(NamedObject object) {
         return null;
     }
 

@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.kvis.editor/src" modelPluginID="de.cau.cs.kieler.kvis"
     forceOverwrite="true" modelName="KVis" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.kvis.edit"
-    editorPluginID="de.cau.cs.kieler.kvis.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.kvis.editor" runtimeVersion="2.12" usedGenPackages="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.genmodel#//kibuild">
   <genPackages prefix="Kvis" basePackage="de.cau.cs.kieler.kvis" disposableProviderFactory="true"
       ecorePackage="KVis.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//DOMEvent">
@@ -23,6 +23,10 @@
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//SimulationOperation/STOP"/>
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//SimulationOperation/PAUSE"/>
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//SimulationOperation/PLAY"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//Sign">
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//Sign/POSITIVE"/>
+      <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//Sign/NEGATIVE"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="KVis.ecore#//OperatorType">
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//OperatorType/EQ"/>
@@ -54,11 +58,10 @@
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationTypeName/MOVEMENT"/>
       <genEnumLiterals ecoreEnumLiteral="KVis.ecore#//AnimationTypeName/VISIBILITY"/>
     </genEnums>
-    <genClasses ecoreClass="KVis.ecore#//Visualization">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/image"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/elements"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/interactions"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/file"/>
+    <genClasses ecoreClass="KVis.ecore#//VisualizationConfiguration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//VisualizationConfiguration/image"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//VisualizationConfiguration/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//VisualizationConfiguration/interactions"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//Element">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Element/name"/>
@@ -125,6 +128,34 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//AndExpression/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndExpression/right"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//Literal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Literal/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//SignedFloat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//SignedFloat/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//SignedFloat/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//SignedInt">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//SignedInt/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//SignedInt/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//Visualization">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/image"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Visualization/interactions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//Visualization/file"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//Value">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//Value/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//FloatValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//FloatValue/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//FloatValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="KVis.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//IntValue/sign"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KVis.ecore#//IntValue/value"/>
     </genClasses>
     <genClasses ecoreClass="KVis.ecore#//AndOrExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KVis.ecore#//AndOrExpression/left"/>

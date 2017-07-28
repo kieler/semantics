@@ -15,8 +15,7 @@ package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
-import de.cau.cs.kieler.kexpressions.Identifiable;
-
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
 import org.eclipse.emf.common.util.EList;
@@ -57,7 +56,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface Scope extends Annotatable, DeclarationScope, Identifiable {
+public interface Scope extends Annotatable, DeclarationScope, NamedObject {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

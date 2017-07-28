@@ -48,7 +48,7 @@ class SCChartsControlflowRegionExtensions {
     
     def ControlflowRegion createControlflowRegion(String id) {
         SCChartsFactory::eINSTANCE.createControlflowRegion => [
-            setId(id)
+            setName(id)
             setLabel("")
         ]
     }
@@ -61,7 +61,7 @@ class SCChartsControlflowRegionExtensions {
             state.regions.head instanceof ControlflowRegion && 
             state.regions.head.allContainedStates.empty) {
             val implicitRegion = state.regions.head as ControlflowRegion;
-            implicitRegion.id = id;
+            implicitRegion.name = id;
             return implicitRegion;
         }
         state.regions += region

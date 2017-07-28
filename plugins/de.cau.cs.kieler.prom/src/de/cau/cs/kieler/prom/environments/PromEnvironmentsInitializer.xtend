@@ -13,17 +13,16 @@
  */
 package de.cau.cs.kieler.prom.environments
 
-import de.cau.cs.kieler.prom.common.EnvironmentData
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
-import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
+import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.data.EnvironmentData
+import de.cau.cs.kieler.prom.data.FileData
+import de.cau.cs.kieler.prom.data.KiCoLaunchData
 import java.util.ArrayList
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
-import de.cau.cs.kieler.prom.common.FileData
 
 /**
  * This class handles initialization of default environments.
@@ -163,6 +162,6 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * Returns the preference store of the Prom plugin
      */
     private static def IPreferenceStore getStore(){
-        return PromPlugin.^default.preferenceStore
+        return PromPlugin.preferenceStore
     }
 }

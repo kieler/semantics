@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -16,19 +16,31 @@ package de.cau.cs.kieler.esterel.prom
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl
-import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
+import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.launch.IWrapperCodeAnnotationAnalyzer
 import java.io.File
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
+import de.cau.cs.kieler.esterel.esterel.Program
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.
  * @author aas
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getModelName(EObject model) {
+        if (model instanceof Program) {
+            if(!model.modules.isNullOrEmpty) {
+                return model.modules.get(0).name    
+            }
+        }
+    }
     
     override getSimulationInterface(EObject model) {
         return null

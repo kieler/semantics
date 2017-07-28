@@ -143,6 +143,15 @@ public interface KExpressionsFactory extends EFactory {
     FunctionCall createFunctionCall();
 
     /**
+     * Returns a new object of class '<em>Print Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Print Call</em>'.
+     * @generated
+     */
+    PrintCall createPrintCall();
+
+    /**
      * Returns a new object of class '<em>Parameter</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

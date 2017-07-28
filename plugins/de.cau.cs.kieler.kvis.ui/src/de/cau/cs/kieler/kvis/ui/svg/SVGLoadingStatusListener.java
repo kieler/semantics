@@ -84,7 +84,7 @@ public class SVGLoadingStatusListener implements SVGDocumentLoaderListener {
      */
     public void documentLoadingCancelled(final SVGDocumentLoaderEvent e) {
         setLoadingStatus(LOADING_CANCELLED);
-        System.out.println("SVGDocumentLoadingListener: Loading of SVG file was cancelled!");
+//        System.out.println("SVGDocumentLoadingListener: Loading of SVG file was cancelled!");
     }
 
     /**
@@ -95,7 +95,7 @@ public class SVGLoadingStatusListener implements SVGDocumentLoaderListener {
      */
     public void documentLoadingCompleted(final SVGDocumentLoaderEvent e) {
         setLoadingStatus(LOADING_COMPLETED);
-        System.out.println("SVGDocumentLoadingListener: Loading of SVG file successfully completed!");
+//        System.out.println("SVGDocumentLoadingListener: Loading of SVG file successfully completed!");
     }
 
     /**
@@ -106,7 +106,7 @@ public class SVGLoadingStatusListener implements SVGDocumentLoaderListener {
      */
     public void documentLoadingFailed(final SVGDocumentLoaderEvent e) {
         setLoadingStatus(LOADING_FAILED);
-        System.out.println("SVGDocumentLoadingListener: Loading of SVG file failed!");
+//        System.out.println("SVGDocumentLoadingListener: Loading of SVG file failed!");
     }
 
     /**
@@ -117,7 +117,6 @@ public class SVGLoadingStatusListener implements SVGDocumentLoaderListener {
      */
     public void documentLoadingStarted(final SVGDocumentLoaderEvent e) {
         setLoadingStatus(LOADING_STARTED);
-        System.out.println("SVGDocumentLoadingListener: Loading of SVG file started!");
+//        System.out.println("SVGDocumentLoadingListener: Loading of SVG file started!");
     }
-
 }

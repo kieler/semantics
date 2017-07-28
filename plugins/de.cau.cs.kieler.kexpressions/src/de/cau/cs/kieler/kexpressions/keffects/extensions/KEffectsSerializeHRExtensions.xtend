@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 
 /**
  * Serialization of KEffects in human readable form.
@@ -62,6 +63,12 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
             return label
         }
         return ""
+    }    
+    
+    def dispatch CharSequence serializeHR(PrintCallEffect printCallEffect) {
+        var paramStr = printCallEffect.parameters.serializeHRParameters.toString
+        
+        return "print " + paramStr.substring(1, paramStr.length - 1)
     }    
     
 //    override dispatch CharSequence serializeHR(FunctionCall functionCall) {

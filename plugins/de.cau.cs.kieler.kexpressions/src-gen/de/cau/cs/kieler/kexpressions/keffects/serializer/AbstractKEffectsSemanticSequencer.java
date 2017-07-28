@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
 import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
@@ -56,8 +57,19 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
-				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
+					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.PRAGMA:
 				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
@@ -129,6 +141,9 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				return; 
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.PRINT_CALL_EFFECT:
+				sequence_PrintCallEffect(context, (PrintCallEffect) semanticObject); 
 				return; 
 			case KEffectsPackage.REFERENCE_CALL_EFFECT:
 				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 
@@ -588,6 +603,19 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=PostfixOperator schedule+=ScheduleObjectReference*)
 	 */
 	protected void sequence_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Effect returns PrintCallEffect
+	 *     PrintCallEffect returns PrintCallEffect
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* parameters+=Parameter parameters+=Parameter*)
+	 */
+	protected void sequence_PrintCallEffect(ISerializationContext context, PrintCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -46,8 +46,8 @@ import org.eclipse.xtext.ui.util.ResourceUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterators;
 
-import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -557,18 +557,20 @@ public class TimingAnalysis extends Job {
         HashSet<String> inputOutputNameSet = new HashSet<String>();
         while (declarationListIterator.hasNext()) {
             VariableDeclaration currentDeclaration = declarationListIterator.next();
-            String name = currentDeclaration.getValuedObjects().get(0)
-                    .getName();
-            if (currentDeclaration.isInput()) {
-                ValueType type = currentDeclaration.getType();
-                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-                    stringBuilder
-                            .append("\nGlobalVar " + name + " 0..1");
-                    inputOutputNameSet.add(name);
-                }
-            } else {
-                if (currentDeclaration.isOutput()) {
-                    inputOutputNameSet.add(name);
+            Iterator<ValuedObject> valuedObjectsListIterator =
+                    currentDeclaration.getValuedObjects().iterator();
+            while (valuedObjectsListIterator.hasNext()) {
+                String name = valuedObjectsListIterator.next().getName();
+                if (currentDeclaration.isInput()) {
+                    ValueType type = currentDeclaration.getType();
+                    if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
+                        stringBuilder.append("\nGlobalVar " + name + " 0..1");
+                        inputOutputNameSet.add(name);
+                    }
+                } else {
+                    if (currentDeclaration.isOutput()) {
+                        inputOutputNameSet.add(name);
+                    }
                 }
             }
         }

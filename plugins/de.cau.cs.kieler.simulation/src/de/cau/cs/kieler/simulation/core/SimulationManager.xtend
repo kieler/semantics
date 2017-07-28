@@ -12,11 +12,20 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import de.cau.cs.kieler.prom.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.build.Configurable
+import de.cau.cs.kieler.simulation.kisim.Action
+import de.cau.cs.kieler.simulation.kisim.ActionOperation
+import de.cau.cs.kieler.simulation.kisim.SimulationConfiguration
 import java.util.List
+import java.util.Map
+import java.util.Set
+import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 
 /**
  * The simulation manager holds a configuration of a simulation and takes care of its execution.
@@ -35,7 +44,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class SimulationManager {
+class SimulationManager extends Configurable {
     
     /**
      * Singleton instance.
@@ -45,30 +54,46 @@ class SimulationManager {
     /**
      * Default delay in milliseconds when playing the simulation
      */
-    public static val DEFAULT_DELAY = 200;
+    public static val DEFAULT_PAUSE = 200;
     
     /**
      * Default delay in milliseconds when playing the simulation
      */
-    public static val MIN_DELAY = 5;
+    public static val MIN_PAUSE = 10;
     
     /**
      * Default delay in milliseconds when playing the simulation
      */
-    public static val MAX_DELAY = 3000;
+    public static val MAX_PAUSE = 3000;
     
     /**
-     * The pause in milliseconds that is waited
-     * until the next tick is simulated when in play mode. 
+     * The pause in milliseconds that is waited between two ticks in play mode.
+     * The time is including the duration of the tick,
+     * thus the actually waited time might be smaller, if the tick took longer to execute.
      */
     @Accessors(PUBLIC_GETTER)
-    private static var int playDelay = DEFAULT_DELAY
-    
+    private static var int desiredTickPause = DEFAULT_PAUSE
     
     /**
      * List of event listeners
      */
     private static val List<SimulationListener> listeners = newArrayList
+    
+    /**
+     * The length of the saved data pool history.
+     * If set to a value smaller than 1, no history will be recorded.
+     */
+    public val maxHistoryLength = new ConfigurableAttribute("historyLength", -1)
+    /**
+     * The name of an input variable in the data pool,
+     * which should receive the current system time as value.
+     */
+    public val currentTimeVariable = new ConfigurableAttribute("currentTimeVariable")
+    /**
+     * The name of an output variable in the data pool,
+     * that determines the next time the tick function should be called.
+     */
+    public val nextTickTimeVariable = new ConfigurableAttribute("nextTickTimeVariable")
     
     /**
      * The job that executes the step actions concurrently when playing.
@@ -89,20 +114,20 @@ class SimulationManager {
     @Accessors(PUBLIC_GETTER)
     private var int positionInHistory;
     
-    // TODO: Make history length configurable and set default to limitless (-1).
+    /**
+     * The configuration that has been used to create the simulation.
+     */
     @Accessors
-    private var int maxHistoryLength = 10;
+    private var SimulationConfiguration usedConfiguration
     
     /**
      * Instances of the data handlers in the step actions without duplicates.
      */
-    // TODO: make private
-    public val List<DataHandler> dataHandlers = newArrayList()
+    private val List<DataHandler> dataHandlers = newArrayList()
     /**
      * The list of step actions that make up a macro tick simulation.
      */
-     // TODO: make private
-    public val List<StepAction> actions = newArrayList()
+    private val List<StepAction> actions = newArrayList()
 
     /**
      * The current state of the simulation.
@@ -115,23 +140,110 @@ class SimulationManager {
     private var List<StepState> history = newArrayList()
     
     /**
+     * Id's of the data handlers used. There may be multiple handlers with the same id.
+     */
+    val Map<DataHandler, String> idForDataHandler = newHashMap
+    
+    val Set<DataHandler> initializedHandlers = newHashSet
+    
+    /**
      * Constructor
      */
     new() {
+        super()
         if(instance != null) {
             instance.stop()
         }
         instance = this
+        
+        // Save initial state
+        val pool = new DataPool
+        currentState = new StepState(pool, 0)
+    }
+    
+    /**
+     * Constructor with initial configuration.
+     */
+    new(SimulationConfiguration config) {
+        this()
+        usedConfiguration = config
+        // Load attributes
+        this.updateConfigurableAttributes(config.attributes)
+        // Load data handlers
+        val List<DataHandler> loadedHandlers = newArrayList
+        for(handlerConfig : config.handlers) {
+            // Instantiate matching data handler
+            val name = handlerConfig.name
+            val requiredConfig = [IConfigurationElement elem | elem.getAttribute("name") == name]
+            val configurationElements = ExtensionLookupUtil.getConfigurationElements("de.cau.cs.kieler.simulation.dataHandler",
+                                                                                      requiredConfig)
+            if(!configurationElements.isNullOrEmpty) {
+                val element = configurationElements.get(0)
+                val handler = ExtensionLookupUtil.instantiateClassFromConfiguration(element) as DataHandler
+                handler.updateConfigurableAttributes(handlerConfig.attributes)
+                // Remember the id for this handler
+                if(handlerConfig.id != null) {
+                    idForDataHandler.put(handler, handlerConfig.id)
+                    // Set model name of simulators to id from configuration
+                    if(handler instanceof Simulator) {
+                        handler.baseModelName = handlerConfig.id
+                    }
+                }
+                
+                // Remember to initialize this handler,
+                // even if it is not added to the macro tick actions
+                loadedHandlers.add(handler)
+            } else {
+                throw new Exception("Data handler name '"+name+"' could not be instantiated.")
+            }
+        }
+        // Initialize loaded handlers
+        initializeHandlers(loadedHandlers)
+        
+        // Add actions that make up a macro tick
+        if(config.execution != null) {
+            for(action : config.execution.actions) {
+                val handler = action.findDataHandler
+                // Add step action with the corresponding method
+                switch(action.operation) {
+                    case ActionOperation.WRITE : {
+                        addAction(StepAction.Method.WRITE, handler)
+                    }
+                    case ActionOperation.READ : {
+                        addAction(StepAction.Method.READ, handler)
+                    }
+                }
+            }
+        }
+    }
+    
+    private def findDataHandler(Action action) {
+        // Find handler that matches the id and name of the action
+        val handlersMatchingId = newArrayList
+        if(action.id != null) {
+            for(entry : idForDataHandler.entrySet) {
+                if(entry.value == action.id) {
+                    handlersMatchingId.add(entry.key)
+                }
+            }
+        } else {
+            handlersMatchingId.addAll(dataHandlers)
+        }
+        val handler = handlersMatchingId.findFirst[it.name == action.handler]
+        if(handler == null) {
+            throw new Exception(action.handler+" data handler with id '"+action.id+"' has not been configured.")
+        }
+        return handler
     }
     
     /**
      * Sets the play delay.
      */
-    public static def void setPlayDelay(int value) {
-        if(value >= MIN_DELAY && value <= MAX_DELAY) {
-            playDelay = value
+    public static def void setDesiredTickPause(int value) {
+        if(value >= MIN_PAUSE && value <= MAX_PAUSE) {
+            desiredTickPause = value
         } else {
-            throw new IllegalArgumentException("Delay for simulation does not fit in range "+MIN_DELAY+" to "+MAX_DELAY)
+            throw new IllegalArgumentException("Desired pause for simulation must be between "+MIN_PAUSE+" to "+MAX_PAUSE)
         }
     }
     
@@ -140,7 +252,11 @@ class SimulationManager {
      */
     public def int getCurrentMacroTickNumber() {
         if(currentState != null) {
-            return currentState.actionIndex / actions.size
+            if(actions.size > 0) {
+                return currentState.actionIndex / actions.size
+            } else {
+                return currentState.actionIndex
+            }
         } else {
             return 0
         }
@@ -149,7 +265,7 @@ class SimulationManager {
     /**
      * Adds a data handler
      */
-    public def void addHandler(DataHandler handler) {
+    private def void addHandler(DataHandler handler) {
         if(!dataHandlers.contains(handler))
             dataHandlers.add(handler)
     }
@@ -169,9 +285,8 @@ class SimulationManager {
      */
     public def void append(Simulator simulator) {
         simulator.initialize(currentPool)
-        
 //        println("Appended simulator")
-        notifyListeners(SimulationEventType.APPEND_SIMULATION)
+        fireEvent(SimulationEventType.INITIALIZED)
     }
     
     /**
@@ -179,18 +294,44 @@ class SimulationManager {
      * All simulators are initilized to create the initial data pool.
      */
     public def void initialize() {
-        val pool = new DataPool()
-        for(handler : dataHandlers) {
-            if(handler instanceof Simulator) {
-                handler.initialize(pool)
+        // Initialize handlers
+        initializeHandlers(dataHandlers)
+        
+        // Perform actions from initialization part of configuration
+        if(usedConfiguration != null && usedConfiguration.initialization != null) {
+            for(action : usedConfiguration.initialization.actions) {
+                val handler = action.findDataHandler
+                // Add step action with the corresponding method
+                switch(action.operation) {
+                    case ActionOperation.WRITE : {
+                        val stepAction = new StepAction(StepAction.Method.WRITE, handler)
+                        stepAction.apply(currentPool)
+                    }
+                    case ActionOperation.READ : {
+                        val stepAction = new StepAction(StepAction.Method.READ, handler)
+                        stepAction.apply(currentPool)
+                    }
+                }
             }
         }
         
-        // Save initial state
-        currentState = new StepState(pool, 0)
-        
 //        println("Initilized simulation")
-        notifyListeners(SimulationEventType.INITIALIZED)
+        fireEvent(SimulationEventType.INITIALIZED)
+    }
+    
+    /**
+     * Initializes all data handlers that have not been initialized yet
+     */
+    private def void initializeHandlers(List<DataHandler> handlers) {
+        // Initialize simulators
+        for(handler : handlers) {
+            if(handler instanceof Simulator) {
+                if(!initializedHandlers.contains(handler)) {
+                    initializedHandlers.add(handler)           
+                    handler.initialize(currentPool)
+                }
+            }
+        }
     }
     
     /**
@@ -203,18 +344,17 @@ class SimulationManager {
             pause()
         }
         
-        // Apply user values
-        applyUserValues()
-        
         // Create following state
         val DataPool pool = createNextPool()
+        // Apply user made changes
+        pool.applyUserValues
         // Perform action on this new state
         currentAction.apply(pool)
         // Save new state
         setNewState(pool, currentState.actionIndex + 1)
         
 //        println("Sub Stepped simulation")
-        notifyListeners(SimulationEventType.SUB_STEP)
+        fireEvent(SimulationEventType.SUB_STEP)
     }
     
     /**
@@ -227,17 +367,16 @@ class SimulationManager {
             pause()
         }
         
-        applyUserValues()
-        
         // Create following state
         val DataPool pool = createNextPool()
+        // Apply user made changes
+        pool.applyUserValues
         // Perform actions on this new state
         val nextActionIndex = applyMacroTickActions(pool)
         // Save new state
         setNewState(pool, nextActionIndex)
-        
 //        println("Stepped simulation macro tick")
-        notifyListeners(SimulationEventType.STEP)
+        fireEvent(SimulationEventType.MACRO_STEP)
     }
     
     /**
@@ -278,7 +417,7 @@ class SimulationManager {
             }
         }
         
-        notifyListeners(SimulationEventType.STEP_BACK)
+        fireEvent(SimulationEventType.STEP_BACK)
     }
 
     /**
@@ -293,21 +432,65 @@ class SimulationManager {
             
             steppingJob = new Job("Simulation Player") {
                 override protected run(IProgressMonitor monitor) {
+                    var int currentTime = System.currentTimeMillis.intValue
+                    var int nextTickTime = currentTime
                     while(isPlaying) {
-                        // Perform a step after a period of time
-                        Thread.sleep(playDelay);
+                        currentTime = System.currentTimeMillis.intValue
+                        if(nextTickTime > currentTime) {
+                            // Wait until next tick time reached
+                            val pause = nextTickTime - currentTime 
+                            Thread.sleep(pause);
+                        }
+                        // Save time BEFORE the tick is executed
+                        val int timeBeforeTick = System.currentTimeMillis.intValue
+                        
+                        // Notify listeners of new state
+                        fireEvent(SimulationEventType.PLAYING)
                         
                         // Create following state
                         val DataPool pool = createNextPool()
+                        // Apply user made changes
+                        pool.applyUserValues
+                        // Set variable of model to current time if needed
+                        if(currentTimeVariable.value != null) {
+                            val variable = pool.getVariable(currentTimeVariable.stringValue)
+                            if(variable.isInput) {
+                                variable.value = System.currentTimeMillis.intValue
+                            } else {
+                                throw new Exception("The variable that receives the current time must be an input")
+                            }
+                        }
                         // Perform actions on this new state
                         val nextActionIndex = applyMacroTickActions(pool)
                         // Save new state
                         setNewState(pool, nextActionIndex)
                         
-                        // Notify listeners of new state
-                        notifyListeners(SimulationEventType.PLAYING)
+                        // Set absolute time for next tick (possibly from a variable in the data pool)
+                        if(nextTickTimeVariable.value != null) {
+                            val variable = currentPool.getVariable(nextTickTimeVariable.stringValue)
+                            if(variable.isOutput) {
+                                nextTickTime = variable.value.doubleValue.intValue
+                            } else {
+                                throw new Exception("The variable that determines the time for the next tick must be an output")
+                            }
+                        } else {
+                            nextTickTime = timeBeforeTick + desiredTickPause
+                        }
+                        currentTime = System.currentTimeMillis.intValue
+                        
+                        // If the nextTickTime is already smaller than the currentTime,
+                        // the tick took more time than the play delay. Thus it is too slow
+                        if(nextTickTime < currentTime) {
+                            val event = new SimulationEvent
+                            event.type = SimulationEventType.ERROR
+                            event.message = "Tick needed longer than desired. "
+                                          + "(needed: "+(currentTime-timeBeforeTick)+" ms, "
+                                          + "desired: "+(timeBeforeTick-nextTickTime)+ " ms)"
+                            System.err.println(event.message)
+                            fireEvent(event)
+                        }
                     }
-                    notifyListeners(SimulationEventType.STEP)
+                    fireEvent(SimulationEventType.MACRO_STEP)
                     return Status.OK_STATUS
                 }
             }
@@ -326,7 +509,7 @@ class SimulationManager {
             isPlaying = false
         }
         
-        notifyListeners(SimulationEventType.PAUSE)
+        fireEvent(SimulationEventType.PAUSE)
     }
     
     /**
@@ -354,7 +537,7 @@ class SimulationManager {
         }
         currentState = null
         
-        notifyListeners(SimulationEventType.STOP)
+        fireEvent(SimulationEventType.STOP)
     }
     
     /**
@@ -396,7 +579,7 @@ class SimulationManager {
             history.add(currentState)
         }
         // Remove oldest states if history is too long
-        if(maxHistoryLength > 0 && history.size > maxHistoryLength) {
+        if(maxHistoryLength.intValue >= 0 && history.size >= maxHistoryLength.intValue) {
             val oldState = history.get(0)
             oldState.pool.previousPool = null
             history.remove(0)
@@ -409,8 +592,15 @@ class SimulationManager {
      */
     private def DataPool createNextPool() {
         positionInHistory = 0
-        val pool = currentState.pool.clone()  
-        pool.previousPool = currentPool
+        val pool = currentPool.clone()
+        // Apply user values to next tick
+        if(currentPool.hasModifiedVariable) {
+            pool.applyUserValues
+        }
+        // Set history
+        if(maxHistoryLength.intValue != 0) {
+            pool.previousPool = currentPool
+        }
         return pool
     }
     
@@ -419,64 +609,49 @@ class SimulationManager {
      */
     private def int applyMacroTickActions(DataPool pool) {
         // Round action index up to next fully done macro tick
-        val macroTickActionCount = actions.size()
+        val macroTickActionCount = actions.size
         val currentActionIndex = currentState.actionIndex
-        val nextActionIndex = ((currentActionIndex + macroTickActionCount) / macroTickActionCount) * macroTickActionCount
-        // Apply all data handlers up to next fully done macro tick
-        for(var i = currentActionIndex; i < nextActionIndex; i++) {
-            getActionStep(i).apply(pool)
-        }
-        
-        return nextActionIndex
-    }
-    
-    /**
-     * Applies modifications to variables in the current pool made by the user. 
-     */
-    private def void applyUserValues() {
-        // Apply user made changes to variable values
-        for(m : currentPool.models) {
-            for(v : m.variables) {
-                if(v.isDirty) {
-                    // Apply user value of changed array elements
-                    if(v.userValue instanceof NDimensionalArray) {
-                        val arr = v.userValue as NDimensionalArray
-                        for(elem : arr.elements) {
-                            if(elem.isDirty) {
-                                elem.value = elem.userValue
-                            }
-                        }
-                    }
-                    // Apply user value
-                    v.value = v.userValue
-                }
+        if(macroTickActionCount > 0) {
+            val nextActionIndex = ((currentActionIndex + macroTickActionCount) / macroTickActionCount) * macroTickActionCount
+            // Apply all data handlers up to next fully done macro tick
+            for(var i = currentActionIndex; i < nextActionIndex; i++) {
+                getActionStep(i).apply(pool)
             }
+            return nextActionIndex
+        } else {
+            return currentState.actionIndex+1
         }
     }
     
     /**
      * Notifies all listeners about an event.
      */
-     protected def void notifyListeners(SimulationEventType type, Variable variable) {
+     public def void fireEvent(SimulationEvent event) {
+         for(l : listeners) {
+             l.update(event)
+         }
+     }
+    
+    /**
+     * Notifies all listeners about an event.
+     */
+     protected def void fireEvent(SimulationEventType type, Variable variable) {
          val e = new SimulationEvent()
          e.type = type
-         e.newPool = currentPool
-         e.modifiedVariable = variable
-         for(l : listeners) {
-             l.update(e)
-         }
+         e.pool = currentPool
+         e.variable = variable
+         fireEvent(e)
      }
      
      /**
      * Notifies all listeners about an event.
+     * The pool is set to the current pool in the simulation.
      */
-     protected def void notifyListeners(SimulationEventType type) {
+     public def void fireEvent(SimulationEventType type) {
          val e = new SimulationEvent()
          e.type = type
-         e.newPool = currentPool
-         for(l : listeners) {
-             l.update(e)
-         }
+         e.pool = currentPool
+         fireEvent(e)
      }
      
      public static def void addListener(SimulationListener listener) {

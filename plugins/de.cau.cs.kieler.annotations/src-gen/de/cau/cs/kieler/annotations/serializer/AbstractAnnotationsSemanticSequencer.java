@@ -41,8 +41,19 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
-				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
+					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.PRAGMA:
 				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
@@ -102,6 +113,18 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *     values+=COMMENT_ANNOTATION
 	 */
 	protected void sequence_CommentAnnotation(ISerializationContext context, CommentAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     CommentAnnotatonSL returns CommentAnnotation
+	 *
+	 * Constraint:
+	 *     values+=SL_COMMENT_ANNOTATION
+	 */
+	protected void sequence_CommentAnnotatonSL(ISerializationContext context, CommentAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

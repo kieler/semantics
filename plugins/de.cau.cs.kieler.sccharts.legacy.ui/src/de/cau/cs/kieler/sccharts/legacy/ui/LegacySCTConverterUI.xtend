@@ -103,7 +103,7 @@ class LegacySCTConverterUI extends AbstractHandler {
     }
 
     dispatch def List<IFile> collect(IFile file) {
-        if (file.exists && file.fileExtension.endsWith(INPUT_EXTENSION)) {
+        if (file.exists && file.fileExtension != null && file.fileExtension.endsWith(INPUT_EXTENSION)) {
             return newLinkedList(file)
         }
         return emptyList

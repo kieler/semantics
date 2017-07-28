@@ -2,7 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-
+    <extension-point id="hooks" name="Legacy Synthesis Hooks" schema="schema/hooks.exsd"/>
     <extension
             point="org.eclipse.ui.editors">
         <editor
@@ -406,6 +406,79 @@
             </visibleWhen>
          </command>
       </menuContribution>
+   </extension>
+
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.actions.LegacyReferenceExpandAction"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.actions.LegacyReferenceExpandAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyLabelShorteningHook"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyLabelShorteningHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyStateActionsHook"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyStateActionsHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyDeclarationsHook"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyDeclarationsHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyLayoutHook"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyLayoutHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.actions.LegacyMemorizingExpandCollapseAction"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.actions.LegacyMemorizingExpandCollapseAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.actions.LegacyCollapseAllRegionsAction"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.actions.LegacyCollapseAllRegionsAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.actions.LegacyExpandAllRegionsAction"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.actions.LegacyExpandAllRegionsAction">
+      </action>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis"
+            id="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.SCChartsSynthesis">
+      </diagramSynthesis>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sccharts.legacy.ui.hooks">
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyDeclarationsHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyStateActionsHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyBlackWhiteModeHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyShadowHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyHideAnnotationHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyLabelShorteningHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacySynthesisAnnotationHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyLayoutHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.legacy.klighd.synthesis.hooks.LegacyExpandCollapseHook">
+      </hook>
    </extension>
 
 </plugin>

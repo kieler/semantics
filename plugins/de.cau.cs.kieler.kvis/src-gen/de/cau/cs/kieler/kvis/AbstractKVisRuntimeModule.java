@@ -93,9 +93,9 @@ public abstract class AbstractKVisRuntimeModule extends org.eclipse.xtext.servic
 		return org.eclipse.xtext.parser.antlr.AntlrTokenDefProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
-	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kvis.validation.KVisJavaValidator> bindKVisJavaValidator() {
-		return de.cau.cs.kieler.kvis.validation.KVisJavaValidator.class;
+	// contributed by org.eclipse.xtext.generator.validation.ValidatorFragment
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.kvis.validation.KVisValidator> bindKVisValidator() {
+		return de.cau.cs.kieler.kvis.validation.KVisValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

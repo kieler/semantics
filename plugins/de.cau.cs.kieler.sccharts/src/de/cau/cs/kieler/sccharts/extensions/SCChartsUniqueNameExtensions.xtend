@@ -12,10 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import java.util.regex.Pattern
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.annotations.extensions.UniqueNameExtensions
-import de.cau.cs.kieler.kexpressions.Identifiable
 
 /**
  * @author ssm
@@ -24,27 +21,5 @@ import de.cau.cs.kieler.kexpressions.Identifiable
  *
  */
 class SCChartsUniqueNameExtensions extends UniqueNameExtensions {
-    
-    def <T extends Identifiable> T uniqueName(T namedObject, UniqueNameCache nameCache) {
-        if (nameCache.contains(namedObject.id)) {
-            val p = Pattern.compile("[0-9]+$");
-            val m = p.matcher(namedObject.id);
-            if(m.find()) {
-                val n = Integer.parseInt(m.group) + 1
-                namedObject.id = namedObject.id.substring(0, namedObject.id.length - m.group.length) + n
-            } else {
-                namedObject.id = namedObject.id + "0"
-            }
-            namedObject.uniqueName(nameCache)
-        } else {
-            nameCache += namedObject.id
-        }
-        namedObject
-    }
-    
-    def <T extends Identifiable> isUnique(T namedObject, UniqueNameCache nameCache) {
-        !nameCache.contains(namedObject.id)
-    }
-
     
 }

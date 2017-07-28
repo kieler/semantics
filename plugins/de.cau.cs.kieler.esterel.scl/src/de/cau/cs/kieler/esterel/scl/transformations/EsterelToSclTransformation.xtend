@@ -96,12 +96,9 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-<<<<<<< HEAD
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import java.util.List
-=======
 import de.cau.cs.kieler.esterel.esterel.WeakSuspend
->>>>>>> master
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started

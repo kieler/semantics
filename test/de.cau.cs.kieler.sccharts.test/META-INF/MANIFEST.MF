@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.kicool

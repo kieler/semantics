@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-<!--   <extension
-         point="de.cau.cs.kieler.klighd.extensions">
-      <styleModifier
-            class="de.cau.cs.kieler.sccharts.klighd.SCChartsRegionLineModifier"
-            id="de.cau.cs.kieler.sccharts.klighd.regionLineModifier">
-      </styleModifier>
-   </extension>-->
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis"
-            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis">
+            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.klighd.SCGraphsDiagramSynthesis"
+            id="de.cau.cs.kieler.scg.klighd.diagramSynthesis.scgraphs">
       </diagramSynthesis>
    </extension>
 </plugin>

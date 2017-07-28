@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.kvis.ui.views
 
-import org.eclipse.jface.action.Action
 import de.cau.cs.kieler.kvis.ui.KVisUiModule
-import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.ui.PromUIPlugin
+import org.eclipse.jface.action.Action
 
 /**
  * @author aas
@@ -23,9 +23,18 @@ import de.cau.cs.kieler.prom.common.PromPlugin
 class KVisViewToolbarAction extends Action {
     String imageName
     
-    new(String title, String imageName) {
-        super(title)
+    new(String title, String imageName, int style) {
+        super(title, style)
         this.imageName = imageName
+    }
+    
+    new(String title, String imageName, boolean checked) {
+        this(title, imageName, AS_CHECK_BOX)
+        setChecked(checked)
+    }
+    
+    new(String title, String imageName) {
+        this(title, imageName, AS_PUSH_BUTTON)
     }
     
     override getImageDescriptor() {
@@ -33,6 +42,6 @@ class KVisViewToolbarAction extends Action {
             return null
         }
         val path = "icons/" + imageName
-        return PromPlugin.imageDescriptorFromPlugin(KVisUiModule.PLUGIN_ID, path);
+        return PromUIPlugin.imageDescriptorFromPlugin(KVisUiModule.PLUGIN_ID, path);
     }
 }

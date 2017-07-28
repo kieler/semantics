@@ -29,7 +29,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Calendar;
 
 import javax.swing.JLabel;
 import javax.swing.JRootPane;
@@ -42,11 +41,6 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.svg2svg.SVGTranscoder;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -71,13 +65,11 @@ import de.cau.cs.kieler.kvis.ui.internal.KVisActivator;
 
 public class KVisCanvas extends Composite implements ISelectionListener {
 
-    private JSVGCanvas svgCanvas;
+    private EclipseJSVGCanvas svgCanvas;
 
     private IFile svgFile;
-    private IProject svgProject;
     private URI svgURI; // required if RCP does not support IFiles
 
-    private JLabel statusLabel;
     private Frame frame;
 
     private KVisUserAgent userAgent;
@@ -103,17 +95,7 @@ public class KVisCanvas extends Composite implements ISelectionListener {
     }
 
     public KVisCanvas(Composite parent, int style, boolean showScrollbars) {
-        super(parent, SWT.EMBEDDED);
-
-        parent.setLayout(new FillLayout());
-        statusLabel = new JLabel("Status");
-        statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        statusLabel.setBackground(java.awt.Color.BLACK);
-        statusLabel.setForeground(java.awt.Color.WHITE);
-        statusLabel.setFont(new Font("helvetica", Font.BOLD, 12));
-        statusLabel.setOpaque(true);
-        statusLabel.setVisible(false);
-
+        super(parent, style);
         /*
          * Set a Windows specific AWT property that prevents heavyweight components from erasing
          * their background. Note that this is a global property and cannot be scoped. It might not
@@ -128,13 +110,11 @@ public class KVisCanvas extends Composite implements ISelectionListener {
         try {
             userAgent = new KVisUserAgent(this);
             // Create the EclipseJSVGCanvas
-            svgCanvas = new EclipseJSVGCanvas(userAgent, true, true);
+            svgCanvas = new EclipseJSVGCanvas(userAgent, true, false);
             svgCanvas.setLayout(new BorderLayout());
-
             svgCanvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
-            svgCanvas.setDoubleBufferedRendering(false);
-            svgCanvas.setDisableInteractions(true);
-            // this.canvas.setAnimationLimitingCPU(0.5f);
+            svgCanvas.setDoubleBufferedRendering(true);
+            svgCanvas.setProgressivePaint(true);
 
             frame = null;
             frame = SWT_AWT.new_Frame(this);
@@ -195,7 +175,6 @@ public class KVisCanvas extends Composite implements ISelectionListener {
 
     public void setSVGFile(IFile f) {
         svgFile = f;
-        svgProject = f.getProject();
         svgURI = f.getLocationURI();
         paintSVGFile();
     }

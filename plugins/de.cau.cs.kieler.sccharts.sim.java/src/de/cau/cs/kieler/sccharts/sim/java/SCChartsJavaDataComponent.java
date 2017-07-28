@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.circuit.Actor;
@@ -413,10 +418,10 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
 
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null
-                    && kExpressionValuedObjectExtensions.getValuedObjects(myModel) != null) {
-                for (ValuedObject valuedObject : kExpressionValuedObjectExtensions
-                        .getValuedObjects(myModel)) {
+            if (myModel != null && Iterators.any(myModel.eAllContents(), Predicates.instanceOf(ValuedObject.class))) {
+                Iterator<ValuedObject> vos = Iterators.filter(myModel.eAllContents(), ValuedObject.class);
+                while (vos.hasNext()) {
+                    ValuedObject valuedObject = vos.next();
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
                         String valuedObjectName = valuedObject.getName();
                         inputVariableList.add(valuedObjectName);
@@ -723,7 +728,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
 
             String modelName = "SCG";
             if (myModel instanceof State) {
-                modelName = ((State) myModel).getId();
+                modelName = ((State) myModel).getName();
             }
             if (myModel instanceof SCGraph) {
                 modelName = ((SCGraph) myModel).getLabel();

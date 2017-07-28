@@ -29,6 +29,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cHostcodeEffectParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cReferenceCallEffectParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cFunctionCallEffectParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cPrintCallEffectParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
 		/// **
 		// * @author ssm
@@ -45,10 +46,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 		//// function call effect.
 		//Effect keffects::Effect:
-		//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect
+		//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
 		@Override public ParserRule getRule() { return rule; }
 
-		//Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect
+		//Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Assignment
@@ -68,6 +69,9 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//FunctionCallEffect
 		public RuleCall getFunctionCallEffectParserRuleCall_5() { return cFunctionCallEffectParserRuleCall_5; }
+
+		//PrintCallEffect
+		public RuleCall getPrintCallEffectParserRuleCall_6() { return cPrintCallEffectParserRuleCall_6; }
 	}
 
 	public class EmissionElements extends AbstractParserRuleElementFinder {
@@ -694,6 +698,55 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//'>'
 		public Keyword getGreaterThanSignKeyword_1_3() { return cGreaterThanSignKeyword_1_3; }
 	}
+
+	public class PrintCallEffectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.PrintCallEffect");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Keyword cPrintKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cParametersAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cParametersParameterParserRuleCall_2_0 = (RuleCall)cParametersAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cParametersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_1_0 = (RuleCall)cParametersAssignment_3_1.eContents().get(0);
+		
+		//PrintCallEffect keffects::PrintCallEffect:
+		//	annotations+=Annotation*
+		//	'print' parameters+=Parameter (',' parameters+=Parameter)*
+		@Override public ParserRule getRule() { return rule; }
+
+		//annotations+=Annotation* 'print' parameters+=Parameter (',' parameters+=Parameter)*
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
+		//'print'
+		public Keyword getPrintKeyword_1() { return cPrintKeyword_1; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2() { return cParametersAssignment_2; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_0() { return cParametersParameterParserRuleCall_2_0; }
+
+		//(',' parameters+=Parameter)*
+		public Group getGroup_3() { return cGroup_3; }
+
+		//','
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_1() { return cParametersAssignment_3_1; }
+
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_1_0() { return cParametersParameterParserRuleCall_3_1_0; }
+	}
 	
 	
 	public class AssignOperatorElements extends AbstractEnumRuleElementFinder {
@@ -835,6 +888,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	private final HostcodeEffectElements pHostcodeEffect;
 	private final ReferenceCallEffectElements pReferenceCallEffect;
 	private final FunctionCallEffectElements pFunctionCallEffect;
+	private final PrintCallEffectElements pPrintCallEffect;
 	private final AssignOperatorElements eAssignOperator;
 	private final PostfixOperatorElements ePostfixOperator;
 	
@@ -863,6 +917,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pHostcodeEffect = new HostcodeEffectElements();
 		this.pReferenceCallEffect = new ReferenceCallEffectElements();
 		this.pFunctionCallEffect = new FunctionCallEffectElements();
+		this.pPrintCallEffect = new PrintCallEffectElements();
 		this.eAssignOperator = new AssignOperatorElements();
 		this.ePostfixOperator = new PostfixOperatorElements();
 	}
@@ -917,7 +972,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect
 	public EffectElements getEffectAccess() {
 		return pEffect;
 	}
@@ -1032,6 +1087,17 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallEffectRule() {
 		return getFunctionCallEffectAccess().getRule();
+	}
+
+	//PrintCallEffect keffects::PrintCallEffect:
+	//	annotations+=Annotation*
+	//	'print' parameters+=Parameter (',' parameters+=Parameter)*
+	public PrintCallEffectElements getPrintCallEffectAccess() {
+		return pPrintCallEffect;
+	}
+	
+	public ParserRule getPrintCallEffectRule() {
+		return getPrintCallEffectAccess().getRule();
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
@@ -1814,6 +1880,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
+	//CommentAnnotatonSL CommentAnnotation:
+	//	values+=SL_COMMENT_ANNOTATION
+	public AnnotationsGrammarAccess.CommentAnnotatonSLElements getCommentAnnotatonSLAccess() {
+		return gaAnnotations.getCommentAnnotatonSLAccess();
+	}
+	
+	public ParserRule getCommentAnnotatonSLRule() {
+		return getCommentAnnotatonSLAccess().getRule();
+	}
+
 	//// TagAnnotation
 	//// e.g.: @HVlayout
 	//TagAnnotation Annotation:
@@ -1954,7 +2030,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// ExtendedID extends the ID rule provided by the terminals grammar.
 	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
 	//ExtendedID:
-	//	ID ("." | "-" ID)* ("#" INT)?;
+	//	ID (('.' | '-') ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaAnnotations.getExtendedIDAccess();
 	}
@@ -2009,6 +2085,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getML_COMMENTRule();
 	} 
 
+	//terminal SL_COMMENT_ANNOTATION:
+	//	'// *' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENT_ANNOTATIONRule() {
+		return gaAnnotations.getSL_COMMENT_ANNOTATIONRule();
+	} 
+
+	//terminal SL_COMMENT:
+	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
+	public TerminalRule getSL_COMMENTRule() {
+		return gaAnnotations.getSL_COMMENTRule();
+	} 
+
 	//terminal fragment NUMBER:
 	//	'0'..'9';
 	public TerminalRule getNUMBERRule() {
@@ -2043,12 +2131,6 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:

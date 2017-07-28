@@ -23,7 +23,9 @@ import de.cau.cs.kieler.kvis.kvis.Mapping;
 import de.cau.cs.kieler.kvis.kvis.ModelReference;
 import de.cau.cs.kieler.kvis.kvis.SimulationOperation;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
-import de.cau.cs.kieler.kvis.kvis.Visualization;
+import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration;
+
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -46,7 +48,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass visualizationEClass = null;
+  private EClass visualizationConfigurationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -217,6 +219,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     // Initialize simple dependencies
     KExpressionsPackage.eINSTANCE.eClass();
+    KibuildPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theKvisPackage.createPackageContents();
@@ -238,9 +241,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVisualization()
+  public EClass getVisualizationConfiguration()
   {
-    return visualizationEClass;
+    return visualizationConfigurationEClass;
   }
 
   /**
@@ -248,9 +251,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVisualization_Image()
+  public EAttribute getVisualizationConfiguration_Image()
   {
-    return (EAttribute)visualizationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)visualizationConfigurationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -258,9 +261,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getVisualization_Elements()
+  public EReference getVisualizationConfiguration_Elements()
   {
-    return (EReference)visualizationEClass.getEStructuralFeatures().get(1);
+    return (EReference)visualizationConfigurationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -268,9 +271,9 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getVisualization_Interactions()
+  public EReference getVisualizationConfiguration_Interactions()
   {
-    return (EReference)visualizationEClass.getEStructuralFeatures().get(2);
+    return (EReference)visualizationConfigurationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -813,10 +816,10 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     isCreated = true;
 
     // Create classes and their features
-    visualizationEClass = createEClass(VISUALIZATION);
-    createEAttribute(visualizationEClass, VISUALIZATION__IMAGE);
-    createEReference(visualizationEClass, VISUALIZATION__ELEMENTS);
-    createEReference(visualizationEClass, VISUALIZATION__INTERACTIONS);
+    visualizationConfigurationEClass = createEClass(VISUALIZATION_CONFIGURATION);
+    createEAttribute(visualizationConfigurationEClass, VISUALIZATION_CONFIGURATION__IMAGE);
+    createEReference(visualizationConfigurationEClass, VISUALIZATION_CONFIGURATION__ELEMENTS);
+    createEReference(visualizationConfigurationEClass, VISUALIZATION_CONFIGURATION__INTERACTIONS);
 
     elementEClass = createEClass(ELEMENT);
     createEAttribute(elementEClass, ELEMENT__NAME);
@@ -912,6 +915,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
+    KibuildPackage theKibuildPackage = (KibuildPackage)EPackage.Registry.INSTANCE.getEPackage(KibuildPackage.eNS_URI);
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
     // Create type parameters
@@ -919,14 +923,15 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    attributeMappingEClass.getESuperTypes().add(theKibuildPackage.getAttributeMapping());
     comparisonEClass.getESuperTypes().add(this.getCondition());
     andExpressionEClass.getESuperTypes().add(this.getCondition());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(visualizationEClass, Visualization.class, "Visualization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVisualization_Image(), ecorePackage.getEString(), "image", null, 0, 1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVisualization_Elements(), this.getElement(), null, "elements", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVisualization_Interactions(), this.getInteraction(), null, "interactions", null, 0, -1, Visualization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(visualizationConfigurationEClass, VisualizationConfiguration.class, "VisualizationConfiguration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVisualizationConfiguration_Image(), ecorePackage.getEString(), "image", null, 0, 1, VisualizationConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVisualizationConfiguration_Elements(), this.getElement(), null, "elements", null, 0, -1, VisualizationConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVisualizationConfiguration_Interactions(), this.getInteraction(), null, "interactions", null, 0, -1, VisualizationConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -943,7 +948,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAction_Variable(), this.getVariableReference(), null, "variable", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAction_Value(), theKExpressionsPackage.getValue(), null, "value", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_Value(), theKibuildPackage.getLiteral(), null, "value", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Operation(), this.getSimulationOperation(), "operation", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(animationEClass, Animation.class, "Animation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -954,7 +959,7 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
 
     initEClass(attributeMappingEClass, AttributeMapping.class, "AttributeMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAttributeMapping_Attribute(), ecorePackage.getEString(), "attribute", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAttributeMapping_Literal(), theKExpressionsPackage.getValue(), null, "literal", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAttributeMapping_Literal(), theKibuildPackage.getLiteral(), null, "literal", null, 0, 1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAttributeMapping_Mappings(), this.getMapping(), null, "mappings", null, 0, -1, AttributeMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(mappingEClass, Mapping.class, "Mapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -969,12 +974,12 @@ public class KvisPackageImpl extends EPackageImpl implements KvisPackage
     initEReference(getComparison_Right(), ecorePackage.getEObject(), null, "right", null, 0, 1, Comparison.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(domainEClass, Domain.class, "Domain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDomain_Value(), theKExpressionsPackage.getValue(), null, "value", null, 0, 1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDomain_Value(), theKibuildPackage.getLiteral(), null, "value", null, 0, 1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDomain_Range(), this.getInterval(), null, "range", null, 0, 1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(intervalEClass, Interval.class, "Interval", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInterval_From(), theKExpressionsPackage.getValue(), null, "from", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getInterval_To(), theKExpressionsPackage.getValue(), null, "to", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInterval_From(), ecorePackage.getEObject(), null, "from", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInterval_To(), ecorePackage.getEObject(), null, "to", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(variableReferenceEClass, VariableReference.class, "VariableReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVariableReference_Model(), this.getModelReference(), null, "model", null, 0, 1, VariableReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

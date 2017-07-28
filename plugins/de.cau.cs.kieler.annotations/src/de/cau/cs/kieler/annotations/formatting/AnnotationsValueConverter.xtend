@@ -113,6 +113,13 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
         return qualifiedIDValueConverter;
     }
     
+    @Inject private ExtendedIDValueConverter extendedIDValueConverter;
+    
+    @ValueConverter(rule = "ExtendedID") 
+    def IValueConverter<String> convertExtendedID() {
+        return extendedIDValueConverter;
+    }    
+    
     /**
      * Provides EString converter dropping/attaching the leading/trailing character.
      * 

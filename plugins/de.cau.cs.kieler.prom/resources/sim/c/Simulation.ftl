@@ -1,17 +1,14 @@
-/*****************************************************************************/
-/* SIMULATION WRAPPER CODE
-/*****************************************************************************/
-
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
+// Include JSON library and file to be simulated.
 #include "../lib/cJSON.c"
 #include "${compiled_model_loc}"
 
-/*****************************************************************************/
-/* SIMULATION WRAPPER CODE
-/*****************************************************************************/
+// Determines if a simin file with the json object should be generated,
+// which can be used to feed the simulation when starting the executable not from within KIELER.
+// #define WRITE_SIMIN_FILE
 
 cJSON* output = 0;
 
@@ -53,11 +50,22 @@ void sendVariables() {
     
 ${outputs}
 
+    // Get JSON object as string
     char* outString = cJSON_Print(root);
     cJSON_Minify(outString);
+    // Flush to stdout
     printf("%s\n", outString);
     fflush(stdout);
     
+#ifdef WRITE_SIMIN_FILE
+    // Flush to simin file
+    FILE *file = fopen("json_output.simin", "w");
+    if(file != NULL) {
+      fprintf(file, "%s\n", outString);
+      fclose(file);
+    }
+#endif
+
     cJSON_Delete(root);
 }
 

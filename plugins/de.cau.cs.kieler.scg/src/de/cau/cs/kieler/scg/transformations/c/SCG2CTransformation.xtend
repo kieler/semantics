@@ -110,17 +110,17 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         parameterMapping.clear
         val mainEntry = scg.getStringAnnotationValue("main")
         for(tickStart : tickStarts) {
-            if (tickStart.id == null || tickStart.id.equals(mainEntry)) {
-                entryMapping.put(tickStart.id, "")
+            if (tickStart.name == null || tickStart.name.equals(mainEntry)) {
+                entryMapping.put(tickStart.name, "")
             } else {
-                entryMapping.put(tickStart.id, suffixCounter.toString)
+                entryMapping.put(tickStart.name, suffixCounter.toString)
             }
             
             val parameterList = <String> newArrayList
-            for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(tickStart.id)]) {
+            for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(tickStart.name)]) {
                 parameterList += tsa.type
             }
-            parameterMapping.put(tickStart.id, parameterList)
+            parameterMapping.put(tickStart.name, parameterList)
         }
         
         VOCalleeMap.clear
@@ -132,8 +132,8 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         }
         
         // TODO: Sort by actual references!
-        for (tickStart : tickStarts.sortBy[ it.id ]) {
-            functionSuffix = entryMapping.get(tickStart.id)
+        for (tickStart : tickStarts.sortBy[ it.name ]) {
+            functionSuffix = entryMapping.get(tickStart.name)
             tickStart.addTick(initSB, implSB, scg, functionSuffix)
             suffixCounter++
         }
@@ -295,7 +295,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             tickLogicFunction.append(indent).append("}\n")            
         }
         
-        for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(tickEntry.id)]) {
+        for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(tickEntry.name)]) {
             if (!VOSet.exists[ it.name.equals(tsa.type)]) {
                 valuedObjectPrefix = ""
                 tickStruct.append(DEFAULT_INDENTATION)

@@ -128,7 +128,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
                 var counter = 0
 
                 // FIXME: stateEnum should be static
-                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.id, createIntDeclaration).
+                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.name, createIntDeclaration).
                     uniqueName(nameCache)
                 stateEnumsAll.add(stateEnum)
                 if (!regions.contains(region)) {

@@ -1,0 +1,42 @@
+grammar de.cau.cs.kieler.simulation.KiSim with de.cau.cs.kieler.prom.KiBuild
+
+generate kisim "http://www.cau.de/cs/kieler/simulation/KiSim"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
+import "http://www.cau.de/cs/kieler/prom/KiBuild" as kibuild 
+
+SimulationConfiguration:
+	(attributes+=AttributeMapping)*
+	(handlers+=DataHandlerConfiguration)*
+	(initialization=Initialization)?
+	(execution=Execution)?
+;
+
+DataHandlerConfiguration:
+    'configure' name=ID (id=ID)? '{'
+        (attributes+=AttributeMapping)*
+    '}'
+;
+
+Initialization:
+    'initialization' '{'
+        {Initialization}
+        (actions+=Action)*
+    '}'
+;
+
+Execution:
+    'execution' '{'
+        {Execution}
+        (actions+=Action)*
+    '}'
+;
+
+Action:
+    operation=ActionOperation handler=ID (id=ID)
+;
+
+enum ActionOperation:
+    WRITE='write' | READ='read'
+;

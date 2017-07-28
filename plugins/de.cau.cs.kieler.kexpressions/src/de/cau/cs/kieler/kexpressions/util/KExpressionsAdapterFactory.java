@@ -154,12 +154,12 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createFunctionCallAdapter();
             }
             @Override
-            public Adapter caseReferenceable(Referenceable object) {
-                return createReferenceableAdapter();
+            public Adapter casePrintCall(PrintCall object) {
+                return createPrintCallAdapter();
             }
             @Override
-            public Adapter caseIdentifiable(Identifiable object) {
-                return createIdentifiableAdapter();
+            public Adapter caseReferenceable(Referenceable object) {
+                return createReferenceableAdapter();
             }
             @Override
             public Adapter caseSchedulable(Schedulable object) {
@@ -418,6 +418,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.PrintCall <em>Print Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.PrintCall
+     * @generated
+     */
+    public Adapter createPrintCallAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -428,20 +442,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createReferenceableAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.Identifiable
-     * @generated
-     */
-    public Adapter createIdentifiableAdapter() {
         return null;
     }
 

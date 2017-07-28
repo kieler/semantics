@@ -26,7 +26,7 @@ import org.eclipse.xtext.scoping.IScopeProvider
  * @kieler.design 2013-10-23 proposed 
  * @kieler.rating 2013-10-23 proposed yellow
  */
-class SCGRuntimeModu2le extends KExpressionsRuntimeModule {
+class SCGRuntimeModule extends KExpressionsRuntimeModule {
     
     @Singleton
     override Class<? extends IScopeProvider> bindIScopeProvider() {

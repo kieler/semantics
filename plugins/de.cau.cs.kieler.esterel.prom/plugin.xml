@@ -10,7 +10,7 @@
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.esterel.prom.filewizard"
+            id="de.cau.cs.kieler.esterel.prom.strlWizard"
             name="Esterel File"
             project="false">
          <description>
@@ -23,7 +23,7 @@
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.esterel.prom.projectwizard"
+            id="de.cau.cs.kieler.esterel.prom.esterelProject"
             name="Esterel Project"
             project="true">
          <description>
@@ -34,7 +34,7 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchShortcut"
+            class="de.cau.cs.kieler.prom.ui.launch.KiCoLaunchShortcut"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.esterel.prom.launchShortcut"
             label="KiCo Compilation"
@@ -91,12 +91,12 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <commonWizard
             type="new"
-            wizardId="de.cau.cs.kieler.esterel.prom.projectwizard">
+            wizardId="de.cau.cs.kieler.esterel.prom.strlWizard">
          <enablement></enablement>
       </commonWizard>
       <commonWizard
             type="new"
-            wizardId="de.cau.cs.kieler.esterel.prom.filewizard">
+            wizardId="de.cau.cs.kieler.esterel.prom.esterelProject">
          <enablement></enablement>
       </commonWizard>
    </extension>

@@ -307,8 +307,8 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         kextEClass.getESuperTypes().add(this.getKExtScope());
         kExtScopeEClass.getESuperTypes().add(this.getDeclarationScope());
         kExtScopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        kExtScopeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
         kExtScopeEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceable());
+        kExtScopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         annotatedExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 
         // Initialize classes and features; add operations and parameters

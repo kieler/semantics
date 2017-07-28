@@ -2,6 +2,22 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+    <extension
+          point="org.eclipse.ui.newWizards">
+       <wizard
+             canFinishEarly="false"
+             category="de.cau.cs.kieler.simulation"
+             class="de.cau.cs.kieler.kvis.ui.wizards.KVisFileWizard"
+             finalPerspective="de.cau.cs.kieler.simulation"
+             hasPages="true"
+             id="de.cau.cs.kieler.kvis.ui.fileWizard"
+             name="KVis File"
+             project="false">
+          <description>
+             Create a new KVis file to configure how a running simulation is visualized.
+          </description>
+       </wizard>
+    </extension>
 
     <extension
             point="org.eclipse.ui.editors">

@@ -41,6 +41,20 @@ class Model implements Cloneable {
      * The variables of the model
      */
     private List<Variable> variables = newArrayList()
+    
+    /**
+     * Indicates that at least one variable might have a user value set,
+     * which must be applied before the next tick is executed.
+     */
+    @Accessors(PUBLIC_GETTER)
+    private boolean hasModifiedVariable
+
+    new () {
+    }
+
+    new(String name) {
+        this.name = name
+    }
 
     /**
      * Convert this model to a json representation.
@@ -102,6 +116,18 @@ class Model implements Cloneable {
         if(!variables.contains(v)) {
             variables.add(v)
         }
+    }
+    
+    public def void applyUserValues() {
+        // Apply user made changes to variable values
+        for(v : variables) {
+            v.applyUserValues
+        }
+    }
+    
+    protected def void setModifiedVariable() {
+        hasModifiedVariable = true
+        pool.setModifiedVariable
     }
     
     /**

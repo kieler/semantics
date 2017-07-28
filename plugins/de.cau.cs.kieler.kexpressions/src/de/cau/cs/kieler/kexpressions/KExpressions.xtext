@@ -229,7 +229,7 @@ AtomicValuedExpression returns Expression:
     | FloatValue 
     | StringValue
     | '(' ValuedExpression ')'
-    | AtomicExpression ;
+    | AtomicExpression;
 
 // Valued Object Test Expression Rule
 // This rules creates an operator expression for pre or val tests. Alternatively, it directs to a

@@ -17,13 +17,12 @@ import de.cau.cs.kieler.test.common.repository.ModelsRepository
 import java.util.ArrayList
 import java.util.HashSet
 import java.util.List
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
-import org.eclipse.ui.progress.UIJob
+import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.ui.PlatformUI
-import org.eclipse.core.resources.ResourcesPlugin
-import java.nio.file.Paths
 
 /**
  * The main benchmark suite starting all benchmarks.
@@ -32,7 +31,7 @@ import java.nio.file.Paths
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class BenchmarkSuite extends UIJob {
+class BenchmarkSuite extends Job {
 
     /** Identifier of the extension point for benchmarks. */
     private static val String EXTP_ID_BENCHMARK = "de.cau.cs.kieler.benchmark.common.benchmark";
@@ -59,7 +58,7 @@ class BenchmarkSuite extends UIJob {
     /**
      * {@inheritDoc}
      */
-    override runInUIThread(IProgressMonitor monitor) {
+    override run(IProgressMonitor monitor) {
         try {
             if (isBambooRun) println("=== STARTED Benchmarks ===")
             flush

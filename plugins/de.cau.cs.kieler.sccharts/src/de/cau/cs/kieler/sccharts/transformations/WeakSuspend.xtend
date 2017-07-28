@@ -125,7 +125,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             for (region : state.allContainedControlflowRegions.toList) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName(nameCache)
-                val stateBookmark = state.createValuedObject(GENERATED_PREFIX  + region.parentState.id, createIntDeclaration).uniqueName(nameCache)
+                val stateBookmark = state.createValuedObject(GENERATED_PREFIX  + region.parentState.name, createIntDeclaration).uniqueName(nameCache)
                 // Set the initial value to the (original) initial state
                 stateBookmark.setInitialValue(createIntValue(0))
                 var counter = 0

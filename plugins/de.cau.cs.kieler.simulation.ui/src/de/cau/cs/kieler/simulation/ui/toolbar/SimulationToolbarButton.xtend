@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.simulation.ui.toolbar
 
-import de.cau.cs.kieler.prom.ui.console.PromConsole
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.ui.launch.SimulationLaunchShortcut
+import de.cau.cs.kieler.simulation.launch.SimulationLaunchConfig
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
@@ -34,13 +34,9 @@ class SimulationToolbarButton extends AbstractHandler {
             // Start last simulation
             justRestarted = true
             PromConsole.print("Restarting last simulation")
-            new SimulationLaunchShortcut().launchLastSelection
+            SimulationLaunchConfig.launchLastSelection
         }
         return null
-    }
-    
-    override isEnabled() {
-        return true
     }
 
     public def SimulationManager getSimulation() {

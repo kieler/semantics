@@ -22,7 +22,6 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.kvis.kvis.AndExpression;
 import de.cau.cs.kieler.kvis.kvis.Animation;
 import de.cau.cs.kieler.kvis.kvis.AttributeMapping;
@@ -37,8 +36,20 @@ import de.cau.cs.kieler.kvis.kvis.KvisPackage;
 import de.cau.cs.kieler.kvis.kvis.Mapping;
 import de.cau.cs.kieler.kvis.kvis.ModelReference;
 import de.cau.cs.kieler.kvis.kvis.VariableReference;
-import de.cau.cs.kieler.kvis.kvis.Visualization;
+import de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration;
 import de.cau.cs.kieler.kvis.services.KVisGrammarAccess;
+import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
+import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
+import de.cau.cs.kieler.prom.kibuild.Literal;
+import de.cau.cs.kieler.prom.kibuild.ModelCompiler;
+import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor;
+import de.cau.cs.kieler.prom.kibuild.SignedFloat;
+import de.cau.cs.kieler.prom.kibuild.SignedInt;
+import de.cau.cs.kieler.prom.kibuild.SimulationCompiler;
+import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
+import de.cau.cs.kieler.prom.kibuild.TextValue;
+import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
+import de.cau.cs.kieler.prom.serializer.KiBuildSemanticSequencer;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -50,7 +61,7 @@ import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemanticSequencer {
+public abstract class AbstractKVisSemanticSequencer extends KiBuildSemanticSequencer {
 
 	@Inject
 	private KVisGrammarAccess grammarAccess;
@@ -67,8 +78,19 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
-				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
+					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.PRAGMA:
 				sequence_PragmaTag(context, (Pragma) semanticObject); 
 				return; 
@@ -471,6 +493,39 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 				}
 				else break;
 			}
+		else if (epackage == KibuildPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KibuildPackage.BUILD_CONFIGURATION:
+				sequence_BuildConfiguration(context, (BuildConfiguration) semanticObject); 
+				return; 
+			case KibuildPackage.LITERAL:
+				sequence_Literal(context, (Literal) semanticObject); 
+				return; 
+			case KibuildPackage.MODEL_COMPILER:
+				sequence_ModelCompiler(context, (ModelCompiler) semanticObject); 
+				return; 
+			case KibuildPackage.NORMAL_TEMPLATE_PROCESSOR:
+				sequence_NormalTemplateProcessor(context, (NormalTemplateProcessor) semanticObject); 
+				return; 
+			case KibuildPackage.SIGNED_FLOAT:
+				sequence_SignedFloat(context, (SignedFloat) semanticObject); 
+				return; 
+			case KibuildPackage.SIGNED_INT:
+				sequence_SignedInt(context, (SignedInt) semanticObject); 
+				return; 
+			case KibuildPackage.SIMULATION_COMPILER:
+				sequence_SimulationCompiler(context, (SimulationCompiler) semanticObject); 
+				return; 
+			case KibuildPackage.SIMULATION_TEMPLATE_PROCESSOR:
+				sequence_SimulationTemplateProcessor(context, (SimulationTemplateProcessor) semanticObject); 
+				return; 
+			case KibuildPackage.TEXT_VALUE:
+				sequence_TextValue(context, (TextValue) semanticObject); 
+				return; 
+			case KibuildPackage.WRAPPER_CODE_TEMPLATE_PROCESSOR:
+				sequence_WrapperCodeTemplateProcessor(context, (WrapperCodeTemplateProcessor) semanticObject); 
+				return; 
+			}
 		else if (epackage == KvisPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KvisPackage.ACTION:
@@ -526,8 +581,8 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 			case KvisPackage.VARIABLE_REFERENCE:
 				sequence_VariableReference(context, (VariableReference) semanticObject); 
 				return; 
-			case KvisPackage.VISUALIZATION:
-				sequence_Visualization(context, (Visualization) semanticObject); 
+			case KvisPackage.VISUALIZATION_CONFIGURATION:
+				sequence_VisualizationConfiguration(context, (VisualizationConfiguration) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -594,7 +649,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     AttributeMapping returns AttributeMapping
 	 *
 	 * Constraint:
-	 *     (attribute=ID (literal=AnyValue | (mappings+=Mapping mappings+=Mapping*)))
+	 *     (attribute=ID (literal=Literal | (mappings+=Mapping mappings+=Mapping*)))
 	 */
 	protected void sequence_AttributeMapping(ISerializationContext context, AttributeMapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -608,7 +663,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     Comparison returns Comparison
 	 *
 	 * Constraint:
-	 *     (left=VariableReference relation=CompareOperator (right=AnyValue | right=VariableReference))
+	 *     (left=VariableReference relation=CompareOperator (right=Literal | right=VariableReference))
 	 */
 	protected void sequence_Comparison(ISerializationContext context, Comparison semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -665,7 +720,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     Interval returns Interval
 	 *
 	 * Constraint:
-	 *     ((from=IntValue | from=FloatValue) (to=IntValue | to=FloatValue))
+	 *     ((from=SignedInt | from=SignedFloat) (to=SignedInt | to=SignedFloat))
 	 */
 	protected void sequence_Interval(ISerializationContext context, Interval semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -734,7 +789,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     Action returns Action
 	 *
 	 * Constraint:
-	 *     ((variable=VariableReference value=AnyValue) | operation=SimulationOperation)
+	 *     ((variable=VariableReference value=Literal) | operation=SimulationOperation)
 	 */
 	protected void sequence_SimulationAction_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -746,7 +801,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     VariableAssignment returns Action
 	 *
 	 * Constraint:
-	 *     (variable=VariableReference value=AnyValue)
+	 *     (variable=VariableReference value=Literal)
 	 */
 	protected void sequence_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kvis.kvis.Action semanticObject) {
 		if (errorAcceptor != null) {
@@ -757,7 +812,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getVariableAssignmentAccess().getVariableVariableReferenceParserRuleCall_0_0(), semanticObject.getVariable());
-		feeder.accept(grammarAccess.getVariableAssignmentAccess().getValueAnyValueParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getVariableAssignmentAccess().getValueLiteralParserRuleCall_2_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	
@@ -768,7 +823,7 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	 *     AttributeDomain returns Domain
 	 *
 	 * Constraint:
-	 *     (value=AnyValue | range=Interval)
+	 *     (value=Literal | range=Interval)
 	 */
 	protected void sequence_VariableDomain(ISerializationContext context, Domain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -789,12 +844,12 @@ public abstract class AbstractKVisSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Contexts:
-	 *     Visualization returns Visualization
+	 *     VisualizationConfiguration returns VisualizationConfiguration
 	 *
 	 * Constraint:
-	 *     (image=STRING (elements+=Element | interactions+=Interaction)*)
+	 *     (image=STRING | (image=STRING (elements+=Element | interactions+=Interaction)+))?
 	 */
-	protected void sequence_Visualization(ISerializationContext context, Visualization semanticObject) {
+	protected void sequence_VisualizationConfiguration(ISerializationContext context, VisualizationConfiguration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

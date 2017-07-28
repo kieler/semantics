@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getPriorities <em>Priorities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration()
@@ -64,5 +65,34 @@ public interface ScheduleDeclaration extends Declaration {
      * @generated
      */
     EList<SchedulePriority> getPriorities();
+
+    /**
+     * Returns the value of the '<em><b>Global</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.SchedulePriorityType}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Global</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Global</em>' attribute.
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
+     * @see #setGlobal(SchedulePriorityType)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration_Global()
+     * @model
+     * @generated
+     */
+    SchedulePriorityType getGlobal();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ScheduleDeclaration#getGlobal <em>Global</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Global</em>' attribute.
+     * @see de.cau.cs.kieler.kexpressions.SchedulePriorityType
+     * @see #getGlobal()
+     * @generated
+     */
+    void setGlobal(SchedulePriorityType value);
 
 } // ScheduleDeclaration

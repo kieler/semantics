@@ -14,10 +14,11 @@ package de.cau.cs.kieler.scg.processors.transformators
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer
+import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -28,7 +29,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
  * @kieler.design 2017-06-16 proposed
  * @kieler.rating 2017-06-16 proposed yellow  
  */
-class SequentializerWrapper extends Processor<SCGraph, SCGraph> {
+class SequentializerWrapper extends Processor<SCGraphs, SCGraphs> {
     
     @Inject Injector injector
     
@@ -42,7 +43,11 @@ class SequentializerWrapper extends Processor<SCGraph, SCGraph> {
     
     override process() {
         val wrappedTransformation = injector.getInstance(SimpleGuardSequentializer)
-        setModel(wrappedTransformation.transform(getModel, null))
+        val SCGGraphs = ScgFactory.eINSTANCE.createSCGraphs
+        for (scg : getModel.scgs) {
+            SCGGraphs.scgs += wrappedTransformation.transform(scg, null)                               
+        }        
+        setModel(SCGGraphs)
     }
     
     override getType() {

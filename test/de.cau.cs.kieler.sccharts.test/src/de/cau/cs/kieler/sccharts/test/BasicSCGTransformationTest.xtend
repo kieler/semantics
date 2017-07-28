@@ -52,7 +52,7 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<SCChar
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("sccharts")
+        return modelData.modelProperties.contains("scchartsX")
     }
     
     @Test(timeout=60000)

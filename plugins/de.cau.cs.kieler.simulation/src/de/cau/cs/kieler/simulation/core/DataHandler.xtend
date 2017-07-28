@@ -37,4 +37,10 @@ interface DataHandler {
      * Stop everything and clean up
      */
     public def void stop()
+    
+    /**
+     * The name of this data handler.
+     * This must match the name that is used to register the handler in the extension point.
+     */
+    public def String getName()
 }

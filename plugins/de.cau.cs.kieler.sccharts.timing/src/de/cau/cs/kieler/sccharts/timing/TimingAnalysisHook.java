@@ -46,7 +46,7 @@ import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook;
 
 public class TimingAnalysisHook extends SynthesisHook {
     
@@ -93,7 +93,7 @@ public class TimingAnalysisHook extends SynthesisHook {
 			// region to represent the SCChart in Timing Analysis.
 			State rootState = (State) scope;
 			Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createControlflowRegion();
-			scchartDummyRegion.setId("SCChartDummyRegion");
+			scchartDummyRegion.setName("SCChartDummyRegion");
 
 			Resource resource = null;
             KielerCompilerContext context =

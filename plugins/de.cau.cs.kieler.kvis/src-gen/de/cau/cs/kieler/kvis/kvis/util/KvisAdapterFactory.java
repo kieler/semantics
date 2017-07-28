@@ -75,9 +75,9 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
     new KvisSwitch<Adapter>()
     {
       @Override
-      public Adapter caseVisualization(Visualization object)
+      public Adapter caseVisualizationConfiguration(VisualizationConfiguration object)
       {
-        return createVisualizationAdapter();
+        return createVisualizationConfigurationAdapter();
       }
       @Override
       public Adapter caseElement(Element object)
@@ -155,6 +155,11 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
         return createAndExpressionAdapter();
       }
       @Override
+      public Adapter caseKibuild_AttributeMapping(de.cau.cs.kieler.prom.kibuild.AttributeMapping object)
+      {
+        return createKibuild_AttributeMappingAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -177,16 +182,16 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.Visualization <em>Visualization</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration <em>Visualization Configuration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.kvis.kvis.Visualization
+   * @see de.cau.cs.kieler.kvis.kvis.VisualizationConfiguration
    * @generated
    */
-  public Adapter createVisualizationAdapter()
+  public Adapter createVisualizationConfigurationAdapter()
   {
     return null;
   }
@@ -412,6 +417,21 @@ public class KvisAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAndExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.prom.kibuild.AttributeMapping <em>Attribute Mapping</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.prom.kibuild.AttributeMapping
+   * @generated
+   */
+  public Adapter createKibuild_AttributeMappingAdapter()
   {
     return null;
   }

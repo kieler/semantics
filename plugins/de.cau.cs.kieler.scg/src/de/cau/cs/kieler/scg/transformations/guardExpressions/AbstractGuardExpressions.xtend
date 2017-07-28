@@ -42,44 +42,32 @@ import de.cau.cs.kieler.scg.SCGraph
 
 abstract class AbstractGuardExpressions extends AbstractProductionTransformation {
         
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions    
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions    
+
         
-    // -------------------------------------------------------------------------
-    // -- Constants 
-    // -------------------------------------------------------------------------
-    
     /** Name of the go signal. */
-    public static val String GOGUARDNAME = "_GO"
-    
+    public static val String GO_GUARD_NAME = "_GO"
     public static val CONDITIONAL_EXPRESSION_PREFIX = "_c"
     
     
-    // -------------------------------------------------------------------------
-    // -- Sequentializer 
-    // -------------------------------------------------------------------------            
-	
     public def transform(SCGraph scg, KielerCompilerContext context) {
         createGuards(scg , context)
     }
 	
 	abstract def SCGraph createGuards(SCGraph scg, KielerCompilerContext context)
 	
+    /**
+     * To form (circuit like) guard expression a GO signal must be created.  
+     * It is needed in the guard expression of blocks that are active
+     * when the program starts.
+     */
     protected def ValuedObject createGOSignal(SCGraph scg) {
-        /**
-         * To form (circuit like) guard expression a GO signal must be created.  
-         * It is needed in the guard expression of blocks that are active
-         * when the program starts.
-         */
-         
         // Create a new signal using the kexpression factory for the GO signal.
         // Don't forget to add it to the SCG.
-        createValuedObject(GOGUARDNAME) => [
+        createValuedObject(GO_GUARD_NAME) => [
             scg.declarations += createBoolDeclaration.attach(it)    
         ]
     }
-
+    
 }

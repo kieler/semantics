@@ -80,7 +80,7 @@ class CopyPropagation extends AbstractOptimizer {
             reverseGuardMap.put(valuedObject, it)
         ]
         
-        val goGuardVO = scg.findValuedObjectByName(AbstractGuardExpressions.GOGUARDNAME)
+        val goGuardVO = scg.findValuedObjectByName(AbstractGuardExpressions.GO_GUARD_NAME)
         assignmentReferences.put(goGuardVO, goGuardVO)        
         
         val schedulingBlocks = <SchedulingBlock> newArrayList => [ list | 

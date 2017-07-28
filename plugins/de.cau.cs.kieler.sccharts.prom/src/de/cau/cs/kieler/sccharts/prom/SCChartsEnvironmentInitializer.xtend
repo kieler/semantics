@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,14 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.prom.common.EnvironmentData
-import de.cau.cs.kieler.prom.common.FileData
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
+import de.cau.cs.kieler.prom.PromPlugin
+import de.cau.cs.kieler.prom.data.CommandData
+import de.cau.cs.kieler.prom.data.EnvironmentData
+import de.cau.cs.kieler.prom.data.FileData
+import de.cau.cs.kieler.prom.data.KiCoLaunchData
 import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
-import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
-import de.cau.cs.kieler.prom.common.CommandData
-import de.cau.cs.kieler.prom.common.PromPlugin
 
 /**
  * Returns a list with default environments ready to use.

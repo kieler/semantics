@@ -17,9 +17,9 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation
-import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
@@ -30,7 +30,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.design 2017-06-16 proposed
  * @kieler.rating 2017-06-16 proposed yellow  
  */
-class SCGTransformationWrapper extends Processor<SCCharts, SCGraph> {
+class SCGTransformationWrapper extends Processor<SCCharts, SCGraphs> {
     
     @Inject Injector injector
     
@@ -44,7 +44,10 @@ class SCGTransformationWrapper extends Processor<SCCharts, SCGraph> {
     
     override process() {
         val wrappedTransformation = injector.getInstance(SCGTransformation)
-        setModel(wrappedTransformation.transform(getModel, null))
+        val scgs = ScgFactory.eINSTANCE.createSCGraphs => [
+            scgs += wrappedTransformation.transform(getModel, null) 
+        ]
+        setModel(scgs)
     }
     
     override getType() {

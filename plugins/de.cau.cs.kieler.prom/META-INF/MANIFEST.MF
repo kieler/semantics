@@ -3,38 +3,45 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Project Management
 Bundle-SymbolicName: de.cau.cs.kieler.prom;singleton:=true
 Bundle-Version: 0.12.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.prom.common.PromPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.variables;bundle-version="3.2.800",
- org.eclipse.debug.ui;bundle-version="3.10.1",
  org.eclipse.jdt.core;bundle-version="3.10.0",
  org.eclipse.ltk.core.refactoring;bundle-version="3.6.101",
  org.eclipse.ltk.ui.refactoring;bundle-version="3.7.100",
- org.eclipse.ui.console;bundle-version="3.5.300",
- org.eclipse.ui.ide;bundle-version="3.10.1",
- org.eclipse.ui;bundle-version="3.106.0",
  org.eclipse.xtend.lib,
  org.eclipse.xtext;bundle-version="2.7.2",
+ org.eclipse.xtext.generator;bundle-version="2.10.0",
  com.google.guava,
- org.freemarker;bundle-version="0.1.0",
+ org.freemarker,
  de.cau.cs.kieler.sccharts.preferences,
- de.cau.cs.kieler.sccharts.text;bundle-version="0.12.0",
+ de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.scg.s,
- de.cau.cs.kieler.kico
+ de.cau.cs.kieler.kico,
+ org.eclipse.core.resources;bundle-version="3.11.0",
+ org.eclipse.jface,
+ org.eclipse.debug.core,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ActivationPoliBundle-Vendor: Christian-Albrechts-Universität zu Kiel
-cy: lazy
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.prom.common,
- de.cau.cs.kieler.prom.common.ui,
- de.cau.cs.kieler.prom.environments,
- de.cau.cs.kieler.prom.environments.ui,
- de.cau.cs.kieler.prom.filewizard,
- de.cau.cs.kieler.prom.launchconfig,
- de.cau.cs.kieler.prom.launchconfig.ui,
- de.cau.cs.kieler.prom.projectwizard,
- de.cau.cs.kieler.prom.simulation,
- de.cau.cs.kieler.prom.simulation.ui,
- de.cau.cs.kieler.prom.ui.console
 Bundle-Vendor: Kiel University
-
+Export-Package: de.cau.cs.kieler.prom,
+ de.cau.cs.kieler.prom.build,
+ de.cau.cs.kieler.prom.console,
+ de.cau.cs.kieler.prom.data,
+ de.cau.cs.kieler.prom.environments,
+ de.cau.cs.kieler.prom.launch,
+ de.cau.cs.kieler.prom.services,
+ de.cau.cs.kieler.prom.kibuild,
+ de.cau.cs.kieler.prom.kibuild.impl,
+ de.cau.cs.kieler.prom.kibuild.util,
+ de.cau.cs.kieler.prom.serializer,
+ de.cau.cs.kieler.prom.parser.antlr,
+ de.cau.cs.kieler.prom.parser.antlr.internal,
+ de.cau.cs.kieler.prom.validation,
+ de.cau.cs.kieler.prom.scoping,
+ de.cau.cs.kieler.prom.formatting
+Import-Package: org.apache.log4j

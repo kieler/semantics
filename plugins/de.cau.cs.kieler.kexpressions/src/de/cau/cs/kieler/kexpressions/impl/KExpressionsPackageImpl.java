@@ -15,13 +15,13 @@ import de.cau.cs.kieler.kexpressions.DoubleValue;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
-import de.cau.cs.kieler.kexpressions.Identifiable;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
 import de.cau.cs.kieler.kexpressions.Parameter;
+import de.cau.cs.kieler.kexpressions.PrintCall;
 import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.Referenceable;
@@ -170,14 +170,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass referenceableEClass = null;
+    private EClass printCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass identifiableEClass = null;
+    private EClass referenceableEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -671,6 +671,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getScheduleDeclaration_Global() {
+        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getSchedulePriority() {
         return schedulePriorityEClass;
     }
@@ -734,26 +743,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getPrintCall() {
+        return printCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getReferenceable() {
         return referenceableEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getIdentifiable() {
-        return identifiableEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getIdentifiable_Id() {
-        return (EAttribute)identifiableEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -992,6 +992,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         scheduleDeclarationEClass = createEClass(SCHEDULE_DECLARATION);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__NAME);
         createEReference(scheduleDeclarationEClass, SCHEDULE_DECLARATION__PRIORITIES);
+        createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__GLOBAL);
 
         schedulePriorityEClass = createEClass(SCHEDULE_PRIORITY);
         createEAttribute(schedulePriorityEClass, SCHEDULE_PRIORITY__PRIORITY);
@@ -1015,10 +1016,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         functionCallEClass = createEClass(FUNCTION_CALL);
         createEAttribute(functionCallEClass, FUNCTION_CALL__FUNCTION_NAME);
 
-        referenceableEClass = createEClass(REFERENCEABLE);
+        printCallEClass = createEClass(PRINT_CALL);
 
-        identifiableEClass = createEClass(IDENTIFIABLE);
-        createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
+        referenceableEClass = createEClass(REFERENCEABLE);
 
         schedulableEClass = createEClass(SCHEDULABLE);
         createEReference(schedulableEClass, SCHEDULABLE__SCHEDULE);
@@ -1082,6 +1082,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         referenceCallEClass.getESuperTypes().add(this.getValuedObjectReference());
         referenceCallEClass.getESuperTypes().add(this.getCall());
         functionCallEClass.getESuperTypes().add(this.getCall());
+        printCallEClass.getESuperTypes().add(this.getCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1139,6 +1140,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScheduleDeclaration_Priorities(), this.getSchedulePriority(), null, "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getScheduleDeclaration_Global(), this.getSchedulePriorityType(), "global", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(schedulePriorityEClass, SchedulePriority.class, "SchedulePriority", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSchedulePriority_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, SchedulePriority.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1162,10 +1164,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(referenceableEClass, Referenceable.class, "Referenceable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(printCallEClass, PrintCall.class, "PrintCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(identifiableEClass, Identifiable.class, "Identifiable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIdentifiable_Id(), ecorePackage.getEString(), "id", null, 0, 1, Identifiable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(referenceableEClass, Referenceable.class, "Referenceable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(schedulableEClass, Schedulable.class, "Schedulable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSchedulable_Schedule(), this.getScheduleObjectReference(), null, "schedule", null, 0, -1, Schedulable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

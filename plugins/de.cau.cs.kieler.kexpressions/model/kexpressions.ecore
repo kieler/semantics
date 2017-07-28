@@ -260,6 +260,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="priorities" upperBound="-1"
         eType="#//SchedulePriority" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" eType="#//SchedulePriorityType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulePriority">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -290,10 +291,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="FunctionCall" eSuperTypes="#//Call">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrintCall" eSuperTypes="#//Call"/>
   <eClassifiers xsi:type="ecore:EClass" name="Referenceable" abstract="true" interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Identifiable" abstract="true" interface="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Schedulable" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedule" upperBound="-1"
         eType="#//ScheduleObjectReference" containment="true"/>

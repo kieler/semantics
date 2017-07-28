@@ -13,7 +13,9 @@
 package de.cau.cs.kieler.kvis.ui.animations
 
 import de.cau.cs.kieler.kvis.kvis.Animation
+import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
+import org.w3c.dom.Element
 
 /**
  * @author aas
@@ -21,17 +23,23 @@ import de.cau.cs.kieler.simulation.core.DataPool
  */
 class ColorAnimation extends AnimationHandler {
     
+    public val fillColor = new ConfigurableAttribute("fillColor")
+    public val strokeColor = new ConfigurableAttribute("strokeColor")
+    public val strokeWidth = new ConfigurableAttribute("strokeWidth")
+    public val opacity = new ConfigurableAttribute("opacity")
+    public val fillOpacity = new ConfigurableAttribute("fillOpacity")
+    public val strokeOpacity = new ConfigurableAttribute("strokeOpacity")
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
-        setAttributes("fillColor", "strokeColor", "strokeWidth", "opacity")
+        initialize
     }
     
     override getName() {
         return "color"
     }
     
-    override doApply(DataPool pool) {
-        val elem = findElement(true)
+    override doApply(DataPool pool, Element elem) {
         for(attr : attributes) {
             if(attr.value != null) {
                 switch(attr.name) {
@@ -39,6 +47,8 @@ class ColorAnimation extends AnimationHandler {
                     case "strokeColor" : elem.setAttributeField("style", "stroke", attr.stringValue)
                     case "strokeWidth" : elem.setAttributeField("style", "stroke-width", attr.stringValue)
                     case "opacity" : elem.setAttributeField("style", "opacity", attr.stringValue)
+                    case "fillOpacity" : elem.setAttributeField("style", "fill-opacity", attr.stringValue)
+                    case "strokeOpacity" : elem.setAttributeField("style", "stroke-opacity", attr.stringValue)
                 }
             }
         }

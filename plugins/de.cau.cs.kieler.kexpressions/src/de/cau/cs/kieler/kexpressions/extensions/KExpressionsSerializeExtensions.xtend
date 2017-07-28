@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -48,7 +48,7 @@ class KExpressionsSerializeExtensions {
     }
 
     def dispatch CharSequence serialize(TextExpression hostCodeString) {
-        "'" + hostCodeString.text + "'"
+        "`" + hostCodeString.text + "`"
     }
     
 //      ssm: old c code serialization, remove these lines after creating specific serialization for the 

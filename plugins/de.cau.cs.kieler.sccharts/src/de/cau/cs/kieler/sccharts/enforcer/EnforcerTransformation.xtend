@@ -102,8 +102,8 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         // It resembles the initial pre-processed input and output regions of the enforcer.
         // Hence, copy the region for the output region. The original will serve as input region.
         val SARegion = rootState.regions.filter(ControlflowRegion).head
-        val inputRegion = SARegion => [ id = "input" ]
-        val outputRegion = SARegion.copy => [ id = "output" rootState.regions += it ]
+        val inputRegion = SARegion => [ name = "input" ]
+        val outputRegion = SARegion.copy => [ name = "output" rootState.regions += it ]
            
         // Additionally, create a region for the tick function.
         val tickRegion = rootState.createTickRegion(inputs, outputs)

@@ -2,11 +2,9 @@
  */
 package de.cau.cs.kieler.kvis.kvis;
 
-import de.cau.cs.kieler.kexpressions.Value;
+import de.cau.cs.kieler.prom.kibuild.Literal;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface AttributeMapping extends EObject
+public interface AttributeMapping extends de.cau.cs.kieler.prom.kibuild.AttributeMapping
 {
   /**
    * Returns the value of the '<em><b>Attribute</b></em>' attribute.
@@ -63,12 +61,12 @@ public interface AttributeMapping extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Literal</em>' containment reference.
-   * @see #setLiteral(Value)
+   * @see #setLiteral(Literal)
    * @see de.cau.cs.kieler.kvis.kvis.KvisPackage#getAttributeMapping_Literal()
    * @model containment="true"
    * @generated
    */
-  Value getLiteral();
+  Literal getLiteral();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kvis.kvis.AttributeMapping#getLiteral <em>Literal</em>}' containment reference.
@@ -78,7 +76,7 @@ public interface AttributeMapping extends EObject
    * @see #getLiteral()
    * @generated
    */
-  void setLiteral(Value value);
+  void setLiteral(Literal value);
 
   /**
    * Returns the value of the '<em><b>Mappings</b></em>' containment reference list.

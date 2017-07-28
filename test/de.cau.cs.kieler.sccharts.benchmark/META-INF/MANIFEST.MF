@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.benchmark.common,
  de.cau.cs.kieler.test.common,
  org.eclipse.orbit.mongodb;bundle-version="2.10.1"

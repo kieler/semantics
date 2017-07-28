@@ -10,42 +10,42 @@ bool @alias "globalB" B;
 bool @alias "globalC" C;
 bool @alias "globalD" D;
 
-@check scoping.global.literal.global
+@check "scoping.global.literal.global"
 global = true
 
-@check scoping.global.literal.globalA
+@check "scoping.global.literal.globalA"
 @aliasCheck A, globalA
 A = false
 
-@check scoping.global.literal.globalB
+@check "scoping.global.literal.globalB"
 @aliasCheck B, globalB
 B = false
 
-@check scoping.global.reference.globalA
+@check "scoping.global.reference.globalA"
 @aliasCheck A, globalA
 global = A
 
-@check scoping.global.reference.globalB
+@check "scoping.global.reference.globalB"
 @aliasCheck B, globalB
 global = B
 
-@check scoping.global.reference.globalBToA
+@check "scoping.global.reference.globalBToA"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
 A = B
 
-@check scoping.global.reference.operator#001
+@check "scoping.global.reference.operator#001"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
 global = A & B
 
-@check scoping.global.reference.operator#002
+@check "scoping.global.reference.operator#002"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
 @strict
 global = pre(A)
 
-@check scoping.global.reference.operator#003
+@check "scoping.global.reference.operator#003"
 @aliasCheck A, globalA
 @aliasCheck B, globalB
 @aliasCheck C, globalC
@@ -59,188 +59,188 @@ scope X {
 	bool @alias "XE" E;
 	bool @alias "XF" F;
 
-	@check scoping.X.literal.global
+	@check "scoping.X.literal.global"
 	global = true
 
-	@check scoping.X.literal.local
+	@check "scoping.X.literal.local"
 	local = true
 
-	@check scoping.X.literal.A
+	@check "scoping.X.literal.A"
 	@aliasCheck A, XA
 	A = false
 
-	@check scoping.X.literal.E
+	@check "scoping.X.literal.E"
 	@aliasCheck E, XE
 	B = false
 
-	@check scoping.X.literal.globalC
+	@check "scoping.X.literal.globalC"
 	@aliasCheck C, globalC
 	C = false
 
-	@check scoping.X.reference.A
+	@check "scoping.X.reference.A"
 	@aliasCheck A, XA
 	global = A
 
-	@check scoping.X.reference.E
+	@check "scoping.X.reference.E"
 	@aliasCheck E, XE
 	global = E
 	
-	@check scoping.X.reference.globalC
+	@check "scoping.X.reference.globalC"
 	@aliasCheck C, globalC
 	global = C
 
-	@check scoping.X.reference.AToLocal
+	@check "scoping.X.reference.AToLocal"
 	@aliasCheck A, XA
 	local = A
 
-	@check scoping.X.reference.EToLocal
+	@check "scoping.X.reference.EToLocal"
 	@aliasCheck E, XE
 	local = E
 	
-	@check scoping.X.reference.globalCToLocal
+	@check "scoping.X.reference.globalCToLocal"
 	@aliasCheck C, globalC
 	local = C
 
 	// overridden, overridden
-	@check scoping.X.reference.BToA
+	@check "scoping.X.reference.BToA"
 	@aliasCheck A, XA
 	@aliasCheck B, XB
 	A = B
 
 	// overridden, new local
-	@check scoping.X.reference.EToA
+	@check "scoping.X.reference.EToA"
 	@aliasCheck A, XA
 	@aliasCheck E, XE
 	A = E
 
 	// overridden, parent
-	@check scoping.X.reference.CToA
+	@check "scoping.X.reference.CToA"
 	@aliasCheck C, globalC
 	@aliasCheck A, XA
 	A = C
 	
 	// parent, new local
-	@check scoping.X.reference.EToC
+	@check "scoping.X.reference.EToC"
 	@aliasCheck C, globalC
 	@aliasCheck E, XE
 	C = E
 	
 	// parent, parent
-	@check scoping.X.reference.CToD
+	@check "scoping.X.reference.CToD"
 	@aliasCheck C, globalC
 	@aliasCheck D, globalD
 	D = C
 
 	// parent, overridden
-	@check scoping.X.reference.AToD
+	@check "scoping.X.reference.AToD"
 	@aliasCheck A, XA
 	@aliasCheck D, globalD
 	D = A
 
 	// new local, new local
-	@check scoping.X.reference.FToE
+	@check "scoping.X.reference.FToE"
 	@aliasCheck E, XE
 	@aliasCheck F, XF
 	E = F
 	
 	// new local, parent
-	@check scoping.X.reference.DToE
+	@check "scoping.X.reference.DToE"
 	@aliasCheck E, XE
 	@aliasCheck D, globalD
 	E = D
 
 	// new local, overridden
-	@check scoping.X.reference.AToE
+	@check "scoping.X.reference.AToE"
 	@aliasCheck E, XE
 	@aliasCheck A, XA
 	E = A
 	
 	// operator new local
-	@check scoping.X.reference.operator.unary.local
+	@check "scoping.X.reference.operator.unary.local"
 	@aliasCheck F, XF
 	@strict
 	local = pre(F)
 	
 	// operator parent
-	@check scoping.X.reference.operator.unary.parent
+	@check "scoping.X.reference.operator.unary.parent"
 	@aliasCheck D, globalD
 	@strict
 	local = pre(D)
 
 	// operator overridden
-	@check scoping.X.reference.operator.unary.overridden
+	@check "scoping.X.reference.operator.unary.overridden"
 	@aliasCheck A, XA
 	@strict
 	local = pre(A)
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.LL
+	@check "scoping.X.reference.operator.binary.LL"
 	@aliasCheck E, XE
 	@aliasCheck F, XF
 	local = E & F
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.LL#002
+	@check "scoping.X.reference.operator.binary.LL#002"
 	@aliasCheck E, XE
 	@aliasCheck F, XF
 	local = F & E
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.LP
+	@check "scoping.X.reference.operator.binary.LP"
 	@aliasCheck C, globalC
 	@aliasCheck F, XF
 	local = C & F
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.PL
+	@check "scoping.X.reference.operator.binary.PL"
 	@aliasCheck C, globalC
 	@aliasCheck F, XF
 	local = F & C
 	
 	// operator overridden
-	@check scoping.X.reference.operator.binary.PP
+	@check "scoping.X.reference.operator.binary.PP"
 	@aliasCheck C, globalC
 	@aliasCheck D, globalD
 	local = C & D
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.PP#002
+	@check "scoping.X.reference.operator.binary.PP#002"
 	@aliasCheck C, globalC
 	@aliasCheck D, globalD
 	local = D & C
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.LO
+	@check "scoping.X.reference.operator.binary.LO"
 	@aliasCheck A, XA
 	@aliasCheck F, XF
 	local = A & F
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.OL
+	@check "scoping.X.reference.operator.binary.OL"
 	@aliasCheck A, XA
 	@aliasCheck F, XF
 	local = F & A
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.OO
+	@check "scoping.X.reference.operator.binary.OO"
 	@aliasCheck A, XA
 	@aliasCheck B, XB
 	local = A & B
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.OO#002
+	@check "scoping.X.reference.operator.binary.OO#002"
 	@aliasCheck A, XA
 	@aliasCheck B, XB
 	local = B & A
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.PO
+	@check "scoping.X.reference.operator.binary.PO"
 	@aliasCheck A, XA
 	@aliasCheck C, globalC
 	local = A & C
 
 	// operator overridden
-	@check scoping.X.reference.operator.binary.OP
+	@check "scoping.X.reference.operator.binary.OP"
 	@aliasCheck A, XA
 	@aliasCheck C, globalC
 	local = C & A	
