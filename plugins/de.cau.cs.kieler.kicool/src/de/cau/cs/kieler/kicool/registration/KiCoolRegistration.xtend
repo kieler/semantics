@@ -91,8 +91,7 @@ class KiCoolRegistration {
                 modelsMap.put(system.key, model as System) 
                 modelsIdMap.put((model as System).id, model as System)
             } catch (Exception e) {
-                java.lang.System.err.println("The processor system " + system.toString + " is registered. " + 
-                    "However, there was an error while loading the resource! I'm sorry!")
+                throw new Exception("There was an error loading the registered processor system " + system.toString, e)
             }
         }
         modelList
