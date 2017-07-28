@@ -115,17 +115,17 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
     // -------------------------------------------------------------------------
 
-    /**
-     * A state should be reachable from an initial state.
-     *
-     * @param state the state
-     */
-    @Check
-    public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
-        if (!sCChartExtension.isStateReachable(state, false, false, false)) {
-           warning(STATE_NOT_REACHABLE, state, null, -1);
-        }
-    }
+//    /**
+//     * A state should be reachable from an initial state.
+//     *
+//     * @param state the state
+//     */
+//    @Check
+//    public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
+//        if (!sCChartExtension.isStateReachable(state, false, false, false)) {
+//           warning(STATE_NOT_REACHABLE, state, null, -1);
+//        }
+//    }
 
     // -------------------------------------------------------------------------
     // @Check

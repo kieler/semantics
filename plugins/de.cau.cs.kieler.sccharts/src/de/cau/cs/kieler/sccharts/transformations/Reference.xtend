@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -59,9 +59,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
  */
 class Reference extends AbstractExpansionTransformation implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::REFERENCE_ID
     }
@@ -82,12 +82,12 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         return Sets.newHashSet()
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     @Inject
-    extension KExpressionsDeclarationExtensions    
-    
+    extension KExpressionsDeclarationExtensions
+
     @Inject
-    extension KExpressionsValuedObjectExtensions   
+    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension AnnotationsExtensions
@@ -104,24 +104,23 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
     private val propagatedBindings = <String, Binding>newHashMap
 
-    //-------------------------------------------------------------------------
-    //--                        R E F E R E N C E                            --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                        R E F E R E N C E                            --
+    // -------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
         // Transform dataflows first
-		targetRootState.transformDataflows
+        targetRootState.transformDataflows
         // Traverse all referenced states
-        targetRootState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
         targetRootState.allContainedStates.filter[referencedState].immutableCopy.forEach [
             transformReference(targetRootState)
         ]
-        
+
         targetRootState;
     }
 
-    def void transformReference(State state, State targetRootState) {        
+    def void transformReference(State state, State targetRootState) {
         state.setDefaultTrace
         // Referenced scopes are always SCCharts
         // Each referenced state must be contained in a region.
@@ -134,564 +133,558 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         var newStateIterator = newState.eAllContents
         while (newStateIterator.hasNext) {
             val eObject = newStateIterator.next
-            if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference ||
-            if (eObject instanceof Emission || eObject instanceof Assignment || eObject instanceof ValuedObjectReference ||
-                eObject instanceof TextExpression || eObject instanceof Binding) {
-                for (binding : state.bindings) {
-                    if (eObject instanceof Assignment) {
+            if (eObject instanceof Emission || eObject instanceof Assignment ||
+                eObject instanceof ValuedObjectReference || eObject instanceof TextExpression ||
+                eObject instanceof Binding) {
+                    for (binding : state.bindings) {
+                        if (eObject instanceof Assignment) {
 
-
-
-
-
-                    if (eObject instanceof Emission) {
-                        val emission = (eObject as Emission);
-                        val emissionCopy = emission.nontracingCopy;
-                        if (emission.valuedObject.name == binding.formal.name) {
-                            emission.valuedObject = binding.actual
-                        }
-                    } else if (eObject instanceof Assignment) {
-
-
-
-
-
-                        val assignment = (eObject as Assignment);
-                        val assignmentCopy = assignment.nontracingCopy;
-                        if (assignment.valuedObject.name == binding.formal.name) {
-                        if ((assignment.valuedObject.declaration.input ||
-                             assignment.valuedObject.declaration.output)
-                            && assignment.valuedObject.name == binding.formal.name) {
-                            assignment.valuedObject = binding.actual
-                            assignment.indices.clear
-                            for (index : assignmentCopy.indices) {
-                                assignment.indices.add(index.nontracingCopy.rtrace(binding));
-                            }
-                            
-                            // Use binding indices when bind to scalar.
-                            if (binding.indices.size > 0 && assignment.indices.size == 0) {
-                                assignment.indices.clear
-                                for(index : binding.indices) {
-                                    assignment.indices.add(index.nontracingCopy.rtrace(binding))
-                                }                                
-                            }                        
-                        }
-                        assignment.indices.clear
-                        for (index : assignmentCopy.indices) {
-                            assignment.indices.add(index.nontracingCopy.rtrace(binding));
-                        }
-                    } else if (eObject instanceof ValuedObjectReference) {
-                        val valuedObjectReference = (eObject as ValuedObjectReference);
-                        val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
-                        if (valuedObjectReference.valuedObject.name == binding.formal.name) {
-                            valuedObjectReference.valuedObject = binding.actual
-                        if ((valuedObjectReference.valuedObject.declaration.input ||
-                             valuedObjectReference.valuedObject.declaration.output)
-                            && valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
-                            
-                            if (binding.actual != null) {
-                                valuedObjectReference.valuedObject = binding.actual 
-                                // This should be handled by copyState.
-                                // However, we need more testing for bindings with arrays.
-    //                            valuedObjectReference.indices.clear
-    //                            for (index : valuedObjectReferenceCopy.indices) {
-    //                                valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
-    //                            }
-    
-                                if (binding.indices.size > 0) {
-                                    valuedObjectReference.indices.clear
-                                    for(index : binding.indices) {
-                                        valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding))
-                                    }                                
+                            if (eObject instanceof Emission) {
+                                val emission = (eObject as Emission);
+                                val emissionCopy = emission.nontracingCopy;
+                                if (emission.valuedObject.name == binding.formal.name) {
+                                    emission.valuedObject = binding.actual
                                 }
-                            } else { // bind to literal
-                                val newConstVO = createValuedObject(CONST_VO_PREFIX + binding.value.hashCode) => [
-                                    initialValue = binding.value.copy
-                                ]
-                                binding.value.createDeclaration.attach(newConstVO) => [
-                                    const = true
-                                    newState.declarations += it 
-                                ]
-                                valuedObjectReference.valuedObject = newConstVO
+                            } else if (eObject instanceof Assignment) {
+
+                                val assignment = (eObject as Assignment);
+                                val assignmentCopy = assignment.nontracingCopy;
+                                if ((assignment.valuedObject.declaration.input ||
+                                    assignment.valuedObject.declaration.output) &&
+                                    assignment.valuedObject.name == binding.formal.name) {
+                                    assignment.valuedObject = binding.actual
+                                    assignment.indices.clear
+                                    for (index : assignmentCopy.indices) {
+                                        assignment.indices.add(index.nontracingCopy.rtrace(binding));
+                                    }
+
+                                    // Use binding indices when bind to scalar.
+                                    if (binding.indices.size > 0 && assignment.indices.size == 0) {
+                                        assignment.indices.clear
+                                        for (index : binding.indices) {
+                                            assignment.indices.add(index.nontracingCopy.rtrace(binding))
+                                        }
+                                    }
+                                }
+                                assignment.indices.clear
+                                for (index : assignmentCopy.indices) {
+                                    assignment.indices.add(index.nontracingCopy.rtrace(binding));
+                                }
+                            } else if (eObject instanceof ValuedObjectReference) {
+                                val valuedObjectReference = (eObject as ValuedObjectReference);
+                                val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
+                                if ((valuedObjectReference.valuedObject.declaration.input ||
+                                    valuedObjectReference.valuedObject.declaration.output) &&
+                                    valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
+
+                                    if (binding.actual != null) {
+                                        valuedObjectReference.valuedObject = binding.actual
+                                        // This should be handled by copyState.
+                                        // However, we need more testing for bindings with arrays.
+                                        // valuedObjectReference.indices.clear
+                                        // for (index : valuedObjectReferenceCopy.indices) {
+                                        // valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
+                                        // }
+                                        if (binding.indices.size > 0) {
+                                            valuedObjectReference.indices.clear
+                                            for (index : binding.indices) {
+                                                valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding))
+                                            }
+                                        }
+                                    } else { // bind to literal
+                                        val newConstVO = createValuedObject(CONST_VO_PREFIX + binding.value.hashCode) =>
+                                            [
+                                                initialValue = binding.value.copy
+                                            ]
+                                        binding.value.createDeclaration.attach(newConstVO) => [
+                                            const = true
+                                            newState.declarations += it
+                                        ]
+                                        valuedObjectReference.valuedObject = newConstVO
+                                    }
+                                }
+                                valuedObjectReference.indices.clear
+                                for (index : valuedObjectReferenceCopy.indices) {
+                                    valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
+                                }
+                            } else if (eObject instanceof Binding) {
+                                val bing = eObject as Binding
+                                if ((bing.actual.declaration.input || bing.actual.declaration.output) &&
+                                    bing.actual.name == binding.formal.name) {
+                                    bing.actual = binding.actual
+                                    for (index : binding.indices) {
+                                        bing.indices.add(index.nontracingCopy.rtrace(binding))
+                                    }
+                                }
+                            } else if (eObject instanceof TextExpression) {
+                                if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {
+                                    val texp = (eObject as TextExpression)
+                                    texp.text = texp.text.replaceAll(binding.formal.name, binding.actual.name)
+                                }
                             }
-                        }
-                        valuedObjectReference.indices.clear
-                        for (index : valuedObjectReferenceCopy.indices) {
-                            valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
-                        }
-                    } else if (eObject instanceof Binding) {
-                        val bing = eObject as Binding
-                        if (bing.actual.name == binding.formal.name) {
-                        if ((bing.actual.declaration.input ||
-                             bing.actual.declaration.output)
-                            && bing.actual.name == binding.formal.name) {
-                            bing.actual = binding.actual
-                            for(index : binding.indices) {
-                                bing.indices.add(index.nontracingCopy.rtrace(binding))
-                            }
-                        }
-                    } else if (eObject instanceof TextExpression) {
-                        if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {
-                            val texp = (eObject as TextExpression)
-                            texp.text = texp.text.replaceAll(binding.formal.name, binding.actual.name)
                         }
                     }
                 }
+
+                state.bindings.forEach [ binding |
+                    if (binding.hasAnnotation(PROPAGATE_ANNOTATION)) {
+                        propagatedBindings.put(binding.formal.name, binding)
+                    }
+                    newState.declarations.immutableCopy.forEach [
+                        val bindingName = binding.formal.name
+                        val objects = valuedObjects.filter[name.equals(bindingName)].toList
+                        objects.immutableCopy.forEach[delete]
+                    ]
+                ]
+
+                newState.declarations.immutableCopy.forEach [ declaration |
+                    if (declaration.isInput || declaration.isOutput) {
+                        declaration.valuedObjects.forEach [
+                            val newObject = (newState.eContainer as Scope).findValuedObjectByName(name)
+                            if (newObject != null) {
+                                newState.replaceAllOccurrences(it, newObject)
+                            } else {
+                                val propagatedName = name.findPropagatedName
+                                if (!propagatedName.nullOrEmpty) {
+                                    val propagatedNewObject = (newState.eContainer as Scope).
+                                        findValuedObjectByName(propagatedName)
+                                    newState.replaceAllOccurrences(it, propagatedNewObject)
+                                }
+                            }
+                        ]
+                        declaration.delete
+                    }
+                ]
+
+                state.incomingTransitions.immutableCopy.forEach[targetState = newState]
+                state.outgoingTransitions.immutableCopy.forEach[sourceState = newState]
+
+                newState => [
+                    initial = state.initial
+                    ^final = state.^final
+                ]
+
+                state.remove
+
+                newState.allContainedStates.filter[referencedState].immutableCopy.forEach [
+                    transformReference(newState)
+                ]
             }
         }
 
-        state.bindings.forEach [ binding |
-            if (binding.hasAnnotation(PROPAGATE_ANNOTATION)) {
-                propagatedBindings.put(binding.formal.name, binding)
-            }
-            newState.declarations.immutableCopy.forEach [
-                val bindingName = binding.formal.name
-                val objects = valuedObjects.filter[name == bindingName].toList
-                val objects = valuedObjects.filter[name.equals(bindingName)].toList
-                objects.immutableCopy.forEach[delete]
-            ]
-        ]
-
-        newState.declarations.immutableCopy.forEach [ declaration |
-            if (declaration.isInput || declaration.isOutput) {
-                declaration.valuedObjects.forEach [
-                    val newObject = (newState.eContainer as Scope).findValuedObjectByName(name)
-                    if (newObject != null) {
-                        newState.replaceAllOccurrences(it, newObject)
+        def transformDataflows(State state) {
+            val dataflows = <DataflowRegion>newHashSet
+            // traverse all dataflows
+            state.getAllContainedStates.forEach[dataflows += regions.filter(typeof(DataflowRegion))]
+            val nodeMapping = <Node, State>newHashMap
+            for (dataflow : dataflows.immutableCopy) {
+                val parentState = dataflow.eContainer as State
+                var regionCounter = 0
+                var idCounter = 0
+                /*
+                 * Transform ReferenceNodes first
+                 * => create new region and state, copy referenced scope
+                 * and bind all valued objects accordingly
+                 */
+                for (refNode : dataflow.nodes.filter(typeof(ReferenceNode))) {
+                    val rRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
+                    rRegion.label = dataflow.label + regionCounter
+                    val newState = rRegion.createState("_" + refNode.id + idCounter)
+                    newState.label = if (refNode.label != null) {
+                        refNode.label + idCounter
                     } else {
-                        val propagatedName = name.findPropagatedName
-                        if (!propagatedName.nullOrEmpty) {
-                            val propagatedNewObject = (newState.eContainer as Scope).
-                                findValuedObjectByName(propagatedName)
-                            newState.replaceAllOccurrences(it, propagatedNewObject)
-                        }
+                        refNode.id + idCounter
                     }
-                ]
-                declaration.delete
-            }
-        ]
-
-        state.incomingTransitions.immutableCopy.forEach[targetState = newState]
-        state.outgoingTransitions.immutableCopy.forEach[sourceState = newState]
-
-        newState => [
-            initial = state.initial
-            ^final = state.^final
-        ]
-
-        state.remove
-
-        newState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
-        newState.allContainedStates.filter[referencedState].immutableCopy.forEach [
-            transformReference(newState)
-        ]
-    }
-
-    
-    def transformDataflows(State state) {
-    	val dataflows = <DataflowRegion> newHashSet
-    	// traverse all dataflows
-    	state.getAllContainedStates.forEach[ dataflows += regions.filter(typeof(DataflowRegion))]
-    	val nodeMapping = <Node, State> newHashMap
-    	for(dataflow : dataflows.immutableCopy) {
-    		val parentState = dataflow.eContainer as State
-    		var regionCounter = 0
-			var idCounter = 0
-			/*
-			 * Transform ReferenceNodes first
-			 * => create new region and state, copy referenced scope
-			 * and bind all valued objects accordingly
-			 */
-            for(refNode: dataflow.nodes.filter(typeof(ReferenceNode))) {
-                val rRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
-                rRegion.label = dataflow.label + regionCounter
-                val newState = rRegion.createState("_" + refNode.id + idCounter)
-                newState.label = if (refNode.label != null) {refNode.label + idCounter} else {refNode.id + idCounter}
-                regionCounter = regionCounter + 1
-                idCounter = idCounter + 1
-                newState.setInitial
-                newState.referencedScope = refNode.referencedScope
-                nodeMapping.put(refNode, newState)
-                
-                // bind inputs
-                var exprCounter = 0
-                val refedInputs = <ValuedObject>newArrayList
-                refNode.referencedScope.declarations.filter[it.input].forEach[
-                    refedInputs += valuedObjects
-                ]
-                for (expr: refNode.parameters) {
-                    val newBinding = SCChartsFactory.eINSTANCE.createBinding
-                    newBinding.actual = (expr as ValuedObjectReference).valuedObject
-                    newBinding.formal = refedInputs.get(exprCounter)
-                    val rState = nodeMapping.get(refNode)
-                    rState.bindings += newBinding
-                    exprCounter = exprCounter + 1
-                }
-                // bind outputs
-                exprCounter = 0
-                val refedOutputs = <ValuedObject>newArrayList
-                refNode.referencedScope.declarations.filter[it.output].forEach[
-                    refedOutputs += valuedObjects
-                ]
-                for (eq: dataflow.equations) {
-                    if (eq.node != null) {
-                        if (eq.node.equals(refNode)) {
-                            val refedVo = (eq.expression as ValuedObjectReference).valuedObject
-                            if (refedOutputs.contains(refedVo)) {
-                                val newBinding = SCChartsFactory.eINSTANCE.createBinding
-                                newBinding.actual = eq.valuedObject
-                                newBinding.formal = refedVo
-                                val rState = nodeMapping.get(refNode)
-                                rState.bindings += newBinding
-                            }
-                        }
-                    }
-                }
-                (newState.referencedScope as State).transform
-            }
-			// transform all call nodes
-			val assignmentMapping = <String, Assignment> newHashMap
-			val voMapping = <String, ValuedObject> newHashMap
-			val transitionsMapping = <String, Transition> newHashMap
-			for(callNode: dataflow.nodes.filter(typeof(CallNode))) {
-			    // Get the called DefineNode, create lists for all inputs and outputs
-			    val defNode = callNode.callReference
-			    val refedInputs = <ValuedObject>newArrayList
-                defNode.inputs.forEach[
-                    refedInputs += valuedObjects
-                ]
-			    val refedOutputs = <ValuedObject>newArrayList
-                defNode.outputs.forEach[
-                    refedOutputs += valuedObjects
-                ]
-			    
-			    if (defNode.states.nullOrEmpty) {
-                    // case: dataflow is modelled inside define node
-                    // create new region, initial and final state
-                    val newRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
-                    newRegion.label = dataflow.label + regionCounter
-                    
-                    val newState = newRegion.createState("_" + dataflow.ID + idCounter)
-                    newState.label = dataflow.label + idCounter + "_start"
+                    regionCounter = regionCounter + 1
+                    idCounter = idCounter + 1
                     newState.setInitial
-                    
-                    val newState2 = newRegion.createState("_" + dataflow.ID + idCounter)
-                    newState2.label = dataflow.label + idCounter + "_end"
-                    
-                    // change comments on next two lines for "old" version
-//                    newState2.setFinal
-                    createNewTransition(newState2, newState)
-                    
-                    // create transition between states for effects
-                    val transition = createNewTransition(newState, newState2)
-                    transition.setImmediate
-                    
-                    // create an assignment effect for all dataflow equations modelled inside
-                    // the defining node
-                    var eqCounter = 0
-                    for (vo: defNode.valuedObjects) {
-                        val newAssignment = createNewAssignment(vo, defNode.expressions.get(eqCounter).copy)
-                        transition.effects += newAssignment
-                        eqCounter = eqCounter + 1
-                        assignmentMapping.put(callNode.id + "." + vo.name, newAssignment)
-                    }
-                    
-                    // replace inputs
+                    newState.referencedScope = refNode.referencedScope
+                    nodeMapping.put(refNode, newState)
+
+                    // bind inputs
                     var exprCounter = 0
-                    for (p: callNode.parameters) {
-                        val in = (p as ValuedObjectReference).valuedObject
-                        newState.replaceAllOccurrences(refedInputs.get(exprCounter), in)
+                    val refedInputs = <ValuedObject>newArrayList
+                    refNode.referencedScope.declarations.filter[it.input].forEach [
+                        refedInputs += valuedObjects
+                    ]
+                    for (expr : refNode.parameters) {
+                        val newBinding = SCChartsFactory.eINSTANCE.createBinding
+                        newBinding.actual = (expr as ValuedObjectReference).valuedObject
+                        newBinding.formal = refedInputs.get(exprCounter)
+                        val rState = nodeMapping.get(refNode)
+                        rState.bindings += newBinding
                         exprCounter = exprCounter + 1
                     }
-                    
-                    // replace outputs: get all dataflow equations which have a reference
-                    // to the current call node
-                    for (eq: dataflow.equations) {
+                    // bind outputs
+                    exprCounter = 0
+                    val refedOutputs = <ValuedObject>newArrayList
+                    refNode.referencedScope.declarations.filter[it.output].forEach [
+                        refedOutputs += valuedObjects
+                    ]
+                    for (eq : dataflow.equations) {
                         if (eq.node != null) {
-                            if (eq.node.equals(callNode)) {
-                                val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
-                                val vo = eq.valuedObject
-                                // check if output variable is already substituted
-                                if (voMapping.containsKey(key)) {
-                                    val existingValuedObject = voMapping.get(key)
-                                    /*
-                                     * if the region has two states (initial+final) then create
-                                     * a third state and another immediate transition to the new state.
-                                     * Set old final state to normal and the new state to final.
-                                     * Put all output variables referring to the same output value
-                                     * of the call node as an effect to this transition 
-                                     */
-                                    if (newRegion.states.size == 2) {
-                                            newState2.setFinal(false)
-                                            newState2.label = dataflow.label + idCounter + "_mid"
-                                        
-                                            val newFinalState = newRegion.createState("_" + dataflow.id + idCounter)
-                                            newFinalState.label = dataflow.label + idCounter + "_end"
-                                            newFinalState.setFinal
-                                            
-                                            val newTransition = createNewTransition(newState2, newFinalState)
-                                            newTransition.setImmediate
-                                    }
-                                    // if thirs state already exist, just create the assignment
-                                    val newAssignment = createNewAssignment(vo, existingValuedObject.reference)
-                                    newState2.outgoingTransitions.get(0).effects += newAssignment
-                                
-                                // if the output variable is not yet substituted (first look at it)
-                                // then substitute 
-                                } else {
-                                    val oldAssignment = assignmentMapping.get(key)
-                                    oldAssignment.valuedObject = vo
-                                    voMapping.put(key, vo)
+                            if (eq.node.equals(refNode)) {
+                                val refedVo = (eq.expression as ValuedObjectReference).valuedObject
+                                if (refedOutputs.contains(refedVo)) {
+                                    val newBinding = SCChartsFactory.eINSTANCE.createBinding
+                                    newBinding.actual = eq.valuedObject
+                                    newBinding.formal = refedVo
+                                    val rState = nodeMapping.get(refNode)
+                                    rState.bindings += newBinding
                                 }
                             }
                         }
                     }
-                    // increment counters
-                    regionCounter = regionCounter + 1
-                    idCounter = idCounter + 1
-                    // remember CallNode and its initial state
-                    nodeMapping.put(callNode, newState)
-			    } else {
-                    // second case: controlflow is modeled inside define node
-                    // create new region and copy all content of the define node
-			        val newRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
-                    newRegion.label = dataflow.label + regionCounter
-                    
-                     // ssm: copy all local declarations
-                    val voMap = <ValuedObject, ValuedObject>newHashMap
-                    for (declaration : dataflow.declarations) {
-                        val newDeclaration = createDeclaration(declaration).trace(declaration)
-                        declaration.valuedObjects.forEach [
-                            val newValuedObject = it.copy
-                            newDeclaration.valuedObjects += newValuedObject
-                            voMap.put(it, newValuedObject)
-                        ]
-                        newRegion.declarations += newDeclaration
-                    }                    
-                    
-                    val transitionMapping = <Transition, Transition> newHashMap
-                    // copy states
-                    for (s: defNode.states) {
-                        val newState = s.copy
-                        // copy transitions
-                        for (t: s.incomingTransitions) {
-                            var newTrans = SCChartsFactory.eINSTANCE.createTransition
-                            if (transitionMapping.containsKey(t)) {
-                                newTrans = transitionMapping.get(t)
-                            } else {
-                                newTrans = t.copy
-                                transitionMapping.put(t, newTrans)
-                            }
-                            newTrans.targetState = newState
-                            newState.incomingTransitions += newTrans
+                    (newState.referencedScope as State).transform
+                }
+                // transform all call nodes
+                val assignmentMapping = <String, Assignment>newHashMap
+                val voMapping = <String, ValuedObject>newHashMap
+                val transitionsMapping = <String, Transition>newHashMap
+                for (callNode : dataflow.nodes.filter(typeof(CallNode))) {
+                    // Get the called DefineNode, create lists for all inputs and outputs
+                    val defNode = callNode.callReference
+                    val refedInputs = <ValuedObject>newArrayList
+                    defNode.inputs.forEach [
+                        refedInputs += valuedObjects
+                    ]
+                    val refedOutputs = <ValuedObject>newArrayList
+                    defNode.outputs.forEach [
+                        refedOutputs += valuedObjects
+                    ]
+
+                    if (defNode.states.nullOrEmpty) {
+                        // case: dataflow is modelled inside define node
+                        // create new region, initial and final state
+                        val newRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
+                        newRegion.label = dataflow.label + regionCounter
+
+                        val newState = newRegion.createState("_" + dataflow.ID + idCounter)
+                        newState.label = dataflow.label + idCounter + "_start"
+                        newState.setInitial
+
+                        val newState2 = newRegion.createState("_" + dataflow.ID + idCounter)
+                        newState2.label = dataflow.label + idCounter + "_end"
+
+                        // change comments on next two lines for "old" version
+//                    newState2.setFinal
+                        createNewTransition(newState2, newState)
+
+                        // create transition between states for effects
+                        val transition = createNewTransition(newState, newState2)
+                        transition.setImmediate
+
+                        // create an assignment effect for all dataflow equations modelled inside
+                        // the defining node
+                        var eqCounter = 0
+                        for (vo : defNode.valuedObjects) {
+                            val newAssignment = createNewAssignment(vo, defNode.expressions.get(eqCounter).copy)
+                            transition.effects += newAssignment
+                            eqCounter = eqCounter + 1
+                            assignmentMapping.put(callNode.id + "." + vo.name, newAssignment)
                         }
-                        for (t: s.outgoingTransitions) {
-                            var newTrans = SCChartsFactory.eINSTANCE.createTransition
-                            if (transitionMapping.containsKey(t)) {
-                                newTrans = transitionMapping.get(t)
-                            } else {
-                                newTrans = t.copy
-                                transitionMapping.put(t, newTrans)
-                            }
-                            newTrans.sourceState = newState
-                            newState.outgoingTransitions += newTrans
+
+                        // replace inputs
+                        var exprCounter = 0
+                        for (p : callNode.parameters) {
+                            val in = (p as ValuedObjectReference).valuedObject
+                            newState.replaceAllOccurrences(refedInputs.get(exprCounter), in)
+                            exprCounter = exprCounter + 1
                         }
-                        newRegion.states += newState
-                    }
-                    
-                    // ssm: create consistent local variable state 
+
+                        // replace outputs: get all dataflow equations which have a reference
+                        // to the current call node
+                        for (eq : dataflow.equations) {
+                            if (eq.node != null) {
+                                if (eq.node.equals(callNode)) {
+                                    val key = callNode.id + "." +
+                                        (eq.expression as ValuedObjectReference).valuedObject.name
+                                    val vo = eq.valuedObject
+                                    // check if output variable is already substituted
+                                    if (voMapping.containsKey(key)) {
+                                        val existingValuedObject = voMapping.get(key)
+                                        /*
+                                         * if the region has two states (initial+final) then create
+                                         * a third state and another immediate transition to the new state.
+                                         * Set old final state to normal and the new state to final.
+                                         * Put all output variables referring to the same output value
+                                         * of the call node as an effect to this transition 
+                                         */
+                                        if (newRegion.states.size == 2) {
+                                            newState2.setFinal(false)
+                                            newState2.label = dataflow.label + idCounter + "_mid"
+
+                                            val newFinalState = newRegion.createState("_" + dataflow.id + idCounter)
+                                            newFinalState.label = dataflow.label + idCounter + "_end"
+                                            newFinalState.setFinal
+
+                                            val newTransition = createNewTransition(newState2, newFinalState)
+                                            newTransition.setImmediate
+                                        }
+                                        // if thirs state already exist, just create the assignment
+                                        val newAssignment = createNewAssignment(vo, existingValuedObject.reference)
+                                        newState2.outgoingTransitions.get(0).effects += newAssignment
+
+                                    // if the output variable is not yet substituted (first look at it)
+                                    // then substitute 
+                                    } else {
+                                        val oldAssignment = assignmentMapping.get(key)
+                                        oldAssignment.valuedObject = vo
+                                        voMapping.put(key, vo)
+                                    }
+                                }
+                            }
+                        }
+                        // increment counters
+                        regionCounter = regionCounter + 1
+                        idCounter = idCounter + 1
+                        // remember CallNode and its initial state
+                        nodeMapping.put(callNode, newState)
+                    } else {
+                        // second case: controlflow is modeled inside define node
+                        // create new region and copy all content of the define node
+                        val newRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
+                        newRegion.label = dataflow.label + regionCounter
+
+                        // ssm: copy all local declarations
+                        val voMap = <ValuedObject, ValuedObject>newHashMap
+                        for (declaration : dataflow.declarations) {
+                            val newDeclaration = createDeclaration(declaration).trace(declaration)
+                            declaration.valuedObjects.forEach [
+                                val newValuedObject = it.copy
+                                newDeclaration.valuedObjects += newValuedObject
+                                voMap.put(it, newValuedObject)
+                            ]
+                            newRegion.declarations += newDeclaration
+                        }
+
+                        val transitionMapping = <Transition, Transition>newHashMap
+                        // copy states
+                        for (s : defNode.states) {
+                            val newState = s.copy
+                            // copy transitions
+                            for (t : s.incomingTransitions) {
+                                var newTrans = SCChartsFactory.eINSTANCE.createTransition
+                                if (transitionMapping.containsKey(t)) {
+                                    newTrans = transitionMapping.get(t)
+                                } else {
+                                    newTrans = t.copy
+                                    transitionMapping.put(t, newTrans)
+                                }
+                                newTrans.targetState = newState
+                                newState.incomingTransitions += newTrans
+                            }
+                            for (t : s.outgoingTransitions) {
+                                var newTrans = SCChartsFactory.eINSTANCE.createTransition
+                                if (transitionMapping.containsKey(t)) {
+                                    newTrans = transitionMapping.get(t)
+                                } else {
+                                    newTrans = t.copy
+                                    transitionMapping.put(t, newTrans)
+                                }
+                                newTrans.sourceState = newState
+                                newState.outgoingTransitions += newTrans
+                            }
+                            newRegion.states += newState
+                        }
+
+                        // ssm: create consistent local variable state 
 //                    for (vo : voMap.keySet) {
 //                        newRegion.replaceAllOccurrences(vo, voMap.get(vo))
 //                    }                    
-                    
-                    /*
-                     * remove transitions with no source or target state attached
-                     * because they are not visualized
-                     * and cannot be transformed to core sccharts
-                     * (but has been maybe created when copying transitions from DefineNodes)
-                     */
-                    newRegion.states.forEach[ s|
-                        s.incomingTransitions.immutableCopy.forEach[
-                            if (it.sourceState == null || it.targetState == null) {
-                                it.remove
-                            }
-                        ]
-                        s.outgoingTransitions.immutableCopy.forEach[
-                            if (it.sourceState == null || it.targetState == null) {
-                                it.remove
-                            }
-                        ]
-                    ]
-                    // replace input valued objects
-                    defNode.inputs.forEach[ i|
-                        i.valuedObjects.forEach[ vo|
-                            newRegion.states.forEach[
-                                it.replaceAllOccurrences(vo, (callNode.parameters.get(i.valuedObjects.indexOf(vo)) as ValuedObjectReference).valuedObject)
+                        /*
+                         * remove transitions with no source or target state attached
+                         * because they are not visualized
+                         * and cannot be transformed to core sccharts
+                         * (but has been maybe created when copying transitions from DefineNodes)
+                         */
+                        newRegion.states.forEach [ s |
+                            s.incomingTransitions.immutableCopy.forEach [
+                                if (it.sourceState == null || it.targetState == null) {
+                                    it.remove
+                                }
+                            ]
+                            s.outgoingTransitions.immutableCopy.forEach [
+                                if (it.sourceState == null || it.targetState == null) {
+                                    it.remove
+                                }
                             ]
                         ]
-                    ]
-                    // remember callNode and its initial state
-                    var State initState
-                    for (s: newRegion.states) {
-                        if (s.initial) {
-                            initState = s
-                        }
-                    }
-                    nodeMapping.put(callNode, initState)
-                    // deal with multiple use of outputs
-                    // first get all equations which refer to the current call node
-                    for (eq: dataflow.equations) {
-                        if (eq.node != null) {
-                            if (eq.node.equals(callNode)) {
-                                val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
-                                val vo = eq.valuedObject
-                                val voRef = (eq.expression as ValuedObjectReference).valuedObject
-                                /* if the output variable is already substituted traverse all states
-                                 * to get the corresponding transitions
-                                 * add a new assignment effect to set current output to the already
-                                 * substituted value.
-                                 */
-                                if (voMapping.containsKey(key)) {
-                                    for (s: newRegion.states) {
-                                        for (t: s.allContainedTransitions) {
-                                            if (transitionsMapping.containsKey(key+t.id)) {
-                                                val newAssignment = createNewAssignment(vo, voMapping.get(key).reference)
-                                                transitionsMapping.get(key+t.id).effects += newAssignment
-                                            }
-                                        }
+                        // replace input valued objects
+                        defNode.inputs.forEach [ i |
+                            i.valuedObjects.forEach [ vo |
+                                newRegion.states.forEach [
+                                    it.replaceAllOccurrences(vo,
+                                        (callNode.parameters.get(i.valuedObjects.indexOf(vo)) as ValuedObjectReference).
+                                            valuedObject)
+                                        ]
+                                    ]
+                                ]
+                                // remember callNode and its initial state
+                                var State initState
+                                for (s : newRegion.states) {
+                                    if (s.initial) {
+                                        initState = s
                                     }
-                                /*  if the output is not already substituted, traverse all states
-                                 *  to find all occurence of the value and replace it
-                                 */
-                                } else {
-                                    for (s: newRegion.states) {
-                                        for (t: s.allContainedTransitions) {
-                                            for (assign: t.allContainedAssignments) {
-                                                if (assign.valuedObject.equals(voRef)) {
-                                                    assign.valuedObject = vo
-                                                    voMapping.put(key, vo)
-                                                    transitionsMapping.put(key + t.id, t)
+                                }
+                                nodeMapping.put(callNode, initState)
+                                // deal with multiple use of outputs
+                                // first get all equations which refer to the current call node
+                                for (eq : dataflow.equations) {
+                                    if (eq.node != null) {
+                                        if (eq.node.equals(callNode)) {
+                                            val key = callNode.id + "." +
+                                                (eq.expression as ValuedObjectReference).valuedObject.name
+                                            val vo = eq.valuedObject
+                                            val voRef = (eq.expression as ValuedObjectReference).valuedObject
+                                            /* if the output variable is already substituted traverse all states
+                                             * to get the corresponding transitions
+                                             * add a new assignment effect to set current output to the already
+                                             * substituted value.
+                                             */
+                                            if (voMapping.containsKey(key)) {
+                                                for (s : newRegion.states) {
+                                                    for (t : s.allContainedTransitions) {
+                                                        if (transitionsMapping.containsKey(key + t.id)) {
+                                                            val newAssignment = createNewAssignment(vo,
+                                                                voMapping.get(key).reference)
+                                                            transitionsMapping.get(key + t.id).effects += newAssignment
+                                                        }
+                                                    }
+                                                }
+                                            /*  if the output is not already substituted, traverse all states
+                                             *  to find all occurence of the value and replace it
+                                             */
+                                            } else {
+                                                for (s : newRegion.states) {
+                                                    for (t : s.allContainedTransitions) {
+                                                        for (assign : t.allContainedAssignments) {
+                                                            if (assign.valuedObject.equals(voRef)) {
+                                                                assign.valuedObject = vo
+                                                                voMapping.put(key, vo)
+                                                                transitionsMapping.put(key + t.id, t)
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
+
+                                // ssm: create consistent local variable state 
+                                for (vo : voMap.keySet) {
+                                    newRegion.replaceAllOccurrences(vo, voMap.get(vo))
+                                }
+
+                            }
+                        }
+
+                        // transform all dataflow equations which do not refer to a node
+                        val assignmentList = <Assignment>newArrayList
+                        for (eq : dataflow.equations) {
+                            if (eq.node == null) {
+                                // Equation: eq.node == null
+                                // and create new assignment as transition effect
+                                assignmentList += createNewAssignment(eq.valuedObject, eq.expression)
+                            }
+                        }
+                        /*
+                         * create just one new region for all dataflow equations
+                         * and put all assignments as effect to a transition between the initial and final state
+                         */
+                        if (!assignmentList.empty) {
+                            // => create new region with initial and final state for each expression
+                            val rRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
+                            rRegion.label = dataflow.label + regionCounter
+
+                            // ssm: copy all local declarations
+                            val voMap = <ValuedObject, ValuedObject>newHashMap
+                            for (declaration : dataflow.declarations) {
+                                val newDeclaration = createDeclaration(declaration).trace(declaration)
+                                declaration.valuedObjects.forEach [
+                                    val newValuedObject = it.copy
+                                    newDeclaration.valuedObjects += newValuedObject
+                                    voMap.put(it, newValuedObject)
+                                ]
+                                rRegion.declarations += newDeclaration
+                            }
+
+                            val newState = rRegion.createState("_" + dataflow.ID + idCounter)
+                            newState.label = dataflow.label + idCounter + "_start"
+                            newState.setInitial
+
+                            val newState2 = rRegion.createState("_" + dataflow.id + idCounter)
+                            newState2.label = dataflow.label + idCounter + "_end"
+                            // change comment on next two lines for "old" version
+//                newState2.setFinal
+                            createNewTransition(newState2, newState)
+
+                            regionCounter = regionCounter + 1
+                            idCounter = idCounter + 1
+
+                            val transition = createNewTransition(newState, newState2)
+                            transition.setImmediate
+
+                            for (assign : assignmentList) {
+                                transition.effects += assign
+                            }
+
+                            // ssm: create consistent local variable state 
+                            for (vo : voMap.keySet) {
+                                rRegion.replaceAllOccurrences(vo, voMap.get(vo))
+                            }
+                        }
+                        // recursive call, to get all nested dataflows after reference
+                        parentState.regions.filter(ControlflowRegion).forEach [
+                            states.forEach [
+                                transform
+                            ]
+                        ]
+
+                        // remove (old) dataflow and empty regions
+                        dataflow.remove
+                        for (r : parentState.regions.filter(ControlflowRegion).toList) {
+                            if (r.states.size == 0) {
+                                r.remove
                             }
                         }
                     }
-                    
-                    // ssm: create consistent local variable state 
-                    for (vo : voMap.keySet) {
-                        newRegion.replaceAllOccurrences(vo, voMap.get(vo))
+
+                    // remove empty regions
+                    for (r : state.regions.filter(ControlflowRegion).toList) {
+                        if (r.states.size == 0) {
+                            r.remove
+                        }
                     }
-                    
-			    }
-			}
-			
-			// transform all dataflow equations which do not refer to a node
-			val assignmentList = <Assignment> newArrayList			
-			for (eq: dataflow.equations) {
-			    if (eq.node == null) {
-                    // Equation: eq.node == null
-                    // and create new assignment as transition effect
-                    assignmentList += createNewAssignment(eq.valuedObject, eq.expression)
                 }
-            }
-            /*
-             * create just one new region for all dataflow equations
-             * and put all assignments as effect to a transition between the initial and final state
-             */
-            if (!assignmentList.empty) {
-                // => create new region with initial and final state for each expression
-                val rRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
-                rRegion.label = dataflow.label + regionCounter
-                
-                // ssm: copy all local declarations
-                val voMap = <ValuedObject, ValuedObject> newHashMap
-                for (declaration : dataflow.declarations) {
-                    val newDeclaration = createDeclaration(declaration).trace(declaration)
-                    declaration.valuedObjects.forEach [
-                        val newValuedObject = it.copy
-                        newDeclaration.valuedObjects += newValuedObject
-                        voMap.put(it, newValuedObject)
-                    ]
-                    rRegion.declarations += newDeclaration
-                }
-                    
-                val newState = rRegion.createState("_" + dataflow.ID + idCounter)
-                newState.label = dataflow.label + idCounter + "_start"
-                newState.setInitial
-                    
-                val newState2 = rRegion.createState("_" + dataflow.id + idCounter)
-                newState2.label = dataflow.label + idCounter + "_end"
-                // change comment on next two lines for "old" version
-//                newState2.setFinal
-                createNewTransition(newState2, newState)
-                    
-                regionCounter = regionCounter + 1
-                idCounter = idCounter + 1
-                
-                val transition = createNewTransition(newState, newState2)
-                transition.setImmediate
-                
-                for (assign: assignmentList) {
-                    transition.effects += assign
-                }
-                
-                //ssm: create consistent local variable state 
-                for(vo : voMap.keySet) {
-                    rRegion.replaceAllOccurrences(vo, voMap.get(vo))
-                }
-            }
-            // recursive call, to get all nested dataflows after reference
-            parentState.regions.filter(ControlflowRegion).forEach[
-                states.forEach[
-                    transform
-                ]
-            ]
-			
-            // remove (old) dataflow and empty regions
-    		dataflow.remove
-    		for (r: parentState.regions.filter(ControlflowRegion).toList) {
-    		    if (r.states.size == 0) {
-    		        r.remove
-    		    }
-    		}
-    	}
-    	
-    	// remove empty regions
-    	for(r : state.regions.filter(ControlflowRegion).toList) {
-    		if (r.states.size == 0) {
-    		    r.remove
-    		}
-    	}
-   	}
-   	
-   	// helper methods
-   	private def Assignment createNewAssignment(ValuedObject vo, Expression expression) {
-   	    val newAssignment = KEffectsFactory.eINSTANCE.createAssignment
-   	    newAssignment.valuedObject = vo
-   	    newAssignment.expression = expression
-   	    return newAssignment
-   	}
-   	
-   	private def Transition createNewTransition(State sourceState, State targetState) {
-   	    val newTransition = SCChartsFactory.eINSTANCE.createTransition
-   	    newTransition.sourceState = sourceState
-   	    newTransition.targetState = targetState
-   	    return newTransition
-   	}
-    
-    private def String findPropagatedName(String name) {
-        var newName = name
 
-        for (k : propagatedBindings.keySet) {
-            if (k == name) {
-                newName = propagatedBindings.get(k).actual.name
-                return newName.findPropagatedName
-            }
-        }
+                // helper methods
+                private def Assignment createNewAssignment(ValuedObject vo, Expression expression) {
+                    val newAssignment = KEffectsFactory.eINSTANCE.createAssignment
+                    newAssignment.valuedObject = vo
+                    newAssignment.expression = expression
+                    return newAssignment
+                }
 
-        newName
-    }
-}
+                private def Transition createNewTransition(State sourceState, State targetState) {
+                    val newTransition = SCChartsFactory.eINSTANCE.createTransition
+                    newTransition.sourceState = sourceState
+                    newTransition.targetState = targetState
+                    return newTransition
+                }
+
+                private def String findPropagatedName(String name) {
+                    var newName = name
+
+                    for (k : propagatedBindings.keySet) {
+                        if (k == name) {
+                            newName = propagatedBindings.get(k).actual.name
+                            return newName.findPropagatedName
+                        }
+                    }
+
+                    newName
+                }
+            }
+            

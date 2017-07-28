@@ -36,9 +36,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
  */
 class SurfaceDepth extends AbstractExpansionTransformation implements Traceable {
 
-    // -------------------------------------------------------------------------
-    // --                 K I C O      C O N F I G U R A T I O N              --
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// --                 K I C O      C O N F I G U R A T I O N              --
+// -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::SURFACEDEPTH_ID
     }
@@ -59,7 +59,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         return Sets.newHashSet(SCChartsFeature::TRIGGEREFFECT_ID)
     }
 
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
     @Inject
     extension KExpressionsCompareExtensions
 
@@ -69,36 +69,35 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     @Inject
     extension SCChartsOptimization
 
-    // This prefix is used for naming of all generated signals, states and regions
+// This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    // -------------------------------------------------------------------------
-    // --                S U R F A C E  &   D E P T H                         --
-    // -------------------------------------------------------------------------
-    // @requires: abort transformation (there must not be any weak or strong aborts outgoing from
-    // macro state, hence we just consider simple states here)
-    //
-    // For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
-    // Create an auxiliary valuedObject isDepth_S that indicates that the state was
-    // entered in an earlier tick and add it to the parent state P of the parent region R of S.
-    // Modify all triggers of outgoing non-immediate transitions T of S: 1. set them to be
-    // immediate and 2. add "isDepth_S &&" to its trigger.
-    // Modify state S and make it a conditional.
-    // Now walk through all n transitions T_1..n outgoing from S (ordered ascended by their priority):
-    // For T_i create a conditional C_i. Connect C_i-1 and C_i with a true triggered immediate transition
-    // of priority 2. Set priority of T_i to 1. Note that T_i's original priority is now implicitly encoded
-    // by the sequential order of evaluating the conditionals C_1..n.
-    // The last conditional C_n connect with a new a normal state D (the explicit depth of S).
-    // Connect D with C_1 using a transition that emits isDepth_S.
-    // Note that conditionals cannot be marked to be initial. Hence, if a state S is marked initial 
-    // then an additional initial state I with a true triggered immediate transition to S will
-    // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
-    // the above transformation.
+// -------------------------------------------------------------------------
+// --                S U R F A C E  &   D E P T H                         --
+// -------------------------------------------------------------------------
+// @requires: abort transformation (there must not be any weak or strong aborts outgoing from
+// macro state, hence we just consider simple states here)
+//
+// For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
+// Create an auxiliary valuedObject isDepth_S that indicates that the state was
+// entered in an earlier tick and add it to the parent state P of the parent region R of S.
+// Modify all triggers of outgoing non-immediate transitions T of S: 1. set them to be
+// immediate and 2. add "isDepth_S &&" to its trigger.
+// Modify state S and make it a conditional.
+// Now walk through all n transitions T_1..n outgoing from S (ordered ascended by their priority):
+// For T_i create a conditional C_i. Connect C_i-1 and C_i with a true triggered immediate transition
+// of priority 2. Set priority of T_i to 1. Note that T_i's original priority is now implicitly encoded
+// by the sequential order of evaluating the conditionals C_1..n.
+// The last conditional C_n connect with a new a normal state D (the explicit depth of S).
+// Connect D with C_1 using a transition that emits isDepth_S.
+// Note that conditionals cannot be marked to be initial. Hence, if a state S is marked initial 
+// then an additional initial state I with a true triggered immediate transition to S will
+// be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
+// the above transformation.
     def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.allStates.toList.forEach [ targetState |
         targetRootState.allStates.immutableCopy.forEach [ targetState |
             targetState.transformSurfaceDepth(targetRootState);
         ]
@@ -211,7 +210,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
         var State previousState = surfaceState
         var State currentState = surfaceState
-        
+
         var i = 0;
 
         surfaceState.setDefaultTrace // All following states etc. will be traced to surfaceState if not traced to transition
@@ -260,15 +259,12 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             // System.out.println("Set previousState := " + currentState.id)
             previousState = currentState
             currentState = null
-            
-            
-            //i++;
-            //if (i == 2) {
-            //    return;
-            // }
-            
-        }
 
+        // i++;
+        // if (i == 2) {
+        // return;
+        // }
+        }
 
         // Connect back depth with surface state
         var T2tmp = previousState.createImmediateTransitionTo(depthState).trace(previousState)
@@ -319,49 +315,15 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                         val TK1s = K1.outgoingTransitions.filter(e|e != T1)
                         val TK2s = K2.outgoingTransitions.filter(e|e != T2)
                         if (TK1s.size > 0 && TK2s.size > 0) {
-                            val TK1 = TK1s.get(0)
-                            val TK2 = TK2s.get(0)
-                            if ((TK1.targetState == TK2.targetState) && // TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
-                            ((TK1.trigger == TK2.trigger) ||
-                                (TK2.trigger != null && TK1.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
+
+                            val TK1 = K1.outgoingTransitions.findFirst[it != T1]
+                            val TK2 = K2.outgoingTransitions.findFirst[it != T2]
+                            if ((TK1.targetState == TK2.targetState) && ((TK1.trigger == TK2.trigger) ||
+                                (TK2.trigger !== null && TK1.trigger !== null && (TK1.trigger.equals2(TK2.trigger))
+                            ))) { // TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
                                 stateAfterDepth = K1
-                    if (K1.outgoingTransitions.exists[it != T1]
-                        && K2.outgoingTransitions.exists[it != T2]
-                        && K1 != K2
-                    ) {
-                        val TK1 = K1.outgoingTransitions.findFirst[it != T1]
-                        val TK2 = K2.outgoingTransitions.findFirst[it != T2]
-                        if ((TK1.targetState == TK2.targetState)
-                                && ((TK1.trigger == TK2.trigger)
-                            || (TK2.trigger !== null && TK1.trigger !== null
-                                && (TK1.trigger.equals2(TK2.trigger))
-                            ))) {// TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
-                            stateAfterDepth = K1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
+                                // System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
                                 val t = K2.incomingTransitions.get(0)
                                 t.setTargetState(stateAfterDepth)
                                 for (transition : K2.outgoingTransitions) {
@@ -372,35 +334,26 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                                 K2.parentRegion.states.remove(K2)
                                 done = false
                                 T2tmp = t
-                            val t = K2.incomingTransitions.get(0)
-                            t.setTargetState(stateAfterDepth)
-                            for (transition : K2.outgoingTransitions) {
-                                stateAfterDepth.trace(transition) // KITT: Redirect tracing before removing
-                                transition.targetState.incomingTransitions.remove(transition)
+                                val t2 = K2.incomingTransitions.get(0)
+                                t2.setTargetState(stateAfterDepth)
+                                for (transition : K2.outgoingTransitions) {
+                                    stateAfterDepth.trace(transition) // KITT: Redirect tracing before removing
+                                    transition.targetState.incomingTransitions.remove(transition)
 
-
-
-
-
-
-
-
-
-
-
+                                }
+                                stateAfterDepth.trace(K2) // KITT: Redirect tracing before removing
+                                K2.parentRegion.states.remove(K2)
+                                done = false
+                                T2tmp = t2
                             }
-                            stateAfterDepth.trace(K2) // KITT: Redirect tracing before removing
-                            K2.parentRegion.states.remove(K2)
-                            done = false
-                            T2tmp = t
                         }
                     }
-                }
 
-            // End of DTO transformation
-            // This MUST be highest priority so that the control flow restarts and takes other 
-            // outgoing transition.
-            // There should not be any other outgoing transition.
+                // End of DTO transformation
+                // This MUST be highest priority so that the control flow restarts and takes other 
+                // outgoing transition.
+                // There should not be any other outgoing transition.
+                }
             }
         }
     }
