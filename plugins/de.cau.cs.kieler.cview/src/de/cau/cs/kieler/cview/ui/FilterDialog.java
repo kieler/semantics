@@ -197,14 +197,14 @@ public class FilterDialog extends Dialog {
         }
         String contain = " that " + dont + "contain the following string";
         if (valueCheckRegExp) {
-               contain = " that " + dont + "match the regular expression";
+            contain = " that " + dont + "match the regular expression";
         }
         updateText += contain;
         updateText += ":";
-        
+
         labelFilter.setText(updateText);
-        
-        btnCheckCaseSensitive.setEnabled(!valueCheckRegExp);
+
+        // btnCheckCaseSensitive.setEnabled(!valueCheckRegExp);
         btnCheckChilds.setEnabled(!valueCheckTransitions);
     }
 
@@ -253,63 +253,6 @@ public class FilterDialog extends Dialog {
         gridLayout.marginHeight = MARGIN_WIDTH_AND_HEIGHT;
         gridLayout.marginWidth = MARGIN_WIDTH_AND_HEIGHT;
 
-        // table = new Table(composite, SWT.CHECK | SWT.BORDER | SWT.MULTI);
-        // table.addSelectionListener(new SelectionListener() {
-        // public void widgetDefaultSelected(final SelectionEvent e) {
-        // }
-        //
-        // public void widgetSelected(final SelectionEvent e) {
-        // // updateSelectedList();
-        // updateTable();
-        // refreshTextColorsAndItemName();
-        // }
-        // });
-        // table.addKeyListener(new KeyListener() {
-        // public void keyPressed(final KeyEvent e) {
-        // // if user pressed delete
-        // if (e.keyCode == KEYBOARD_DELETE) {
-        // // delete selected signals from inputSignalList and outputSignalList
-        // List<String> selectedList = getSelectedList();
-        // for (String selectedSignal : selectedList) {
-        // if (selectedList.contains(selectedSignal)) {
-        // selectedList.remove(selectedSignal);
-        // }
-        // table.remove(table.getSelectionIndices());
-        // }
-        //
-        // // updateSelectedList();
-        // updateTable();
-        // refreshTextColorsAndItemName();
-        // }
-        // }
-        //
-        // public void keyReleased(final KeyEvent e) {
-        // }
-        // });
-        // table.addMouseListener(new MouseListener() {
-        // public void mouseDoubleClick(final MouseEvent e) {
-        // // toggle checked status of selected signal
-        // TableItem[] tableItems = table.getSelection();
-        // for (TableItem tableItem : tableItems) {
-        // tableItem.setChecked(!tableItem.getChecked());
-        // }
-        // // updateSelectedList();
-        // updateTable();
-        // refreshTextColorsAndItemName();
-        // }
-        //
-        // public void mouseDown(final MouseEvent e) {
-        // }
-        //
-        // public void mouseUp(final MouseEvent e) {
-        // // updateSelectedList();
-        // updateTable();
-        // refreshTextColorsAndItemName();
-        // }
-        // });
-        // updateTable();
-        //
-
         GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;
         gridData.grabExcessVerticalSpace = true;
@@ -329,7 +272,6 @@ public class FilterDialog extends Dialog {
         textFilter.setBounds(0, 0, FORM_WIDTH, 10);
         textFilter.setLayoutData(gridDataText);
 
-
         GridLayout innerLayoutChecks = new GridLayout(2, true);
         Composite compositeInnerChecks = new Composite(composite, SWT.NONE);
         compositeInnerChecks.setLayout(innerLayoutChecks);
@@ -337,7 +279,7 @@ public class FilterDialog extends Dialog {
         GridLayout innerLayout = new GridLayout(6, false);
         Composite compositeInner = new Composite(composite, SWT.NONE);
         compositeInner.setLayout(innerLayout);
-        
+
         Label labelSpinnerStart = new Label(compositeInner, SWT.LEFT);
         labelSpinnerStart.setText("Apply filter to hierarchy layers ");
         spinnerStart = new Spinner(compositeInner, SWT.WRAP);
@@ -348,7 +290,6 @@ public class FilterDialog extends Dialog {
                 .setToolTipText("Do not filter any elements on a lower layer than specified here.");
         spinnerStart
                 .setToolTipText("Do not filter any elements on a lower layer than specified here.");
-
 
         Label labelSpinnerEnd = new Label(compositeInner, SWT.LEFT);
         labelSpinnerEnd.setText(" and ");
@@ -372,8 +313,8 @@ public class FilterDialog extends Dialog {
 
         btnCheckCaseSensitive = new Button(compositeInnerChecks, SWT.CHECK);
         btnCheckCaseSensitive.setText("Case sensitive");
-        btnCheckCaseSensitive.setToolTipText(
-                "Apply the filter by considering the case of each character.");
+        btnCheckCaseSensitive
+                .setToolTipText("Apply the filter by considering the case of each character.");
 
         btnCheckChilds = new Button(compositeInnerChecks, SWT.CHECK);
         btnCheckChilds.setText("Consider childs");
@@ -406,43 +347,8 @@ public class FilterDialog extends Dialog {
         btnCheckNegative.addSelectionListener(btnListener);
         btnCheckTransitions.addSelectionListener(btnListener);
 
-        // btnOk = new Button(composite, SWT.OK);
-        // btnAbort = new Button(composite, SWT.ABORT);
-
-        // if (optionList != null) {
-        // for (int i = 0; i < optionList.length; i++) {
-        // final String option = optionList[i];
-        // Button btn = new Button(composite, SWT.CHECK);
-        // btn.setData(option);
-        // boolean preChecked = option.startsWith("X");
-        // btn.setText(option.substring(1));
-        // btn.setSelection(preChecked);
-        // if (preChecked) {
-        // optionListSelected.add(option);
-        // }
-        // btn.addSelectionListener(new SelectionListener() {
-        // @Override
-        // public void widgetSelected(SelectionEvent event) {
-        // Button button = ((Button) event.widget);
-        // String btnOption = (String) button.getData();
-        // if (button.getSelection()) {
-        // optionListSelected.add(btnOption);
-        // } else {
-        // optionListSelected.remove(btnOption);
-        // }
-        // }
-        //
-        // @Override
-        // public void widgetDefaultSelected(SelectionEvent e) {
-        // // TODO Auto-generated method stub
-        //
-        // }
-        // });
-        // }
-        // }
         load();
         updateLabelTitle();
-
         return composite;
     }
 
