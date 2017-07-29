@@ -122,16 +122,16 @@ public class CommandHandler implements IHandler {
                             out.close();
                             success = true;
                             openMessageDialog("Export Analysis",
-                                    "Export completed.\n\nFile written to '" + fileToWrite + "'",
+                                    "Export completed.\n\nFile written to '" + fileToWrite + "'.",
                                     false);
                         }
                     } catch (FileNotFoundException e) {
                         openMessageDialog("Error",
-                                "An error occurred while exporting to '" + fileToWrite + "'", true);
+                                "An error occurred while exporting to '" + fileToWrite + "'.", true);
                         e.printStackTrace();
                     }
                     if (!success) {
-                        openMessageDialog("Error", "Could not export to '" + fileToWrite + "'",
+                        openMessageDialog("Error", "Could not export to '" + fileToWrite + "'.",
                                 true);
                     }
                 }
