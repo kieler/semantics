@@ -169,7 +169,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 allowed = true
             }
         }
-        println("FILTER '" + component.name + "' --> " + allowed)
+        //println("FILTER '" + component.name + "' --> " + allowed)
         allowedByFilterCache.put(component, allowed)
         return allowed;
     }
