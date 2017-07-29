@@ -378,12 +378,13 @@ public class SelectDialog extends Dialog {
 
     static boolean dialogAborted = true;
 
-    public static boolean showSelectDialog() {
+    public static boolean showDialog() {
         dialogAborted = true;
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 final Shell shell = Display.getCurrent().getShells()[0];
                 // first ask the user to select input signals
+                shell.setBounds(Display.getCurrent().getBounds());
                 SelectDialog dialog = new SelectDialog(shell);
                 dialog.open();
                 if (dialog.getReturnCode() == SelectDialog.OK) {

@@ -242,21 +242,6 @@ class KLighDController extends AbstractKLighDController {
             val component = model.addToModel(element, monitor)
         }
 
-        // Apply filter
-        if (CViewPlugin.filter.length > 0) {
-//            val List<Component> copyList = new ArrayList
-            // //scope.eAllContents().filter(typeof(State))
-            for (component : model.eAllContents.filter(typeof(Component)).toList) {
-                val cDepth =component.depth 
-                val selDepth = DiagramSynthesis.selectedExpandLevel
-                if (cDepth  > 1) {
-                    if (!component.name.matches(CViewPlugin.filter)) {
-                        model.components.remove(component)
-                    }
-                }
-            }
-        }
-
         val connectionHooks = CViewPlugin.getRegisteredConnectionHooks(false)
         // Initialize
         for (connectionHook : connectionHooks) {

@@ -61,6 +61,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.math.KVector
 import java.util.HashSet
+import de.cau.cs.kieler.cview.ui.FilterDialog
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -123,6 +124,122 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     val HashSet<Component> connectedComponents = new HashSet
     val HashSet<Component> connectedComponentsAdditional = new HashSet // thru hierarchy
     // val HashMap<Component, KNode> knodes = new HashMap
+    val HashMap<EObject, Boolean> allowedByFilterCache = new HashMap
+
+    def boolean allowedByFilterComponent(Component component) {
+        if (FilterDialog.valueCheckTransitions || FilterDialog.valueTextFilter.nullOrEmpty) {
+            // If connection-filter, then return here, allow all components
+            return true
+        }
+        if (allowedByFilterCache.containsKey(component)) {
+            return allowedByFilterCache.get(component)
+        }
+        var allowed = false
+        val level = component.depth - 1
+        if (level < FilterDialog.valueLayerStart || (level > FilterDialog.valueLayerEnd &&
+            FilterDialog.valueLayerEnd < DiagramSynthesis.MAX_EXPANDED_VALUE)) {
+            // If hierarchy level is not to consider, then return
+            allowed = true
+        }
+
+        if (!allowed) {
+            var filter = FilterDialog.valueTextFilter
+            var matching = false
+            var whatToCheck = component.name
+            if (!FilterDialog.valueCheckCaseSensitive) {
+                whatToCheck = whatToCheck.toLowerCase
+                filter = filter.toLowerCase
+            }
+            if (FilterDialog.valueCheckRegExp) {
+                matching = whatToCheck.matches(filter);
+            } else {
+                matching = whatToCheck.contains(filter);
+            }
+            if (!FilterDialog.valueCheckNegative) {
+                // non-matching items are filtered away: non-matching ==> false (not allowed)
+                allowed = matching
+            } else {
+                // matching items are filtered away (negate options): matching ==> false (not allowed)
+                allowed = !matching
+            }
+        }
+        if (!allowed && FilterDialog.valueCheckChilds) {
+            // Check if any child is allowed => allow this parent
+            if (component.allowedByFilterAnyChild) {
+                allowed = true
+            }
+        }
+        println("FILTER '" + component.name + "' --> " + allowed)
+        allowedByFilterCache.put(component, allowed)
+        return allowed;
+    }
+
+    def boolean allowedByFilterAnyChild(Component component) {
+        for (childComponent : component.children) {
+            if (childComponent.allowedByFilterAnyChildHelper) {
+                return true
+            }
+        }
+    }
+
+    def boolean allowedByFilterAnyChildHelper(Component component) {
+        if (component.allowedByFilterComponent) {
+            return true
+        }
+        for (childComponent : component.children) {
+            if (childComponent.allowedByFilterAnyChildHelper) {
+                return true
+            }
+        }
+        return false
+    }
+
+    def boolean allowedByFilterConnection(Connection connection) {
+        if (!FilterDialog.valueCheckTransitions || FilterDialog.valueTextFilter.nullOrEmpty) {
+            // If component-filter, then return here, allow all connections
+            return true;
+        }
+        if (allowedByFilterCache.containsKey(connection)) {
+            return allowedByFilterCache.get(connection)
+        }
+        var allowed = false
+
+        val level1 = connection.src.depth - 1
+        val level2 = connection.dst.depth - 1
+        val levelIgnore1 = (level1 < FilterDialog.valueLayerStart) || (level1 > FilterDialog.valueLayerEnd &&
+            FilterDialog.valueLayerEnd < DiagramSynthesis.MAX_EXPANDED_VALUE)
+        val levelIgnore2 = (level2 < FilterDialog.valueLayerStart) || (level2 > FilterDialog.valueLayerEnd &&
+            FilterDialog.valueLayerEnd < DiagramSynthesis.MAX_EXPANDED_VALUE)
+
+        if (levelIgnore1 || levelIgnore2) {
+            // If hierarchy level is not to consider, then return
+            allowed = true
+        }
+
+        if (!allowed) {
+            var filter = FilterDialog.valueTextFilter
+            var matching = false
+            var whatToCheck = connection.label;
+            if (!FilterDialog.valueCheckCaseSensitive) {
+                whatToCheck = whatToCheck.toLowerCase
+                filter = filter.toLowerCase
+            }
+            if (FilterDialog.valueCheckRegExp) {
+                matching = whatToCheck.matches(filter);
+            } else {
+                matching = whatToCheck.contains(filter);
+            }
+            if (!FilterDialog.valueCheckNegative) {
+                // non-matching items are filtered away: non-matching ==> false (not allowed)
+                allowed = matching
+            } else {
+                // matching items are filtered away (negate options): matching ==> false (not allowed)
+                allowed = !matching
+            }
+        }
+        allowedByFilterCache.put(connection, allowed)
+        return allowed;
+    }
 
     def addConnectedParents(Component component) {
         if (component.parent != null) {
@@ -134,11 +251,16 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     override KNode transform(CViewModel model) {
         instance = this
         connectedComponents.clear
-        
+
+        // Ensure filter values are set
+        FilterDialog.loadValues
+        // Clear filter cache
+        allowedByFilterCache.clear
+
         if (ANONYMIZE.booleanValue) {
             // anonymize the model
             for (component : model.components) {
-                component.name =  component.name.possiblyAnonymize(true)
+                component.name = component.name.possiblyAnonymize(true)
                 component.location = component.location.possiblyAnonymize(true)
                 component.tooltip = component.tooltip.possiblyAnonymize(false)
                 component.rawdata = component.rawdata.possiblyAnonymize(false)
@@ -149,7 +271,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
-        selectedExpandLevel = EXPANDED_SLIDER.intValue        
+        selectedExpandLevel = EXPANDED_SLIDER.intValue
 
         val root = model.createNode().associateWith(model);
         val depth = 1;
@@ -163,7 +285,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     }
                 }
                 if (!skip) {
-                    root.children.add(item.transformItem(depth))
+                    if (item.allowedByFilterComponent) {
+                        root.children.add(item.transformItem(depth))
+                    }
                 }
             }
         }
@@ -171,12 +295,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         // Create connections (added by extensions)
         if (!HIDE_CONNECTIONS.booleanValue) {
             for (connection : model.connections) {
-
-                var connectionColor = "Black".color
-                if (connection.color != null) {
-                    connectionColor = connection.color.color
+                if (connection.allowedByFilterConnection) {
+                    var connectionColor = "Black".color
+                    if (connection.color != null) {
+                        connectionColor = connection.color.color
+                    }
+                    connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
                 }
-                connection.addConnection(INTERLEVEL_CONNECTIONS.booleanValue, connectionColor)
             }
         }
 
@@ -471,8 +596,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         def KNode transformItemFunc(Component item, int depth) {
             val childNode = item.createNode().associateWith(item);
             val childRect = childNode.addRoundedRectangle(4, 4, 2);
-            val label = childNode.addInsideCenteredNodeLabel(item.name,
-                KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME);
+            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+                KlighdConstants.DEFAULT_FONT_NAME);
             childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
             childRect.background = "LIGHTBLUE".color;
@@ -487,8 +612,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         def KNode transformItemFile(Component item, int depth) {
             val childNode = item.createNode().associateWith(item);
             val childRect = childNode.addRoundedRectangle(4, 4, 2);
-            val label = childNode.addInsideCenteredNodeLabel(item.name,
-                KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME);
+            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+                KlighdConstants.DEFAULT_FONT_NAME);
             childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
                 EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
             childRect.background = item.getFileColor
@@ -570,7 +695,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
                 if (!FLATTEN_HIERARCHY.booleanValue) {
                     for (child : item.children) {
-                        childArea.children += child.transformItem(depth + 1);
+                        if (child.allowedByFilterComponent) {
+                            childArea.children += child.transformItem(depth + 1);
+                        }
                     }
                 }
             }
@@ -623,7 +750,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
                 if (!FLATTEN_HIERARCHY.booleanValue) {
                     for (child : item.children) {
-                        childArea.children += child.transformItem(depth + 1);
+                        if (child.allowedByFilterComponent) {
+                            childArea.children += child.transformItem(depth + 1);
+                        }
                     }
                 }
             }

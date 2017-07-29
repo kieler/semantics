@@ -23,7 +23,6 @@ public class CViewPlugin implements BundleActivator {
 
     static public String CVIEW_PREFERENCE_ID = "de.cau.cs.kieler.cview.preferences.active";
     static public String CVIEW_PREFERENCE_ENABLED = "active";
-    static public String CVIEW_PREFERENCE_FILTER = "filter";
     static public String KLIGHD_MODEL_VIEW = "de.cau.cs.kieler.klighd.ui.view.diagram";
 
     /** The Constant EXTENSION_POINT_ID. */
@@ -42,8 +41,67 @@ public class CViewPlugin implements BundleActivator {
     public void start(BundleContext context) throws Exception {
     }
 
+    // -------------------------------------------------------------------------
+
     @Override
     public void stop(BundleContext context) throws Exception {
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static void setPrefInt(String key, int value) {
+        setPrefString(key, value + "");
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static void setPrefBool(String key, boolean value) {
+        if (value) {
+            setPrefString(key, "1");
+        } else {
+            setPrefString(key, "0");
+        }
+    }
+    
+    // -------------------------------------------------------------------------
+
+    public static void setPrefString(String key, String value) {
+        IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
+        preferences.put(CVIEW_PREFERENCE_ID + key, value);
+        try {
+            preferences.flush();
+        } catch (Exception e) {
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static int getPrefInt(String key, int defaultValue) {
+        String returnValueString = getPrefString(key, defaultValue + "");
+        int returnValue = defaultValue;
+        try {
+            returnValue = Integer.parseInt(returnValueString);
+        } catch(Exception e) {
+        }
+        return returnValue;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static boolean getPrefBool(String key, boolean defaultValue) {
+        String defaultString = "0";
+        if (defaultValue) {
+            defaultString = "1";
+        }
+        String returnValue = getPrefString(key, defaultString);
+        return (returnValue != null && returnValue.equals("1"));
+    }
+    // -------------------------------------------------------------------------
+
+
+    public static String getPrefString(String key, String defaultValue) {
+        Preferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
+        return (preferences.get(CVIEW_PREFERENCE_ID + key, defaultValue));
     }
 
     // -------------------------------------------------------------------------
@@ -53,7 +111,8 @@ public class CViewPlugin implements BundleActivator {
         return (preferences.get(CVIEW_PREFERENCE_ENABLED + hookId, "enabled").equals("enabled"));
     }
 
-    
+    // -------------------------------------------------------------------------
+
     public static void setEnabled(String hookId, boolean enabled) {
         IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
 
@@ -66,23 +125,6 @@ public class CViewPlugin implements BundleActivator {
             preferences.flush();
         } catch (Exception e) {
         }
-    }
-
-    // -------------------------------------------------------------------------
-
-    public static void setFilter(String filter) {
-        IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
-
-        preferences.put(CVIEW_PREFERENCE_FILTER, filter);
-        try {
-            preferences.flush();
-        } catch (Exception e) {
-        }
-    }
-
-    public static String getFilter() {
-        Preferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
-        return (preferences.get(CVIEW_PREFERENCE_FILTER, ""));
     }
 
     // -------------------------------------------------------------------------
@@ -107,6 +149,14 @@ public class CViewPlugin implements BundleActivator {
         Preferences preferences = InstanceScope.INSTANCE.getNode(CVIEW_PREFERENCE_ID);
         return (preferences.get(CVIEW_PREFERENCE_ENABLED, "disabled").equals("enabled"));
     }
+
+    // -------------------------------------------------------------------------
+
+    public static void rebuildModelAndrefreshCView(boolean forceRebuid) {
+        AbstractKLighDController.controller.rebuildModelAndrefreshCView(forceRebuid);
+    }
+
+    // -------------------------------------------------------------------------
 
     public static void refreshCView(boolean forceRebuid) {
         AbstractKLighDController.controller.refreshCView(forceRebuid);

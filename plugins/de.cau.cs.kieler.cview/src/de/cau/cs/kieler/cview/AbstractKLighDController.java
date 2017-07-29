@@ -127,8 +127,36 @@ public abstract class AbstractKLighDController {
         });
     }
 
+    
     public void refreshCView(boolean forceRebuild) {
-        int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                if (forceRebuild) {
+                    CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
+                    DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+                    if (view == null) {
+                        DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
+                                nullModel, KlighdSynthesisProperties.create());
+                    } else {
+                        DiagramViewManager.updateView(view.getViewContext(), nullModel);
+                    }
+                }
+                if (controller != null && model != null) {
+                    DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
+                    if (view == null) {
+                        DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
+                                model, KlighdSynthesisProperties.create());
+                    } else {
+                        DiagramViewManager.updateView(view.getViewContext(), model);
+                    }
+                }
+            }
+        });
+    }
+
+    
+    public void rebuildModelAndrefreshCView(boolean forceRebuild) {
+     int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
         try {
             new CViewProgressMonitorDialog(new Shell()).run(true,true, (new RunnableWithProgress() {
                 public void run(IProgressMonitor monitor) {
@@ -136,30 +164,8 @@ public abstract class AbstractKLighDController {
                     monitor.beginTask("Processing "+workTotal+" files...", workTotal);
                     subMonitor.worked(1);
                     model = calculateModel(allSelections, subMonitor); // , IProgressMonitor monitor));
-
-                    Display.getDefault().asyncExec(new Runnable() {
-                        public void run() {
-                            if (forceRebuild) {
-                                CViewModel nullModel = CViewModelFactory.eINSTANCE.createCViewModel();
-                                DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
-                                if (view == null) {
-                                    DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
-                                            nullModel, KlighdSynthesisProperties.create());
-                                } else {
-                                    DiagramViewManager.updateView(view.getViewContext(), nullModel);
-                                }
-                            }
-                            if (controller != null && model != null) {
-                                DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
-                                if (view == null) {
-                                    DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
-                                            model, KlighdSynthesisProperties.create());
-                                } else {
-                                    DiagramViewManager.updateView(view.getViewContext(), model);
-                                }
-                            }
-                        }
-                    });
+                    
+                    refreshCView(forceRebuild);
                 }
             }));
         } catch (InvocationTargetException e) {

@@ -52,11 +52,13 @@ public class CommandToggleHandler implements IHandler {
         String commandId = event.getCommand().getId();
 
         if (commandId.equals(CMD_FILTER_ID)) {
-            String newFilter = getNewValue(CViewPlugin.getFilter());
-            if (newFilter != null) {
-                CViewPlugin.setFilter(newFilter);
+            boolean ok = FilterDialog.showDialog();
+            if (ok) {
+                // Apply filter
+                CViewPlugin.refreshCView(true);
             }
-            
+
+            return null;
         }
 
         if (commandId.equals(CMD_SELECT_ID)) {
@@ -65,7 +67,7 @@ public class CommandToggleHandler implements IHandler {
             SelectDialog.itemListAll = CViewPlugin.getAllRegisteredConnectionHookIds();
             SelectDialog.itemListSelected =
                     CViewPlugin.filterSelectedRegisteredConnectionHookIds(SelectDialog.itemListAll);
-            boolean ok = SelectDialog.showSelectDialog();
+            boolean ok = SelectDialog.showDialog();
 
             if (ok) {
                 // Save
@@ -96,7 +98,7 @@ public class CommandToggleHandler implements IHandler {
             changedExpandedSliderValue = true;
         }
 
-        CViewPlugin.refreshCView(changedExpandedSliderValue);
+        CViewPlugin.rebuildModelAndrefreshCView(changedExpandedSliderValue);
         return null;
     }
 

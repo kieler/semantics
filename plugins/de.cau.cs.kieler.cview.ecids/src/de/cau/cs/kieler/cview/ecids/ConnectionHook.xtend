@@ -59,7 +59,7 @@ class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
                             msgId = sending.substring(iReceiver + 1, iMsgId).trim
                             receiver = sending.substring(0, iReceiver).trim
                             if (msgId.length < 150) {
-                                println("Send '" + msgId + "' to '" + receiver + "'");
+                                //println("Send '" + msgId + "' to '" + receiver + "'");
                                 val recvComponents = readers.get(msgId);
                                 if (recvComponents != null) {
                                     for (recvComponent : recvComponents) {
