@@ -3,10 +3,10 @@
 <schema targetNamespace="de.cau.cs.kieler.cview.model" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="de.cau.cs.kieler.cview.model" id="analysis" name="Define Connection Analysis"/>
+         <meta.schema plugin="de.cau.cs.kieler.cview.model" id="export" name="Define Analysis Export"/>
       </appInfo>
       <documentation>
-         Define connection analysis.
+         Define analysis export.
       </documentation>
    </annotation>
 
@@ -18,25 +18,25 @@
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="analysisHook"/>
+            <element ref="exportHook"/>
          </sequence>
       </complexType>
    </element>
 
-   <element name="analysisHook">
+   <element name="exportHook">
       <annotation>
          <documentation>
-            A hook for defining an analysis of connection between components.
+            A hook for defining an analysis export.
          </documentation>
       </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementation of the concrete hook defining the connections.
+                  The implementation of the concrete hook defining the export.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook:de.cau.cs.kieler.cview.hooks.IAnalysisHook"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.AbstractExportHook:de.cau.cs.kieler.cview.hooks.IExportHook"/>
                </appInfo>
             </annotation>
          </attribute>

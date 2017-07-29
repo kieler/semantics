@@ -1,5 +1,8 @@
 package de.cau.cs.kieler.cview.ui;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
@@ -7,11 +10,16 @@ import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 
 import de.cau.cs.kieler.cview.CViewPlugin;
 import de.cau.cs.kieler.cview.DiagramSynthesis;
 import de.cau.cs.kieler.cview.KLighDController;
+import de.cau.cs.kieler.cview.hooks.IExportHook;
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 
 public class CommandHandler implements IHandler {
@@ -20,7 +28,8 @@ public class CommandHandler implements IHandler {
 
     public static String CMD_SELECT_ID = "de.cau.cs.kieler.cview.command.select";
     public static String CMD_FILTER_ID = "de.cau.cs.kieler.cview.command.filter";
-    public static String CMD_SAVE_ID = "de.cau.cs.kieler.cview.command.save";
+    public static String CMD_EXPORT_ID = "de.cau.cs.kieler.cview.command.save";
+    public static String CMD_REFRESH_ID = "de.cau.cs.kieler.cview.command";
 
     @Override
     public void addHandlerListener(IHandlerListener handlerListener) {
@@ -52,6 +61,85 @@ public class CommandHandler implements IHandler {
 
         String commandId = event.getCommand().getId();
 
+        if (commandId.equals(CMD_EXPORT_ID) || commandId.equals(CMD_REFRESH_ID)) {
+            if (KLighDController.getModel() == null) {
+                // No model, so build one
+                if (KLighDController.getAllSelections() == null) {
+                    openMessageDialog("Error", "Nothing selected. Cannot build model.", false);
+                    return null;
+                } else {
+                    // CMD_REFRESH_ID will refresh at the bottom of this method...
+                    if (commandId.equals(CMD_EXPORT_ID)) {
+                        CViewPlugin.rebuildModelAndrefreshCView(true);
+                    }
+                }
+            }
+        }
+
+        if (commandId.equals(CMD_EXPORT_ID)) {
+            SelectExportDialog.itemListAll = CViewPlugin.getAllRegisteredExportHookIds();
+            boolean ok = SelectExportDialog.showDialog();
+
+            if (ok) {
+                IExportHook selectedHook = null;
+                for (IExportHook hook : CViewPlugin.getRegisteredExportHooks(false)) {
+                    if (hook.getId()
+                            .equals(CViewPlugin.extractId(SelectExportDialog.itemSelected))) {
+                        selectedHook = hook;
+                        break;
+                    }
+                }
+
+                FileDialog dlg =
+                        new FileDialog(Display.getCurrent().getActiveShell(), SWT.SINGLE | SWT.SAVE);
+                // SaveAsDialog dlg = new SaveAsDialog(Display.getCurrent().getActiveShell());
+                dlg.setOverwrite(true);
+                String[] exts = { "*.*" };
+                String ext = selectedHook.getFileExtension();
+                if (ext != null) {
+                    exts[0] = "*." + ext;
+                }
+                dlg.setFilterExtensions(exts);
+                String fileToWrite = dlg.open();
+                // int ok2 = dlg.open();
+                // if (ok2 == dlg.OK) {
+                if (fileToWrite != null) {
+                    // String fileToWrite = dlg.getResult().toOSString();
+                    boolean success = false;
+                    if (ext != null && !fileToWrite.endsWith("." + ext)) {
+                        fileToWrite += "." + ext;
+                    }
+                    System.out.println("Exporting to " + fileToWrite);
+                    PrintWriter out;
+                    try {
+                        out = new PrintWriter(fileToWrite);
+                        String exported = selectedHook.export(KLighDController.getModel());
+                        if (exported == null || exported.equals("")) {
+                            openMessageDialog("Export Analysis", "Nothing to export.", false);
+                            success = true;
+                        } else {
+                            out.append(exported);
+                            out.close();
+                            success = true;
+                            openMessageDialog("Export Analysis",
+                                    "Export completed.\n\nFile written to '" + fileToWrite + "'",
+                                    false);
+                        }
+                    } catch (FileNotFoundException e) {
+                        openMessageDialog("Error",
+                                "An error occurred while exporting to '" + fileToWrite + "'", true);
+                        e.printStackTrace();
+                    }
+                    if (!success) {
+                        openMessageDialog("Error", "Could not export to '" + fileToWrite + "'",
+                                true);
+                    }
+                }
+            }
+
+            return null;
+        }
+
         if (commandId.equals(CMD_FILTER_ID)) {
             boolean ok = FilterDialog.showDialog();
             if (ok) {
@@ -65,23 +153,23 @@ public class CommandHandler implements IHandler {
         if (commandId.equals(CMD_SELECT_ID)) {
             // SelectDialog.optionList = {};
 
-            SelectDialog.itemListAll = CViewPlugin.getAllRegisteredAnalysisHookIds();
-            SelectDialog.itemListSelected =
-                    CViewPlugin.filterSelectedRegisteredAnalysisHookIds(SelectDialog.itemListAll);
-            boolean ok = SelectDialog.showDialog();
+            SelectAnalysisDialog.itemListAll = CViewPlugin.getAllRegisteredAnalysisHookIds();
+            SelectAnalysisDialog.itemListSelected = CViewPlugin
+                    .filterSelectedRegisteredAnalysisHookIds(SelectAnalysisDialog.itemListAll);
+            boolean ok = SelectAnalysisDialog.showDialog();
 
             if (ok) {
                 // Save
-                for (String item : SelectDialog.itemListAll) {
+                for (String item : SelectAnalysisDialog.itemListAll) {
                     String hookId = CViewPlugin.extractId(item);
                     CViewPlugin.setEnabled(hookId, false);
                 }
-                for (String item : SelectDialog.itemListSelected) {
+                for (String item : SelectAnalysisDialog.itemListSelected) {
                     String hookId = CViewPlugin.extractId(item);
                     CViewPlugin.setEnabled(hookId, true);
                 }
 
-                CViewPlugin.clearSelectionHooks();
+                CViewPlugin.clearSelectionAnalysisHooks();
             }
 
             return null;
@@ -117,6 +205,17 @@ public class CommandHandler implements IHandler {
     public void removeHandlerListener(IHandlerListener handlerListener) {
         // TODO Auto-generated method stub
 
+    }
+
+    public void openMessageDialog(String title, String text, boolean error) {
+        int type = SWT.ICON_INFORMATION;
+        if (error) {
+            type = SWT.ICON_ERROR;
+        }
+        MessageBox dialog = new MessageBox(Display.getCurrent().getShells()[0], type | SWT.OK);
+        dialog.setText(title);
+        dialog.setMessage(text);
+        dialog.open();
     }
 
 }

@@ -91,6 +91,7 @@
       </startup>
    </extension>
    <extension-point id="analysis" name="Define Connection Analysis" schema="schema/analysis.exsd"/>
+   <extension-point id="export" name="Define Analysis Export" schema="schema/export.exsd"/>
    
      <extension point="org.eclipse.ui.menus">
      <menuContribution locationURI="menu:de.cau.cs.kieler.cview.toolbar.command.button">

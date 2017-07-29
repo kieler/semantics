@@ -18,6 +18,7 @@ import org.osgi.service.prefs.Preferences;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook;
+import de.cau.cs.kieler.cview.hooks.IExportHook;
 
 public class CViewPlugin implements BundleActivator {
 
@@ -26,14 +27,19 @@ public class CViewPlugin implements BundleActivator {
     static public String KLIGHD_MODEL_VIEW = "de.cau.cs.kieler.klighd.ui.view.diagram";
 
     /** The Constant EXTENSION_POINT_ID. */
-    public static final String CONNECTION_HOOK_EXTENSION_POINT_ID =
+    public static final String ANALYSIS_HOOK_EXTENSION_POINT_ID =
             "de.cau.cs.kieler.cview.analysis";
-    
+
+    /** The Constant EXTENSION_POINT_ID. */
+    public static final String EXPORT_HOOK_EXTENSION_POINT_ID =
+            "de.cau.cs.kieler.cview.export";
+
     // The plug-in ID
     public static final String PLUGIN_ID = "de.cau.cs.kieler.cview"; //$NON-NLS-1$
     
 
     static ArrayList<IAnalysisHook> analysisHooks = null; 
+    static ArrayList<IExportHook> exportHooks = null; 
     
     // -------------------------------------------------------------------------
 
@@ -174,8 +180,51 @@ public class CViewPlugin implements BundleActivator {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    public static void clearSelectionExportHooks() {
+        exportHooks = null;
+    }
+
+    public static List<IExportHook> getRegisteredExportHooks(boolean forceReload) {
+        if (exportHooks != null && !forceReload) {
+            return exportHooks;
+        }
+        if (exportHooks == null || forceReload) {
+            exportHooks = new ArrayList<IExportHook>();
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor(EXPORT_HOOK_EXTENSION_POINT_ID);
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            try {
+                IExportHook instance =
+                        (IExportHook) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (IExportHook) getGuiceInstance(instance);
+                exportHooks.add(instance);
+            } catch (CoreException e) {
+                e.printStackTrace();
+            }
+        }
+        return exportHooks;
+    }
+
+    public static List<String> getAllRegisteredExportHookIds() {
+        ArrayList returnList = new ArrayList<String>();
+        List<IExportHook> hooks = getRegisteredExportHooks(true);
+        for (IExportHook hook: hooks) {
+                returnList.add(hook.getName() + " (" + hook.getId() + ")");
+        }
+        return returnList;
+    }
     
-    public static void clearSelectionHooks() {
+    
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    
+    public static void clearSelectionAnalysisHooks() {
         analysisHooks = null;
     }
     
@@ -226,7 +275,7 @@ public class CViewPlugin implements BundleActivator {
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(CONNECTION_HOOK_EXTENSION_POINT_ID);
+                .getConfigurationElementsFor(ANALYSIS_HOOK_EXTENSION_POINT_ID);
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {

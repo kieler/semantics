@@ -84,6 +84,14 @@ public abstract class AbstractKLighDController {
     static AbstractKLighDController controller = null;
 
     static Object[] allSelections;
+    
+    public static Object[] getAllSelections() {
+        return allSelections;
+    }
+    
+    public static CViewModel getModel() {
+        return model;
+    }
 
     public abstract CViewModel calculateModel(Object[] allselections, IProgressMonitor monitor);
 

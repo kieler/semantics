@@ -22,46 +22,34 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection;
  * @author cmot
  *
  */
-public interface IAnalysisHook {
+public interface IExportHook {
 
     /**
-     * Define the name for this connection analysis hook.
+     * Define the name for this export hook.
      * 
      * @return the name
      */
     String getName();
 
     /**
-     * Define an id for this connection analysis hook.
+     * Define an id for this export hook.
      * 
      * @return the name
      */
     String getId();
-
+    
+    
     /**
-     * Initialize this connection analysis hook. Called once for all components before
-     * createConnections have been called.
-     * 
-     * @param model
-     */
-    void initialize(CViewModel model);
-
-    /**
-     * Create more connections based on the traversed component and the overall model. Return null
-     * if no connections shall be created.
-     * 
-     * @param component
-     * @param model
+     * Define the file extension for the export dialog.
      * @return
      */
-    List<Connection> createConnections(Component component, CViewModel model);
+    String getFileExtension();
 
     /**
-     * Wrapup this connection analysis hook. Called once for all components after createConnections
-     * have been called.
+     * Export the model or connections to textual output (Model2Text).
      * 
      * @param model
      */
-    void wrapup(CViewModel model);
+    String export(CViewModel model);
 
 }

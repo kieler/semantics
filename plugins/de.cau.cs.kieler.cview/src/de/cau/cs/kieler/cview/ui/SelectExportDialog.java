@@ -46,7 +46,7 @@ import de.cau.cs.kieler.cview.CViewPlugin;
  * @author cmot
  * 
  */
-public class SelectDialog extends Dialog {
+public class SelectExportDialog extends Dialog {
 
     /** The Constant MARGIN_WIDTH_AND_HEIGHT. */
     private static final int MARGIN_WIDTH_AND_HEIGHT = 15;
@@ -63,20 +63,15 @@ public class SelectDialog extends Dialog {
     private Image pluginIcon;
 
     /** The Constant DIALOG_TITLE. */
-    private static final String DIALOG_TITLE = "Select Analysis Hooks";
+    private static final String DIALOG_TITLE = "Select Export";
 
-    /** The temporary table that allows the user to select DataComponents. */
+    /** The temporary table that allows the user to select. */
     private Table table;
-
-    public static String[] optionList = null;
-
-    public static List<String> optionListSelected = new ArrayList<String>();
-
-    /** The list that holds the currently selected item list. */
-    public static List<String> itemListSelected = new ArrayList<String>();
 
     /** The list that holds the list of all items. */
     public static List<String> itemListAll = new ArrayList<String>();
+    
+    public static String itemSelected = null;
 
     /** The Constant for the keyboard delete key. */
     private static final int KEYBOARD_DELETE = 127;
@@ -92,7 +87,7 @@ public class SelectDialog extends Dialog {
      * @param parent
      *            the SWT parent of this dialog
      */
-    public SelectDialog(final Shell parent) {
+    public SelectExportDialog(final Shell parent) {
         super(parent);
         pluginIcon = AbstractUIPlugin.imageDescriptorFromPlugin(CViewPlugin.PLUGIN_ID, PLUGIN_GIF)
                 .createImage();
@@ -114,12 +109,10 @@ public class SelectDialog extends Dialog {
      */
     public int open() {
         // Make a copy
-        optionListSelected.clear();
-
         int returnValue = super.open();
 
         if (returnValue != RETURN_VALUE_OK) {
-            itemListSelected.clear();
+            itemSelected  = null;
         }
 
         dispose();
@@ -153,37 +146,17 @@ public class SelectDialog extends Dialog {
         gridLayout.marginHeight = MARGIN_WIDTH_AND_HEIGHT;
         gridLayout.marginWidth = MARGIN_WIDTH_AND_HEIGHT;
 
-        table = new Table(composite, SWT.CHECK | SWT.BORDER | SWT.MULTI);
+        table = new Table(composite, SWT.BORDER | SWT.SIMPLE);
         table.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(final SelectionEvent e) {
             }
 
             public void widgetSelected(final SelectionEvent e) {
-                // updateSelectedList();
+                if (e.item instanceof TableItem) {
+                    itemSelected = ((TableItem) e.item).getText();
+                }
                 updateTable();
                 refreshTextColorsAndItemName();
-            }
-        });
-        table.addKeyListener(new KeyListener() {
-            public void keyPressed(final KeyEvent e) {
-                // if user pressed delete
-                if (e.keyCode == KEYBOARD_DELETE) {
-                    // delete selected signals from inputSignalList and outputSignalList
-                    List<String> selectedList = getSelectedList();
-                    for (String selectedSignal : selectedList) {
-                        if (selectedList.contains(selectedSignal)) {
-                            selectedList.remove(selectedSignal);
-                        }
-                        table.remove(table.getSelectionIndices());
-                    }
-
-                    // updateSelectedList();
-                    updateTable();
-                    refreshTextColorsAndItemName();
-                }
-            }
-
-            public void keyReleased(final KeyEvent e) {
             }
         });
         table.addMouseListener(new MouseListener() {
@@ -196,6 +169,7 @@ public class SelectDialog extends Dialog {
                 // updateSelectedList();
                 updateTable();
                 refreshTextColorsAndItemName();
+                okPressed();
             }
 
             public void mouseDown(final MouseEvent e) {
@@ -216,37 +190,6 @@ public class SelectDialog extends Dialog {
         gridData.verticalAlignment = GridData.FILL;
         table.setLayoutData(gridData);
 
-        if (optionList != null) {
-            for (int i = 0; i < optionList.length; i++) {
-                final String option = optionList[i];
-                Button btn = new Button(composite, SWT.CHECK);
-                btn.setData(option);
-                boolean preChecked = option.startsWith("X");
-                btn.setText(option.substring(1));
-                btn.setSelection(preChecked);
-                if (preChecked) {
-                    optionListSelected.add(option);
-                }
-                btn.addSelectionListener(new SelectionListener() {
-                    @Override
-                    public void widgetSelected(SelectionEvent event) {
-                        Button button = ((Button) event.widget);
-                        String btnOption = (String) button.getData();
-                        if (button.getSelection()) {
-                            optionListSelected.add(btnOption);
-                        } else {
-                            optionListSelected.remove(btnOption);
-                        }
-                    }
-
-                    @Override
-                    public void widgetDefaultSelected(SelectionEvent e) {
-                        // TODO Auto-generated method stub
-
-                    }
-                });
-            }
-        }
 
         refreshTextColorsAndItemName();
         return composite;
@@ -308,10 +251,12 @@ public class SelectDialog extends Dialog {
     private void updateTable() {
         for (String item : itemListAll) {
             if (!tableContains(item)) {
-                this.addToTable(item, (itemListSelected.contains(item)));
+                this.addToTable(item, (itemSelected == item));
             }
         }
-        itemListSelected = getCheckedList();
+        if (getCheckedList() != null & getCheckedList().size() > 0) {
+            itemSelected = getCheckedList().get(0);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -385,9 +330,9 @@ public class SelectDialog extends Dialog {
                 final Shell shell = Display.getCurrent().getShells()[0];
                 // first ask the user to select input signals
                 shell.setBounds(Display.getCurrent().getBounds());
-                SelectDialog dialog = new SelectDialog(shell);
+                SelectExportDialog dialog = new SelectExportDialog(shell);
                 dialog.open();
-                if (dialog.getReturnCode() == SelectDialog.OK) {
+                if (dialog.getReturnCode() == SelectExportDialog.OK) {
                     dialogAborted = false;
                 }
             }

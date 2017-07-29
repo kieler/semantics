@@ -7,5 +7,17 @@
             class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisHook">
       </connectionHook>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.cview.export">
+      <exportHook
+            class="de.cau.cs.kieler.cview.ecids.ECidsExportHook">
+      </exportHook>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.cview.export">
+      <exportHook
+            class="de.cau.cs.kieler.cview.ecids.ECidsExportHook2">
+      </exportHook>
+   </extension>
 
 </plugin>
