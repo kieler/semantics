@@ -100,9 +100,12 @@ class Reference extends SCChartsProcessor {
             }
         }       
         
-        for (region : newState.regions) {
-            region.replaceValuedObjectReferences(replacements)
-        } 
+        
+//        for (region : newState.regions) {
+//            region.replaceValuedObjectReferences(replacements)
+//        } 
+        
+        newState.replaceValuedObjectReferencesInState(replacements)        
         
         val parent = stateWithReference.eContainer as ControlflowRegion
         
@@ -110,6 +113,9 @@ class Reference extends SCChartsProcessor {
         
         for (transition : stateWithReference.outgoingTransitions.immutableCopy) {
             transition.sourceState = newState
+        }
+        for (transition : stateWithReference.incomingTransitions.immutableCopy) {
+            transition.targetState = newState
         }
         
         stateWithReference.remove
@@ -128,7 +134,7 @@ class Reference extends SCChartsProcessor {
         
         // TODO: Resolve name clash
         switch(scope) {
-            ControlflowRegion: for (state : scope.states) state.replaceValuedObjectReferences(replacements)  
+            ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)  
             State: scope.replaceValuedObjectReferencesInState(replacements)
         }
         
@@ -139,7 +145,7 @@ class Reference extends SCChartsProcessor {
     
     protected def replaceValuedObjectReferencesInState(State state, Replacements replacements) {
         for (action : state.actions + state.outgoingTransitions) {
-            action.trigger.replaceReferences(replacements)
+            action.trigger?.replaceReferences(replacements)
             for (effect : action.effects) {
                 effect.replaceReferences(replacements)
             }
@@ -208,7 +214,7 @@ class Reference extends SCChartsProcessor {
     }
     
     protected dispatch def void replaceReferences(Emission emission, Replacements replacements) {
-        emission.newValue.replaceReferences(replacements)
+        emission.newValue?.replaceReferences(replacements)
         
         val newRef = replacements.peek(emission.valuedObject)
         if (newRef != null) {

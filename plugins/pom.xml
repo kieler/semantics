@@ -62,6 +62,7 @@
     <module>de.cau.cs.kieler.kvis</module>
     <module>de.cau.cs.kieler.kvis.ui</module>
     <module>de.cau.cs.kieler.prom</module>
+    <module>de.cau.cs.kieler.prom.ui</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
     <module>de.cau.cs.kieler.s.sim</module>
@@ -78,7 +79,6 @@
     <module>de.cau.cs.kieler.sccharts.ui</module>
     <module>de.cau.cs.kieler.sccharts.preferences</module>
     <module>de.cau.cs.kieler.sccharts.prom</module>
-    <module>de.cau.cs.kieler.sccharts.prom.ui</module>
     <module>de.cau.cs.kieler.sccharts.s</module>
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.sim.c</module>

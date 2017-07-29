@@ -12,22 +12,23 @@
  */
 package de.cau.cs.kieler.kicool.registration
 
-import org.eclipse.core.runtime.Platform
-import org.eclipse.emf.ecore.resource.Resource
-import java.io.IOException
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import java.util.Collections
-import org.eclipse.emf.common.util.URI
-import org.osgi.framework.Bundle
-import java.net.URL
-import de.cau.cs.kieler.kicool.KiCoolActivator
-import java.util.Map
-import java.util.HashMap
-import java.util.List
+import com.google.inject.Guice
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Processor
-import com.google.inject.Guice
+import java.io.IOException
+import java.util.HashMap
+import java.util.List
+import java.util.Map
+import org.eclipse.core.runtime.Platform
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.resource.XtextResourceSet
+
+import static com.google.common.base.Preconditions.*
+
+import static extension java.lang.String.format
 
 /**
  * Main class for the registration of systems and processors.
@@ -43,6 +44,7 @@ class KiCoolRegistration {
     public static val EXTENSION_POINT_PROCESSOR = "de.cau.cs.kieler.kicool.processor"
     
     private static val injector = Guice.createInjector
+    private static val kicoolXtextInjector = KiCoolStandaloneSetup.doSetup
     
     private static val Map<String, System> modelsMap = new HashMap<String, System>()
     private static val Map<String, System> modelsIdMap = new HashMap<String, System>()
@@ -65,10 +67,12 @@ class KiCoolRegistration {
     }
     
     static def getSystemByResource(String res) {
+        checkArgument(modelsMap.containsKey(res), "No processor system registered for resource: " + res)
         modelsMap.get(res)
     }
     
     static def getSystemById(String id) {
+        checkArgument(modelsIdMap.containsKey(id), "No processor system registered with id: " + id)
         modelsIdMap.get(id)
     }
     
@@ -88,8 +92,7 @@ class KiCoolRegistration {
                 modelsMap.put(system.key, model as System) 
                 modelsIdMap.put((model as System).id, model as System)
             } catch (Exception e) {
-                java.lang.System.err.println("The processor system " + system.toString + " is registered. " + 
-                    "However, there was an error while loading the resource! I'm sorry!")
+                throw new Exception("There was an error loading the registered processor system " + system.toString, e)
             }
         }
         modelList
@@ -105,13 +108,9 @@ class KiCoolRegistration {
     }
     
     static def EObject loadEObjectFromResourceLocation(String resourceLocation, String bundleId) throws IOException {
-        
-        val Bundle bundle = Platform.getBundle(bundleId);
-        val URL bundleFileUrl = bundle.getEntry(resourceLocation.toString()); 
-        
-        val uri = URI.createURI(bundleFileUrl.toString, false)
-        val Resource resource = new ResourceSetImpl().createResource(uri);
-        resource.load(Collections.EMPTY_MAP);
+        val uri = URI.createPlatformPluginURI("/%s/%s".format(bundleId, resourceLocation), false)
+        val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
+        val Resource resource = resourceSet.getResource(uri, true)
         if (resource != null && resource.getContents() != null && resource.getContents().size() > 0) {
             val eobject = resource.getContents().get(0)
             return eobject
