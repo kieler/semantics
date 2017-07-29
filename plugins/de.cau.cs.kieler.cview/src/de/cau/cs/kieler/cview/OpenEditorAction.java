@@ -18,16 +18,22 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.internal.editors.text.FileEditorInputAdapterFactory;
 
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
+import de.cau.cs.kieler.cview.model.cViewModel.ComponentType;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -66,7 +72,7 @@ public class OpenEditorAction implements IAction {
                     i = j;
                 }
                 if (i == -1) {
-                    // not founde
+                    // not found
                     done = true;
                 } else {
                     pathString = pathString.substring(i+1);
@@ -79,7 +85,16 @@ public class OpenEditorAction implements IAction {
         IEditorDescriptor desc = PlatformUI.getWorkbench().
                 getEditorRegistry().getDefaultEditor(file.getName());
         try {
-            page.openEditor(new FileEditorInput(file), desc.getId());
+            IEditorPart editorPart = page.openEditor(new FileEditorInput(file), desc.getId());
+            if (domainElement instanceof Component) {
+                Component component = (Component) domainElement;
+                int line = component.getReferenceLine();
+                if (component.getType() == ComponentType.FUNC) {
+                    goToLine(editorPart, line);
+                } else {
+                    //goToLine(editorPart, 1);
+                }
+            }
         } catch (PartInitException e) {
             e.printStackTrace();
         }        
@@ -120,5 +135,35 @@ public class OpenEditorAction implements IAction {
         return ActionResult.createResult(false);
 
     }
+    
+    
+    
+    /**
+     * 
+     * @param editorPart
+     * @param lineNumber
+     */
+    private static void goToLine(IEditorPart editorPart, int lineNumber) {
+        if (!(editorPart instanceof ITextEditor) || lineNumber <= 0) {
+          return;
+        }
+        ITextEditor editor = (ITextEditor) editorPart;
+        IDocument document = editor.getDocumentProvider().getDocument(
+          editor.getEditorInput());
+        if (document != null) {
+          IRegion lineInfo = null;
+          try {
+            // line count internaly starts with 0, and not with 1 like in
+            // GUI
+            lineInfo = document.getLineInformation(lineNumber - 1);
+          } catch (BadLocationException e) {
+            // ignored because line number may not really exist in document,
+            // we guess this...
+          }
+          if (lineInfo != null) {
+            editor.selectAndReveal(lineInfo.getOffset(), lineInfo.getLength());
+          }
+        }
+      }
 
 }
