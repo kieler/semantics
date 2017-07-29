@@ -123,4 +123,10 @@
         </command>
      </menuContribution>
   </extension>
+     <extension
+           point="org.eclipse.ui.startup">
+        <startup
+              class="de.cau.cs.kieler.cview.Startup">
+        </startup>
+     </extension>
 </plugin>
