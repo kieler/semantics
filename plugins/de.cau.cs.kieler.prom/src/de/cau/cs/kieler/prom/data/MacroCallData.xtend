@@ -13,16 +13,18 @@
  */
 package de.cau.cs.kieler.prom.data
 
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import java.util.List
-import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Set
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Data container for wrapper code annotations in Model file.
+ * Data container to create macro calls in templates.
+ * They are created by analyzing variables and annotations in models.
  * 
  * @author aas
  */
-class WrapperCodeAnnotationData {
+class MacroCallData {
     /**
      * The name of the model.
      * e.g. 'MyModel' for an scchart 'scchart MyModel {initial state init;}'
@@ -32,26 +34,20 @@ class WrapperCodeAnnotationData {
     private String modelName = ""
     
     /**
-     * True if the variable of this annotation is an input variable.
+     * The phases in which the macro call should be injected
      */
     @Accessors
-    private boolean input
+    private Set<String> phases = getAllPhaseNames
     
     /**
-     * True if the variable of this annotation is an output variable.
-     */
-    @Accessors
-    private boolean output
-    
-    /**
-     * The name of the annotation.
+     * The name of the macro call.
      * e.g. 'Clock' for an annotation '@Clock 500'.
      */
     @Accessors
     private String name = ""
     
     /**
-     * A list with the arguments for this annotation.
+     * A list with the arguments for this macro call.
      * e.g. #['500'] for an annotation '@Clock 500'.
      */
     @Accessors
@@ -72,7 +68,7 @@ class WrapperCodeAnnotationData {
     private String varType = ""
     
     /**
-     * The interface type can be an input, output, internal variable or a mixture of those.
+     * The interface type can be e.g. inputs, outputs, others or a mixture of those.
      */
     @Accessors
     private Set<String> interfaceTypes = newHashSet
@@ -85,7 +81,35 @@ class WrapperCodeAnnotationData {
     private boolean ignoreNonExistingSnippet
     
     /**
-     * Two WrapperCodeAnnotationData are equal if the name is equal
+     * Convinience method to set phases
+     * and include the phases for inputs and outputs only if the corresponding parameter is true.
+     */
+    public def void setPhases(boolean isInput, boolean isOutput) {
+        setAllPhases()
+        if(!isInput) {
+            phases.remove("input")
+        }
+        if(!isOutput) {
+            phases.remove("output")
+        }
+    }
+    
+    /**
+     * Sets the phases variable to include all code generation phases
+     */
+    public def void setAllPhases() {
+        phases = getAllPhaseNames
+    }
+    
+    /**
+     * Returns the names of all code generation phases
+     */
+    public static def Set<String> getAllPhaseNames() {
+        return TemplateManager.codeGenerationPhases.map[it.name].toSet
+    } 
+    
+    /**
+     * Two objects are equal if the name is equal
      * and their argument lists are equal.
      * 
      * @param obj The other object
@@ -94,8 +118,8 @@ class WrapperCodeAnnotationData {
         if(obj == null)
             return false;
             
-        if(obj instanceof WrapperCodeAnnotationData){
-            val o = obj as WrapperCodeAnnotationData
+        if(obj instanceof MacroCallData){
+            val o = obj as MacroCallData
             return o.name.equals(name) && o.arguments.equals(arguments)
         }
         return false

@@ -61,12 +61,6 @@
       </shortcut>
    </extension>
    <extension
-         point="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer">
-      <analyzer
-            class="de.cau.cs.kieler.esterel.prom.EsterelWrapperCodeAnnotationAnalyzer">
-      </analyzer>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="de.cau.cs.kieler.Modeling">
@@ -99,6 +93,12 @@
             wizardId="de.cau.cs.kieler.esterel.prom.esterelProject">
          <enablement></enablement>
       </commonWizard>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.modelAnalyzer">
+      <analyzer
+            class="de.cau.cs.kieler.esterel.prom.EsterelAnalyzer">
+      </analyzer>
    </extension>
 
 </plugin>

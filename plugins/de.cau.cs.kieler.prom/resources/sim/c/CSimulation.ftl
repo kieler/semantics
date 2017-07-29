@@ -12,6 +12,9 @@
 
 cJSON* output = 0;
 
+// The data for the model
+TickData tickData;
+
 void receiveVariables() {
     char buffer[10000];
     int i = 0;
@@ -71,15 +74,14 @@ ${outputs}
 
 int main(int argc, const char* argv[]) {
     // Initialize 
-    reset();
+    reset(&tickData);
     sendVariables();
-    
     while (1) {
         // Receive variables
         receiveVariables();
   
         // Reaction of model
-        tick();
+        tick(&tickData);
          
         // Send variables
         sendVariables();

@@ -11,14 +11,13 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.launch
+package de.cau.cs.kieler.prom.templates
 
 import com.google.common.base.Strings
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.FileData
-import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
 import de.cau.cs.kieler.prom.templates.FreemarkerConfiguration
 import freemarker.template.Template
 import java.io.File
@@ -33,6 +32,7 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.data.MacroCallData
 
 /**
  * This class generates wrapper code for models.
@@ -41,17 +41,17 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author aas
  */
-class WrapperCodeGenerator {
+class TemplateManager {
 
     /**
      * The id of the extension point for wrapper code annotation analyzers.
      */
-    private static val WRAPPER_CODE_ANNOTATION_ANALYZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer"
+    private static val MODEL_ANALYZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.modelAnalyzer"
 
     /**
      * List with all wrapper code annotation analyzers loaded from extensions.
      */
-    private static var List<IWrapperCodeAnnotationAnalyzer> wrapperCodeAnnotationAnalyzers
+    private static var List<ModelAnalyzer> modelAnalyzers
 
 
     /**
@@ -75,11 +75,11 @@ class WrapperCodeGenerator {
      */
     public static val KICO_GENERATED_CODE_VARIABLE = "kico_code"
     
-    private static val declarationPhase = new CodeGenerationPhase("declaration", true, [data | true], "decl")
-    private static val initializationPhase = new CodeGenerationPhase("initialization", true, [data | true], "init")
-    private static val releasePhase = new CodeGenerationPhase("release", true, [data | true], "free")
-    private static val inputPhase = new CodeGenerationPhase("input", false, [data | data.isInput])
-    private static val outputPhase = new CodeGenerationPhase("output", false, [data | data.isOutput])
+    private static val declarationPhase = new CodeGenerationPhase("declaration", true, "decl")
+    private static val initializationPhase = new CodeGenerationPhase("initialization", true, "init")
+    private static val inputPhase = new CodeGenerationPhase("input", false)
+    private static val outputPhase = new CodeGenerationPhase("output", false)
+    private static val releasePhase = new CodeGenerationPhase("release", true, "free")
 
     public static var List<CodeGenerationPhase> codeGenerationPhases = #[declarationPhase, initializationPhase, inputPhase, outputPhase, releasePhase]
 
@@ -113,12 +113,12 @@ class WrapperCodeGenerator {
      * @param datas The model files to generate wrapper code for
      */
     def public String generateWrapperCode(String templatePath, FileData... datas) {
-        val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
+        val List<MacroCallData> annotationDatas = newArrayList()
         var List<String> modelNames = newArrayList()
         var String modelName = ""
         for(data : datas) {
             val model = ModelImporter.load(data.getFile(project))
-            getWrapperCodeAnnotationData(model, annotationDatas)
+            getMacroCallData(model, annotationDatas)
             modelName = Files.getNameWithoutExtension(datas.get(0).name)
             modelNames += modelName
         }
@@ -135,7 +135,7 @@ class WrapperCodeGenerator {
      * @param templatePath The project relative path to the wrapper code template
      * @param annotationDatas The annotations that injected as macro calls
      */
-    def public String generateWrapperCode(String templatePath, List<WrapperCodeAnnotationData> annotationDatas) {
+    def public String generateWrapperCode(String templatePath, List<MacroCallData> annotationDatas) {
         generateWrapperCode(templatePath, annotationDatas, #{})
     }
     
@@ -168,7 +168,7 @@ class WrapperCodeGenerator {
      * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
      * @param annotationDatas The annotations that injected as macro calls
      */
-    def public String generateWrapperCode(String templatePath, List<WrapperCodeAnnotationData> annotationDatas, Map<String, Object> additionalMappings) {
+    def public String generateWrapperCode(String templatePath, List<MacroCallData> annotationDatas, Map<String, Object> additionalMappings) {
                 
         // Check consistency of path
         if (!templatePath.isNullOrEmpty()) {
@@ -194,7 +194,7 @@ class WrapperCodeGenerator {
      * plus injected macro calls from annotations of the given files.
      */
     private def String getTemplateWithMacroCalls(String templatePath, Map<String, Object> additionalMappings,
-            List<WrapperCodeAnnotationData> annotationDatas) {
+            List<MacroCallData> annotationDatas) {
         
         // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
@@ -298,7 +298,7 @@ class WrapperCodeGenerator {
      * @return a map where the keys 'inits', 'inputs' and 'outputs'
      *         are mapped to the corresponding macro calls for the given annotations.
      */
-    private def Map<String, Object> getMacroCalls(WrapperCodeAnnotationData... annotationDatas) {
+    private def Map<String, Object> getMacroCalls(MacroCallData... annotationDatas) {
         val Map<String, Object> map = newHashMap
         if(annotationDatas.isNullOrEmpty) {
             // Set the macro value for all placeholders (e.g. ${inputs}, ${outputs}) to the empty string,
@@ -317,11 +317,11 @@ class WrapperCodeGenerator {
         }
 
         // Keep track of the annotations that were already seen before in this collection
-        val doneAnnotations = new ArrayList<WrapperCodeAnnotationData>()
+        val doneAnnotations = new ArrayList<MacroCallData>()
         var boolean isAnnotationDoneAlready
         
         // Add macro calls for annotations to the different phases
-        var WrapperCodeAnnotationData prev = null; 
+        var MacroCallData prev = null; 
         for (data : annotationDatas) {
             
             isAnnotationDoneAlready = true
@@ -363,7 +363,7 @@ class WrapperCodeGenerator {
      * @return a string to set information about the variable which the annotation is used for.
      *         as well as the macro call for the annotation.    
      */
-    private static def String getTemplateCodeForAnnotation(WrapperCodeAnnotationData data) {
+    private static def String getTemplateCodeForAnnotation(MacroCallData data) {
         return getMetaAssignments(data) + getMacroCall(data);
     }
 
@@ -373,7 +373,7 @@ class WrapperCodeGenerator {
      * @param data The wrapper code annotation data 
      * @return a string which globally sets meta information.  
      */
-    private static def String getMetaAssignments(WrapperCodeAnnotationData data) {
+    private static def String getMetaAssignments(MacroCallData data) {
         return '''<#assign varname = '«data.varName»' vartype = '«data.varType»' />'''+"\n"
     }
 
@@ -383,7 +383,7 @@ class WrapperCodeGenerator {
      * @param data The wrapper code annotation data
      * @return a string with the macro call for an wrapper code annotation data.
      */
-    private static def String getMacroCall(WrapperCodeAnnotationData data) {
+    private static def String getMacroCall(MacroCallData data) {
         var txt = ""
         // Ignore non existing macro <=> only call if macro exists
         if (data.ignoreNonExistingSnippet)
@@ -474,10 +474,10 @@ class WrapperCodeGenerator {
      * @param data the FileData with information which model file will be analyzed
      * @return the annotation datas
      */
-    public static def List<WrapperCodeAnnotationData> getWrapperCodeAnnotationData(IProject project, FileData data) {
-        val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
+    public static def List<MacroCallData> getMacroCallData(IProject project, FileData data) {
+        val List<MacroCallData> annotationDatas = newArrayList()
         val model = ModelImporter.load(data.getFile(project))
-        getWrapperCodeAnnotationData(model, annotationDatas)
+        getMacroCallData(model, annotationDatas)
         return annotationDatas
     }
 
@@ -494,7 +494,7 @@ class WrapperCodeGenerator {
             initAnalyzers()
             
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : wrapperCodeAnnotationAnalyzers) {
+            for (analyzer : de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers) {
                 val modelName = analyzer.getModelName(model)
                 if(modelName != null) {
                     return modelName
@@ -511,16 +511,16 @@ class WrapperCodeGenerator {
      * @param data File data holding a path to a model file
      * @param annotationDatas List to add found annotation datas to
      */
-    public static def void getWrapperCodeAnnotationData(EObject model,
-        List<WrapperCodeAnnotationData> annotationDatas) {
+    public static def void getMacroCallData(EObject model,
+        List<MacroCallData> annotationDatas) {
 
         // Load EObject from file
         if (model != null) {
             initAnalyzers()
             
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : wrapperCodeAnnotationAnalyzers) {
-                val annotations = analyzer.getAnnotations(model)
+            for (analyzer : de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers) {
+                val annotations = analyzer.getAnnotationInterface(model)
                 if (annotations != null) {
                     annotationDatas.addAll(annotations)    
                 }
@@ -537,14 +537,14 @@ class WrapperCodeGenerator {
      * @param datas List to add found datas objects to
      */
     public static def void getSimulationInterfaceData(EObject model,
-        List<WrapperCodeAnnotationData> simulationDatas) {
+        List<MacroCallData> simulationDatas) {
 
         // Load EObject from file
         if (model != null) {
             initAnalyzers()
             
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : wrapperCodeAnnotationAnalyzers) {
+            for (analyzer : de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers) {
                 val datas = analyzer.getSimulationInterface(model)
                 if (!datas.isNullOrEmpty) {
                     simulationDatas.addAll(datas)    
@@ -559,17 +559,17 @@ class WrapperCodeGenerator {
      * if not yet done.
      */
     private static def void initAnalyzers(){
-        if(wrapperCodeAnnotationAnalyzers == null){
+        if(de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers == null){
             // Initialize list
-            wrapperCodeAnnotationAnalyzers = newArrayList()
+            de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers = newArrayList()
             
             // Fill list with wrapper code annotation analyzers from extensions.
-            val config = Platform.getExtensionRegistry().getConfigurationElementsFor(WRAPPER_CODE_ANNOTATION_ANALYZER_EXTENSION_POINT_ID);
+            val config = Platform.getExtensionRegistry().getConfigurationElementsFor(de.cau.cs.kieler.prom.templates.TemplateManager.MODEL_ANALYZER_EXTENSION_POINT_ID);
             try {
                 for (IConfigurationElement e : config) {
                     val o = e.createExecutableExtension("class");
-                    if (o instanceof IWrapperCodeAnnotationAnalyzer) {
-                        wrapperCodeAnnotationAnalyzers += o
+                    if (o instanceof ModelAnalyzer) {
+                        de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers += o
                     }
                 }
             } catch (CoreException ex) {
@@ -585,12 +585,13 @@ class WrapperCodeGenerator {
      * Class to define the phases for which wrapper code is used and thus to define which macro calls
      * need to be injected in the template.
      */
-    private static class CodeGenerationPhase {
+    public static class CodeGenerationPhase {
         
         /**
          * The unique name of this phase.
          * Used to identify which phase is currently active in the template.
          */
+        @Accessors(PUBLIC_GETTER)
         private var String name
         
         /**
@@ -599,13 +600,6 @@ class WrapperCodeGenerator {
          * but may be used multiple times: as input and output) 
          */
         private boolean isUsesAnnotationsOnce
-        
-        /**
-         * Method to check if the snippet definition for a wrapper code annotation
-         * should be inserted in this phase.
-         * (e.g. the input phase is only relevant for annotations on an input variable) 
-         */
-        private (WrapperCodeAnnotationData) => boolean isApplicableFunction;
         
         /**
          * The list of assignment macros that will insert its content as part of this phase.
@@ -625,14 +619,11 @@ class WrapperCodeGenerator {
          * 
          * @param name The unique name of the phase.
          * @param isUsesAnnotationsOnce Defines whether the same annotation may be used multiple times in this phase
-         * @param  isApplicableFunction A function that takes a WrapperCodeAnnotationData
-         * and returns true iff the snippet definition for the annotation should be called as part of this phase.
          * @param alternativeMacroNames A list of macro names that should be equiivalent to the macro with the same name as this phase. 
          */
-        new(String name, boolean isUsesAnnotationsOnce, (WrapperCodeAnnotationData) => boolean isApplicableFunction, String... alternativeMacroNames) {
+        new(String name, boolean isUsesAnnotationsOnce, String... alternativeMacroNames) {
             this.name = name
             this.isUsesAnnotationsOnce = isUsesAnnotationsOnce
-            this.isApplicableFunction = isApplicableFunction
             
             // Create macros
             this.macros += new AssignmentMacro(name, this)
@@ -662,8 +653,8 @@ class WrapperCodeGenerator {
          * 
          * @return true if the snippet definition for the annotation should be inserted as part of this phase.
          */
-        public def boolean isApplicable(WrapperCodeAnnotationData data){
-            return isApplicableFunction.apply(data)
+        public def boolean isApplicable(MacroCallData data){
+            return data.phases.contains(name)
         }
     }
     

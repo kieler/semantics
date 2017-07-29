@@ -19,7 +19,7 @@ import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.FileGenerationResult
 import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.kibuild.BuildConfiguration
-import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Simulator
 import de.cau.cs.kieler.simulation.core.StepAction
@@ -64,7 +64,7 @@ class SimulationUtil {
                 case null: {
                     startExecutableFile(file)
                 }
-                case "sct": {
+                case "sctx": {
                     compileAndSimulateModel(file)
                 }
                 default: {
@@ -191,11 +191,11 @@ class SimulationUtil {
         // Create dummy file for the model.
         // Note that it is not necessary to save the model in the file
         // because it is only used for path and location operations.
-        var modelName = WrapperCodeGenerator.getModelName(model)
+        var modelName = TemplateManager.getModelName(model)
         if(modelName == null) {
-            modelName = "SimulatedEObject.sct"
+            modelName = "SimulatedEObject.sctx"
         } else if(Files.getFileExtension(modelName).isNullOrEmpty){
-            modelName = modelName+".sct"
+            modelName = modelName+".sctx"
         }
         val file = tmpProject.getFile(modelName)
         
@@ -213,7 +213,7 @@ class SimulationUtil {
         // Create dummy file for the model.
         // Note that it is not necessary to save the model in the file
         // because it is only used for path and location operations.
-        val file = tmpProject.getFile("SimulatedEObject.sct")
+        val file = tmpProject.getFile("SimulatedEObject.sctx")
         
         // Compile model (C configuration), then simulate result
         val result = compileModelForSimulation(file, model)

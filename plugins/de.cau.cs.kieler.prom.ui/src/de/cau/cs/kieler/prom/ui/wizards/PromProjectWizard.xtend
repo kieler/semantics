@@ -33,6 +33,7 @@ import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
+import com.google.common.io.Files
 
 /**op
  * Wizard implementation wich creates a project
@@ -259,6 +260,12 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     if(isFile) {
                         // Create file
                         PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath, data.origin)
+                        
+                        // Remember kibuild file in project preferences
+                        if(Files.getFileExtension(resolvedProjectRelativePath) == "kibuild") {
+                            newlyCreatedProject.setPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER,
+                                                                      resolvedProjectRelativePath)
+                        }
                     } else {
                         // Create folder
                         PromPlugin.initializeFolder(newlyCreatedProject, resolvedProjectRelativePath, data.origin)

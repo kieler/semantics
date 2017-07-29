@@ -12,28 +12,32 @@
  */
 package de.cau.cs.kieler.prom.build
 
-import com.google.common.base.Strings
 import com.google.common.io.Files
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import java.io.IOException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.util.Collections
 import java.util.List
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.IPath
+import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
-import org.eclipse.core.runtime.Path
-import org.eclipse.core.runtime.IPath
-import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * @author aas
@@ -41,10 +45,10 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
  */
 class KiCoModelCompiler extends ModelCompiler {
     public val outputTemplate = new ConfigurableAttribute("outputTemplate", "")
-    public val compileChain = new ConfigurableAttribute("compileChain", "s.c")
     public val fileExtension = new ConfigurableAttribute("fileExtension", ".c")
+    public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple")
     
-    private var ModelCompilationResult result
+    private var IFile compiledFile
     
     /**
      * Compile a model file via KiCo. 
@@ -53,16 +57,40 @@ class KiCoModelCompiler extends ModelCompiler {
      * @param model model to be built
      */
     override doCompile(IFile file, EObject model) {
+        // Save reference of the file that should be compiled
+        compiledFile = file
         // Prepare result
-        result = new ModelCompilationResult()
+        val result = new ModelCompilationResult()
         
         // Compile model
         if (model != null) {
             // Compile
-            val kicoResult = compileWithKiCo(model)
+            val context = compileWithKiCo(model)
+            // Check all intermediate results for errors and warnings
+            var boolean noIssues = true
+            var Processor<?,?> lastResult
+            for (iResult : context.processorInstancesSequence) {
+                lastResult = iResult
+                val errors = iResult.environment.errors
+                val warnings = iResult.environment.warnings
+                // Add build problems to result
+                if(!errors.isNullOrEmpty) {
+                    noIssues = false
+                    val errorMessage = "Error in '"+iResult.id+"':"+errors.messages
+                    result.addProblem(BuildProblem.createError(file, errorMessage))
+                }
+                if(!warnings.isNullOrEmpty) {
+                    noIssues = false
+                    // Add build problem to result
+                    val warningMessage = "Warning in '"+iResult.id+"':"+warnings.messages
+                    result.addProblem(BuildProblem.createWarning(file, warningMessage))
+                }
+            }
+            // Get final result of compilation
+            val resultModel = lastResult.environment.getProperty(Environment.MODEL)
             
             // Save result if no errors and warnings
-            if (kicoResult.allErrors.isNullOrEmpty() && kicoResult.allWarnings.isNullOrEmpty()) {
+            if(noIssues) {
                 // If fileExtension starts with a letter, add a dot as prefix
                 var String fileExt = fileExtension.stringValue
                 if(fileExt.matches("^\\w.*")) {
@@ -74,19 +102,20 @@ class KiCoModelCompiler extends ModelCompiler {
                                                                        fileExt,
                                                                        file.project)
                 val targetFile = targetResource as IFile
-                saveCompilationResult(file, model, kicoResult, targetFile)
+                saveCompilationResult(resultModel, targetFile)
                 
                 // Add generated file to result
                 result.addCreatedFile(targetFile)
                 
                 // Create simulation code
                 if(simulationProcessor != null) {
-                    // Get all guards in the resulting program, to add them to the simulation data pool
+                    // Get all variables that make up the current state of the model
+                    // to add them to the simulation data pool.
+                    // These are the variables in the model, as well as the PRE_XXX variables 
                     val interfaceTypes = (simulationProcessor.interfaceTypes.value as List)
-                    if(!interfaceTypes.isNullOrEmpty && interfaceTypes.contains("guard")) {
-                        val guards = kicoResult.getGuards
-                        simulationProcessor.additionalVariables.value = #{"guard" -> guards.map[it.name]}
-                        // TODO: How to get the PRE_g0 variables?
+                    if(!interfaceTypes.isNullOrEmpty && interfaceTypes.contains("other")) {
+                        val registerVariables = context.getRegisterVariables
+                        simulationProcessor.additionalVariables.value = #{"other" -> registerVariables.map[it.name]}
                     }
                     
                     // Compute output file of simulation generation
@@ -106,17 +135,7 @@ class KiCoModelCompiler extends ModelCompiler {
                     simulationProcessor.model = model
                     // Run processor
                     result.simulationGenerationResult = simulationProcessor.process
-                } 
-            } else {
-                // Add build problem to result
-                if(kicoResult.allWarnings != null && kicoResult.allWarnings.toLowerCase.contains("not asc")) {
-                    result.addProblem(BuildProblem.createWarning(file, "Model is not ASC-Schedulable"))
-                } else {
-                    val errorMessage = Strings.nullToEmpty(kicoResult.allErrors) + "\n" +
-                                       Strings.nullToEmpty(kicoResult.allWarnings)
-                    val exception = new Exception(errorMessage)
-                    result.addProblem(BuildProblem.createError(file, "Compilation failed. Please, check the Error Log", exception))
-                }
+                }    
             }
         }
         
@@ -148,46 +167,27 @@ class KiCoModelCompiler extends ModelCompiler {
         }
     }
     
-    private def List<ValuedObject> getGuards(CompilationResult kicoResult) {
-        val List<ValuedObject> valuedObjects = newArrayList
-        for(intermediateResult : kicoResult.transformationIntermediateResults) {
-//            val intermediateModel = intermediateResult.result
-//            if(intermediateModel instanceof Program) {
-//                val decls = intermediateModel.declarations
-//                for(decl : decls) {
-//                    for(valuedObject : decl.valuedObjects) {
-//                        if(valuedObject.name.matches("g\\d+")) {
-//                            valuedObjects.add(valuedObject)    
-//                        }
-//                    }
-//                }
-//            }
-        }
-        return valuedObjects
+    private def String getMessages(MessageObjectReferences messageObjectReferences) {
+        return messageObjectReferences.map[messageObject |
+                     if (messageObject.exception != null) {
+                         ((new StringWriter) => [messageObject.exception.printStackTrace(new PrintWriter(it))]).toString()
+                     } else {
+                        messageObject.message
+                     }
+                ].join("\n- ")
     }
     
-    private def CompilationResult compileWithKiCo(EObject model) {
-        // Get compiler context with settings for KiCo
-        // TODO: There are several transformations that do not work correctly or throw exceptions, so we explicitly disable them.
-        // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015)
-        // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015)
-        // TODO: ABORTWTO often makes trouble and is not deterministicly choosen
-        // TODO: scg.guards.ft and scg.scheduling.dc are experimental transformations and have issues (KISEMA-1188)
-        var String chain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, "
-                         + "!T_ABORTWTO, !T_scg.guards.ft, !T_scg.scheduling.dc"
-        if(KiCoBuilder.isCompileChain(compileChain.stringValue)) {
-            chain += ", " + compileChain.stringValue
-        } else {
-            // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
-            chain += ", T_"+ compileChain.stringValue
-        }
-        val context = new KielerCompilerContext(chain, model)
-        context.inplace = true
-        context.advancedSelect = true
-        context.progressMonitor = monitor
-        
-        var CompilationResult result = KielerCompiler.compile(context)
-        return result
+    private def List<ValuedObject> getRegisterVariables(CompilationContext context) {
+        // TODO: Search SCG for pre(GUARD) calls and add them to the returned list
+        return newArrayList
+    }
+    
+    private def CompilationContext compileWithKiCo(EObject model) {
+        val compilationSystemID = compilationSystem.stringValue
+        val context = Compile.createCompilationContext(compilationSystemID, model)
+        context.startEnvironment.setProperty(Environment.INPLACE, false)
+        context.compile
+        return context
     }
     
     /**
@@ -198,27 +198,36 @@ class KiCoModelCompiler extends ModelCompiler {
      * @param result The KiCo compilation result to be saved
      * @param targetPath File path where the result should be saved
      */
-    private def void saveCompilationResult(IFile file, EObject model, CompilationResult result, IFile targetFile) {
-        // Serialize Eobject
-        if(result.string.isNullOrEmpty) {
-            saveEObject(result.getEObject(), targetFile)
+    private def void saveCompilationResult(Object result, IFile targetFile) {
+        if(result == null) {
+            return;
+        } else if(result instanceof CodeContainer) {
+            val String resultCode = result?.get(0)
+            saveCode(resultCode, targetFile)
+        } else if(result instanceof EObject) {
+            // Serialize EObject
+            saveEObject(result, targetFile)
         } else {
-            // Save generated code to file, possibly using a target template
-            val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate.stringValue, file.project)
-            if (resolvedTargetTemplate.isNullOrEmpty) {
-                val inputStream = new StringInputStream(result.string)
-                PromPlugin.createResource(targetFile, inputStream, true)
-            } else {
-                // Inject compilation result into target template
-                val modelName = Files.getNameWithoutExtension(file.name)
-                val generator = new WrapperCodeGenerator(file.project, null)
-                val wrapperCode = generator.processTemplate(resolvedTargetTemplate, 
-                    #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string,
-                      WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName})
-                // Save output
-                val inputStream = new StringInputStream(wrapperCode)
-                PromPlugin.createResource(targetFile, inputStream, true)
-            }
+            throw new Exception("Cannot save compilation result:"+result)
+        }
+    }
+
+    private def void saveCode(String code, IFile targetFile) {
+        // Save generated code to file, possibly using a target template
+        val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate.stringValue, compiledFile.project)
+        if (resolvedTargetTemplate.isNullOrEmpty) {
+            val inputStream = new StringInputStream(code)
+            PromPlugin.createResource(targetFile, inputStream, true)
+        } else {
+            // Inject compilation result into target template
+            val modelName = Files.getNameWithoutExtension(compiledFile.name)
+            val generator = new TemplateManager(compiledFile.project, null)
+            val wrapperCode = generator.processTemplate(resolvedTargetTemplate, 
+                #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> code,
+                  TemplateManager.MODEL_NAME_VARIABLE -> modelName})
+            // Save output
+            val inputStream = new StringInputStream(wrapperCode)
+            PromPlugin.createResource(targetFile, inputStream, true)
         }
     }
 

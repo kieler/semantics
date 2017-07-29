@@ -227,7 +227,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                         val file = res as IFile
                         // Only take care of files with the following extensions
                         switch(file.fileExtension.toLowerCase) {
-                            case "sct",
+//                            case "sct",
+                            case "sctx",
                             case "strl": {
                                 changedModels.add(file)    
                             }
@@ -401,7 +402,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                                        + "to define how model files are compiled.")
         } else {
             try {
-                initializeConfiguration(project.getFile(configFilePath))    
+                val file = project.getFile(configFilePath)
+                val model = ModelImporter.load(file)
+                if(model != null && model instanceof BuildConfiguration) {
+                        initializeConfiguration(model as BuildConfiguration)
+                } else {
+                    throw new Exception("Build configuration '" + file.projectRelativePath + "' could not be loaded")
+                }
             } catch (Exception e) {
                 createErrorMarker(project, e.message)
             }
@@ -475,33 +482,27 @@ class KiCoBuilder extends IncrementalProjectBuilder {
 //        }
 //    }
     
-    private def void initializeConfiguration(IFile file) {
-        val model = ModelImporter.load(file)
-        if(model != null && model instanceof BuildConfiguration) {
-            val buildConfig = model as BuildConfiguration
-            // Update attributes
-            this.updateConfigurableAttributes(buildConfig.attributes)
-            
-            // Create model compilers
+    private def void initializeConfiguration(BuildConfiguration buildConfig) {
+        // Update attributes
+        this.updateConfigurableAttributes(buildConfig.attributes)
+        
+        // Create model compilers
 //            buildConfig.createModelCompilers
-            modelCompilers = buildConfig.createModelCompilers
-            for(modelCompiler : modelCompilers) {
-                modelCompiler.outputFolder = outputFolder.stringValue
-                modelCompiler.monitor = monitor
-            }
-            // Create simulation compilers
-            simulationCompilers = buildConfig.createSimulationCompilers
-            for(simulationCompiler : simulationCompilers) {
-                simulationCompiler.monitor = monitor
-            }
-            // Create template processors
-            templateProcessors = buildConfig.createTemplateProcessors
-            for(processor : templateProcessors) {
-                processor.monitor = monitor
-                processor.project = project
-            }
-        } else {
-            throw new Exception("Build configuration '" + file.projectRelativePath + "' could not be loaded")
+        modelCompilers = buildConfig.createModelCompilers
+        for(modelCompiler : modelCompilers) {
+            modelCompiler.outputFolder = outputFolder.stringValue
+            modelCompiler.monitor = monitor
+        }
+        // Create simulation compilers
+        simulationCompilers = buildConfig.createSimulationCompilers
+        for(simulationCompiler : simulationCompilers) {
+            simulationCompiler.monitor = monitor
+        }
+        // Create template processors
+        templateProcessors = buildConfig.createTemplateProcessors
+        for(processor : templateProcessors) {
+            processor.monitor = monitor
+            processor.project = project
         }
     }
 
@@ -512,7 +513,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private def List<IFile> findModelFilesInProject() {
         // Search for models in project
         val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
-        return PromPlugin.findFiles(membersWithoutBinDirectory, #["sct", "strl"])
+        return PromPlugin.findFiles(membersWithoutBinDirectory, #[//"sct",
+                                                                  "sctx",
+                                                                  "strl"])
     }
     
     /**

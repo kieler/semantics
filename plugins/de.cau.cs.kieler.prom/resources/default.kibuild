@@ -2,14 +2,14 @@ outputFolder: kieler-gen
 
 // Compile models to C code
 model compiler kico {
-  compileChain: s.c
+  compilationSystem: de.cau.cs.kieler.sccharts.netlist.simple
   fileExtension: c
-  // whitelist: ".sct" // Only compile the models matching this regular expression
+  // whitelist: "MyModel.sctx" // Only compile the models matching this regular expression
   
   // Generate C simulation from output of compilation
   process simulation template {
     snippetFolder: snippets
-    file: Simulation.ftl
+    file: CSimulation.ftl
   }
 }
 

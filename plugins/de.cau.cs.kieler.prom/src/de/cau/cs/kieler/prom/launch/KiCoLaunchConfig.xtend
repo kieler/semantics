@@ -23,8 +23,10 @@ import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.build.KiCoBuilder
+import de.cau.cs.kieler.prom.console.PromConsole
 import de.cau.cs.kieler.prom.data.FileData
 import de.cau.cs.kieler.prom.data.KiCoLaunchData
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import java.io.File
 import java.io.IOException
 import java.util.Collections
@@ -46,9 +48,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
-import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.console.PromConsole
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -267,7 +267,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                     // resolve template path
                     val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate, project)
                     // Create wrapper code
-                    val generator = new WrapperCodeGenerator(project, launchData.wrapperCodeSnippetDirectory)
+                    val generator = new TemplateManager(project, launchData.wrapperCodeSnippetDirectory)
                     val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate, launchData.files)
                     // Save output
                     val resolvedWrapperCodeTargetLocation = launchConfig.computeTargetPath(resolvedWrapperCodeTemplate, false)
@@ -452,11 +452,11 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             } else {
                 // Create wrapper code
                 val modelName = Files.getNameWithoutExtension(data.name)
-                val annotationDatas = WrapperCodeGenerator.getWrapperCodeAnnotationData(project, data)
-                val generator = new WrapperCodeGenerator(project, launchData.wrapperCodeSnippetDirectory)
-                val mappings = #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string,
-                                 WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
-                                 WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]}
+                val annotationDatas = TemplateManager.getMacroCallData(project, data)
+                val generator = new TemplateManager(project, launchData.wrapperCodeSnippetDirectory)
+                val mappings = #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> result.string,
+                                 TemplateManager.MODEL_NAME_VARIABLE -> modelName,
+                                 TemplateManager.MODEL_NAMES_VARIABLE -> #[modelName]}
                 val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate, annotationDatas, mappings)
                 
                 // Save output

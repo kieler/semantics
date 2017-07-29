@@ -97,9 +97,10 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * @return the created environment
      */
     private static def EnvironmentData getGenericEnvironment() {
-        val simTemplateFile = new FileData("Simulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/Simulation.ftl") 
-        val simTemplateSnippet = new FileData("snippets/SimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/SimulationSnippets.ftl") 
-        val initialResources = #[simTemplateFile,simTemplateSnippet]
+        val simTemplateFile = new FileData("CSimulation.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl") 
+        val simTemplateSnippet = new FileData("snippets/CSimulationSnippets.ftl", "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulationSnippets.ftl")
+        val buildConfigFile = new FileData("BuildConfig.kibuild", "platform:/plugin/de.cau.cs.kieler.prom/resources/default.kibuild") 
+        val initialResources = #[simTemplateFile, simTemplateSnippet, buildConfigFile]
         
         var launchData = new KiCoLaunchData()
         

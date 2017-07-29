@@ -18,7 +18,7 @@ import de.cau.cs.kieler.prom.IProjectHolder
 import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.FileData
 import de.cau.cs.kieler.prom.data.KiCoLaunchData
-import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.io.File
 import java.util.ArrayList
@@ -305,7 +305,7 @@ class KiCoLaunchConfigCompilationTab extends AbstractKiCoLaunchConfigTab impleme
             }
         })
         targetTemplate.toolTipText = "Template for the compiled output.\n"
-            + "Use ${" + WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
+            + "Use ${" + TemplateManager.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
             
         // Create target directory control
         val comp4 = UIUtil.createComposite(group, 1)
