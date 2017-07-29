@@ -211,8 +211,10 @@ public class CViewPlugin implements BundleActivator {
         return exportHooks;
     }
 
+    // -------------------------------------------------------------------------
+    
     public static List<String> getAllRegisteredExportHookIds() {
-        ArrayList returnList = new ArrayList<String>();
+        ArrayList<String> returnList = new ArrayList<String>();
         List<IExportHook> hooks = getRegisteredExportHooks(true);
         for (IExportHook hook: hooks) {
                 returnList.add(hook.getName() + " (" + hook.getId() + ")");
@@ -227,6 +229,8 @@ public class CViewPlugin implements BundleActivator {
     public static void clearSelectionAnalysisHooks() {
         analysisHooks = null;
     }
+
+    // -------------------------------------------------------------------------
     
     public static String extractId(String item) {
         int start = item.lastIndexOf("(");
@@ -239,8 +243,10 @@ public class CViewPlugin implements BundleActivator {
         return "";
     }
 
+    // -------------------------------------------------------------------------
+    
     public static List<String> filterSelectedRegisteredAnalysisHookIds(List<String> inputList) {
-        ArrayList returnList = new ArrayList<String>();
+        ArrayList<String> returnList = new ArrayList<String>();
         List<IAnalysisHook> hooks = getRegisteredAnalysisHooks(true);
         for (IAnalysisHook hook: hooks) {
             for (String item : inputList) {
@@ -255,8 +261,10 @@ public class CViewPlugin implements BundleActivator {
         return returnList;
     }
 
+    // -------------------------------------------------------------------------
+    
     public static List<String> getAllRegisteredAnalysisHookIds() {
-        ArrayList returnList = new ArrayList<String>();
+        ArrayList<String> returnList = new ArrayList<String>();
         List<IAnalysisHook> hooks = getRegisteredAnalysisHooks(true);
         for (IAnalysisHook hook: hooks) {
                 returnList.add(hook.getName() + " (" + hook.getId() + ")");

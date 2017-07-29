@@ -59,11 +59,10 @@ public class SelectExportDialog extends Dialog {
 
     private static final String PLUGIN_GIF = "icon/plugin.gif";
 
-    /** The Constant Image/ImageDescriptor INPUT_SIGNAL. */
     private Image pluginIcon;
 
     /** The Constant DIALOG_TITLE. */
-    private static final String DIALOG_TITLE = "Select Export";
+    private static final String DIALOG_TITLE = "Select Exporter";
 
     /** The temporary table that allows the user to select. */
     private Table table;
@@ -320,6 +319,7 @@ public class SelectExportDialog extends Dialog {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     static boolean dialogAborted = true;
 
@@ -340,4 +340,5 @@ public class SelectExportDialog extends Dialog {
         return !dialogAborted;
     }
 
+    // -------------------------------------------------------------------------
 }

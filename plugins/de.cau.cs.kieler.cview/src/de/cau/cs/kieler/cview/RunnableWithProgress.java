@@ -18,19 +18,20 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
 /**
- * @author delphino
+ * @author cmot
  *
  */
 public abstract class RunnableWithProgress implements IRunnableWithProgress {
 
+    // -------------------------------------------------------------------------
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public void run(IProgressMonitor monitor)
             throws InvocationTargetException, InterruptedException {
-        // TODO Auto-generated method stub
-
     }
 
+    // -------------------------------------------------------------------------
 }

@@ -14,13 +14,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.ui.dialogs.SaveAsDialog;
 
 import de.cau.cs.kieler.cview.CViewPlugin;
 import de.cau.cs.kieler.cview.DiagramSynthesis;
 import de.cau.cs.kieler.cview.KLighDController;
 import de.cau.cs.kieler.cview.hooks.IExportHook;
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 
 public class CommandHandler implements IHandler {
 
@@ -31,30 +29,19 @@ public class CommandHandler implements IHandler {
     public static String CMD_EXPORT_ID = "de.cau.cs.kieler.cview.command.save";
     public static String CMD_REFRESH_ID = "de.cau.cs.kieler.cview.command";
 
+    // -------------------------------------------------------------------------
+
     @Override
     public void addHandlerListener(IHandlerListener handlerListener) {
     }
+
+    // -------------------------------------------------------------------------
 
     @Override
     public void dispose() {
     }
 
-    private String getNewValue(final String value) {
-        InputDialog id = new InputDialog(Display.getCurrent().getShells()[0], "Set Filter (RegExp)",
-                "Only show components that match the following filter:", value,
-                new IInputValidator() {
-
-                    @Override
-                    public String isValid(final String s) {
-                        return null;
-                    }
-                });
-        if (id.open() == Window.OK) {
-            return id.getValue();
-        } else {
-            return null;
-        }
-    }
+    // -------------------------------------------------------------------------
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -90,9 +77,8 @@ public class CommandHandler implements IHandler {
                     }
                 }
 
-                FileDialog dlg =
-                        new FileDialog(Display.getCurrent().getActiveShell(), SWT.SINGLE | SWT.SAVE);
-                // SaveAsDialog dlg = new SaveAsDialog(Display.getCurrent().getActiveShell());
+                FileDialog dlg = new FileDialog(Display.getCurrent().getActiveShell(),
+                        SWT.SINGLE | SWT.SAVE);
                 dlg.setOverwrite(true);
                 String[] exts = { "*.*" };
                 String ext = selectedHook.getFileExtension();
@@ -101,10 +87,7 @@ public class CommandHandler implements IHandler {
                 }
                 dlg.setFilterExtensions(exts);
                 String fileToWrite = dlg.open();
-                // int ok2 = dlg.open();
-                // if (ok2 == dlg.OK) {
                 if (fileToWrite != null) {
-                    // String fileToWrite = dlg.getResult().toOSString();
                     boolean success = false;
                     if (ext != null && !fileToWrite.endsWith("." + ext)) {
                         fileToWrite += "." + ext;
@@ -127,7 +110,8 @@ public class CommandHandler implements IHandler {
                         }
                     } catch (FileNotFoundException e) {
                         openMessageDialog("Error",
-                                "An error occurred while exporting to '" + fileToWrite + "'.", true);
+                                "An error occurred while exporting to '" + fileToWrite + "'.",
+                                true);
                         e.printStackTrace();
                     }
                     if (!success) {
@@ -191,21 +175,27 @@ public class CommandHandler implements IHandler {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     @Override
     public boolean isEnabled() {
         return true;
     }
+
+    // -------------------------------------------------------------------------
 
     @Override
     public boolean isHandled() {
         return true;
     }
 
+    // -------------------------------------------------------------------------
+
     @Override
     public void removeHandlerListener(IHandlerListener handlerListener) {
-        // TODO Auto-generated method stub
-
     }
+
+    // -------------------------------------------------------------------------
 
     public void openMessageDialog(String title, String text, boolean error) {
         int type = SWT.ICON_INFORMATION;
@@ -218,14 +208,5 @@ public class CommandHandler implements IHandler {
         dialog.open();
     }
 
+    // -------------------------------------------------------------------------
 }
-
-// Command command = event.getCommand();
-// CViewPlugin.setEnabled(false);
-// boolean oldValue = HandlerUtil.toggleCommandState(command);
-// CViewPlugin.setEnabled(!oldValue);
-//
-// if (!oldValue) {
-// // CViewPlugin.showModelView();
-// CViewPlugin.refreshCView();
-// }

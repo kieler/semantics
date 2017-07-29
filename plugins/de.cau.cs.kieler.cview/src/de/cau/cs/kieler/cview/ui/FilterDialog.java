@@ -143,6 +143,8 @@ public class FilterDialog extends Dialog {
         }
     }
 
+    // -------------------------------------------------------------------------
+
     public void updateValues() {
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
@@ -158,6 +160,8 @@ public class FilterDialog extends Dialog {
         });
     }
 
+    // -------------------------------------------------------------------------
+
     public static void loadValues() {
         valueCheckRegExp = CViewPlugin.getPrefBool("btnCheckRegExp", false);
         valueCheckCaseSensitive = CViewPlugin.getPrefBool("btnCheckCaseSensitive", true);
@@ -170,6 +174,8 @@ public class FilterDialog extends Dialog {
                 CViewPlugin.getPrefInt("spinnerEnd", DiagramSynthesis.MAX_EXPANDED_VALUE + 1);
     }
 
+    // -------------------------------------------------------------------------
+
     public void save() {
         updateValues();
         CViewPlugin.setPrefBool("btnCheckRegExp", valueCheckRegExp);
@@ -181,6 +187,8 @@ public class FilterDialog extends Dialog {
         CViewPlugin.setPrefInt("spinnerStart", valueLayerStart);
         CViewPlugin.setPrefInt("spinnerEnd", valueLayerEnd);
     }
+
+    // -------------------------------------------------------------------------
 
     public void updateLabelTitle() {
         String updateText = "Only show ";
@@ -214,12 +222,12 @@ public class FilterDialog extends Dialog {
      * {@inheritDoc}
      */
     public int open() {
-        // Prework
+        // Pre work
         load();
         int returnValue = super.open();
 
         if (returnValue == RETURN_VALUE_OK) {
-            // Afterwork (widget already disposed here...)
+            // Afte rwork (widget already disposed here...)
         }
 
         dispose();
@@ -385,4 +393,5 @@ public class FilterDialog extends Dialog {
         return !dialogAborted;
     }
 
+    // -------------------------------------------------------------------------
 }

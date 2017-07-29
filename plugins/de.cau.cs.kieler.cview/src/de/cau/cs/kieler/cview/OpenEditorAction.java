@@ -50,6 +50,8 @@ public class OpenEditorAction implements IAction {
     public static final String ID =
             "de.cau.cs.kieler.cview.OpenEditorAction";
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
@@ -80,7 +82,9 @@ public class OpenEditorAction implements IAction {
                 }
             }
         }
-        
+    
+        // -------------------------------------------------------------------------
+
         IWorkbenchPage page = Workbench.getInstance().getWorkbenchWindows()[0].getActivePage();
         IEditorDescriptor desc = PlatformUI.getWorkbench().
                 getEditorRegistry().getDefaultEditor(file.getName());
@@ -99,44 +103,10 @@ public class OpenEditorAction implements IAction {
             e.printStackTrace();
         }        
         
-//        // get placeholder model
-//        CodePlaceHolder codeModel = null;
-//        if (inputModel instanceof CodePlaceHolder) {
-//            codeModel = (CodePlaceHolder) inputModel;
-//        } else if (context.getKNode() != null) {
-//            // if input model is not CodePlaceHolder check if clicked node is associated with it
-//            Object domainElement = context.getDomainElement(context.getKNode());
-//            if (domainElement instanceof CodePlaceHolder) {
-//                codeModel = (CodePlaceHolder) domainElement;
-//            }
-//        }
-//        // open editor
-//        if (codeModel != null) {
-//            // get window for opening editor
-//            IWorkbenchWindow window = context.getViewContext().getDiagramWorkbenchPart().getSite()
-//                    .getWorkbenchWindow();
-//
-//            // Create editor input based on string.
-//            // Currently it is better to set this read only because if normal save is used instead
-//            // of save as saving has no effect
-//            IStorageEditorInput input = new StringBasedEditorInput(codeModel.getName(),
-//                    "Generated Code", codeModel.getCode(), true, codeModel.getResourceExtension());
-//
-//            // open editor
-//            IWorkbenchPage page = window.getActivePage();
-//            if (page != null) {
-//                try {
-//                    page.openEditor(input, codeModel.getEditorID());
-//                } catch (PartInitException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
         return ActionResult.createResult(false);
-
     }
     
-    
+    // -------------------------------------------------------------------------
     
     /**
      * 
@@ -153,7 +123,7 @@ public class OpenEditorAction implements IAction {
         if (document != null) {
           IRegion lineInfo = null;
           try {
-            // line count internaly starts with 0, and not with 1 like in
+            // line count internally starts with 0, and not with 1 like in
             // GUI
             lineInfo = document.getLineInformation(lineNumber - 1);
           } catch (BadLocationException e) {
@@ -166,4 +136,5 @@ public class OpenEditorAction implements IAction {
         }
       }
 
+    // -------------------------------------------------------------------------
 }

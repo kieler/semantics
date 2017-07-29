@@ -20,12 +20,19 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class CViewProgressMonitorDialog extends ProgressMonitorDialog {
+    
+    // -------------------------------------------------------------------------
+
     public CViewProgressMonitorDialog(Shell parent) {
         super(parent);
     }
 
+    // -------------------------------------------------------------------------
+    
     protected void configureShell(final Shell shell) {
         super.configureShell(shell);
         shell.setText("Refreshing  C View");
     }
+
+    // -------------------------------------------------------------------------
 }

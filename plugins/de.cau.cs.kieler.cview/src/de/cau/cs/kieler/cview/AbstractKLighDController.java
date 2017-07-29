@@ -84,22 +84,32 @@ public abstract class AbstractKLighDController {
     static AbstractKLighDController controller = null;
 
     static Object[] allSelections;
-    
-    public static Object[] getAllSelections() {
-        return allSelections;
-    }
-    
-    public static CViewModel getModel() {
-        return model;
-    }
+
+    // -------------------------------------------------------------------------
 
     public abstract CViewModel calculateModel(Object[] allselections, IProgressMonitor monitor);
 
     public abstract int preCalculateModel(Object[] allselections);
 
+    // -------------------------------------------------------------------------
+
+    public static Object[] getAllSelections() {
+        return allSelections;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public static CViewModel getModel() {
+        return model;
+    }
+
+    // -------------------------------------------------------------------------
+
     public List<java.io.File> listFiles(String dirPath) {
         return listFiles(dirPath, "*.{c,h}");
     }
+
+    // -------------------------------------------------------------------------
 
     public List<java.io.File> listFiles(String dirPath, String filter) {
         List<java.io.File> files = new ArrayList<>();
@@ -114,6 +124,8 @@ public abstract class AbstractKLighDController {
         }
         return null;
     }
+
+    // -------------------------------------------------------------------------
 
     public AbstractKLighDController() {
         System.out.println("+++ CONTROLLER INSTANTIATED +++");
@@ -135,7 +147,8 @@ public abstract class AbstractKLighDController {
         });
     }
 
-    
+    // -------------------------------------------------------------------------
+
     public void refreshCView(boolean forceRebuild) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
@@ -152,8 +165,8 @@ public abstract class AbstractKLighDController {
                 if (controller != null && model != null) {
                     DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
                     if (view == null) {
-                        DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE,
-                                model, KlighdSynthesisProperties.create());
+                        DiagramViewManager.createView(CVIEW_KLIGHD_ID, CVIEW_KLIGHD_TITLE, model,
+                                KlighdSynthesisProperties.create());
                     } else {
                         DiagramViewManager.updateView(view.getViewContext(), model);
                     }
@@ -162,26 +175,31 @@ public abstract class AbstractKLighDController {
         });
     }
 
-    
+    // -------------------------------------------------------------------------
+
     public void rebuildModelAndrefreshCView(boolean forceRebuild) {
-     int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
+        int workTotal = preCalculateModel(allSelections); // , IProgressMonitor monitor));
         try {
-            new CViewProgressMonitorDialog(new Shell()).run(true,true, (new RunnableWithProgress() {
-                public void run(IProgressMonitor monitor) {
-                    SubMonitor subMonitor = SubMonitor.convert(monitor, workTotal);
-                    monitor.beginTask("Processing "+workTotal+" files...", workTotal);
-                    subMonitor.worked(1);
-                    model = calculateModel(allSelections, subMonitor); // , IProgressMonitor monitor));
-                    
-                    refreshCView(forceRebuild);
-                }
-            }));
+            new CViewProgressMonitorDialog(new Shell()).run(true, true,
+                    (new RunnableWithProgress() {
+                        public void run(IProgressMonitor monitor) {
+                            SubMonitor subMonitor = SubMonitor.convert(monitor, workTotal);
+                            monitor.beginTask("Processing " + workTotal + " files...", workTotal);
+                            subMonitor.worked(1);
+                            model = calculateModel(allSelections, subMonitor); // , IProgressMonitor
+                                                                               // monitor));
+
+                            refreshCView(forceRebuild);
+                        }
+                    }));
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+    // -------------------------------------------------------------------------
 
     public String getFilePath(Object object) {
         try {
@@ -216,6 +234,8 @@ public abstract class AbstractKLighDController {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     public String getProjectPath(Object object) {
         try {
             // The PROJECT type
@@ -233,6 +253,8 @@ public abstract class AbstractKLighDController {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     public String resolveFile(String workSpaceFileLocation) {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
@@ -247,10 +269,14 @@ public abstract class AbstractKLighDController {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     public static Charset getEncoding() {
         Charset encoding = Charset.defaultCharset();
         return encoding;
     }
+
+    // -------------------------------------------------------------------------
 
     static char[] readFile(String filePath) throws IOException {
         Charset encoding = getEncoding();
@@ -270,7 +296,7 @@ public abstract class AbstractKLighDController {
     }
 
     // -------------------------------------------------------------------------
-    
+
     public static int getSynthesisOptionIntValue(final SynthesisOption option) {
         ViewContext viewContext = getCurrentViewContext();
         if (viewContext != null) {
@@ -281,7 +307,7 @@ public abstract class AbstractKLighDController {
             } else if (result instanceof Float) {
                 return ((Float) result).intValue();
 
-            } else  if (result instanceof Integer) {
+            } else if (result instanceof Integer) {
                 return (Integer) result;
             }
         }
@@ -294,9 +320,10 @@ public abstract class AbstractKLighDController {
         DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
         ViewContext returnContext = null;
         if (view != null) {
-            returnContext = view.getViewContext();            
+            returnContext = view.getViewContext();
         }
         return returnContext;
     }
 
+    // -------------------------------------------------------------------------
 }

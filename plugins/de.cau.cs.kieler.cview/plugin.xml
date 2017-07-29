@@ -84,12 +84,6 @@
             id="de.cau.cs.kieler.cview.OpenEditorAction">
       </action>
    </extension>
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="de.cau.cs.kieler.cview.Startup">
-      </startup>
-   </extension>
    <extension-point id="analysis" name="Define Connection Analysis" schema="schema/analysis.exsd"/>
    <extension-point id="export" name="Define Analysis Export" schema="schema/export.exsd"/>
    

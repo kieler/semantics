@@ -166,6 +166,8 @@ class KLighDController extends AbstractKLighDController {
         }
     }
 
+
+
     def extractTooltip(String data) {
         // TODO: Make this available as an extension point for other plugins to contribute
         val iStart1 = data.indexOf("/*");
@@ -194,11 +196,11 @@ class KLighDController extends AbstractKLighDController {
         // val filePath = getFilePath(fileComponent.location);
         val filePath = fileComponent.location
         if (filePath != null) {
-            val content = readFile(filePath);
+            val content = readFile(filePath)
             fileComponent.rawdata = String.valueOf(content)
             val tooltip = extractTooltip(fileComponent.rawdata)
             fileComponent.tooltip = tooltip
-            val ast = CFileParser.parse(content);
+            val ast = CFileParser.parse(content)
 
             val visitor = new ASTVisitor() {
                 override int visit(IASTName name) {
@@ -222,17 +224,17 @@ class KLighDController extends AbstractKLighDController {
                                 functionComponent.location = fileComponent.location
                                 fileComponent.children.add(functionComponent)
                                 functionComponent.parent = fileComponent
-                            // System.out.println("- D " + name.toString() + " ");
+                            // System.out.println("- D " + name.toString() + " ")
                             } else if (name.reference) {
-                                // System.out.println("- R " + name.toString() + " ");
+                                // System.out.println("- R " + name.toString() + " ")
                             }
                         }
                     }
-                    return ASTVisitor.PROCESS_CONTINUE;
+                    return ASTVisitor.PROCESS_CONTINUE
                 }
             };
-            visitor.shouldVisitNames = true;
-            ast.accept(visitor);
+            visitor.shouldVisitNames = true
+            ast.accept(visitor)
 
         }
 

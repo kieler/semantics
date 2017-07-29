@@ -375,6 +375,7 @@ public class SelectAnalysisDialog extends Dialog {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     static boolean dialogAborted = true;
 
@@ -394,5 +395,6 @@ public class SelectAnalysisDialog extends Dialog {
         });
         return !dialogAborted;
     }
-
+    
+    // -------------------------------------------------------------------------
 }
