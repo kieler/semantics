@@ -13,10 +13,12 @@
 package de.cau.cs.kieler.kicool.compilation
 
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.internal.AsynchronousCompilation
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+
+import static com.google.common.base.Preconditions.*
 
 import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.compilation.internal.AsynchronousCompilation
 
 /**
  * Class for preparing compilations programmatically through creating compilation contexts. 
@@ -32,6 +34,8 @@ class Compile {
      * Easily create a standard compilation context from a compilation system and a source model.
      */
     static def CompilationContext createCompilationContext(System system, Object sourceModel) {
+        checkNotNull(system, "System is null")
+        checkNotNull(sourceModel, "Source model is null")
         new CompilationContext => [
             it.system = system
             it.sourceModel = sourceModel
