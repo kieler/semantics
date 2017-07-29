@@ -29,6 +29,8 @@ import org.eclipse.core.runtime.IProgressMonitor
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.inject.Inject
+import org.eclipse.cdt.core.model.ITranslationUnit
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation
 
 /**
  * @author cmot
@@ -208,6 +210,14 @@ class KLighDController extends AbstractKLighDController {
                                 // model.addToModel(functionComponent, monitor, fileComponent)
                                 model.components.add(functionComponent)
                                 functionComponent.name = name.toString()
+//                                val ITranslationUnit tu = name.originalNode.translationUnit.originatingTranslationUnit;
+//                                if (tu != null) {
+//                                        val IASTFileLocation loc = name.getFileLocation();
+//                                        functionComponent.referenceLine = loc.startingLineNumber
+//                                }
+                                val IASTFileLocation loc = name.getFileLocation();
+                                functionComponent.referenceLine = loc.startingLineNumber
+
                                 functionComponent.rawdata = "";
                                 functionComponent.location = fileComponent.location
                                 fileComponent.children.add(functionComponent)
