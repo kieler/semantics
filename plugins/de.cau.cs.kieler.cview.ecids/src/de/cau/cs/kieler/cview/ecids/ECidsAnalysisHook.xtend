@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.cview.ecids
 
-import de.cau.cs.kieler.cview.hooks.AbstractConnectionHook
-import de.cau.cs.kieler.cview.hooks.IConnectionHook
 import de.cau.cs.kieler.cview.model.cViewModel.Component
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 import de.cau.cs.kieler.cview.model.cViewModel.Connection
@@ -26,12 +24,14 @@ import org.eclipse.emf.ecore.EObject
 import java.util.Set
 import java.util.ArrayList
 import java.util.HashSet
+import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
+import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 
 /**
  * @author cmot
  * 
  */
-class ConnectionHook extends AbstractConnectionHook implements IConnectionHook {
+class ECidsAnalysisHook extends AbstractAnalysisHook implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
 

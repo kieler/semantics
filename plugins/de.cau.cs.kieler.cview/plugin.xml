@@ -44,16 +44,20 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.cview.ui.CommandToggleHandler"
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
             commandId="de.cau.cs.kieler.cview.command">
       </handler>
       <handler
-            class="de.cau.cs.kieler.cview.ui.CommandToggleHandler"
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
             commandId="de.cau.cs.kieler.cview.command.select">
       </handler>
       <handler
-            class="de.cau.cs.kieler.cview.ui.CommandToggleHandler"
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
             commandId="de.cau.cs.kieler.cview.command.filter">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
+            commandId="de.cau.cs.kieler.cview.command.save">
       </handler>
    </extension>
    <extension
@@ -86,7 +90,7 @@
             class="de.cau.cs.kieler.cview.Startup">
       </startup>
    </extension>
-   <extension-point id="connection" name="Define Connections" schema="schema/connection.exsd"/>
+   <extension-point id="analysis" name="Define Connection Analysis" schema="schema/analysis.exsd"/>
    
      <extension point="org.eclipse.ui.menus">
      <menuContribution locationURI="menu:de.cau.cs.kieler.cview.toolbar.command.button">
@@ -97,20 +101,29 @@
               label="Refresh  C View"
               style="push">
         </command>
-        <separator name="additions" visible="true">
+        <separator name="filterandselectadditions" visible="true">
         </separator>
         <command
               commandId="de.cau.cs.kieler.cview.command.filter"
               icon="icon/filter.gif"
               id="de.cau.cs.kieler.cview.command.filter"
-              label="Set Filter"
+              label="Configure Filter..."
               style="push">
         </command>
         <command
               commandId="de.cau.cs.kieler.cview.command.select"
               icon="icon/select.gif"
               id="de.cau.cs.kieler.cview.command.select"
-              label="Select Analysis"
+              label="Select Analysis..."
+              style="push">
+        </command>
+        <separator name="saveadditions" visible="true">
+        </separator>
+        <command
+              commandId="de.cau.cs.kieler.cview.command.save"
+              icon="icon/saveas.gif"
+              id="de.cau.cs.kieler.cview.command.save"
+              label="Export Analysis Results..."
               style="push">
         </command>
      </menuContribution>

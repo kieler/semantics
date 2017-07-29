@@ -14,12 +14,13 @@ import de.cau.cs.kieler.cview.DiagramSynthesis;
 import de.cau.cs.kieler.cview.KLighDController;
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 
-public class CommandToggleHandler implements IHandler {
+public class CommandHandler implements IHandler {
 
     public int lastExpandedSliderValue = DiagramSynthesis.DEFAULT_EXPANDED_VALUE;
 
     public static String CMD_SELECT_ID = "de.cau.cs.kieler.cview.command.select";
     public static String CMD_FILTER_ID = "de.cau.cs.kieler.cview.command.filter";
+    public static String CMD_SAVE_ID = "de.cau.cs.kieler.cview.command.save";
 
     @Override
     public void addHandlerListener(IHandlerListener handlerListener) {
@@ -64,9 +65,9 @@ public class CommandToggleHandler implements IHandler {
         if (commandId.equals(CMD_SELECT_ID)) {
             // SelectDialog.optionList = {};
 
-            SelectDialog.itemListAll = CViewPlugin.getAllRegisteredConnectionHookIds();
+            SelectDialog.itemListAll = CViewPlugin.getAllRegisteredAnalysisHookIds();
             SelectDialog.itemListSelected =
-                    CViewPlugin.filterSelectedRegisteredConnectionHookIds(SelectDialog.itemListAll);
+                    CViewPlugin.filterSelectedRegisteredAnalysisHookIds(SelectDialog.itemListAll);
             boolean ok = SelectDialog.showDialog();
 
             if (ok) {

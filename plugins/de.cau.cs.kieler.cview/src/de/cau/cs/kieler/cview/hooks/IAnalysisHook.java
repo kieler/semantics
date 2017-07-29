@@ -22,7 +22,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection;
  * @author cmot
  *
  */
-public interface IConnectionHook {
+public interface IAnalysisHook {
 
     /**
      * Define the name for this connection hook.

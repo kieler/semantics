@@ -17,7 +17,7 @@ import org.osgi.service.prefs.Preferences;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.cview.hooks.IConnectionHook;
+import de.cau.cs.kieler.cview.hooks.IAnalysisHook;
 
 public class CViewPlugin implements BundleActivator {
 
@@ -27,13 +27,13 @@ public class CViewPlugin implements BundleActivator {
 
     /** The Constant EXTENSION_POINT_ID. */
     public static final String CONNECTION_HOOK_EXTENSION_POINT_ID =
-            "de.cau.cs.kieler.cview.connection";
+            "de.cau.cs.kieler.cview.analysis";
     
     // The plug-in ID
     public static final String PLUGIN_ID = "de.cau.cs.kieler.cview"; //$NON-NLS-1$
     
 
-    static ArrayList<IConnectionHook> connectionHooks = null; 
+    static ArrayList<IAnalysisHook> analysisHooks = null; 
     
     // -------------------------------------------------------------------------
 
@@ -176,7 +176,7 @@ public class CViewPlugin implements BundleActivator {
     // -------------------------------------------------------------------------
     
     public static void clearSelectionHooks() {
-        connectionHooks = null;
+        analysisHooks = null;
     }
     
     public static String extractId(String item) {
@@ -190,10 +190,10 @@ public class CViewPlugin implements BundleActivator {
         return "";
     }
 
-    public static List<String> filterSelectedRegisteredConnectionHookIds(List<String> inputList) {
+    public static List<String> filterSelectedRegisteredAnalysisHookIds(List<String> inputList) {
         ArrayList returnList = new ArrayList<String>();
-        List<IConnectionHook> hooks = getRegisteredConnectionHooks(true);
-        for (IConnectionHook hook: hooks) {
+        List<IAnalysisHook> hooks = getRegisteredAnalysisHooks(true);
+        for (IAnalysisHook hook: hooks) {
             for (String item : inputList) {
                 String hookId = extractId(item);
                 if (hookId.equals(hook.getId())) {
@@ -206,10 +206,10 @@ public class CViewPlugin implements BundleActivator {
         return returnList;
     }
 
-    public static List<String> getAllRegisteredConnectionHookIds() {
+    public static List<String> getAllRegisteredAnalysisHookIds() {
         ArrayList returnList = new ArrayList<String>();
-        List<IConnectionHook> hooks = getRegisteredConnectionHooks(true);
-        for (IConnectionHook hook: hooks) {
+        List<IAnalysisHook> hooks = getRegisteredAnalysisHooks(true);
+        for (IAnalysisHook hook: hooks) {
                 returnList.add(hook.getName() + " (" + hook.getId() + ")");
         }
         return returnList;
@@ -217,12 +217,12 @@ public class CViewPlugin implements BundleActivator {
 
     // -------------------------------------------------------------------------
 
-    public static List<IConnectionHook> getRegisteredConnectionHooks(boolean forceReload) {
-        if (connectionHooks != null && !forceReload) {
-            return connectionHooks;
+    public static List<IAnalysisHook> getRegisteredAnalysisHooks(boolean forceReload) {
+        if (analysisHooks != null && !forceReload) {
+            return analysisHooks;
         }
-        if (connectionHooks == null || forceReload) {
-            connectionHooks = new ArrayList<IConnectionHook>();
+        if (analysisHooks == null || forceReload) {
+            analysisHooks = new ArrayList<IAnalysisHook>();
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
@@ -230,16 +230,16 @@ public class CViewPlugin implements BundleActivator {
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             try {
-                IConnectionHook instance =
-                        (IConnectionHook) extension.createExecutableExtension("class");
+                IAnalysisHook instance =
+                        (IAnalysisHook) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
-                instance = (IConnectionHook) getGuiceInstance(instance);
-                connectionHooks.add(instance);
+                instance = (IAnalysisHook) getGuiceInstance(instance);
+                analysisHooks.add(instance);
             } catch (CoreException e) {
                 e.printStackTrace();
             }
         }
-        return connectionHooks;
+        return analysisHooks;
     }
 
     // -------------------------------------------------------------------------

@@ -23,7 +23,6 @@ import de.cau.cs.kieler.cview.model.cViewModel.Component
 
 import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import java.util.List
-import de.cau.cs.kieler.cview.hooks.IConnectionHook
 import java.util.ArrayList
 import org.eclipse.core.runtime.IProgressMonitor
 
@@ -31,6 +30,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.inject.Inject
 import org.eclipse.cdt.core.model.ITranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation
+import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 
 /**
  * @author cmot
@@ -252,7 +252,7 @@ class KLighDController extends AbstractKLighDController {
             val component = model.addToModel(element, monitor)
         }
 
-        val connectionHooks = CViewPlugin.getRegisteredConnectionHooks(false)
+        val connectionHooks = CViewPlugin.getRegisteredAnalysisHooks(false)
         // Initialize
         for (connectionHook : connectionHooks) {
             if (CViewPlugin.isEnabled(connectionHook.id)) {

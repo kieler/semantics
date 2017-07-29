@@ -3,10 +3,10 @@
 <schema targetNamespace="de.cau.cs.kieler.cview.model" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="de.cau.cs.kieler.cview.model" id="connection" name="Define Connections"/>
+         <meta.schema plugin="de.cau.cs.kieler.cview.model" id="connection" name="Define Connection Analysis"/>
       </appInfo>
       <documentation>
-         Define connections of specific types using this extension point.
+         Define connection analysis.
       </documentation>
    </annotation>
 
@@ -18,15 +18,15 @@
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="connectionHook"/>
+            <element ref="analysisHook"/>
          </sequence>
       </complexType>
    </element>
 
-   <element name="connectionHook">
+   <element name="analysisHook">
       <annotation>
          <documentation>
-            A hook for defining a connection between components.
+            A hook for defining an analysis of connection between components.
          </documentation>
       </annotation>
       <complexType>
@@ -36,7 +36,7 @@
                   The implementation of the concrete hook defining the connections.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.AbstractConnectionHook:de.cau.cs.kieler.cview.hooks.IConnectionHook"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook:de.cau.cs.kieler.cview.hooks.IAnalysisHook"/>
                </appInfo>
             </annotation>
          </attribute>

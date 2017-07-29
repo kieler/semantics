@@ -2,9 +2,9 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.cview.connection">
+         point="de.cau.cs.kieler.cview.analysis">
       <connectionHook
-            class="de.cau.cs.kieler.cview.ecids.ConnectionHook">
+            class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisHook">
       </connectionHook>
    </extension>
 

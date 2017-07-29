@@ -16,6 +16,6 @@ package de.cau.cs.kieler.cview.hooks;
  * @author cmot
  *
  */
-public class AbstractConnectionHook {
+public class AbstractAnalysisHook {
 
 }
