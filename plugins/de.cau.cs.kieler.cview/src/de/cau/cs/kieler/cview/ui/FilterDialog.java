@@ -289,7 +289,7 @@ public class FilterDialog extends Dialog {
         compositeInner.setLayout(innerLayout);
 
         Label labelSpinnerStart = new Label(compositeInner, SWT.LEFT);
-        labelSpinnerStart.setText("Apply filter to hierarchy layers ");
+        labelSpinnerStart.setText("Apply filter between hierarchy layers ");
         spinnerStart = new Spinner(compositeInner, SWT.WRAP);
         spinnerStart.setBounds(0, 0, 30, 10);
         spinnerStart.setIncrement(1);

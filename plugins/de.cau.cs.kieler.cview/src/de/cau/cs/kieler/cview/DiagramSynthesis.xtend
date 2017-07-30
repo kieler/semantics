@@ -85,7 +85,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final String SELECTION_CONNECTION_COLOR = "Red"
 
     public static final int DEFAULT_EXPANDED_VALUE = 2;
-    public static final int MAX_EXPANDED_VALUE = 4;
+    public static final int MAX_EXPANDED_VALUE = 7;
     public static final int MIN_EXPANDED_VALUE = 1;
 
     /** Option for enabling adaptive zoom */
