@@ -80,8 +80,8 @@ public class ExpandCollapseNoMouseMoveAction implements IAction {
      * {@inheritDoc}
      */
     public ActionResult execute(final ActionContext context) {
-        Object inputModel = context.getViewContext().getInputModel();
-        Object domainElement = context.getDomainElement(context.getKNode());
+        // Object inputModel = context.getViewContext().getInputModel();
+        // Object domainElement = context.getDomainElement(context.getKNode());
         
         if (!expandCollapseMouseListenerAdded) {
             expandCollapseMouseListenerAdded = true;
