@@ -43,14 +43,14 @@ public class CollapseExpandNoDragAction implements IAction {
     int xDown = 0;
     int yDown = 0;
 
-    // The default is dragged == true => a first click might *not* collapse/expand even if not
-    // dragged
+    // The default is dragged == true => a first click might *not* collapse/expand even
+    // if not dragged.
     boolean dragged = true;
 
-    // Remember for which control/KLighD view we had added a mouse listener
+    // Remember for which control/KLighD view we had added a mouse listener.
     HashSet<Control> collapseExpandNoDragMouseListenerAdded = new HashSet<Control>();
 
-    // The controller that detects a dragged-event
+    // The controller that detects a possible dragged-event.
     MouseListener collapseExpandNoDragMouseListener = new MouseListener() {
         @Override
         public void mouseUp(MouseEvent e) {
@@ -59,7 +59,8 @@ public class CollapseExpandNoDragAction implements IAction {
             int diffX = Math.abs(xDown - xUp);
             int diffY = Math.abs(yDown - yUp);
 
-            // If out of tolerance for the X or the Y coordinate => consider this a dragging-event
+            // If out of tolerance for the X or the Y coordinate
+            // => consider this a dragging-event.
             if ((diffX > TOLERANCE) || (diffY > TOLERANCE)) {
                 dragged = true;
             } else {
@@ -69,7 +70,8 @@ public class CollapseExpandNoDragAction implements IAction {
 
         @Override
         public void mouseDown(MouseEvent e) {
-            // When mouse is down, save the coordinates to later detect a possible drag-event
+            // When mouse is down, then save the coordinates to later detect 
+            // a possible drag-event.
             xDown = e.x;
             yDown = e.y;
         }
