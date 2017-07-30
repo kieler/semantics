@@ -34,7 +34,7 @@ import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
  * @author cmot
  * 
  */
-public class ExpandCollapseNoMouseMoveAction implements IAction {
+public class ExpandCollapseNoDragAction implements IAction {
 
     /** The action ID. */
     public static final String ID =
