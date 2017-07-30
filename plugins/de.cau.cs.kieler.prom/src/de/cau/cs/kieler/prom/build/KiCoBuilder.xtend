@@ -71,8 +71,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     extension KiBuildExtensions kiBuildExtensions 
     extension AttributeExtensions attributeExtensions 
 
-    public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen")
-
     private var List<SimulationCompiler> simulationCompilers = newArrayList
     private var List<ModelCompiler> modelCompilers = newArrayList
     private var List<TemplateProcessor> templateProcessors = newArrayList
@@ -364,10 +362,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         for(f : createdSimulationFiles) {
             compileSimulationCode(f)
         }
-        
-        // Refresh output in workspace
-//        monitor.subTask("Refreshing output directory")
-//        refreshOutput(files)
     }
 
     /**
@@ -414,9 +408,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             }
         }
         
-        // Create directory for output        
-        createBuildDirectory();
-        
         // At first build, search for wrapper code annotations in all model files.
         // These are updated later, if a model file changes.
         if(!isInitialized) {
@@ -424,63 +415,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             createResourceSet    
         }
     }
-    
-//    private def void initializeDefaultConfiguration() {
-//        if(PromPlugin.isJavaProject(project)) {
-//            initializeDefaultJavaConfiguration
-//        } else {
-//            initializeDefaultCConfiguration
-//        }
-//    }
-    
-//    private def void initializeDefaultCConfiguration() {
-//        // Create Simulation compilers
-//        val cCompiler = new CSimulationCompiler
-//        cCompiler.monitor = monitor
-//        simulationCompilers.add(cCompiler)
-//        
-//        // Create KiCo model compiler
-//        val kicoModelCompiler = new KiCoModelCompiler
-//        modelCompilers.add(kicoModelCompiler)
-//        kicoModelCompiler.outputFolder = outputFolder.stringValue
-//        kicoModelCompiler.monitor = monitor
-//        kicoModelCompiler.compileChain.value = "s.c"
-//        kicoModelCompiler.fileExtension.value = "c"
-//        
-//        // Create simulation template processor
-//        val simTemplate = project.getFile("Simulation.ftl")
-//        if(simTemplate.exists) {
-//            val simProcessor = new SimulationTemplateProcessor
-//            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
-//            // Add simulation generator to model compiler
-//            kicoModelCompiler.simulationProcessor = simProcessor
-//        }
-//    }
-//    
-//    private def void initializeDefaultJavaConfiguration() {
-//        // Create Simulation compilers
-//        val javaCompiler = new JavaSimulationCompiler
-//        javaCompiler.monitor = monitor
-//        simulationCompilers.add(javaCompiler)
-//        
-//        // Create KiCo model compiler
-//        val kicoModelCompiler = new KiCoModelCompiler
-//        modelCompilers.add(kicoModelCompiler)
-//        kicoModelCompiler.outputFolder = outputFolder.stringValue
-//        kicoModelCompiler.monitor = monitor
-//        kicoModelCompiler.fileExtension.value = "java"
-//        kicoModelCompiler.compileChain.value = "s.java"
-//        kicoModelCompiler.outputTemplate.value = "src/TargetTemplate.ftl"
-//        
-//        // Create simulation template processor
-//        val simTemplate = project.getFile("src/JavaSimulation.ftl")
-//        if(simTemplate.exists) {
-//            val simProcessor = new SimulationTemplateProcessor
-//            simProcessor.template.value = simTemplate.projectRelativePath.toOSString
-//            // Add simulation generator to model compiler
-//            kicoModelCompiler.simulationProcessor = simProcessor
-//        }
-//    }
     
     private def void initializeConfiguration(BuildConfiguration buildConfig) {
         // Update attributes
@@ -490,7 +424,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
 //            buildConfig.createModelCompilers
         modelCompilers = buildConfig.createModelCompilers
         for(modelCompiler : modelCompilers) {
-            modelCompiler.outputFolder = outputFolder.stringValue
             modelCompiler.monitor = monitor
         }
         // Create simulation compilers
@@ -516,22 +449,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         return PromPlugin.findFiles(membersWithoutBinDirectory, #[//"sct",
                                                                   "sctx",
                                                                   "strl"])
-    }
-    
-    /**
-     * Refreshes the folders of the resources or the general output folder for generated files.
-     * This depends of the configuration of the output behaviour.
-     */
-    private def void refreshOutput(IFile... resources) {
-        // Refresh target directory
-        if(!outputFolder.stringValue.isNullOrEmpty()) {
-            project.getFolder(outputFolder.stringValue).refreshLocal(IResource.DEPTH_INFINITE, monitor)
-        } else if(resources != null) {
-            // Refresh files
-            for(r : resources) {
-                r.parent.refreshLocal(1, monitor)
-            }
-        }
     }
     
     public static def void deleteMarkers(IResource res) {
@@ -571,34 +488,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 val result = simulationCompiler.compile(file)
                 showBuildProblems(result.problems)
             }
-        }
-    }
-    
-    /**
-     * Creates the folder in which compilation results will be saved. 
-     */
-    private def void createBuildDirectory() {
-        // If the target directory is empty
-        // the output will be saved in the same folder as the input files,
-        // so we don't need to create them.
-        if(!outputFolder.stringValue.isNullOrEmpty()) {
-            val folder = project.getFolder(outputFolder.stringValue)
-            if(!folder.exists) {
-                folder.create(false, true, null)
-                // Add folder to java class path if it is a java project
-                if (PromPlugin.isJavaProject(project)) {
-                    val javaProject = JavaCore.create(project);
-                    PromPlugin.addFolderToJavaClasspath(javaProject, folder)
-                }                
-            }
-            
-            // Create folder structure for simulation
-            val simFolder = folder.getFolder("sim")
-            PromPlugin.createResource(simFolder)
-            val binFolder = simFolder.getFolder("bin")
-            PromPlugin.createResource(binFolder)
-            val codeFolder = simFolder.getFolder("code")
-            PromPlugin.createResource(codeFolder)
         }
     }
     

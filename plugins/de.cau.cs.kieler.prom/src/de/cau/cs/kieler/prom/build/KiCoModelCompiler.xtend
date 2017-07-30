@@ -98,7 +98,7 @@ class KiCoModelCompiler extends ModelCompiler {
                 }
                 // Flush compilation result to target
                 val targetResource = KiCoBuilder.computeTargetResource(file.projectRelativePath.toOSString,
-                                                                       outputFolder,
+                                                                       outputFolder.stringValue,
                                                                        fileExt,
                                                                        file.project)
                 val targetFile = targetResource as IFile
@@ -120,8 +120,8 @@ class KiCoModelCompiler extends ModelCompiler {
                     
                     // Compute output file of simulation generation
                     var IPath simulationTargetFolder = new Path("")
-                    if(!outputFolder.isNullOrEmpty) {
-                        simulationTargetFolder = new Path(outputFolder).append("sim").append("code")
+                    if(!outputFolder.stringValue.isNullOrEmpty) {
+                        simulationTargetFolder = new Path(outputFolder.stringValue).append("sim").append("code")
                     }
                     val fileNameWithoutExtension = Files.getNameWithoutExtension(file.name)
                     val simulationFileName = "Sim_" + fileNameWithoutExtension + fileExt

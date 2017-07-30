@@ -118,6 +118,23 @@ class SimulationUtil {
         simMan.initializeSimulation
     }
     
+    public static def void startExecutableWithTrace(IFile exeFile, EObject trace) {
+        // Create simulation from executable
+        val exeSimulator = new ExecutableSimulator
+        exeSimulator.executableFile = exeFile
+        
+        // Create trace from eso file
+        val traceHandler = new Trace()
+        traceHandler.traceModel = trace
+        
+        // Create new simulation with the trace
+        val simMan = new SimulationManager
+        simMan.addAction(StepAction.Method.WRITE, traceHandler)
+        simMan.addAction(StepAction.Method.WRITE, exeSimulator)
+        simMan.addAction(StepAction.Method.READ, traceHandler)
+        simMan.initializeSimulation
+    }
+    
     public static def void startExecutableWithTraceFile(IFile exeFile, IFile traceFile) {
         // Create simulation from executable
         val exeSimulator = new ExecutableSimulator
@@ -166,7 +183,7 @@ class SimulationUtil {
         } else {
             val monitor = null
             // Create temporary project and link file into it, to simulate it
-            val tmpProject = getTemporarySimulationProject()
+            val tmpProject = createTemporarySimulationProject
             val location_path = new Path(location)
             val newFile = tmpProject.getFile(location_path.lastSegment)
             newFile.createLink(location_path, IResource.REPLACE, monitor)
@@ -187,7 +204,7 @@ class SimulationUtil {
     
     public static def void compileAndSimulateModel(EObject model) {
         // Create temporary project
-        val tmpProject = temporarySimulationProject
+        val tmpProject = createTemporarySimulationProject
         // Create dummy file for the model.
         // Note that it is not necessary to save the model in the file
         // because it is only used for path and location operations.
@@ -207,9 +224,28 @@ class SimulationUtil {
         tmpProject.delete(true, null)
     }
     
+    public static def void compileAndSimulateModelWithTrace(EObject model, EObject trace) {
+        // Create temporary project
+        val tmpProject = createTemporarySimulationProject
+        // Create dummy file for the model.
+        // Note that it is not necessary to save the model in the file
+        // because it is only used for path and location operations.
+        val file = tmpProject.getFile("SimulatedEObject.sctx")
+        
+        // Compile model, then simulate result
+        val result = compileModelForSimulation(file, model)
+        if(result != null && !result.createdFiles.isNullOrEmpty) {
+            val exeFile = result.createdFiles.get(0)
+            startExecutableWithTrace(exeFile, trace)
+        }
+        
+        // Delete temporary project
+        tmpProject.delete(true, null)
+    }
+    
     public static def void compileAndSimulateModelWithTraceFile(EObject model, IFile traceFile) {
         // Create temporary project
-        val tmpProject = temporarySimulationProject
+        val tmpProject = createTemporarySimulationProject
         // Create dummy file for the model.
         // Note that it is not necessary to save the model in the file
         // because it is only used for path and location operations.
@@ -251,7 +287,7 @@ class SimulationUtil {
         return #["eso", "sim"].contains(file.fileExtension)
     }
     
-    private static def IProject getTemporarySimulationProject() {
+    private static def IProject createTemporarySimulationProject() {
         val root = ResourcesPlugin.getWorkspace.getRoot
         val temporaryProjectName = "TEMPORARY_SIM_PROJECT"
         val newProject = root.getProject(temporaryProjectName)

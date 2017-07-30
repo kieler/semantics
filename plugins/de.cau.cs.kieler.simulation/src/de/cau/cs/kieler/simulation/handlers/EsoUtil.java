@@ -48,6 +48,14 @@ public class EsoUtil {
         }
     }
     
+    EsoUtil(EObject trace) throws Exception {
+        if(trace instanceof tracelist) {
+            traces =  ((tracelist)trace).getTraces();
+        } else {
+            throw new Exception(trace+" is not an ESO trace.");
+        }
+    }
+    
     int getTraceCount() {
         return traces.size();
     }

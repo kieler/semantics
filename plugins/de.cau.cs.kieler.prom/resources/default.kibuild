@@ -1,7 +1,6 @@
-outputFolder: kieler-gen
-
 // Compile models to C code
 model compiler kico {
+  outputFolder: kieler-gen
   compilationSystem: de.cau.cs.kieler.sccharts.netlist.simple
   fileExtension: c
   // whitelist: "MyModel.sctx" // Only compile the models matching this regular expression
