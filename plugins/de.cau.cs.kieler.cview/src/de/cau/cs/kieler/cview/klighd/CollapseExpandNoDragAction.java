@@ -91,28 +91,17 @@ public class CollapseExpandNoDragAction implements IAction {
         }
     };
 
-   /**
-    * Adds the single mouse listener to the control of a KLighD viewer if it is not already
-    * added for this control.
-    * 
-    * @param viewer
-    */
-    private void addMouseListener(IViewer viewer) {
-        Control control = viewer.getControl();
-        if (!collapseExpandNoDragMouseListenerAdded.contains(control)) {
-            System.out.println("ADD MOUSE LISTENER FOR " + control.hashCode());
-            control.addMouseListener(collapseExpandNoDragMouseListener);
-            collapseExpandNoDragMouseListenerAdded.add(control);
-        }
-    }
-    
     /**
      * {@inheritDoc}
      */
     public ActionResult execute(final ActionContext context) {
         // First test if a mouse listener already exist for this control. Note that if the
         // KLighD view is closed & re-opened, a new control exist.
-        addMouseListener(context.getActiveViewer());
+        Control control = context.getActiveViewer().getControl();
+        if (!collapseExpandNoDragMouseListenerAdded.contains(control)) {
+            control.addMouseListener(collapseExpandNoDragMouseListener);
+            collapseExpandNoDragMouseListenerAdded.add(control);
+        }
 
         // Do this only (collapse/expand + layout) if no dragged-event has occurred right before
         // Because we only have ONE mouse, it's OK to do it like that and refer to the latest
