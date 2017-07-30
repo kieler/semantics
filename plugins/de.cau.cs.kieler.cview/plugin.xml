@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.cview.DiagramSynthesis"
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.cview.klighd.DiagramSynthesis"
             id="de.cau.cs.kieler.cview">
       </diagramSynthesis>
    </extension>
@@ -80,8 +80,15 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.cview.OpenEditorAction"
+            class="de.cau.cs.kieler.cview.klighd.OpenEditorAction"
             id="de.cau.cs.kieler.cview.OpenEditorAction">
+      </action>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.cview.klighd.ExpandCollapseNoMouseMoveAction"
+            id="de.cau.cs.kieler.cview.ExpandCollapseNoMouseMoveAction">
       </action>
    </extension>
    <extension-point id="analysis" name="Define Connection Analysis" schema="schema/analysis.exsd"/>

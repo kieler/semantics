@@ -40,6 +40,8 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -76,8 +78,8 @@ import de.cau.cs.kieler.klighd.util.RenderingContextData;
  */
 public abstract class AbstractKLighDController {
 
-    static String CVIEW_KLIGHD_ID = "de.cau.cs.kieler.cview.klighd";
-    static String CVIEW_KLIGHD_TITLE = "C View";
+    public static String CVIEW_KLIGHD_ID = "de.cau.cs.kieler.cview.klighd";
+    public static String CVIEW_KLIGHD_TITLE = "C View";
 
     static CViewModel model = null;
 
@@ -315,12 +317,22 @@ public abstract class AbstractKLighDController {
     }
 
     // -------------------------------------------------------------------------
+    static int c = 0;
 
     public static ViewContext getCurrentViewContext() {
         DiagramViewPart view = DiagramViewManager.getView(CVIEW_KLIGHD_ID);
         ViewContext returnContext = null;
         if (view != null) {
             returnContext = view.getViewContext();
+            // Get Selection
+            // returnContext.getViewer().getDiagramSelection();
+//            etControl().addMouseMoveListener(new MouseMoveListener() {
+//                @Override
+//                public void mouseMove(MouseEvent e) {
+//                    System.out.println("!!! MOUSE MOVED !!! (" + c++ +")");
+//                    
+//                }
+//            });
         }
         return returnContext;
     }

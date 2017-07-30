@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.cview;
+package de.cau.cs.kieler.cview.klighd;
 
 
 import org.eclipse.core.resources.IFile;
@@ -35,6 +35,7 @@ import org.eclipse.ui.internal.editors.text.FileEditorInputAdapterFactory;
 import de.cau.cs.kieler.cview.model.cViewModel.Component;
 import de.cau.cs.kieler.cview.model.cViewModel.ComponentType;
 import de.cau.cs.kieler.klighd.IAction;
+
 
 /**
  * Open in C or Text Editor

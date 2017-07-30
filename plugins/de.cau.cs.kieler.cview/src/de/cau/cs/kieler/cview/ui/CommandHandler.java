@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 
 import de.cau.cs.kieler.cview.CViewPlugin;
-import de.cau.cs.kieler.cview.DiagramSynthesis;
+import de.cau.cs.kieler.cview.klighd.DiagramSynthesis;
 import de.cau.cs.kieler.cview.KLighDController;
 import de.cau.cs.kieler.cview.hooks.IExportHook;
 

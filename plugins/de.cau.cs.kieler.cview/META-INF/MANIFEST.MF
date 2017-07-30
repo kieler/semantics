@@ -24,5 +24,6 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.cdt.core,
  org.eclipse.cdt.core.dom,
  org.eclipse.cdt.core.parser
-Export-Package: de.cau.cs.kieler.cview.hooks
+Export-Package: de.cau.cs.kieler.cview.hooks,
+ de.cau.cs.kieler.cview.klighd
 Bundle-Vendor: Kiel University

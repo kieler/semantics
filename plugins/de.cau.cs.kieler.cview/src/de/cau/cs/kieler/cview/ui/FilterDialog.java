@@ -46,7 +46,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.cview.CViewPlugin;
-import de.cau.cs.kieler.cview.DiagramSynthesis;
+import de.cau.cs.kieler.cview.klighd.DiagramSynthesis;
 
 /**
  * 
