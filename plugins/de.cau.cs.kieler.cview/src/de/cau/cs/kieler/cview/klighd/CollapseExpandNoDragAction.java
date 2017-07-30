@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.cview.klighd;
 
 
+import java.util.HashSet;
+
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Control;
@@ -40,14 +42,16 @@ public class CollapseExpandNoDragAction implements IAction {
     public static final String ID =
             "de.cau.cs.kieler.cview.CollapseExpandNoDragAction";
 
+    public final int TOLERANCE = 5;
+
     // -------------------------------------------------------------------------
     
     int xDown = 0;
     int yDown = 0;
-    boolean dragged = false;
-    final int TOLERANCE = 5;
+    boolean dragged = true;
     
-    boolean collapseExpandNoDragMouseListenerAdded = false;
+    // Remember for which controller we had added a mouse listener
+    HashSet<Control> collapseExpandNoDragMouseListenerAdded = new HashSet<Control>();
     
     MouseListener collapseExpandNoDragMouseListener = new MouseListener() {
         @Override
@@ -58,10 +62,8 @@ public class CollapseExpandNoDragAction implements IAction {
             int diffY = Math.abs(yDown - yUp);
             
             if ((diffX > TOLERANCE) || (diffY > TOLERANCE)) {
-                // System.out.println("MOUSE DRAGGED :" + diffX + ", " + diffY);
                 dragged = true;
             } else {
-                // System.out.println("MOUSE NOT DRAGGED :" + diffX + ", " + diffY);
                 dragged = false;
             }
         }
@@ -80,13 +82,10 @@ public class CollapseExpandNoDragAction implements IAction {
      * {@inheritDoc}
      */
     public ActionResult execute(final ActionContext context) {
-        // Object inputModel = context.getViewContext().getInputModel();
-        // Object domainElement = context.getDomainElement(context.getKNode());
-        
-        if (!collapseExpandNoDragMouseListenerAdded) {
-            collapseExpandNoDragMouseListenerAdded = true;
-            Control c = context.getActiveViewer().getControl();
-            c.addMouseListener(collapseExpandNoDragMouseListener);
+        Control control = context.getActiveViewer().getControl();
+        if (!collapseExpandNoDragMouseListenerAdded.contains(control)) {
+            control.addMouseListener(collapseExpandNoDragMouseListener);
+            collapseExpandNoDragMouseListenerAdded.add(control);
         }
         
         if (!dragged) {
