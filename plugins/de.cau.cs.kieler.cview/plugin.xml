@@ -37,8 +37,23 @@
       </category>
       <command
             categoryId="de.cau.cs.kieler.cview.category"
-            id="de.cau.cs.kieler.cview.command"
-            name="C View Toggle Command">
+            id="de.cau.cs.kieler.cview.command.refresh"
+            name="C View Refresh Command">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command.filter"
+            name="C View Filter Command">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command.export"
+            name="C View Export Analysis Command">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.cview.category"
+            id="de.cau.cs.kieler.cview.command.select"
+            name="C View Select Analysis Command">
       </command>
    </extension>
    <extension
@@ -46,6 +61,10 @@
       <handler
             class="de.cau.cs.kieler.cview.ui.CommandHandler"
             commandId="de.cau.cs.kieler.cview.command">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.cview.ui.CommandHandler"
+            commandId="de.cau.cs.kieler.cview.command.refresh">
       </handler>
       <handler
             class="de.cau.cs.kieler.cview.ui.CommandHandler"
@@ -57,7 +76,7 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.cview.ui.CommandHandler"
-            commandId="de.cau.cs.kieler.cview.command.save">
+            commandId="de.cau.cs.kieler.cview.command.export">
       </handler>
    </extension>
    <extension
@@ -68,7 +87,7 @@
                id="de.cau.cs.kieler.cview.toolbar.command"
                style="toggle">
             <command
-                  commandId="de.cau.cs.kieler.cview.command"
+                  commandId="de.cau.cs.kieler.cview.command.refresh"
                   icon="icon/cview.png"
                   id="de.cau.cs.kieler.cview.toolbar.command.button"
                   style="pulldown"
@@ -97,7 +116,7 @@
      <extension point="org.eclipse.ui.menus">
      <menuContribution locationURI="menu:de.cau.cs.kieler.cview.toolbar.command.button">
         <command
-              commandId="de.cau.cs.kieler.cview.command"
+              commandId="de.cau.cs.kieler.cview.command.refresh"
               icon="icon/refresh.gif"
               id="de.cau.cs.kieler.cview.command.refresh"
               label="Refresh  C View"
@@ -122,9 +141,9 @@
         <separator name="saveadditions" visible="true">
         </separator>
         <command
-              commandId="de.cau.cs.kieler.cview.command.save"
+              commandId="de.cau.cs.kieler.cview.command.export"
               icon="icon/saveas.gif"
-              id="de.cau.cs.kieler.cview.command.save"
+              id="de.cau.cs.kieler.cview.command.export"
               label="Export Analysis Results..."
               style="push">
         </command>
@@ -135,5 +154,32 @@
         <startup
               class="de.cau.cs.kieler.cview.Startup">
         </startup>
+     </extension>
+     <extension
+           point="org.eclipse.ui.bindings">
+        <key
+              commandId="de.cau.cs.kieler.cview.command.refresh"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="ALT+R">
+        </key>
+        <key
+              commandId="de.cau.cs.kieler.cview.command.filter"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="ALT+F">
+        </key>
+        <key
+              commandId="de.cau.cs.kieler.cview.command.select"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="ALT+S">
+        </key>
+        <key
+              commandId="de.cau.cs.kieler.cview.command.export"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="ALT+E">
+        </key>
      </extension>
 </plugin>

@@ -26,7 +26,7 @@ public class CommandHandler implements IHandler {
 
     public static String CMD_SELECT_ID = "de.cau.cs.kieler.cview.command.select";
     public static String CMD_FILTER_ID = "de.cau.cs.kieler.cview.command.filter";
-    public static String CMD_EXPORT_ID = "de.cau.cs.kieler.cview.command.save";
+    public static String CMD_EXPORT_ID = "de.cau.cs.kieler.cview.command.export";
     public static String CMD_REFRESH_ID = "de.cau.cs.kieler.cview.command";
 
     // -------------------------------------------------------------------------
@@ -52,7 +52,7 @@ public class CommandHandler implements IHandler {
             if (KLighDController.getModel() == null) {
                 // No model, so build one
                 if (KLighDController.getAllSelections() == null) {
-                    openMessageDialog("Error", "Nothing selected. Cannot build model.", false);
+                    openMessageDialog("Warning", "Nothing selected. Cannot build model.", false, true);
                     return null;
                 } else {
                     // CMD_REFRESH_ID will refresh at the bottom of this method...
@@ -98,7 +98,7 @@ public class CommandHandler implements IHandler {
                         out = new PrintWriter(fileToWrite);
                         String exported = selectedHook.export(KLighDController.getModel());
                         if (exported == null || exported.equals("")) {
-                            openMessageDialog("Export Analysis", "Nothing to export.", false);
+                            openMessageDialog("Export Analysis", "Nothing to export.", false, false);
                             success = true;
                         } else {
                             out.append(exported);
@@ -106,17 +106,17 @@ public class CommandHandler implements IHandler {
                             success = true;
                             openMessageDialog("Export Analysis",
                                     "Export completed.\n\nFile written to '" + fileToWrite + "'.",
-                                    false);
+                                    false, false);
                         }
                     } catch (FileNotFoundException e) {
                         openMessageDialog("Error",
                                 "An error occurred while exporting to '" + fileToWrite + "'.",
-                                true);
+                                true, false);
                         e.printStackTrace();
                     }
                     if (!success) {
                         openMessageDialog("Error", "Could not export to '" + fileToWrite + "'.",
-                                true);
+                                true, false);
                     }
                 }
             }
@@ -197,8 +197,11 @@ public class CommandHandler implements IHandler {
 
     // -------------------------------------------------------------------------
 
-    public void openMessageDialog(String title, String text, boolean error) {
+    public void openMessageDialog(String title, String text, boolean error, boolean warning) {
         int type = SWT.ICON_INFORMATION;
+        if (warning) {
+            type = SWT.ICON_WARNING;
+        }
         if (error) {
             type = SWT.ICON_ERROR;
         }
