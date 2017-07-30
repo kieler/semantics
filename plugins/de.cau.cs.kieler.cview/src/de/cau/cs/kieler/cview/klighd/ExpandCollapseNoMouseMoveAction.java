@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2015 by
+ * Copyright 2017 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -58,10 +58,10 @@ public class ExpandCollapseNoMouseMoveAction implements IAction {
             int diffY = Math.abs(yDown - yUp);
             
             if ((diffX > TOLERANCE) || (diffY > TOLERANCE)) {
-                System.out.println("MOUSE DRAGGED :" + diffX + ", " + diffY);
+                // System.out.println("MOUSE DRAGGED :" + diffX + ", " + diffY);
                 dragged = true;
             } else {
-                System.out.println("MOUSE NOT DRAGGED :" + diffX + ", " + diffY);
+                // System.out.println("MOUSE NOT DRAGGED :" + diffX + ", " + diffY);
                 dragged = false;
             }
         }
