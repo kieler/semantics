@@ -47,7 +47,16 @@ class ECidsExportHook extends AbstractExportHook implements IExportHook {
     }
     
     override export(CViewModel model) {
-        return "Hello eCIDS"
+        if (model.connections == null) {
+            return null
+        }
+        
+        var returnString = 
+        '''«FOR connection : model.connections»
+        «connection.src.name» --> «connection.dst.name»
+        «ENDFOR»'''
+        
+        return returnString
     }
     
     override getFileExtension() {
