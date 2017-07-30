@@ -23,15 +23,12 @@ import org.eclipse.swt.widgets.Control;
 import de.cau.cs.kieler.cview.AbstractKLighDController;
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig;
-import de.cau.cs.kieler.klighd.piccolo.internal.util.MathUtil;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
-import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
-import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
 
 /**
- * Expand & collapse only if mouse was not dragged.
+ * Expand & collapse only if mouse was *not* dragged.
  * 
  * @author cmot
  * 
@@ -48,11 +45,14 @@ public class CollapseExpandNoDragAction implements IAction {
     
     int xDown = 0;
     int yDown = 0;
+    
+    // The default is dragged == true => a first click might *not* collapse/expand even if not dragged
     boolean dragged = true;
     
-    // Remember for which controller we had added a mouse listener
+    // Remember for which control/KLighD view we had added a mouse listener
     HashSet<Control> collapseExpandNoDragMouseListenerAdded = new HashSet<Control>();
     
+    // The controller that detects a dragged-event
     MouseListener collapseExpandNoDragMouseListener = new MouseListener() {
         @Override
         public void mouseUp(MouseEvent e) {
@@ -61,6 +61,7 @@ public class CollapseExpandNoDragAction implements IAction {
             int diffX = Math.abs(xDown - xUp);
             int diffY = Math.abs(yDown - yUp);
             
+            // If out of tolerance for the X or the Y coordinate => consider this a dragging-event
             if ((diffX > TOLERANCE) || (diffY > TOLERANCE)) {
                 dragged = true;
             } else {
@@ -69,6 +70,7 @@ public class CollapseExpandNoDragAction implements IAction {
         }
         @Override
         public void mouseDown(MouseEvent e) {
+            // When mouse is down, save the coordinates to later detect a possible drag-event
             xDown = e.x;
             yDown = e.y;
         }
@@ -82,12 +84,17 @@ public class CollapseExpandNoDragAction implements IAction {
      * {@inheritDoc}
      */
     public ActionResult execute(final ActionContext context) {
+        // First test if a mouse listener already exist for this control. Note that if the
+        // KLighD view is closed & re-opened, a new control exist.
         Control control = context.getActiveViewer().getControl();
         if (!collapseExpandNoDragMouseListenerAdded.contains(control)) {
             control.addMouseListener(collapseExpandNoDragMouseListener);
             collapseExpandNoDragMouseListenerAdded.add(control);
         }
         
+        // Do this only (collapse/expand + layout) if no dragged-event has occurred right before
+        // Because we only have ONE mouse, it's OK to do it like that and refer to the latest
+        // status of the dragged variable.
         if (!dragged) {
             context.getActiveViewer().toggleExpansion(context.getKNode());
             DiagramViewPart view = DiagramViewManager.getView(AbstractKLighDController.CVIEW_KLIGHD_ID);
