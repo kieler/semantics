@@ -87,8 +87,8 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.cview.klighd.ExpandCollapseNoDragAction"
-            id="de.cau.cs.kieler.cview.ExpandCollapseNoDragAction">
+            class="de.cau.cs.kieler.cview.klighd.CollapseExpandNoDragAction"
+            id="de.cau.cs.kieler.cview.CollapseExpandNoDragAction">
       </action>
    </extension>
    <extension-point id="analysis" name="Define Connection Analysis" schema="schema/analysis.exsd"/>

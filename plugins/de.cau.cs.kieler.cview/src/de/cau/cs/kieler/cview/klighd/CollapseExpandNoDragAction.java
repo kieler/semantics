@@ -34,11 +34,11 @@ import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
  * @author cmot
  * 
  */
-public class ExpandCollapseNoDragAction implements IAction {
+public class CollapseExpandNoDragAction implements IAction {
 
     /** The action ID. */
     public static final String ID =
-            "de.cau.cs.kieler.cview.ExpandCollapseNoMouseMoveAction";
+            "de.cau.cs.kieler.cview.CollapseExpandNoDragAction";
 
     // -------------------------------------------------------------------------
     

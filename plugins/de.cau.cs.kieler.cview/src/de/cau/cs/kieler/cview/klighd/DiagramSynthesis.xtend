@@ -62,7 +62,7 @@ import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.math.KVector
 import java.util.HashSet
 import de.cau.cs.kieler.cview.ui.FilterDialog
-import de.cau.cs.kieler.cview.klighd.ExpandCollapseNoDragAction 
+
 import de.cau.cs.kieler.cview.klighd.OpenEditorAction 
 
 /* Package and import statements... */
@@ -645,7 +645,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectCol.background = item.getFileColor
             rectCol.selectionBackground = item.getFileColor
-            rectCol.addSingleClickAction(ExpandCollapseNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
+            rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
             
             // rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             rectCol.addDoubleClickAction(OpenEditorAction.ID);
@@ -653,7 +653,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             rectExp.background = item.getFileColor
             rectExp.selectionBackground = item.getFileColor
             //rectExp.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-            rectExp.addSingleClickAction(ExpandCollapseNoDragAction.ID)
+            rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID)
             
             // rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             rectExp.addDoubleClickAction(OpenEditorAction.ID);
@@ -676,7 +676,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             if (item.hieararchical) {
                 // Hierarchical case
-                label.firstText.addSingleClickAction(ExpandCollapseNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
+                label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
                 // label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 label.firstText.selectionBackground = item.getFileColor
             }
@@ -714,13 +714,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectCol.background = "YELLOW".color;
             rectCol.selectionBackground = "YELLOW".color;
-            rectCol.addSingleClickAction(ExpandCollapseNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
+            rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             // rectCol.addDoubleClickAction(OpenEditorAction.ID);
             val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
             rectExp.background = "YELLOW".color;
             rectExp.selectionBackground = "YELLOW".color;
-            rectExp.addSingleClickAction(ExpandCollapseNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
+            rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
             rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             // rectExp.addDoubleClickAction(OpenEditorAction.ID);
             childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
@@ -734,7 +734,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
                 // Hierarchical case
-                label.firstText.addSingleClickAction(ExpandCollapseNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
+                label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) //KlighdConstants::ACTION_COLLAPSE_EXPAND
                 label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 // label.firstText.addDoubleClickAction(OpenEditorAction.ID);
                 val childArea = item.children.createNode().associateWith(item)
