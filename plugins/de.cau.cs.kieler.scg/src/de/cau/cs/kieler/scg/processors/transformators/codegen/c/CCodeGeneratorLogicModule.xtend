@@ -183,10 +183,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         reset.code.append(indentation).append(struct.getVariableName).append("->").append(name).append(" = 0;\n")
         
         // Add the "register save" in the tick function.
-        prePrefix = ""
+        prePrefix = "_"
         tick.code.append(indentation)
         tick.code.append(struct.getVariableName).append("->").append(name).append(" = ")
-        tick.code.append(operatorExpression.serializeHR).append(";\n")
+        tick.code.append(struct.getVariableName).append("->").append(operatorExpression.serializeHR).append(";\n")
     }
     
 }
