@@ -17,8 +17,18 @@ import java.util.HashSet;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.internal.WorkbenchWindow;
+
 import de.cau.cs.kieler.cview.AbstractKLighDController;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
+import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
@@ -43,9 +53,9 @@ public class CollapseExpandNoDragAction implements IAction {
     int xDown = 0;
     int yDown = 0;
 
-    // The default is dragged == true => a first click might *not* collapse/expand even
-    // if not dragged.
-    boolean dragged = true;
+    // The default is dragged == false => a first click might collapse/expand even
+    // if dragged (like the typical KlighdConstants::ACTION_COLLAPSE_EXPAND action).
+    boolean dragged = false;
 
     // Remember for which control/KLighD view we had added a mouse listener.
     HashSet<Control> collapseExpandNoDragMouseListenerAdded = new HashSet<Control>();
@@ -81,26 +91,36 @@ public class CollapseExpandNoDragAction implements IAction {
         }
     };
 
+   /**
+    * Adds the single mouse listener to the control of a KLighD viewer if it is not already
+    * added for this control.
+    * 
+    * @param viewer
+    */
+    private void addMouseListener(IViewer viewer) {
+        Control control = viewer.getControl();
+        if (!collapseExpandNoDragMouseListenerAdded.contains(control)) {
+            System.out.println("ADD MOUSE LISTENER FOR " + control.hashCode());
+            control.addMouseListener(collapseExpandNoDragMouseListener);
+            collapseExpandNoDragMouseListenerAdded.add(control);
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
     public ActionResult execute(final ActionContext context) {
         // First test if a mouse listener already exist for this control. Note that if the
         // KLighD view is closed & re-opened, a new control exist.
-        Control control = context.getActiveViewer().getControl();
-        if (!collapseExpandNoDragMouseListenerAdded.contains(control)) {
-            control.addMouseListener(collapseExpandNoDragMouseListener);
-            collapseExpandNoDragMouseListenerAdded.add(control);
-        }
+        addMouseListener(context.getActiveViewer());
 
         // Do this only (collapse/expand + layout) if no dragged-event has occurred right before
         // Because we only have ONE mouse, it's OK to do it like that and refer to the latest
         // status of the dragged variable.
         if (!dragged) {
             context.getActiveViewer().toggleExpansion(context.getKNode());
-            DiagramViewPart view =
-                    DiagramViewManager.getView(AbstractKLighDController.CVIEW_KLIGHD_ID);
-            new LightDiagramLayoutConfig(view).performLayout();
+            IDiagramWorkbenchPart diagramWorkbenchPart = context.getViewContext().getDiagramWorkbenchPart();
+            new LightDiagramLayoutConfig(diagramWorkbenchPart).performLayout();
         }
 
         return ActionResult.createResult(false);
