@@ -13,19 +13,15 @@
  */
 package de.cau.cs.kieler.cview.klighd;
 
-
 import java.util.HashSet;
-
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Control;
-
 import de.cau.cs.kieler.cview.AbstractKLighDController;
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
-
 
 /**
  * Expand & collapse only if mouse was *not* dragged.
@@ -36,22 +32,24 @@ import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 public class CollapseExpandNoDragAction implements IAction {
 
     /** The action ID. */
-    public static final String ID =
-            "de.cau.cs.kieler.cview.CollapseExpandNoDragAction";
+    public static final String ID = "de.cau.cs.kieler.cview.CollapseExpandNoDragAction";
 
+    // A tolerance of 5 pixels. If this is exceeded by either the X or the Y coordinate,
+    // then the movement (while holding the mouse down) is considered a dragged-event.
     public final int TOLERANCE = 5;
 
     // -------------------------------------------------------------------------
-    
+
     int xDown = 0;
     int yDown = 0;
-    
-    // The default is dragged == true => a first click might *not* collapse/expand even if not dragged
+
+    // The default is dragged == true => a first click might *not* collapse/expand even if not
+    // dragged
     boolean dragged = true;
-    
+
     // Remember for which control/KLighD view we had added a mouse listener
     HashSet<Control> collapseExpandNoDragMouseListenerAdded = new HashSet<Control>();
-    
+
     // The controller that detects a dragged-event
     MouseListener collapseExpandNoDragMouseListener = new MouseListener() {
         @Override
@@ -60,7 +58,7 @@ public class CollapseExpandNoDragAction implements IAction {
             int yUp = e.y;
             int diffX = Math.abs(xDown - xUp);
             int diffY = Math.abs(yDown - yUp);
-            
+
             // If out of tolerance for the X or the Y coordinate => consider this a dragging-event
             if ((diffX > TOLERANCE) || (diffY > TOLERANCE)) {
                 dragged = true;
@@ -68,13 +66,14 @@ public class CollapseExpandNoDragAction implements IAction {
                 dragged = false;
             }
         }
+
         @Override
         public void mouseDown(MouseEvent e) {
             // When mouse is down, save the coordinates to later detect a possible drag-event
             xDown = e.x;
             yDown = e.y;
         }
-        
+
         @Override
         public void mouseDoubleClick(MouseEvent e) {
         }
@@ -91,18 +90,19 @@ public class CollapseExpandNoDragAction implements IAction {
             control.addMouseListener(collapseExpandNoDragMouseListener);
             collapseExpandNoDragMouseListenerAdded.add(control);
         }
-        
+
         // Do this only (collapse/expand + layout) if no dragged-event has occurred right before
         // Because we only have ONE mouse, it's OK to do it like that and refer to the latest
         // status of the dragged variable.
         if (!dragged) {
             context.getActiveViewer().toggleExpansion(context.getKNode());
-            DiagramViewPart view = DiagramViewManager.getView(AbstractKLighDController.CVIEW_KLIGHD_ID);
+            DiagramViewPart view =
+                    DiagramViewManager.getView(AbstractKLighDController.CVIEW_KLIGHD_ID);
             new LightDiagramLayoutConfig(view).performLayout();
         }
-        
+
         return ActionResult.createResult(false);
     }
-    
+
     // -------------------------------------------------------------------------
 }
