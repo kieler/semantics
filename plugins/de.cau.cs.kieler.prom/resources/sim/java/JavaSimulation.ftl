@@ -1,3 +1,4 @@
+<#include "/assets/JavaSimulationSnippets.ftl" >
 package sim.code;
 
 import java.io.BufferedReader;

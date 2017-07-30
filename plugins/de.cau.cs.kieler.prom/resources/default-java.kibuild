@@ -1,18 +1,19 @@
-// Compile models to C code
+// Compile models to Java code
 model compiler kico {
   outputFolder: kieler-gen
-  outputFileExtension: c
+  outputFileExtension: java
+  outputTemplate: assets/OutputTemplate.ftl
   compilationSystem: de.cau.cs.kieler.sccharts.netlist.simple
   
   // Generate C simulation from output of compilation
   process simulation template {
-    file: assets/CSimulation.ftl
+    file: assets/JavaSimulation.ftl
   }
 }
 
 // Compile C simulation via gcc
-simulation compiler c {
-  libFolder: kieler-gen/sim/lib
+simulation compiler java {
+  libFolder: kieler-gen/org/json
   outputFolder: kieler-gen/sim/bin
-  command: "gcc -std=c99 -o ./${outputFolder}/${executable_name}"
+  command: "jar cvfe ../${outputFolder}/${executable_name}"
 }
