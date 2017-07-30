@@ -47,9 +47,9 @@ public class CollapseExpandNoDragAction implements IAction {
     boolean dragged = false;
     final int TOLERANCE = 5;
     
-    boolean expandCollapseMouseListenerAdded = false;
+    boolean collapseExpandNoDragMouseListenerAdded = false;
     
-    MouseListener expandCollapseMouseListener = new MouseListener() {
+    MouseListener collapseExpandNoDragMouseListener = new MouseListener() {
         @Override
         public void mouseUp(MouseEvent e) {
             int xUp = e.x;
@@ -83,10 +83,10 @@ public class CollapseExpandNoDragAction implements IAction {
         // Object inputModel = context.getViewContext().getInputModel();
         // Object domainElement = context.getDomainElement(context.getKNode());
         
-        if (!expandCollapseMouseListenerAdded) {
-            expandCollapseMouseListenerAdded = true;
+        if (!collapseExpandNoDragMouseListenerAdded) {
+            collapseExpandNoDragMouseListenerAdded = true;
             Control c = context.getActiveViewer().getControl();
-            c.addMouseListener(expandCollapseMouseListener);
+            c.addMouseListener(collapseExpandNoDragMouseListener);
         }
         
         if (!dragged) {
