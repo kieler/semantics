@@ -13,26 +13,27 @@
  */
 package de.cau.cs.kieler.prom.templates
 
-import com.google.common.base.Strings
+import com.google.common.base.Charsets
 import com.google.common.io.Files
+import com.google.common.io.LineProcessor
 import de.cau.cs.kieler.prom.ModelImporter
-import de.cau.cs.kieler.prom.PromPlugin
 import de.cau.cs.kieler.prom.data.FileData
-import de.cau.cs.kieler.prom.templates.FreemarkerConfiguration
+import de.cau.cs.kieler.prom.data.MacroCallData
 import freemarker.template.Template
 import java.io.File
 import java.io.FileFilter
+import java.io.IOException
 import java.io.StringWriter
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import java.util.regex.Pattern
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.prom.data.MacroCallData
 
 /**
  * This class generates wrapper code for models.
@@ -87,11 +88,6 @@ class TemplateManager {
      * Macro definitions to use <@init>, <@input>, <@output> in wrapper code snippets.
      */
     public static var String macroDefinitions = null
-
-    /**
-     * The launch data
-     */
-    private String snippetDirectory
     
     /**
      * The project
@@ -101,8 +97,7 @@ class TemplateManager {
     /**
      * Constructor
      */
-    new(IProject project, String snippetDirectory) {
-        this.snippetDirectory = Strings.nullToEmpty(snippetDirectory)
+    new(IProject project) {
         this.project = project
     }
     
@@ -169,20 +164,43 @@ class TemplateManager {
      * @param annotationDatas The annotations that injected as macro calls
      */
     def public String generateWrapperCode(String templatePath, List<MacroCallData> annotationDatas, Map<String, Object> additionalMappings) {
-                
+
         // Check consistency of path
         if (!templatePath.isNullOrEmpty()) {
-            val templateWithMacroCalls = getTemplateWithMacroCalls(templatePath, additionalMappings, annotationDatas)
+            val templateWithMacroCalls = getTemplateWithMacroCalls(templatePath, annotationDatas)
             
             // Debug log macro calls
 //            System.err.println(templateWithMacroCalls)
 
-            val wrapperCode = processTemplateWithSnippetDefinitions(templateWithMacroCalls)
+            // Create mappings
+            val map = <String, Object> newHashMap
+            
+            // Add name of model 
+            if(!map.containsKey(MODEL_NAME_VARIABLE)) {
+                val modelName = annotationDatas.get(0).modelName
+                map.put(MODEL_NAME_VARIABLE, modelName)
+                map.put(MODEL_NAMES_VARIABLE, #[modelName])
+            }
+            
+            // Add name of output file 
+            if(!map.containsKey(FILE_NAME_VARIABLE)) {
+                val fileName = new File(templatePath).name
+                val fileNameWithoutExtension = Files.getNameWithoutExtension(fileName)
+                map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
+            }
+            
+            // Add additional mappings
+            if(additionalMappings != null) {
+                map.putAll(additionalMappings)
+            }
+        
+            // Process template with macro calls and the mappings created above
+            val wrapperCode = processTemplateWithSnippetDefinitions(templateWithMacroCalls, map)
             return wrapperCode
         }
         return ""
     }
-
+            
     /**
      * Searches for wrapper code annotations in the models
      * and injects macro calls accordingly in the template.
@@ -193,37 +211,39 @@ class TemplateManager {
      * @return a String with the input template's wrapper code
      * plus injected macro calls from annotations of the given files.
      */
-    private def String getTemplateWithMacroCalls(String templatePath, Map<String, Object> additionalMappings,
-            List<MacroCallData> annotationDatas) {
+    private def String getTemplateWithMacroCalls(String templatePath, List<MacroCallData> annotationDatas) {
         
         // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
         
-        // Add name of model 
-        if(!map.containsKey(MODEL_NAME_VARIABLE) && !annotationDatas.isNullOrEmpty) {
-            val modelName = annotationDatas.get(0).modelName
-            map.put(MODEL_NAME_VARIABLE, modelName)
-            map.put(MODEL_NAMES_VARIABLE, #[modelName])
-        }
-        
-        // Add name of output file 
-        if(!map.containsKey(FILE_NAME_VARIABLE)) {
-            val fileName = new File(templatePath).name
-            val fileNameWithoutExtension = Files.getNameWithoutExtension(fileName)
-            map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
-        }
-        
-        // Add additional mappings
-        map.putAll(additionalMappings)
-        
         // Inject macro calls in input template
-        FreemarkerConfiguration.newConfiguration(project.location.toOSString)
-        val template = FreemarkerConfiguration.configuration.getTemplate(templatePath)
-
-        val writer = new StringWriter()
-        template.process(map, writer)
-
-        return writer.toString()
+        val lineProcessor = new LineProcessor<String>() {
+            String text = ""
+            
+            override getResult() {
+                return text
+            }
+            
+            override processLine(String line) throws IOException {
+                // Replace placeholders in the line
+                // Freemarker should process the templates only after the macro calls have been injected.
+                // Otherwise things like includes are processed, not needed in this case, yet gone in the next iteration,
+                // in which macro calls should be processed.
+                // Thus, injecting the macro calls is done here, before Freemarker is used.
+                var lineWithoutPlaceholders = line
+                for(entry : map.entrySet) {
+                    val placeholderRegex = Pattern.quote("${"+entry.key+"}")
+                    lineWithoutPlaceholders = lineWithoutPlaceholders.replaceAll(placeholderRegex, entry.value)
+                }
+                text += lineWithoutPlaceholders+"\n"
+                // Continue reading the lines
+                return true
+            }
+        }
+        val templateText = Files.readLines(new File(project.location.append(templatePath).toOSString),
+                                           Charsets.UTF_8,
+                                           lineProcessor)
+        return templateText
     }
 
     /**
@@ -232,40 +252,24 @@ class TemplateManager {
      * 
      * @param templateWithMacroCalls The template text to be processed 
      */
-    private def String processTemplateWithSnippetDefinitions(String templateWithMacroCalls) {
+    private def String processTemplateWithSnippetDefinitions(String templateWithMacroCalls, Map<String, Object> additionalMappings) {
         
-        // Resolve snippet path
-        val resolvedWrapperCodeSnippetDirectory = PromPlugin.performStringSubstitution(snippetDirectory, project)
+        FreemarkerConfiguration.newConfiguration(project.location.toOSString)
         
-        // Load snippet definitions
-        if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
-            var File snippetDirectoryLocation = new File(resolvedWrapperCodeSnippetDirectory)
-            if (!snippetDirectoryLocation.isAbsolute)
-                snippetDirectoryLocation = new File(project.location + File.separator + resolvedWrapperCodeSnippetDirectory)
-                
-            // Set the snippets directory to implicitly load the macro definitions
-            FreemarkerConfiguration.newConfiguration(snippetDirectoryLocation.absolutePath)
-    
-            // Add implicit include of assignment macros such as <@init> and <@output>
-            FreemarkerConfiguration.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
-            FreemarkerConfiguration.configuration.addAutoInclude("assignmentMacros")
-    
-            // Add implicit include of snippet definitions
-            val snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
-            for(snippetFile : snippetFiles) {
-                // FreeMarker needs paths relative to the template directory.
-                // We calculate this via the URI class.
-                val relativeURI = snippetDirectoryLocation.toURI().relativize(snippetFile.toURI())
-                FreemarkerConfiguration.configuration.addAutoInclude(relativeURI.getPath())
-            }
-        }
+        // Add implicit include of assignment macros such as <@init> and <@output>
+        FreemarkerConfiguration.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
+        FreemarkerConfiguration.configuration.addAutoInclude("assignmentMacros")
         
         // Process template with macro calls and now implicitly loaded snippet definitions.
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreemarkerConfiguration.configuration)
 
         // Process template and write output in string
+        val map = if(additionalMappings != null)
+                      additionalMappings
+                  else
+                    newHashMap
         val writer = new StringWriter()
-        template.process(newHashMap(), writer)
+        template.process(map, writer)
         writer.close()
         return writer.toString
     }
@@ -298,8 +302,8 @@ class TemplateManager {
      * @return a map where the keys 'inits', 'inputs' and 'outputs'
      *         are mapped to the corresponding macro calls for the given annotations.
      */
-    private def Map<String, Object> getMacroCalls(MacroCallData... annotationDatas) {
-        val Map<String, Object> map = newHashMap
+    private def Map<String, String> getMacroCalls(MacroCallData... annotationDatas) {
+        val Map<String, String> map = newHashMap
         if(annotationDatas.isNullOrEmpty) {
             // Set the macro value for all placeholders (e.g. ${inputs}, ${outputs}) to the empty string,
             // because there are no annotations to inject.
@@ -494,7 +498,7 @@ class TemplateManager {
             initAnalyzers()
             
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers) {
+            for (analyzer : TemplateManager.modelAnalyzers) {
                 val modelName = analyzer.getModelName(model)
                 if(modelName != null) {
                     return modelName
@@ -519,7 +523,7 @@ class TemplateManager {
             initAnalyzers()
             
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers) {
+            for (analyzer : TemplateManager.modelAnalyzers) {
                 val annotations = analyzer.getAnnotationInterface(model)
                 if (annotations != null) {
                     annotationDatas.addAll(annotations)    
@@ -544,7 +548,7 @@ class TemplateManager {
             initAnalyzers()
             
             // Analyze the model with all wrapper code annotation analyzers
-            for (analyzer : de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers) {
+            for (analyzer : TemplateManager.modelAnalyzers) {
                 val datas = analyzer.getSimulationInterface(model)
                 if (!datas.isNullOrEmpty) {
                     simulationDatas.addAll(datas)    
@@ -559,17 +563,17 @@ class TemplateManager {
      * if not yet done.
      */
     private static def void initAnalyzers(){
-        if(de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers == null){
+        if(TemplateManager.modelAnalyzers == null){
             // Initialize list
-            de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers = newArrayList()
+            TemplateManager.modelAnalyzers = newArrayList()
             
             // Fill list with wrapper code annotation analyzers from extensions.
-            val config = Platform.getExtensionRegistry().getConfigurationElementsFor(de.cau.cs.kieler.prom.templates.TemplateManager.MODEL_ANALYZER_EXTENSION_POINT_ID);
+            val config = Platform.getExtensionRegistry().getConfigurationElementsFor(TemplateManager.MODEL_ANALYZER_EXTENSION_POINT_ID);
             try {
                 for (IConfigurationElement e : config) {
                     val o = e.createExecutableExtension("class");
                     if (o instanceof ModelAnalyzer) {
-                        de.cau.cs.kieler.prom.templates.TemplateManager.modelAnalyzers += o
+                        TemplateManager.modelAnalyzers += o
                     }
                 }
             } catch (CoreException ex) {

@@ -30,7 +30,7 @@ class SimpleTemplateProcessor extends TemplateProcessor {
         val targetFile = project.getFile(target.stringValue)
         
         val name = Files.getNameWithoutExtension(templateFile.name)
-        val generator = new TemplateManager(project, null)
+        val generator = new TemplateManager(project)
         val generatedCode = generator.processTemplate(templateFile.projectRelativePath.toOSString, 
                 #{TemplateManager.FILE_NAME_VARIABLE -> name} )
         

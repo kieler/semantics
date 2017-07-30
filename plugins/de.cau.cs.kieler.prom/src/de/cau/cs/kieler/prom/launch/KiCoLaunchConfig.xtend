@@ -267,7 +267,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                     // resolve template path
                     val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate, project)
                     // Create wrapper code
-                    val generator = new TemplateManager(project, launchData.wrapperCodeSnippetDirectory)
+                    val generator = new TemplateManager(project)
                     val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate, launchData.files)
                     // Save output
                     val resolvedWrapperCodeTargetLocation = launchConfig.computeTargetPath(resolvedWrapperCodeTemplate, false)
@@ -453,7 +453,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                 // Create wrapper code
                 val modelName = Files.getNameWithoutExtension(data.name)
                 val annotationDatas = TemplateManager.getMacroCallData(project, data)
-                val generator = new TemplateManager(project, launchData.wrapperCodeSnippetDirectory)
+                val generator = new TemplateManager(project)
                 val mappings = #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> result.string,
                                  TemplateManager.MODEL_NAME_VARIABLE -> modelName,
                                  TemplateManager.MODEL_NAMES_VARIABLE -> #[modelName]}

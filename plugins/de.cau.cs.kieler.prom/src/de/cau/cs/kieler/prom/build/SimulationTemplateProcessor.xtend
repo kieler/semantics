@@ -31,7 +31,6 @@ import de.cau.cs.kieler.prom.templates.TemplateManager
  */
 class SimulationTemplateProcessor extends TemplateProcessor {
     public val modelPath = new ConfigurableAttribute("modelFile")
-    public val snippetFolder = new ConfigurableAttribute("snippetFolder", "snippets")
     public val compiledModelPath = new ConfigurableAttribute("compiledModelFile", "")
     public val additionalVariables = new ConfigurableAttribute("variables")
     public val interfaceTypes = new ConfigurableAttribute("interfaceTypes")
@@ -96,7 +95,7 @@ class SimulationTemplateProcessor extends TemplateProcessor {
         }
         
         // Create simulation code
-        val generator = new TemplateManager(project, snippetFolder.stringValue)
+        val generator = new TemplateManager(project)
         val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, annotationDatas,
             #{TemplateManager.MODEL_NAME_VARIABLE -> modelName,
               TemplateManager.FILE_NAME_VARIABLE -> targetName, 

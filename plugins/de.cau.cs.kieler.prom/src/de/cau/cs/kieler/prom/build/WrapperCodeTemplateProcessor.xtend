@@ -23,7 +23,6 @@ import de.cau.cs.kieler.prom.templates.TemplateManager
  */
 class WrapperCodeTemplateProcessor extends TemplateProcessor {
     public val modelPath = new ConfigurableAttribute("modelFile")
-    public val snippetFolder = new ConfigurableAttribute("snippetFolder", "snippets")
     
     new() {
         super()
@@ -44,7 +43,7 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         
         // Create wrapper code
         val name = Files.getNameWithoutExtension(templateFile.name)
-        val generator = new TemplateManager(project, snippetFolder.stringValue)
+        val generator = new TemplateManager(project)
         val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, annotationDatas,
             #{TemplateManager.MODEL_NAME_VARIABLE -> name} )
         

@@ -45,7 +45,7 @@ import org.eclipse.xtext.util.StringInputStream
  */
 class KiCoModelCompiler extends ModelCompiler {
     public val outputTemplate = new ConfigurableAttribute("outputTemplate", "")
-    public val fileExtension = new ConfigurableAttribute("fileExtension", ".c")
+    public val outputFileExtension = new ConfigurableAttribute("outputFileExtension", ".c")
     public val compilationSystem = new ConfigurableAttribute("compilationSystem", "de.cau.cs.kieler.sccharts.netlist.simple")
     
     private var IFile compiledFile
@@ -92,7 +92,7 @@ class KiCoModelCompiler extends ModelCompiler {
             // Save result if no errors and warnings
             if(noIssues) {
                 // If fileExtension starts with a letter, add a dot as prefix
-                var String fileExt = fileExtension.stringValue
+                var String fileExt = outputFileExtension.stringValue
                 if(fileExt.matches("^\\w.*")) {
                     fileExt = "."+fileExt
                 }
@@ -221,7 +221,7 @@ class KiCoModelCompiler extends ModelCompiler {
         } else {
             // Inject compilation result into target template
             val modelName = Files.getNameWithoutExtension(compiledFile.name)
-            val generator = new TemplateManager(compiledFile.project, null)
+            val generator = new TemplateManager(compiledFile.project)
             val wrapperCode = generator.processTemplate(resolvedTargetTemplate, 
                 #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> code,
                   TemplateManager.MODEL_NAME_VARIABLE -> modelName})
