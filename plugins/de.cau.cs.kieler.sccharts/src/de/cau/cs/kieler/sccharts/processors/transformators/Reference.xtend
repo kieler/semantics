@@ -170,16 +170,19 @@ class Reference extends SCChartsProcessor {
                 for (index : valuedObjectReference.indices) {
                     index.replaceReferences(replacements)
                 }
-                
-                valuedObjectReference.indices.clear
-                for (index : newRef.indices) {
-                    if (index instanceof Value) {
-                        valuedObjectReference.indices += index.copy  
-                    } else {
-                        val vor = index.copy
-                        vor.replaceReferences(replacements)
-                        valuedObjectReference.indices += vor
-                    } 
+
+                // If the binding is an array reference, add the references to the valued object reference.                
+                if (!newRef.indices.empty) {
+                    valuedObjectReference.indices.clear
+                    for (index : newRef.indices) {
+                        if (index instanceof Value) {
+                            valuedObjectReference.indices += index.copy  
+                        } else {
+                            val vor = index.copy
+                            vor.replaceReferences(replacements)
+                            valuedObjectReference.indices += vor
+                        } 
+                    }
                 }
             } else if (newRef instanceof Value) {
                 valuedObjectReference.replaceReferenceWithLiteral(newRef)
@@ -188,6 +191,10 @@ class Reference extends SCChartsProcessor {
                     "\" exists, but " + 
                     "the type \"" + newRef.class.getName + "\" is not supported.", valuedObjectReference, true)
             }
+        } else {
+            for (index : valuedObjectReference.indices) {
+                index.replaceReferences(replacements)
+            }            
         }
     }
     
