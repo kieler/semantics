@@ -55,11 +55,13 @@ class Visualizer {
     /*************************************************************************
      * I N J E C T I O N S ***************************************************
      *************************************************************************/
+     
     // For parsing helpers and speed constants
     @Inject extension RailSLExtensions
 
     // To determine the EObject generated from a certain cursor position in the XText editor
-    @Inject EObjectAtOffsetHelper eObjectAtOffsetHelper // = new EObjectAtOffsetHelper();
+    @Inject EObjectAtOffsetHelper eObjectAtOffsetHelper
+    
     /*************************************************************************
      * F I E L D S ***********************************************************
      *************************************************************************/
@@ -87,11 +89,7 @@ class Visualizer {
      */
     private var DataPool pool
 
-    /**
-     * Helper list to keep track of all variables added to the DataPool.
-     * Used to clear the variables added by the previous statement when computing the DataPool for a new one.
-     */
-    private val addedVars = new ArrayList<Variable>()
+    private val DataPool emptyPool = createEmptyPool()
 
     /**
      * All the track name constants
@@ -112,30 +110,8 @@ class Visualizer {
     new() {
 
         System.out.println("Creating Visualizer...")
-        pool = new DataPool()
-        val model = new Model()
-        model.name = "railway"
-        model.pool = pool
-        pool.addModel(model)
 
-        // Add tracks at speed 0
-        for (constant : constants) {
-            model.addVariable(new Variable(constant, 0))
-            model.addVariable(new Variable("S0_" + constant, 4))
-            model.addVariable(new Variable("S1_" + constant, 4))
-            model.addVariable(new Variable(constant + "_C_0", "off"))
-            model.addVariable(new Variable(constant + "_C_1", "off"))
-        }
-
-        // Add points as straight
-        for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
-            model.addVariable(new Variable("point_" + i, 0))
-        }
-
-        // Add lights as off
-        for (var i = 0; i < RailSLTransformation::NUM_OF_LIGHTS; i++) {
-            model.addVariable(new Variable("light_" + i, "off"))
-        }
+        pool = emptyPool.clone
 
         // TODO Add more default variable values here
         registerListenerToEditor
@@ -196,6 +172,36 @@ class Visualizer {
                         })
                 }
             })
+    }
+
+    private def DataPool createEmptyPool()  {
+        val pool = new DataPool()
+        val model = new Model()
+        model.name = "railway"
+        model.pool = pool
+        pool.addModel(model)
+
+        // Add tracks at speed 0
+        for (constant : constants) {
+            model.addVariable(new Variable(constant, 0))
+            model.addVariable(new Variable("S0_" + constant, 4))
+            model.addVariable(new Variable("S1_" + constant, 4))
+            model.addVariable(new Variable(constant + "_C_0", "off"))
+            model.addVariable(new Variable(constant + "_C_1", "off"))
+        }
+
+        // Add points as straight
+        for (var i = 0; i < RailSLTransformation::NUM_OF_POINTS; i++) {
+            model.addVariable(new Variable("point_" + i, 0))
+        }
+
+        // Add lights as off
+        for (var i = 0; i < RailSLTransformation::NUM_OF_LIGHTS; i++) {
+            model.addVariable(new Variable("light_" + i, "off"))
+        }
+        
+        pool
+        
     }
 
     /**
@@ -279,7 +285,7 @@ class Visualizer {
                             val object = eObjectAtOffsetHelper.resolveElementAt(state, textSelection.getOffset())
                             updatePool(object)
 
-                            KVisView.instance?.update(pool)
+                            KVisView.instance?.update(pool, true)
 
                             return null
                         } catch (Exception e) {
@@ -302,15 +308,10 @@ class Visualizer {
     def void updatePool(EObject object) {
 
         // delete previously added variables
+        pool = emptyPool.clone()
+        
         val model = pool.getModel("railway");
-        val modelVars = model.variables
-
-        for (variable : addedVars) {
-            modelVars.remove(variable)
-        }
-
-        addedVars.clear
-
+        
         // process the EObject passed as a parameter
         if (object instanceof Statement) {
             model.addValues(object as Statement)
@@ -389,10 +390,6 @@ class Visualizer {
                 model.variables.add(0, forwardSignal)
                 model.variables.add(0, reverseSignal)
                 model.variables.add(0, speedVar)
-
-                addedVars.add(forwardSignal)
-                addedVars.add(reverseSignal)
-                addedVars.add(speedVar)
             }
         } catch (NullPointerException e) {
             System.out.println("Parsed illegal statement.")
@@ -413,7 +410,6 @@ class Visualizer {
         for (index : statement.points) {
             variable = new Variable("point_" + index, statement.orientation)
             model.addVariable(variable)
-            addedVars.add(0, variable)
         }
     }
     
@@ -430,7 +426,6 @@ class Visualizer {
         for (index : statement.lights) {
             variable = new Variable("light_" + index, statement.state)
             model.addVariable(variable)
-            addedVars.add(variable)
         }
     }
 
@@ -443,7 +438,6 @@ class Visualizer {
     def addContactValue(Model model, ContactWaitStatement statement) {
         val variable = new Variable(statement.segName + "_C_" + statement.parseContactIndex, "on")
         model.addVariable(variable)
-        addedVars.add(0, variable)
     }
 
     /**
@@ -467,7 +461,6 @@ class Visualizer {
     def addConditionalLineValues(Model model, ConditionalLine line) {
         val variable = new Variable(line.segName + "_C_" + line.parseContactIndex, "on")
         model.addVariable(variable)
-        addedVars.add(0, variable)
     }
 
     /*************************************************************************

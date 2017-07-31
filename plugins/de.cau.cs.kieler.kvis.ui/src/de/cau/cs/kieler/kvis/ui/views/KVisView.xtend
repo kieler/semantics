@@ -476,12 +476,17 @@ class KVisView extends ViewPart {
         }
     }
 
+    public def void update(DataPool pool) {
+        update(pool, false)
+    }
+
     /**
      * Updates the image with the loaded configuration.
      * This method has to be called in the UI thread.
      */
-    public def void update(DataPool pool) {
-        if(!linkWithSimulation || kvisFile == null || svgImage == null) {
+    public def void update(DataPool pool, boolean force) {
+        if(kvisFile == null || svgImage == null
+            || (!linkWithSimulation && !force)) {
             return
         }
         
@@ -504,7 +509,8 @@ class KVisView extends ViewPart {
                     override run() {
                         // As this is invoked later in another thread,
                         // the pool that should be visualized might already be outdated
-                        if(SimulationManager.instance != null && pool == SimulationManager.instance.currentPool) {
+                        if(force
+                           || SimulationManager.instance != null && pool == SimulationManager.instance.currentPool) {
                             val time = System.currentTimeMillis
                             try {
                                 // Safe reference to animation handlers in case the reference changes concurrently
