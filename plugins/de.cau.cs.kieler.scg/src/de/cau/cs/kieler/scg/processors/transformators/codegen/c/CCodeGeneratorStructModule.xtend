@@ -55,13 +55,13 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
             for (valuedObject : declaration.valuedObjects) {
                 if (declaration instanceof VariableDeclaration) {
                     code.append(indentation + declaration.type.serializeHR)
+                    code.append(" ")
+                    code.append(valuedObject.name)
                     if (valuedObject.isArray) {
                         for (cardinality : valuedObject.cardinalities) {
                             code.append("[" + cardinality.serializeHR + "]")
                         }
                     }
-                    code.append(" ")
-                    code.append(valuedObject.name)
                     code.append(";\n")
                 }
             }
