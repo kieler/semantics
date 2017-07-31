@@ -86,7 +86,7 @@ class DeclarationsHook extends SynthesisActionHook {
         if (region instanceof ControlflowRegion && !region.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
             val parent = node.regionExtendedContainer
             val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER);
-            val container = parent?.children?.filter(KContainerRendering)?.head;
+            val container = declarations.eContainer as KContainerRendering
             // Hide declarations
             if (declarations != null && container != null) {
                 val idx = container.children.indexOf(declarations)
