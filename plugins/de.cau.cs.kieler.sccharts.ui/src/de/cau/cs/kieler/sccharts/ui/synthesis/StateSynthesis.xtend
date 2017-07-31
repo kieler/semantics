@@ -118,8 +118,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 switch state {
                     case state.isReferencedState:
                         node.addMacroStateLabel(
-                            state.serializeHR + " @ " + ((state.reference.scope as State).serializeHR ?: "UnresolvedReference") +
-                            state.reference.parameters.serializeHRParameters).associateWith(state)
+                            state.serializeHR + " @ "
+                            + (if (state.reference.scope != null) (state.reference.scope as State).serializeHR else "UnresolvedReference")
+                            // TODO make optional since long parameter lists are too large in the diagram
+                            // + state.reference.parameters.serializeHRParameters
+                            ).associateWith(state)
                     case state.isMacroState:
                         node.addMacroStateLabel(state.serializeHR.toString).associateWith(state)
                     default:
