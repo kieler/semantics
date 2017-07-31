@@ -262,6 +262,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
         
         
+        
+        
         instance = this
         connectedComponents.clear
         
@@ -284,7 +286,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             }
         }
 
-        selectedExpandLevel = EXPANDED_SLIDER.intValue
+        if (selectedExpandLevel != EXPANDED_SLIDER.intValue) {
+            selectedExpandLevel = EXPANDED_SLIDER.intValue
+            CViewPlugin.refreshCView(true)
+            return null;            
+        }
 
         val root = model.createNode().associateWith(model);
         val depth = 1;
