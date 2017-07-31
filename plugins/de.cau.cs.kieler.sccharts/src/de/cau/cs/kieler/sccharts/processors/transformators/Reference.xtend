@@ -34,6 +34,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -53,6 +54,8 @@ class Reference extends SCChartsProcessor {
     @Inject extension SCChartsReferenceExtensions
     @Inject Injector injector
     
+    protected val replacedWithLiterals = <ValuedObject> newHashSet
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.transformators.reference"
     }
@@ -62,6 +65,8 @@ class Reference extends SCChartsProcessor {
     }
     
     override process() {
+        replacedWithLiterals.clear
+        
         val model = getModel
         
         for(rootState : model.rootStates.toList) {
@@ -100,11 +105,6 @@ class Reference extends SCChartsProcessor {
             }
         }       
         
-        
-//        for (region : newState.regions) {
-//            region.replaceValuedObjectReferences(replacements)
-//        } 
-        
         newState.replaceValuedObjectReferencesInState(replacements)        
         
         val parent = stateWithReference.eContainer as ControlflowRegion
@@ -130,7 +130,6 @@ class Reference extends SCChartsProcessor {
         for (valuedObject : valuedObjects) {
             replacements.push(valuedObject, valuedObject.reference)
         }
-        
         
         // TODO: Resolve name clash
         switch(scope) {
@@ -165,19 +164,31 @@ class Reference extends SCChartsProcessor {
     
     protected dispatch def void replaceReferences(ValuedObjectReference valuedObjectReference, Replacements replacements) {
         val newRef = replacements.peek(valuedObjectReference.valuedObject)
-        // TODO: Bind Literals
         if (newRef != null) {
             if (newRef instanceof ValuedObjectReference) { 
                 valuedObjectReference.valuedObject = (newRef as ValuedObjectReference).valuedObject
                 for (index : valuedObjectReference.indices) {
                     index.replaceReferences(replacements)
-                }   
+                }
+            } else if (newRef instanceof Value) {
+                valuedObjectReference.replaceReferenceWithLiteral(newRef)
             } else {
                 environment.errors.add("A binding for the valued object reference \"" + valuedObjectReference.valuedObject.name + 
-                    "\" exists, but is not another valued object reference.\n" + 
-                    "The type \"" + newRef.class.getName + "\" is not supported.", valuedObjectReference, true)
+                    "\" exists, but " + 
+                    "the type \"" + newRef.class.getName + "\" is not supported.", valuedObjectReference, true)
             }
         }
+    }
+    
+    protected def void replaceReferenceWithLiteral(ValuedObjectReference valuedObjectReference, Value value) {
+        val valuedObject = valuedObjectReference.valuedObject
+        if (replacedWithLiterals.contains(valuedObject)) return;
+        val oldDeclaration = valuedObject.variableDeclaration
+        val newDeclaration = createVariableDeclaration(oldDeclaration.type)
+        (oldDeclaration.eContainer as Scope).declarations += newDeclaration
+        newDeclaration.valuedObjects += valuedObject
+        valuedObject.initialValue = value.copy   
+        replacedWithLiterals += valuedObject
     }
     
     protected dispatch def void replaceReferences(OperatorExpression operatorExpression, Replacements replacements) {
