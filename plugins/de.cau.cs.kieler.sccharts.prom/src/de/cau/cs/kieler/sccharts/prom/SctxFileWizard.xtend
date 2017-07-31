@@ -20,11 +20,11 @@ import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 
 /**
- * Implementation of a newWizard which contains a page to create an sct file. 
+ * Implementation of a newWizard which contains a page to create an sctx file. 
  * 
  * @author aas
  */
-class SCChartsFileWizard extends Wizard implements INewWizard {
+class SctxFileWizard extends Wizard implements INewWizard {
 
     /**
      * The workbench from the init(...) method.
@@ -37,29 +37,29 @@ class SCChartsFileWizard extends Wizard implements INewWizard {
     private var IStructuredSelection selection
     
     /**
-     * Page to create an sct file.
+     * Page to create a file.
      */
-    private AdvancedNewFileCreationPage sctPage
+    private AdvancedNewFileCreationPage filePage
     
     /**
-     * Instantiates and adds the sct file creation page to this wizard.
+     * Instantiates and adds the file creation page to this wizard.
      */
     override addPages(){
-        sctPage = new AdvancedNewFileCreationPage("SCChart Text File", selection, false);
-        sctPage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
-        sctPage.fileName = "NewModel.sct"
-        sctPage.fileExtension = "sct"
-        sctPage.description = "Create a new SCT file."
+        filePage = new AdvancedNewFileCreationPage("SCChart Text File", selection, false);
+        filePage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sctx"
+        filePage.fileName = "NewModel.sctx"
+        filePage.fileExtension = "sctx"
+        filePage.description = "Create a new SCTX file."
         
-        addPage(sctPage);
+        addPage(filePage);
     }
     
     /**
-     * Creates the sct file with the settings from the sct file creation page.
+     * Creates the file with the settings from the file creation page.
      * The method is called when the finish button is clicked.
      */
     override performFinish() {
-        return sctPage.performFinish()
+        return filePage.performFinish()
     }
     
     /**
@@ -69,7 +69,7 @@ class SCChartsFileWizard extends Wizard implements INewWizard {
         this.workbench = workbench
         this.selection = selection
         
-        windowTitle = "New SCT File"
+        windowTitle = "New SCTX File"
         helpAvailable = false
     }
 }

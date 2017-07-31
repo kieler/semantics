@@ -60,12 +60,17 @@
                   tooltip="Step Sub Tick">
                <visibleWhen
                      checkEnabled="false">
-                  <with
-                        variable="activeWorkbenchWindow.activePerspective">
-                     <equals
-                           value="de.cau.cs.kieler.simulation">
-                     </equals>
-                  </with>
+                  <and>
+                     <with
+                           variable="activeWorkbenchWindow.activePerspective">
+                        <equals
+                              value="de.cau.cs.kieler.simulation">
+                        </equals>
+                     </with>
+                     <test
+                           property="de.cau.cs.kieler.simulation.ui.subTicksEnabled">
+                     </test>
+                  </and>
                </visibleWhen>
             </command>
             <command
@@ -198,6 +203,16 @@
             id="de.cau.cs.kieler.simulation.ui.stop"
             name="Stop Simulation">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester"
+            id="de.cau.cs.kieler.simulation.ui.subTicksEnabledPropertyTester"
+            namespace="de.cau.cs.kieler.simulation.ui"
+            properties="subTicksEnabled"
+            type="java.lang.Object">
+      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">

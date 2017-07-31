@@ -114,6 +114,10 @@ class KExpressionsValuedObjectExtensions {
     def boolean isArray(ValuedObject valuedObject) {
         !valuedObject.cardinalities.nullOrEmpty
     }
+    
+    def boolean isArrayReference(ValuedObjectReference valuedObjectReference) {
+        !valuedObjectReference.indices.nullOrEmpty
+    }
 
     def boolean isSignal(ValuedObject valuedObject) {
         if (valuedObject.isModelReference) return false

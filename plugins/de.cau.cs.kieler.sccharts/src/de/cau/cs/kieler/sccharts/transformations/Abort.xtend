@@ -95,7 +95,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
     @Inject extension SCChartsUniqueNameExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "_A"
 
     private val nameCache = new UniqueNameCache => [ it += "_term" ]
 

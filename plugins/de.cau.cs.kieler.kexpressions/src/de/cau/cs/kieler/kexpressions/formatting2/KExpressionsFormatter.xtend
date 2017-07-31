@@ -51,8 +51,8 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 	def dispatch void format(ValuedObjectReference valuedobjectreference, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		
-		valuedobjectreference.regionFor.keyword(valuedObjectReferenceAccess.leftSquareBracketKeyword_1_0)?.prepend[ noSpace ].append[ noSpace ]
-        valuedobjectreference.regionFor.keyword(valuedObjectReferenceAccess.rightSquareBracketKeyword_1_2)?.prepend[ noSpace ]
+		valuedobjectreference.regionFor.keywords(valuedObjectReferenceAccess.leftSquareBracketKeyword_1_0).forEach[prepend[ noSpace ].append[ noSpace ]]
+        valuedobjectreference.regionFor.keywords(valuedObjectReferenceAccess.rightSquareBracketKeyword_1_2).forEach[prepend[ noSpace ]]
         
 		for (Expression indices : valuedobjectreference.getIndices()) {
 			format(indices, document);

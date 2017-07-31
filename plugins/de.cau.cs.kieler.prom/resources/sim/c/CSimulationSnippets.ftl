@@ -24,7 +24,7 @@
             }
             </#list>
             <#else>
-            ${varname} = <@value_of_item "value_item" />
+            tickData.${varname} = <@value_of_item "value_item" />
             </#if>
         } else {
             printf("WARNING: Did not receive variable ${varname}\n");
@@ -68,11 +68,11 @@
 </#macro>
 
 <#macro array_elem indices>
-${varname}<#list indices as s>[i${index}]</#list><#t>
+tickData.${varname}<#list indices as s>[i${index}]</#list><#t>
 </#macro>
 
 <#macro cJSON_value var>
-<@cJSON_value_method />(${var})<#t>
+<@cJSON_value_method />(tickData.${var})<#t>
 </#macro>
 
 <#macro value_of_item item>

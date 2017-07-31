@@ -83,6 +83,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     override generate() {
         var nodes = newLinkedList => [ it += scg.nodes.head ]
         conditionalStack.clear
+        val processedNodes = <Node> newHashSet
         
         // Iterate through all nodes. 
         // However, if the last node was already the actual node, then skip it, because
@@ -91,7 +92,13 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         var Node lastNode = null
         while(!nodes.empty) {
             val node = nodes.pop
-            if (node != lastNode) node.generate(nodes)
+            if (processedNodes.contains(node)) {
+                System.err.println("The code generation tries to serialize node " + node + "." + 
+                    "However, that node was already processed. How did that happen?")
+            } else {
+                if (node != lastNode) node.generate(nodes)
+            }
+            processedNodes += node
             lastNode = node
         }
     }
@@ -110,6 +117,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         indent(conditionalStack.size + 1)
         valuedObjectPrefix = struct.getVariableName + "->"
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+        println("Serializing " + assignment.serializeHR)
         code.append(assignment.serializeHR).append(";\n")
         
         // Handle pre variable if necessary.
@@ -183,10 +191,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         reset.code.append(indentation).append(struct.getVariableName).append("->").append(name).append(" = 0;\n")
         
         // Add the "register save" in the tick function.
-        prePrefix = ""
+        prePrefix = "_"
         tick.code.append(indentation)
         tick.code.append(struct.getVariableName).append("->").append(name).append(" = ")
-        tick.code.append(operatorExpression.serializeHR).append(";\n")
+        tick.code.append(struct.getVariableName).append("->").append(operatorExpression.serializeHR).append(";\n")
     }
     
 }

@@ -3,6 +3,7 @@ model compiler kico {
   outputFolder: kieler-gen
   outputFileExtension: c
   compilationSystem: de.cau.cs.kieler.sccharts.netlist.simple
+  whitelist: "MyModel.sctx" // Only compile the models matching this regular expression
   
   // Generate C simulation from output of compilation
   process simulation template {
@@ -15,4 +16,17 @@ simulation compiler c {
   libFolder: kieler-gen/sim/lib
   outputFolder: kieler-gen/sim/bin
   command: "gcc -std=c99 -o ./${outputFolder}/${executable_name}"
+}
+
+// Process a simple template
+process template {
+ file: Template.ftl
+ target: Output.txt
+}
+
+// Process a template to generate a main file that can be deployed.
+process wrapper template {
+  file: Main.ftl
+  target: kieler-gen/Main.c
+  modelFile: MyModel.sct
 }

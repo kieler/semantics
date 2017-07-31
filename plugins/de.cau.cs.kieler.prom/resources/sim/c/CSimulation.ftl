@@ -1,3 +1,4 @@
+<#include "/assets/CSimulationSnippets.ftl" >
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,6 +12,9 @@
 // #define WRITE_SIMIN_FILE
 
 cJSON* output = 0;
+
+// The data for the model
+TickData tickData;
 
 void receiveVariables() {
     char buffer[10000];
@@ -71,15 +75,14 @@ ${outputs}
 
 int main(int argc, const char* argv[]) {
     // Initialize 
-    reset();
+    reset(&tickData);
     sendVariables();
-    
     while (1) {
         // Receive variables
         receiveVariables();
   
         // Reaction of model
-        tick();
+        tick(&tickData);
          
         // Send variables
         sendVariables();

@@ -12,19 +12,20 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
+import java.io.File
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
-import com.google.common.io.Files
-import java.io.File
-import java.nio.charset.Charset
-import com.google.common.base.Charsets
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -37,6 +38,13 @@ class Trace extends DefaultDataHandler {
     public val currentTraceNumber = new ConfigurableAttribute("traceNumber", 0)
     public val currentTickNumber = new ConfigurableAttribute("tickNumber", 0)
     public val checkOutputs = new ConfigurableAttribute("checkOutputs", true)
+    
+    /**
+     * The trace model that should be used to load the trace data.
+     * This can be used programatically instead of a path to a file that contains a trace model.
+     */
+    @Accessors
+    private EObject traceModel
     
     private int traceCount = 0
     private IFile traceFile
@@ -139,12 +147,16 @@ class Trace extends DefaultDataHandler {
     
     private def void initialize() {
         if(currentTrace == null) {
-            val path = new Path(tracePath.stringValue)
-            switch(path.fileExtension.toLowerCase) {
-                case "eso": loadEsoTrace(path)
-                case "sim": loadDataPoolHistory(path)
-                default:
-                    throw new Exception("The file '"+path.toOSString+"' is not a supported trace format.")
+            if(traceModel != null) {
+                loadEsoTrace(traceModel)
+            } else {
+                val path = new Path(tracePath.stringValue)
+                switch(path.fileExtension.toLowerCase) {
+                    case "eso": loadEsoTrace(path)
+                    case "sim": loadDataPoolHistory(path)
+                    default:
+                        throw new Exception("The file '"+path.toOSString+"' is not a supported trace format.")
+                }
             }
         }
     }
@@ -158,6 +170,12 @@ class Trace extends DefaultDataHandler {
         } else {
             throw new Exception("Could not load trace '"+path.toOSString+"'")
         }
+    }
+    
+    private def void loadEsoTrace(EObject trace) {
+        esoUtil = new EsoUtil(trace)
+        traceCount = esoUtil.traceCount
+        currentTrace = esoUtil.getTraceAsDataPools(currentTraceNumber.intValue)
     }
     
     private def void loadDataPoolHistory(IPath path) {

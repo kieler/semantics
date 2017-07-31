@@ -14,7 +14,7 @@ package de.cau.cs.kieler.prom.build
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.templates.TemplateManager
 
 /**
  * @author aas
@@ -30,9 +30,9 @@ class SimpleTemplateProcessor extends TemplateProcessor {
         val targetFile = project.getFile(target.stringValue)
         
         val name = Files.getNameWithoutExtension(templateFile.name)
-        val generator = new WrapperCodeGenerator(project, null)
+        val generator = new TemplateManager(project)
         val generatedCode = generator.processTemplate(templateFile.projectRelativePath.toOSString, 
-                #{WrapperCodeGenerator.FILE_NAME_VARIABLE -> name} )
+                #{TemplateManager.FILE_NAME_VARIABLE -> name} )
         
         // Save output
         val result = new FileGenerationResult

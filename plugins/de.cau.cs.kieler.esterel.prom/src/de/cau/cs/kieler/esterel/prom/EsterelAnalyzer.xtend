@@ -15,21 +15,21 @@ package de.cau.cs.kieler.esterel.prom
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
+import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl
-import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
-import de.cau.cs.kieler.prom.launch.IWrapperCodeAnnotationAnalyzer
+import de.cau.cs.kieler.prom.data.MacroCallData
+import de.cau.cs.kieler.prom.templates.ModelAnalyzer
 import java.io.File
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.esterel.esterel.Program
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.
  * @author aas
  */
-class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
+class EsterelAnalyzer implements ModelAnalyzer {
     
     /**
      * {@inheritDoc}
@@ -46,7 +46,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
         return null
     }
     
-    override getAnnotations(EObject model) {
+    override getAnnotationInterface(EObject model) {
         // At the moment there are no annotations for inputs/outputs in the esterel grammar.
         // So instead we parse the text file manually and search for special comments.
         return parseModelAndGetWrapperCodeAnnotations(model)
@@ -76,7 +76,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
 //        }
     }
     
-    def private List<WrapperCodeAnnotationData> parseModelAndGetWrapperCodeAnnotations(EObject model) {
+    def private List<MacroCallData> parseModelAndGetWrapperCodeAnnotations(EObject model) {
         // The returned list
         val datas = newArrayList() 
         
@@ -104,8 +104,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
                 // Finish wrapper code annotation data with information of input / output
                 if(inputOutput != null && !annotations.nullOrEmpty) {
                     for(a : annotations) {
-                        a.input = inputOutput.isInput
-                        a.output = inputOutput.isOutput
+                        a.setPhases(inputOutput.isInput, inputOutput.isOutput)
                         a.varName = inputOutput.name
                         a.varType = inputOutput.type
                         
@@ -122,7 +121,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
         return datas
     }
     
-    def private WrapperCodeAnnotationData parseLineAndGetWrapperCodeAnnotation(String line) {
+    def private MacroCallData parseLineAndGetWrapperCodeAnnotation(String line) {
         // Find line comment
         val wrapperCommentRegEx = "^\\s*%\\s*Wrapper "
         val p = Pattern.compile(wrapperCommentRegEx);
@@ -131,7 +130,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
             // Rest of the line comment is assumed to be the annotation with parameters
             val token = line.substring(m.end()).trim.split(" ")
             if(!token.isNullOrEmpty) {
-                val data = new WrapperCodeAnnotationData()
+                val data = new MacroCallData()
                 data.ignoreNonExistingSnippet = false
                 data.name = token.get(0)
                 // Annotation has arguments?

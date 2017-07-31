@@ -13,25 +13,22 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.sccharts.ui.synthesis.AbstractSCChartsSynthesis
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import java.util.LinkedHashSet
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -65,28 +62,32 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
     static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
     static val PRAGMA_FONT = "font"        
     static val PRAGMA_SKINPATH = "skinpath"
+          
+    val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
     
-    public static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
-        setCategory(GeneralSynthesisOptions::APPEARANCE)
-        
+    @Accessors private var String skinPath = ""
+    
     override getDisplayedActions() {
         return newLinkedList => [ list |
             hooks.allHooks.forEach[list.addAll(getDisplayedActions)];
         ]
     }
-
-    val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
-    
-    @Accessors private var String skinPath = ""
        
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet()
         
         // Add categories options
         options.addAll(APPEARANCE, DATAFLOW, LAYOUT, DEBUGGING)
-        options.add(SHOW_ALL_SCCHARTS)
-        options.add(USE_KLAY)
+        
+        // General options
+        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_COMMENTS)
+        
+        // Subsynthesis options
+        options.addAll(stateSynthesis.displayedSynthesisOptions)
+        options.addAll(transitionSynthesis.displayedSynthesisOptions)
+        options.addAll(controlflowSynthesis.displayedSynthesisOptions)
         options.addAll(dataflowSynthesis.displayedSynthesisOptions)
+        options.addAll(commentSynthesis.displayedSynthesisOptions)
         
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]

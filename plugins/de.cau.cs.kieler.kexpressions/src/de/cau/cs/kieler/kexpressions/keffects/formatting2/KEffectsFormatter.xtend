@@ -34,8 +34,8 @@ class KEffectsFormatter extends KExpressionsFormatter {
 			format(annotations, document);
 		}
 		
-		assignment.regionFor.keyword(assignmentAccess.leftSquareBracketKeyword_2_0)?.prepend[ noSpace ].append[ noSpace ]
-        assignment.regionFor.keyword(assignmentAccess.rightSquareBracketKeyword_2_2)?.prepend[ noSpace ]
+		assignment.regionFor.keywords(assignmentAccess.leftSquareBracketKeyword_2_0).forEach[prepend[ noSpace ].append[ noSpace ]]
+        assignment.regionFor.keywords(assignmentAccess.rightSquareBracketKeyword_2_2).forEach[prepend[ noSpace ]]
 		
 		for (Expression indices : assignment.getIndices()) {
 			format(indices, document);

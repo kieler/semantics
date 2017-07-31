@@ -2,6 +2,7 @@ system de.cau.cs.kieler.sccharts.extended
 	version 1 
 	label "Extended SCCharts"
 
+de.cau.cs.kieler.sccharts.processors.transformators.reference
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.transformators.signal
 	de.cau.cs.kieler.sccharts.processors.transformators.^pre

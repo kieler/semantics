@@ -34,6 +34,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -53,6 +54,8 @@ class Reference extends SCChartsProcessor {
     @Inject extension SCChartsReferenceExtensions
     @Inject Injector injector
     
+    protected val replacedWithLiterals = <ValuedObject> newHashSet
+    
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.transformators.reference"
     }
@@ -62,6 +65,8 @@ class Reference extends SCChartsProcessor {
     }
     
     override process() {
+        replacedWithLiterals.clear
+        
         val model = getModel
         
         for(rootState : model.rootStates.toList) {
@@ -100,9 +105,7 @@ class Reference extends SCChartsProcessor {
             }
         }       
         
-        for (region : newState.regions) {
-            region.replaceValuedObjectReferences(replacements)
-        } 
+        newState.replaceValuedObjectReferencesInState(replacements)        
         
         val parent = stateWithReference.eContainer as ControlflowRegion
         
@@ -111,10 +114,13 @@ class Reference extends SCChartsProcessor {
         for (transition : stateWithReference.outgoingTransitions.immutableCopy) {
             transition.sourceState = newState
         }
+        for (transition : stateWithReference.incomingTransitions.immutableCopy) {
+            transition.targetState = newState
+        }
         
         stateWithReference.remove
         
-        newState.declarations.removeIf[ if (it instanceof VariableDeclaration) input || output else false ]
+        newState.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
         
         snapshot
     } 
@@ -125,10 +131,9 @@ class Reference extends SCChartsProcessor {
             replacements.push(valuedObject, valuedObject.reference)
         }
         
-        
         // TODO: Resolve name clash
         switch(scope) {
-            ControlflowRegion: for (state : scope.states) state.replaceValuedObjectReferences(replacements)  
+            ControlflowRegion: for (state : scope.states.immutableCopy) state.replaceValuedObjectReferences(replacements)  
             State: scope.replaceValuedObjectReferencesInState(replacements)
         }
         
@@ -139,7 +144,7 @@ class Reference extends SCChartsProcessor {
     
     protected def replaceValuedObjectReferencesInState(State state, Replacements replacements) {
         for (action : state.actions + state.outgoingTransitions) {
-            action.trigger.replaceReferences(replacements)
+            action.trigger?.replaceReferences(replacements)
             for (effect : action.effects) {
                 effect.replaceReferences(replacements)
             }
@@ -159,19 +164,42 @@ class Reference extends SCChartsProcessor {
     
     protected dispatch def void replaceReferences(ValuedObjectReference valuedObjectReference, Replacements replacements) {
         val newRef = replacements.peek(valuedObjectReference.valuedObject)
-        // TODO: Bind Literals
         if (newRef != null) {
             if (newRef instanceof ValuedObjectReference) { 
                 valuedObjectReference.valuedObject = (newRef as ValuedObjectReference).valuedObject
                 for (index : valuedObjectReference.indices) {
                     index.replaceReferences(replacements)
-                }   
+                }
+                
+                valuedObjectReference.indices.clear
+                for (index : newRef.indices) {
+                    if (index instanceof Value) {
+                        valuedObjectReference.indices += index.copy  
+                    } else {
+                        val vor = index.copy
+                        vor.replaceReferences(replacements)
+                        valuedObjectReference.indices += vor
+                    } 
+                }
+            } else if (newRef instanceof Value) {
+                valuedObjectReference.replaceReferenceWithLiteral(newRef)
             } else {
                 environment.errors.add("A binding for the valued object reference \"" + valuedObjectReference.valuedObject.name + 
-                    "\" exists, but is not another valued object reference.\n" + 
-                    "The type \"" + newRef.class.getName + "\" is not supported.", valuedObjectReference, true)
+                    "\" exists, but " + 
+                    "the type \"" + newRef.class.getName + "\" is not supported.", valuedObjectReference, true)
             }
         }
+    }
+    
+    protected def void replaceReferenceWithLiteral(ValuedObjectReference valuedObjectReference, Value value) {
+        val valuedObject = valuedObjectReference.valuedObject
+        if (replacedWithLiterals.contains(valuedObject)) return;
+        val oldDeclaration = valuedObject.variableDeclaration
+        val newDeclaration = createVariableDeclaration(oldDeclaration.type)
+        (oldDeclaration.eContainer as Scope).declarations += newDeclaration
+        newDeclaration.valuedObjects += valuedObject
+        valuedObject.initialValue = value.copy   
+        replacedWithLiterals += valuedObject
     }
     
     protected dispatch def void replaceReferences(OperatorExpression operatorExpression, Replacements replacements) {
@@ -196,9 +224,23 @@ class Reference extends SCChartsProcessor {
         if (newRef != null) {
             if (newRef instanceof ValuedObjectReference) { 
                 assignment.valuedObject = (newRef as ValuedObjectReference).valuedObject
-                for (index : assignment.indices) {
-                    index.replaceReferences(replacements)
-                }     
+                if (assignment.indices.empty && !newRef.indices.empty) {
+                    // Array indices were bound to a scalar. Add the right indices.
+                    for (index : newRef.indices) {
+                        if (index instanceof Value) {
+                            assignment.indices += index.copy  
+                        } else {
+                            val vor = index.copy
+                            vor.replaceReferences(replacements)
+                            assignment.indices += vor
+                        } 
+                    }
+                } else {
+                    // The assign already assigned to an array. Just fix the references.
+                    for (index : assignment.indices) {
+                        index.replaceReferences(replacements)
+                    }     
+                }
             } else {
                 environment.errors.add("A binding for the valued object \"" + assignment.valuedObject.name + 
                     "\" in an assignment exists, but is not another valued object.\n" + 
@@ -208,7 +250,7 @@ class Reference extends SCChartsProcessor {
     }
     
     protected dispatch def void replaceReferences(Emission emission, Replacements replacements) {
-        emission.newValue.replaceReferences(replacements)
+        emission.newValue?.replaceReferences(replacements)
         
         val newRef = replacements.peek(emission.valuedObject)
         if (newRef != null) {

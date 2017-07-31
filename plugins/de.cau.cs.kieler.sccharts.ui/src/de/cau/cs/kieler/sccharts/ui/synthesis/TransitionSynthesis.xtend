@@ -91,10 +91,12 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             }
         };
         
-        transition.getCommentAnnotations.forEach[
-            edge.addLabel(it.values.head, 
-                COMMENT_BACKGROUND_GRADIENT_2.color)
-        ]     
+        if (SHOW_COMMENTS.booleanValue) {
+            transition.getCommentAnnotations.forEach[
+                edge.addLabel(it.values.head, 
+                    COMMENT_BACKGROUND_GRADIENT_2.color)
+            ]
+        }     
 
         // Add Label
         val label = new StringBuilder();

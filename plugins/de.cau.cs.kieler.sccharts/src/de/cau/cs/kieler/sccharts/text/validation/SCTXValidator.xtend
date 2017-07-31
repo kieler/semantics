@@ -482,10 +482,11 @@ class SCTXValidator extends AbstractSCTXValidator {
             var implicitMessage = ""
             for (binding : bindings) {
                 if (binding.errors > 0) {
-                    errorMessage += binding.errorMessages.join("\n")
+                    errorMessage = binding.errorMessages.join("\n")
                 }
                 if (binding.type == BindingType.IMPLICIT) {
                     implicitMessage += binding.targetValuedObject.name + ", "
+                    implicitMessage.replaceFirst(", $", "")
                 }
             }
             
