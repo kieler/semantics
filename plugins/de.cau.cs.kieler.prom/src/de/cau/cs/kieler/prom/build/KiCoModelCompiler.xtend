@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import de.cau.cs.kieler.prom.ModelImporter
@@ -30,7 +31,10 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.Collections
 import java.util.List
+import java.util.Observable
+import java.util.Observer
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
@@ -167,6 +171,10 @@ class KiCoModelCompiler extends ModelCompiler {
         }
     }
     
+    private def IProject getProject() {
+        return compiledFile?.project
+    }
+    
     private def String getMessages(MessageObjectReferences messageObjectReferences) {
         return messageObjectReferences.map[messageObject |
                      if (messageObject.exception != null) {
@@ -183,9 +191,40 @@ class KiCoModelCompiler extends ModelCompiler {
     }
     
     private def CompilationContext compileWithKiCo(EObject model) {
-        val compilationSystemID = compilationSystem.stringValue
-        val context = Compile.createCompilationContext(compilationSystemID, model)
+        val compilationSystemFile = project?.getFile(compilationSystem.stringValue)
+        var CompilationContext context
+        if(compilationSystemFile != null && compilationSystemFile.exists) {
+            val system = ModelImporter.load(compilationSystemFile)
+            if(system != null && system instanceof de.cau.cs.kieler.kicool.System) {
+                context = Compile.createCompilationContext(system as de.cau.cs.kieler.kicool.System, model)
+            } else {
+                throw new Exception("Compilation system could not be loaded from resource '"+compilationSystemFile+"'")
+            }
+        } else {
+            val compilationSystemID = compilationSystem.stringValue
+            context = Compile.createCompilationContext(compilationSystemID, model)
+        }
         context.startEnvironment.setProperty(Environment.INPLACE, false)
+        // Add observer to update the progress monitor
+        if(monitor != null) {
+            context.addObserver(new Observer() {
+                override update(Observable o, Object arg) {
+                    val context = o as CompilationContext
+                    if(context != null) {
+                        if(arg instanceof ProcessorStart) {
+                            val currentProcessor = arg.processorInstance
+                            val currentProcessorIndex = context.processorInstancesSequence.indexOf(currentProcessor)
+                            val processorCount = context.processorInstancesSequence.size
+                            monitor.subTask("Compiling '"+compiledFile.name+"' \n"
+                                          + "Starting processor "+(currentProcessorIndex+1)+"/"+processorCount+": "
+                                          + "'"+currentProcessor.name+"'"
+                            )
+                        }
+                    }
+                }
+            })
+        }
+        // Compile the model
         context.compile
         return context
     }
@@ -214,14 +253,14 @@ class KiCoModelCompiler extends ModelCompiler {
 
     private def void saveCode(String code, IFile targetFile) {
         // Save generated code to file, possibly using a target template
-        val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate.stringValue, compiledFile.project)
+        val resolvedTargetTemplate = PromPlugin.performStringSubstitution(outputTemplate.stringValue, project)
         if (resolvedTargetTemplate.isNullOrEmpty) {
             val inputStream = new StringInputStream(code)
             PromPlugin.createResource(targetFile, inputStream, true)
         } else {
             // Inject compilation result into target template
             val modelName = Files.getNameWithoutExtension(compiledFile.name)
-            val generator = new TemplateManager(compiledFile.project)
+            val generator = new TemplateManager(project)
             val wrapperCode = generator.processTemplate(resolvedTargetTemplate, 
                 #{TemplateManager.KICO_GENERATED_CODE_VARIABLE -> code,
                   TemplateManager.MODEL_NAME_VARIABLE -> modelName})

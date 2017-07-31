@@ -30,6 +30,9 @@ class ColorAnimation extends AnimationHandler {
     public val fillOpacity = new ConfigurableAttribute("fillOpacity")
     public val strokeOpacity = new ConfigurableAttribute("strokeOpacity")
     
+    new() {
+    }
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
         initialize
