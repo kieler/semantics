@@ -64,6 +64,7 @@ import java.util.HashSet
 import de.cau.cs.kieler.cview.ui.FilterDialog
 
 import de.cau.cs.kieler.cview.klighd.OpenEditorAction import de.cau.cs.kieler.cview.CViewPlugin
+import org.eclipse.swt.widgets.Display
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -82,6 +83,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static boolean showFunctions = false;
 
     public static DiagramSynthesis instance = null;
+    
+    public static int lastThread = 0
     
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
@@ -290,8 +293,20 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         if (selectedExpandLevel != EXPANDED_SLIDER.intValue) {
             selectedExpandLevel = EXPANDED_SLIDER.intValue
             if (!FLATTEN_HIERARCHY.booleanValue) {
-                CViewPlugin.refreshCView(true)
-                return null;            
+                        Display.getDefault().asyncExec(new Runnable() {
+                            override run() {
+                                lastThread++
+                                val threadId = lastThread
+                                Thread.sleep(150);
+                                if (threadId == lastThread) {
+                                        // If this is still the last thread, then do
+                                        // refresh again. Otherwise the last thread will
+                                        // do this
+                                        CViewPlugin.refreshCView(true)
+                                }
+                            }
+                        }); 
+                //return null;            
             }
         }
 

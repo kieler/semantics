@@ -26,7 +26,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.controller">
       <controller
-            class="de.cau.cs.kieler.cview.KLighDController">
+            class="DISABLED  de.cau.cs.kieler.cview.KLighDController">
       </controller>
    </extension>
    <extension
