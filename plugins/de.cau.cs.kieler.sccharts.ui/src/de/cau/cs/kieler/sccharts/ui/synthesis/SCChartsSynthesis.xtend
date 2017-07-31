@@ -81,9 +81,17 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
         
         // Add categories options
         options.addAll(APPEARANCE, DATAFLOW, LAYOUT, DEBUGGING)
+        
+        // General options
         options.add(SHOW_ALL_SCCHARTS)
         options.add(USE_KLAY)
+        
+        // Subsynthesis options
+        options.addAll(stateSynthesis.displayedSynthesisOptions)
+        options.addAll(transitionSynthesis.displayedSynthesisOptions)
+        options.addAll(controlflowSynthesis.displayedSynthesisOptions)
         options.addAll(dataflowSynthesis.displayedSynthesisOptions)
+        options.addAll(commentSynthesis.displayedSynthesisOptions)
         
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -60,6 +61,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension DataflowRegionSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
+    
+    /** Scope call parameters synthesis option */
+    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Show binding parameters", true).setCategory(GeneralSynthesisOptions::APPEARANCE)
+    
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(SHOW_BINDINGS)
+    }
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state);
@@ -120,8 +128,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                         node.addMacroStateLabel(
                             state.serializeHR + " @ "
                             + (if (state.reference.scope != null) (state.reference.scope as State).serializeHR else "UnresolvedReference")
-                            // TODO make optional since long parameter lists are too large in the diagram
-                            // + state.reference.parameters.serializeHRParameters
+                            + (if (SHOW_BINDINGS.booleanValue) state.reference.parameters.serializeHRParameters else "")
                             ).associateWith(state)
                     case state.isMacroState:
                         node.addMacroStateLabel(state.serializeHR.toString).associateWith(state)
