@@ -83,6 +83,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     override generate() {
         var nodes = newLinkedList => [ it += scg.nodes.head ]
         conditionalStack.clear
+        val processedNodes = <Node> newHashSet
         
         // Iterate through all nodes. 
         // However, if the last node was already the actual node, then skip it, because
@@ -91,7 +92,13 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         var Node lastNode = null
         while(!nodes.empty) {
             val node = nodes.pop
-            if (node != lastNode) node.generate(nodes)
+            if (processedNodes.contains(node)) {
+                System.err.println("The code generation tries to serialize node " + node + "." + 
+                    "However, that node was already processed. How did that happen?")
+            } else {
+                if (node != lastNode) node.generate(nodes)
+            }
+            processedNodes += node
             lastNode = node
         }
     }
@@ -110,6 +117,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         indent(conditionalStack.size + 1)
         valuedObjectPrefix = struct.getVariableName + "->"
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+        println("Serializing " + assignment.serializeHR)
         code.append(assignment.serializeHR).append(";\n")
         
         // Handle pre variable if necessary.
