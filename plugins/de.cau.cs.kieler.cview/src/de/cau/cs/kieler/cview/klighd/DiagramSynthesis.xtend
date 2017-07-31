@@ -288,8 +288,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         if (selectedExpandLevel != EXPANDED_SLIDER.intValue) {
             selectedExpandLevel = EXPANDED_SLIDER.intValue
-            CViewPlugin.refreshCView(true)
-            return null;            
+            if (!FLATTEN_HIERARCHY.booleanValue) {
+                CViewPlugin.refreshCView(true)
+                return null;            
+            }
         }
 
         val root = model.createNode().associateWith(model);
