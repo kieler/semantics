@@ -78,7 +78,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KColorExtensions
     @Inject extension CViewModelExtensions
 
-    public static int selectedExpandLevel = 1;
 
     public static boolean showFunctions = false;
 
@@ -92,6 +91,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final int DEFAULT_EXPANDED_VALUE = 2;
     public static final int MAX_EXPANDED_VALUE = 7;
     public static final int MIN_EXPANDED_VALUE = 1;
+
+    public static int selectedExpandLevel = DEFAULT_EXPANDED_VALUE;
 
     /** Option for enabling adaptive zoom */
     public static final SynthesisOption EXPANDED_SLIDER = SynthesisOption.createRangeOption("Expanded Layers",
@@ -583,21 +584,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return returnPort
         }
 
-//    def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode) {
-//        val edge = createEdge().associateWith(connection)
-//        edge.addPolyline(2).addHeadArrowDecorator();
-//        edge.source = srcNode
-//        edge.target = dstNode
-//        // Basic spline
-//        edge.addConnectionSpline();
-//        edge.setGrayStyle
-//        // Add Label
-//        edge.addLabel(connection.label).associateWith(connection);
-//
-//        // Add the connection
-//        srcNode.outgoingEdges.add(edge)
-//    // srcNode.port.edges.add(edge)
-//    }
+
         def KNode transformItem(Component item, int depth) {
             if (item.isFile) {
                 if (SHOW_FUNCTIONS.booleanValue) {
@@ -820,197 +807,5 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             ]
             return label;
         }
-
-//        val poly = kPort.addPolygon()
-//        poly.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
-//        poly.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
-//        poly.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
-//        poly.background = "black".color;
-//        poly.lineWidth = 2
-//        poly.lineCap = LineCap.CAP_ROUND;
-//        poly.lineJoin = LineJoin.JOIN_ROUND;
-//        poly.selectionBackground = "gray".color;
-//        srcNode.ports.add(kPort)
-//        kPort.edges.add(edge)
-//        kPort.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.WEST)
-// var Component deeperComponent = null
-//          var Component deeperSrc = null
-//          var Component deeperDst = null
-//          var boolean sourceDeeper = false
-//          var int depthToReach = 0
-//          if (depthSrc > depthDst) { // source is deeper
-//              deeperComponent = src
-//              depthToReach = depthDst
-//              deeperSrc = connection.src
-//              deeperDst = connection.dst
-//              sourceDeeper = true
-//          } else { // dst is deeper
-//              deeperComponent = dst
-//              depthToReach = depthSrc
-//              deeperSrc = connection.dst
-//              deeperDst = connection.src
-//          }
-//          while (deeperComponent.depth > depthToReach) {
-//              // Connect deeperComponent's parent to deeperComponent
-//              val parentDepperComponent = deeperComponent.parent
-//              val port = deeperComponent.getPort(deeperSrc)
-//              val pport = parentDepperComponent.getPort(deeperDst)
-//              
-//              var srcNode = port
-//              var dstNode = pport
-//              if (!sourceDeeper) {
-//                  srcNode = pport
-//                  dstNode = port
-//              }
-//              addSimpleConnection(connection, srcNode.node, dstNode.node)
-//              
-//              deeperComponent = parentDepperComponent
-//              if (sourceDeeper) {
-//                  srcComponent = deeperComponent
-//              } else {
-//                  dstComponent = deeperComponent
-//              }
-//          }
-// public static int lastExpandedValue = DEFAULT_EXPANDED_VALUE;
-// public static boolean changedExpandedValue = false;
-//        label.getFirstText.setAsExpandedView
-//        val labelCollapsed = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
-//            KlighdConstants.DEFAULT_FONT_NAME);
-//        labelCollapsed.associateWith(item)
-//        labelCollapsed.getFirstText.setAsCollapsedView
-//    def static <T extends KRendering> T setAsExpandedView(T krendering) {
-//        krendering.getProperties().removeKey(KlighdProperties.COLLAPSED_RENDERING);
-//        krendering.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
-//        return krendering;
-//    }
-//
-//    def static <T extends KRendering> T setAsCollapsedView(T krendering) {
-//        krendering.getProperties().removeKey(KlighdProperties.EXPANDED_RENDERING);
-//        krendering.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
-//        return krendering;
-//    }
-//        (childNodeOuter.class.getMethod("setExpanded", boolean).invoke(childNodeOuter, false))
-//        DiagramController.
-//        allNodes.add(childNodeOuter)
-//            val childArea = item.createNode().associateWith(item)
-//            val areaRect = childArea.addRoundedRectangle(4, 4, 1)
-//            childNode.children.add(childArea)
-//            childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-//                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-//            childArea.addInsideTopCenteredNodeLabel("child area", KlighdConstants.DEFAULT_FONT_SIZE,
-//                KlighdConstants.DEFAULT_FONT_NAME).associateWith(item);
-//            areaRect.background = "WHITE".color;
-//            (item as Folder).children.forEach[s|childArea.children += transformItem(s)]
-//            // Expanded
-//            childNode.addMacroFigure => [
-//                setAsExpandedView
-//                associateWith(item)
-//                it.addRegionFigure.addChildArea(itemLabel.nullOrEmpty)
-//                addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-//            ]
-//
-//            // Collapsed
-//            childNode.addDefaultFigure => [
-//                //.getNode().addRegionFigure
-//                setAsCollapsedView
-//                associateWith(item)
-//                addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-//            ]
-//        val childNodeInner = item.children.createNode().associateWith(item);
-//        val rect2 = childNodeInner.addRoundedRectangle(4, 4, 1);
-//        rect2.foreground =  "BLUE".color;
-//        if (!item.hieararchical) {
-//            
-//            // Hierarchy
-//            childNode.addMacroFigure
-////            childNode.addInsideTopCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
-////                KlighdConstants.DEFAULT_FONT_NAME).associateWith(item);
-//        } else {
-//            // No further files
-//            childNode.addDefaultFigure
-////            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
-////                KlighdConstants.DEFAULT_FONT_NAME);
-////            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-////                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-//        }
-//        rect.background = "YELLOW".color
-//        for (subitem : item.children) {
-//            if (subitem.parent == null) {
-//            }
-//        }
-//    def KRectangle addRegionFigure(KNode node) {
-//        node.addRectangle() => [
-//            background = "WHITE".color;
-//            foreground = "GRAY".color;
-//            lineWidth = 1;
-//            setSurroundingSpace(2, 0);
-//        ]
-//    }
-//
-//    def addChildArea(KContainerRendering container, boolean useHeaderSpace) {
-//        container.addChildArea() => [
-//            if (useHeaderSpace) {
-//                setAreaPlacementData().from(LEFT, -2, 0, TOP, -2, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-//            } else {
-//                setAreaPlacementData().from(LEFT, -2, 0, TOP, 8, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
-//            }
-//        ]
-//    }
-//    def KText addButtonTop(KContainerRendering container, String text) {
-//        container.addText(text) => [
-//            foreground = "BLACK".color;
-//            fontSize = 10;
-//            val size = estimateTextSize;
-//            setPointPlacementData(LEFT, 3, 0, TOP, 1, 0, H_CENTRAL, V_TOP, 8, 8, size.width, size.height);
-//        ]
-//    }
-//
-//    def KText addButtonCenter(KContainerRendering container, String text) {
-//        container.addText(text) => [
-//            foreground = "BLACK".color;
-//            fontSize = 10;
-//            val size = estimateTextSize;
-//            setPointPlacementData(LEFT, 3, 0, TOP, 1, 0, H_CENTRAL, V_CENTRAL, 8, 8, size.width, size.height);
-//        ]
-//    }
-//        /**
-//     * Adds a button with text.
-//     */
-//    def KText addButton(KContainerRendering container, String text) {
-//        container.addText(text) => [
-//            foreground = "BLACK".color;
-//            fontSize = 10;
-//            val size = estimateTextSize;
-//            setPointPlacementData(LEFT, 3, 0, TOP, 1, 0, H_LEFT, V_TOP, 8, 8, size.width, size.height);
-//        ]
-//    }
-//    
-//    def KRoundedRectangle addMacroFigure(KNode node) {
-//        node.setMinimalNodeSize(34, 34); // same as default figure
-//        node.addRoundedRectangle(8, 8, 2) => [
-//            // Mark this figure as container for further content
-//            //setProperty(IS_CONTENT_CONTAINER, true);
-//            //setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
-//            //not? setBackground("YELLOW".color);
-//            foreground = "BLACK".color;
-//            background = "YELLOW".color;
-//            setGridPlacement(1);
-//        ]
-//    }    
-//    
-//    def KRoundedRectangle addDefaultFigure(KNode node) {
-//        node.setMinimalNodeSize(34, 34); // 2 x corner radius
-//        node.addRoundedRectangle(17, 17, 2) => [
-//            // Mark this figure as container for further content
-//            //setProperty(IS_CONTENT_CONTAINER, true);
-//            foreground = "BLACK".color;
-//            background = "YELLOW".color;
-//        ]
-//    }    
-//    val static Bounds estimateTextSize(KText kText) {
-//        return estimateTextSize(kText, kText.getText());
-//    }
-//    public static val List<KNode> allNodes = newArrayList
-//    public static val List<KChildAreaNode> allChildAreas = newArrayList
     }
     

@@ -24,14 +24,14 @@ import org.eclipse.emf.ecore.EObject
 import java.util.Set
 import java.util.ArrayList
 import java.util.HashSet
-import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
+import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
 
 /**
  * @author cmot
  * 
  */
-class ECidsAnalysisHook extends AbstractAnalysisHook implements IAnalysisHook {
+class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
 
@@ -108,6 +108,6 @@ class ECidsAnalysisHook extends AbstractAnalysisHook implements IAnalysisHook {
     }
 
     override getId() {
-        return "de.cau.cs.kieler.cview.ecids";
+        return "de.cau.cs.kieler.cview.ecids.oal";
     }
 }

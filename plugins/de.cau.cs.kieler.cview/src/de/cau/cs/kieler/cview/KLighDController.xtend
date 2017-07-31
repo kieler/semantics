@@ -42,7 +42,7 @@ class KLighDController extends AbstractKLighDController {
     @Inject extension CViewModelExtensions
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
-    
+
     def int countModel(CViewModel model, Object element) {
         var i = 1;
         var filePath = getFilePath(element);
@@ -278,11 +278,12 @@ class KLighDController extends AbstractKLighDController {
                     }
                 }
             }
-            // Wrapup
-            for (connectionHook : connectionHooks) {
-                if (CViewPlugin.isEnabled(connectionHook.id)) {
-                    connectionHook.wrapup(model);
-                }
+        }
+
+        // Wrapup
+        for (connectionHook : connectionHooks) {
+            if (CViewPlugin.isEnabled(connectionHook.id)) {
+                connectionHook.wrapup(model);
             }
         }
 

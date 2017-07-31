@@ -20,6 +20,7 @@ import de.cau.cs.kieler.cview.model.cViewModel.Connection
 import java.util.List
 import de.cau.cs.kieler.cview.model.cViewModel.CViewModel
 import java.util.Set
+import java.util.ArrayList
 
 /**
  * @author cmot
@@ -29,6 +30,146 @@ class CViewModelExtensions {
 
     EObject getParent;
     
+    //------------------------------------------------------------------------
+
+    def String removeCommentsAll(String text) {
+        return text.removeCommentsComplex.removeCommentsSimple
+    }
+
+    def String removeCommentsSimple(String text) {
+        if (text == null) {
+            return null
+        }
+        var returnString = ""
+        var found = true
+        var comment = false  // indicates an active comment
+        var startIndex = 0
+        while (found) {
+            found = false
+            val endIndexNoComment = text.indexOf("//", startIndex)
+            val endIndexComment = text.indexOf("\n", startIndex)
+            if (endIndexNoComment > -1 && !comment) {
+                found = true
+                returnString += text.substring(startIndex, endIndexNoComment)
+                comment = true
+                startIndex = endIndexNoComment + 2
+            } else if (endIndexComment > -1 && comment) {
+                found = true
+                comment = false
+                startIndex = endIndexComment + 1
+            }
+            else {
+                // Append the rest
+                returnString += text.substring(startIndex)
+            }
+        } 
+        return returnString 
+    }
+    
+    def String removeCommentsComplex(String text) {
+        if (text == null) {
+            return null
+        }
+        var returnString = ""
+        var found = true
+        var comment = false  // indicates an active comment
+        var startIndex = 0
+        while (found) {
+            found = false
+            val endIndexNoComment = text.indexOf("/*", startIndex)
+            val endIndexComment = text.indexOf("*/", startIndex)
+            if (endIndexNoComment > -1 && !comment) {
+                found = true
+                returnString += text.substring(startIndex, endIndexNoComment)
+                comment = true
+                startIndex = endIndexNoComment + 2
+            } else if (endIndexComment > -1 && comment) {
+                found = true
+                comment = false
+                startIndex = endIndexComment + 2
+            }
+            else {
+                // Append the rest
+                returnString += text.substring(startIndex)
+            }
+        } 
+        return returnString 
+    }
+
+    //------------------------------------------------------------------------
+
+    def List<String> parseByKey(String text, String keyStart, String keyEnd, String[] filterChars, boolean trim) {
+        val ArrayList<String> returnList = new ArrayList
+        if (text == null) {
+            return returnList
+        }
+        
+        val items = text.split(keyStart);
+        
+        if (!items.nullOrEmpty) {
+            for (item : items) {
+                val endIndex = item.indexOf(keyEnd);
+                if (endIndex > -1) {
+                    var itemString = item.substring(0, endIndex);
+                    if (trim) {
+                        itemString = itemString.trim
+                    }
+                    if (!filterChars.nullOrEmpty) {
+                        for (filterChar : filterChars) {
+                            itemString = itemString.replace(filterChar, "");
+                        }
+                    }
+                    returnList.add(itemString);
+                }
+            }
+        }
+        
+        return returnList
+    } 
+
+
+    //------------------------------------------------------------------------
+    
+    def boolean hasParentContains(Component component, String parentNamePart) {
+        if (component.parent == null) {
+            return false
+        }
+        if (component.parent.name.contains(parentNamePart)) {
+            return true
+        }
+        return component.parent.hasParentContains(parentNamePart)
+    }
+
+    def boolean hasParentStartsWith(Component component, String parentNamePart) {
+        if (component.parent == null) {
+            return false
+        }
+        if (component.parent.name.startsWith(parentNamePart)) {
+            return true
+        }
+        return component.parent.hasParentStartsWith(parentNamePart)
+    }
+
+    def boolean hasParentEndsWith(Component component, String parentNamePart) {
+        if (component.parent == null) {
+            return false
+        }
+        if (component.parent.name.endsWith(parentNamePart)) {
+            return true
+        }
+        return component.parent.hasParentEndsWith(parentNamePart)
+    }
+
+    def boolean hasParent(Component component, String parentName) {
+        if (component.parent == null) {
+            return false
+        }
+        if (component.parent.name.equals(parentName)) {
+            return true
+        }
+        return component.parent.hasParent(parentName)
+    }
+
     def Component rootComponent(Component component) {
         if (component.parent != null) {
             return rootComponent(component.parent)
@@ -100,7 +241,6 @@ class CViewModelExtensions {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
     def Connection createConnection() {
         return (CViewModelFactory.eINSTANCE.createConnection)
     }
@@ -124,7 +264,6 @@ class CViewModelExtensions {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
     def Component createFile() {
         return (CViewModelFactory.eINSTANCE.createComponent.setFile)
     }

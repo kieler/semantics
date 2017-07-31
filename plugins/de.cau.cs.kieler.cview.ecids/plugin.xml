@@ -4,7 +4,10 @@
    <extension
          point="de.cau.cs.kieler.cview.analysis">
       <connectionHook
-            class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisHook">
+            class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisOAL">
+      </connectionHook>
+      <connectionHook
+            class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM">
       </connectionHook>
    </extension>
    <extension
