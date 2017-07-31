@@ -215,7 +215,8 @@ class KiCoModelCompiler extends ModelCompiler {
                             val currentProcessor = arg.processorInstance
                             val currentProcessorIndex = context.processorInstancesSequence.indexOf(currentProcessor)
                             val processorCount = context.processorInstancesSequence.size
-                            monitor.subTask("Starting processor "+(currentProcessorIndex+1)+"/"+processorCount+": "
+                            monitor.subTask("Compiling '"+compiledFile.name+"' \n"
+                                          + "Starting processor "+(currentProcessorIndex+1)+"/"+processorCount+": "
                                           + "'"+currentProcessor.name+"'"
                             )
                         }
