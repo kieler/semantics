@@ -1,0 +1,41 @@
+# Set default line ending behavior
+* text=auto
+
+# Explicitly declare text files we want to always be normalized and converted
+# to native line endings on checkout
+*.java       text
+*.xml        text
+*.xtext      text
+*.xtend      text
+*.properties text
+*.html       text
+*.ini        text
+
+# Binary files which must not be converted
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.tif binary
+*.tiff binary
+*.ico binary
+*.icns binary
+*.svg binary
+*.psd binary
+*.pdf binary
+*.jar binary
+*.class binary
+*.dll binary
+*.dll64 binary
+*.dylib binary
+*.dylib64 binary
+*.so binary
+*.so64 binary
+*.exe binary
+*.execution binary
+*.odt binary
+*.odg binary
+*.out binary
+*.pack binary
+*.zip binary
