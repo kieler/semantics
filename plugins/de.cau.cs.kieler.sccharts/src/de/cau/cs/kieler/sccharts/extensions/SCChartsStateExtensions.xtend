@@ -73,7 +73,7 @@ class SCChartsStateExtensions {
     }
 
     def State setFinal(State state) {
-        state => [ final = false ]
+        state => [ final = true ]
     }
 
     def State setNotFinal(State state) {
