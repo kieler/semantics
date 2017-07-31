@@ -3,13 +3,10 @@
 <schema targetNamespace="de.cau.cs.kieler.prom" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.prom" id="wrapperCodeAnnotationAnalyzer" name="WrapperCodeAnnotationAnalyzer"/>
+         <meta.schema plugin="de.cau.cs.kieler.prom" id="modelAnalyzer" name="modelAnalyzer"/>
       </appinfo>
       <documentation>
-         This extension point is used to add implementations which analyze an EObject and return the defined wrapper code annotations.
-
-The analysis is done when starting a launch configuration for KiCo compilation.
-The wrapper code annotation data is then used to generate wrapper code for the model as part of the launch process.
+         This extension point is used to add implementations which analyze an EObject and return macro call data for code generation.
       </documentation>
    </annotation>
 
@@ -60,10 +57,10 @@ The wrapper code annotation data is then used to generate wrapper code for the m
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  A fully qualified name of the java class implementing de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
+                  A fully qualified name of the java class implementing ModelAnalyzer
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.prom.templates.ModelAnalyzer"/>
                </appinfo>
             </annotation>
          </attribute>

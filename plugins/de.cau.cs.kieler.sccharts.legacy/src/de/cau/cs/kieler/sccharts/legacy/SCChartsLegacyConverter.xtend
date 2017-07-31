@@ -246,6 +246,7 @@ class SCChartsLegacyConverter {
                             } else {
                                 expression = createValuedObjectReference => [
                                     valuedObject = (bind.key.actual?:(bind.key.formal)).convert as de.cau.cs.kieler.kexpressions.ValuedObject
+                                    indices.addAll(bind.key.indices.map[convert as Expression])
                                 ]
                             }
                             if (state.declarations.head.valuedObjects.exists[name.equals(bind.value)]) {

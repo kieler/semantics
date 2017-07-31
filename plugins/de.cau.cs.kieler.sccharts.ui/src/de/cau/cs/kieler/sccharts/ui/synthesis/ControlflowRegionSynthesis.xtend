@@ -124,9 +124,11 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         val returnNodes = <KNode> newArrayList(node)
         
-        region.getCommentAnnotations.forEach[
-            node.children += it.transform                
-        ]                        
+        if (SHOW_COMMENTS.booleanValue) {
+            region.getCommentAnnotations.forEach[
+                node.children += it.transform                
+            ]
+        }                     
 
         return returnNodes
     }

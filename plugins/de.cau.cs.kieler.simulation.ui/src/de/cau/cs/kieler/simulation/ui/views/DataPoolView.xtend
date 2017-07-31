@@ -25,6 +25,7 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.simulation.handlers.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.ui.SimulationUiPlugin
+import de.cau.cs.kieler.simulation.ui.toolbar.SubTicksEnabledPropertyTester
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -42,7 +43,9 @@ import org.eclipse.swt.graphics.Image
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
+import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.part.ViewPart
+import org.eclipse.ui.services.IEvaluationService
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -58,6 +61,9 @@ class DataPoolView extends ViewPart {
     public static val simulationListener = createSimulationListener
     
     @Accessors(PUBLIC_GETTER)
+    static var boolean subTicksEnabled
+    
+    @Accessors(PUBLIC_GETTER)
     private var TableViewer viewer
     
     private var TableViewerColumn variableColumn
@@ -69,9 +75,6 @@ class DataPoolView extends ViewPart {
     private var LabelContribution tickInfo
     
     private var DataPoolFilter filter
-    
-    @Accessors(PUBLIC_GETTER)
-    var boolean subTicksEnabled
     
     private var Map<String, TraceMismatchEvent> traceMismatches = newHashMap
     
@@ -153,14 +156,17 @@ class DataPoolView extends ViewPart {
         mgr.add(new Action("Enable Sub Ticks") {
             override run() {
                 subTicksEnabled = !subTicksEnabled
-                // TODO: Somehow set sub tick button visiblity based on this variable
                 if(subTicksEnabled) {
                     setText("Disable Sub Ticks")
                 } else {
                     setText("Enable Sub Ticks")
                 }
+                
+                // Trigger re-evaluation of the property tester
+                // that controls the visibility of the toolbar button
+                SubTicksEnabledPropertyTester.update
             }
-        });
+        })
     }
     
     private def void createToolbar() {
@@ -439,7 +445,13 @@ class DataPoolView extends ViewPart {
     private def void updateTickInfo(SimulationEvent e) {
         var String txt = null
         if(e.type != SimulationEventType.STOP) {
-            txt = "Tick #"+SimulationManager.instance.currentMacroTickNumber
+            val simMan = SimulationManager.instance
+            val macroTick = simMan.currentMacroTickNumber
+            val subTick = simMan.currentSubTickNumber
+            txt = "Tick #"+macroTick
+            if(subTick > 0) {
+                txt += "," + subTick
+            }
             if(SimulationManager.instance.positionInHistory > 0) {
                 txt += " (-" + SimulationManager.instance.positionInHistory + ")"
             }

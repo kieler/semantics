@@ -123,16 +123,16 @@ abstract class SimulationCompiler extends Configurable {
         // Wait until the process finished
         var Exception exception
         if(!p.waitFor(timeout.intValue, TimeUnit.SECONDS)) {
-            exception = new Exception("Simulation compiler took to long "
-                                     + "(timeout: "+timeout.intValue+"s, "
-                                     + "command: " + pBuilder.command + ", "
+            exception = new Exception("Simulation compiler took to long\n"
+                                     + "(timeout: "+timeout.intValue+"s,\n"
+                                     + "command: " + pBuilder.command + ",\n"
                                      + "in directory '" + pBuilder.directory + "')\n\n"
                               + "Please check the KIELER Console output.")
         }
         // Check that there was no error
         if(exception == null && p.exitValue != 0) {
-            exception = new Exception("Simulation compilation had issues: " + p.exitValue + " "
-                              + "(command: " + pBuilder.command + ", "
+            exception = new Exception("Simulation compilation had issues: " + p.exitValue + "\n"
+                              + "(command: " + pBuilder.command + ",\n"
                               + "in directory '" + pBuilder.directory + "')\n\n"
                               + "Please check the KIELER Console output.")
         }

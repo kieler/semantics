@@ -42,4 +42,8 @@ class SimulationToolbarButton extends AbstractHandler {
     public def SimulationManager getSimulation() {
         return SimulationManager.instance
     }
+    
+    public def void setEnabled(boolean value) {
+        baseEnabled = value
+    }
 }

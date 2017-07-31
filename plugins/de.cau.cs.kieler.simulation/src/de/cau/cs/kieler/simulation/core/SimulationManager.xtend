@@ -263,6 +263,21 @@ class SimulationManager extends Configurable {
     }
     
     /**
+     * Returns the number of the current sub tick within the current macro tick to be exectued.
+     */
+    public def int getCurrentSubTickNumber() {
+        if(currentState != null) {
+            if(actions.size > 0) {
+                return currentState.actionIndex % actions.size
+            } else {
+                return 0
+            }
+        } else {
+            return 0
+        }
+    }
+    
+    /**
      * Adds a data handler
      */
     private def void addHandler(DataHandler handler) {
