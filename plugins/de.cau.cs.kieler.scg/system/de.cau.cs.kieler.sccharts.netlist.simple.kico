@@ -3,6 +3,7 @@ system de.cau.cs.kieler.sccharts.netlist.simple
 	label "Netlist-based Compilation (simple)"
 
 de.cau.cs.kieler.sccharts.processors.transformators.reference	
+de.cau.cs.kieler.sccharts.processors.transformators.const
 de.cau.cs.kieler.sccharts.processors.transformators.signal
 de.cau.cs.kieler.sccharts.processors.transformators.^pre
 de.cau.cs.kieler.sccharts.processors.transformators.suspend
