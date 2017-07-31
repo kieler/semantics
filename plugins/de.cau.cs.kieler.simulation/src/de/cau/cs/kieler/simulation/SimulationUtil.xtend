@@ -339,17 +339,17 @@ class SimulationUtil {
     
     private static def void createResourcesForSimulation(IProject project) {
         // Create resources for simulation
-        val simTemplate = project.getFile("Simulation.ftl")
-        val snippetFolder = project.getFolder("snippets")
+        val simTemplate = project.getFile("CSimulation.ftl")
+        val assetsFolder = project.getFolder("assets")
         if(!simTemplate.exists) {
             // Create templates for simulation of C code
-            val simTemplatePlatformURI = "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/Simulation.ftl"
-            val createdFile = PromPlugin.initializeFile(project, "Simulation.ftl", simTemplatePlatformURI)
+            val simTemplatePlatformURI = "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/CSimulation.ftl"
+            val createdFile = PromPlugin.initializeFile(project, "assets/CSimulation.ftl", simTemplatePlatformURI)
             createdFile.project.refreshLocal(1, null)
         }
-        if(!snippetFolder.exists) {
+        if(!assetsFolder.exists) {
             val snippetTemplatePlatformURI = "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/SimulationSnippets.ftl"
-            val createdFile = PromPlugin.initializeFile(project, "snippets/SimulationSnippets.ftl", snippetTemplatePlatformURI)
+            val createdFile = PromPlugin.initializeFile(project, "assets/CSimulationSnippets.ftl", snippetTemplatePlatformURI)
             createdFile.project.refreshLocal(1, null)
         }
     }

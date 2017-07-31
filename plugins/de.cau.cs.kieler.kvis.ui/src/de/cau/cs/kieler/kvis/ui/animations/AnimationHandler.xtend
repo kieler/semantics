@@ -18,17 +18,19 @@ import de.cau.cs.kieler.kvis.kvis.AttributeMapping
 import de.cau.cs.kieler.kvis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kvis.ui.views.KVisView
 import de.cau.cs.kieler.prom.build.AttributeExtensions
+import de.cau.cs.kieler.prom.build.Configurable
 import de.cau.cs.kieler.prom.build.ConfigurableAttribute
 import de.cau.cs.kieler.simulation.core.DataPool
 import java.util.List
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
+import de.cau.cs.kieler.kvis.animation.IAnimationHandler
 
 /**
  * @author aas
  *
  */
-abstract class AnimationHandler {
+abstract class AnimationHandler extends Configurable implements IAnimationHandler {
     
     public val recursive = new ConfigurableAttribute("recursive", false)
     
@@ -50,13 +52,17 @@ abstract class AnimationHandler {
     @Extension
     protected SVGExtensions svgExtensions
     
-    public new(String svgElementId, Animation animation) {
-        this.svgElementId = svgElementId
-        this.animation = animation
+    public new() {
         // Initialize extension methods
         attributeExtensions = new AttributeExtensions
         kvisExtensions = new KVisExtensions
         svgExtensions = new SVGExtensions
+    }
+    
+    public new(String svgElementId, Animation animation) {
+        this()
+        this.svgElementId = svgElementId
+        this.animation = animation
     }
     
     /**
@@ -79,7 +85,7 @@ abstract class AnimationHandler {
         }
     }
     
-    public def void apply(DataPool pool) {
+    public override apply(DataPool pool) {
         // Only update the svg if the pool changed since last time
         if(pool == lastPool) {
             return

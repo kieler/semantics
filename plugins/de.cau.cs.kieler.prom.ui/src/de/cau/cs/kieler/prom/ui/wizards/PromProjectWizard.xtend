@@ -317,7 +317,9 @@ class PromProjectWizard extends Wizard implements INewWizard {
         }
         
         // Add Xtext nature to project (e.g. for SCCharts with cross-references)
-        newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
+        // Since the new sctx grammar, the Xtext nature is not longer required
+//        newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
+        
         // Add KiCo nature to project (e.g. for builder)
         newlyCreatedProject.addNature(KiCoNature.NATURE_ID)
         
