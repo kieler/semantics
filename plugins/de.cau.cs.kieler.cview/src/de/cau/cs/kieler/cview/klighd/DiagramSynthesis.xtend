@@ -63,7 +63,7 @@ import org.eclipse.elk.core.math.KVector
 import java.util.HashSet
 import de.cau.cs.kieler.cview.ui.FilterDialog
 
-import de.cau.cs.kieler.cview.klighd.OpenEditorAction 
+import de.cau.cs.kieler.cview.klighd.OpenEditorAction import de.cau.cs.kieler.cview.CViewPlugin
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -80,7 +80,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static int selectedExpandLevel = 1;
 
+    public static boolean showFunctions = false;
+
     public static DiagramSynthesis instance = null;
+    
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
@@ -251,9 +254,17 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     }
 
     override KNode transform(CViewModel model) {
+        
+        if (showFunctions != SHOW_FUNCTIONS.booleanValue) {
+            showFunctions = SHOW_FUNCTIONS.booleanValue
+            CViewPlugin.rebuildModelAndrefreshCView(true)
+            return null;
+        }
+        
+        
         instance = this
         connectedComponents.clear
-
+        
         // Ensure filter values are set
         FilterDialog.loadValues
         // Clear filter cache

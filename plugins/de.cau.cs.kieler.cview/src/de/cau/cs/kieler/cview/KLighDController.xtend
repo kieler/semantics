@@ -31,6 +31,7 @@ import com.google.inject.Inject
 import org.eclipse.cdt.core.model.ITranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
+import de.cau.cs.kieler.cview.klighd.DiagramSynthesis
 
 /**
  * @author cmot
@@ -41,7 +42,7 @@ class KLighDController extends AbstractKLighDController {
     @Inject extension CViewModelExtensions
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
-
+    
     def int countModel(CViewModel model, Object element) {
         var i = 1;
         var filePath = getFilePath(element);
@@ -132,7 +133,9 @@ class KLighDController extends AbstractKLighDController {
             model.components.add(file);
 
             // Add all functions to the file
-            fillFileWithFunctions(file, monitor)
+            if (DiagramSynthesis.showFunctions) {
+                fillFileWithFunctions(file, monitor)
+            }
 
             if (parent != null) {
                 file.parent = parent
@@ -166,8 +169,6 @@ class KLighDController extends AbstractKLighDController {
         }
     }
 
-
-
     def extractTooltip(String data) {
         // TODO: Make this available as an extension point for other plugins to contribute
         val iStart1 = data.indexOf("/*");
@@ -196,6 +197,10 @@ class KLighDController extends AbstractKLighDController {
         // val filePath = getFilePath(fileComponent.location);
         val filePath = fileComponent.location
         if (filePath != null) {
+            if (!((filePath.endsWith(".c") || filePath.endsWith(".h")))) {
+                return;
+            }
+            println("fillFileWithFunctions '" + filePath + "'")
             val content = readFile(filePath)
             fileComponent.rawdata = String.valueOf(content)
             val tooltip = extractTooltip(fileComponent.rawdata)

@@ -42,6 +42,8 @@ public class CommandHandler implements IHandler {
     }
 
     // -------------------------------------------------------------------------
+    private boolean oldShowFunctions = false;
+
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
