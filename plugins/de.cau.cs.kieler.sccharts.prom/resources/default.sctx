@@ -1,0 +1,8 @@
+scchart ${name} {
+
+  input bool I
+  output int O
+
+  initial state init
+    go to init if I do O++
+}

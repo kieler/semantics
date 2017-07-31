@@ -20,7 +20,7 @@ import de.cau.cs.kieler.prom.data.CommandData
 import de.cau.cs.kieler.prom.data.EnvironmentData
 import de.cau.cs.kieler.prom.data.FileData
 import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
-import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.templates.TemplateManager
 import de.cau.cs.kieler.prom.ui.UIExtensionLookupUtil
 import de.cau.cs.kieler.prom.ui.UIUtil
 import java.util.ArrayList
@@ -577,7 +577,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         targetTemplate.toolTipText = "Path to a template file for the compiled output.\n"
-        + "Use ${" + WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
+        + "Use ${" + TemplateManager.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
         
         // Create target directory control
         val comp = UIUtil.createComposite(group, 3)

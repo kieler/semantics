@@ -26,7 +26,7 @@ class SCChartsProjectWizard extends PromProjectWizard {
     override addPages(){
         super.addPages()
         
-        modelFileExtension = ".sct"
-        modelFileInitialContentURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
+        modelFileExtension = ".sctx"
+        modelFileInitialContentURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sctx"
     }
 }

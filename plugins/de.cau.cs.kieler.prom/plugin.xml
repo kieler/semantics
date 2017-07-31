@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/de.cau.cs.kieler.prom.environmentInitializer.exsd"/>
-   <extension-point id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer" schema="schema/de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer.exsd"/>
+   <extension-point id="modelAnalyzer" name="Model Analyzer" schema="schema/modelAnalyzer.exsd"/>
    <extension-point id="modelCompiler" name="ModelCompiler" schema="schema/modelCompiler.exsd"/>
    <extension-point id="simulationCompiler" name="SimulationCompiler" schema="schema/simulationCompiler.exsd"/>
    

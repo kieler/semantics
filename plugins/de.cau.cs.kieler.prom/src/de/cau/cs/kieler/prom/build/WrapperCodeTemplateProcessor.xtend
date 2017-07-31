@@ -15,7 +15,7 @@ package de.cau.cs.kieler.prom.build
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.PromPlugin
-import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
+import de.cau.cs.kieler.prom.templates.TemplateManager
 
 /**
  * @author aas
@@ -23,7 +23,6 @@ import de.cau.cs.kieler.prom.launch.WrapperCodeGenerator
  */
 class WrapperCodeTemplateProcessor extends TemplateProcessor {
     public val modelPath = new ConfigurableAttribute("modelFile")
-    public val snippetFolder = new ConfigurableAttribute("snippetFolder", "snippets")
     
     new() {
         super()
@@ -40,13 +39,13 @@ class WrapperCodeTemplateProcessor extends TemplateProcessor {
         // Get annotations in model
         val annotationDatas = newArrayList()
         val model = ModelImporter.load(modelFile)
-        WrapperCodeGenerator.getWrapperCodeAnnotationData(model, annotationDatas)
+        TemplateManager.getMacroCallData(model, annotationDatas)
         
         // Create wrapper code
         val name = Files.getNameWithoutExtension(templateFile.name)
-        val generator = new WrapperCodeGenerator(project, snippetFolder.stringValue)
+        val generator = new TemplateManager(project)
         val wrapperCode = generator.generateWrapperCode(templateFile.projectRelativePath.toOSString, annotationDatas,
-            #{WrapperCodeGenerator.MODEL_NAME_VARIABLE -> name} )
+            #{TemplateManager.MODEL_NAME_VARIABLE -> name} )
         
         // Save output
         val result = new FileGenerationResult

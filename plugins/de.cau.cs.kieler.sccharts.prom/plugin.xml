@@ -4,20 +4,6 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            canFinishEarly="false"
-            category="de.cau.cs.kieler.sccharts"
-            class="de.cau.cs.kieler.sccharts.prom.SCChartsFileWizard"
-            finalPerspective="de.cau.cs.kieler.Modeling"
-            hasPages="true"
-            icon="icons/sccharts_icon16.png"
-            id="de.cau.cs.kieler.sccharts.prom.sctWizard"
-            name="SCT File"
-            project="false">
-         <description>
-            Create a new SCT file.
-         </description>
-      </wizard>
-      <wizard
             category="de.cau.cs.kieler.sccharts"
             class="de.cau.cs.kieler.sccharts.prom.SCChartsProjectWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
@@ -28,6 +14,20 @@
             project="true">
          <description>
             Create a new SCCharts project.
+         </description>
+      </wizard>
+      <wizard
+            canFinishEarly="false"
+            category="de.cau.cs.kieler.sccharts"
+            class="de.cau.cs.kieler.sccharts.prom.SctxFileWizard"
+            finalPerspective="de.cau.cs.kieler.Modeling"
+            hasPages="true"
+            icon="icons/sccharts_icon16.png"
+            id="de.cau.cs.kieler.sccharts.prom.sctxWizard"
+            name="SCTX File"
+            project="false">
+         <description>
+            Create a new SCCharts Text file.
          </description>
       </wizard>
    </extension>
@@ -68,12 +68,6 @@
       </initializer>
    </extension>
    <extension
-         point="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer">
-      <analyzer
-            class="de.cau.cs.kieler.sccharts.prom.SCTWrapperCodeAnnotationAnalyzer">
-      </analyzer>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="de.cau.cs.kieler.Modeling">
@@ -98,7 +92,7 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <commonWizard
             type="new"
-            wizardId="de.cau.cs.kieler.sccharts.prom.sctWizard">
+            wizardId="de.cau.cs.kieler.sccharts.prom.sctxWizard">
          <enablement></enablement>
       </commonWizard>
       <commonWizard
@@ -106,6 +100,12 @@
             wizardId="de.cau.cs.kieler.sccharts.prom.scchartsProject">
          <enablement></enablement>
       </commonWizard>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.modelAnalyzer">
+      <analyzer
+            class="de.cau.cs.kieler.sccharts.prom.SCChartsAnalyzer">
+      </analyzer>
    </extension>
 
 </plugin>

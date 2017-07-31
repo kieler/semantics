@@ -11,16 +11,16 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.launch
+package de.cau.cs.kieler.prom.templates
 
-import de.cau.cs.kieler.prom.data.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.data.MacroCallData
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
  */
-interface IWrapperCodeAnnotationAnalyzer {
+interface ModelAnalyzer {
     
     /**
      * Searches for annotations or similar semantical entities which describe that wrapper code should be injected
@@ -28,14 +28,14 @@ interface IWrapperCodeAnnotationAnalyzer {
      * 
      * @param model The model to fetch wrapper code annotations from 
      */
-    public def List<WrapperCodeAnnotationData> getAnnotations(EObject model)
+    public def List<MacroCallData> getAnnotationInterface(EObject model)
     
     /**
      * Searches for variables (inputs / outputs) in the model that can be used in the simulation. 
      * 
      * @param model The model
      */
-    public def List<WrapperCodeAnnotationData> getSimulationInterface(EObject model)
+    public def List<MacroCallData> getSimulationInterface(EObject model)
     
     /**
      * Returns the name of the model 

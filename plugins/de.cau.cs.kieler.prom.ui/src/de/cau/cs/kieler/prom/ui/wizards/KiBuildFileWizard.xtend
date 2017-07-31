@@ -43,8 +43,7 @@ class KiBuildFileWizard extends Wizard implements INewWizard {
      * Instantiates and adds the file creation page to this wizard.
      */
     override addPages(){
-        filePage = new AdvancedNewFileCreationPage("KiBuild File", selection, false);
-        filePage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.prom/resources/default.kibuild"
+        filePage = new KiBuildFileCreationPage("KiBuild File", selection, false);
         filePage.fileName = "NewBuildConfig.kibuild"
         filePage.fileExtension = "kibuild"
         filePage.description = "Create a new build configuration."

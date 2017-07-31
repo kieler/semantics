@@ -13,11 +13,14 @@
 package de.cau.cs.kieler.prom.build
 
 import de.cau.cs.kieler.prom.ModelImporter
+import de.cau.cs.kieler.prom.PromPlugin
 import java.util.List
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -28,9 +31,7 @@ abstract class ModelCompiler extends Configurable {
     
     public val whitelist = new ConfigurableAttribute("whitelist", null)
     public val blacklist = new ConfigurableAttribute("blacklist", null)
-    
-    @Accessors(PUBLIC_SETTER)
-    protected var String outputFolder = "kieler-gen"
+    public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen")
     
     @Accessors(PUBLIC_SETTER)
     protected var IProgressMonitor monitor
@@ -50,6 +51,10 @@ abstract class ModelCompiler extends Configurable {
             return new ModelCompilationResult
         }
         
+        // Create folder for output
+        createOutputFolder(file.project, outputFolder.stringValue)
+        
+        // Compile the model
         return doCompile(file, model)
     }
     
@@ -88,5 +93,22 @@ abstract class ModelCompiler extends Configurable {
     public def ModelCompilationResult compile(IFile file) {
         val model = ModelImporter.load(file)
         return compile(file, model)
+    }
+    
+    /**
+     * Creates the folder in which compilation results will be saved. 
+     */
+    private static def void createOutputFolder(IProject project, String folderPath) {
+        if(!folderPath.isNullOrEmpty()) {
+            val folder = project.getFolder(folderPath)
+            if(!folder.exists) {
+                folder.create(false, true, null)
+                // Add folder to java class path if it is a java project
+                if (PromPlugin.isJavaProject(project)) {
+                    val javaProject = JavaCore.create(project);
+                    PromPlugin.addFolderToJavaClasspath(javaProject, folder)
+                }                
+            }
+        }
     }
 }
