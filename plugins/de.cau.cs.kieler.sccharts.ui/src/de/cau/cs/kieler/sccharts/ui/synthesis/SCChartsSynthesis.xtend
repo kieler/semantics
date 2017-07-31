@@ -13,25 +13,22 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.sccharts.ui.synthesis.AbstractSCChartsSynthesis
-import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import java.util.LinkedHashSet
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -83,8 +80,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
         options.addAll(APPEARANCE, DATAFLOW, LAYOUT, DEBUGGING)
         
         // General options
-        options.add(SHOW_ALL_SCCHARTS)
-        options.add(USE_KLAY)
+        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_COMMENTS)
         
         // Subsynthesis options
         options.addAll(stateSynthesis.displayedSynthesisOptions)

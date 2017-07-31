@@ -191,9 +191,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         val returnNodes = <KNode> newArrayList(node)
         
-        state.getCommentAnnotations.forEach[
-            returnNodes += it.transform                
-        ]                        
+        if (SHOW_COMMENTS.booleanValue) {
+            state.getCommentAnnotations.forEach[
+                returnNodes += it.transform                
+            ] 
+        }                       
 
         return returnNodes
     }
