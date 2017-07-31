@@ -170,6 +170,20 @@ class Reference extends SCChartsProcessor {
                 for (index : valuedObjectReference.indices) {
                     index.replaceReferences(replacements)
                 }
+
+                // If the binding is an array reference, add the references to the valued object reference.                
+                if (!newRef.indices.empty) {
+                    valuedObjectReference.indices.clear
+                    for (index : newRef.indices) {
+                        if (index instanceof Value) {
+                            valuedObjectReference.indices += index.copy  
+                        } else {
+                            val vor = index.copy
+                            vor.replaceReferences(replacements)
+                            valuedObjectReference.indices += vor
+                        } 
+                    }
+                }
             } else if (newRef instanceof Value) {
                 valuedObjectReference.replaceReferenceWithLiteral(newRef)
             } else {
@@ -177,6 +191,10 @@ class Reference extends SCChartsProcessor {
                     "\" exists, but " + 
                     "the type \"" + newRef.class.getName + "\" is not supported.", valuedObjectReference, true)
             }
+        } else {
+            for (index : valuedObjectReference.indices) {
+                index.replaceReferences(replacements)
+            }            
         }
     }
     
@@ -213,9 +231,23 @@ class Reference extends SCChartsProcessor {
         if (newRef != null) {
             if (newRef instanceof ValuedObjectReference) { 
                 assignment.valuedObject = (newRef as ValuedObjectReference).valuedObject
-                for (index : assignment.indices) {
-                    index.replaceReferences(replacements)
-                }     
+                if (assignment.indices.empty && !newRef.indices.empty) {
+                    // Array indices were bound to a scalar. Add the right indices.
+                    for (index : newRef.indices) {
+                        if (index instanceof Value) {
+                            assignment.indices += index.copy  
+                        } else {
+                            val vor = index.copy
+                            vor.replaceReferences(replacements)
+                            assignment.indices += vor
+                        } 
+                    }
+                } else {
+                    // The assign already assigned to an array. Just fix the references.
+                    for (index : assignment.indices) {
+                        index.replaceReferences(replacements)
+                    }     
+                }
             } else {
                 environment.errors.add("A binding for the valued object \"" + assignment.valuedObject.name + 
                     "\" in an assignment exists, but is not another valued object.\n" + 

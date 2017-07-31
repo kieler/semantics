@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.c
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * C Code Generator Struct Module
@@ -29,6 +30,7 @@ import com.google.inject.Inject
 class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
     @Inject extension CCodeSerializeHRExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     
     public static val STRUCT_NAME = "TickData"
     public static val STRUCT_VARIABLE_NAME = "d"
@@ -52,8 +54,14 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
                 if (declaration instanceof VariableDeclaration) {
-                    code.append(indentation + declaration.type.serializeHR + " ")
+                    code.append(indentation + declaration.type.serializeHR)
+                    code.append(" ")
                     code.append(valuedObject.name)
+                    if (valuedObject.isArray) {
+                        for (cardinality : valuedObject.cardinalities) {
+                            code.append("[" + cardinality.serializeHR + "]")
+                        }
+                    }
                     code.append(";\n")
                 }
             }

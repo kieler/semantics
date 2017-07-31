@@ -25,6 +25,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author ssm
@@ -92,6 +95,8 @@ class SCChartsReferenceExtensions {
                     targetVOPtr++
                 }
             }
+            
+            binding.checkTypeCompability
             bindings += binding
             
         }
@@ -115,12 +120,60 @@ class SCChartsReferenceExtensions {
                     } else {
                         binding.addErrorMessage("Valued object in the referenced scope was not bound properly: " + vo.name)
                     }
+                    
+                    binding.checkTypeCompability
                     bindings += binding
-                                        
                 }
             }        
         }
         
         bindings
     }
+
+    protected def checkTypeCompability(Binding binding) {
+        switch(binding.sourceExpression) {
+            ValuedObjectReference: binding.checkTypeCompabilityForReferences
+            Value: binding.checkTypeCompabilityForLiterals
+        }
+    }
+    
+    protected def checkTypeCompabilityForReferences(Binding binding) {
+        val sExp = binding.sourceExpression as ValuedObjectReference
+        if (sExp.isArrayReference) {
+            // An array ref is used
+            if (sExp.valuedObject.isArray) {
+                if (!binding.targetValuedObject.isArray) {
+                    // but the target is not an array
+//                        binding.addErrorMessage("It is not possible to bind an array reference of array " + sExp.valuedObject.name + 
+//                            " to scalar " + binding.targetValuedObject.name + "!")
+                }
+            } else {
+                // but the valued object is not an array
+                binding.addErrorMessage("It is not possible to bind an array reference of the scalar " +
+                    sExp.valuedObject.name)
+            }
+        } else {
+            // No array ref used
+            if (sExp.valuedObject.isArray) { //
+                // but is is an array
+                if (!binding.targetValuedObject.isArray) {
+                    // but the target is not an array
+                    binding.addErrorMessage("It is not possible to bind array " + sExp.valuedObject.name + 
+                        " to scalar " + binding.targetValuedObject.name + "!")
+                }
+            } 
+        }
+    }
+        
+    protected def checkTypeCompabilityForLiterals(Binding binding) { 
+        val sExp = binding.sourceExpression as Value
+        val targetContainer = binding.targetValuedObject.eContainer
+        if (targetContainer instanceof VariableDeclaration) {
+            if (targetContainer.output) {
+                binding.addErrorMessage("It is not possible to bind the literal " + sExp.serializeHR + " 
+                    to the output " + binding.targetValuedObject.name + " !")
+            }
+        }
+    }
+    
 }
