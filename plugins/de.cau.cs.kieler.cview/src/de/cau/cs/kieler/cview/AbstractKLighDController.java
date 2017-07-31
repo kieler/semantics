@@ -23,6 +23,7 @@ import org.eclipse.core.internal.resources.Folder;
 import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -204,16 +205,26 @@ public abstract class AbstractKLighDController {
     // -------------------------------------------------------------------------
 
     public String getFilePath(Object object) {
-        try {
-            // The FILE type
-            PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
-            Class fieldType = po.getClass();
-            File res = (org.eclipse.core.internal.resources.File) fieldType
-                    .getMethod("getFile", null).invoke(po, null);
-            String workspacePath = res.getFullPath().toString();
-            String fullPath = resolveFile(workspacePath);
-            return fullPath;
-        } catch (Exception e) {
+        IFile file = null;
+        if (object instanceof IFile) {
+            file = (IFile) object;
+        } else {
+            try {
+                // The FILE type
+                PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
+                Class fieldType = po.getClass();
+                file = (org.eclipse.core.internal.resources.File) fieldType
+                        .getMethod("getFile", null).invoke(po, null);
+            } catch (Exception e) {
+            }
+        }
+        if (file != null) {
+            try {
+                String workspacePath = file.getFullPath().toString();
+                String fullPath = resolveFile(workspacePath);
+                return fullPath;
+            } catch (Exception e) {
+            }
         }
         return null;
     }
@@ -221,17 +232,27 @@ public abstract class AbstractKLighDController {
     // -------------------------------------------------------------------------
 
     public String getDirPath(Object object) {
-        try {
-            PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
-            // The FOLDER type
-            Class fieldType = po.getClass();
-            Folder res = (org.eclipse.core.internal.resources.Folder) fieldType
-                    .getMethod("getResource", null).invoke(po, null);
-            String workspacePath = res.getFullPath().toString();
-            String fullPath = resolveFile(workspacePath);
-            return fullPath;
+        IFolder folder = null;
+        if (object instanceof IFolder) {
+            folder = ((IFolder) object);
+        } else {
+            try {
+                PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
+                // The FOLDER type
+                Class fieldType = po.getClass();
+                folder = (org.eclipse.core.internal.resources.Folder) fieldType
+                        .getMethod("getResource", null).invoke(po, null);
+            } catch (Exception e) {
+            }
+        }
+        if (folder != null) {
+            try {
+                String workspacePath = folder.getFullPath().toString();
+                String fullPath = resolveFile(workspacePath);
+                return fullPath;
 
-        } catch (Exception ee) {
+            } catch (Exception ee) {
+            }
         }
         return null;
     }
@@ -239,19 +260,30 @@ public abstract class AbstractKLighDController {
     // -------------------------------------------------------------------------
 
     public String getProjectPath(Object object) {
-        try {
-            // The PROJECT type
-            PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
-            Class fieldType = po.getClass();
-            IPath res =
-                    (IPath) fieldType.getMethod("getWorkingLocation", String.class).invoke(po, ".");
-            String workspacePath = res.toString().substring(0, res.toString().indexOf("/."))
-                    + po.toString().substring(1);
-            String fullPath = workspacePath;
-            return fullPath;
+        IPath path = null;
+        if (object instanceof IProject) {
+            IProject project = ((IProject) object);
+            path = project.getLocation();
+            //path = project.getWorkspace().getRoot().getFullPath();
+            String workspacePath = path.toString();
+            return workspacePath;
+        } else {
+            try {
+                // The PROJECT type
+                PlatformObject po = (org.eclipse.core.runtime.PlatformObject) object;
+                Class fieldType = po.getClass();
+                path =
+                        (IPath) fieldType.getMethod("getWorkingLocation", String.class).invoke(po, ".");
+                String workspacePath = path.toString().substring(0, path.toString().indexOf("/."))
+                        + po.toString().substring(1);
+                String fullPath = workspacePath;
+                return fullPath;
 
-        } catch (Exception eee) {
+            } catch (Exception eee) {
+            }
         }
+        
+
         return null;
     }
 
