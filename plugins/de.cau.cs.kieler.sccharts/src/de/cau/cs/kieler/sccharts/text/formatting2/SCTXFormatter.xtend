@@ -91,10 +91,13 @@ class SCTXFormatter extends KExtFormatter {
 	}
 
 	def dispatch void format(ScopeCall scopecall, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Parameter parameters : scopecall.getParameters()) {
-			format(parameters, document);
-		}
+        
+        scopecall.regionFor.keyword(scopeCallAccess.leftParenthesisKeyword_1_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        scopecall.regionFor.keyword(scopeCallAccess.rightParenthesisKeyword_1_0_3)?.prepend[ noSpace ]
+        
+        for (Parameter parameters : scopecall.getParameters()) {
+            format(parameters, document);
+        }
 	}
 
 	def dispatch void format(Transition transition, extension IFormattableDocument document) {
