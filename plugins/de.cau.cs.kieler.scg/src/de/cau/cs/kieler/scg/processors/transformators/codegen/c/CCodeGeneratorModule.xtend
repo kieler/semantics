@@ -80,10 +80,17 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         logic.generateDone
         tick.generateDone
         
+        code.addHeader
         code.append(struct.code).append("\n")
         code.append(reset.code).append("\n")
         code.append(logic.code).append("\n")
         code.append(tick.code)
     }
+    
+    protected def void addHeader(StringBuilder sb) {
+        sb.append(
+            "/*\n" + " * Automatically generated C code by\n" + " * KIELER SCCharts - The Key to Efficient Modeling\n" +
+                " *\n" + " * http://rtsys.informatik.uni-kiel.de/kieler\n" + " */\n\n")
+    }    
     
 }
