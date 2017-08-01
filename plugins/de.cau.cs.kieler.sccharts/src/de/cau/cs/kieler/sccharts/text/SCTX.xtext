@@ -99,7 +99,9 @@ ImplicitDataflowRegion returns sccharts::DataflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
-    'region' name=ExtendedID? label=STRING? ':'
+    'region' name=ExtendedID? label=STRING?
+    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
+    ':'
     declarations+=DeclarationWOSemicolon*
     states+=State+;
 
@@ -107,19 +109,30 @@ ControlflowRegion returns sccharts::ControlflowRegion:
 NestedControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
-    'region' name=ExtendedID? label=STRING? '{'
+    'region' name=ExtendedID? label=STRING?
+    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
+    '{'
     declarations+=DeclarationWOSemicolon*
     (states+=ImplicitState | states+=State+)
-    '}'
-;
+    '}';
 
 
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     annotations+=Annotation*
-    'dataflow' name=ExtendedID? label=STRING? ':'
+    'dataflow' name=ExtendedID? label=STRING?
+    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
+    ':'
     declarations+=DeclarationWOSemicolon*
     equations+=Equation+;
+    
+    
+IntOrReference returns kexpressions::Expression:
+    IntValue | ValuedObjectReference;
+    
+    
+CounterVariable returns kexpressions::ValuedObject:
+    name=PrimeID;
 	
 // -------------- //
 //  Action Rules  // 

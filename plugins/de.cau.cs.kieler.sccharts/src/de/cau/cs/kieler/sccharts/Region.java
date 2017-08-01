@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -24,6 +27,9 @@ package de.cau.cs.kieler.sccharts;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Region#getCounterVariable <em>Counter Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Region#getForStart <em>For Start</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Region#getForEnd <em>For End</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion()
@@ -65,5 +71,83 @@ public interface Region extends Scope {
      * @generated
      */
     void setParentState(State value);
+
+    /**
+     * Returns the value of the '<em><b>Counter Variable</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Counter Variable</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Counter Variable</em>' containment reference.
+     * @see #setCounterVariable(ValuedObject)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_CounterVariable()
+     * @model containment="true"
+     * @generated
+     */
+    ValuedObject getCounterVariable();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Region#getCounterVariable <em>Counter Variable</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Counter Variable</em>' containment reference.
+     * @see #getCounterVariable()
+     * @generated
+     */
+    void setCounterVariable(ValuedObject value);
+
+    /**
+     * Returns the value of the '<em><b>For Start</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>For Start</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>For Start</em>' containment reference.
+     * @see #setForStart(Expression)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_ForStart()
+     * @model containment="true"
+     * @generated
+     */
+    Expression getForStart();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Region#getForStart <em>For Start</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>For Start</em>' containment reference.
+     * @see #getForStart()
+     * @generated
+     */
+    void setForStart(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>For End</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>For End</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>For End</em>' containment reference.
+     * @see #setForEnd(Expression)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_ForEnd()
+     * @model containment="true"
+     * @generated
+     */
+    Expression getForEnd();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Region#getForEnd <em>For End</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>For End</em>' containment reference.
+     * @see #getForEnd()
+     * @generated
+     */
+    void setForEnd(Expression value);
 
 } // Region

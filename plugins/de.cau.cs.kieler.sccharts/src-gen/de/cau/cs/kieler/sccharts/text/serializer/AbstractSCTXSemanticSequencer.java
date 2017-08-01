@@ -61,6 +61,8 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequencer {
@@ -301,7 +303,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 					sequence_Expression_IntValue(context, (IntValue) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getBoolExpressionRule()
+				else if (rule == grammarAccess.getIntOrReferenceRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getLogicalOrExpressionRule()
 						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getLogicalAndExpressionRule()
@@ -524,15 +527,23 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				}
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT:
-				sequence_ValuedObject(context, (ValuedObject) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getCounterVariableRule()) {
+					sequence_CounterVariable(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if (rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()) {
 					sequence_Expression_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getBoolExpressionRule()
+				else if (rule == grammarAccess.getIntOrReferenceRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getLogicalOrExpressionRule()
 						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getLogicalAndExpressionRule()
@@ -682,7 +693,14 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* name=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=ExtendedID? 
+	 *         label=STRING? 
+	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         states+=State+
+	 *     )
 	 */
 	protected void sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -695,12 +713,44 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *
 	 * Constraint:
 	 *     (
-	 *         (annotations+=Annotation* name=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+) | 
-	 *         (annotations+=Annotation* name=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+))
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             name=ExtendedID? 
+	 *             label=STRING? 
+	 *             (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
+	 *             declarations+=DeclarationWOSemicolon* 
+	 *             states+=State+
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             name=ExtendedID? 
+	 *             label=STRING? 
+	 *             (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
+	 *             declarations+=DeclarationWOSemicolon* 
+	 *             (states+=ImplicitState | states+=State+)
+	 *         )
 	 *     )
 	 */
 	protected void sequence_ControlflowRegion_NestedControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     CounterVariable returns ValuedObject
+	 *
+	 * Constraint:
+	 *     name=PrimeID
+	 */
+	protected void sequence_CounterVariable(ISerializationContext context, ValuedObject semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCounterVariableAccess().getNamePrimeIDParserRuleCall_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
@@ -722,7 +772,14 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     DataflowRegion returns DataflowRegion
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* name=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* equations+=Equation+)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=ExtendedID? 
+	 *         label=STRING? 
+	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         equations+=Equation+
+	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -809,7 +866,14 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     NestedControlflowRegion returns ControlflowRegion
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* name=ExtendedID? label=STRING? declarations+=DeclarationWOSemicolon* (states+=ImplicitState | states+=State+))
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=ExtendedID? 
+	 *         label=STRING? 
+	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         (states+=ImplicitState | states+=State+)
+	 *     )
 	 */
 	protected void sequence_NestedControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
