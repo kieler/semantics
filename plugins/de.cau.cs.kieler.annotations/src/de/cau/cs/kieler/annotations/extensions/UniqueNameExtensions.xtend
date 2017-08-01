@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.annotations.extensions
 
 import de.cau.cs.kieler.annotations.NamedObject
-import java.util.regex.Pattern
 
 /**
  * @author ssm
@@ -28,24 +27,8 @@ class UniqueNameExtensions {
     }   
     
     def <T extends NamedObject> T uniqueName(T namedObject, UniqueNameCache nameCache) {
-        if (nameCache.contains(namedObject.name)) {
-            val p = Pattern.compile("[0-9]+$");
-            val m = p.matcher(namedObject.name);
-            if(m.find()) {
-                val n = Integer.parseInt(m.group)
-                namedObject.name = namedObject.name.substring(0, namedObject.name.length - m.group.length) + (n + 1)
-            } else {
-                namedObject.name = namedObject.name + "0"
-            }
-            namedObject.uniqueName(nameCache)
-        } else {
-            nameCache += namedObject.name
-        }
-        namedObject
-    }
-    
-    def <T extends NamedObject> isUnique(T namedObject, UniqueNameCache nameCache) {
-        !nameCache.contains(namedObject.name)
+        namedObject.name = nameCache.getNewUniqueName(namedObject.name)
+        return namedObject
     }
     
 }

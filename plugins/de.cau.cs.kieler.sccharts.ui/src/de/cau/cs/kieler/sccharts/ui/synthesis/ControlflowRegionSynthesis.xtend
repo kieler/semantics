@@ -38,6 +38,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.processors.transformators.For
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -83,7 +84,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         if (!region.states.empty) {
 
-            val label = if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString;
+            var forLabel = ""
+            if (region.counterVariable != null) {
+                val range = For.getForRegionRange(region)
+                forLabel = " | " + region.counterVariable.name + "[" + range.first + ", " + range.second + "]"
+            }
+            
+            val label = (if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString) + forLabel
 
             // Expanded
             node.addRegionFigure => [

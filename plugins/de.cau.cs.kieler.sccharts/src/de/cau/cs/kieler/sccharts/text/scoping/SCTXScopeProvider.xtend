@@ -20,6 +20,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.sccharts.SCCharts
+import org.eclipse.xtext.scoping.Scopes
+import de.cau.cs.kieler.sccharts.Region
 
 /**
  * This class contains custom scoping description.
@@ -149,5 +151,27 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
         }
         return context.getScopeHierarchical(reference)
     }       
+
+    override def IScope getScopeHierarchical(EObject context, EReference reference) {
+        val candidates = <ValuedObject> newArrayList
+        var declarationScope = context.nextDeclarationScope
+        while (declarationScope != null) {
+            for(declaration : declarationScope.declarations) {
+                for(VO : declaration.valuedObjects) {
+                    candidates += VO
+                }
+            }   
+            
+            // Add for regions counter variable            
+            if (declarationScope instanceof Region) {
+                if (declarationScope.counterVariable != null) {
+                    candidates += declarationScope.counterVariable
+                }
+            }
+            
+            declarationScope = declarationScope.nextDeclarationScope
+        }
+        return Scopes.scopeFor(candidates)
+    }
 
 }

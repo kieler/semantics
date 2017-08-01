@@ -72,29 +72,29 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             feeder.accept(tg.historyHistoryTypeEnumRuleCall_5_0, transition.history)
         }
         
-        if (!transition.label.nullOrEmpty) {
-            feeder.accept(tg.labelSTRINGTerminalRuleCall_6_1_1_0, transition.label)
-        } else {
-            if (transition.trigger != null) {
-                if (transition.triggerDelay > 1) {
-                    feeder.accept(tg.triggerDelayINTTerminalRuleCall_6_0_0_1_0, transition.triggerDelay)
-                }
-                
-                // This handles separation of count delay together with expressions starting with an integer
-                if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
-                    feeder.accept(tg.triggerAtomicExpressionParserRuleCall_6_0_0_2_1_0, transition.trigger)
-                } else {
-                    feeder.accept(tg.triggerBoolExpressionParserRuleCall_6_0_0_2_0_0, transition.trigger)
-                }
+        if (transition.trigger != null) {
+            if (transition.triggerDelay > 1) {
+                feeder.accept(tg.getTriggerDelayINTTerminalRuleCall_6_1_0, transition.triggerDelay)
             }
-            for (idxEffect : transition.effects.indexed) {
-                if (idxEffect.key == 0) {
-                    feeder.accept(tg.effectsEffectParserRuleCall_6_0_1_1_0, idxEffect.value, idxEffect.key)
-                } else {
-                    feeder.accept(tg.effectsEffectParserRuleCall_6_0_1_2_1_0, idxEffect.value, idxEffect.key)
-                }
+            
+            // This handles separation of count delay together with expressions starting with an integer
+            if (transition.triggerDelay == 1 && transition.trigger.requiresParentheses) {
+                feeder.accept(tg.getTriggerAtomicExpressionParserRuleCall_6_2_1_0, transition.trigger)
+            } else {
+                feeder.accept(tg.getTriggerBoolExpressionParserRuleCall_6_2_0_0, transition.trigger)
             }
         }
+        for (idxEffect : transition.effects.indexed) {
+            if (idxEffect.key == 0) {
+                feeder.accept(tg.getEffectsEffectParserRuleCall_7_1_0, idxEffect.value, idxEffect.key)
+            } else {
+                feeder.accept(tg.getEffectsEffectParserRuleCall_7_2_1_0, idxEffect.value, idxEffect.key)
+            }
+        }
+        
+        if (!transition.label.nullOrEmpty) {
+            feeder.accept(tg.getLabelSTRINGTerminalRuleCall_8_1_0, transition.label)
+        } 
                 
         feeder.finish
     }
