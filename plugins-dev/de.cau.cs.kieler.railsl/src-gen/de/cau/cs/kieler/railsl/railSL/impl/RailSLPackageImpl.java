@@ -10,6 +10,7 @@ import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement;
 import de.cau.cs.kieler.railsl.railSL.CrossingStatement;
 import de.cau.cs.kieler.railsl.railSL.LightStatement;
 import de.cau.cs.kieler.railsl.railSL.OpStatement;
+import de.cau.cs.kieler.railsl.railSL.ParallelStatement;
 import de.cau.cs.kieler.railsl.railSL.Program;
 import de.cau.cs.kieler.railsl.railSL.RailSLFactory;
 import de.cau.cs.kieler.railsl.railSL.RailSLPackage;
@@ -134,6 +135,13 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
   private EClass conditionalLineEClass = null;
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parallelStatementEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with
    * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
    * package URI value.
@@ -211,7 +219,7 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_Blocks()
+  public EReference getProgram_Block()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(0);
   }
@@ -521,6 +529,26 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getParallelStatement()
+  {
+    return parallelStatementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getParallelStatement_Blocks()
+  {
+    return (EReference)parallelStatementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public RailSLFactory getRailSLFactory()
   {
     return (RailSLFactory)getEFactoryInstance();
@@ -547,7 +575,7 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
 
     // Create classes and their features
     programEClass = createEClass(PROGRAM);
-    createEReference(programEClass, PROGRAM__BLOCKS);
+    createEReference(programEClass, PROGRAM__BLOCK);
 
     blockEClass = createEClass(BLOCK);
     createEReference(blockEClass, BLOCK__STATEMENTS);
@@ -591,6 +619,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     createEAttribute(conditionalLineEClass, CONDITIONAL_LINE__CONTACT);
     createEAttribute(conditionalLineEClass, CONDITIONAL_LINE__SEG_NAME);
     createEReference(conditionalLineEClass, CONDITIONAL_LINE__BLOCK);
+
+    parallelStatementEClass = createEClass(PARALLEL_STATEMENT);
+    createEReference(parallelStatementEClass, PARALLEL_STATEMENT__BLOCKS);
   }
 
   /**
@@ -632,10 +663,11 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     crossingStatementEClass.getESuperTypes().add(this.getOpStatement());
     lightStatementEClass.getESuperTypes().add(this.getOpStatement());
     conditionalStatementEClass.getESuperTypes().add(this.getStatement());
+    parallelStatementEClass.getESuperTypes().add(this.getStatement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProgram_Blocks(), this.getBlock(), null, "blocks", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProgram_Block(), this.getBlock(), null, "block", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(blockEClass, Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getBlock_Statements(), this.getStatement(), null, "statements", null, 0, -1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -679,6 +711,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     initEAttribute(getConditionalLine_Contact(), ecorePackage.getEString(), "contact", null, 0, 1, ConditionalLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConditionalLine_SegName(), ecorePackage.getEString(), "segName", null, 0, 1, ConditionalLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConditionalLine_Block(), this.getBlock(), null, "block", null, 0, 1, ConditionalLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parallelStatementEClass, ParallelStatement.class, "ParallelStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getParallelStatement_Blocks(), this.getBlock(), null, "blocks", null, 0, -1, ParallelStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

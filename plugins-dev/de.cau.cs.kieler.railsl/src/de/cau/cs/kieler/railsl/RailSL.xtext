@@ -3,7 +3,7 @@ grammar de.cau.cs.kieler.railsl.RailSL with org.eclipse.xtext.common.Terminals
 generate railSL "http://www.cau.de/cs/kieler/railsl/RailSL"
 
 Program:
-	(blocks+=Block)*
+	block = Block
 ;
 
 Block:
@@ -15,7 +15,7 @@ BLOCK_END:
 ;
 
 Statement:
-	SetStatement | WaitStatement | OpStatement | ConditionalStatement
+	SetStatement | WaitStatement | OpStatement | ConditionalStatement | ParallelStatement
 ;
 	
 SetStatement:
@@ -63,8 +63,15 @@ ConditionalStatement:
     lines+=ConditionalLine
     (lines+=ConditionalLine)+
 ;
+
 ConditionalLine:
     'If' contact=ContactIndex 'contact of' segName=SEG_NAME 'is reached first, do' + block=Block
+;
+
+ParallelStatement:
+    'Parallel:'
+    blocks += Block
+    (blocks += Block)+
 ;
 
 ContactIndex:

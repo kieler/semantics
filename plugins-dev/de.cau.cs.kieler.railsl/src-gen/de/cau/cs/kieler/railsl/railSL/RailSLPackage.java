@@ -68,13 +68,13 @@ public interface RailSLPackage extends EPackage
   int PROGRAM = 0;
 
   /**
-   * The feature id for the '<em><b>Blocks</b></em>' containment reference list.
+   * The feature id for the '<em><b>Block</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__BLOCKS = 0;
+  int PROGRAM__BLOCK = 0;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -485,6 +485,34 @@ public interface RailSLPackage extends EPackage
    */
   int CONDITIONAL_LINE_FEATURE_COUNT = 3;
 
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.railsl.railSL.impl.ParallelStatementImpl <em>Parallel Statement</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.railsl.railSL.impl.ParallelStatementImpl
+   * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getParallelStatement()
+   * @generated
+   */
+  int PARALLEL_STATEMENT = 14;
+
+  /**
+   * The feature id for the '<em><b>Blocks</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARALLEL_STATEMENT__BLOCKS = STATEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Parallel Statement</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARALLEL_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.Program <em>Program</em>}'.
@@ -497,15 +525,15 @@ public interface RailSLPackage extends EPackage
   EClass getProgram();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.railsl.railSL.Program#getBlocks <em>Blocks</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.railsl.railSL.Program#getBlock <em>Block</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Blocks</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.Program#getBlocks()
+   * @return the meta object for the containment reference '<em>Block</em>'.
+   * @see de.cau.cs.kieler.railsl.railSL.Program#getBlock()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_Blocks();
+  EReference getProgram_Block();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.Block <em>Block</em>}'.
@@ -825,6 +853,27 @@ public interface RailSLPackage extends EPackage
   EReference getConditionalLine_Block();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.ParallelStatement <em>Parallel Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Parallel Statement</em>'.
+   * @see de.cau.cs.kieler.railsl.railSL.ParallelStatement
+   * @generated
+   */
+  EClass getParallelStatement();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.railsl.railSL.ParallelStatement#getBlocks <em>Blocks</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Blocks</em>'.
+   * @see de.cau.cs.kieler.railsl.railSL.ParallelStatement#getBlocks()
+   * @see #getParallelStatement()
+   * @generated
+   */
+  EReference getParallelStatement_Blocks();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -858,12 +907,12 @@ public interface RailSLPackage extends EPackage
     EClass PROGRAM = eINSTANCE.getProgram();
 
     /**
-     * The meta object literal for the '<em><b>Blocks</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Block</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__BLOCKS = eINSTANCE.getProgram_Blocks();
+    EReference PROGRAM__BLOCK = eINSTANCE.getProgram_Block();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.railsl.railSL.impl.BlockImpl <em>Block</em>}' class.
@@ -1130,6 +1179,24 @@ public interface RailSLPackage extends EPackage
      * @generated
      */
     EReference CONDITIONAL_LINE__BLOCK = eINSTANCE.getConditionalLine_Block();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.railsl.railSL.impl.ParallelStatementImpl <em>Parallel Statement</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.railsl.railSL.impl.ParallelStatementImpl
+     * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getParallelStatement()
+     * @generated
+     */
+    EClass PARALLEL_STATEMENT = eINSTANCE.getParallelStatement();
+
+    /**
+     * The meta object literal for the '<em><b>Blocks</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARALLEL_STATEMENT__BLOCKS = eINSTANCE.getParallelStatement_Blocks();
 
   }
 

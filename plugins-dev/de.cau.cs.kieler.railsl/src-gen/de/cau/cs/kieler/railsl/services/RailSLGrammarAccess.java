@@ -24,18 +24,18 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class ProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.Program");
-		private final Assignment cBlocksAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cBlocksBlockParserRuleCall_0 = (RuleCall)cBlocksAssignment.eContents().get(0);
+		private final Assignment cBlockAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cBlockBlockParserRuleCall_0 = (RuleCall)cBlockAssignment.eContents().get(0);
 		
 		//Program:
-		//	blocks+=Block*;
+		//	block=Block;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//blocks+=Block*
-		public Assignment getBlocksAssignment() { return cBlocksAssignment; }
+		//block=Block
+		public Assignment getBlockAssignment() { return cBlockAssignment; }
 		
 		//Block
-		public RuleCall getBlocksBlockParserRuleCall_0() { return cBlocksBlockParserRuleCall_0; }
+		public RuleCall getBlockBlockParserRuleCall_0() { return cBlockBlockParserRuleCall_0; }
 	}
 	public class BlockElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.Block");
@@ -94,12 +94,13 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cWaitStatementParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cOpStatementParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cConditionalStatementParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cParallelStatementParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//Statement:
-		//	SetStatement | WaitStatement | OpStatement | ConditionalStatement;
+		//	SetStatement | WaitStatement | OpStatement | ConditionalStatement | ParallelStatement;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SetStatement | WaitStatement | OpStatement | ConditionalStatement
+		//SetStatement | WaitStatement | OpStatement | ConditionalStatement | ParallelStatement
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//SetStatement
@@ -113,6 +114,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConditionalStatement
 		public RuleCall getConditionalStatementParserRuleCall_3() { return cConditionalStatementParserRuleCall_3; }
+		
+		//ParallelStatement
+		public RuleCall getParallelStatementParserRuleCall_4() { return cParallelStatementParserRuleCall_4; }
 	}
 	public class SetStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.SetStatement");
@@ -684,6 +688,39 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		//Block
 		public RuleCall getBlockBlockParserRuleCall_5_0() { return cBlockBlockParserRuleCall_5_0; }
 	}
+	public class ParallelStatementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.ParallelStatement");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cParallelKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cBlocksAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cBlocksBlockParserRuleCall_1_0 = (RuleCall)cBlocksAssignment_1.eContents().get(0);
+		private final Assignment cBlocksAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cBlocksBlockParserRuleCall_2_0 = (RuleCall)cBlocksAssignment_2.eContents().get(0);
+		
+		//ParallelStatement:
+		//	'Parallel:'
+		//	blocks+=Block
+		//	blocks+=Block+;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'Parallel:' blocks+=Block blocks+=Block+
+		public Group getGroup() { return cGroup; }
+		
+		//'Parallel:'
+		public Keyword getParallelKeyword_0() { return cParallelKeyword_0; }
+		
+		//blocks+=Block
+		public Assignment getBlocksAssignment_1() { return cBlocksAssignment_1; }
+		
+		//Block
+		public RuleCall getBlocksBlockParserRuleCall_1_0() { return cBlocksBlockParserRuleCall_1_0; }
+		
+		//blocks+=Block+
+		public Assignment getBlocksAssignment_2() { return cBlocksAssignment_2; }
+		
+		//Block
+		public RuleCall getBlocksBlockParserRuleCall_2_0() { return cBlocksBlockParserRuleCall_2_0; }
+	}
 	public class ContactIndexElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.ContactIndex");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -721,6 +758,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	private final LightStatementElements pLightStatement;
 	private final ConditionalStatementElements pConditionalStatement;
 	private final ConditionalLineElements pConditionalLine;
+	private final ParallelStatementElements pParallelStatement;
 	private final ContactIndexElements pContactIndex;
 	private final TerminalRule tSEG_NAME;
 	
@@ -749,6 +787,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pLightStatement = new LightStatementElements();
 		this.pConditionalStatement = new ConditionalStatementElements();
 		this.pConditionalLine = new ConditionalLineElements();
+		this.pParallelStatement = new ParallelStatementElements();
 		this.pContactIndex = new ContactIndexElements();
 		this.tSEG_NAME = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.SEG_NAME");
 	}
@@ -781,7 +820,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Program:
-	//	blocks+=Block*;
+	//	block=Block;
 	public ProgramElements getProgramAccess() {
 		return pProgram;
 	}
@@ -811,7 +850,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Statement:
-	//	SetStatement | WaitStatement | OpStatement | ConditionalStatement;
+	//	SetStatement | WaitStatement | OpStatement | ConditionalStatement | ParallelStatement;
 	public StatementElements getStatementAccess() {
 		return pStatement;
 	}
@@ -942,6 +981,18 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getConditionalLineRule() {
 		return getConditionalLineAccess().getRule();
+	}
+	
+	//ParallelStatement:
+	//	'Parallel:'
+	//	blocks+=Block
+	//	blocks+=Block+;
+	public ParallelStatementElements getParallelStatementAccess() {
+		return pParallelStatement;
+	}
+	
+	public ParserRule getParallelStatementRule() {
+		return getParallelStatementAccess().getRule();
 	}
 	
 	//ContactIndex:

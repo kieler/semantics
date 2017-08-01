@@ -7,7 +7,7 @@
   <genPackages prefix="RailSL" basePackage="de.cau.cs.kieler.railsl" disposableProviderFactory="true"
       fileExtensions="railsl" ecorePackage="RailSL.ecore#/">
     <genClasses ecoreClass="RailSL.ecore#//Program">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//Program/blocks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//Program/block"/>
     </genClasses>
     <genClasses ecoreClass="RailSL.ecore#//Block">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//Block/statements"/>
@@ -47,6 +47,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ConditionalLine/contact"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ConditionalLine/segName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//ConditionalLine/block"/>
+    </genClasses>
+    <genClasses ecoreClass="RailSL.ecore#//ParallelStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//ParallelStatement/blocks"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

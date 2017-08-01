@@ -49,6 +49,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.railsl.railSL.ParallelStatement
 
 /**
  * Transforms a RailSL model to an SCChart.
@@ -139,13 +140,13 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def State railSLtoSCChart(Program model) {
 
-        return generateSCChart(model.blocks)
+        return generateSCChart(model.block)
     }
 
     /**
      * Transforms the model into an SCCharts model
      */
-    def State generateSCChart(List<Block> blocks) {
+    def State generateSCChart(Block block) {
 
         var chart = createState
 
@@ -229,11 +230,8 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         valObjects.put("crossing", crossing);
 
         // A C T U A L   D I A G R A M   S Y N T H E S I S
-        nextRegionID = 0
-        for (block : blocks) {
-            nextStateID = 0
-            block.compile(chart)
-        }
+        nextStateID = 0
+        block.compile(chart)
 
         return chart;
     }
@@ -309,6 +307,8 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             state.makeLightStatement(statement as LightStatement)
         } else if (statement instanceof ConditionalStatement) {
             state.makeConditionalStatement(statement as ConditionalStatement)
+        } else if (statement instanceof ParallelStatement) {
+            state.makeParallelStatement(statement as ParallelStatement)  
         } else {
             state.makeCrossingStatement(statement as CrossingStatement)
         }
@@ -539,7 +539,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      * This state will terminate once a certain amount of time has passed.
      */
     def void makeTimeWaitStatement(State state, TimeWaitStatement twStatement) {
-        state.label = "_" + getStateID() + "_TimeWait"
+        state.label = "_" + getStateID + "_TimeWait"
         var region = state.createControlflowRegion("Wait " + twStatement.time)
         var init = region.createInitialState("init")
         var done = region.createFinalState("done")
@@ -553,6 +553,24 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             subExpressions += second.reference
             subExpressions += createBoolValue(true)
         ]
+    }
+
+    def void makeParallelStatement(State state, ParallelStatement pStatement) {
+        state.label = "_" + getStateID + "_Parallel"
+//        val region = state.createControlflowRegion("parallel")
+//        val init = region.createInitialState("init")
+//        val done = region.createFinalState("done")
+//        
+//        val parallel = region.createState("")
+//        
+//        init.createImmediateTransitionTo(parallel)
+//        parallel.createImmediateTransitionTo(done).setTypeTermination
+        
+        for (block : pStatement.blocks) {
+            block.compile(state)
+        }
+        
+        
     }
 
     /**

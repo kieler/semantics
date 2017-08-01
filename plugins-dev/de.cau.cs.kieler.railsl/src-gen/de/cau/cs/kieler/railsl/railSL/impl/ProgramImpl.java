@@ -7,19 +7,14 @@ import de.cau.cs.kieler.railsl.railSL.Block;
 import de.cau.cs.kieler.railsl.railSL.Program;
 import de.cau.cs.kieler.railsl.railSL.RailSLPackage;
 
-import java.util.Collection;
-
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.ProgramImpl#getBlocks <em>Blocks</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.ProgramImpl#getBlock <em>Block</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,14 +32,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 {
   /**
-   * The cached value of the '{@link #getBlocks() <em>Blocks</em>}' containment reference list.
+   * The cached value of the '{@link #getBlock() <em>Block</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBlocks()
+   * @see #getBlock()
    * @generated
    * @ordered
    */
-  protected EList<Block> blocks;
+  protected Block block;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,13 +67,47 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Block> getBlocks()
+  public Block getBlock()
   {
-    if (blocks == null)
+    return block;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs)
+  {
+    Block oldBlock = block;
+    block = newBlock;
+    if (eNotificationRequired())
     {
-      blocks = new EObjectContainmentEList<Block>(Block.class, this, RailSLPackage.PROGRAM__BLOCKS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RailSLPackage.PROGRAM__BLOCK, oldBlock, newBlock);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return blocks;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setBlock(Block newBlock)
+  {
+    if (newBlock != block)
+    {
+      NotificationChain msgs = null;
+      if (block != null)
+        msgs = ((InternalEObject)block).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - RailSLPackage.PROGRAM__BLOCK, null, msgs);
+      if (newBlock != null)
+        msgs = ((InternalEObject)newBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - RailSLPackage.PROGRAM__BLOCK, null, msgs);
+      msgs = basicSetBlock(newBlock, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, RailSLPackage.PROGRAM__BLOCK, newBlock, newBlock));
   }
 
   /**
@@ -91,8 +120,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case RailSLPackage.PROGRAM__BLOCKS:
-        return ((InternalEList<?>)getBlocks()).basicRemove(otherEnd, msgs);
+      case RailSLPackage.PROGRAM__BLOCK:
+        return basicSetBlock(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -107,8 +136,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case RailSLPackage.PROGRAM__BLOCKS:
-        return getBlocks();
+      case RailSLPackage.PROGRAM__BLOCK:
+        return getBlock();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -118,15 +147,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case RailSLPackage.PROGRAM__BLOCKS:
-        getBlocks().clear();
-        getBlocks().addAll((Collection<? extends Block>)newValue);
+      case RailSLPackage.PROGRAM__BLOCK:
+        setBlock((Block)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,8 +169,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case RailSLPackage.PROGRAM__BLOCKS:
-        getBlocks().clear();
+      case RailSLPackage.PROGRAM__BLOCK:
+        setBlock((Block)null);
         return;
     }
     super.eUnset(featureID);
@@ -159,8 +186,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case RailSLPackage.PROGRAM__BLOCKS:
-        return blocks != null && !blocks.isEmpty();
+      case RailSLPackage.PROGRAM__BLOCK:
+        return block != null;
     }
     return super.eIsSet(featureID);
   }

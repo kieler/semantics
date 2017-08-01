@@ -78,22 +78,22 @@ ruleProgram returns [EObject current=null]
 	(
 		(
 			{
-				newCompositeNode(grammarAccess.getProgramAccess().getBlocksBlockParserRuleCall_0());
+				newCompositeNode(grammarAccess.getProgramAccess().getBlockBlockParserRuleCall_0());
 			}
-			lv_blocks_0_0=ruleBlock
+			lv_block_0_0=ruleBlock
 			{
 				if ($current==null) {
 					$current = createModelElementForParent(grammarAccess.getProgramRule());
 				}
-				add(
+				set(
 					$current,
-					"blocks",
-					lv_blocks_0_0,
+					"block",
+					lv_block_0_0,
 					"de.cau.cs.kieler.railsl.RailSL.Block");
 				afterParserOrEnumRuleCall();
 			}
 		)
-	)*
+	)
 ;
 
 // Entry rule entryRuleBlock
@@ -236,6 +236,15 @@ ruleStatement returns [EObject current=null]
 		this_ConditionalStatement_3=ruleConditionalStatement
 		{
 			$current = $this_ConditionalStatement_3.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getStatementAccess().getParallelStatementParserRuleCall_4());
+		}
+		this_ParallelStatement_4=ruleParallelStatement
+		{
+			$current = $this_ParallelStatement_4.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
@@ -1172,6 +1181,67 @@ ruleConditionalLine returns [EObject current=null]
 				}
 			)
 		)
+	)
+;
+
+// Entry rule entryRuleParallelStatement
+entryRuleParallelStatement returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getParallelStatementRule()); }
+	iv_ruleParallelStatement=ruleParallelStatement
+	{ $current=$iv_ruleParallelStatement.current; }
+	EOF;
+
+// Rule ParallelStatement
+ruleParallelStatement returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='Parallel:'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getParallelStatementAccess().getParallelKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getParallelStatementAccess().getBlocksBlockParserRuleCall_1_0());
+				}
+				lv_blocks_1_0=ruleBlock
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getParallelStatementRule());
+					}
+					add(
+						$current,
+						"blocks",
+						lv_blocks_1_0,
+						"de.cau.cs.kieler.railsl.RailSL.Block");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getParallelStatementAccess().getBlocksBlockParserRuleCall_2_0());
+				}
+				lv_blocks_2_0=ruleBlock
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getParallelStatementRule());
+					}
+					add(
+						$current,
+						"blocks",
+						lv_blocks_2_0,
+						"de.cau.cs.kieler.railsl.RailSL.Block");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)+
 	)
 ;
 

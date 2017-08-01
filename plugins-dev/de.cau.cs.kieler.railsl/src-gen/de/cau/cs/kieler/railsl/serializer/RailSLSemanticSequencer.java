@@ -10,6 +10,7 @@ import de.cau.cs.kieler.railsl.railSL.ConditionalStatement;
 import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement;
 import de.cau.cs.kieler.railsl.railSL.CrossingStatement;
 import de.cau.cs.kieler.railsl.railSL.LightStatement;
+import de.cau.cs.kieler.railsl.railSL.ParallelStatement;
 import de.cau.cs.kieler.railsl.railSL.Program;
 import de.cau.cs.kieler.railsl.railSL.RailSLPackage;
 import de.cau.cs.kieler.railsl.railSL.SetPointStatement;
@@ -58,6 +59,9 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case RailSLPackage.LIGHT_STATEMENT:
 				sequence_LightStatement(context, (LightStatement) semanticObject); 
+				return; 
+			case RailSLPackage.PARALLEL_STATEMENT:
+				sequence_ParallelStatement(context, (ParallelStatement) semanticObject); 
 				return; 
 			case RailSLPackage.PROGRAM:
 				sequence_Program(context, (Program) semanticObject); 
@@ -169,13 +173,32 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns ParallelStatement
+	 *     ParallelStatement returns ParallelStatement
+	 *
+	 * Constraint:
+	 *     (blocks+=Block blocks+=Block+)
+	 */
+	protected void sequence_ParallelStatement(ISerializationContext context, ParallelStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Program returns Program
 	 *
 	 * Constraint:
-	 *     blocks+=Block+
+	 *     block=Block
 	 */
 	protected void sequence_Program(ISerializationContext context, Program semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RailSLPackage.Literals.PROGRAM__BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RailSLPackage.Literals.PROGRAM__BLOCK));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getProgramAccess().getBlockBlockParserRuleCall_0(), semanticObject.getBlock());
+		feeder.finish();
 	}
 	
 	

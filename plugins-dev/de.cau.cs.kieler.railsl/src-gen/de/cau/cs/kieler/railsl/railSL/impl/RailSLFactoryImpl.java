@@ -79,6 +79,7 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
       case RailSLPackage.LIGHT_STATEMENT: return createLightStatement();
       case RailSLPackage.CONDITIONAL_STATEMENT: return createConditionalStatement();
       case RailSLPackage.CONDITIONAL_LINE: return createConditionalLine();
+      case RailSLPackage.PARALLEL_STATEMENT: return createParallelStatement();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -236,6 +237,17 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
   {
     ConditionalLineImpl conditionalLine = new ConditionalLineImpl();
     return conditionalLine;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ParallelStatement createParallelStatement()
+  {
+    ParallelStatementImpl parallelStatement = new ParallelStatementImpl();
+    return parallelStatement;
   }
 
   /**

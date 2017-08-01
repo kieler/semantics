@@ -150,6 +150,15 @@ public interface RailSLFactory extends EFactory
   ConditionalLine createConditionalLine();
 
   /**
+   * Returns a new object of class '<em>Parallel Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parallel Statement</em>'.
+   * @generated
+   */
+  ParallelStatement createParallelStatement();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
