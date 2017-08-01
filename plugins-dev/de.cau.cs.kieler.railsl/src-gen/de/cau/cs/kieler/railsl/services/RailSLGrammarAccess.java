@@ -121,24 +121,24 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class SetStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.SetStatement");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cSetTrackStatementParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cSetPointStatementParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTrackStatementParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cPointStatementParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//SetStatement:
-		//	SetTrackStatement | SetPointStatement;
+		//	TrackStatement | PointStatement;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SetTrackStatement | SetPointStatement
+		//TrackStatement | PointStatement
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//SetTrackStatement
-		public RuleCall getSetTrackStatementParserRuleCall_0() { return cSetTrackStatementParserRuleCall_0; }
+		//TrackStatement
+		public RuleCall getTrackStatementParserRuleCall_0() { return cTrackStatementParserRuleCall_0; }
 		
-		//SetPointStatement
-		public RuleCall getSetPointStatementParserRuleCall_1() { return cSetPointStatementParserRuleCall_1; }
+		//PointStatement
+		public RuleCall getPointStatementParserRuleCall_1() { return cPointStatementParserRuleCall_1; }
 	}
-	public class SetTrackStatementElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.SetTrackStatement");
+	public class TrackStatementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.TrackStatement");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSetTrackKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cSegmentsAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -161,7 +161,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModeTrackSettingParserRuleCall_5_0 = (RuleCall)cModeAssignment_5.eContents().get(0);
 		private final Keyword cFullStopKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		//SetTrackStatement:
+		//TrackStatement:
 		//	'Set track' segments+=SEG_NAME (', ' segments+=SEG_NAME)* ('and' segments+=SEG_NAME | ', and' segments+=SEG_NAME)?
 		//	'to' mode=TrackSetting '.';
 		@Override public ParserRule getRule() { return rule; }
@@ -265,8 +265,8 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		//'stop'
 		public Keyword getStopKeyword_1() { return cStopKeyword_1; }
 	}
-	public class SetPointStatementElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.SetPointStatement");
+	public class PointStatementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.railsl.RailSL.PointStatement");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSetPointKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cPointsAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -291,7 +291,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOrientationBranchKeyword_5_0_1 = (Keyword)cOrientationAlternatives_5_0.eContents().get(1);
 		private final Keyword cFullStopKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		//SetPointStatement:
+		//PointStatement:
 		//	'Set point' points+=INT (', ' points+=INT)* ('and' points+=INT | ', and' points+=INT)? 'to' orientation=('straight' |
 		//	'branch') '.';
 		@Override public ParserRule getRule() { return rule; }
@@ -419,18 +419,18 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cEventAlternatives_0_0 = (Alternatives)cEventAssignment_0.eContents().get(0);
 		private final Keyword cEventReachKeyword_0_0_0 = (Keyword)cEventAlternatives_0_0.eContents().get(0);
 		private final Keyword cEventPassKeyword_0_0_1 = (Keyword)cEventAlternatives_0_0.eContents().get(1);
-		private final Assignment cContactIndexAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cContactIndexContactIndexParserRuleCall_1_0 = (RuleCall)cContactIndexAssignment_1.eContents().get(0);
+		private final Assignment cContactAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cContactContactIndexParserRuleCall_1_0 = (RuleCall)cContactAssignment_1.eContents().get(0);
 		private final Keyword cContactOfKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cSegNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cSegNameSEG_NAMETerminalRuleCall_3_0 = (RuleCall)cSegNameAssignment_3.eContents().get(0);
 		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ContactWaitStatement:
-		//	event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME '.';
+		//	event=('Reach' | 'Pass') contact=ContactIndex 'contact of' segName=SEG_NAME '.';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME '.'
+		//event=('Reach' | 'Pass') contact=ContactIndex 'contact of' segName=SEG_NAME '.'
 		public Group getGroup() { return cGroup; }
 		
 		//event=('Reach' | 'Pass')
@@ -445,11 +445,11 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		//'Pass'
 		public Keyword getEventPassKeyword_0_0_1() { return cEventPassKeyword_0_0_1; }
 		
-		//contactIndex=ContactIndex
-		public Assignment getContactIndexAssignment_1() { return cContactIndexAssignment_1; }
+		//contact=ContactIndex
+		public Assignment getContactAssignment_1() { return cContactAssignment_1; }
 		
 		//ContactIndex
-		public RuleCall getContactIndexContactIndexParserRuleCall_1_0() { return cContactIndexContactIndexParserRuleCall_1_0; }
+		public RuleCall getContactContactIndexParserRuleCall_1_0() { return cContactContactIndexParserRuleCall_1_0; }
 		
 		//'contact of'
 		public Keyword getContactOfKeyword_2() { return cContactOfKeyword_2; }
@@ -747,9 +747,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	private final BLOCK_ENDElements pBLOCK_END;
 	private final StatementElements pStatement;
 	private final SetStatementElements pSetStatement;
-	private final SetTrackStatementElements pSetTrackStatement;
+	private final TrackStatementElements pTrackStatement;
 	private final TrackSettingElements pTrackSetting;
-	private final SetPointStatementElements pSetPointStatement;
+	private final PointStatementElements pPointStatement;
 	private final WaitStatementElements pWaitStatement;
 	private final TimeWaitStatementElements pTimeWaitStatement;
 	private final ContactWaitStatementElements pContactWaitStatement;
@@ -776,9 +776,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBLOCK_END = new BLOCK_ENDElements();
 		this.pStatement = new StatementElements();
 		this.pSetStatement = new SetStatementElements();
-		this.pSetTrackStatement = new SetTrackStatementElements();
+		this.pTrackStatement = new TrackStatementElements();
 		this.pTrackSetting = new TrackSettingElements();
-		this.pSetPointStatement = new SetPointStatementElements();
+		this.pPointStatement = new PointStatementElements();
 		this.pWaitStatement = new WaitStatementElements();
 		this.pTimeWaitStatement = new TimeWaitStatementElements();
 		this.pContactWaitStatement = new ContactWaitStatementElements();
@@ -860,7 +860,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SetStatement:
-	//	SetTrackStatement | SetPointStatement;
+	//	TrackStatement | PointStatement;
 	public SetStatementElements getSetStatementAccess() {
 		return pSetStatement;
 	}
@@ -869,15 +869,15 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getSetStatementAccess().getRule();
 	}
 	
-	//SetTrackStatement:
+	//TrackStatement:
 	//	'Set track' segments+=SEG_NAME (', ' segments+=SEG_NAME)* ('and' segments+=SEG_NAME | ', and' segments+=SEG_NAME)?
 	//	'to' mode=TrackSetting '.';
-	public SetTrackStatementElements getSetTrackStatementAccess() {
-		return pSetTrackStatement;
+	public TrackStatementElements getTrackStatementAccess() {
+		return pTrackStatement;
 	}
 	
-	public ParserRule getSetTrackStatementRule() {
-		return getSetTrackStatementAccess().getRule();
+	public ParserRule getTrackStatementRule() {
+		return getTrackStatementAccess().getRule();
 	}
 	
 	//TrackSetting:
@@ -890,15 +890,15 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getTrackSettingAccess().getRule();
 	}
 	
-	//SetPointStatement:
+	//PointStatement:
 	//	'Set point' points+=INT (', ' points+=INT)* ('and' points+=INT | ', and' points+=INT)? 'to' orientation=('straight' |
 	//	'branch') '.';
-	public SetPointStatementElements getSetPointStatementAccess() {
-		return pSetPointStatement;
+	public PointStatementElements getPointStatementAccess() {
+		return pPointStatement;
 	}
 	
-	public ParserRule getSetPointStatementRule() {
-		return getSetPointStatementAccess().getRule();
+	public ParserRule getPointStatementRule() {
+		return getPointStatementAccess().getRule();
 	}
 	
 	//WaitStatement:
@@ -922,7 +922,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ContactWaitStatement:
-	//	event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME '.';
+	//	event=('Reach' | 'Pass') contact=ContactIndex 'contact of' segName=SEG_NAME '.';
 	public ContactWaitStatementElements getContactWaitStatementAccess() {
 		return pContactWaitStatement;
 	}

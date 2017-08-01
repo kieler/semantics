@@ -267,34 +267,34 @@ ruleSetStatement returns [EObject current=null]
 }:
 	(
 		{
-			newCompositeNode(grammarAccess.getSetStatementAccess().getSetTrackStatementParserRuleCall_0());
+			newCompositeNode(grammarAccess.getSetStatementAccess().getTrackStatementParserRuleCall_0());
 		}
-		this_SetTrackStatement_0=ruleSetTrackStatement
+		this_TrackStatement_0=ruleTrackStatement
 		{
-			$current = $this_SetTrackStatement_0.current;
+			$current = $this_TrackStatement_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getSetStatementAccess().getSetPointStatementParserRuleCall_1());
+			newCompositeNode(grammarAccess.getSetStatementAccess().getPointStatementParserRuleCall_1());
 		}
-		this_SetPointStatement_1=ruleSetPointStatement
+		this_PointStatement_1=rulePointStatement
 		{
-			$current = $this_SetPointStatement_1.current;
+			$current = $this_PointStatement_1.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
 ;
 
-// Entry rule entryRuleSetTrackStatement
-entryRuleSetTrackStatement returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getSetTrackStatementRule()); }
-	iv_ruleSetTrackStatement=ruleSetTrackStatement
-	{ $current=$iv_ruleSetTrackStatement.current; }
+// Entry rule entryRuleTrackStatement
+entryRuleTrackStatement returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getTrackStatementRule()); }
+	iv_ruleTrackStatement=ruleTrackStatement
+	{ $current=$iv_ruleTrackStatement.current; }
 	EOF;
 
-// Rule SetTrackStatement
-ruleSetTrackStatement returns [EObject current=null]
+// Rule TrackStatement
+ruleTrackStatement returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -304,17 +304,17 @@ ruleSetTrackStatement returns [EObject current=null]
 	(
 		otherlv_0='Set track'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getSetTrackStatementAccess().getSetTrackKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getTrackStatementAccess().getSetTrackKeyword_0());
 		}
 		(
 			(
 				lv_segments_1_0=RULE_SEG_NAME
 				{
-					newLeafNode(lv_segments_1_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0());
+					newLeafNode(lv_segments_1_0, grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getSetTrackStatementRule());
+						$current = createModelElement(grammarAccess.getTrackStatementRule());
 					}
 					addWithLastConsumed(
 						$current,
@@ -327,17 +327,17 @@ ruleSetTrackStatement returns [EObject current=null]
 		(
 			otherlv_2=', '
 			{
-				newLeafNode(otherlv_2, grammarAccess.getSetTrackStatementAccess().getCommaSpaceKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getTrackStatementAccess().getCommaSpaceKeyword_2_0());
 			}
 			(
 				(
 					lv_segments_3_0=RULE_SEG_NAME
 					{
-						newLeafNode(lv_segments_3_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0());
+						newLeafNode(lv_segments_3_0, grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getSetTrackStatementRule());
+							$current = createModelElement(grammarAccess.getTrackStatementRule());
 						}
 						addWithLastConsumed(
 							$current,
@@ -352,17 +352,17 @@ ruleSetTrackStatement returns [EObject current=null]
 			(
 				otherlv_4='and'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_0_0());
+					newLeafNode(otherlv_4, grammarAccess.getTrackStatementAccess().getAndKeyword_3_0_0());
 				}
 				(
 					(
 						lv_segments_5_0=RULE_SEG_NAME
 						{
-							newLeafNode(lv_segments_5_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0());
+							newLeafNode(lv_segments_5_0, grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getSetTrackStatementRule());
+								$current = createModelElement(grammarAccess.getTrackStatementRule());
 							}
 							addWithLastConsumed(
 								$current,
@@ -377,17 +377,17 @@ ruleSetTrackStatement returns [EObject current=null]
 			(
 				otherlv_6=', and'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_1_0());
+					newLeafNode(otherlv_6, grammarAccess.getTrackStatementAccess().getAndKeyword_3_1_0());
 				}
 				(
 					(
 						lv_segments_7_0=RULE_SEG_NAME
 						{
-							newLeafNode(lv_segments_7_0, grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0());
+							newLeafNode(lv_segments_7_0, grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getSetTrackStatementRule());
+								$current = createModelElement(grammarAccess.getTrackStatementRule());
 							}
 							addWithLastConsumed(
 								$current,
@@ -401,17 +401,17 @@ ruleSetTrackStatement returns [EObject current=null]
 		)?
 		otherlv_8='to'
 		{
-			newLeafNode(otherlv_8, grammarAccess.getSetTrackStatementAccess().getToKeyword_4());
+			newLeafNode(otherlv_8, grammarAccess.getTrackStatementAccess().getToKeyword_4());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getSetTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0());
 				}
 				lv_mode_9_0=ruleTrackSetting
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getSetTrackStatementRule());
+						$current = createModelElementForParent(grammarAccess.getTrackStatementRule());
 					}
 					set(
 						$current,
@@ -424,7 +424,7 @@ ruleSetTrackStatement returns [EObject current=null]
 		)
 		otherlv_10='.'
 		{
-			newLeafNode(otherlv_10, grammarAccess.getSetTrackStatementAccess().getFullStopKeyword_6());
+			newLeafNode(otherlv_10, grammarAccess.getTrackStatementAccess().getFullStopKeyword_6());
 		}
 	)
 ;
@@ -476,15 +476,15 @@ ruleTrackSetting returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTo
 	)
 ;
 
-// Entry rule entryRuleSetPointStatement
-entryRuleSetPointStatement returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getSetPointStatementRule()); }
-	iv_ruleSetPointStatement=ruleSetPointStatement
-	{ $current=$iv_ruleSetPointStatement.current; }
+// Entry rule entryRulePointStatement
+entryRulePointStatement returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getPointStatementRule()); }
+	iv_rulePointStatement=rulePointStatement
+	{ $current=$iv_rulePointStatement.current; }
 	EOF;
 
-// Rule SetPointStatement
-ruleSetPointStatement returns [EObject current=null]
+// Rule PointStatement
+rulePointStatement returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -494,17 +494,17 @@ ruleSetPointStatement returns [EObject current=null]
 	(
 		otherlv_0='Set point'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getSetPointStatementAccess().getSetPointKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getPointStatementAccess().getSetPointKeyword_0());
 		}
 		(
 			(
 				lv_points_1_0=RULE_INT
 				{
-					newLeafNode(lv_points_1_0, grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_1_0());
+					newLeafNode(lv_points_1_0, grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getSetPointStatementRule());
+						$current = createModelElement(grammarAccess.getPointStatementRule());
 					}
 					addWithLastConsumed(
 						$current,
@@ -517,17 +517,17 @@ ruleSetPointStatement returns [EObject current=null]
 		(
 			otherlv_2=', '
 			{
-				newLeafNode(otherlv_2, grammarAccess.getSetPointStatementAccess().getCommaSpaceKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getPointStatementAccess().getCommaSpaceKeyword_2_0());
 			}
 			(
 				(
 					lv_points_3_0=RULE_INT
 					{
-						newLeafNode(lv_points_3_0, grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_2_1_0());
+						newLeafNode(lv_points_3_0, grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_2_1_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getSetPointStatementRule());
+							$current = createModelElement(grammarAccess.getPointStatementRule());
 						}
 						addWithLastConsumed(
 							$current,
@@ -542,17 +542,17 @@ ruleSetPointStatement returns [EObject current=null]
 			(
 				otherlv_4='and'
 				{
-					newLeafNode(otherlv_4, grammarAccess.getSetPointStatementAccess().getAndKeyword_3_0_0());
+					newLeafNode(otherlv_4, grammarAccess.getPointStatementAccess().getAndKeyword_3_0_0());
 				}
 				(
 					(
 						lv_points_5_0=RULE_INT
 						{
-							newLeafNode(lv_points_5_0, grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_0_1_0());
+							newLeafNode(lv_points_5_0, grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_3_0_1_0());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getSetPointStatementRule());
+								$current = createModelElement(grammarAccess.getPointStatementRule());
 							}
 							addWithLastConsumed(
 								$current,
@@ -567,17 +567,17 @@ ruleSetPointStatement returns [EObject current=null]
 			(
 				otherlv_6=', and'
 				{
-					newLeafNode(otherlv_6, grammarAccess.getSetPointStatementAccess().getAndKeyword_3_1_0());
+					newLeafNode(otherlv_6, grammarAccess.getPointStatementAccess().getAndKeyword_3_1_0());
 				}
 				(
 					(
 						lv_points_7_0=RULE_INT
 						{
-							newLeafNode(lv_points_7_0, grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_1_1_0());
+							newLeafNode(lv_points_7_0, grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_3_1_1_0());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getSetPointStatementRule());
+								$current = createModelElement(grammarAccess.getPointStatementRule());
 							}
 							addWithLastConsumed(
 								$current,
@@ -591,29 +591,29 @@ ruleSetPointStatement returns [EObject current=null]
 		)?
 		otherlv_8='to'
 		{
-			newLeafNode(otherlv_8, grammarAccess.getSetPointStatementAccess().getToKeyword_4());
+			newLeafNode(otherlv_8, grammarAccess.getPointStatementAccess().getToKeyword_4());
 		}
 		(
 			(
 				(
 					lv_orientation_9_1='straight'
 					{
-						newLeafNode(lv_orientation_9_1, grammarAccess.getSetPointStatementAccess().getOrientationStraightKeyword_5_0_0());
+						newLeafNode(lv_orientation_9_1, grammarAccess.getPointStatementAccess().getOrientationStraightKeyword_5_0_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getSetPointStatementRule());
+							$current = createModelElement(grammarAccess.getPointStatementRule());
 						}
 						setWithLastConsumed($current, "orientation", lv_orientation_9_1, null);
 					}
 					    |
 					lv_orientation_9_2='branch'
 					{
-						newLeafNode(lv_orientation_9_2, grammarAccess.getSetPointStatementAccess().getOrientationBranchKeyword_5_0_1());
+						newLeafNode(lv_orientation_9_2, grammarAccess.getPointStatementAccess().getOrientationBranchKeyword_5_0_1());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getSetPointStatementRule());
+							$current = createModelElement(grammarAccess.getPointStatementRule());
 						}
 						setWithLastConsumed($current, "orientation", lv_orientation_9_2, null);
 					}
@@ -622,7 +622,7 @@ ruleSetPointStatement returns [EObject current=null]
 		)
 		otherlv_10='.'
 		{
-			newLeafNode(otherlv_10, grammarAccess.getSetPointStatementAccess().getFullStopKeyword_6());
+			newLeafNode(otherlv_10, grammarAccess.getPointStatementAccess().getFullStopKeyword_6());
 		}
 	)
 ;
@@ -756,17 +756,17 @@ ruleContactWaitStatement returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getContactWaitStatementAccess().getContactIndexContactIndexParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getContactWaitStatementAccess().getContactContactIndexParserRuleCall_1_0());
 				}
-				lv_contactIndex_1_0=ruleContactIndex
+				lv_contact_1_0=ruleContactIndex
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getContactWaitStatementRule());
 					}
 					set(
 						$current,
-						"contactIndex",
-						lv_contactIndex_1_0,
+						"contact",
+						lv_contact_1_0,
 						"de.cau.cs.kieler.railsl.RailSL.ContactIndex");
 					afterParserOrEnumRuleCall();
 				}

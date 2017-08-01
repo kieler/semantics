@@ -60,22 +60,22 @@ public interface RailSLFactory extends EFactory
   SetStatement createSetStatement();
 
   /**
-   * Returns a new object of class '<em>Set Track Statement</em>'.
+   * Returns a new object of class '<em>Track Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Set Track Statement</em>'.
+   * @return a new object of class '<em>Track Statement</em>'.
    * @generated
    */
-  SetTrackStatement createSetTrackStatement();
+  TrackStatement createTrackStatement();
 
   /**
-   * Returns a new object of class '<em>Set Point Statement</em>'.
+   * Returns a new object of class '<em>Point Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Set Point Statement</em>'.
+   * @return a new object of class '<em>Point Statement</em>'.
    * @generated
    */
-  SetPointStatement createSetPointStatement();
+  PointStatement createPointStatement();
 
   /**
    * Returns a new object of class '<em>Wait Statement</em>'.

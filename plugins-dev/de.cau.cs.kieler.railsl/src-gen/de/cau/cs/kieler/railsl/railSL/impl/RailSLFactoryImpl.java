@@ -69,8 +69,8 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
       case RailSLPackage.BLOCK: return createBlock();
       case RailSLPackage.STATEMENT: return createStatement();
       case RailSLPackage.SET_STATEMENT: return createSetStatement();
-      case RailSLPackage.SET_TRACK_STATEMENT: return createSetTrackStatement();
-      case RailSLPackage.SET_POINT_STATEMENT: return createSetPointStatement();
+      case RailSLPackage.TRACK_STATEMENT: return createTrackStatement();
+      case RailSLPackage.POINT_STATEMENT: return createPointStatement();
       case RailSLPackage.WAIT_STATEMENT: return createWaitStatement();
       case RailSLPackage.TIME_WAIT_STATEMENT: return createTimeWaitStatement();
       case RailSLPackage.CONTACT_WAIT_STATEMENT: return createContactWaitStatement();
@@ -134,10 +134,10 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SetTrackStatement createSetTrackStatement()
+  public TrackStatement createTrackStatement()
   {
-    SetTrackStatementImpl setTrackStatement = new SetTrackStatementImpl();
-    return setTrackStatement;
+    TrackStatementImpl trackStatement = new TrackStatementImpl();
+    return trackStatement;
   }
 
   /**
@@ -145,10 +145,10 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SetPointStatement createSetPointStatement()
+  public PointStatement createPointStatement()
   {
-    SetPointStatementImpl setPointStatement = new SetPointStatementImpl();
-    return setPointStatement;
+    PointStatementImpl pointStatement = new PointStatementImpl();
+    return pointStatement;
   }
 
   /**

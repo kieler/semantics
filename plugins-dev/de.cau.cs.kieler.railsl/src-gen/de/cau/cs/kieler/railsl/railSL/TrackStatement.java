@@ -7,22 +7,22 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Set Track Statement</b></em>'.
+ * A representation of the model object '<em><b>Track Statement</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.railsl.railSL.SetTrackStatement#getSegments <em>Segments</em>}</li>
- *   <li>{@link de.cau.cs.kieler.railsl.railSL.SetTrackStatement#getMode <em>Mode</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.railsl.railSL.TrackStatement#getSegments <em>Segments</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.railsl.railSL.TrackStatement#getMode <em>Mode</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getSetTrackStatement()
+ * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getTrackStatement()
  * @model
  * @generated
  */
-public interface SetTrackStatement extends SetStatement
+public interface TrackStatement extends SetStatement
 {
   /**
    * Returns the value of the '<em><b>Segments</b></em>' attribute list.
@@ -34,7 +34,7 @@ public interface SetTrackStatement extends SetStatement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Segments</em>' attribute list.
-   * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getSetTrackStatement_Segments()
+   * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getTrackStatement_Segments()
    * @model unique="false"
    * @generated
    */
@@ -50,14 +50,14 @@ public interface SetTrackStatement extends SetStatement
    * <!-- end-user-doc -->
    * @return the value of the '<em>Mode</em>' attribute.
    * @see #setMode(String)
-   * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getSetTrackStatement_Mode()
+   * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getTrackStatement_Mode()
    * @model
    * @generated
    */
   String getMode();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.railsl.railSL.SetTrackStatement#getMode <em>Mode</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.railsl.railSL.TrackStatement#getMode <em>Mode</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Mode</em>' attribute.
@@ -66,4 +66,4 @@ public interface SetTrackStatement extends SetStatement
    */
   void setMode(String value);
 
-} // SetTrackStatement
+} // TrackStatement

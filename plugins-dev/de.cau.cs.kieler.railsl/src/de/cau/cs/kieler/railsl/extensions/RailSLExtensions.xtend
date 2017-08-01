@@ -12,12 +12,12 @@
  */
 package de.cau.cs.kieler.railsl.extensions
 
-import de.cau.cs.kieler.railsl.railSL.SetPointStatement
 import de.cau.cs.kieler.railsl.railSL.LightStatement
-import de.cau.cs.kieler.railsl.railSL.SetTrackStatement
 import de.cau.cs.kieler.railsl.railSL.CrossingStatement
 import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
 import de.cau.cs.kieler.railsl.railSL.ConditionalLine
+import de.cau.cs.kieler.railsl.railSL.TrackStatement
+import de.cau.cs.kieler.railsl.railSL.PointStatement
 
 /**
  * @author stu121235
@@ -54,7 +54,7 @@ class RailSLExtensions {
     /**
      * Helper method to determine the setting for a point
      */
-    def int parsePointSetting(SetPointStatement spStatement) {
+    def int parsePointSetting(PointStatement spStatement) {
         if (spStatement.orientation.equals("straight")) {
             return 0;
         } else {
@@ -65,7 +65,7 @@ class RailSLExtensions {
     /**
      * Helper method to determine the speed to which a track segment should be set.
      */
-    def int parseSpeed(SetTrackStatement stStatement) {
+    def int parseSpeed(TrackStatement stStatement) {
         if (stStatement.mode.contains("stop")) {
             return 0;
         } else if (stStatement.mode.contains("slow")) {
@@ -78,7 +78,7 @@ class RailSLExtensions {
     /**
      * Helper method to determine the direction of travel.
      */
-    def parseDirection(SetTrackStatement stStatement) {
+    def parseDirection(TrackStatement stStatement) {
         if (stStatement.mode.contains("reverse")) {
             return 1;
         } else {
@@ -91,7 +91,7 @@ class RailSLExtensions {
     }
 
     def int parseContactIndex(ContactWaitStatement statement) {
-        if(statement.contactIndex.equals("first")) 0 else 1
+        if(statement.contact.equals("first")) 0 else 1
     }
 
     def int parseContactIndex(ConditionalLine line) {

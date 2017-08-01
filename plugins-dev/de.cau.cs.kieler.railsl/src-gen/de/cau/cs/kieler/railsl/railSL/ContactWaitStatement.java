@@ -14,7 +14,7 @@ package de.cau.cs.kieler.railsl.railSL;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getEvent <em>Event</em>}</li>
- *   <li>{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContactIndex <em>Contact Index</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContact <em>Contact</em>}</li>
  *   <li>{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getSegName <em>Seg Name</em>}</li>
  * </ul>
  *
@@ -51,30 +51,30 @@ public interface ContactWaitStatement extends WaitStatement
   void setEvent(String value);
 
   /**
-   * Returns the value of the '<em><b>Contact Index</b></em>' attribute.
+   * Returns the value of the '<em><b>Contact</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Contact Index</em>' attribute isn't clear,
+   * If the meaning of the '<em>Contact</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Contact Index</em>' attribute.
-   * @see #setContactIndex(String)
-   * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getContactWaitStatement_ContactIndex()
+   * @return the value of the '<em>Contact</em>' attribute.
+   * @see #setContact(String)
+   * @see de.cau.cs.kieler.railsl.railSL.RailSLPackage#getContactWaitStatement_Contact()
    * @model
    * @generated
    */
-  String getContactIndex();
+  String getContact();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContactIndex <em>Contact Index</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContact <em>Contact</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Contact Index</em>' attribute.
-   * @see #getContactIndex()
+   * @param value the new value of the '<em>Contact</em>' attribute.
+   * @see #getContact()
    * @generated
    */
-  void setContactIndex(String value);
+  void setContact(String value);
 
   /**
    * Returns the value of the '<em><b>Seg Name</b></em>' attribute.

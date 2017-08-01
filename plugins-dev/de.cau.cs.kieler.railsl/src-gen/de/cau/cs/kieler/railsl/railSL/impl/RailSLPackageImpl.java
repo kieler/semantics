@@ -11,14 +11,14 @@ import de.cau.cs.kieler.railsl.railSL.CrossingStatement;
 import de.cau.cs.kieler.railsl.railSL.LightStatement;
 import de.cau.cs.kieler.railsl.railSL.OpStatement;
 import de.cau.cs.kieler.railsl.railSL.ParallelStatement;
+import de.cau.cs.kieler.railsl.railSL.PointStatement;
 import de.cau.cs.kieler.railsl.railSL.Program;
 import de.cau.cs.kieler.railsl.railSL.RailSLFactory;
 import de.cau.cs.kieler.railsl.railSL.RailSLPackage;
-import de.cau.cs.kieler.railsl.railSL.SetPointStatement;
 import de.cau.cs.kieler.railsl.railSL.SetStatement;
-import de.cau.cs.kieler.railsl.railSL.SetTrackStatement;
 import de.cau.cs.kieler.railsl.railSL.Statement;
 import de.cau.cs.kieler.railsl.railSL.TimeWaitStatement;
+import de.cau.cs.kieler.railsl.railSL.TrackStatement;
 import de.cau.cs.kieler.railsl.railSL.WaitStatement;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -69,14 +69,14 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass setTrackStatementEClass = null;
+  private EClass trackStatementEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass setPointStatementEClass = null;
+  private EClass pointStatementEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -279,9 +279,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSetTrackStatement()
+  public EClass getTrackStatement()
   {
-    return setTrackStatementEClass;
+    return trackStatementEClass;
   }
 
   /**
@@ -289,9 +289,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSetTrackStatement_Segments()
+  public EAttribute getTrackStatement_Segments()
   {
-    return (EAttribute)setTrackStatementEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)trackStatementEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -299,9 +299,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSetTrackStatement_Mode()
+  public EAttribute getTrackStatement_Mode()
   {
-    return (EAttribute)setTrackStatementEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)trackStatementEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -309,9 +309,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSetPointStatement()
+  public EClass getPointStatement()
   {
-    return setPointStatementEClass;
+    return pointStatementEClass;
   }
 
   /**
@@ -319,9 +319,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSetPointStatement_Points()
+  public EAttribute getPointStatement_Points()
   {
-    return (EAttribute)setPointStatementEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)pointStatementEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -329,9 +329,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSetPointStatement_Orientation()
+  public EAttribute getPointStatement_Orientation()
   {
-    return (EAttribute)setPointStatementEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)pointStatementEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -389,7 +389,7 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getContactWaitStatement_ContactIndex()
+  public EAttribute getContactWaitStatement_Contact()
   {
     return (EAttribute)contactWaitStatementEClass.getEStructuralFeatures().get(1);
   }
@@ -585,13 +585,13 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
 
     setStatementEClass = createEClass(SET_STATEMENT);
 
-    setTrackStatementEClass = createEClass(SET_TRACK_STATEMENT);
-    createEAttribute(setTrackStatementEClass, SET_TRACK_STATEMENT__SEGMENTS);
-    createEAttribute(setTrackStatementEClass, SET_TRACK_STATEMENT__MODE);
+    trackStatementEClass = createEClass(TRACK_STATEMENT);
+    createEAttribute(trackStatementEClass, TRACK_STATEMENT__SEGMENTS);
+    createEAttribute(trackStatementEClass, TRACK_STATEMENT__MODE);
 
-    setPointStatementEClass = createEClass(SET_POINT_STATEMENT);
-    createEAttribute(setPointStatementEClass, SET_POINT_STATEMENT__POINTS);
-    createEAttribute(setPointStatementEClass, SET_POINT_STATEMENT__ORIENTATION);
+    pointStatementEClass = createEClass(POINT_STATEMENT);
+    createEAttribute(pointStatementEClass, POINT_STATEMENT__POINTS);
+    createEAttribute(pointStatementEClass, POINT_STATEMENT__ORIENTATION);
 
     waitStatementEClass = createEClass(WAIT_STATEMENT);
 
@@ -600,7 +600,7 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
 
     contactWaitStatementEClass = createEClass(CONTACT_WAIT_STATEMENT);
     createEAttribute(contactWaitStatementEClass, CONTACT_WAIT_STATEMENT__EVENT);
-    createEAttribute(contactWaitStatementEClass, CONTACT_WAIT_STATEMENT__CONTACT_INDEX);
+    createEAttribute(contactWaitStatementEClass, CONTACT_WAIT_STATEMENT__CONTACT);
     createEAttribute(contactWaitStatementEClass, CONTACT_WAIT_STATEMENT__SEG_NAME);
 
     opStatementEClass = createEClass(OP_STATEMENT);
@@ -654,8 +654,8 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
 
     // Add supertypes to classes
     setStatementEClass.getESuperTypes().add(this.getStatement());
-    setTrackStatementEClass.getESuperTypes().add(this.getSetStatement());
-    setPointStatementEClass.getESuperTypes().add(this.getSetStatement());
+    trackStatementEClass.getESuperTypes().add(this.getSetStatement());
+    pointStatementEClass.getESuperTypes().add(this.getSetStatement());
     waitStatementEClass.getESuperTypes().add(this.getStatement());
     timeWaitStatementEClass.getESuperTypes().add(this.getWaitStatement());
     contactWaitStatementEClass.getESuperTypes().add(this.getWaitStatement());
@@ -677,13 +677,13 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
 
     initEClass(setStatementEClass, SetStatement.class, "SetStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(setTrackStatementEClass, SetTrackStatement.class, "SetTrackStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSetTrackStatement_Segments(), ecorePackage.getEString(), "segments", null, 0, -1, SetTrackStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSetTrackStatement_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, SetTrackStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(trackStatementEClass, TrackStatement.class, "TrackStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTrackStatement_Segments(), ecorePackage.getEString(), "segments", null, 0, -1, TrackStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTrackStatement_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, TrackStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(setPointStatementEClass, SetPointStatement.class, "SetPointStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSetPointStatement_Points(), ecorePackage.getEInt(), "points", null, 0, -1, SetPointStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSetPointStatement_Orientation(), ecorePackage.getEString(), "orientation", null, 0, 1, SetPointStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(pointStatementEClass, PointStatement.class, "PointStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPointStatement_Points(), ecorePackage.getEInt(), "points", null, 0, -1, PointStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPointStatement_Orientation(), ecorePackage.getEString(), "orientation", null, 0, 1, PointStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(waitStatementEClass, WaitStatement.class, "WaitStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -692,7 +692,7 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
 
     initEClass(contactWaitStatementEClass, ContactWaitStatement.class, "ContactWaitStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getContactWaitStatement_Event(), ecorePackage.getEString(), "event", null, 0, 1, ContactWaitStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getContactWaitStatement_ContactIndex(), ecorePackage.getEString(), "contactIndex", null, 0, 1, ContactWaitStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContactWaitStatement_Contact(), ecorePackage.getEString(), "contact", null, 0, 1, ContactWaitStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getContactWaitStatement_SegName(), ecorePackage.getEString(), "segName", null, 0, 1, ContactWaitStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(opStatementEClass, OpStatement.class, "OpStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

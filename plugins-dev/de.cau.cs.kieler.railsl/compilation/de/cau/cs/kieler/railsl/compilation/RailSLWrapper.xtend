@@ -53,5 +53,4 @@ class RailSLWrapper extends Processor<Program, SCCharts> {
         ProcessorType.TRANSFORMATOR
     }
     
-
 }

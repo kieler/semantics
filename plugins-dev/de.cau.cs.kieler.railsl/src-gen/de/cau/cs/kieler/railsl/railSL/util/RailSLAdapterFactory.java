@@ -96,14 +96,14 @@ public class RailSLAdapterFactory extends AdapterFactoryImpl
         return createSetStatementAdapter();
       }
       @Override
-      public Adapter caseSetTrackStatement(SetTrackStatement object)
+      public Adapter caseTrackStatement(TrackStatement object)
       {
-        return createSetTrackStatementAdapter();
+        return createTrackStatementAdapter();
       }
       @Override
-      public Adapter caseSetPointStatement(SetPointStatement object)
+      public Adapter casePointStatement(PointStatement object)
       {
-        return createSetPointStatementAdapter();
+        return createPointStatementAdapter();
       }
       @Override
       public Adapter caseWaitStatement(WaitStatement object)
@@ -233,31 +233,31 @@ public class RailSLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.railsl.railSL.SetTrackStatement <em>Set Track Statement</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.railsl.railSL.TrackStatement <em>Track Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.railsl.railSL.SetTrackStatement
+   * @see de.cau.cs.kieler.railsl.railSL.TrackStatement
    * @generated
    */
-  public Adapter createSetTrackStatementAdapter()
+  public Adapter createTrackStatementAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.railsl.railSL.SetPointStatement <em>Set Point Statement</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.railsl.railSL.PointStatement <em>Point Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.railsl.railSL.SetPointStatement
+   * @see de.cau.cs.kieler.railsl.railSL.PointStatement
    * @generated
    */
-  public Adapter createSetPointStatementAdapter()
+  public Adapter createPointStatementAdapter()
   {
     return null;
   }

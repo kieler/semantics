@@ -16,8 +16,8 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.Variable
 import de.cau.cs.kieler.railsl.railSL.Statement
-import de.cau.cs.kieler.railsl.railSL.SetTrackStatement
-import de.cau.cs.kieler.railsl.railSL.SetPointStatement
+import de.cau.cs.kieler.railsl.railSL.TrackStatement
+import de.cau.cs.kieler.railsl.railSL.PointStatement
 import de.cau.cs.kieler.railsl.railSL.LightStatement
 import de.cau.cs.kieler.railsl.extensions.RailSLExtensions
 import de.cau.cs.kieler.railsl.compilation.RailSLTransformation
@@ -88,6 +88,10 @@ class Visualizer {
      */
     private var DataPool pool
 
+    /**
+     * A basic pool with no statements applied to it.
+     * Used as base for cloning.
+     */
     private val DataPool emptyPool = createEmptyPool()
 
     /**
@@ -104,15 +108,14 @@ class Visualizer {
      *************************************************************************/
     /**
      * Default constructor.
-     * Instantiates the DataPool and fills it with default values for all tracks, points and lights.
+     * Registers listeners to keep track of the currently used XText Editor.
      */
     new() {
 
-        System.out.println("Creating Visualizer...")
-
+        // Default pool with no statements applied
         pool = emptyPool.clone
-
-        // TODO Add more default variable values here
+        
+        // Register a ChangeListener to the currently active XText editor, if available
         registerListenerToEditor
 
         // Register listener to keep track of changing editors
@@ -173,6 +176,9 @@ class Visualizer {
             })
     }
 
+    /**
+     * Fill a default data pool with data representing an "empty" track scheme.
+     */
     private def DataPool createEmptyPool() {
         val pool = new DataPool()
         val model = new Model()
@@ -199,8 +205,7 @@ class Visualizer {
             model.addVariable(new Variable("light_" + i, "off"))
         }
 
-        pool
-
+        return pool
     }
 
     /**
@@ -262,6 +267,7 @@ class Visualizer {
     /*************************************************************************
      * U P D A T I N G *******************************************************
      *************************************************************************/
+     
     /**
      * Read the current cursor position from the active editor and 
      * display the effects of the currently selected Statement in the KVis View.
@@ -331,10 +337,10 @@ class Visualizer {
      */
     def addValues(Model model, Statement statement) {
 
-        if (statement instanceof SetTrackStatement) {
-            model.addTrackValues(statement as SetTrackStatement)
-        } else if (statement instanceof SetPointStatement) {
-            model.addPointValues(statement as SetPointStatement)
+        if (statement instanceof TrackStatement) {
+            model.addTrackValues(statement as TrackStatement)
+        } else if (statement instanceof PointStatement) {
+            model.addPointValues(statement as PointStatement)
         } else if (statement instanceof LightStatement) {
             model.addLightValues(statement as LightStatement)
         } else if (statement instanceof ContactWaitStatement) {
@@ -350,7 +356,7 @@ class Visualizer {
      * @param model The model from the DataPool to which the data should be added
      * @param statement The statement to be represented
      */
-    def addTrackValues(Model model, SetTrackStatement statement) {
+    def addTrackValues(Model model, TrackStatement statement) {
 
         try {
             val direction = statement.parseDirection
@@ -400,17 +406,15 @@ class Visualizer {
      * @param model The model from the DataPool to which the data should be added
      * @param statement The statement to be represented
      */
-    def addPointValues(Model model, SetPointStatement statement) {
+    def addPointValues(Model model, PointStatement statement) {
 
         var Variable variable
 
         try {
-
             for (index : statement.points) {
                 variable = new Variable("point_" + index, statement.orientation)
                 model.addVariable(variable)
             }
-
         } catch (NullPointerException e) {
             System.out.println("Parsed illegal statement.")
             return
@@ -446,7 +450,6 @@ class Visualizer {
      */
     def addContactValue(Model model, ContactWaitStatement statement) {
         try {
-
             val variable = new Variable(statement.segName + "_C_" + statement.parseContactIndex, "on")
             model.addVariable(variable)
         } catch (NullPointerException e) {
@@ -486,16 +489,12 @@ class Visualizer {
     /*************************************************************************
      * G E T T E R S   &   S E T T E R S *************************************
      *************************************************************************/
-    /**
-     * Getter for the DataPool.
-     * Currently unused.
-     */
-    public def DataPool getDataPool() {
-        return pool
-    }
 
+    /**
+     * Returns the currently registered Editor.
+     */
     public def XtextEditor getRegisteredEditor() {
         return registeredEditor
     }
-
+    
 }

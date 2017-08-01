@@ -19,10 +19,10 @@ Statement:
 ;
 	
 SetStatement:
-	SetTrackStatement | SetPointStatement
+	TrackStatement | PointStatement
 ;
 	
-SetTrackStatement:
+TrackStatement:
 	'Set track' (segments+=SEG_NAME)(', 'segments+=SEG_NAME)*(( 'and' segments+=SEG_NAME) | (', and' segments+=SEG_NAME))? 'to' mode=TrackSetting'.'
 ;
 
@@ -30,7 +30,7 @@ TrackSetting:
 	(('full' | 'slow') ('reverse')?) | 'stop'
 ;
 
-SetPointStatement:
+PointStatement:
 	'Set point' (points+=INT)(', 'points+=INT)*(( 'and' points+=INT) | (', and' points+=INT))? 'to' orientation=('straight' | 'branch')'.'
 ;
 
@@ -43,7 +43,7 @@ TimeWaitStatement:
 ;
 
 ContactWaitStatement:
-	event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME'.' 
+	event=('Reach' | 'Pass') contact=ContactIndex 'contact of' segName=SEG_NAME'.' 
 ;
 
 OpStatement:

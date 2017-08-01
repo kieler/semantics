@@ -32,14 +32,11 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.ArrayList
-import java.util.List
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.railsl.railSL.Block
 import de.cau.cs.kieler.railsl.railSL.Statement
 import de.cau.cs.kieler.railsl.railSL.TimeWaitStatement
 import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement
-import de.cau.cs.kieler.railsl.railSL.SetTrackStatement
-import de.cau.cs.kieler.railsl.railSL.SetPointStatement
 import de.cau.cs.kieler.railsl.railSL.LightStatement
 import de.cau.cs.kieler.railsl.railSL.ConditionalStatement
 import de.cau.cs.kieler.railsl.railSL.CrossingStatement
@@ -50,6 +47,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.railsl.railSL.ParallelStatement
+import de.cau.cs.kieler.railsl.railSL.TrackStatement
+import de.cau.cs.kieler.railsl.railSL.PointStatement
 
 /**
  * Transforms a RailSL model to an SCChart.
@@ -78,6 +77,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     /*************************************************************************
      * I N J E C T I O N S ***************************************************
      *************************************************************************/
+     
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -92,6 +92,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     /*************************************************************************
      * F I E L D S ***********************************************************
      *************************************************************************/
+    
     /**
      * The speed value for slow driving
      */
@@ -135,11 +136,11 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     /**************************************************************************
      * T R A N S F O R M A T I O N S ******************************************
      **************************************************************************/
+     
     /**
      * Transforms an instance of the RailSL metamodel to an instance of the SCCharts metamodel.
      */
     def State railSLtoSCChart(Program model) {
-
         return generateSCChart(model.block)
     }
 
@@ -299,10 +300,10 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             state.makeTimeWaitStatement(statement as TimeWaitStatement)
         } else if (statement instanceof ContactWaitStatement) {
             state.makeContactWaitStatement(statement as ContactWaitStatement)
-        } else if (statement instanceof SetTrackStatement) {
-            state.makeSetTrackStatement(statement as SetTrackStatement)
-        } else if (statement instanceof SetPointStatement) {
-            state.makeSetPointStatement(statement as SetPointStatement)
+        } else if (statement instanceof TrackStatement) {
+            state.makeTrackStatement(statement as TrackStatement)
+        } else if (statement instanceof PointStatement) {
+            state.makePointStatement(statement as PointStatement)
         } else if (statement instanceof LightStatement) {
             state.makeLightStatement(statement as LightStatement)
         } else if (statement instanceof ConditionalStatement) {
@@ -414,7 +415,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      * 
      * This state sets one or multiple points to a certain setting.
      */
-    def void makeSetPointStatement(State state, SetPointStatement spStatement) {
+    def void makePointStatement(State state, PointStatement spStatement) {
         state.label = "_" + getStateID() + "_SetPoint"
 
         val region = state.createControlflowRegion("Set_points_to_" + spStatement.orientation)
@@ -445,7 +446,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      * This state sets one or multiple tracks to a certain setting.
      * It will also update their signals accordingly.
      */
-    def void makeSetTrackStatement(State state, SetTrackStatement stStatement) {
+    def void makeTrackStatement(State state, TrackStatement stStatement) {
         state.label = "_" + getStateID() + "_SetTrack"
 
         val region = state.createControlflowRegion("Set_tracks_to_" + stStatement.mode)
@@ -554,23 +555,16 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             subExpressions += createBoolValue(true)
         ]
     }
-
+    
+    /**
+     * Transforms an empty state into a parallel statement state.
+     */
     def void makeParallelStatement(State state, ParallelStatement pStatement) {
         state.label = "_" + getStateID + "_Parallel"
-//        val region = state.createControlflowRegion("parallel")
-//        val init = region.createInitialState("init")
-//        val done = region.createFinalState("done")
-//        
-//        val parallel = region.createState("")
-//        
-//        init.createImmediateTransitionTo(parallel)
-//        parallel.createImmediateTransitionTo(done).setTypeTermination
         
         for (block : pStatement.blocks) {
             block.compile(state)
         }
-        
-        
     }
 
     /**

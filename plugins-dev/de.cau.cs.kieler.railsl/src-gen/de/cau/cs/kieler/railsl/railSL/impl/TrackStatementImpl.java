@@ -4,7 +4,7 @@
 package de.cau.cs.kieler.railsl.railSL.impl;
 
 import de.cau.cs.kieler.railsl.railSL.RailSLPackage;
-import de.cau.cs.kieler.railsl.railSL.SetPointStatement;
+import de.cau.cs.kieler.railsl.railSL.TrackStatement;
 
 import java.util.Collection;
 
@@ -20,56 +20,56 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Set Point Statement</b></em>'.
+ * An implementation of the model object '<em><b>Track Statement</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.SetPointStatementImpl#getPoints <em>Points</em>}</li>
- *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.SetPointStatementImpl#getOrientation <em>Orientation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.TrackStatementImpl#getSegments <em>Segments</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.TrackStatementImpl#getMode <em>Mode</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class SetPointStatementImpl extends SetStatementImpl implements SetPointStatement
+public class TrackStatementImpl extends SetStatementImpl implements TrackStatement
 {
   /**
-   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list.
+   * The cached value of the '{@link #getSegments() <em>Segments</em>}' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPoints()
+   * @see #getSegments()
    * @generated
    * @ordered
    */
-  protected EList<Integer> points;
+  protected EList<String> segments;
 
   /**
-   * The default value of the '{@link #getOrientation() <em>Orientation</em>}' attribute.
+   * The default value of the '{@link #getMode() <em>Mode</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOrientation()
+   * @see #getMode()
    * @generated
    * @ordered
    */
-  protected static final String ORIENTATION_EDEFAULT = null;
+  protected static final String MODE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getOrientation() <em>Orientation</em>}' attribute.
+   * The cached value of the '{@link #getMode() <em>Mode</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOrientation()
+   * @see #getMode()
    * @generated
    * @ordered
    */
-  protected String orientation = ORIENTATION_EDEFAULT;
+  protected String mode = MODE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected SetPointStatementImpl()
+  protected TrackStatementImpl()
   {
     super();
   }
@@ -82,7 +82,7 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
   @Override
   protected EClass eStaticClass()
   {
-    return RailSLPackage.Literals.SET_POINT_STATEMENT;
+    return RailSLPackage.Literals.TRACK_STATEMENT;
   }
 
   /**
@@ -90,13 +90,13 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Integer> getPoints()
+  public EList<String> getSegments()
   {
-    if (points == null)
+    if (segments == null)
     {
-      points = new EDataTypeEList<Integer>(Integer.class, this, RailSLPackage.SET_POINT_STATEMENT__POINTS);
+      segments = new EDataTypeEList<String>(String.class, this, RailSLPackage.TRACK_STATEMENT__SEGMENTS);
     }
-    return points;
+    return segments;
   }
 
   /**
@@ -104,9 +104,9 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOrientation()
+  public String getMode()
   {
-    return orientation;
+    return mode;
   }
 
   /**
@@ -114,12 +114,12 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOrientation(String newOrientation)
+  public void setMode(String newMode)
   {
-    String oldOrientation = orientation;
-    orientation = newOrientation;
+    String oldMode = mode;
+    mode = newMode;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RailSLPackage.SET_POINT_STATEMENT__ORIENTATION, oldOrientation, orientation));
+      eNotify(new ENotificationImpl(this, Notification.SET, RailSLPackage.TRACK_STATEMENT__MODE, oldMode, mode));
   }
 
   /**
@@ -132,10 +132,10 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
   {
     switch (featureID)
     {
-      case RailSLPackage.SET_POINT_STATEMENT__POINTS:
-        return getPoints();
-      case RailSLPackage.SET_POINT_STATEMENT__ORIENTATION:
-        return getOrientation();
+      case RailSLPackage.TRACK_STATEMENT__SEGMENTS:
+        return getSegments();
+      case RailSLPackage.TRACK_STATEMENT__MODE:
+        return getMode();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -151,12 +151,12 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
   {
     switch (featureID)
     {
-      case RailSLPackage.SET_POINT_STATEMENT__POINTS:
-        getPoints().clear();
-        getPoints().addAll((Collection<? extends Integer>)newValue);
+      case RailSLPackage.TRACK_STATEMENT__SEGMENTS:
+        getSegments().clear();
+        getSegments().addAll((Collection<? extends String>)newValue);
         return;
-      case RailSLPackage.SET_POINT_STATEMENT__ORIENTATION:
-        setOrientation((String)newValue);
+      case RailSLPackage.TRACK_STATEMENT__MODE:
+        setMode((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -172,11 +172,11 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
   {
     switch (featureID)
     {
-      case RailSLPackage.SET_POINT_STATEMENT__POINTS:
-        getPoints().clear();
+      case RailSLPackage.TRACK_STATEMENT__SEGMENTS:
+        getSegments().clear();
         return;
-      case RailSLPackage.SET_POINT_STATEMENT__ORIENTATION:
-        setOrientation(ORIENTATION_EDEFAULT);
+      case RailSLPackage.TRACK_STATEMENT__MODE:
+        setMode(MODE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -192,10 +192,10 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
   {
     switch (featureID)
     {
-      case RailSLPackage.SET_POINT_STATEMENT__POINTS:
-        return points != null && !points.isEmpty();
-      case RailSLPackage.SET_POINT_STATEMENT__ORIENTATION:
-        return ORIENTATION_EDEFAULT == null ? orientation != null : !ORIENTATION_EDEFAULT.equals(orientation);
+      case RailSLPackage.TRACK_STATEMENT__SEGMENTS:
+        return segments != null && !segments.isEmpty();
+      case RailSLPackage.TRACK_STATEMENT__MODE:
+        return MODE_EDEFAULT == null ? mode != null : !MODE_EDEFAULT.equals(mode);
     }
     return super.eIsSet(featureID);
   }
@@ -211,12 +211,12 @@ public class SetPointStatementImpl extends SetStatementImpl implements SetPointS
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (points: ");
-    result.append(points);
-    result.append(", orientation: ");
-    result.append(orientation);
+    result.append(" (segments: ");
+    result.append(segments);
+    result.append(", mode: ");
+    result.append(mode);
     result.append(')');
     return result.toString();
   }
 
-} //SetPointStatementImpl
+} //TrackStatementImpl

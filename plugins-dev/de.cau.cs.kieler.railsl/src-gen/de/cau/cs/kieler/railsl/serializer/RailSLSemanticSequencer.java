@@ -11,11 +11,11 @@ import de.cau.cs.kieler.railsl.railSL.ContactWaitStatement;
 import de.cau.cs.kieler.railsl.railSL.CrossingStatement;
 import de.cau.cs.kieler.railsl.railSL.LightStatement;
 import de.cau.cs.kieler.railsl.railSL.ParallelStatement;
+import de.cau.cs.kieler.railsl.railSL.PointStatement;
 import de.cau.cs.kieler.railsl.railSL.Program;
 import de.cau.cs.kieler.railsl.railSL.RailSLPackage;
-import de.cau.cs.kieler.railsl.railSL.SetPointStatement;
-import de.cau.cs.kieler.railsl.railSL.SetTrackStatement;
 import de.cau.cs.kieler.railsl.railSL.TimeWaitStatement;
+import de.cau.cs.kieler.railsl.railSL.TrackStatement;
 import de.cau.cs.kieler.railsl.services.RailSLGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -63,17 +63,17 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case RailSLPackage.PARALLEL_STATEMENT:
 				sequence_ParallelStatement(context, (ParallelStatement) semanticObject); 
 				return; 
+			case RailSLPackage.POINT_STATEMENT:
+				sequence_PointStatement(context, (PointStatement) semanticObject); 
+				return; 
 			case RailSLPackage.PROGRAM:
 				sequence_Program(context, (Program) semanticObject); 
 				return; 
-			case RailSLPackage.SET_POINT_STATEMENT:
-				sequence_SetPointStatement(context, (SetPointStatement) semanticObject); 
-				return; 
-			case RailSLPackage.SET_TRACK_STATEMENT:
-				sequence_SetTrackStatement(context, (SetTrackStatement) semanticObject); 
-				return; 
 			case RailSLPackage.TIME_WAIT_STATEMENT:
 				sequence_TimeWaitStatement(context, (TimeWaitStatement) semanticObject); 
+				return; 
+			case RailSLPackage.TRACK_STATEMENT:
+				sequence_TrackStatement(context, (TrackStatement) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -136,7 +136,7 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     ContactWaitStatement returns ContactWaitStatement
 	 *
 	 * Constraint:
-	 *     ((event='Reach' | event='Pass') contactIndex=ContactIndex segName=SEG_NAME)
+	 *     ((event='Reach' | event='Pass') contact=ContactIndex segName=SEG_NAME)
 	 */
 	protected void sequence_ContactWaitStatement(ISerializationContext context, ContactWaitStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -186,6 +186,20 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns PointStatement
+	 *     SetStatement returns PointStatement
+	 *     PointStatement returns PointStatement
+	 *
+	 * Constraint:
+	 *     (points+=INT points+=INT* (points+=INT | points+=INT)? (orientation='straight' | orientation='branch'))
+	 */
+	protected void sequence_PointStatement(ISerializationContext context, PointStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Program returns Program
 	 *
 	 * Constraint:
@@ -204,34 +218,6 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Statement returns SetPointStatement
-	 *     SetStatement returns SetPointStatement
-	 *     SetPointStatement returns SetPointStatement
-	 *
-	 * Constraint:
-	 *     (points+=INT points+=INT* (points+=INT | points+=INT)? (orientation='straight' | orientation='branch'))
-	 */
-	protected void sequence_SetPointStatement(ISerializationContext context, SetPointStatement semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Statement returns SetTrackStatement
-	 *     SetStatement returns SetTrackStatement
-	 *     SetTrackStatement returns SetTrackStatement
-	 *
-	 * Constraint:
-	 *     (segments+=SEG_NAME segments+=SEG_NAME* (segments+=SEG_NAME | segments+=SEG_NAME)? mode=TrackSetting)
-	 */
-	protected void sequence_SetTrackStatement(ISerializationContext context, SetTrackStatement semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Statement returns TimeWaitStatement
 	 *     WaitStatement returns TimeWaitStatement
 	 *     TimeWaitStatement returns TimeWaitStatement
@@ -240,6 +226,20 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     time=INT+
 	 */
 	protected void sequence_TimeWaitStatement(ISerializationContext context, TimeWaitStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns TrackStatement
+	 *     SetStatement returns TrackStatement
+	 *     TrackStatement returns TrackStatement
+	 *
+	 * Constraint:
+	 *     (segments+=SEG_NAME segments+=SEG_NAME* (segments+=SEG_NAME | segments+=SEG_NAME)? mode=TrackSetting)
+	 */
+	protected void sequence_TrackStatement(ISerializationContext context, TrackStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

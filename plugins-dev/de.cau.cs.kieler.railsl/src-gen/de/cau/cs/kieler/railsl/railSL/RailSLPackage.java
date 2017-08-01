@@ -161,14 +161,14 @@ public interface RailSLPackage extends EPackage
   int SET_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.railsl.railSL.impl.SetTrackStatementImpl <em>Set Track Statement</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.railsl.railSL.impl.TrackStatementImpl <em>Track Statement</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.railsl.railSL.impl.SetTrackStatementImpl
-   * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getSetTrackStatement()
+   * @see de.cau.cs.kieler.railsl.railSL.impl.TrackStatementImpl
+   * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getTrackStatement()
    * @generated
    */
-  int SET_TRACK_STATEMENT = 4;
+  int TRACK_STATEMENT = 4;
 
   /**
    * The feature id for the '<em><b>Segments</b></em>' attribute list.
@@ -177,7 +177,7 @@ public interface RailSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET_TRACK_STATEMENT__SEGMENTS = SET_STATEMENT_FEATURE_COUNT + 0;
+  int TRACK_STATEMENT__SEGMENTS = SET_STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Mode</b></em>' attribute.
@@ -186,26 +186,26 @@ public interface RailSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET_TRACK_STATEMENT__MODE = SET_STATEMENT_FEATURE_COUNT + 1;
+  int TRACK_STATEMENT__MODE = SET_STATEMENT_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Set Track Statement</em>' class.
+   * The number of structural features of the '<em>Track Statement</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SET_TRACK_STATEMENT_FEATURE_COUNT = SET_STATEMENT_FEATURE_COUNT + 2;
+  int TRACK_STATEMENT_FEATURE_COUNT = SET_STATEMENT_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.railsl.railSL.impl.SetPointStatementImpl <em>Set Point Statement</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.railsl.railSL.impl.PointStatementImpl <em>Point Statement</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.railsl.railSL.impl.SetPointStatementImpl
-   * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getSetPointStatement()
+   * @see de.cau.cs.kieler.railsl.railSL.impl.PointStatementImpl
+   * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getPointStatement()
    * @generated
    */
-  int SET_POINT_STATEMENT = 5;
+  int POINT_STATEMENT = 5;
 
   /**
    * The feature id for the '<em><b>Points</b></em>' attribute list.
@@ -214,7 +214,7 @@ public interface RailSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET_POINT_STATEMENT__POINTS = SET_STATEMENT_FEATURE_COUNT + 0;
+  int POINT_STATEMENT__POINTS = SET_STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Orientation</b></em>' attribute.
@@ -223,16 +223,16 @@ public interface RailSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SET_POINT_STATEMENT__ORIENTATION = SET_STATEMENT_FEATURE_COUNT + 1;
+  int POINT_STATEMENT__ORIENTATION = SET_STATEMENT_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Set Point Statement</em>' class.
+   * The number of structural features of the '<em>Point Statement</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SET_POINT_STATEMENT_FEATURE_COUNT = SET_STATEMENT_FEATURE_COUNT + 2;
+  int POINT_STATEMENT_FEATURE_COUNT = SET_STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.railsl.railSL.impl.WaitStatementImpl <em>Wait Statement</em>}' class.
@@ -301,13 +301,13 @@ public interface RailSLPackage extends EPackage
   int CONTACT_WAIT_STATEMENT__EVENT = WAIT_STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Contact Index</b></em>' attribute.
+   * The feature id for the '<em><b>Contact</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONTACT_WAIT_STATEMENT__CONTACT_INDEX = WAIT_STATEMENT_FEATURE_COUNT + 1;
+  int CONTACT_WAIT_STATEMENT__CONTACT = WAIT_STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Seg Name</b></em>' attribute.
@@ -588,68 +588,68 @@ public interface RailSLPackage extends EPackage
   EClass getSetStatement();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.SetTrackStatement <em>Set Track Statement</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.TrackStatement <em>Track Statement</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Set Track Statement</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.SetTrackStatement
+   * @return the meta object for class '<em>Track Statement</em>'.
+   * @see de.cau.cs.kieler.railsl.railSL.TrackStatement
    * @generated
    */
-  EClass getSetTrackStatement();
+  EClass getTrackStatement();
 
   /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.railsl.railSL.SetTrackStatement#getSegments <em>Segments</em>}'.
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.railsl.railSL.TrackStatement#getSegments <em>Segments</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute list '<em>Segments</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.SetTrackStatement#getSegments()
-   * @see #getSetTrackStatement()
+   * @see de.cau.cs.kieler.railsl.railSL.TrackStatement#getSegments()
+   * @see #getTrackStatement()
    * @generated
    */
-  EAttribute getSetTrackStatement_Segments();
+  EAttribute getTrackStatement_Segments();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.railsl.railSL.SetTrackStatement#getMode <em>Mode</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.railsl.railSL.TrackStatement#getMode <em>Mode</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Mode</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.SetTrackStatement#getMode()
-   * @see #getSetTrackStatement()
+   * @see de.cau.cs.kieler.railsl.railSL.TrackStatement#getMode()
+   * @see #getTrackStatement()
    * @generated
    */
-  EAttribute getSetTrackStatement_Mode();
+  EAttribute getTrackStatement_Mode();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.SetPointStatement <em>Set Point Statement</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.PointStatement <em>Point Statement</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Set Point Statement</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.SetPointStatement
+   * @return the meta object for class '<em>Point Statement</em>'.
+   * @see de.cau.cs.kieler.railsl.railSL.PointStatement
    * @generated
    */
-  EClass getSetPointStatement();
+  EClass getPointStatement();
 
   /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.railsl.railSL.SetPointStatement#getPoints <em>Points</em>}'.
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.railsl.railSL.PointStatement#getPoints <em>Points</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute list '<em>Points</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.SetPointStatement#getPoints()
-   * @see #getSetPointStatement()
+   * @see de.cau.cs.kieler.railsl.railSL.PointStatement#getPoints()
+   * @see #getPointStatement()
    * @generated
    */
-  EAttribute getSetPointStatement_Points();
+  EAttribute getPointStatement_Points();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.railsl.railSL.SetPointStatement#getOrientation <em>Orientation</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.railsl.railSL.PointStatement#getOrientation <em>Orientation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Orientation</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.SetPointStatement#getOrientation()
-   * @see #getSetPointStatement()
+   * @see de.cau.cs.kieler.railsl.railSL.PointStatement#getOrientation()
+   * @see #getPointStatement()
    * @generated
    */
-  EAttribute getSetPointStatement_Orientation();
+  EAttribute getPointStatement_Orientation();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.railsl.railSL.WaitStatement <em>Wait Statement</em>}'.
@@ -704,15 +704,15 @@ public interface RailSLPackage extends EPackage
   EAttribute getContactWaitStatement_Event();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContactIndex <em>Contact Index</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContact <em>Contact</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Contact Index</em>'.
-   * @see de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContactIndex()
+   * @return the meta object for the attribute '<em>Contact</em>'.
+   * @see de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getContact()
    * @see #getContactWaitStatement()
    * @generated
    */
-  EAttribute getContactWaitStatement_ContactIndex();
+  EAttribute getContactWaitStatement_Contact();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.railsl.railSL.ContactWaitStatement#getSegName <em>Seg Name</em>}'.
@@ -961,14 +961,14 @@ public interface RailSLPackage extends EPackage
     EClass SET_STATEMENT = eINSTANCE.getSetStatement();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.railsl.railSL.impl.SetTrackStatementImpl <em>Set Track Statement</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.railsl.railSL.impl.TrackStatementImpl <em>Track Statement</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.railsl.railSL.impl.SetTrackStatementImpl
-     * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getSetTrackStatement()
+     * @see de.cau.cs.kieler.railsl.railSL.impl.TrackStatementImpl
+     * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getTrackStatement()
      * @generated
      */
-    EClass SET_TRACK_STATEMENT = eINSTANCE.getSetTrackStatement();
+    EClass TRACK_STATEMENT = eINSTANCE.getTrackStatement();
 
     /**
      * The meta object literal for the '<em><b>Segments</b></em>' attribute list feature.
@@ -976,7 +976,7 @@ public interface RailSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SET_TRACK_STATEMENT__SEGMENTS = eINSTANCE.getSetTrackStatement_Segments();
+    EAttribute TRACK_STATEMENT__SEGMENTS = eINSTANCE.getTrackStatement_Segments();
 
     /**
      * The meta object literal for the '<em><b>Mode</b></em>' attribute feature.
@@ -984,17 +984,17 @@ public interface RailSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SET_TRACK_STATEMENT__MODE = eINSTANCE.getSetTrackStatement_Mode();
+    EAttribute TRACK_STATEMENT__MODE = eINSTANCE.getTrackStatement_Mode();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.railsl.railSL.impl.SetPointStatementImpl <em>Set Point Statement</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.railsl.railSL.impl.PointStatementImpl <em>Point Statement</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.railsl.railSL.impl.SetPointStatementImpl
-     * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getSetPointStatement()
+     * @see de.cau.cs.kieler.railsl.railSL.impl.PointStatementImpl
+     * @see de.cau.cs.kieler.railsl.railSL.impl.RailSLPackageImpl#getPointStatement()
      * @generated
      */
-    EClass SET_POINT_STATEMENT = eINSTANCE.getSetPointStatement();
+    EClass POINT_STATEMENT = eINSTANCE.getPointStatement();
 
     /**
      * The meta object literal for the '<em><b>Points</b></em>' attribute list feature.
@@ -1002,7 +1002,7 @@ public interface RailSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SET_POINT_STATEMENT__POINTS = eINSTANCE.getSetPointStatement_Points();
+    EAttribute POINT_STATEMENT__POINTS = eINSTANCE.getPointStatement_Points();
 
     /**
      * The meta object literal for the '<em><b>Orientation</b></em>' attribute feature.
@@ -1010,7 +1010,7 @@ public interface RailSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SET_POINT_STATEMENT__ORIENTATION = eINSTANCE.getSetPointStatement_Orientation();
+    EAttribute POINT_STATEMENT__ORIENTATION = eINSTANCE.getPointStatement_Orientation();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.railsl.railSL.impl.WaitStatementImpl <em>Wait Statement</em>}' class.
@@ -1059,12 +1059,12 @@ public interface RailSLPackage extends EPackage
     EAttribute CONTACT_WAIT_STATEMENT__EVENT = eINSTANCE.getContactWaitStatement_Event();
 
     /**
-     * The meta object literal for the '<em><b>Contact Index</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Contact</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONTACT_WAIT_STATEMENT__CONTACT_INDEX = eINSTANCE.getContactWaitStatement_ContactIndex();
+    EAttribute CONTACT_WAIT_STATEMENT__CONTACT = eINSTANCE.getContactWaitStatement_Contact();
 
     /**
      * The meta object literal for the '<em><b>Seg Name</b></em>' attribute feature.

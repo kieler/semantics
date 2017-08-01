@@ -487,20 +487,20 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleSetStatement"
 
 
-    // $ANTLR start "entryRuleSetTrackStatement"
-    // InternalRailSL.g:178:1: entryRuleSetTrackStatement : ruleSetTrackStatement EOF ;
-    public final void entryRuleSetTrackStatement() throws RecognitionException {
+    // $ANTLR start "entryRuleTrackStatement"
+    // InternalRailSL.g:178:1: entryRuleTrackStatement : ruleTrackStatement EOF ;
+    public final void entryRuleTrackStatement() throws RecognitionException {
         try {
-            // InternalRailSL.g:179:1: ( ruleSetTrackStatement EOF )
-            // InternalRailSL.g:180:1: ruleSetTrackStatement EOF
+            // InternalRailSL.g:179:1: ( ruleTrackStatement EOF )
+            // InternalRailSL.g:180:1: ruleTrackStatement EOF
             {
-             before(grammarAccess.getSetTrackStatementRule()); 
+             before(grammarAccess.getTrackStatementRule()); 
             pushFollow(FOLLOW_1);
-            ruleSetTrackStatement();
+            ruleTrackStatement();
 
             state._fsp--;
 
-             after(grammarAccess.getSetTrackStatementRule()); 
+             after(grammarAccess.getTrackStatementRule()); 
             match(input,EOF,FOLLOW_2); 
 
             }
@@ -514,35 +514,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleSetTrackStatement"
+    // $ANTLR end "entryRuleTrackStatement"
 
 
-    // $ANTLR start "ruleSetTrackStatement"
-    // InternalRailSL.g:187:1: ruleSetTrackStatement : ( ( rule__SetTrackStatement__Group__0 ) ) ;
-    public final void ruleSetTrackStatement() throws RecognitionException {
+    // $ANTLR start "ruleTrackStatement"
+    // InternalRailSL.g:187:1: ruleTrackStatement : ( ( rule__TrackStatement__Group__0 ) ) ;
+    public final void ruleTrackStatement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:191:2: ( ( ( rule__SetTrackStatement__Group__0 ) ) )
-            // InternalRailSL.g:192:2: ( ( rule__SetTrackStatement__Group__0 ) )
+            // InternalRailSL.g:191:2: ( ( ( rule__TrackStatement__Group__0 ) ) )
+            // InternalRailSL.g:192:2: ( ( rule__TrackStatement__Group__0 ) )
             {
-            // InternalRailSL.g:192:2: ( ( rule__SetTrackStatement__Group__0 ) )
-            // InternalRailSL.g:193:3: ( rule__SetTrackStatement__Group__0 )
+            // InternalRailSL.g:192:2: ( ( rule__TrackStatement__Group__0 ) )
+            // InternalRailSL.g:193:3: ( rule__TrackStatement__Group__0 )
             {
-             before(grammarAccess.getSetTrackStatementAccess().getGroup()); 
-            // InternalRailSL.g:194:3: ( rule__SetTrackStatement__Group__0 )
-            // InternalRailSL.g:194:4: rule__SetTrackStatement__Group__0
+             before(grammarAccess.getTrackStatementAccess().getGroup()); 
+            // InternalRailSL.g:194:3: ( rule__TrackStatement__Group__0 )
+            // InternalRailSL.g:194:4: rule__TrackStatement__Group__0
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__0();
+            rule__TrackStatement__Group__0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetTrackStatementAccess().getGroup()); 
+             after(grammarAccess.getTrackStatementAccess().getGroup()); 
 
             }
 
@@ -561,7 +561,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleSetTrackStatement"
+    // $ANTLR end "ruleTrackStatement"
 
 
     // $ANTLR start "entryRuleTrackSetting"
@@ -641,20 +641,20 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleTrackSetting"
 
 
-    // $ANTLR start "entryRuleSetPointStatement"
-    // InternalRailSL.g:228:1: entryRuleSetPointStatement : ruleSetPointStatement EOF ;
-    public final void entryRuleSetPointStatement() throws RecognitionException {
+    // $ANTLR start "entryRulePointStatement"
+    // InternalRailSL.g:228:1: entryRulePointStatement : rulePointStatement EOF ;
+    public final void entryRulePointStatement() throws RecognitionException {
         try {
-            // InternalRailSL.g:229:1: ( ruleSetPointStatement EOF )
-            // InternalRailSL.g:230:1: ruleSetPointStatement EOF
+            // InternalRailSL.g:229:1: ( rulePointStatement EOF )
+            // InternalRailSL.g:230:1: rulePointStatement EOF
             {
-             before(grammarAccess.getSetPointStatementRule()); 
+             before(grammarAccess.getPointStatementRule()); 
             pushFollow(FOLLOW_1);
-            ruleSetPointStatement();
+            rulePointStatement();
 
             state._fsp--;
 
-             after(grammarAccess.getSetPointStatementRule()); 
+             after(grammarAccess.getPointStatementRule()); 
             match(input,EOF,FOLLOW_2); 
 
             }
@@ -668,35 +668,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleSetPointStatement"
+    // $ANTLR end "entryRulePointStatement"
 
 
-    // $ANTLR start "ruleSetPointStatement"
-    // InternalRailSL.g:237:1: ruleSetPointStatement : ( ( rule__SetPointStatement__Group__0 ) ) ;
-    public final void ruleSetPointStatement() throws RecognitionException {
+    // $ANTLR start "rulePointStatement"
+    // InternalRailSL.g:237:1: rulePointStatement : ( ( rule__PointStatement__Group__0 ) ) ;
+    public final void rulePointStatement() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:241:2: ( ( ( rule__SetPointStatement__Group__0 ) ) )
-            // InternalRailSL.g:242:2: ( ( rule__SetPointStatement__Group__0 ) )
+            // InternalRailSL.g:241:2: ( ( ( rule__PointStatement__Group__0 ) ) )
+            // InternalRailSL.g:242:2: ( ( rule__PointStatement__Group__0 ) )
             {
-            // InternalRailSL.g:242:2: ( ( rule__SetPointStatement__Group__0 ) )
-            // InternalRailSL.g:243:3: ( rule__SetPointStatement__Group__0 )
+            // InternalRailSL.g:242:2: ( ( rule__PointStatement__Group__0 ) )
+            // InternalRailSL.g:243:3: ( rule__PointStatement__Group__0 )
             {
-             before(grammarAccess.getSetPointStatementAccess().getGroup()); 
-            // InternalRailSL.g:244:3: ( rule__SetPointStatement__Group__0 )
-            // InternalRailSL.g:244:4: rule__SetPointStatement__Group__0
+             before(grammarAccess.getPointStatementAccess().getGroup()); 
+            // InternalRailSL.g:244:3: ( rule__PointStatement__Group__0 )
+            // InternalRailSL.g:244:4: rule__PointStatement__Group__0
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__0();
+            rule__PointStatement__Group__0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getGroup()); 
+             after(grammarAccess.getPointStatementAccess().getGroup()); 
 
             }
 
@@ -715,7 +715,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleSetPointStatement"
+    // $ANTLR end "rulePointStatement"
 
 
     // $ANTLR start "entryRuleWaitStatement"
@@ -1720,13 +1720,13 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SetStatement__Alternatives"
-    // InternalRailSL.g:562:1: rule__SetStatement__Alternatives : ( ( ruleSetTrackStatement ) | ( ruleSetPointStatement ) );
+    // InternalRailSL.g:562:1: rule__SetStatement__Alternatives : ( ( ruleTrackStatement ) | ( rulePointStatement ) );
     public final void rule__SetStatement__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:566:1: ( ( ruleSetTrackStatement ) | ( ruleSetPointStatement ) )
+            // InternalRailSL.g:566:1: ( ( ruleTrackStatement ) | ( rulePointStatement ) )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1744,18 +1744,18 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt3) {
                 case 1 :
-                    // InternalRailSL.g:567:2: ( ruleSetTrackStatement )
+                    // InternalRailSL.g:567:2: ( ruleTrackStatement )
                     {
-                    // InternalRailSL.g:567:2: ( ruleSetTrackStatement )
-                    // InternalRailSL.g:568:3: ruleSetTrackStatement
+                    // InternalRailSL.g:567:2: ( ruleTrackStatement )
+                    // InternalRailSL.g:568:3: ruleTrackStatement
                     {
-                     before(grammarAccess.getSetStatementAccess().getSetTrackStatementParserRuleCall_0()); 
+                     before(grammarAccess.getSetStatementAccess().getTrackStatementParserRuleCall_0()); 
                     pushFollow(FOLLOW_2);
-                    ruleSetTrackStatement();
+                    ruleTrackStatement();
 
                     state._fsp--;
 
-                     after(grammarAccess.getSetStatementAccess().getSetTrackStatementParserRuleCall_0()); 
+                     after(grammarAccess.getSetStatementAccess().getTrackStatementParserRuleCall_0()); 
 
                     }
 
@@ -1763,18 +1763,18 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:573:2: ( ruleSetPointStatement )
+                    // InternalRailSL.g:573:2: ( rulePointStatement )
                     {
-                    // InternalRailSL.g:573:2: ( ruleSetPointStatement )
-                    // InternalRailSL.g:574:3: ruleSetPointStatement
+                    // InternalRailSL.g:573:2: ( rulePointStatement )
+                    // InternalRailSL.g:574:3: rulePointStatement
                     {
-                     before(grammarAccess.getSetStatementAccess().getSetPointStatementParserRuleCall_1()); 
+                     before(grammarAccess.getSetStatementAccess().getPointStatementParserRuleCall_1()); 
                     pushFollow(FOLLOW_2);
-                    ruleSetPointStatement();
+                    rulePointStatement();
 
                     state._fsp--;
 
-                     after(grammarAccess.getSetStatementAccess().getSetPointStatementParserRuleCall_1()); 
+                     after(grammarAccess.getSetStatementAccess().getPointStatementParserRuleCall_1()); 
 
                     }
 
@@ -1798,14 +1798,14 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__SetStatement__Alternatives"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Alternatives_3"
-    // InternalRailSL.g:583:1: rule__SetTrackStatement__Alternatives_3 : ( ( ( rule__SetTrackStatement__Group_3_0__0 ) ) | ( ( rule__SetTrackStatement__Group_3_1__0 ) ) );
-    public final void rule__SetTrackStatement__Alternatives_3() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Alternatives_3"
+    // InternalRailSL.g:583:1: rule__TrackStatement__Alternatives_3 : ( ( ( rule__TrackStatement__Group_3_0__0 ) ) | ( ( rule__TrackStatement__Group_3_1__0 ) ) );
+    public final void rule__TrackStatement__Alternatives_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:587:1: ( ( ( rule__SetTrackStatement__Group_3_0__0 ) ) | ( ( rule__SetTrackStatement__Group_3_1__0 ) ) )
+            // InternalRailSL.g:587:1: ( ( ( rule__TrackStatement__Group_3_0__0 ) ) | ( ( rule__TrackStatement__Group_3_1__0 ) ) )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -1823,24 +1823,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt4) {
                 case 1 :
-                    // InternalRailSL.g:588:2: ( ( rule__SetTrackStatement__Group_3_0__0 ) )
+                    // InternalRailSL.g:588:2: ( ( rule__TrackStatement__Group_3_0__0 ) )
                     {
-                    // InternalRailSL.g:588:2: ( ( rule__SetTrackStatement__Group_3_0__0 ) )
-                    // InternalRailSL.g:589:3: ( rule__SetTrackStatement__Group_3_0__0 )
+                    // InternalRailSL.g:588:2: ( ( rule__TrackStatement__Group_3_0__0 ) )
+                    // InternalRailSL.g:589:3: ( rule__TrackStatement__Group_3_0__0 )
                     {
-                     before(grammarAccess.getSetTrackStatementAccess().getGroup_3_0()); 
-                    // InternalRailSL.g:590:3: ( rule__SetTrackStatement__Group_3_0__0 )
-                    // InternalRailSL.g:590:4: rule__SetTrackStatement__Group_3_0__0
+                     before(grammarAccess.getTrackStatementAccess().getGroup_3_0()); 
+                    // InternalRailSL.g:590:3: ( rule__TrackStatement__Group_3_0__0 )
+                    // InternalRailSL.g:590:4: rule__TrackStatement__Group_3_0__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__SetTrackStatement__Group_3_0__0();
+                    rule__TrackStatement__Group_3_0__0();
 
                     state._fsp--;
 
 
                     }
 
-                     after(grammarAccess.getSetTrackStatementAccess().getGroup_3_0()); 
+                     after(grammarAccess.getTrackStatementAccess().getGroup_3_0()); 
 
                     }
 
@@ -1848,24 +1848,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:594:2: ( ( rule__SetTrackStatement__Group_3_1__0 ) )
+                    // InternalRailSL.g:594:2: ( ( rule__TrackStatement__Group_3_1__0 ) )
                     {
-                    // InternalRailSL.g:594:2: ( ( rule__SetTrackStatement__Group_3_1__0 ) )
-                    // InternalRailSL.g:595:3: ( rule__SetTrackStatement__Group_3_1__0 )
+                    // InternalRailSL.g:594:2: ( ( rule__TrackStatement__Group_3_1__0 ) )
+                    // InternalRailSL.g:595:3: ( rule__TrackStatement__Group_3_1__0 )
                     {
-                     before(grammarAccess.getSetTrackStatementAccess().getGroup_3_1()); 
-                    // InternalRailSL.g:596:3: ( rule__SetTrackStatement__Group_3_1__0 )
-                    // InternalRailSL.g:596:4: rule__SetTrackStatement__Group_3_1__0
+                     before(grammarAccess.getTrackStatementAccess().getGroup_3_1()); 
+                    // InternalRailSL.g:596:3: ( rule__TrackStatement__Group_3_1__0 )
+                    // InternalRailSL.g:596:4: rule__TrackStatement__Group_3_1__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__SetTrackStatement__Group_3_1__0();
+                    rule__TrackStatement__Group_3_1__0();
 
                     state._fsp--;
 
 
                     }
 
-                     after(grammarAccess.getSetTrackStatementAccess().getGroup_3_1()); 
+                     after(grammarAccess.getTrackStatementAccess().getGroup_3_1()); 
 
                     }
 
@@ -1886,7 +1886,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Alternatives_3"
+    // $ANTLR end "rule__TrackStatement__Alternatives_3"
 
 
     // $ANTLR start "rule__TrackSetting__Alternatives"
@@ -2041,14 +2041,14 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TrackSetting__Alternatives_0_0"
 
 
-    // $ANTLR start "rule__SetPointStatement__Alternatives_3"
-    // InternalRailSL.g:646:1: rule__SetPointStatement__Alternatives_3 : ( ( ( rule__SetPointStatement__Group_3_0__0 ) ) | ( ( rule__SetPointStatement__Group_3_1__0 ) ) );
-    public final void rule__SetPointStatement__Alternatives_3() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Alternatives_3"
+    // InternalRailSL.g:646:1: rule__PointStatement__Alternatives_3 : ( ( ( rule__PointStatement__Group_3_0__0 ) ) | ( ( rule__PointStatement__Group_3_1__0 ) ) );
+    public final void rule__PointStatement__Alternatives_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:650:1: ( ( ( rule__SetPointStatement__Group_3_0__0 ) ) | ( ( rule__SetPointStatement__Group_3_1__0 ) ) )
+            // InternalRailSL.g:650:1: ( ( ( rule__PointStatement__Group_3_0__0 ) ) | ( ( rule__PointStatement__Group_3_1__0 ) ) )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -2066,24 +2066,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt7) {
                 case 1 :
-                    // InternalRailSL.g:651:2: ( ( rule__SetPointStatement__Group_3_0__0 ) )
+                    // InternalRailSL.g:651:2: ( ( rule__PointStatement__Group_3_0__0 ) )
                     {
-                    // InternalRailSL.g:651:2: ( ( rule__SetPointStatement__Group_3_0__0 ) )
-                    // InternalRailSL.g:652:3: ( rule__SetPointStatement__Group_3_0__0 )
+                    // InternalRailSL.g:651:2: ( ( rule__PointStatement__Group_3_0__0 ) )
+                    // InternalRailSL.g:652:3: ( rule__PointStatement__Group_3_0__0 )
                     {
-                     before(grammarAccess.getSetPointStatementAccess().getGroup_3_0()); 
-                    // InternalRailSL.g:653:3: ( rule__SetPointStatement__Group_3_0__0 )
-                    // InternalRailSL.g:653:4: rule__SetPointStatement__Group_3_0__0
+                     before(grammarAccess.getPointStatementAccess().getGroup_3_0()); 
+                    // InternalRailSL.g:653:3: ( rule__PointStatement__Group_3_0__0 )
+                    // InternalRailSL.g:653:4: rule__PointStatement__Group_3_0__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__SetPointStatement__Group_3_0__0();
+                    rule__PointStatement__Group_3_0__0();
 
                     state._fsp--;
 
 
                     }
 
-                     after(grammarAccess.getSetPointStatementAccess().getGroup_3_0()); 
+                     after(grammarAccess.getPointStatementAccess().getGroup_3_0()); 
 
                     }
 
@@ -2091,24 +2091,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalRailSL.g:657:2: ( ( rule__SetPointStatement__Group_3_1__0 ) )
+                    // InternalRailSL.g:657:2: ( ( rule__PointStatement__Group_3_1__0 ) )
                     {
-                    // InternalRailSL.g:657:2: ( ( rule__SetPointStatement__Group_3_1__0 ) )
-                    // InternalRailSL.g:658:3: ( rule__SetPointStatement__Group_3_1__0 )
+                    // InternalRailSL.g:657:2: ( ( rule__PointStatement__Group_3_1__0 ) )
+                    // InternalRailSL.g:658:3: ( rule__PointStatement__Group_3_1__0 )
                     {
-                     before(grammarAccess.getSetPointStatementAccess().getGroup_3_1()); 
-                    // InternalRailSL.g:659:3: ( rule__SetPointStatement__Group_3_1__0 )
-                    // InternalRailSL.g:659:4: rule__SetPointStatement__Group_3_1__0
+                     before(grammarAccess.getPointStatementAccess().getGroup_3_1()); 
+                    // InternalRailSL.g:659:3: ( rule__PointStatement__Group_3_1__0 )
+                    // InternalRailSL.g:659:4: rule__PointStatement__Group_3_1__0
                     {
                     pushFollow(FOLLOW_2);
-                    rule__SetPointStatement__Group_3_1__0();
+                    rule__PointStatement__Group_3_1__0();
 
                     state._fsp--;
 
 
                     }
 
-                     after(grammarAccess.getSetPointStatementAccess().getGroup_3_1()); 
+                     after(grammarAccess.getPointStatementAccess().getGroup_3_1()); 
 
                     }
 
@@ -2129,12 +2129,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Alternatives_3"
+    // $ANTLR end "rule__PointStatement__Alternatives_3"
 
 
-    // $ANTLR start "rule__SetPointStatement__OrientationAlternatives_5_0"
-    // InternalRailSL.g:667:1: rule__SetPointStatement__OrientationAlternatives_5_0 : ( ( 'straight' ) | ( 'branch' ) );
-    public final void rule__SetPointStatement__OrientationAlternatives_5_0() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__OrientationAlternatives_5_0"
+    // InternalRailSL.g:667:1: rule__PointStatement__OrientationAlternatives_5_0 : ( ( 'straight' ) | ( 'branch' ) );
+    public final void rule__PointStatement__OrientationAlternatives_5_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -2162,9 +2162,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                     // InternalRailSL.g:672:2: ( 'straight' )
                     // InternalRailSL.g:673:3: 'straight'
                     {
-                     before(grammarAccess.getSetPointStatementAccess().getOrientationStraightKeyword_5_0_0()); 
+                     before(grammarAccess.getPointStatementAccess().getOrientationStraightKeyword_5_0_0()); 
                     match(input,17,FOLLOW_2); 
-                     after(grammarAccess.getSetPointStatementAccess().getOrientationStraightKeyword_5_0_0()); 
+                     after(grammarAccess.getPointStatementAccess().getOrientationStraightKeyword_5_0_0()); 
 
                     }
 
@@ -2177,9 +2177,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                     // InternalRailSL.g:678:2: ( 'branch' )
                     // InternalRailSL.g:679:3: 'branch'
                     {
-                     before(grammarAccess.getSetPointStatementAccess().getOrientationBranchKeyword_5_0_1()); 
+                     before(grammarAccess.getPointStatementAccess().getOrientationBranchKeyword_5_0_1()); 
                     match(input,18,FOLLOW_2); 
-                     after(grammarAccess.getSetPointStatementAccess().getOrientationBranchKeyword_5_0_1()); 
+                     after(grammarAccess.getPointStatementAccess().getOrientationBranchKeyword_5_0_1()); 
 
                     }
 
@@ -2200,7 +2200,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__OrientationAlternatives_5_0"
+    // $ANTLR end "rule__PointStatement__OrientationAlternatives_5_0"
 
 
     // $ANTLR start "rule__WaitStatement__Alternatives"
@@ -3019,23 +3019,23 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Block__Group__2__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__0"
-    // InternalRailSL.g:923:1: rule__SetTrackStatement__Group__0 : rule__SetTrackStatement__Group__0__Impl rule__SetTrackStatement__Group__1 ;
-    public final void rule__SetTrackStatement__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__0"
+    // InternalRailSL.g:923:1: rule__TrackStatement__Group__0 : rule__TrackStatement__Group__0__Impl rule__TrackStatement__Group__1 ;
+    public final void rule__TrackStatement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:927:1: ( rule__SetTrackStatement__Group__0__Impl rule__SetTrackStatement__Group__1 )
-            // InternalRailSL.g:928:2: rule__SetTrackStatement__Group__0__Impl rule__SetTrackStatement__Group__1
+            // InternalRailSL.g:927:1: ( rule__TrackStatement__Group__0__Impl rule__TrackStatement__Group__1 )
+            // InternalRailSL.g:928:2: rule__TrackStatement__Group__0__Impl rule__TrackStatement__Group__1
             {
             pushFollow(FOLLOW_6);
-            rule__SetTrackStatement__Group__0__Impl();
+            rule__TrackStatement__Group__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__1();
+            rule__TrackStatement__Group__1();
 
             state._fsp--;
 
@@ -3054,12 +3054,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__0"
+    // $ANTLR end "rule__TrackStatement__Group__0"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__0__Impl"
-    // InternalRailSL.g:935:1: rule__SetTrackStatement__Group__0__Impl : ( 'Set track' ) ;
-    public final void rule__SetTrackStatement__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__0__Impl"
+    // InternalRailSL.g:935:1: rule__TrackStatement__Group__0__Impl : ( 'Set track' ) ;
+    public final void rule__TrackStatement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -3070,9 +3070,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:940:1: ( 'Set track' )
             // InternalRailSL.g:941:2: 'Set track'
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSetTrackKeyword_0()); 
+             before(grammarAccess.getTrackStatementAccess().getSetTrackKeyword_0()); 
             match(input,28,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getSetTrackKeyword_0()); 
+             after(grammarAccess.getTrackStatementAccess().getSetTrackKeyword_0()); 
 
             }
 
@@ -3091,26 +3091,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__0__Impl"
+    // $ANTLR end "rule__TrackStatement__Group__0__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__1"
-    // InternalRailSL.g:950:1: rule__SetTrackStatement__Group__1 : rule__SetTrackStatement__Group__1__Impl rule__SetTrackStatement__Group__2 ;
-    public final void rule__SetTrackStatement__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__1"
+    // InternalRailSL.g:950:1: rule__TrackStatement__Group__1 : rule__TrackStatement__Group__1__Impl rule__TrackStatement__Group__2 ;
+    public final void rule__TrackStatement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:954:1: ( rule__SetTrackStatement__Group__1__Impl rule__SetTrackStatement__Group__2 )
-            // InternalRailSL.g:955:2: rule__SetTrackStatement__Group__1__Impl rule__SetTrackStatement__Group__2
+            // InternalRailSL.g:954:1: ( rule__TrackStatement__Group__1__Impl rule__TrackStatement__Group__2 )
+            // InternalRailSL.g:955:2: rule__TrackStatement__Group__1__Impl rule__TrackStatement__Group__2
             {
             pushFollow(FOLLOW_7);
-            rule__SetTrackStatement__Group__1__Impl();
+            rule__TrackStatement__Group__1__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__2();
+            rule__TrackStatement__Group__2();
 
             state._fsp--;
 
@@ -3129,35 +3129,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__1"
+    // $ANTLR end "rule__TrackStatement__Group__1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__1__Impl"
-    // InternalRailSL.g:962:1: rule__SetTrackStatement__Group__1__Impl : ( ( rule__SetTrackStatement__SegmentsAssignment_1 ) ) ;
-    public final void rule__SetTrackStatement__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__1__Impl"
+    // InternalRailSL.g:962:1: rule__TrackStatement__Group__1__Impl : ( ( rule__TrackStatement__SegmentsAssignment_1 ) ) ;
+    public final void rule__TrackStatement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:966:1: ( ( ( rule__SetTrackStatement__SegmentsAssignment_1 ) ) )
-            // InternalRailSL.g:967:1: ( ( rule__SetTrackStatement__SegmentsAssignment_1 ) )
+            // InternalRailSL.g:966:1: ( ( ( rule__TrackStatement__SegmentsAssignment_1 ) ) )
+            // InternalRailSL.g:967:1: ( ( rule__TrackStatement__SegmentsAssignment_1 ) )
             {
-            // InternalRailSL.g:967:1: ( ( rule__SetTrackStatement__SegmentsAssignment_1 ) )
-            // InternalRailSL.g:968:2: ( rule__SetTrackStatement__SegmentsAssignment_1 )
+            // InternalRailSL.g:967:1: ( ( rule__TrackStatement__SegmentsAssignment_1 ) )
+            // InternalRailSL.g:968:2: ( rule__TrackStatement__SegmentsAssignment_1 )
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_1()); 
-            // InternalRailSL.g:969:2: ( rule__SetTrackStatement__SegmentsAssignment_1 )
-            // InternalRailSL.g:969:3: rule__SetTrackStatement__SegmentsAssignment_1
+             before(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_1()); 
+            // InternalRailSL.g:969:2: ( rule__TrackStatement__SegmentsAssignment_1 )
+            // InternalRailSL.g:969:3: rule__TrackStatement__SegmentsAssignment_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__SegmentsAssignment_1();
+            rule__TrackStatement__SegmentsAssignment_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_1()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_1()); 
 
             }
 
@@ -3176,26 +3176,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__1__Impl"
+    // $ANTLR end "rule__TrackStatement__Group__1__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__2"
-    // InternalRailSL.g:977:1: rule__SetTrackStatement__Group__2 : rule__SetTrackStatement__Group__2__Impl rule__SetTrackStatement__Group__3 ;
-    public final void rule__SetTrackStatement__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__2"
+    // InternalRailSL.g:977:1: rule__TrackStatement__Group__2 : rule__TrackStatement__Group__2__Impl rule__TrackStatement__Group__3 ;
+    public final void rule__TrackStatement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:981:1: ( rule__SetTrackStatement__Group__2__Impl rule__SetTrackStatement__Group__3 )
-            // InternalRailSL.g:982:2: rule__SetTrackStatement__Group__2__Impl rule__SetTrackStatement__Group__3
+            // InternalRailSL.g:981:1: ( rule__TrackStatement__Group__2__Impl rule__TrackStatement__Group__3 )
+            // InternalRailSL.g:982:2: rule__TrackStatement__Group__2__Impl rule__TrackStatement__Group__3
             {
             pushFollow(FOLLOW_7);
-            rule__SetTrackStatement__Group__2__Impl();
+            rule__TrackStatement__Group__2__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__3();
+            rule__TrackStatement__Group__3();
 
             state._fsp--;
 
@@ -3214,24 +3214,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__2"
+    // $ANTLR end "rule__TrackStatement__Group__2"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__2__Impl"
-    // InternalRailSL.g:989:1: rule__SetTrackStatement__Group__2__Impl : ( ( rule__SetTrackStatement__Group_2__0 )* ) ;
-    public final void rule__SetTrackStatement__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__2__Impl"
+    // InternalRailSL.g:989:1: rule__TrackStatement__Group__2__Impl : ( ( rule__TrackStatement__Group_2__0 )* ) ;
+    public final void rule__TrackStatement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:993:1: ( ( ( rule__SetTrackStatement__Group_2__0 )* ) )
-            // InternalRailSL.g:994:1: ( ( rule__SetTrackStatement__Group_2__0 )* )
+            // InternalRailSL.g:993:1: ( ( ( rule__TrackStatement__Group_2__0 )* ) )
+            // InternalRailSL.g:994:1: ( ( rule__TrackStatement__Group_2__0 )* )
             {
-            // InternalRailSL.g:994:1: ( ( rule__SetTrackStatement__Group_2__0 )* )
-            // InternalRailSL.g:995:2: ( rule__SetTrackStatement__Group_2__0 )*
+            // InternalRailSL.g:994:1: ( ( rule__TrackStatement__Group_2__0 )* )
+            // InternalRailSL.g:995:2: ( rule__TrackStatement__Group_2__0 )*
             {
-             before(grammarAccess.getSetTrackStatementAccess().getGroup_2()); 
-            // InternalRailSL.g:996:2: ( rule__SetTrackStatement__Group_2__0 )*
+             before(grammarAccess.getTrackStatementAccess().getGroup_2()); 
+            // InternalRailSL.g:996:2: ( rule__TrackStatement__Group_2__0 )*
             loop17:
             do {
                 int alt17=2;
@@ -3244,10 +3244,10 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt17) {
             	case 1 :
-            	    // InternalRailSL.g:996:3: rule__SetTrackStatement__Group_2__0
+            	    // InternalRailSL.g:996:3: rule__TrackStatement__Group_2__0
             	    {
             	    pushFollow(FOLLOW_8);
-            	    rule__SetTrackStatement__Group_2__0();
+            	    rule__TrackStatement__Group_2__0();
 
             	    state._fsp--;
 
@@ -3260,7 +3260,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                 }
             } while (true);
 
-             after(grammarAccess.getSetTrackStatementAccess().getGroup_2()); 
+             after(grammarAccess.getTrackStatementAccess().getGroup_2()); 
 
             }
 
@@ -3279,26 +3279,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__2__Impl"
+    // $ANTLR end "rule__TrackStatement__Group__2__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__3"
-    // InternalRailSL.g:1004:1: rule__SetTrackStatement__Group__3 : rule__SetTrackStatement__Group__3__Impl rule__SetTrackStatement__Group__4 ;
-    public final void rule__SetTrackStatement__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__3"
+    // InternalRailSL.g:1004:1: rule__TrackStatement__Group__3 : rule__TrackStatement__Group__3__Impl rule__TrackStatement__Group__4 ;
+    public final void rule__TrackStatement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1008:1: ( rule__SetTrackStatement__Group__3__Impl rule__SetTrackStatement__Group__4 )
-            // InternalRailSL.g:1009:2: rule__SetTrackStatement__Group__3__Impl rule__SetTrackStatement__Group__4
+            // InternalRailSL.g:1008:1: ( rule__TrackStatement__Group__3__Impl rule__TrackStatement__Group__4 )
+            // InternalRailSL.g:1009:2: rule__TrackStatement__Group__3__Impl rule__TrackStatement__Group__4
             {
             pushFollow(FOLLOW_7);
-            rule__SetTrackStatement__Group__3__Impl();
+            rule__TrackStatement__Group__3__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__4();
+            rule__TrackStatement__Group__4();
 
             state._fsp--;
 
@@ -3317,24 +3317,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__3"
+    // $ANTLR end "rule__TrackStatement__Group__3"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__3__Impl"
-    // InternalRailSL.g:1016:1: rule__SetTrackStatement__Group__3__Impl : ( ( rule__SetTrackStatement__Alternatives_3 )? ) ;
-    public final void rule__SetTrackStatement__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__3__Impl"
+    // InternalRailSL.g:1016:1: rule__TrackStatement__Group__3__Impl : ( ( rule__TrackStatement__Alternatives_3 )? ) ;
+    public final void rule__TrackStatement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1020:1: ( ( ( rule__SetTrackStatement__Alternatives_3 )? ) )
-            // InternalRailSL.g:1021:1: ( ( rule__SetTrackStatement__Alternatives_3 )? )
+            // InternalRailSL.g:1020:1: ( ( ( rule__TrackStatement__Alternatives_3 )? ) )
+            // InternalRailSL.g:1021:1: ( ( rule__TrackStatement__Alternatives_3 )? )
             {
-            // InternalRailSL.g:1021:1: ( ( rule__SetTrackStatement__Alternatives_3 )? )
-            // InternalRailSL.g:1022:2: ( rule__SetTrackStatement__Alternatives_3 )?
+            // InternalRailSL.g:1021:1: ( ( rule__TrackStatement__Alternatives_3 )? )
+            // InternalRailSL.g:1022:2: ( rule__TrackStatement__Alternatives_3 )?
             {
-             before(grammarAccess.getSetTrackStatementAccess().getAlternatives_3()); 
-            // InternalRailSL.g:1023:2: ( rule__SetTrackStatement__Alternatives_3 )?
+             before(grammarAccess.getTrackStatementAccess().getAlternatives_3()); 
+            // InternalRailSL.g:1023:2: ( rule__TrackStatement__Alternatives_3 )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -3343,10 +3343,10 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt18) {
                 case 1 :
-                    // InternalRailSL.g:1023:3: rule__SetTrackStatement__Alternatives_3
+                    // InternalRailSL.g:1023:3: rule__TrackStatement__Alternatives_3
                     {
                     pushFollow(FOLLOW_2);
-                    rule__SetTrackStatement__Alternatives_3();
+                    rule__TrackStatement__Alternatives_3();
 
                     state._fsp--;
 
@@ -3356,7 +3356,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getSetTrackStatementAccess().getAlternatives_3()); 
+             after(grammarAccess.getTrackStatementAccess().getAlternatives_3()); 
 
             }
 
@@ -3375,26 +3375,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__3__Impl"
+    // $ANTLR end "rule__TrackStatement__Group__3__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__4"
-    // InternalRailSL.g:1031:1: rule__SetTrackStatement__Group__4 : rule__SetTrackStatement__Group__4__Impl rule__SetTrackStatement__Group__5 ;
-    public final void rule__SetTrackStatement__Group__4() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__4"
+    // InternalRailSL.g:1031:1: rule__TrackStatement__Group__4 : rule__TrackStatement__Group__4__Impl rule__TrackStatement__Group__5 ;
+    public final void rule__TrackStatement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1035:1: ( rule__SetTrackStatement__Group__4__Impl rule__SetTrackStatement__Group__5 )
-            // InternalRailSL.g:1036:2: rule__SetTrackStatement__Group__4__Impl rule__SetTrackStatement__Group__5
+            // InternalRailSL.g:1035:1: ( rule__TrackStatement__Group__4__Impl rule__TrackStatement__Group__5 )
+            // InternalRailSL.g:1036:2: rule__TrackStatement__Group__4__Impl rule__TrackStatement__Group__5
             {
             pushFollow(FOLLOW_9);
-            rule__SetTrackStatement__Group__4__Impl();
+            rule__TrackStatement__Group__4__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__5();
+            rule__TrackStatement__Group__5();
 
             state._fsp--;
 
@@ -3413,12 +3413,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__4"
+    // $ANTLR end "rule__TrackStatement__Group__4"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__4__Impl"
-    // InternalRailSL.g:1043:1: rule__SetTrackStatement__Group__4__Impl : ( 'to' ) ;
-    public final void rule__SetTrackStatement__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__4__Impl"
+    // InternalRailSL.g:1043:1: rule__TrackStatement__Group__4__Impl : ( 'to' ) ;
+    public final void rule__TrackStatement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -3429,9 +3429,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1048:1: ( 'to' )
             // InternalRailSL.g:1049:2: 'to'
             {
-             before(grammarAccess.getSetTrackStatementAccess().getToKeyword_4()); 
+             before(grammarAccess.getTrackStatementAccess().getToKeyword_4()); 
             match(input,29,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getToKeyword_4()); 
+             after(grammarAccess.getTrackStatementAccess().getToKeyword_4()); 
 
             }
 
@@ -3450,26 +3450,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__4__Impl"
+    // $ANTLR end "rule__TrackStatement__Group__4__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__5"
-    // InternalRailSL.g:1058:1: rule__SetTrackStatement__Group__5 : rule__SetTrackStatement__Group__5__Impl rule__SetTrackStatement__Group__6 ;
-    public final void rule__SetTrackStatement__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__5"
+    // InternalRailSL.g:1058:1: rule__TrackStatement__Group__5 : rule__TrackStatement__Group__5__Impl rule__TrackStatement__Group__6 ;
+    public final void rule__TrackStatement__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1062:1: ( rule__SetTrackStatement__Group__5__Impl rule__SetTrackStatement__Group__6 )
-            // InternalRailSL.g:1063:2: rule__SetTrackStatement__Group__5__Impl rule__SetTrackStatement__Group__6
+            // InternalRailSL.g:1062:1: ( rule__TrackStatement__Group__5__Impl rule__TrackStatement__Group__6 )
+            // InternalRailSL.g:1063:2: rule__TrackStatement__Group__5__Impl rule__TrackStatement__Group__6
             {
             pushFollow(FOLLOW_10);
-            rule__SetTrackStatement__Group__5__Impl();
+            rule__TrackStatement__Group__5__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__6();
+            rule__TrackStatement__Group__6();
 
             state._fsp--;
 
@@ -3488,35 +3488,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__5"
+    // $ANTLR end "rule__TrackStatement__Group__5"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__5__Impl"
-    // InternalRailSL.g:1070:1: rule__SetTrackStatement__Group__5__Impl : ( ( rule__SetTrackStatement__ModeAssignment_5 ) ) ;
-    public final void rule__SetTrackStatement__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__5__Impl"
+    // InternalRailSL.g:1070:1: rule__TrackStatement__Group__5__Impl : ( ( rule__TrackStatement__ModeAssignment_5 ) ) ;
+    public final void rule__TrackStatement__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1074:1: ( ( ( rule__SetTrackStatement__ModeAssignment_5 ) ) )
-            // InternalRailSL.g:1075:1: ( ( rule__SetTrackStatement__ModeAssignment_5 ) )
+            // InternalRailSL.g:1074:1: ( ( ( rule__TrackStatement__ModeAssignment_5 ) ) )
+            // InternalRailSL.g:1075:1: ( ( rule__TrackStatement__ModeAssignment_5 ) )
             {
-            // InternalRailSL.g:1075:1: ( ( rule__SetTrackStatement__ModeAssignment_5 ) )
-            // InternalRailSL.g:1076:2: ( rule__SetTrackStatement__ModeAssignment_5 )
+            // InternalRailSL.g:1075:1: ( ( rule__TrackStatement__ModeAssignment_5 ) )
+            // InternalRailSL.g:1076:2: ( rule__TrackStatement__ModeAssignment_5 )
             {
-             before(grammarAccess.getSetTrackStatementAccess().getModeAssignment_5()); 
-            // InternalRailSL.g:1077:2: ( rule__SetTrackStatement__ModeAssignment_5 )
-            // InternalRailSL.g:1077:3: rule__SetTrackStatement__ModeAssignment_5
+             before(grammarAccess.getTrackStatementAccess().getModeAssignment_5()); 
+            // InternalRailSL.g:1077:2: ( rule__TrackStatement__ModeAssignment_5 )
+            // InternalRailSL.g:1077:3: rule__TrackStatement__ModeAssignment_5
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__ModeAssignment_5();
+            rule__TrackStatement__ModeAssignment_5();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetTrackStatementAccess().getModeAssignment_5()); 
+             after(grammarAccess.getTrackStatementAccess().getModeAssignment_5()); 
 
             }
 
@@ -3535,21 +3535,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__5__Impl"
+    // $ANTLR end "rule__TrackStatement__Group__5__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__6"
-    // InternalRailSL.g:1085:1: rule__SetTrackStatement__Group__6 : rule__SetTrackStatement__Group__6__Impl ;
-    public final void rule__SetTrackStatement__Group__6() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__6"
+    // InternalRailSL.g:1085:1: rule__TrackStatement__Group__6 : rule__TrackStatement__Group__6__Impl ;
+    public final void rule__TrackStatement__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1089:1: ( rule__SetTrackStatement__Group__6__Impl )
-            // InternalRailSL.g:1090:2: rule__SetTrackStatement__Group__6__Impl
+            // InternalRailSL.g:1089:1: ( rule__TrackStatement__Group__6__Impl )
+            // InternalRailSL.g:1090:2: rule__TrackStatement__Group__6__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group__6__Impl();
+            rule__TrackStatement__Group__6__Impl();
 
             state._fsp--;
 
@@ -3568,12 +3568,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__6"
+    // $ANTLR end "rule__TrackStatement__Group__6"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group__6__Impl"
-    // InternalRailSL.g:1096:1: rule__SetTrackStatement__Group__6__Impl : ( '.' ) ;
-    public final void rule__SetTrackStatement__Group__6__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group__6__Impl"
+    // InternalRailSL.g:1096:1: rule__TrackStatement__Group__6__Impl : ( '.' ) ;
+    public final void rule__TrackStatement__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -3584,9 +3584,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1101:1: ( '.' )
             // InternalRailSL.g:1102:2: '.'
             {
-             before(grammarAccess.getSetTrackStatementAccess().getFullStopKeyword_6()); 
+             before(grammarAccess.getTrackStatementAccess().getFullStopKeyword_6()); 
             match(input,30,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getFullStopKeyword_6()); 
+             after(grammarAccess.getTrackStatementAccess().getFullStopKeyword_6()); 
 
             }
 
@@ -3605,26 +3605,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group__6__Impl"
+    // $ANTLR end "rule__TrackStatement__Group__6__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_2__0"
-    // InternalRailSL.g:1112:1: rule__SetTrackStatement__Group_2__0 : rule__SetTrackStatement__Group_2__0__Impl rule__SetTrackStatement__Group_2__1 ;
-    public final void rule__SetTrackStatement__Group_2__0() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_2__0"
+    // InternalRailSL.g:1112:1: rule__TrackStatement__Group_2__0 : rule__TrackStatement__Group_2__0__Impl rule__TrackStatement__Group_2__1 ;
+    public final void rule__TrackStatement__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1116:1: ( rule__SetTrackStatement__Group_2__0__Impl rule__SetTrackStatement__Group_2__1 )
-            // InternalRailSL.g:1117:2: rule__SetTrackStatement__Group_2__0__Impl rule__SetTrackStatement__Group_2__1
+            // InternalRailSL.g:1116:1: ( rule__TrackStatement__Group_2__0__Impl rule__TrackStatement__Group_2__1 )
+            // InternalRailSL.g:1117:2: rule__TrackStatement__Group_2__0__Impl rule__TrackStatement__Group_2__1
             {
             pushFollow(FOLLOW_6);
-            rule__SetTrackStatement__Group_2__0__Impl();
+            rule__TrackStatement__Group_2__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group_2__1();
+            rule__TrackStatement__Group_2__1();
 
             state._fsp--;
 
@@ -3643,12 +3643,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_2__0"
+    // $ANTLR end "rule__TrackStatement__Group_2__0"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_2__0__Impl"
-    // InternalRailSL.g:1124:1: rule__SetTrackStatement__Group_2__0__Impl : ( ', ' ) ;
-    public final void rule__SetTrackStatement__Group_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_2__0__Impl"
+    // InternalRailSL.g:1124:1: rule__TrackStatement__Group_2__0__Impl : ( ', ' ) ;
+    public final void rule__TrackStatement__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -3659,9 +3659,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1129:1: ( ', ' )
             // InternalRailSL.g:1130:2: ', '
             {
-             before(grammarAccess.getSetTrackStatementAccess().getCommaSpaceKeyword_2_0()); 
+             before(grammarAccess.getTrackStatementAccess().getCommaSpaceKeyword_2_0()); 
             match(input,31,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getCommaSpaceKeyword_2_0()); 
+             after(grammarAccess.getTrackStatementAccess().getCommaSpaceKeyword_2_0()); 
 
             }
 
@@ -3680,21 +3680,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_2__0__Impl"
+    // $ANTLR end "rule__TrackStatement__Group_2__0__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_2__1"
-    // InternalRailSL.g:1139:1: rule__SetTrackStatement__Group_2__1 : rule__SetTrackStatement__Group_2__1__Impl ;
-    public final void rule__SetTrackStatement__Group_2__1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_2__1"
+    // InternalRailSL.g:1139:1: rule__TrackStatement__Group_2__1 : rule__TrackStatement__Group_2__1__Impl ;
+    public final void rule__TrackStatement__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1143:1: ( rule__SetTrackStatement__Group_2__1__Impl )
-            // InternalRailSL.g:1144:2: rule__SetTrackStatement__Group_2__1__Impl
+            // InternalRailSL.g:1143:1: ( rule__TrackStatement__Group_2__1__Impl )
+            // InternalRailSL.g:1144:2: rule__TrackStatement__Group_2__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group_2__1__Impl();
+            rule__TrackStatement__Group_2__1__Impl();
 
             state._fsp--;
 
@@ -3713,35 +3713,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_2__1"
+    // $ANTLR end "rule__TrackStatement__Group_2__1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_2__1__Impl"
-    // InternalRailSL.g:1150:1: rule__SetTrackStatement__Group_2__1__Impl : ( ( rule__SetTrackStatement__SegmentsAssignment_2_1 ) ) ;
-    public final void rule__SetTrackStatement__Group_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_2__1__Impl"
+    // InternalRailSL.g:1150:1: rule__TrackStatement__Group_2__1__Impl : ( ( rule__TrackStatement__SegmentsAssignment_2_1 ) ) ;
+    public final void rule__TrackStatement__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1154:1: ( ( ( rule__SetTrackStatement__SegmentsAssignment_2_1 ) ) )
-            // InternalRailSL.g:1155:1: ( ( rule__SetTrackStatement__SegmentsAssignment_2_1 ) )
+            // InternalRailSL.g:1154:1: ( ( ( rule__TrackStatement__SegmentsAssignment_2_1 ) ) )
+            // InternalRailSL.g:1155:1: ( ( rule__TrackStatement__SegmentsAssignment_2_1 ) )
             {
-            // InternalRailSL.g:1155:1: ( ( rule__SetTrackStatement__SegmentsAssignment_2_1 ) )
-            // InternalRailSL.g:1156:2: ( rule__SetTrackStatement__SegmentsAssignment_2_1 )
+            // InternalRailSL.g:1155:1: ( ( rule__TrackStatement__SegmentsAssignment_2_1 ) )
+            // InternalRailSL.g:1156:2: ( rule__TrackStatement__SegmentsAssignment_2_1 )
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_2_1()); 
-            // InternalRailSL.g:1157:2: ( rule__SetTrackStatement__SegmentsAssignment_2_1 )
-            // InternalRailSL.g:1157:3: rule__SetTrackStatement__SegmentsAssignment_2_1
+             before(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_2_1()); 
+            // InternalRailSL.g:1157:2: ( rule__TrackStatement__SegmentsAssignment_2_1 )
+            // InternalRailSL.g:1157:3: rule__TrackStatement__SegmentsAssignment_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__SegmentsAssignment_2_1();
+            rule__TrackStatement__SegmentsAssignment_2_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_2_1()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_2_1()); 
 
             }
 
@@ -3760,26 +3760,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_2__1__Impl"
+    // $ANTLR end "rule__TrackStatement__Group_2__1__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_0__0"
-    // InternalRailSL.g:1166:1: rule__SetTrackStatement__Group_3_0__0 : rule__SetTrackStatement__Group_3_0__0__Impl rule__SetTrackStatement__Group_3_0__1 ;
-    public final void rule__SetTrackStatement__Group_3_0__0() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_0__0"
+    // InternalRailSL.g:1166:1: rule__TrackStatement__Group_3_0__0 : rule__TrackStatement__Group_3_0__0__Impl rule__TrackStatement__Group_3_0__1 ;
+    public final void rule__TrackStatement__Group_3_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1170:1: ( rule__SetTrackStatement__Group_3_0__0__Impl rule__SetTrackStatement__Group_3_0__1 )
-            // InternalRailSL.g:1171:2: rule__SetTrackStatement__Group_3_0__0__Impl rule__SetTrackStatement__Group_3_0__1
+            // InternalRailSL.g:1170:1: ( rule__TrackStatement__Group_3_0__0__Impl rule__TrackStatement__Group_3_0__1 )
+            // InternalRailSL.g:1171:2: rule__TrackStatement__Group_3_0__0__Impl rule__TrackStatement__Group_3_0__1
             {
             pushFollow(FOLLOW_6);
-            rule__SetTrackStatement__Group_3_0__0__Impl();
+            rule__TrackStatement__Group_3_0__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group_3_0__1();
+            rule__TrackStatement__Group_3_0__1();
 
             state._fsp--;
 
@@ -3798,12 +3798,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_0__0"
+    // $ANTLR end "rule__TrackStatement__Group_3_0__0"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_0__0__Impl"
-    // InternalRailSL.g:1178:1: rule__SetTrackStatement__Group_3_0__0__Impl : ( 'and' ) ;
-    public final void rule__SetTrackStatement__Group_3_0__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_0__0__Impl"
+    // InternalRailSL.g:1178:1: rule__TrackStatement__Group_3_0__0__Impl : ( 'and' ) ;
+    public final void rule__TrackStatement__Group_3_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -3814,9 +3814,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1183:1: ( 'and' )
             // InternalRailSL.g:1184:2: 'and'
             {
-             before(grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_0_0()); 
+             before(grammarAccess.getTrackStatementAccess().getAndKeyword_3_0_0()); 
             match(input,32,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_0_0()); 
+             after(grammarAccess.getTrackStatementAccess().getAndKeyword_3_0_0()); 
 
             }
 
@@ -3835,21 +3835,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_0__0__Impl"
+    // $ANTLR end "rule__TrackStatement__Group_3_0__0__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_0__1"
-    // InternalRailSL.g:1193:1: rule__SetTrackStatement__Group_3_0__1 : rule__SetTrackStatement__Group_3_0__1__Impl ;
-    public final void rule__SetTrackStatement__Group_3_0__1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_0__1"
+    // InternalRailSL.g:1193:1: rule__TrackStatement__Group_3_0__1 : rule__TrackStatement__Group_3_0__1__Impl ;
+    public final void rule__TrackStatement__Group_3_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1197:1: ( rule__SetTrackStatement__Group_3_0__1__Impl )
-            // InternalRailSL.g:1198:2: rule__SetTrackStatement__Group_3_0__1__Impl
+            // InternalRailSL.g:1197:1: ( rule__TrackStatement__Group_3_0__1__Impl )
+            // InternalRailSL.g:1198:2: rule__TrackStatement__Group_3_0__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group_3_0__1__Impl();
+            rule__TrackStatement__Group_3_0__1__Impl();
 
             state._fsp--;
 
@@ -3868,35 +3868,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_0__1"
+    // $ANTLR end "rule__TrackStatement__Group_3_0__1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_0__1__Impl"
-    // InternalRailSL.g:1204:1: rule__SetTrackStatement__Group_3_0__1__Impl : ( ( rule__SetTrackStatement__SegmentsAssignment_3_0_1 ) ) ;
-    public final void rule__SetTrackStatement__Group_3_0__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_0__1__Impl"
+    // InternalRailSL.g:1204:1: rule__TrackStatement__Group_3_0__1__Impl : ( ( rule__TrackStatement__SegmentsAssignment_3_0_1 ) ) ;
+    public final void rule__TrackStatement__Group_3_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1208:1: ( ( ( rule__SetTrackStatement__SegmentsAssignment_3_0_1 ) ) )
-            // InternalRailSL.g:1209:1: ( ( rule__SetTrackStatement__SegmentsAssignment_3_0_1 ) )
+            // InternalRailSL.g:1208:1: ( ( ( rule__TrackStatement__SegmentsAssignment_3_0_1 ) ) )
+            // InternalRailSL.g:1209:1: ( ( rule__TrackStatement__SegmentsAssignment_3_0_1 ) )
             {
-            // InternalRailSL.g:1209:1: ( ( rule__SetTrackStatement__SegmentsAssignment_3_0_1 ) )
-            // InternalRailSL.g:1210:2: ( rule__SetTrackStatement__SegmentsAssignment_3_0_1 )
+            // InternalRailSL.g:1209:1: ( ( rule__TrackStatement__SegmentsAssignment_3_0_1 ) )
+            // InternalRailSL.g:1210:2: ( rule__TrackStatement__SegmentsAssignment_3_0_1 )
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_3_0_1()); 
-            // InternalRailSL.g:1211:2: ( rule__SetTrackStatement__SegmentsAssignment_3_0_1 )
-            // InternalRailSL.g:1211:3: rule__SetTrackStatement__SegmentsAssignment_3_0_1
+             before(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_3_0_1()); 
+            // InternalRailSL.g:1211:2: ( rule__TrackStatement__SegmentsAssignment_3_0_1 )
+            // InternalRailSL.g:1211:3: rule__TrackStatement__SegmentsAssignment_3_0_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__SegmentsAssignment_3_0_1();
+            rule__TrackStatement__SegmentsAssignment_3_0_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_3_0_1()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_3_0_1()); 
 
             }
 
@@ -3915,26 +3915,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_0__1__Impl"
+    // $ANTLR end "rule__TrackStatement__Group_3_0__1__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_1__0"
-    // InternalRailSL.g:1220:1: rule__SetTrackStatement__Group_3_1__0 : rule__SetTrackStatement__Group_3_1__0__Impl rule__SetTrackStatement__Group_3_1__1 ;
-    public final void rule__SetTrackStatement__Group_3_1__0() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_1__0"
+    // InternalRailSL.g:1220:1: rule__TrackStatement__Group_3_1__0 : rule__TrackStatement__Group_3_1__0__Impl rule__TrackStatement__Group_3_1__1 ;
+    public final void rule__TrackStatement__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1224:1: ( rule__SetTrackStatement__Group_3_1__0__Impl rule__SetTrackStatement__Group_3_1__1 )
-            // InternalRailSL.g:1225:2: rule__SetTrackStatement__Group_3_1__0__Impl rule__SetTrackStatement__Group_3_1__1
+            // InternalRailSL.g:1224:1: ( rule__TrackStatement__Group_3_1__0__Impl rule__TrackStatement__Group_3_1__1 )
+            // InternalRailSL.g:1225:2: rule__TrackStatement__Group_3_1__0__Impl rule__TrackStatement__Group_3_1__1
             {
             pushFollow(FOLLOW_6);
-            rule__SetTrackStatement__Group_3_1__0__Impl();
+            rule__TrackStatement__Group_3_1__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group_3_1__1();
+            rule__TrackStatement__Group_3_1__1();
 
             state._fsp--;
 
@@ -3953,12 +3953,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_1__0"
+    // $ANTLR end "rule__TrackStatement__Group_3_1__0"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_1__0__Impl"
-    // InternalRailSL.g:1232:1: rule__SetTrackStatement__Group_3_1__0__Impl : ( ', and' ) ;
-    public final void rule__SetTrackStatement__Group_3_1__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_1__0__Impl"
+    // InternalRailSL.g:1232:1: rule__TrackStatement__Group_3_1__0__Impl : ( ', and' ) ;
+    public final void rule__TrackStatement__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -3969,9 +3969,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1237:1: ( ', and' )
             // InternalRailSL.g:1238:2: ', and'
             {
-             before(grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_1_0()); 
+             before(grammarAccess.getTrackStatementAccess().getAndKeyword_3_1_0()); 
             match(input,33,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getAndKeyword_3_1_0()); 
+             after(grammarAccess.getTrackStatementAccess().getAndKeyword_3_1_0()); 
 
             }
 
@@ -3990,21 +3990,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_1__0__Impl"
+    // $ANTLR end "rule__TrackStatement__Group_3_1__0__Impl"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_1__1"
-    // InternalRailSL.g:1247:1: rule__SetTrackStatement__Group_3_1__1 : rule__SetTrackStatement__Group_3_1__1__Impl ;
-    public final void rule__SetTrackStatement__Group_3_1__1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_1__1"
+    // InternalRailSL.g:1247:1: rule__TrackStatement__Group_3_1__1 : rule__TrackStatement__Group_3_1__1__Impl ;
+    public final void rule__TrackStatement__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1251:1: ( rule__SetTrackStatement__Group_3_1__1__Impl )
-            // InternalRailSL.g:1252:2: rule__SetTrackStatement__Group_3_1__1__Impl
+            // InternalRailSL.g:1251:1: ( rule__TrackStatement__Group_3_1__1__Impl )
+            // InternalRailSL.g:1252:2: rule__TrackStatement__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__Group_3_1__1__Impl();
+            rule__TrackStatement__Group_3_1__1__Impl();
 
             state._fsp--;
 
@@ -4023,35 +4023,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_1__1"
+    // $ANTLR end "rule__TrackStatement__Group_3_1__1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__Group_3_1__1__Impl"
-    // InternalRailSL.g:1258:1: rule__SetTrackStatement__Group_3_1__1__Impl : ( ( rule__SetTrackStatement__SegmentsAssignment_3_1_1 ) ) ;
-    public final void rule__SetTrackStatement__Group_3_1__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__Group_3_1__1__Impl"
+    // InternalRailSL.g:1258:1: rule__TrackStatement__Group_3_1__1__Impl : ( ( rule__TrackStatement__SegmentsAssignment_3_1_1 ) ) ;
+    public final void rule__TrackStatement__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1262:1: ( ( ( rule__SetTrackStatement__SegmentsAssignment_3_1_1 ) ) )
-            // InternalRailSL.g:1263:1: ( ( rule__SetTrackStatement__SegmentsAssignment_3_1_1 ) )
+            // InternalRailSL.g:1262:1: ( ( ( rule__TrackStatement__SegmentsAssignment_3_1_1 ) ) )
+            // InternalRailSL.g:1263:1: ( ( rule__TrackStatement__SegmentsAssignment_3_1_1 ) )
             {
-            // InternalRailSL.g:1263:1: ( ( rule__SetTrackStatement__SegmentsAssignment_3_1_1 ) )
-            // InternalRailSL.g:1264:2: ( rule__SetTrackStatement__SegmentsAssignment_3_1_1 )
+            // InternalRailSL.g:1263:1: ( ( rule__TrackStatement__SegmentsAssignment_3_1_1 ) )
+            // InternalRailSL.g:1264:2: ( rule__TrackStatement__SegmentsAssignment_3_1_1 )
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_3_1_1()); 
-            // InternalRailSL.g:1265:2: ( rule__SetTrackStatement__SegmentsAssignment_3_1_1 )
-            // InternalRailSL.g:1265:3: rule__SetTrackStatement__SegmentsAssignment_3_1_1
+             before(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_3_1_1()); 
+            // InternalRailSL.g:1265:2: ( rule__TrackStatement__SegmentsAssignment_3_1_1 )
+            // InternalRailSL.g:1265:3: rule__TrackStatement__SegmentsAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetTrackStatement__SegmentsAssignment_3_1_1();
+            rule__TrackStatement__SegmentsAssignment_3_1_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsAssignment_3_1_1()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsAssignment_3_1_1()); 
 
             }
 
@@ -4070,7 +4070,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__Group_3_1__1__Impl"
+    // $ANTLR end "rule__TrackStatement__Group_3_1__1__Impl"
 
 
     // $ANTLR start "rule__TrackSetting__Group_0__0"
@@ -4245,23 +4245,23 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TrackSetting__Group_0__1__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__0"
-    // InternalRailSL.g:1328:1: rule__SetPointStatement__Group__0 : rule__SetPointStatement__Group__0__Impl rule__SetPointStatement__Group__1 ;
-    public final void rule__SetPointStatement__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__0"
+    // InternalRailSL.g:1328:1: rule__PointStatement__Group__0 : rule__PointStatement__Group__0__Impl rule__PointStatement__Group__1 ;
+    public final void rule__PointStatement__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1332:1: ( rule__SetPointStatement__Group__0__Impl rule__SetPointStatement__Group__1 )
-            // InternalRailSL.g:1333:2: rule__SetPointStatement__Group__0__Impl rule__SetPointStatement__Group__1
+            // InternalRailSL.g:1332:1: ( rule__PointStatement__Group__0__Impl rule__PointStatement__Group__1 )
+            // InternalRailSL.g:1333:2: rule__PointStatement__Group__0__Impl rule__PointStatement__Group__1
             {
             pushFollow(FOLLOW_12);
-            rule__SetPointStatement__Group__0__Impl();
+            rule__PointStatement__Group__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__1();
+            rule__PointStatement__Group__1();
 
             state._fsp--;
 
@@ -4280,12 +4280,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__0"
+    // $ANTLR end "rule__PointStatement__Group__0"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__0__Impl"
-    // InternalRailSL.g:1340:1: rule__SetPointStatement__Group__0__Impl : ( 'Set point' ) ;
-    public final void rule__SetPointStatement__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__0__Impl"
+    // InternalRailSL.g:1340:1: rule__PointStatement__Group__0__Impl : ( 'Set point' ) ;
+    public final void rule__PointStatement__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -4296,9 +4296,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1345:1: ( 'Set point' )
             // InternalRailSL.g:1346:2: 'Set point'
             {
-             before(grammarAccess.getSetPointStatementAccess().getSetPointKeyword_0()); 
+             before(grammarAccess.getPointStatementAccess().getSetPointKeyword_0()); 
             match(input,35,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getSetPointKeyword_0()); 
+             after(grammarAccess.getPointStatementAccess().getSetPointKeyword_0()); 
 
             }
 
@@ -4317,26 +4317,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__0__Impl"
+    // $ANTLR end "rule__PointStatement__Group__0__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__1"
-    // InternalRailSL.g:1355:1: rule__SetPointStatement__Group__1 : rule__SetPointStatement__Group__1__Impl rule__SetPointStatement__Group__2 ;
-    public final void rule__SetPointStatement__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__1"
+    // InternalRailSL.g:1355:1: rule__PointStatement__Group__1 : rule__PointStatement__Group__1__Impl rule__PointStatement__Group__2 ;
+    public final void rule__PointStatement__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1359:1: ( rule__SetPointStatement__Group__1__Impl rule__SetPointStatement__Group__2 )
-            // InternalRailSL.g:1360:2: rule__SetPointStatement__Group__1__Impl rule__SetPointStatement__Group__2
+            // InternalRailSL.g:1359:1: ( rule__PointStatement__Group__1__Impl rule__PointStatement__Group__2 )
+            // InternalRailSL.g:1360:2: rule__PointStatement__Group__1__Impl rule__PointStatement__Group__2
             {
             pushFollow(FOLLOW_7);
-            rule__SetPointStatement__Group__1__Impl();
+            rule__PointStatement__Group__1__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__2();
+            rule__PointStatement__Group__2();
 
             state._fsp--;
 
@@ -4355,35 +4355,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__1"
+    // $ANTLR end "rule__PointStatement__Group__1"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__1__Impl"
-    // InternalRailSL.g:1367:1: rule__SetPointStatement__Group__1__Impl : ( ( rule__SetPointStatement__PointsAssignment_1 ) ) ;
-    public final void rule__SetPointStatement__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__1__Impl"
+    // InternalRailSL.g:1367:1: rule__PointStatement__Group__1__Impl : ( ( rule__PointStatement__PointsAssignment_1 ) ) ;
+    public final void rule__PointStatement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1371:1: ( ( ( rule__SetPointStatement__PointsAssignment_1 ) ) )
-            // InternalRailSL.g:1372:1: ( ( rule__SetPointStatement__PointsAssignment_1 ) )
+            // InternalRailSL.g:1371:1: ( ( ( rule__PointStatement__PointsAssignment_1 ) ) )
+            // InternalRailSL.g:1372:1: ( ( rule__PointStatement__PointsAssignment_1 ) )
             {
-            // InternalRailSL.g:1372:1: ( ( rule__SetPointStatement__PointsAssignment_1 ) )
-            // InternalRailSL.g:1373:2: ( rule__SetPointStatement__PointsAssignment_1 )
+            // InternalRailSL.g:1372:1: ( ( rule__PointStatement__PointsAssignment_1 ) )
+            // InternalRailSL.g:1373:2: ( rule__PointStatement__PointsAssignment_1 )
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsAssignment_1()); 
-            // InternalRailSL.g:1374:2: ( rule__SetPointStatement__PointsAssignment_1 )
-            // InternalRailSL.g:1374:3: rule__SetPointStatement__PointsAssignment_1
+             before(grammarAccess.getPointStatementAccess().getPointsAssignment_1()); 
+            // InternalRailSL.g:1374:2: ( rule__PointStatement__PointsAssignment_1 )
+            // InternalRailSL.g:1374:3: rule__PointStatement__PointsAssignment_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__PointsAssignment_1();
+            rule__PointStatement__PointsAssignment_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getPointsAssignment_1()); 
+             after(grammarAccess.getPointStatementAccess().getPointsAssignment_1()); 
 
             }
 
@@ -4402,26 +4402,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__1__Impl"
+    // $ANTLR end "rule__PointStatement__Group__1__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__2"
-    // InternalRailSL.g:1382:1: rule__SetPointStatement__Group__2 : rule__SetPointStatement__Group__2__Impl rule__SetPointStatement__Group__3 ;
-    public final void rule__SetPointStatement__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__2"
+    // InternalRailSL.g:1382:1: rule__PointStatement__Group__2 : rule__PointStatement__Group__2__Impl rule__PointStatement__Group__3 ;
+    public final void rule__PointStatement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1386:1: ( rule__SetPointStatement__Group__2__Impl rule__SetPointStatement__Group__3 )
-            // InternalRailSL.g:1387:2: rule__SetPointStatement__Group__2__Impl rule__SetPointStatement__Group__3
+            // InternalRailSL.g:1386:1: ( rule__PointStatement__Group__2__Impl rule__PointStatement__Group__3 )
+            // InternalRailSL.g:1387:2: rule__PointStatement__Group__2__Impl rule__PointStatement__Group__3
             {
             pushFollow(FOLLOW_7);
-            rule__SetPointStatement__Group__2__Impl();
+            rule__PointStatement__Group__2__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__3();
+            rule__PointStatement__Group__3();
 
             state._fsp--;
 
@@ -4440,24 +4440,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__2"
+    // $ANTLR end "rule__PointStatement__Group__2"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__2__Impl"
-    // InternalRailSL.g:1394:1: rule__SetPointStatement__Group__2__Impl : ( ( rule__SetPointStatement__Group_2__0 )* ) ;
-    public final void rule__SetPointStatement__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__2__Impl"
+    // InternalRailSL.g:1394:1: rule__PointStatement__Group__2__Impl : ( ( rule__PointStatement__Group_2__0 )* ) ;
+    public final void rule__PointStatement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1398:1: ( ( ( rule__SetPointStatement__Group_2__0 )* ) )
-            // InternalRailSL.g:1399:1: ( ( rule__SetPointStatement__Group_2__0 )* )
+            // InternalRailSL.g:1398:1: ( ( ( rule__PointStatement__Group_2__0 )* ) )
+            // InternalRailSL.g:1399:1: ( ( rule__PointStatement__Group_2__0 )* )
             {
-            // InternalRailSL.g:1399:1: ( ( rule__SetPointStatement__Group_2__0 )* )
-            // InternalRailSL.g:1400:2: ( rule__SetPointStatement__Group_2__0 )*
+            // InternalRailSL.g:1399:1: ( ( rule__PointStatement__Group_2__0 )* )
+            // InternalRailSL.g:1400:2: ( rule__PointStatement__Group_2__0 )*
             {
-             before(grammarAccess.getSetPointStatementAccess().getGroup_2()); 
-            // InternalRailSL.g:1401:2: ( rule__SetPointStatement__Group_2__0 )*
+             before(grammarAccess.getPointStatementAccess().getGroup_2()); 
+            // InternalRailSL.g:1401:2: ( rule__PointStatement__Group_2__0 )*
             loop20:
             do {
                 int alt20=2;
@@ -4470,10 +4470,10 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt20) {
             	case 1 :
-            	    // InternalRailSL.g:1401:3: rule__SetPointStatement__Group_2__0
+            	    // InternalRailSL.g:1401:3: rule__PointStatement__Group_2__0
             	    {
             	    pushFollow(FOLLOW_8);
-            	    rule__SetPointStatement__Group_2__0();
+            	    rule__PointStatement__Group_2__0();
 
             	    state._fsp--;
 
@@ -4486,7 +4486,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                 }
             } while (true);
 
-             after(grammarAccess.getSetPointStatementAccess().getGroup_2()); 
+             after(grammarAccess.getPointStatementAccess().getGroup_2()); 
 
             }
 
@@ -4505,26 +4505,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__2__Impl"
+    // $ANTLR end "rule__PointStatement__Group__2__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__3"
-    // InternalRailSL.g:1409:1: rule__SetPointStatement__Group__3 : rule__SetPointStatement__Group__3__Impl rule__SetPointStatement__Group__4 ;
-    public final void rule__SetPointStatement__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__3"
+    // InternalRailSL.g:1409:1: rule__PointStatement__Group__3 : rule__PointStatement__Group__3__Impl rule__PointStatement__Group__4 ;
+    public final void rule__PointStatement__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1413:1: ( rule__SetPointStatement__Group__3__Impl rule__SetPointStatement__Group__4 )
-            // InternalRailSL.g:1414:2: rule__SetPointStatement__Group__3__Impl rule__SetPointStatement__Group__4
+            // InternalRailSL.g:1413:1: ( rule__PointStatement__Group__3__Impl rule__PointStatement__Group__4 )
+            // InternalRailSL.g:1414:2: rule__PointStatement__Group__3__Impl rule__PointStatement__Group__4
             {
             pushFollow(FOLLOW_7);
-            rule__SetPointStatement__Group__3__Impl();
+            rule__PointStatement__Group__3__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__4();
+            rule__PointStatement__Group__4();
 
             state._fsp--;
 
@@ -4543,24 +4543,24 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__3"
+    // $ANTLR end "rule__PointStatement__Group__3"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__3__Impl"
-    // InternalRailSL.g:1421:1: rule__SetPointStatement__Group__3__Impl : ( ( rule__SetPointStatement__Alternatives_3 )? ) ;
-    public final void rule__SetPointStatement__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__3__Impl"
+    // InternalRailSL.g:1421:1: rule__PointStatement__Group__3__Impl : ( ( rule__PointStatement__Alternatives_3 )? ) ;
+    public final void rule__PointStatement__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1425:1: ( ( ( rule__SetPointStatement__Alternatives_3 )? ) )
-            // InternalRailSL.g:1426:1: ( ( rule__SetPointStatement__Alternatives_3 )? )
+            // InternalRailSL.g:1425:1: ( ( ( rule__PointStatement__Alternatives_3 )? ) )
+            // InternalRailSL.g:1426:1: ( ( rule__PointStatement__Alternatives_3 )? )
             {
-            // InternalRailSL.g:1426:1: ( ( rule__SetPointStatement__Alternatives_3 )? )
-            // InternalRailSL.g:1427:2: ( rule__SetPointStatement__Alternatives_3 )?
+            // InternalRailSL.g:1426:1: ( ( rule__PointStatement__Alternatives_3 )? )
+            // InternalRailSL.g:1427:2: ( rule__PointStatement__Alternatives_3 )?
             {
-             before(grammarAccess.getSetPointStatementAccess().getAlternatives_3()); 
-            // InternalRailSL.g:1428:2: ( rule__SetPointStatement__Alternatives_3 )?
+             before(grammarAccess.getPointStatementAccess().getAlternatives_3()); 
+            // InternalRailSL.g:1428:2: ( rule__PointStatement__Alternatives_3 )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -4569,10 +4569,10 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt21) {
                 case 1 :
-                    // InternalRailSL.g:1428:3: rule__SetPointStatement__Alternatives_3
+                    // InternalRailSL.g:1428:3: rule__PointStatement__Alternatives_3
                     {
                     pushFollow(FOLLOW_2);
-                    rule__SetPointStatement__Alternatives_3();
+                    rule__PointStatement__Alternatives_3();
 
                     state._fsp--;
 
@@ -4582,7 +4582,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getAlternatives_3()); 
+             after(grammarAccess.getPointStatementAccess().getAlternatives_3()); 
 
             }
 
@@ -4601,26 +4601,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__3__Impl"
+    // $ANTLR end "rule__PointStatement__Group__3__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__4"
-    // InternalRailSL.g:1436:1: rule__SetPointStatement__Group__4 : rule__SetPointStatement__Group__4__Impl rule__SetPointStatement__Group__5 ;
-    public final void rule__SetPointStatement__Group__4() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__4"
+    // InternalRailSL.g:1436:1: rule__PointStatement__Group__4 : rule__PointStatement__Group__4__Impl rule__PointStatement__Group__5 ;
+    public final void rule__PointStatement__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1440:1: ( rule__SetPointStatement__Group__4__Impl rule__SetPointStatement__Group__5 )
-            // InternalRailSL.g:1441:2: rule__SetPointStatement__Group__4__Impl rule__SetPointStatement__Group__5
+            // InternalRailSL.g:1440:1: ( rule__PointStatement__Group__4__Impl rule__PointStatement__Group__5 )
+            // InternalRailSL.g:1441:2: rule__PointStatement__Group__4__Impl rule__PointStatement__Group__5
             {
             pushFollow(FOLLOW_13);
-            rule__SetPointStatement__Group__4__Impl();
+            rule__PointStatement__Group__4__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__5();
+            rule__PointStatement__Group__5();
 
             state._fsp--;
 
@@ -4639,12 +4639,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__4"
+    // $ANTLR end "rule__PointStatement__Group__4"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__4__Impl"
-    // InternalRailSL.g:1448:1: rule__SetPointStatement__Group__4__Impl : ( 'to' ) ;
-    public final void rule__SetPointStatement__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__4__Impl"
+    // InternalRailSL.g:1448:1: rule__PointStatement__Group__4__Impl : ( 'to' ) ;
+    public final void rule__PointStatement__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -4655,9 +4655,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1453:1: ( 'to' )
             // InternalRailSL.g:1454:2: 'to'
             {
-             before(grammarAccess.getSetPointStatementAccess().getToKeyword_4()); 
+             before(grammarAccess.getPointStatementAccess().getToKeyword_4()); 
             match(input,29,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getToKeyword_4()); 
+             after(grammarAccess.getPointStatementAccess().getToKeyword_4()); 
 
             }
 
@@ -4676,26 +4676,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__4__Impl"
+    // $ANTLR end "rule__PointStatement__Group__4__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__5"
-    // InternalRailSL.g:1463:1: rule__SetPointStatement__Group__5 : rule__SetPointStatement__Group__5__Impl rule__SetPointStatement__Group__6 ;
-    public final void rule__SetPointStatement__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__5"
+    // InternalRailSL.g:1463:1: rule__PointStatement__Group__5 : rule__PointStatement__Group__5__Impl rule__PointStatement__Group__6 ;
+    public final void rule__PointStatement__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1467:1: ( rule__SetPointStatement__Group__5__Impl rule__SetPointStatement__Group__6 )
-            // InternalRailSL.g:1468:2: rule__SetPointStatement__Group__5__Impl rule__SetPointStatement__Group__6
+            // InternalRailSL.g:1467:1: ( rule__PointStatement__Group__5__Impl rule__PointStatement__Group__6 )
+            // InternalRailSL.g:1468:2: rule__PointStatement__Group__5__Impl rule__PointStatement__Group__6
             {
             pushFollow(FOLLOW_10);
-            rule__SetPointStatement__Group__5__Impl();
+            rule__PointStatement__Group__5__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__6();
+            rule__PointStatement__Group__6();
 
             state._fsp--;
 
@@ -4714,35 +4714,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__5"
+    // $ANTLR end "rule__PointStatement__Group__5"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__5__Impl"
-    // InternalRailSL.g:1475:1: rule__SetPointStatement__Group__5__Impl : ( ( rule__SetPointStatement__OrientationAssignment_5 ) ) ;
-    public final void rule__SetPointStatement__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__5__Impl"
+    // InternalRailSL.g:1475:1: rule__PointStatement__Group__5__Impl : ( ( rule__PointStatement__OrientationAssignment_5 ) ) ;
+    public final void rule__PointStatement__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1479:1: ( ( ( rule__SetPointStatement__OrientationAssignment_5 ) ) )
-            // InternalRailSL.g:1480:1: ( ( rule__SetPointStatement__OrientationAssignment_5 ) )
+            // InternalRailSL.g:1479:1: ( ( ( rule__PointStatement__OrientationAssignment_5 ) ) )
+            // InternalRailSL.g:1480:1: ( ( rule__PointStatement__OrientationAssignment_5 ) )
             {
-            // InternalRailSL.g:1480:1: ( ( rule__SetPointStatement__OrientationAssignment_5 ) )
-            // InternalRailSL.g:1481:2: ( rule__SetPointStatement__OrientationAssignment_5 )
+            // InternalRailSL.g:1480:1: ( ( rule__PointStatement__OrientationAssignment_5 ) )
+            // InternalRailSL.g:1481:2: ( rule__PointStatement__OrientationAssignment_5 )
             {
-             before(grammarAccess.getSetPointStatementAccess().getOrientationAssignment_5()); 
-            // InternalRailSL.g:1482:2: ( rule__SetPointStatement__OrientationAssignment_5 )
-            // InternalRailSL.g:1482:3: rule__SetPointStatement__OrientationAssignment_5
+             before(grammarAccess.getPointStatementAccess().getOrientationAssignment_5()); 
+            // InternalRailSL.g:1482:2: ( rule__PointStatement__OrientationAssignment_5 )
+            // InternalRailSL.g:1482:3: rule__PointStatement__OrientationAssignment_5
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__OrientationAssignment_5();
+            rule__PointStatement__OrientationAssignment_5();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getOrientationAssignment_5()); 
+             after(grammarAccess.getPointStatementAccess().getOrientationAssignment_5()); 
 
             }
 
@@ -4761,21 +4761,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__5__Impl"
+    // $ANTLR end "rule__PointStatement__Group__5__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__6"
-    // InternalRailSL.g:1490:1: rule__SetPointStatement__Group__6 : rule__SetPointStatement__Group__6__Impl ;
-    public final void rule__SetPointStatement__Group__6() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__6"
+    // InternalRailSL.g:1490:1: rule__PointStatement__Group__6 : rule__PointStatement__Group__6__Impl ;
+    public final void rule__PointStatement__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1494:1: ( rule__SetPointStatement__Group__6__Impl )
-            // InternalRailSL.g:1495:2: rule__SetPointStatement__Group__6__Impl
+            // InternalRailSL.g:1494:1: ( rule__PointStatement__Group__6__Impl )
+            // InternalRailSL.g:1495:2: rule__PointStatement__Group__6__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group__6__Impl();
+            rule__PointStatement__Group__6__Impl();
 
             state._fsp--;
 
@@ -4794,12 +4794,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__6"
+    // $ANTLR end "rule__PointStatement__Group__6"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group__6__Impl"
-    // InternalRailSL.g:1501:1: rule__SetPointStatement__Group__6__Impl : ( '.' ) ;
-    public final void rule__SetPointStatement__Group__6__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group__6__Impl"
+    // InternalRailSL.g:1501:1: rule__PointStatement__Group__6__Impl : ( '.' ) ;
+    public final void rule__PointStatement__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -4810,9 +4810,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1506:1: ( '.' )
             // InternalRailSL.g:1507:2: '.'
             {
-             before(grammarAccess.getSetPointStatementAccess().getFullStopKeyword_6()); 
+             before(grammarAccess.getPointStatementAccess().getFullStopKeyword_6()); 
             match(input,30,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getFullStopKeyword_6()); 
+             after(grammarAccess.getPointStatementAccess().getFullStopKeyword_6()); 
 
             }
 
@@ -4831,26 +4831,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group__6__Impl"
+    // $ANTLR end "rule__PointStatement__Group__6__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_2__0"
-    // InternalRailSL.g:1517:1: rule__SetPointStatement__Group_2__0 : rule__SetPointStatement__Group_2__0__Impl rule__SetPointStatement__Group_2__1 ;
-    public final void rule__SetPointStatement__Group_2__0() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_2__0"
+    // InternalRailSL.g:1517:1: rule__PointStatement__Group_2__0 : rule__PointStatement__Group_2__0__Impl rule__PointStatement__Group_2__1 ;
+    public final void rule__PointStatement__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1521:1: ( rule__SetPointStatement__Group_2__0__Impl rule__SetPointStatement__Group_2__1 )
-            // InternalRailSL.g:1522:2: rule__SetPointStatement__Group_2__0__Impl rule__SetPointStatement__Group_2__1
+            // InternalRailSL.g:1521:1: ( rule__PointStatement__Group_2__0__Impl rule__PointStatement__Group_2__1 )
+            // InternalRailSL.g:1522:2: rule__PointStatement__Group_2__0__Impl rule__PointStatement__Group_2__1
             {
             pushFollow(FOLLOW_12);
-            rule__SetPointStatement__Group_2__0__Impl();
+            rule__PointStatement__Group_2__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group_2__1();
+            rule__PointStatement__Group_2__1();
 
             state._fsp--;
 
@@ -4869,12 +4869,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_2__0"
+    // $ANTLR end "rule__PointStatement__Group_2__0"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_2__0__Impl"
-    // InternalRailSL.g:1529:1: rule__SetPointStatement__Group_2__0__Impl : ( ', ' ) ;
-    public final void rule__SetPointStatement__Group_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_2__0__Impl"
+    // InternalRailSL.g:1529:1: rule__PointStatement__Group_2__0__Impl : ( ', ' ) ;
+    public final void rule__PointStatement__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -4885,9 +4885,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1534:1: ( ', ' )
             // InternalRailSL.g:1535:2: ', '
             {
-             before(grammarAccess.getSetPointStatementAccess().getCommaSpaceKeyword_2_0()); 
+             before(grammarAccess.getPointStatementAccess().getCommaSpaceKeyword_2_0()); 
             match(input,31,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getCommaSpaceKeyword_2_0()); 
+             after(grammarAccess.getPointStatementAccess().getCommaSpaceKeyword_2_0()); 
 
             }
 
@@ -4906,21 +4906,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_2__0__Impl"
+    // $ANTLR end "rule__PointStatement__Group_2__0__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_2__1"
-    // InternalRailSL.g:1544:1: rule__SetPointStatement__Group_2__1 : rule__SetPointStatement__Group_2__1__Impl ;
-    public final void rule__SetPointStatement__Group_2__1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_2__1"
+    // InternalRailSL.g:1544:1: rule__PointStatement__Group_2__1 : rule__PointStatement__Group_2__1__Impl ;
+    public final void rule__PointStatement__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1548:1: ( rule__SetPointStatement__Group_2__1__Impl )
-            // InternalRailSL.g:1549:2: rule__SetPointStatement__Group_2__1__Impl
+            // InternalRailSL.g:1548:1: ( rule__PointStatement__Group_2__1__Impl )
+            // InternalRailSL.g:1549:2: rule__PointStatement__Group_2__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group_2__1__Impl();
+            rule__PointStatement__Group_2__1__Impl();
 
             state._fsp--;
 
@@ -4939,35 +4939,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_2__1"
+    // $ANTLR end "rule__PointStatement__Group_2__1"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_2__1__Impl"
-    // InternalRailSL.g:1555:1: rule__SetPointStatement__Group_2__1__Impl : ( ( rule__SetPointStatement__PointsAssignment_2_1 ) ) ;
-    public final void rule__SetPointStatement__Group_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_2__1__Impl"
+    // InternalRailSL.g:1555:1: rule__PointStatement__Group_2__1__Impl : ( ( rule__PointStatement__PointsAssignment_2_1 ) ) ;
+    public final void rule__PointStatement__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1559:1: ( ( ( rule__SetPointStatement__PointsAssignment_2_1 ) ) )
-            // InternalRailSL.g:1560:1: ( ( rule__SetPointStatement__PointsAssignment_2_1 ) )
+            // InternalRailSL.g:1559:1: ( ( ( rule__PointStatement__PointsAssignment_2_1 ) ) )
+            // InternalRailSL.g:1560:1: ( ( rule__PointStatement__PointsAssignment_2_1 ) )
             {
-            // InternalRailSL.g:1560:1: ( ( rule__SetPointStatement__PointsAssignment_2_1 ) )
-            // InternalRailSL.g:1561:2: ( rule__SetPointStatement__PointsAssignment_2_1 )
+            // InternalRailSL.g:1560:1: ( ( rule__PointStatement__PointsAssignment_2_1 ) )
+            // InternalRailSL.g:1561:2: ( rule__PointStatement__PointsAssignment_2_1 )
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsAssignment_2_1()); 
-            // InternalRailSL.g:1562:2: ( rule__SetPointStatement__PointsAssignment_2_1 )
-            // InternalRailSL.g:1562:3: rule__SetPointStatement__PointsAssignment_2_1
+             before(grammarAccess.getPointStatementAccess().getPointsAssignment_2_1()); 
+            // InternalRailSL.g:1562:2: ( rule__PointStatement__PointsAssignment_2_1 )
+            // InternalRailSL.g:1562:3: rule__PointStatement__PointsAssignment_2_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__PointsAssignment_2_1();
+            rule__PointStatement__PointsAssignment_2_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getPointsAssignment_2_1()); 
+             after(grammarAccess.getPointStatementAccess().getPointsAssignment_2_1()); 
 
             }
 
@@ -4986,26 +4986,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_2__1__Impl"
+    // $ANTLR end "rule__PointStatement__Group_2__1__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_0__0"
-    // InternalRailSL.g:1571:1: rule__SetPointStatement__Group_3_0__0 : rule__SetPointStatement__Group_3_0__0__Impl rule__SetPointStatement__Group_3_0__1 ;
-    public final void rule__SetPointStatement__Group_3_0__0() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_0__0"
+    // InternalRailSL.g:1571:1: rule__PointStatement__Group_3_0__0 : rule__PointStatement__Group_3_0__0__Impl rule__PointStatement__Group_3_0__1 ;
+    public final void rule__PointStatement__Group_3_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1575:1: ( rule__SetPointStatement__Group_3_0__0__Impl rule__SetPointStatement__Group_3_0__1 )
-            // InternalRailSL.g:1576:2: rule__SetPointStatement__Group_3_0__0__Impl rule__SetPointStatement__Group_3_0__1
+            // InternalRailSL.g:1575:1: ( rule__PointStatement__Group_3_0__0__Impl rule__PointStatement__Group_3_0__1 )
+            // InternalRailSL.g:1576:2: rule__PointStatement__Group_3_0__0__Impl rule__PointStatement__Group_3_0__1
             {
             pushFollow(FOLLOW_12);
-            rule__SetPointStatement__Group_3_0__0__Impl();
+            rule__PointStatement__Group_3_0__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group_3_0__1();
+            rule__PointStatement__Group_3_0__1();
 
             state._fsp--;
 
@@ -5024,12 +5024,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_0__0"
+    // $ANTLR end "rule__PointStatement__Group_3_0__0"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_0__0__Impl"
-    // InternalRailSL.g:1583:1: rule__SetPointStatement__Group_3_0__0__Impl : ( 'and' ) ;
-    public final void rule__SetPointStatement__Group_3_0__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_0__0__Impl"
+    // InternalRailSL.g:1583:1: rule__PointStatement__Group_3_0__0__Impl : ( 'and' ) ;
+    public final void rule__PointStatement__Group_3_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -5040,9 +5040,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1588:1: ( 'and' )
             // InternalRailSL.g:1589:2: 'and'
             {
-             before(grammarAccess.getSetPointStatementAccess().getAndKeyword_3_0_0()); 
+             before(grammarAccess.getPointStatementAccess().getAndKeyword_3_0_0()); 
             match(input,32,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getAndKeyword_3_0_0()); 
+             after(grammarAccess.getPointStatementAccess().getAndKeyword_3_0_0()); 
 
             }
 
@@ -5061,21 +5061,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_0__0__Impl"
+    // $ANTLR end "rule__PointStatement__Group_3_0__0__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_0__1"
-    // InternalRailSL.g:1598:1: rule__SetPointStatement__Group_3_0__1 : rule__SetPointStatement__Group_3_0__1__Impl ;
-    public final void rule__SetPointStatement__Group_3_0__1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_0__1"
+    // InternalRailSL.g:1598:1: rule__PointStatement__Group_3_0__1 : rule__PointStatement__Group_3_0__1__Impl ;
+    public final void rule__PointStatement__Group_3_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1602:1: ( rule__SetPointStatement__Group_3_0__1__Impl )
-            // InternalRailSL.g:1603:2: rule__SetPointStatement__Group_3_0__1__Impl
+            // InternalRailSL.g:1602:1: ( rule__PointStatement__Group_3_0__1__Impl )
+            // InternalRailSL.g:1603:2: rule__PointStatement__Group_3_0__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group_3_0__1__Impl();
+            rule__PointStatement__Group_3_0__1__Impl();
 
             state._fsp--;
 
@@ -5094,35 +5094,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_0__1"
+    // $ANTLR end "rule__PointStatement__Group_3_0__1"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_0__1__Impl"
-    // InternalRailSL.g:1609:1: rule__SetPointStatement__Group_3_0__1__Impl : ( ( rule__SetPointStatement__PointsAssignment_3_0_1 ) ) ;
-    public final void rule__SetPointStatement__Group_3_0__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_0__1__Impl"
+    // InternalRailSL.g:1609:1: rule__PointStatement__Group_3_0__1__Impl : ( ( rule__PointStatement__PointsAssignment_3_0_1 ) ) ;
+    public final void rule__PointStatement__Group_3_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1613:1: ( ( ( rule__SetPointStatement__PointsAssignment_3_0_1 ) ) )
-            // InternalRailSL.g:1614:1: ( ( rule__SetPointStatement__PointsAssignment_3_0_1 ) )
+            // InternalRailSL.g:1613:1: ( ( ( rule__PointStatement__PointsAssignment_3_0_1 ) ) )
+            // InternalRailSL.g:1614:1: ( ( rule__PointStatement__PointsAssignment_3_0_1 ) )
             {
-            // InternalRailSL.g:1614:1: ( ( rule__SetPointStatement__PointsAssignment_3_0_1 ) )
-            // InternalRailSL.g:1615:2: ( rule__SetPointStatement__PointsAssignment_3_0_1 )
+            // InternalRailSL.g:1614:1: ( ( rule__PointStatement__PointsAssignment_3_0_1 ) )
+            // InternalRailSL.g:1615:2: ( rule__PointStatement__PointsAssignment_3_0_1 )
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsAssignment_3_0_1()); 
-            // InternalRailSL.g:1616:2: ( rule__SetPointStatement__PointsAssignment_3_0_1 )
-            // InternalRailSL.g:1616:3: rule__SetPointStatement__PointsAssignment_3_0_1
+             before(grammarAccess.getPointStatementAccess().getPointsAssignment_3_0_1()); 
+            // InternalRailSL.g:1616:2: ( rule__PointStatement__PointsAssignment_3_0_1 )
+            // InternalRailSL.g:1616:3: rule__PointStatement__PointsAssignment_3_0_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__PointsAssignment_3_0_1();
+            rule__PointStatement__PointsAssignment_3_0_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getPointsAssignment_3_0_1()); 
+             after(grammarAccess.getPointStatementAccess().getPointsAssignment_3_0_1()); 
 
             }
 
@@ -5141,26 +5141,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_0__1__Impl"
+    // $ANTLR end "rule__PointStatement__Group_3_0__1__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_1__0"
-    // InternalRailSL.g:1625:1: rule__SetPointStatement__Group_3_1__0 : rule__SetPointStatement__Group_3_1__0__Impl rule__SetPointStatement__Group_3_1__1 ;
-    public final void rule__SetPointStatement__Group_3_1__0() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_1__0"
+    // InternalRailSL.g:1625:1: rule__PointStatement__Group_3_1__0 : rule__PointStatement__Group_3_1__0__Impl rule__PointStatement__Group_3_1__1 ;
+    public final void rule__PointStatement__Group_3_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1629:1: ( rule__SetPointStatement__Group_3_1__0__Impl rule__SetPointStatement__Group_3_1__1 )
-            // InternalRailSL.g:1630:2: rule__SetPointStatement__Group_3_1__0__Impl rule__SetPointStatement__Group_3_1__1
+            // InternalRailSL.g:1629:1: ( rule__PointStatement__Group_3_1__0__Impl rule__PointStatement__Group_3_1__1 )
+            // InternalRailSL.g:1630:2: rule__PointStatement__Group_3_1__0__Impl rule__PointStatement__Group_3_1__1
             {
             pushFollow(FOLLOW_12);
-            rule__SetPointStatement__Group_3_1__0__Impl();
+            rule__PointStatement__Group_3_1__0__Impl();
 
             state._fsp--;
 
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group_3_1__1();
+            rule__PointStatement__Group_3_1__1();
 
             state._fsp--;
 
@@ -5179,12 +5179,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_1__0"
+    // $ANTLR end "rule__PointStatement__Group_3_1__0"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_1__0__Impl"
-    // InternalRailSL.g:1637:1: rule__SetPointStatement__Group_3_1__0__Impl : ( ', and' ) ;
-    public final void rule__SetPointStatement__Group_3_1__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_1__0__Impl"
+    // InternalRailSL.g:1637:1: rule__PointStatement__Group_3_1__0__Impl : ( ', and' ) ;
+    public final void rule__PointStatement__Group_3_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -5195,9 +5195,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:1642:1: ( ', and' )
             // InternalRailSL.g:1643:2: ', and'
             {
-             before(grammarAccess.getSetPointStatementAccess().getAndKeyword_3_1_0()); 
+             before(grammarAccess.getPointStatementAccess().getAndKeyword_3_1_0()); 
             match(input,33,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getAndKeyword_3_1_0()); 
+             after(grammarAccess.getPointStatementAccess().getAndKeyword_3_1_0()); 
 
             }
 
@@ -5216,21 +5216,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_1__0__Impl"
+    // $ANTLR end "rule__PointStatement__Group_3_1__0__Impl"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_1__1"
-    // InternalRailSL.g:1652:1: rule__SetPointStatement__Group_3_1__1 : rule__SetPointStatement__Group_3_1__1__Impl ;
-    public final void rule__SetPointStatement__Group_3_1__1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_1__1"
+    // InternalRailSL.g:1652:1: rule__PointStatement__Group_3_1__1 : rule__PointStatement__Group_3_1__1__Impl ;
+    public final void rule__PointStatement__Group_3_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1656:1: ( rule__SetPointStatement__Group_3_1__1__Impl )
-            // InternalRailSL.g:1657:2: rule__SetPointStatement__Group_3_1__1__Impl
+            // InternalRailSL.g:1656:1: ( rule__PointStatement__Group_3_1__1__Impl )
+            // InternalRailSL.g:1657:2: rule__PointStatement__Group_3_1__1__Impl
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__Group_3_1__1__Impl();
+            rule__PointStatement__Group_3_1__1__Impl();
 
             state._fsp--;
 
@@ -5249,35 +5249,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_1__1"
+    // $ANTLR end "rule__PointStatement__Group_3_1__1"
 
 
-    // $ANTLR start "rule__SetPointStatement__Group_3_1__1__Impl"
-    // InternalRailSL.g:1663:1: rule__SetPointStatement__Group_3_1__1__Impl : ( ( rule__SetPointStatement__PointsAssignment_3_1_1 ) ) ;
-    public final void rule__SetPointStatement__Group_3_1__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__Group_3_1__1__Impl"
+    // InternalRailSL.g:1663:1: rule__PointStatement__Group_3_1__1__Impl : ( ( rule__PointStatement__PointsAssignment_3_1_1 ) ) ;
+    public final void rule__PointStatement__Group_3_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1667:1: ( ( ( rule__SetPointStatement__PointsAssignment_3_1_1 ) ) )
-            // InternalRailSL.g:1668:1: ( ( rule__SetPointStatement__PointsAssignment_3_1_1 ) )
+            // InternalRailSL.g:1667:1: ( ( ( rule__PointStatement__PointsAssignment_3_1_1 ) ) )
+            // InternalRailSL.g:1668:1: ( ( rule__PointStatement__PointsAssignment_3_1_1 ) )
             {
-            // InternalRailSL.g:1668:1: ( ( rule__SetPointStatement__PointsAssignment_3_1_1 ) )
-            // InternalRailSL.g:1669:2: ( rule__SetPointStatement__PointsAssignment_3_1_1 )
+            // InternalRailSL.g:1668:1: ( ( rule__PointStatement__PointsAssignment_3_1_1 ) )
+            // InternalRailSL.g:1669:2: ( rule__PointStatement__PointsAssignment_3_1_1 )
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsAssignment_3_1_1()); 
-            // InternalRailSL.g:1670:2: ( rule__SetPointStatement__PointsAssignment_3_1_1 )
-            // InternalRailSL.g:1670:3: rule__SetPointStatement__PointsAssignment_3_1_1
+             before(grammarAccess.getPointStatementAccess().getPointsAssignment_3_1_1()); 
+            // InternalRailSL.g:1670:2: ( rule__PointStatement__PointsAssignment_3_1_1 )
+            // InternalRailSL.g:1670:3: rule__PointStatement__PointsAssignment_3_1_1
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__PointsAssignment_3_1_1();
+            rule__PointStatement__PointsAssignment_3_1_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getPointsAssignment_3_1_1()); 
+             after(grammarAccess.getPointStatementAccess().getPointsAssignment_3_1_1()); 
 
             }
 
@@ -5296,7 +5296,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__Group_3_1__1__Impl"
+    // $ANTLR end "rule__PointStatement__Group_3_1__1__Impl"
 
 
     // $ANTLR start "rule__TimeWaitStatement__Group__0"
@@ -5741,31 +5741,31 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ContactWaitStatement__Group__1__Impl"
-    // InternalRailSL.g:1813:1: rule__ContactWaitStatement__Group__1__Impl : ( ( rule__ContactWaitStatement__ContactIndexAssignment_1 ) ) ;
+    // InternalRailSL.g:1813:1: rule__ContactWaitStatement__Group__1__Impl : ( ( rule__ContactWaitStatement__ContactAssignment_1 ) ) ;
     public final void rule__ContactWaitStatement__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1817:1: ( ( ( rule__ContactWaitStatement__ContactIndexAssignment_1 ) ) )
-            // InternalRailSL.g:1818:1: ( ( rule__ContactWaitStatement__ContactIndexAssignment_1 ) )
+            // InternalRailSL.g:1817:1: ( ( ( rule__ContactWaitStatement__ContactAssignment_1 ) ) )
+            // InternalRailSL.g:1818:1: ( ( rule__ContactWaitStatement__ContactAssignment_1 ) )
             {
-            // InternalRailSL.g:1818:1: ( ( rule__ContactWaitStatement__ContactIndexAssignment_1 ) )
-            // InternalRailSL.g:1819:2: ( rule__ContactWaitStatement__ContactIndexAssignment_1 )
+            // InternalRailSL.g:1818:1: ( ( rule__ContactWaitStatement__ContactAssignment_1 ) )
+            // InternalRailSL.g:1819:2: ( rule__ContactWaitStatement__ContactAssignment_1 )
             {
-             before(grammarAccess.getContactWaitStatementAccess().getContactIndexAssignment_1()); 
-            // InternalRailSL.g:1820:2: ( rule__ContactWaitStatement__ContactIndexAssignment_1 )
-            // InternalRailSL.g:1820:3: rule__ContactWaitStatement__ContactIndexAssignment_1
+             before(grammarAccess.getContactWaitStatementAccess().getContactAssignment_1()); 
+            // InternalRailSL.g:1820:2: ( rule__ContactWaitStatement__ContactAssignment_1 )
+            // InternalRailSL.g:1820:3: rule__ContactWaitStatement__ContactAssignment_1
             {
             pushFollow(FOLLOW_2);
-            rule__ContactWaitStatement__ContactIndexAssignment_1();
+            rule__ContactWaitStatement__ContactAssignment_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getContactWaitStatementAccess().getContactIndexAssignment_1()); 
+             after(grammarAccess.getContactWaitStatementAccess().getContactAssignment_1()); 
 
             }
 
@@ -8360,9 +8360,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Block__EndAssignment_2"
 
 
-    // $ANTLR start "rule__SetTrackStatement__SegmentsAssignment_1"
-    // InternalRailSL.g:2677:1: rule__SetTrackStatement__SegmentsAssignment_1 : ( RULE_SEG_NAME ) ;
-    public final void rule__SetTrackStatement__SegmentsAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__SegmentsAssignment_1"
+    // InternalRailSL.g:2677:1: rule__TrackStatement__SegmentsAssignment_1 : ( RULE_SEG_NAME ) ;
+    public final void rule__TrackStatement__SegmentsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8373,9 +8373,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2682:2: ( RULE_SEG_NAME )
             // InternalRailSL.g:2683:3: RULE_SEG_NAME
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0()); 
+             before(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0()); 
             match(input,RULE_SEG_NAME,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_1_0()); 
 
             }
 
@@ -8394,12 +8394,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__SegmentsAssignment_1"
+    // $ANTLR end "rule__TrackStatement__SegmentsAssignment_1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__SegmentsAssignment_2_1"
-    // InternalRailSL.g:2692:1: rule__SetTrackStatement__SegmentsAssignment_2_1 : ( RULE_SEG_NAME ) ;
-    public final void rule__SetTrackStatement__SegmentsAssignment_2_1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__SegmentsAssignment_2_1"
+    // InternalRailSL.g:2692:1: rule__TrackStatement__SegmentsAssignment_2_1 : ( RULE_SEG_NAME ) ;
+    public final void rule__TrackStatement__SegmentsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8410,9 +8410,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2697:2: ( RULE_SEG_NAME )
             // InternalRailSL.g:2698:3: RULE_SEG_NAME
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0()); 
+             before(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0()); 
             match(input,RULE_SEG_NAME,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_2_1_0()); 
 
             }
 
@@ -8431,12 +8431,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__SegmentsAssignment_2_1"
+    // $ANTLR end "rule__TrackStatement__SegmentsAssignment_2_1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__SegmentsAssignment_3_0_1"
-    // InternalRailSL.g:2707:1: rule__SetTrackStatement__SegmentsAssignment_3_0_1 : ( RULE_SEG_NAME ) ;
-    public final void rule__SetTrackStatement__SegmentsAssignment_3_0_1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__SegmentsAssignment_3_0_1"
+    // InternalRailSL.g:2707:1: rule__TrackStatement__SegmentsAssignment_3_0_1 : ( RULE_SEG_NAME ) ;
+    public final void rule__TrackStatement__SegmentsAssignment_3_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8447,9 +8447,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2712:2: ( RULE_SEG_NAME )
             // InternalRailSL.g:2713:3: RULE_SEG_NAME
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0()); 
+             before(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0()); 
             match(input,RULE_SEG_NAME,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_0_1_0()); 
 
             }
 
@@ -8468,12 +8468,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__SegmentsAssignment_3_0_1"
+    // $ANTLR end "rule__TrackStatement__SegmentsAssignment_3_0_1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__SegmentsAssignment_3_1_1"
-    // InternalRailSL.g:2722:1: rule__SetTrackStatement__SegmentsAssignment_3_1_1 : ( RULE_SEG_NAME ) ;
-    public final void rule__SetTrackStatement__SegmentsAssignment_3_1_1() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__SegmentsAssignment_3_1_1"
+    // InternalRailSL.g:2722:1: rule__TrackStatement__SegmentsAssignment_3_1_1 : ( RULE_SEG_NAME ) ;
+    public final void rule__TrackStatement__SegmentsAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8484,9 +8484,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2727:2: ( RULE_SEG_NAME )
             // InternalRailSL.g:2728:3: RULE_SEG_NAME
             {
-             before(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0()); 
+             before(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0()); 
             match(input,RULE_SEG_NAME,FOLLOW_2); 
-             after(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0()); 
+             after(grammarAccess.getTrackStatementAccess().getSegmentsSEG_NAMETerminalRuleCall_3_1_1_0()); 
 
             }
 
@@ -8505,12 +8505,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__SegmentsAssignment_3_1_1"
+    // $ANTLR end "rule__TrackStatement__SegmentsAssignment_3_1_1"
 
 
-    // $ANTLR start "rule__SetTrackStatement__ModeAssignment_5"
-    // InternalRailSL.g:2737:1: rule__SetTrackStatement__ModeAssignment_5 : ( ruleTrackSetting ) ;
-    public final void rule__SetTrackStatement__ModeAssignment_5() throws RecognitionException {
+    // $ANTLR start "rule__TrackStatement__ModeAssignment_5"
+    // InternalRailSL.g:2737:1: rule__TrackStatement__ModeAssignment_5 : ( ruleTrackSetting ) ;
+    public final void rule__TrackStatement__ModeAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8521,13 +8521,13 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2742:2: ( ruleTrackSetting )
             // InternalRailSL.g:2743:3: ruleTrackSetting
             {
-             before(grammarAccess.getSetTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0()); 
+             before(grammarAccess.getTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
             ruleTrackSetting();
 
             state._fsp--;
 
-             after(grammarAccess.getSetTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0()); 
+             after(grammarAccess.getTrackStatementAccess().getModeTrackSettingParserRuleCall_5_0()); 
 
             }
 
@@ -8546,12 +8546,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetTrackStatement__ModeAssignment_5"
+    // $ANTLR end "rule__TrackStatement__ModeAssignment_5"
 
 
-    // $ANTLR start "rule__SetPointStatement__PointsAssignment_1"
-    // InternalRailSL.g:2752:1: rule__SetPointStatement__PointsAssignment_1 : ( RULE_INT ) ;
-    public final void rule__SetPointStatement__PointsAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__PointsAssignment_1"
+    // InternalRailSL.g:2752:1: rule__PointStatement__PointsAssignment_1 : ( RULE_INT ) ;
+    public final void rule__PointStatement__PointsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8562,9 +8562,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2757:2: ( RULE_INT )
             // InternalRailSL.g:2758:3: RULE_INT
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_1_0()); 
+             before(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_1_0()); 
+             after(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_1_0()); 
 
             }
 
@@ -8583,12 +8583,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__PointsAssignment_1"
+    // $ANTLR end "rule__PointStatement__PointsAssignment_1"
 
 
-    // $ANTLR start "rule__SetPointStatement__PointsAssignment_2_1"
-    // InternalRailSL.g:2767:1: rule__SetPointStatement__PointsAssignment_2_1 : ( RULE_INT ) ;
-    public final void rule__SetPointStatement__PointsAssignment_2_1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__PointsAssignment_2_1"
+    // InternalRailSL.g:2767:1: rule__PointStatement__PointsAssignment_2_1 : ( RULE_INT ) ;
+    public final void rule__PointStatement__PointsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8599,9 +8599,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2772:2: ( RULE_INT )
             // InternalRailSL.g:2773:3: RULE_INT
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_2_1_0()); 
+             before(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_2_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_2_1_0()); 
+             after(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_2_1_0()); 
 
             }
 
@@ -8620,12 +8620,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__PointsAssignment_2_1"
+    // $ANTLR end "rule__PointStatement__PointsAssignment_2_1"
 
 
-    // $ANTLR start "rule__SetPointStatement__PointsAssignment_3_0_1"
-    // InternalRailSL.g:2782:1: rule__SetPointStatement__PointsAssignment_3_0_1 : ( RULE_INT ) ;
-    public final void rule__SetPointStatement__PointsAssignment_3_0_1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__PointsAssignment_3_0_1"
+    // InternalRailSL.g:2782:1: rule__PointStatement__PointsAssignment_3_0_1 : ( RULE_INT ) ;
+    public final void rule__PointStatement__PointsAssignment_3_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8636,9 +8636,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2787:2: ( RULE_INT )
             // InternalRailSL.g:2788:3: RULE_INT
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_0_1_0()); 
+             before(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_3_0_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_0_1_0()); 
+             after(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_3_0_1_0()); 
 
             }
 
@@ -8657,12 +8657,12 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__PointsAssignment_3_0_1"
+    // $ANTLR end "rule__PointStatement__PointsAssignment_3_0_1"
 
 
-    // $ANTLR start "rule__SetPointStatement__PointsAssignment_3_1_1"
-    // InternalRailSL.g:2797:1: rule__SetPointStatement__PointsAssignment_3_1_1 : ( RULE_INT ) ;
-    public final void rule__SetPointStatement__PointsAssignment_3_1_1() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__PointsAssignment_3_1_1"
+    // InternalRailSL.g:2797:1: rule__PointStatement__PointsAssignment_3_1_1 : ( RULE_INT ) ;
+    public final void rule__PointStatement__PointsAssignment_3_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8673,9 +8673,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2802:2: ( RULE_INT )
             // InternalRailSL.g:2803:3: RULE_INT
             {
-             before(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_1_1_0()); 
+             before(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_3_1_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
-             after(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_3_1_1_0()); 
+             after(grammarAccess.getPointStatementAccess().getPointsINTTerminalRuleCall_3_1_1_0()); 
 
             }
 
@@ -8694,35 +8694,35 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__PointsAssignment_3_1_1"
+    // $ANTLR end "rule__PointStatement__PointsAssignment_3_1_1"
 
 
-    // $ANTLR start "rule__SetPointStatement__OrientationAssignment_5"
-    // InternalRailSL.g:2812:1: rule__SetPointStatement__OrientationAssignment_5 : ( ( rule__SetPointStatement__OrientationAlternatives_5_0 ) ) ;
-    public final void rule__SetPointStatement__OrientationAssignment_5() throws RecognitionException {
+    // $ANTLR start "rule__PointStatement__OrientationAssignment_5"
+    // InternalRailSL.g:2812:1: rule__PointStatement__OrientationAssignment_5 : ( ( rule__PointStatement__OrientationAlternatives_5_0 ) ) ;
+    public final void rule__PointStatement__OrientationAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2816:1: ( ( ( rule__SetPointStatement__OrientationAlternatives_5_0 ) ) )
-            // InternalRailSL.g:2817:2: ( ( rule__SetPointStatement__OrientationAlternatives_5_0 ) )
+            // InternalRailSL.g:2816:1: ( ( ( rule__PointStatement__OrientationAlternatives_5_0 ) ) )
+            // InternalRailSL.g:2817:2: ( ( rule__PointStatement__OrientationAlternatives_5_0 ) )
             {
-            // InternalRailSL.g:2817:2: ( ( rule__SetPointStatement__OrientationAlternatives_5_0 ) )
-            // InternalRailSL.g:2818:3: ( rule__SetPointStatement__OrientationAlternatives_5_0 )
+            // InternalRailSL.g:2817:2: ( ( rule__PointStatement__OrientationAlternatives_5_0 ) )
+            // InternalRailSL.g:2818:3: ( rule__PointStatement__OrientationAlternatives_5_0 )
             {
-             before(grammarAccess.getSetPointStatementAccess().getOrientationAlternatives_5_0()); 
-            // InternalRailSL.g:2819:3: ( rule__SetPointStatement__OrientationAlternatives_5_0 )
-            // InternalRailSL.g:2819:4: rule__SetPointStatement__OrientationAlternatives_5_0
+             before(grammarAccess.getPointStatementAccess().getOrientationAlternatives_5_0()); 
+            // InternalRailSL.g:2819:3: ( rule__PointStatement__OrientationAlternatives_5_0 )
+            // InternalRailSL.g:2819:4: rule__PointStatement__OrientationAlternatives_5_0
             {
             pushFollow(FOLLOW_2);
-            rule__SetPointStatement__OrientationAlternatives_5_0();
+            rule__PointStatement__OrientationAlternatives_5_0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getSetPointStatementAccess().getOrientationAlternatives_5_0()); 
+             after(grammarAccess.getPointStatementAccess().getOrientationAlternatives_5_0()); 
 
             }
 
@@ -8741,7 +8741,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SetPointStatement__OrientationAssignment_5"
+    // $ANTLR end "rule__PointStatement__OrientationAssignment_5"
 
 
     // $ANTLR start "rule__TimeWaitStatement__TimeAssignment_1"
@@ -8828,9 +8828,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ContactWaitStatement__EventAssignment_0"
 
 
-    // $ANTLR start "rule__ContactWaitStatement__ContactIndexAssignment_1"
-    // InternalRailSL.g:2857:1: rule__ContactWaitStatement__ContactIndexAssignment_1 : ( ruleContactIndex ) ;
-    public final void rule__ContactWaitStatement__ContactIndexAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__ContactWaitStatement__ContactAssignment_1"
+    // InternalRailSL.g:2857:1: rule__ContactWaitStatement__ContactAssignment_1 : ( ruleContactIndex ) ;
+    public final void rule__ContactWaitStatement__ContactAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -8841,13 +8841,13 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             // InternalRailSL.g:2862:2: ( ruleContactIndex )
             // InternalRailSL.g:2863:3: ruleContactIndex
             {
-             before(grammarAccess.getContactWaitStatementAccess().getContactIndexContactIndexParserRuleCall_1_0()); 
+             before(grammarAccess.getContactWaitStatementAccess().getContactContactIndexParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
             ruleContactIndex();
 
             state._fsp--;
 
-             after(grammarAccess.getContactWaitStatementAccess().getContactIndexContactIndexParserRuleCall_1_0()); 
+             after(grammarAccess.getContactWaitStatementAccess().getContactContactIndexParserRuleCall_1_0()); 
 
             }
 
@@ -8866,7 +8866,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ContactWaitStatement__ContactIndexAssignment_1"
+    // $ANTLR end "rule__ContactWaitStatement__ContactAssignment_1"
 
 
     // $ANTLR start "rule__ContactWaitStatement__SegNameAssignment_3"

@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.ContactWaitStatementImpl#getEvent <em>Event</em>}</li>
- *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.ContactWaitStatementImpl#getContactIndex <em>Contact Index</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.ContactWaitStatementImpl#getContact <em>Contact</em>}</li>
  *   <li>{@link de.cau.cs.kieler.railsl.railSL.impl.ContactWaitStatementImpl#getSegName <em>Seg Name</em>}</li>
  * </ul>
  *
@@ -50,24 +50,24 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
   protected String event = EVENT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getContactIndex() <em>Contact Index</em>}' attribute.
+   * The default value of the '{@link #getContact() <em>Contact</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getContactIndex()
+   * @see #getContact()
    * @generated
    * @ordered
    */
-  protected static final String CONTACT_INDEX_EDEFAULT = null;
+  protected static final String CONTACT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getContactIndex() <em>Contact Index</em>}' attribute.
+   * The cached value of the '{@link #getContact() <em>Contact</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getContactIndex()
+   * @see #getContact()
    * @generated
    * @ordered
    */
-  protected String contactIndex = CONTACT_INDEX_EDEFAULT;
+  protected String contact = CONTACT_EDEFAULT;
 
   /**
    * The default value of the '{@link #getSegName() <em>Seg Name</em>}' attribute.
@@ -138,9 +138,9 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getContactIndex()
+  public String getContact()
   {
-    return contactIndex;
+    return contact;
   }
 
   /**
@@ -148,12 +148,12 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setContactIndex(String newContactIndex)
+  public void setContact(String newContact)
   {
-    String oldContactIndex = contactIndex;
-    contactIndex = newContactIndex;
+    String oldContact = contact;
+    contact = newContact;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT_INDEX, oldContactIndex, contactIndex));
+      eNotify(new ENotificationImpl(this, Notification.SET, RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT, oldContact, contact));
   }
 
   /**
@@ -191,8 +191,8 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
     {
       case RailSLPackage.CONTACT_WAIT_STATEMENT__EVENT:
         return getEvent();
-      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT_INDEX:
-        return getContactIndex();
+      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT:
+        return getContact();
       case RailSLPackage.CONTACT_WAIT_STATEMENT__SEG_NAME:
         return getSegName();
     }
@@ -212,8 +212,8 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
       case RailSLPackage.CONTACT_WAIT_STATEMENT__EVENT:
         setEvent((String)newValue);
         return;
-      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT_INDEX:
-        setContactIndex((String)newValue);
+      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT:
+        setContact((String)newValue);
         return;
       case RailSLPackage.CONTACT_WAIT_STATEMENT__SEG_NAME:
         setSegName((String)newValue);
@@ -235,8 +235,8 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
       case RailSLPackage.CONTACT_WAIT_STATEMENT__EVENT:
         setEvent(EVENT_EDEFAULT);
         return;
-      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT_INDEX:
-        setContactIndex(CONTACT_INDEX_EDEFAULT);
+      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT:
+        setContact(CONTACT_EDEFAULT);
         return;
       case RailSLPackage.CONTACT_WAIT_STATEMENT__SEG_NAME:
         setSegName(SEG_NAME_EDEFAULT);
@@ -257,8 +257,8 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
     {
       case RailSLPackage.CONTACT_WAIT_STATEMENT__EVENT:
         return EVENT_EDEFAULT == null ? event != null : !EVENT_EDEFAULT.equals(event);
-      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT_INDEX:
-        return CONTACT_INDEX_EDEFAULT == null ? contactIndex != null : !CONTACT_INDEX_EDEFAULT.equals(contactIndex);
+      case RailSLPackage.CONTACT_WAIT_STATEMENT__CONTACT:
+        return CONTACT_EDEFAULT == null ? contact != null : !CONTACT_EDEFAULT.equals(contact);
       case RailSLPackage.CONTACT_WAIT_STATEMENT__SEG_NAME:
         return SEG_NAME_EDEFAULT == null ? segName != null : !SEG_NAME_EDEFAULT.equals(segName);
     }
@@ -278,8 +278,8 @@ public class ContactWaitStatementImpl extends WaitStatementImpl implements Conta
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (event: ");
     result.append(event);
-    result.append(", contactIndex: ");
-    result.append(contactIndex);
+    result.append(", contact: ");
+    result.append(contact);
     result.append(", segName: ");
     result.append(segName);
     result.append(')');

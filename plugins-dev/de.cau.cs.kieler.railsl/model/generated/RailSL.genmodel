@@ -15,13 +15,13 @@
     </genClasses>
     <genClasses ecoreClass="RailSL.ecore#//Statement"/>
     <genClasses ecoreClass="RailSL.ecore#//SetStatement"/>
-    <genClasses ecoreClass="RailSL.ecore#//SetTrackStatement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//SetTrackStatement/segments"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//SetTrackStatement/mode"/>
+    <genClasses ecoreClass="RailSL.ecore#//TrackStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//TrackStatement/segments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//TrackStatement/mode"/>
     </genClasses>
-    <genClasses ecoreClass="RailSL.ecore#//SetPointStatement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//SetPointStatement/points"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//SetPointStatement/orientation"/>
+    <genClasses ecoreClass="RailSL.ecore#//PointStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//PointStatement/points"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//PointStatement/orientation"/>
     </genClasses>
     <genClasses ecoreClass="RailSL.ecore#//WaitStatement"/>
     <genClasses ecoreClass="RailSL.ecore#//TimeWaitStatement">
@@ -29,7 +29,7 @@
     </genClasses>
     <genClasses ecoreClass="RailSL.ecore#//ContactWaitStatement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ContactWaitStatement/event"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ContactWaitStatement/contactIndex"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ContactWaitStatement/contact"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ContactWaitStatement/segName"/>
     </genClasses>
     <genClasses ecoreClass="RailSL.ecore#//OpStatement"/>

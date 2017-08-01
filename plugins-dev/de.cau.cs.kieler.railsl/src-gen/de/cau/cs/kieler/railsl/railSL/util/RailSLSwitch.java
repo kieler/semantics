@@ -102,21 +102,21 @@ public class RailSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case RailSLPackage.SET_TRACK_STATEMENT:
+      case RailSLPackage.TRACK_STATEMENT:
       {
-        SetTrackStatement setTrackStatement = (SetTrackStatement)theEObject;
-        T result = caseSetTrackStatement(setTrackStatement);
-        if (result == null) result = caseSetStatement(setTrackStatement);
-        if (result == null) result = caseStatement(setTrackStatement);
+        TrackStatement trackStatement = (TrackStatement)theEObject;
+        T result = caseTrackStatement(trackStatement);
+        if (result == null) result = caseSetStatement(trackStatement);
+        if (result == null) result = caseStatement(trackStatement);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case RailSLPackage.SET_POINT_STATEMENT:
+      case RailSLPackage.POINT_STATEMENT:
       {
-        SetPointStatement setPointStatement = (SetPointStatement)theEObject;
-        T result = caseSetPointStatement(setPointStatement);
-        if (result == null) result = caseSetStatement(setPointStatement);
-        if (result == null) result = caseStatement(setPointStatement);
+        PointStatement pointStatement = (PointStatement)theEObject;
+        T result = casePointStatement(pointStatement);
+        if (result == null) result = caseSetStatement(pointStatement);
+        if (result == null) result = caseStatement(pointStatement);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -264,33 +264,33 @@ public class RailSLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Set Track Statement</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Track Statement</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Set Track Statement</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Track Statement</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSetTrackStatement(SetTrackStatement object)
+  public T caseTrackStatement(TrackStatement object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Set Point Statement</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Point Statement</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Set Point Statement</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Point Statement</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSetPointStatement(SetPointStatement object)
+  public T casePointStatement(PointStatement object)
   {
     return null;
   }
