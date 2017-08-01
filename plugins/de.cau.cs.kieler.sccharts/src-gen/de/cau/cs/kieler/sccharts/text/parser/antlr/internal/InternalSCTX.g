@@ -978,15 +978,15 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)?(((	otherlv_6='if' 
+)?(	otherlv_6='if' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getTransitionAccess().getIfKeyword_6_0_0_0());
+    	newLeafNode(otherlv_6, grammarAccess.getTransitionAccess().getIfKeyword_6_0());
     }
 (
 (
 		lv_triggerDelay_7_0=RULE_INT
 		{
-			newLeafNode(lv_triggerDelay_7_0, grammarAccess.getTransitionAccess().getTriggerDelayINTTerminalRuleCall_6_0_0_1_0()); 
+			newLeafNode(lv_triggerDelay_7_0, grammarAccess.getTransitionAccess().getTriggerDelayINTTerminalRuleCall_6_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1003,7 +1003,7 @@ ruleTransition returns [EObject current=null]
 )?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_6_0_0_2_0_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_6_2_0_0()); 
 	    }
 		lv_trigger_8_0=ruleBoolExpression		{
 	        if ($current==null) {
@@ -1022,7 +1022,7 @@ ruleTransition returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerAtomicExpressionParserRuleCall_6_0_0_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerAtomicExpressionParserRuleCall_6_2_1_0()); 
 	    }
 		lv_trigger_9_0=ruleAtomicExpression		{
 	        if ($current==null) {
@@ -1039,12 +1039,12 @@ ruleTransition returns [EObject current=null]
 )
 )))?(	otherlv_10='do' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getDoKeyword_6_0_1_0());
+    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getDoKeyword_7_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_6_0_1_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_7_1_0()); 
 	    }
 		lv_effects_11_0=ruleEffect		{
 	        if ($current==null) {
@@ -1061,12 +1061,12 @@ ruleTransition returns [EObject current=null]
 )
 )(	otherlv_12=';' 
     {
-    	newLeafNode(otherlv_12, grammarAccess.getTransitionAccess().getSemicolonKeyword_6_0_1_2_0());
+    	newLeafNode(otherlv_12, grammarAccess.getTransitionAccess().getSemicolonKeyword_7_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_6_0_1_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_7_2_1_0()); 
 	    }
 		lv_effects_13_0=ruleEffect		{
 	        if ($current==null) {
@@ -1081,16 +1081,15 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-))*)?)
-    |(	otherlv_14='if' 
+))*)?(	otherlv_14='label' 
     {
-    	newLeafNode(otherlv_14, grammarAccess.getTransitionAccess().getIfKeyword_6_1_0());
+    	newLeafNode(otherlv_14, grammarAccess.getTransitionAccess().getLabelKeyword_8_0());
     }
 (
 (
 		lv_label_15_0=RULE_STRING
 		{
-			newLeafNode(lv_label_15_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_6_1_1_0()); 
+			newLeafNode(lv_label_15_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_8_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1104,7 +1103,7 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)))?)
+))?)
 ;
 
 
@@ -1864,7 +1863,29 @@ ruleEntryAction returns [EObject current=null]
 	    }
 
 )
-))*)?)
+))*)?(	otherlv_8='label' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getEntryActionAccess().getLabelKeyword_4_0());
+    }
+(
+(
+		lv_label_9_0=RULE_STRING
+		{
+			newLeafNode(lv_label_9_0, grammarAccess.getEntryActionAccess().getLabelSTRINGTerminalRuleCall_4_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEntryActionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"label",
+        		lv_label_9_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.STRING");
+	    }
+
+)
+))?)
 ;
 
 
@@ -1982,7 +2003,29 @@ ruleDuringAction returns [EObject current=null]
 	    }
 
 )
-))*)?)
+))*)?(	otherlv_9='label' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getDuringActionAccess().getLabelKeyword_5_0());
+    }
+(
+(
+		lv_label_10_0=RULE_STRING
+		{
+			newLeafNode(lv_label_10_0, grammarAccess.getDuringActionAccess().getLabelSTRINGTerminalRuleCall_5_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getDuringActionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"label",
+        		lv_label_10_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.STRING");
+	    }
+
+)
+))?)
 ;
 
 
@@ -2082,7 +2125,29 @@ ruleExitAction returns [EObject current=null]
 	    }
 
 )
-))*)?)
+))*)?(	otherlv_8='label' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getExitActionAccess().getLabelKeyword_4_0());
+    }
+(
+(
+		lv_label_9_0=RULE_STRING
+		{
+			newLeafNode(lv_label_9_0, grammarAccess.getExitActionAccess().getLabelSTRINGTerminalRuleCall_4_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getExitActionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"label",
+        		lv_label_9_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.STRING");
+	    }
+
+)
+))?)
 ;
 
 
@@ -2168,6 +2233,28 @@ ruleSuspendAction returns [EObject current=null]
         		lv_trigger_5_0, 
         		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?(	otherlv_6='label' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getSuspendActionAccess().getLabelKeyword_5_0());
+    }
+(
+(
+		lv_label_7_0=RULE_STRING
+		{
+			newLeafNode(lv_label_7_0, grammarAccess.getSuspendActionAccess().getLabelSTRINGTerminalRuleCall_5_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSuspendActionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"label",
+        		lv_label_7_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.STRING");
 	    }
 
 )
@@ -2271,7 +2358,29 @@ rulePrecedingAction returns [EObject current=null]
 	    }
 
 )
-))*)?)
+))*)?(	otherlv_8='label' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getPrecedingActionAccess().getLabelKeyword_4_0());
+    }
+(
+(
+		lv_label_9_0=RULE_STRING
+		{
+			newLeafNode(lv_label_9_0, grammarAccess.getPrecedingActionAccess().getLabelSTRINGTerminalRuleCall_4_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPrecedingActionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"label",
+        		lv_label_9_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.STRING");
+	    }
+
+)
+))?)
 ;
 
 
@@ -2371,7 +2480,29 @@ ruleSucceedingAction returns [EObject current=null]
 	    }
 
 )
-))*)?)
+))*)?(	otherlv_8='label' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getSucceedingActionAccess().getLabelKeyword_4_0());
+    }
+(
+(
+		lv_label_9_0=RULE_STRING
+		{
+			newLeafNode(lv_label_9_0, grammarAccess.getSucceedingActionAccess().getLabelSTRINGTerminalRuleCall_4_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSucceedingActionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"label",
+        		lv_label_9_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.STRING");
+	    }
+
+)
+))?)
 ;
 
 

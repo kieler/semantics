@@ -75,12 +75,9 @@ Transition returns sccharts::Transition:
 	delay=DelayType?
 	deferred?='deferred'?
 	history=HistoryType?
-	(
-		//                      -> This alternative is only for the serializer to enable forcing of brackets
-		('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
-		|
-		('if' label=STRING)
-	)?;
+    //                      -> This alternative is only for the serializer to enable forcing of brackets
+	('if' triggerDelay=INT? (trigger=BoolExpression | trigger=AtomicExpression))? ('do' effects+=Effect (';' effects+=Effect)*)?
+	('label' label=STRING)?;
 	
 // -------------- //
 //  Region Rules  // 
@@ -133,27 +130,33 @@ LocalAction returns sccharts::LocalAction:
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
-   'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+   'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   ('label' label=STRING)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+    delay=DelayType? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
-	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	('label' label=STRING)?;  
        
 SuspendAction returns sccharts::SuspendAction:
 	{sccharts::SuspendAction}
-	delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)?;
+	delay=DelayType? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)?
+	('label' label=STRING)?;
       
 PrecedingAction returns sccharts::PrecedingAction:
 	{sccharts::PrecedingAction}
-   'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+   'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   ('label' label=STRING)?;
          
 SucceedingAction returns sccharts::SucceedingAction:
 	{sccharts::SucceedingAction}
-	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	('label' label=STRING)?;  
 
 
 // ---------------- //

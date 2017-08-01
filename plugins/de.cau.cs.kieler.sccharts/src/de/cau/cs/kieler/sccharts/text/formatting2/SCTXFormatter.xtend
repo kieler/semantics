@@ -106,9 +106,9 @@ class SCTXFormatter extends KExtFormatter {
 			format(annotations, document);
 		}
 		format(transition.getTrigger(), document);
-		for (Effect effects : transition.getEffects()) {
-			format(effects, document);
-			effects.append[ noSpace ]
+		for (idxEffect : transition.getEffects().indexed) {
+			format(idxEffect.value, document);
+			if (idxEffect.key < transition.effects.size - 1) idxEffect.value.append[ noSpace ]
 		}
 	}
 
