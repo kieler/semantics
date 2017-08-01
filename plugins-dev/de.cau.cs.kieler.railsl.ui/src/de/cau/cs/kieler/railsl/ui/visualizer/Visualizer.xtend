@@ -55,13 +55,12 @@ class Visualizer {
     /*************************************************************************
      * I N J E C T I O N S ***************************************************
      *************************************************************************/
-     
     // For parsing helpers and speed constants
     @Inject extension RailSLExtensions
 
     // To determine the EObject generated from a certain cursor position in the XText editor
     @Inject EObjectAtOffsetHelper eObjectAtOffsetHelper
-    
+
     /*************************************************************************
      * F I E L D S ***********************************************************
      *************************************************************************/
@@ -174,7 +173,7 @@ class Visualizer {
             })
     }
 
-    private def DataPool createEmptyPool()  {
+    private def DataPool createEmptyPool() {
         val pool = new DataPool()
         val model = new Model()
         model.name = "railway"
@@ -199,9 +198,9 @@ class Visualizer {
         for (var i = 0; i < RailSLTransformation::NUM_OF_LIGHTS; i++) {
             model.addVariable(new Variable("light_" + i, "off"))
         }
-        
+
         pool
-        
+
     }
 
     /**
@@ -214,7 +213,6 @@ class Visualizer {
     /*************************************************************************
      * L I S T E N E R S *****************************************************
      *************************************************************************/
-
     /**
      * Deactivates the IDocumentListener attached to the XtextEditor.
      * 
@@ -264,7 +262,6 @@ class Visualizer {
     /*************************************************************************
      * U P D A T I N G *******************************************************
      *************************************************************************/
-
     /**
      * Read the current cursor position from the active editor and 
      * display the effects of the currently selected Statement in the KVis View.
@@ -309,14 +306,14 @@ class Visualizer {
 
         // delete previously added variables
         pool = emptyPool.clone()
-        
+
         val model = pool.getModel("railway");
-        
+
         // process the EObject passed as a parameter
         if (object instanceof Statement) {
             model.addValues(object as Statement)
-        }  else if (object instanceof Block) {
-            
+        } else if (object instanceof Block) {
+
             // For a block, display all statements at once
             for (statement : (object as Block).statements) {
                 model.addValues(statement)
@@ -404,15 +401,22 @@ class Visualizer {
      * @param statement The statement to be represented
      */
     def addPointValues(Model model, SetPointStatement statement) {
-        
+
         var Variable variable
-        
-        for (index : statement.points) {
-            variable = new Variable("point_" + index, statement.orientation)
-            model.addVariable(variable)
+
+        try {
+
+            for (index : statement.points) {
+                variable = new Variable("point_" + index, statement.orientation)
+                model.addVariable(variable)
+            }
+
+        } catch (NullPointerException e) {
+            System.out.println("Parsed illegal statement.")
+            return
         }
     }
-    
+
     /**
      * Add data representing the LightStatement to the model.
      * 
@@ -420,12 +424,17 @@ class Visualizer {
      * @param statement The statement to be represented
      */
     def addLightValues(Model model, LightStatement statement) {
-        
-        var Variable variable
-        
-        for (index : statement.lights) {
-            variable = new Variable("light_" + index, statement.state)
-            model.addVariable(variable)
+
+        try {
+            var Variable variable
+
+            for (index : statement.lights) {
+                variable = new Variable("light_" + index, statement.state)
+                model.addVariable(variable)
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Parsed illegal statement.")
+            return
         }
     }
 
@@ -436,8 +445,14 @@ class Visualizer {
      * @param statement The statement to be represented
      */
     def addContactValue(Model model, ContactWaitStatement statement) {
-        val variable = new Variable(statement.segName + "_C_" + statement.parseContactIndex, "on")
-        model.addVariable(variable)
+        try {
+
+            val variable = new Variable(statement.segName + "_C_" + statement.parseContactIndex, "on")
+            model.addVariable(variable)
+        } catch (NullPointerException e) {
+            System.out.println("Parsed illegal statement.")
+            return
+        }
     }
 
     /**
@@ -459,14 +474,18 @@ class Visualizer {
      * @param statement The statement to be represented
      */
     def addConditionalLineValues(Model model, ConditionalLine line) {
-        val variable = new Variable(line.segName + "_C_" + line.parseContactIndex, "on")
-        model.addVariable(variable)
+        try {
+            val variable = new Variable(line.segName + "_C_" + line.parseContactIndex, "on")
+            model.addVariable(variable)
+        } catch (NullPointerException e) {
+            System.out.println("Parsed illegal statement.")
+            return
+        }
     }
 
     /*************************************************************************
      * G E T T E R S   &   S E T T E R S *************************************
      *************************************************************************/
-
     /**
      * Getter for the DataPool.
      * Currently unused.
