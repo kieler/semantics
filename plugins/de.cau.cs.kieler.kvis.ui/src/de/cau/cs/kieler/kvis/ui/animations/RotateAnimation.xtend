@@ -27,6 +27,9 @@ class RotateAnimation extends AnimationHandler {
     public val anchorX = new ConfigurableAttribute("x", 0.5)
     public val anchorY = new ConfigurableAttribute("x", 0.5)
     
+    new() {
+    }
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
         initialize

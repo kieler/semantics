@@ -66,7 +66,7 @@ class SCChartsAnalyzer implements ModelAnalyzer{
         // Iterate over model to get all annotations
         for (decl : state.declarations.filter(VariableDeclaration)) {
             // Only consider annotations of inputs and outputs.
-            if (decl.input || decl.output) {
+            if (!decl.const && (decl.input || decl.output)) {
                 for (annotation : decl.annotations) {
                     val data = new MacroCallData()
                     data.modelName = state.name
@@ -105,45 +105,47 @@ class SCChartsAnalyzer implements ModelAnalyzer{
         
         for(decl : state.declarations.filter(VariableDeclaration)) {
             for(valuedObject : decl.valuedObjects) {
-                val data = new MacroCallData();
-                data.arguments.add(String.valueOf(decl.input))
-                data.arguments.add(String.valueOf(decl.output))
-                // add array sizes if any
-                if(!valuedObject.cardinalities.nullOrEmpty) {
-                    for(card : valuedObject.cardinalities) {
-                        var IntValue intValue = null;
-                        if(card instanceof IntValue) {
-                            intValue = card as IntValue
-                        } else if(card instanceof ValuedObjectReference) {
-                            if(card.valuedObject.initialValue instanceof IntValue) {
-                                intValue = card.valuedObject.initialValue as IntValue
-                            } else {
-                                throw new Exception("Array sizes must have an integer or integer constant as initial value")
+                if(!decl.const) {
+                    val data = new MacroCallData();
+                    data.arguments.add(String.valueOf(decl.input))
+                    data.arguments.add(String.valueOf(decl.output))
+                    // add array sizes if any
+                    if(!valuedObject.cardinalities.nullOrEmpty) {
+                        for(card : valuedObject.cardinalities) {
+                            var IntValue intValue = null;
+                            if(card instanceof IntValue) {
+                                intValue = card as IntValue
+                            } else if(card instanceof ValuedObjectReference) {
+                                if(card.valuedObject.initialValue instanceof IntValue) {
+                                    intValue = card.valuedObject.initialValue as IntValue
+                                } else {
+                                    throw new Exception("Array sizes must have an integer or integer constant as initial value")
+                                }
+                            }
+                            if(intValue != null) {
+                                data.arguments.add(intValue.value.toString)
                             }
                         }
-                        if(intValue != null) {
-                            data.arguments.add(intValue.value.toString)
-                        }
                     }
+                    
+                    data.modelName = state.name
+                    data.name = "Simulate"
+                    data.varType = decl.type.literal
+                    data.varName = valuedObject.name
+                    
+                    // Set interface type
+                    if(decl.input) {
+                        data.interfaceTypes.add("input")
+                    }
+                    if(decl.output) {
+                        data.interfaceTypes.add("output")
+                    }
+                    if(!decl.input && !decl.output) {
+                        data.interfaceTypes.add("internal")
+                    }
+                    
+                    annotationDatas.add(data)
                 }
-                
-                data.modelName = state.name
-                data.name = "Simulate"
-                data.varType = decl.type.literal
-                data.varName = valuedObject.name
-                
-                // Set interface type
-                if(decl.input) {
-                    data.interfaceTypes.add("input")
-                }
-                if(decl.output) {
-                    data.interfaceTypes.add("output")
-                }
-                if(!decl.input && !decl.output) {
-                    data.interfaceTypes.add("internal")
-                }
-                
-                annotationDatas.add(data)
             }
         }
         

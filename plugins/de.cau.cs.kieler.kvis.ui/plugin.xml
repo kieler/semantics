@@ -3,6 +3,29 @@
 
 <plugin>
     <extension
+          point="de.cau.cs.kieler.kvis.animationHandler">
+       <animationHandler
+             class="de.cau.cs.kieler.kvis.ui.animations.ColorAnimation"
+             name="color">
+       </animationHandler>
+       <animationHandler
+             class="de.cau.cs.kieler.kvis.ui.animations.WalkPathAnimation"
+             name="walkPath">
+       </animationHandler>
+       <animationHandler
+             class="de.cau.cs.kieler.kvis.ui.animations.TextAnimation"
+             name="text">
+       </animationHandler>
+       <animationHandler
+             class="de.cau.cs.kieler.kvis.ui.animations.RotateAnimation"
+             name="rotate">
+       </animationHandler>
+       <animationHandler
+             class="de.cau.cs.kieler.kvis.ui.animations.MoveAnimation"
+             name="move">
+       </animationHandler>
+    </extension>
+    <extension
           point="org.eclipse.ui.newWizards">
        <wizard
              canFinishEarly="false"

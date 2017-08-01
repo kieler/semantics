@@ -31,8 +31,7 @@ import org.eclipse.emf.ecore.EObject
  *
  */
 class AttributeExtensions {
-    public def updateConfigurableAttributes(Object object, AttributeMapping... attributeMappings) {
-        // Get attributes via reflection
+    public def List<ConfigurableAttribute> getConfigurableAttributes(Object object) {
         val List<ConfigurableAttribute> attributes = newArrayList
         for(f : object.class.fields) {
             if(f.type == typeof(ConfigurableAttribute)) {
@@ -42,7 +41,13 @@ class AttributeExtensions {
                 }
             }
         }
-        
+        return attributes
+    }
+    
+    public def void updateConfigurableAttributes(Object object, AttributeMapping... attributeMappings) {
+        // Get attributes via reflection
+        val attributes = getConfigurableAttributes(object)
+
         // Set attributes from mapping
         for(attributeMapping : attributeMappings) {
             val attributeName = attributeMapping.name

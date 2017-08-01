@@ -41,6 +41,9 @@ class WalkPathAnimation extends AnimationHandler {
     var String initialTransform
     var SVGPoint lastPoint
     
+    new() {
+    }
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
         initialize

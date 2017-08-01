@@ -26,6 +26,9 @@ class TextAnimation extends AnimationHandler {
     public val fontSize = new ConfigurableAttribute("fontSize", 0)
     public val fontFamily = new ConfigurableAttribute("fontFamily")
     
+    new() {
+    }
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
         initialize
