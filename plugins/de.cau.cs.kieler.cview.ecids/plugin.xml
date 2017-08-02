@@ -9,6 +9,9 @@
       <connectionHook
             class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM">
       </connectionHook>
+      <connectionHook
+            class="de.cau.cs.kieler.cview.ecids.ECidsAnalysisCAM_old">
+      </connectionHook>
    </extension>
    <extension
          point="de.cau.cs.kieler.cview.export">

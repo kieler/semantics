@@ -28,7 +28,7 @@ import java.util.HashSet
  * @author cmot
  * 
  */
-class ECidsAnalysisCAM extends AbstractAnalysisHook implements IAnalysisHook {
+class ECidsAnalysisCAM_old extends AbstractAnalysisHook implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
 
@@ -61,17 +61,6 @@ class ECidsAnalysisCAM extends AbstractAnalysisHook implements IAnalysisHook {
 
     override initialize(CViewModel model) {
         CViewPlugin.clearConosle
-//        val camFiles = model.components.filter[e|e.parent != null && e.parent.name.equals("CAM")].toList
-//        for (camFile : camFiles) {
-//            CViewPlugin.printlnConsole(camFile.name);
-//            val camStructs = camFile.rawdata.removeCommentsAll.parseByKey("typedef struct", "{", #["\\n"], true)
-//            for (camStruct : camStructs) {
-//                definedCAMStructs.put(camStruct, camFile)
-//                CViewPlugin.printlnConsole("  - " + camStruct);
-//            }
-//        }
-        definedCAMStructs.clear
-
         val camFiles = model.components.filter[e|e.parent != null && e.parent.name.equals("CAM")].toList
         for (camFile : camFiles) {
             CViewPlugin.printlnConsole(camFile.name);
@@ -81,40 +70,39 @@ class ECidsAnalysisCAM extends AbstractAnalysisHook implements IAnalysisHook {
                 CViewPlugin.printlnConsole("  - " + camStruct);
             }
         }
-
-
     }
 
     override wrapup(CViewModel model) {
-//        for (component : model.components) {
-//            if (!component.hasParent("Include")) {
-//                if (component.rawdata != null) {
-//                    val includes = component.rawdata.parseByKey("#include", ".h", null, false);
-//                    if (!includes.nullOrEmpty) {
-//                        for (camHeaderFile : CAMHeaderFiles) {
-//                            val name = camHeaderFile.name.replace(".h", "").trim
-//                            var found = false
-//                            for (include : includes) {
-//                                if (!found && include.endsWith(name)) {
-//                                    found = true
-//                                    val connection = camHeaderFile.connectTo(component)
-//                                    connection.color = "Blue"
-//                                    model.connections.add(connection)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        for (component : model.components) {
+            if (!component.hasParent("Include")) {
+                if (component.rawdata != null) {
+                    val includes = component.rawdata.parseByKey("#include", ".h", null, false);
+                    if (!includes.nullOrEmpty) {
+                        for (camHeaderFile : CAMHeaderFiles) {
+                            val name = camHeaderFile.name.replace(".h", "").trim
+                            var found = false
+                            for (include : includes) {
+                                if (!found && include.endsWith(name)) {
+                                    found = true
+                                    val connection = camHeaderFile.connectTo(component)
+                                    connection.color = "Blue"
+                                    model.connections.add(connection)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     override getName() {
-        return "eCIDS CAM Usage";
+        return "eCIDS CAM Usage (Old)";
     }
 
     override getId() {
-        return "de.cau.cs.kieler.cview.ecids.cam";
+        return "de.cau.cs.kieler.cview.ecids.cam.old";
     }
 }
 

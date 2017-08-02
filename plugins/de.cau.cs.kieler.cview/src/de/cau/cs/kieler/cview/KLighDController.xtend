@@ -32,6 +32,13 @@ import org.eclipse.cdt.core.model.ITranslationUnit
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 import de.cau.cs.kieler.cview.klighd.DiagramSynthesis
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTDeclaration
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPClassType
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration
+import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 
 /**
  * @author cmot
@@ -133,8 +140,8 @@ class KLighDController extends AbstractKLighDController {
             model.components.add(file);
 
             // Add all functions to the file
-            if (DiagramSynthesis.showFunctions) {
-                fillFileWithFunctions(file, monitor)
+            if (!DiagramSynthesis.skipFileContent) {
+                fillFileWithFunctions(file, monitor, DiagramSynthesis.parseFiles)
             }
 
             if (parent != null) {
@@ -193,24 +200,63 @@ class KLighDController extends AbstractKLighDController {
         return altTooltip2
     }
 
-    def fillFileWithFunctions(Component fileComponent, IProgressMonitor monitor) {
+    def fillFileWithFunctions(Component fileComponent, IProgressMonitor monitor, boolean parse) {
         // val filePath = getFilePath(fileComponent.location);
         val filePath = fileComponent.location
-        if (filePath != null) {
-            if (!((filePath.endsWith(".c") || filePath.endsWith(".h")))) {
-                return;
-            }
-            println("fillFileWithFunctions '" + filePath + "'")
-            val content = readFile(filePath)
-            fileComponent.rawdata = String.valueOf(content)
-            val tooltip = extractTooltip(fileComponent.rawdata)
-            fileComponent.tooltip = tooltip
+        if (filePath == null || !((filePath.endsWith(".c") || filePath.endsWith(".h")))) {
+            return;
+        }
+
+        println("fillFileWithFunctions '" + filePath + "'")
+        val content = readFile(filePath)
+        fileComponent.rawdata = String.valueOf(content)
+        val tooltip = extractTooltip(fileComponent.rawdata)
+        fileComponent.tooltip = tooltip
+
+        if (parse) {
             val ast = CFileParser.parse(content)
 
             val visitor = new ASTVisitor() {
+
+                override int visit(IASTDeclaration declaration) {
+                    CViewPlugin.printlnConsole("!!! IASTDeclaration !!!")
+                    if (declaration instanceof IASTSimpleDeclaration) {
+                        val astDecl = declaration as IASTSimpleDeclaration;
+                        try {
+                            CViewPlugin.printlnConsole(
+                                "--- type: " + ast.getSyntax() + " (childs: " + ast.getChildren().length + ")")
+                            var IASTNode typedef = if (astDecl.children.length == 1) {
+                                    astDecl.children.get(0)
+                                } else {
+                                    astDecl.children.get(1)
+                                }
+                            CViewPlugin.printlnConsole("------- typedef: " + typedef);
+                        } catch (Exception e) {
+                        }
+                    } // end if typedef
+                    return 3
+                }
+
                 override int visit(IASTName name) {
                     if (name.active) {
                         val binding = name.resolveBinding
+                        if (binding instanceof CPPClassType) {
+                            val parent = name.parent
+                            if (parent instanceof CPPASTCompositeTypeSpecifier) {
+                                val typeSpec = parent as CPPASTCompositeTypeSpecifier
+                                val typeSpecName = typeSpec.name
+                                val IASTDeclaration[] decls = typeSpec.getDeclarations(false)
+                                CViewPlugin.printlnConsole("!!! TypeSpec !!! - " + typeSpec.name)
+                                for (decl : decls) {
+                                    if (decl instanceof CPPASTSimpleDeclaration) {
+                                        for (declarator : decl.declarators) {
+                                            CViewPlugin.printlnConsole("   o " + declarator.name)
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
                         if (binding instanceof IFunction) {
                             if (name.definition) {
                                 val functionComponent = cViewModelExtensions.createFunc
@@ -241,8 +287,7 @@ class KLighDController extends AbstractKLighDController {
             visitor.shouldVisitNames = true
             ast.accept(visitor)
 
-        }
-
+        } // end if parse
     }
 
     override preCalculateModel(Object[] allselections) {

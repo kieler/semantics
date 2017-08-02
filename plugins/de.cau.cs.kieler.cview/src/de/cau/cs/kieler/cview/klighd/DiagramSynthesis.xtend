@@ -65,6 +65,7 @@ import de.cau.cs.kieler.cview.ui.FilterDialog
 
 import de.cau.cs.kieler.cview.klighd.OpenEditorAction import de.cau.cs.kieler.cview.CViewPlugin
 import org.eclipse.swt.widgets.Display
+import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -80,7 +81,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension CViewModelExtensions
 
 
-    public static boolean showFunctions = false;
+    public static boolean parseFiles = false;
+    public static boolean skipFileContent = false;
 
     public static DiagramSynthesis instance = null;
     
@@ -105,7 +107,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption FLATTEN_HIERARCHY = SynthesisOption.createCheckOption(
         "Flatten Hierarchy", false);
 
-    public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption("Show Functions", false);
+    public static final SynthesisOption SKIP_FILE_CONTENT   = SynthesisOption.createCheckOption("Skip File Content", false);
+    public static final SynthesisOption PARSE_FILES = SynthesisOption.createCheckOption("Parse Files", false);
 
     public static final SynthesisOption INTERLEVEL_CONNECTIONS = SynthesisOption.createCheckOption(
         "Interlevel Connections", false);
@@ -122,7 +125,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         // Add general options
         options.addAll(EXPANDED_SLIDER);
         options.addAll(FLATTEN_HIERARCHY);
-        options.addAll(SHOW_FUNCTIONS);
+        options.addAll(SKIP_FILE_CONTENT);
+        options.addAll(PARSE_FILES);
         options.addAll(INTERLEVEL_CONNECTIONS);
         options.addAll(HIDE_CONNECTIONS);
         options.addAll(HIDE_UNCONNECTED);
@@ -259,12 +263,17 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     override KNode transform(CViewModel model) {
         
-        if (showFunctions != SHOW_FUNCTIONS.booleanValue) {
-            showFunctions = SHOW_FUNCTIONS.booleanValue
+        if (parseFiles != PARSE_FILES.booleanValue) {
+            parseFiles = PARSE_FILES.booleanValue
             CViewPlugin.rebuildModelAndrefreshCView(true)
             return null;
         }
         
+        if (skipFileContent != SKIP_FILE_CONTENT.booleanValue) {
+            skipFileContent = SKIP_FILE_CONTENT.booleanValue
+            CViewPlugin.rebuildModelAndrefreshCView(true)
+            return null;
+        }
         
         
         
@@ -343,7 +352,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
         if (HIDE_UNCONNECTED.booleanValue) {
-            if (!INTERLEVEL_CONNECTIONS.booleanValue) {
+            if (!INTERLEVEL_CONNECTIONS.booleanValue || !FLATTEN_HIERARCHY.booleanValue) {
                 // Consider connected and their parents
                 for (item : model.components) {
                     if (!connectedComponents.contains(item) && !connectedComponentsAdditional.contains(item)) {
@@ -351,7 +360,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     }
                 }
             } else {
-                // Only consider connected
+                // Only consider connected if interlevel + flattened
                 for (item : model.components) {
                     if (!connectedComponents.contains(item)) {
                         item.node.remove
@@ -359,7 +368,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 }
             }
         }
-
         return root;
     }
 
@@ -558,6 +566,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
             connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
             connection.src.rootComponent.node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
+            //connection.src.rootComponent.node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType::OFF);
 
             if (usePorts) {
                 // Add the connection
@@ -582,6 +591,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
                 returnPort.addLayoutParam(CoreOptions::PORT_SIDE, side);
             }
+            //node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType::OFF);
             val rect = returnPort.addRectangle
             node.addLayoutParam(CoreOptions::PORT_ANCHOR, new KVector(0, 100));
             // returnPort.addLayoutParam(CoreOptions::PORT_ANCHOR, new KVector(0,0) );
@@ -602,7 +612,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         def KNode transformItem(Component item, int depth) {
             if (item.isFile) {
-                if (SHOW_FUNCTIONS.booleanValue) {
+                if (PARSE_FILES.booleanValue) {
                     return item.transformItemFileWithFunctions(depth)
                 } else {
                     return item.transformItemFile(depth)
