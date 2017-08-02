@@ -211,7 +211,7 @@ class KLighDController extends AbstractKLighDController {
         if (filePath == null || !((filePath.endsWith(".c") || filePath.endsWith(".h")))) {
             return;
         }
-        
+
         println("fillFileWithFunctions '" + filePath + "'")
         val content = readFile(filePath)
         fileComponent.rawdata = String.valueOf(content)
@@ -245,60 +245,59 @@ class KLighDController extends AbstractKLighDController {
                 override int visit(IASTName name) {
                     val theName = name.toString
 //                    CViewPlugin.printlnConsole("[" + theName + "]")
-                    
                     if (name.active) {
                         val binding = name.resolveBinding
-                        if (binding instanceof CPPTypedef) {
-                            // This binding is a typedef,
-                            // fortunately referencing a struct
-                            val type = binding.type
+                        if (name.definition) { //} || name.reference) {
+                            if (binding instanceof CPPTypedef) {
+                                // This binding is a typedef,
+                                // fortunately referencing a struct
+                                val type = binding.type
 //                            CViewPlugin.printlnConsole("TYPEDEF " + theName + " >>> " + type)
-                            
-                            val typeTypedefComponent = createTypedef
-                            model.components.add(typeTypedefComponent)
-                            typeTypedefComponent.name = name.toString
-                            typeTypedefComponent.referenceUnresolved = binding.type.toString
-                            fileComponent.children.add(typeTypedefComponent)
-                            typeTypedefComponent.parent = fileComponent
-                        }
-                        if (binding instanceof CPPClassType) {
-                            val parent = name.parent
-                            if (parent instanceof CPPASTCompositeTypeSpecifier) {
-                                val typeSpec = parent as CPPASTCompositeTypeSpecifier
-                                val typeSpecName = typeSpec.name
-                                val IASTDeclaration[] decls = typeSpec.members // getDeclarations(false)
-//                                CViewPlugin.printlnConsole("STRUCT " + typeSpec.name +" : ") //[" + typeSpec.rawSignature + "]")
-                                
-                                val structComponent = createStruct
-                                model.components.add(structComponent)
-                                structComponent.name = typeSpec.name.toString
-                                fileComponent.children.add(structComponent)
-                                structComponent.parent = fileComponent
-                                
-                                for (decl : decls) {
-                                    val ASTNodeProperty prop = decl.propertyInParent
-                                    val propName = prop.name.toString
-                                    if (decl instanceof CPPASTSimpleDeclaration) {
-                                        val declType = decl.getDeclSpecifier
-                                        for (declarator : decl.declarators) {
-                                            
-                                            val declComponent = createDecl
-                                            model.components.add(declComponent)
-                                            declComponent.name = declarator.name.toString
-                                            declComponent.referenceUnresolved = declType.toString 
-                                            structComponent.children.add(declComponent)
-                                            declComponent.parent = structComponent
-                                            
-                                            val declRawSig = decl.rawSignature
-                                            val declName = declarator.name.toString
-//                                            CViewPlugin.printlnConsole("   o " + declName + " [" + declType + "]")
-                                        }
-                                    }
-//                                    CViewPlugin.printlnConsole("   r " + decl.rawSignature)
-                                }
+                                val typeTypedefComponent = createTypedef
+                                model.components.add(typeTypedefComponent)
+                                typeTypedefComponent.name = name.toString
+                                typeTypedefComponent.referenceUnresolved = binding.type.toString
+                                fileComponent.children.add(typeTypedefComponent)
+                                typeTypedefComponent.parent = fileComponent
                             }
+                            if (binding instanceof CPPClassType) {
+                                val parent = name.parent
+                                if (parent instanceof CPPASTCompositeTypeSpecifier) {
+                                    val typeSpec = parent as CPPASTCompositeTypeSpecifier
+                                    val typeSpecName = typeSpec.name
+                                    val IASTDeclaration[] decls = typeSpec.members // getDeclarations(false)
+                                    CViewPlugin.printlnConsole("STRUCT " + typeSpec.name +" : ") //[" + typeSpec.rawSignature + "]")
+                                    val structComponent = createStruct
+                                    model.components.add(structComponent)
+                                    structComponent.name = typeSpec.name.toString
+                                    fileComponent.children.add(structComponent)
+                                    structComponent.parent = fileComponent
 
-                        }
+                                    for (decl : decls) {
+                                        val ASTNodeProperty prop = decl.propertyInParent
+                                        val propName = prop.name.toString
+                                        if (decl instanceof CPPASTSimpleDeclaration) {
+                                            val declType = decl.getDeclSpecifier
+                                            for (declarator : decl.declarators) {
+
+                                                val declComponent = createDecl
+                                                model.components.add(declComponent)
+                                                declComponent.name = declarator.name.toString
+                                                declComponent.referenceUnresolved = declType.toString
+                                                structComponent.children.add(declComponent)
+                                                declComponent.parent = structComponent
+
+                                                val declRawSig = decl.rawSignature
+                                                val declName = declarator.name.toString
+                                            CViewPlugin.printlnConsole("   o " + declName + " [" + declType + "]")
+                                            }
+                                        }
+//                                    CViewPlugin.printlnConsole("   r " + decl.rawSignature)
+                                    }
+                                }
+
+                            }
+                        }//end if definition
                         if (binding instanceof IFunction) {
                             if (name.definition) {
                                 val functionComponent = cViewModelExtensions.createFunc
@@ -368,10 +367,10 @@ class KLighDController extends AbstractKLighDController {
         referenceMapping.clear
         // Build list of mappings
         for (component : model.components) {
-                val String referenceType = component.type.literal
-                val String referenceId = referenceType + "__@#$__" + component.name
-                referenceMapping.put(referenceId, component)
-                CViewPlugin.printlnConsole("INFO: Put Ref. '" + referenceId + "'")
+            val String referenceType = component.type.literal
+            val String referenceId = referenceType + "__@#$__" + component.name
+            referenceMapping.put(referenceId, component)
+            //CViewPlugin.printlnConsole("INFO: Put Ref. '" + referenceId + "'")
         }
         // Resolve
         for (component : model.components) {
@@ -388,7 +387,7 @@ class KLighDController extends AbstractKLighDController {
                     val Component otherComponent = referenceMapping.get(referenceId)
                     // Here we set the reference if we have found it
                     component.reference = otherComponent
-                    CViewPlugin.printlnConsole("INFO: Resolved '" + referenceId + "'")
+                    //CViewPlugin.printlnConsole("INFO: Resolved '" + referenceId + "'")
                 } else {
                     // Claim that we have not found
                     CViewPlugin.printlnConsole("ERRROR: Could not resolve '" + referenceId + "'")

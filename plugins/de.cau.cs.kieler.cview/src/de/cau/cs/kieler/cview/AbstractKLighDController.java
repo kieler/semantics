@@ -81,6 +81,7 @@ public abstract class AbstractKLighDController {
 
     public static String CVIEW_KLIGHD_ID = "de.cau.cs.kieler.cview.klighd";
     public static String CVIEW_KLIGHD_TITLE = "C View";
+    public static String CVIEW_KLIGHD_TITLE_FILTERED = "C View  (FILTERED)";
 
     static CViewModel model = null;
 

@@ -67,6 +67,7 @@ import de.cau.cs.kieler.cview.klighd.OpenEditorAction
 import de.cau.cs.kieler.cview.CViewPlugin
 import org.eclipse.swt.widgets.Display
 import org.eclipse.elk.alg.layered.properties.GreedySwitchType
+import de.cau.cs.kieler.cview.AbstractKLighDController
 
 /* Package and import statements... */
 class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
@@ -419,6 +420,14 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 }
             }
         }
+        
+        
+        if (FilterDialog.valueTextFilter.nullOrEmpty) {
+            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)            
+        } else {
+            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)            
+        }
+        
         return root;
     }
 
@@ -440,7 +449,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             addSimpleConnection(connection, connection.src.node, connection.dst.node, false, color, true);
         } else {
             if (connection.sameParent) {
-                addSimpleConnection(connection, connection.src.node, connection.dst.node, false, color, true);
+                addSimpleConnection(connection, connection.src.node, connection.dst.node, true, color, true);
             } else {
                 addPortbasedConnection(connection, connection.src, connection.dst, color);
             }
@@ -585,6 +594,23 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts,
             KColor color, boolean addLabel) {
+                
+                
+                //val freeSide = (srcNode.parent == dstNode.parent)
+            
+//                if (connection.src.name.equals("cam_outer_t")) {
+//                    println("cam_outer_t")
+//                }
+//                if (connection.src.name.equals("outer_s")) {
+//                    println("cam_outer_t")
+//                }
+
+//            val dbglabel = connection.src.name + "[" + connection.src.parent.name + "] ---> " + connection.dst.name  + "[" + connection.dst.parent.name + "]";
+//            if (dbglabel.startsWith("tla_inner__cam_outer_ref")) { //[tla_inner] ---> cam_outer_t[CAM.h]") {
+//                println(dbglabel)    
+//            }
+//            println(dbglabel)    
+                
             connectedComponents.add(connection.src)
             connectedComponents.add(connection.dst)
             connection.src.addConnectedParents
@@ -598,7 +624,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             edge.source = srcNode
             edge.target = dstNode
             // Basic spline
-            edge.addConnectionSpline();
+            //edge.addConnectionSpline();
             edge.line.foreground = color.copy
             // if (connection.src == null && connection.dst == null) 
             if (addLabel) {
@@ -612,18 +638,36 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
                 }
             }
+            
 
-            connection.src.rootComponent.node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-            connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
-            connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-            connection.src.rootComponent.node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
+            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
+            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::DIRECTION, Direction::LEFT);
             // connection.src.rootComponent.node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType::OFF);
             if (usePorts) {
+                
                 // Add the connection
-                val portId = connection.hashCode.toString
+                var portId = connection.hashCode.toString
+                
+                
+//                if (!freeSide) {
+//                   portId = (srcNode.hashCode + dstNode.hashCode).toString
+//                }
                 // val portId = (connection.hashCode + srcNode.hashCode).toString
-                val srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
-                val dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
+//                var KPort srcPort
+//                var KPort dstPort
+//                if (freeSide) {
+                    val KPort srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
+                    var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
+                    // If not level-crossing (eg to parent, or from parent) then
+                    // let the layouter choose the side. Otherwise fix it from EAST to WEST
+                    //srcNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+                    //dstNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+//                } else {
+//                    srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
+//                    dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
+//                }
                 edge.sourcePort = srcPort
                 edge.targetPort = dstPort
                 edge.line.setSelectionForeground(SELECTION_CONNECTION_COLOR.color)
@@ -912,7 +956,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         def KSpline addConnectionSpline(KEdge edge) {
             edge.addSpline => [
-                lineWidth = 2;
+                lineWidth = 4;
             ]
         }
 
