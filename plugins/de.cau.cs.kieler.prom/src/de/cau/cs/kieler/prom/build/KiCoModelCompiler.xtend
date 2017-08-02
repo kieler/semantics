@@ -43,6 +43,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
+import de.cau.cs.kieler.prom.console.PromConsole
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
 
 /**
  * @author aas
@@ -214,30 +216,42 @@ class KiCoModelCompiler extends ModelCompiler {
                  
                 override update(Observable o, Object arg) {
                     val context = o as CompilationContext
-                    if(context != null) {
-                        if(arg instanceof ProcessorStart) {
-                            val currentProcessor = arg.processorInstance
-                            val currentProcessorIndex = context.processorInstancesSequence.indexOf(currentProcessor)
-                            val processorCount = context.processorInstancesSequence.size
+                    if(context == null
+                       || monitor == null
+                       || !(arg instanceof AbstractProcessorNotification)) {
+                        return
+                    }
+                    val processorNotification = arg as AbstractProcessorNotification
+                    // Cancel the build if requested
+                    if(monitor.canceled) {
+                        PromConsole.print("Build canceled by the user")
+                        // Cancel all processors
+                        for(processor : context.processorInstancesSequence) {
+                            processor.cancelCompilation
+                        }
+                    }
+                    // Show progress of compilation
+                    val currentProcessor = processorNotification.processorInstance
+                    val currentProcessorIndex = context.processorInstancesSequence.indexOf(currentProcessor)
+                    val processorCount = context.processorInstancesSequence.size
+                    switch(processorNotification) {
+                        ProcessorStart : {
+                            // Show the progress in the monitor
                             monitor.subTask("Compiling '"+compiledFile.name+"' \n"
                                           + "Starting processor "+(currentProcessorIndex+1)+"/"+processorCount+": "
                                           + "'"+currentProcessor.name+"'")
-                                          
                             startTimeMap.put(currentProcessor.name, System.currentTimeMillis)
                         }
-                        // Check how long the processor took
-                        if(arg instanceof ProcessorFinished) {
-                            val currentProcessor = arg.processorInstance
-                            val currentProcessorIndex = context.processorInstancesSequence.indexOf(currentProcessor)
-                            val processorCount = context.processorInstancesSequence.size
-                            val startTime = startTimeMap.getOrDefault(currentProcessor.name, -1l)
-                            val duration = System.currentTimeMillis - startTime
-                            durationTimeMap.put(currentProcessor.name, duration)
+                        ProcessorFinished : {
                             monitor.subTask("Compiling '"+compiledFile.name+"' \n"
                                           + "Finished processor "+(currentProcessorIndex+1)+"/"+processorCount+": "
                                           + "'"+currentProcessor.name+"'")
+                            // Check how long the processor took
+                            val startTime = startTimeMap.getOrDefault(currentProcessor.name, -1l)
+                            val duration = System.currentTimeMillis - startTime
+                            durationTimeMap.put(currentProcessor.name, duration)
                             if(startTime > 0) {
-//                                println("'"+currentProcessor.name + "' took " + duration + " ms")
+//                                      println("'"+currentProcessor.name + "' took " + duration + " ms")
                             }
                         }
                     }
