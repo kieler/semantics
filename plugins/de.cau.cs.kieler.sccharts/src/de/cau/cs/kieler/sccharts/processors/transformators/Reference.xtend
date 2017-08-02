@@ -255,6 +255,11 @@ class Reference extends SCChartsProcessor {
                     "\" in an assignment exists, but is not another valued object.\n" + 
                     "The type \"" + newRef.class.getName + "\" is not supported.", assignment, true)
             }
+        } else {
+            // The valued object itself is not bound. However, the indices could be; transform.
+            for (index : assignment.indices) {
+                index.replaceReferences(replacements)
+            }     
         }
     }
     
@@ -289,7 +294,16 @@ class Reference extends SCChartsProcessor {
         }
         for (vor : state.eAllContents.filter(ValuedObjectReference).toList) {
             if (!valuedObjects.contains(vor.valuedObject)) {
+                
+                var container = vor.eContainer
+                while(!(container instanceof State)) {
+                    container = container.eContainer
+                }
+                
                 environment.errors.add("The valued object reference points to a valued object that is not contained in the model!", vor, true)
+                System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
+                    vor.valuedObject.name + " " + vor + " " + (container as State).name
+                )
             }
         }
     }
