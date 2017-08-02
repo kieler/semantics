@@ -51,6 +51,10 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
             val enabledFlag = environments.source.getProperty(ENABLED)
             environment.setProperty(ENABLED, enabledFlag)
         }
+        if (environments != null && environments.target != null) {
+            val cancelCompilationFlag = environments.target.getProperty(CANCEL_COMPILATION)
+            environmentPrime.setProperty(CANCEL_COMPILATION, cancelCompilationFlag)
+        }
         this.environments = new EnvironmentPair(environment, environmentPrime)
     }
     
@@ -179,6 +183,15 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         }
         c
     }
+    
+    
+    /**  
+     *  Convenient method to cancel the ongoing compilation. 
+     */
+    synchronized def cancelCompilation() {
+        environment.setProperty(CANCEL_COMPILATION, true)
+    }        
+    
     
     /**
      * ID of the processor.

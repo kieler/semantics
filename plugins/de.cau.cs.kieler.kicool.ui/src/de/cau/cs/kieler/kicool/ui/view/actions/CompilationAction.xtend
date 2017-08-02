@@ -72,10 +72,15 @@ class CompilationAction {
     }
     
     protected def void deactiveDisabledProcessors(CompilationContext cc) {
-        for (proc : ToggleProcessorOnOffAction.deactivatedProcessors) {
+        for (proc : ToggleProcessorOnOffAction.deactivatedProcessors.keySet) {
             val unit = cc.processorMap.get(proc)
             if (unit != null) {
-                unit.sourceEnvironment.setProperty(Environment.ENABLED, false)
+                val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(proc)
+                switch(toggle) {
+                    case ON: {}
+                    case OFF: unit.sourceEnvironment.setProperty(Environment.ENABLED, false)
+                    case HALT: unit.environment.setProperty(Environment.CANCEL_COMPILATION, true) 
+                }
             }
         }
     }

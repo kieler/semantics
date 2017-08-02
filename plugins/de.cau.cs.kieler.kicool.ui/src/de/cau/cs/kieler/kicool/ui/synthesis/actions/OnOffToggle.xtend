@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2017 by
+ * Copyright ${year} by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,18 +12,12 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
-import org.eclipse.xtend.lib.annotations.Data
-import de.cau.cs.kieler.kicool.ProcessorReference
-
 /**
- * Class for holding the data of on/off requests.
- * 
  * @author ssm
- * @kieler.design 2017-06-19 proposed 
- * @kieler.rating 2017-06-19 proposed yellow
+ * @kieler.design 2017-08-20 proposed 
+ * @kieler.rating 2017-08-02 proposed yellow
+ * 
  */
- @Data
-class ToggleOnOffData {
-    ProcessorReference processorReference
-//    OnOffToggle toggle
+enum OnOffToggle {
+    ON, OFF, HALT
 }

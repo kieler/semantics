@@ -80,11 +80,14 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Snapshots> SNAPSHOTS = 
         new Property<Snapshots>("de.cau.cs.kieler.kicool.snapshots", new Snapshots)
         
+    public static val IProperty<Boolean> SNAPSHOTS_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.snapshotsEnabled", true)
+        
     public static val IProperty<Boolean> ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.enabled", true)
         
-    public static val IProperty<Boolean> SNAPSHOTS_ENABLED = 
-        new Property<Boolean>("de.cau.cs.kieler.kicool.snapshotsEnabled", true)
+    public static val IProperty<Boolean> CANCEL_COMPILATION = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.cancelCompilation", false)
              
     new() {
     }

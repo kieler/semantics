@@ -71,6 +71,7 @@ import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager.fillUndefinedColors
 import de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencePair
+import de.cau.cs.kieler.kicool.ui.synthesis.actions.OnOffToggle
 
 /**
  * The data manager handles all synthesis updates.
@@ -118,10 +119,13 @@ class ProcessorDataManager {
         if (toggleOnOffNode != null) {
             toggleOnOffNode.container.addAction(Trigger::SINGLECLICK, ToggleProcessorOnOffAction.ID)
             toggleOnOffNode.setProperty(TOGGLE_ON_OFF_DATA, new ToggleOnOffData(processorReference))
-            if (ToggleProcessorOnOffAction.deactivatedProcessors.contains(processorReference)) {
+            val toggle = ToggleProcessorOnOffAction.deactivatedProcessors.get(processorReference)
+            if (toggle == null || toggle == OnOffToggle.ON) {
+                setFBColor(getContainer(toggleOnOffNode), ON)
+            } else if (toggle == OnOffToggle.OFF) {
                 setFBColor(getContainer(toggleOnOffNode), OFF)
             } else {
-                setFBColor(getContainer(toggleOnOffNode), ON)
+                setFBColor(getContainer(toggleOnOffNode), HALT)
             }
         }
     }
