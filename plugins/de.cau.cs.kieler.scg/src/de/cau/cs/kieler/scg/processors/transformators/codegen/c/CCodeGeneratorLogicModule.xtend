@@ -28,6 +28,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.scg.ControlFlow
+import java.util.Deque
 
 /**
  * C Code Generator Logic Module
@@ -89,17 +90,12 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         // However, if the last node was already the actual node, then skip it, because
         // this are two joining control-flows from a conditional. 
         // Consequence: Self-Loops in sequentialized assignments are forbidden.
-        var Node lastNode = null
         while(!nodes.empty) {
             val node = nodes.pop
-            if (processedNodes.contains(node)) {
-                System.err.println("The code generation tries to serialize node " + node + "." + 
-                    "However, that node was already processed. How did that happen?")
-            } else {
-                if (node != lastNode) node.generate(nodes)
+            if (!processedNodes.contains(node)) {
+                node.generate(nodes)
+                processedNodes += node
             }
-            processedNodes += node
-            lastNode = node
         }
     }
     
@@ -107,7 +103,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         code.append("}\n")
     }
     
-    protected def dispatch void generate(Assignment assignment, List<Node> nodes) {
+    protected def dispatch void generate(Assignment assignment, Deque<Node> nodes) {
         if (!conditionalStack.empty) {
             // Apparently, we are in a nested conditional. Handle it if necessary. 
             assignment.handleConditionalNesting
@@ -117,7 +113,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         indent(conditionalStack.size + 1)
         valuedObjectPrefix = struct.getVariableName + "->"
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
-        println("Serializing " + assignment.serializeHR)
+//        println("Serializing " + assignment.serializeHR)
         code.append(assignment.serializeHR).append(";\n")
         
         // Handle pre variable if necessary.
@@ -127,10 +123,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }
         
         // If a new statement follows, add it to the node list.
-        if (assignment.next != null) nodes += assignment.next.target
+        if (assignment.next != null) nodes.push(assignment.next.target)
     }
     
-    protected def dispatch void generate(Conditional conditional, List<Node> nodes) {
+    protected def dispatch void generate(Conditional conditional, Deque<Node> nodes) {
         valuedObjectPrefix = struct.getVariableName + "->"
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
 
@@ -141,8 +137,8 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         
         conditionalStack.push(conditional)
         
-        if (conditional.^then != null) nodes += conditional.^then.target
-        if (conditional.^else != null) nodes += conditional.^else.target        
+        if (conditional.^else != null) nodes.push(conditional.^else.target)        
+        if (conditional.^then != null) nodes.push(conditional.^then.target)
     }
     
     protected def void handleConditionalNesting(Assignment assignment) {

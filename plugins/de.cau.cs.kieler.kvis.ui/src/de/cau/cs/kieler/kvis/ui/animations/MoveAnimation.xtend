@@ -26,6 +26,9 @@ class MoveAnimation extends AnimationHandler {
     public val posX = new ConfigurableAttribute("x", 0)
     public val posY = new ConfigurableAttribute("y", 0)
     
+    new() {
+    }
+    
     new(String svgElementId, Animation animation) {
         super(svgElementId, animation)
         initialize

@@ -42,6 +42,7 @@ import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -110,6 +111,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Graph representing the dependencies of the resources.
      */
     private DependencyGraph dependencies;
+    
+    @Accessors
+    private boolean abortIncrementalBuild
     
     /**
      * Creates a marker for a file in the Eclipse workspace.
@@ -212,6 +216,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def void incrementalBuild(IResourceDelta delta) {
         // Initialize
+        abortIncrementalBuild = false
         initialize
         // Find changed files
         monitor.subTask("Searching changed files")
@@ -234,7 +239,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                                 changedTemplates.add(file)
                             }
                             case "kibuild": {
-                                // The configuration changed: Do a full build
+                                // The configuration changed: Do a full build instead of an incremental build
+                                abortIncrementalBuild = true
                                 fullBuild
                                 // No need to check further files, because we do a full build
                                 return false
@@ -255,10 +261,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         } catch (CoreException e) {
             e.printStackTrace();
         }
-        // Build the changed models
-        buildModels(changedModels)
-        // Process templates
-        processTemplates(changedTemplates)
+        // If a full build is started, there is no need to continue the incremental build
+        if(!abortIncrementalBuild) {
+            // Build the changed models
+            buildModels(changedModels)
+            // Process templates
+            processTemplates(changedTemplates)            
+        }
     }
     
     private def void processAllTemplates() {

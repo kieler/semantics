@@ -59,6 +59,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="Region" abstract="true" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
         eOpposite="#//State/regions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="counterVariable" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="forStart" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="forEnd" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ControlflowRegion" eSuperTypes="#//Region">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

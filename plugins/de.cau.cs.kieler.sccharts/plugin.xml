@@ -300,6 +300,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.transformators.Reference">
         </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.transformators.For">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">

@@ -599,13 +599,40 @@ public interface SCChartsPackage extends EPackage {
     int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Counter Variable</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__COUNTER_VARIABLE = SCOPE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>For Start</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__FOR_START = SCOPE_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>For End</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__FOR_END = SCOPE_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
+    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
@@ -679,6 +706,33 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__PARENT_STATE = REGION__PARENT_STATE;
+
+    /**
+     * The feature id for the '<em><b>Counter Variable</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__COUNTER_VARIABLE = REGION__COUNTER_VARIABLE;
+
+    /**
+     * The feature id for the '<em><b>For Start</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__FOR_START = REGION__FOR_START;
+
+    /**
+     * The feature id for the '<em><b>For End</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__FOR_END = REGION__FOR_END;
 
     /**
      * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -770,6 +824,33 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__PARENT_STATE = REGION__PARENT_STATE;
+
+    /**
+     * The feature id for the '<em><b>Counter Variable</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__COUNTER_VARIABLE = REGION__COUNTER_VARIABLE;
+
+    /**
+     * The feature id for the '<em><b>For Start</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__FOR_START = REGION__FOR_START;
+
+    /**
+     * The feature id for the '<em><b>For End</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__FOR_END = REGION__FOR_END;
 
     /**
      * The feature id for the '<em><b>Equations</b></em>' containment reference list.
@@ -1674,6 +1755,39 @@ public interface SCChartsPackage extends EPackage {
     EReference getRegion_ParentState();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Region#getCounterVariable <em>Counter Variable</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Counter Variable</em>'.
+     * @see de.cau.cs.kieler.sccharts.Region#getCounterVariable()
+     * @see #getRegion()
+     * @generated
+     */
+    EReference getRegion_CounterVariable();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Region#getForStart <em>For Start</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>For Start</em>'.
+     * @see de.cau.cs.kieler.sccharts.Region#getForStart()
+     * @see #getRegion()
+     * @generated
+     */
+    EReference getRegion_ForStart();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Region#getForEnd <em>For End</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>For End</em>'.
+     * @see de.cau.cs.kieler.sccharts.Region#getForEnd()
+     * @see #getRegion()
+     * @generated
+     */
+    EReference getRegion_ForEnd();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ControlflowRegion <em>Controlflow Region</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2135,6 +2249,30 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference REGION__PARENT_STATE = eINSTANCE.getRegion_ParentState();
+
+        /**
+         * The meta object literal for the '<em><b>Counter Variable</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference REGION__COUNTER_VARIABLE = eINSTANCE.getRegion_CounterVariable();
+
+        /**
+         * The meta object literal for the '<em><b>For Start</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference REGION__FOR_START = eINSTANCE.getRegion_ForStart();
+
+        /**
+         * The meta object literal for the '<em><b>For End</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference REGION__FOR_END = eINSTANCE.getRegion_ForEnd();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.

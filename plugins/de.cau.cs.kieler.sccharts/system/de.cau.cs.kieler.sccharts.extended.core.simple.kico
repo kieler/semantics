@@ -2,7 +2,9 @@ system de.cau.cs.kieler.sccharts.extended.core.simple
 	version 1 
 	label "Extended and Core SCCharts (simple)"
 	
-de.cau.cs.kieler.sccharts.processors.transformators.reference	
+de.cau.cs.kieler.sccharts.processors.transformators.reference
+de.cau.cs.kieler.sccharts.processors.transformators.for	
+de.cau.cs.kieler.sccharts.processors.transformators.const
 de.cau.cs.kieler.sccharts.processors.transformators.signal
 de.cau.cs.kieler.sccharts.processors.transformators.^pre
 de.cau.cs.kieler.sccharts.processors.transformators.suspend

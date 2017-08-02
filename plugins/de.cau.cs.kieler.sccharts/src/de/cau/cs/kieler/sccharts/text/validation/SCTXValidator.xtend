@@ -31,6 +31,7 @@ import java.util.Map
 import java.util.Set
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.sccharts.Action
 
 //import org.eclipse.xtext.validation.Check
 
@@ -500,6 +501,22 @@ class SCTXValidator extends AbstractSCTXValidator {
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 
                     "Valued Objects are bound implicitly!\n" + implicitMessage);
+            }
+        }
+    }
+    
+    @Check
+    def void checkActionTriggerEffectsWithLabel(Action action) {
+        if (!action.label.nullOrEmpty) {
+            if (action.trigger != null) {
+                warning("The trigger of this action is hidden by the label.", 
+                    action, 
+                    SCChartsPackage.eINSTANCE.action_Trigger)
+            }
+            if (action.effects != null && action.effects.size > 0) {
+                warning("The effects of this action are hidden by the label.", 
+                    action, 
+                    SCChartsPackage.eINSTANCE.action_Effects)
             }
         }
     }
