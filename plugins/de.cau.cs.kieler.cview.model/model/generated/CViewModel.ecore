@@ -33,9 +33,8 @@
     <eLiterals name="DIR" literal="DIR"/>
     <eLiterals name="FILE" value="1" literal="FILE"/>
     <eLiterals name="FUNC" value="2" literal="FUNC"/>
-    <eLiterals name="DECL" value="3" literal="DECL"/>
-    <eLiterals name="COMPOUND" value="4" literal="COMPOUND"/>
-    <eLiterals name="READER" value="5" literal="READER"/>
-    <eLiterals name="WRITER" value="6" literal="WRITER"/>
+    <eLiterals name="TYPEDEF" value="3" literal="TYPEDEF"/>
+    <eLiterals name="STRUCT" value="4" literal="STRUCT"/>
+    <eLiterals name="DECL" value="5" literal="DECL"/>
   </eClassifiers>
 </ecore:EPackage>

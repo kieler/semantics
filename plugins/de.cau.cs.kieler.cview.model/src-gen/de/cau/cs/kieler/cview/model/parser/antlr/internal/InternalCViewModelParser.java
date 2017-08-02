@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'Component'", "'parent'", "'='", "'type'", "'reference'", "'referenceUnresolved'", "'location'", "'referenceLine'", "'children'", "'tooltip'", "'rawdata'", "'src'", "'dst'", "'label'", "'color'", "'DIR'", "'FILE'", "'FUNC'", "'DECL'", "'COMPOUND'", "'READER'", "'WRITER'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "';'", "'Component'", "'parent'", "'='", "'type'", "'reference'", "'referenceUnresolved'", "'location'", "'referenceLine'", "'children'", "'tooltip'", "'rawdata'", "'src'", "'dst'", "'label'", "'color'", "'DIR'", "'FILE'", "'FUNC'", "'TYPEDEF'", "'STRUCT'", "'DECL'"
     };
     public static final int RULE_STRING=5;
     public static final int RULE_SL_COMMENT=8;
@@ -32,7 +32,6 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int T__11=11;
-    public static final int T__33=33;
     public static final int T__12=12;
     public static final int T__13=13;
     public static final int T__14=14;
@@ -1022,7 +1021,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComponentType"
-    // InternalCViewModel.g:526:1: ruleComponentType returns [Enumerator current=null] : ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'DECL' ) | (enumLiteral_4= 'COMPOUND' ) | (enumLiteral_5= 'READER' ) | (enumLiteral_6= 'WRITER' ) ) ;
+    // InternalCViewModel.g:526:1: ruleComponentType returns [Enumerator current=null] : ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'TYPEDEF' ) | (enumLiteral_4= 'STRUCT' ) | (enumLiteral_5= 'DECL' ) ) ;
     public final Enumerator ruleComponentType() throws RecognitionException {
         Enumerator current = null;
 
@@ -1032,17 +1031,16 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
         Token enumLiteral_3=null;
         Token enumLiteral_4=null;
         Token enumLiteral_5=null;
-        Token enumLiteral_6=null;
 
 
         	enterRule();
 
         try {
-            // InternalCViewModel.g:532:2: ( ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'DECL' ) | (enumLiteral_4= 'COMPOUND' ) | (enumLiteral_5= 'READER' ) | (enumLiteral_6= 'WRITER' ) ) )
-            // InternalCViewModel.g:533:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'DECL' ) | (enumLiteral_4= 'COMPOUND' ) | (enumLiteral_5= 'READER' ) | (enumLiteral_6= 'WRITER' ) )
+            // InternalCViewModel.g:532:2: ( ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'TYPEDEF' ) | (enumLiteral_4= 'STRUCT' ) | (enumLiteral_5= 'DECL' ) ) )
+            // InternalCViewModel.g:533:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'TYPEDEF' ) | (enumLiteral_4= 'STRUCT' ) | (enumLiteral_5= 'DECL' ) )
             {
-            // InternalCViewModel.g:533:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'DECL' ) | (enumLiteral_4= 'COMPOUND' ) | (enumLiteral_5= 'READER' ) | (enumLiteral_6= 'WRITER' ) )
-            int alt7=7;
+            // InternalCViewModel.g:533:2: ( (enumLiteral_0= 'DIR' ) | (enumLiteral_1= 'FILE' ) | (enumLiteral_2= 'FUNC' ) | (enumLiteral_3= 'TYPEDEF' ) | (enumLiteral_4= 'STRUCT' ) | (enumLiteral_5= 'DECL' ) )
+            int alt7=6;
             switch ( input.LA(1) ) {
             case 27:
                 {
@@ -1072,11 +1070,6 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
             case 32:
                 {
                 alt7=6;
-                }
-                break;
-            case 33:
-                {
-                alt7=7;
                 }
                 break;
             default:
@@ -1139,15 +1132,15 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalCViewModel.g:558:3: (enumLiteral_3= 'DECL' )
+                    // InternalCViewModel.g:558:3: (enumLiteral_3= 'TYPEDEF' )
                     {
-                    // InternalCViewModel.g:558:3: (enumLiteral_3= 'DECL' )
-                    // InternalCViewModel.g:559:4: enumLiteral_3= 'DECL'
+                    // InternalCViewModel.g:558:3: (enumLiteral_3= 'TYPEDEF' )
+                    // InternalCViewModel.g:559:4: enumLiteral_3= 'TYPEDEF'
                     {
                     enumLiteral_3=(Token)match(input,30,FOLLOW_2); 
 
-                    				current = grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_3());
+                    				current = grammarAccess.getComponentTypeAccess().getTYPEDEFEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getTYPEDEFEnumLiteralDeclaration_3());
                     			
 
                     }
@@ -1156,15 +1149,15 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalCViewModel.g:566:3: (enumLiteral_4= 'COMPOUND' )
+                    // InternalCViewModel.g:566:3: (enumLiteral_4= 'STRUCT' )
                     {
-                    // InternalCViewModel.g:566:3: (enumLiteral_4= 'COMPOUND' )
-                    // InternalCViewModel.g:567:4: enumLiteral_4= 'COMPOUND'
+                    // InternalCViewModel.g:566:3: (enumLiteral_4= 'STRUCT' )
+                    // InternalCViewModel.g:567:4: enumLiteral_4= 'STRUCT'
                     {
                     enumLiteral_4=(Token)match(input,31,FOLLOW_2); 
 
-                    				current = grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_4());
+                    				current = grammarAccess.getComponentTypeAccess().getSTRUCTEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getSTRUCTEnumLiteralDeclaration_4());
                     			
 
                     }
@@ -1173,32 +1166,15 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalCViewModel.g:574:3: (enumLiteral_5= 'READER' )
+                    // InternalCViewModel.g:574:3: (enumLiteral_5= 'DECL' )
                     {
-                    // InternalCViewModel.g:574:3: (enumLiteral_5= 'READER' )
-                    // InternalCViewModel.g:575:4: enumLiteral_5= 'READER'
+                    // InternalCViewModel.g:574:3: (enumLiteral_5= 'DECL' )
+                    // InternalCViewModel.g:575:4: enumLiteral_5= 'DECL'
                     {
                     enumLiteral_5=(Token)match(input,32,FOLLOW_2); 
 
-                    				current = grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_5());
-                    			
-
-                    }
-
-
-                    }
-                    break;
-                case 7 :
-                    // InternalCViewModel.g:582:3: (enumLiteral_6= 'WRITER' )
-                    {
-                    // InternalCViewModel.g:582:3: (enumLiteral_6= 'WRITER' )
-                    // InternalCViewModel.g:583:4: enumLiteral_6= 'WRITER'
-                    {
-                    enumLiteral_6=(Token)match(input,33,FOLLOW_2); 
-
-                    				current = grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_6().getEnumLiteral().getInstance();
-                    				newLeafNode(enumLiteral_6, grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_6());
+                    				current = grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+                    				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_5());
                     			
 
                     }
@@ -1240,7 +1216,7 @@ public class InternalCViewModelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x000000000000A000L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000004000L});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x00000003F8000000L});
+    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x00000001F8000000L});
     public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000000020L});

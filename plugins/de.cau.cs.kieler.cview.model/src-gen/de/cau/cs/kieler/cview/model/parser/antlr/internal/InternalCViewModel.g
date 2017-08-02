@@ -556,34 +556,26 @@ ruleComponentType returns [Enumerator current=null]
 		)
 		    |
 		(
-			enumLiteral_3='DECL'
+			enumLiteral_3='TYPEDEF'
 			{
-				$current = grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_3());
+				$current = grammarAccess.getComponentTypeAccess().getTYPEDEFEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getComponentTypeAccess().getTYPEDEFEnumLiteralDeclaration_3());
 			}
 		)
 		    |
 		(
-			enumLiteral_4='COMPOUND'
+			enumLiteral_4='STRUCT'
 			{
-				$current = grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getCOMPOUNDEnumLiteralDeclaration_4());
+				$current = grammarAccess.getComponentTypeAccess().getSTRUCTEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getComponentTypeAccess().getSTRUCTEnumLiteralDeclaration_4());
 			}
 		)
 		    |
 		(
-			enumLiteral_5='READER'
+			enumLiteral_5='DECL'
 			{
-				$current = grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getREADEREnumLiteralDeclaration_5());
-			}
-		)
-		    |
-		(
-			enumLiteral_6='WRITER'
-			{
-				$current = grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_6().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_6, grammarAccess.getComponentTypeAccess().getWRITEREnumLiteralDeclaration_6());
+				$current = grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getComponentTypeAccess().getDECLEnumLiteralDeclaration_5());
 			}
 		)
 	)

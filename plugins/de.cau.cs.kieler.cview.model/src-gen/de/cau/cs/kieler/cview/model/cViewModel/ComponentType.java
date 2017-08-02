@@ -51,6 +51,26 @@ public enum ComponentType implements Enumerator
   FUNC(2, "FUNC", "FUNC"),
 
   /**
+   * The '<em><b>TYPEDEF</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #TYPEDEF_VALUE
+   * @generated
+   * @ordered
+   */
+  TYPEDEF(3, "TYPEDEF", "TYPEDEF"),
+
+  /**
+   * The '<em><b>STRUCT</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #STRUCT_VALUE
+   * @generated
+   * @ordered
+   */
+  STRUCT(4, "STRUCT", "STRUCT"),
+
+  /**
    * The '<em><b>DECL</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -58,37 +78,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  DECL(3, "DECL", "DECL"),
-
-  /**
-   * The '<em><b>COMPOUND</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #COMPOUND_VALUE
-   * @generated
-   * @ordered
-   */
-  COMPOUND(4, "COMPOUND", "COMPOUND"),
-
-  /**
-   * The '<em><b>READER</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #READER_VALUE
-   * @generated
-   * @ordered
-   */
-  READER(5, "READER", "READER"),
-
-  /**
-   * The '<em><b>WRITER</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #WRITER_VALUE
-   * @generated
-   * @ordered
-   */
-  WRITER(6, "WRITER", "WRITER");
+  DECL(5, "DECL", "DECL");
 
   /**
    * The '<em><b>DIR</b></em>' literal value.
@@ -136,6 +126,36 @@ public enum ComponentType implements Enumerator
   public static final int FUNC_VALUE = 2;
 
   /**
+   * The '<em><b>TYPEDEF</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>TYPEDEF</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #TYPEDEF
+   * @model
+   * @generated
+   * @ordered
+   */
+  public static final int TYPEDEF_VALUE = 3;
+
+  /**
+   * The '<em><b>STRUCT</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>STRUCT</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #STRUCT
+   * @model
+   * @generated
+   * @ordered
+   */
+  public static final int STRUCT_VALUE = 4;
+
+  /**
    * The '<em><b>DECL</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
@@ -148,52 +168,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int DECL_VALUE = 3;
-
-  /**
-   * The '<em><b>COMPOUND</b></em>' literal value.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>COMPOUND</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @see #COMPOUND
-   * @model
-   * @generated
-   * @ordered
-   */
-  public static final int COMPOUND_VALUE = 4;
-
-  /**
-   * The '<em><b>READER</b></em>' literal value.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>READER</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @see #READER
-   * @model
-   * @generated
-   * @ordered
-   */
-  public static final int READER_VALUE = 5;
-
-  /**
-   * The '<em><b>WRITER</b></em>' literal value.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>WRITER</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @see #WRITER
-   * @model
-   * @generated
-   * @ordered
-   */
-  public static final int WRITER_VALUE = 6;
+  public static final int DECL_VALUE = 5;
 
   /**
    * An array of all the '<em><b>Component Type</b></em>' enumerators.
@@ -207,10 +182,9 @@ public enum ComponentType implements Enumerator
       DIR,
       FILE,
       FUNC,
+      TYPEDEF,
+      STRUCT,
       DECL,
-      COMPOUND,
-      READER,
-      WRITER,
     };
 
   /**
@@ -278,10 +252,9 @@ public enum ComponentType implements Enumerator
       case DIR_VALUE: return DIR;
       case FILE_VALUE: return FILE;
       case FUNC_VALUE: return FUNC;
+      case TYPEDEF_VALUE: return TYPEDEF;
+      case STRUCT_VALUE: return STRUCT;
       case DECL_VALUE: return DECL;
-      case COMPOUND_VALUE: return COMPOUND;
-      case READER_VALUE: return READER;
-      case WRITER_VALUE: return WRITER;
     }
     return null;
   }

@@ -81,7 +81,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     @Inject extension KColorExtensions
     @Inject extension CViewModelExtensions
 
-    public static String CONNECTION_TYPE_REFERENCE = "CONNECTION_TYPE_REFERENCE"
+    public static String CONNECTION_TYPE_REFERENCE_FUNC = "CONNECTION_TYPE_REFERENCE_FUNC"
+    public static String CONNECTION_TYPE_REFERENCE_TYPE = "CONNECTION_TYPE_REFERENCE_TYPE"
 
     public static boolean parseFiles = false;
     public static boolean skipFileContent = false;
@@ -110,14 +111,18 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     public static final SynthesisOption SKIP_FILE_CONTENT = SynthesisOption.createCheckOption("Skip File Content",
         false);
-    public static final SynthesisOption PARSE_FILES = SynthesisOption.createCheckOption("Parse Files", false);
+
+
+    public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption("Show Functions", false);
+    public static final SynthesisOption SHOW_REFERENCES_FUNC = SynthesisOption.createCheckOption("Show Function References", false);
+    public static final SynthesisOption SHOW_TYPES = SynthesisOption.createCheckOption("Show Types", false);
+    public static final SynthesisOption SHOW_REFERENCES_TYPE = SynthesisOption.createCheckOption("Show Type References", false);
 
     public static final SynthesisOption INTERLEVEL_CONNECTIONS = SynthesisOption.createCheckOption(
         "Interlevel Connections", false);
 
     public static final SynthesisOption HIDE_CONNECTIONS = SynthesisOption.createCheckOption("Hide Connections", false);
 
-    public static final SynthesisOption SHOW_REFERENCES = SynthesisOption.createCheckOption("Show References", false);
 
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
@@ -131,8 +136,10 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         options.addAll(FLATTEN_HIERARCHY);
         options.addAll(INTERLEVEL_CONNECTIONS);
         options.addAll(SKIP_FILE_CONTENT);
-        options.addAll(PARSE_FILES);
-        options.addAll(SHOW_REFERENCES);
+        options.addAll(SHOW_FUNCTIONS);
+        options.addAll(SHOW_REFERENCES_FUNC);
+        options.addAll(SHOW_TYPES);
+        options.addAll(SHOW_REFERENCES_TYPE);
         options.addAll(HIDE_CONNECTIONS);
         options.addAll(HIDE_UNCONNECTED);
         options.addAll(ANONYMIZE);
@@ -268,8 +275,9 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     override KNode transform(CViewModel model) {
 
-        if (parseFiles != PARSE_FILES.booleanValue) {
-            parseFiles = PARSE_FILES.booleanValue
+        val newParseFiles = SHOW_FUNCTIONS.booleanValue || SHOW_TYPES.booleanValue || SHOW_REFERENCES_FUNC.booleanValue || SHOW_REFERENCES_TYPE.booleanValue
+        if (parseFiles != newParseFiles) {
+            parseFiles = newParseFiles
             CViewPlugin.rebuildModelAndrefreshCView(true)
             return null;
         }
@@ -280,17 +288,40 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return null;
         }
 
-        val toBeRemovedAll = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE)].toList
-        for (toBeRemoved : toBeRemovedAll) {
-            toBeRemoved.remove
+        val toBeRemovedAllFunc = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_FUNC)]
+        if (!toBeRemovedAllFunc.nullOrEmpty) {
+            for (toBeRemoved : toBeRemovedAllFunc.toList.immutableCopy) {
+                toBeRemoved.remove
+            }
         }
-        if (SHOW_REFERENCES.booleanValue) {
+        val toBeRemovedAllType = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_TYPE)]
+        if (!toBeRemovedAllType.nullOrEmpty) {
+            for (toBeRemoved : toBeRemovedAllType.toList.immutableCopy) {
+                toBeRemoved.remove
+            }
+        }
+        if (SHOW_REFERENCES_FUNC.booleanValue) {
             // Add more (default-)connections that represent the references here
             for (component : model.components.filter[e|e.reference != null]) {
                 val connection = component.connectTo(component.reference)
-                connection.type = CONNECTION_TYPE_REFERENCE
-                connection.color = "#378CFF"
-                model.connections.add(connection)
+                connection.type = CONNECTION_TYPE_REFERENCE_FUNC
+                if (component.isFunc) {
+                    // Func Ref
+                    connection.color = "#378CFF"
+                    model.connections.add(connection)
+                }
+            }
+        }
+        if (SHOW_REFERENCES_TYPE.booleanValue) {
+            // Add more (default-)connections that represent the references here
+            for (component : model.components.filter[e|e.reference != null]) {
+                val connection = component.connectTo(component.reference)
+                connection.type = CONNECTION_TYPE_REFERENCE_TYPE
+                if (!component.isFunc) {
+                    // Struct, Decl, Typedef
+                    connection.color = "#FFD236"
+                    model.connections.add(connection)
+                }
             }
         }
 
@@ -630,7 +661,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         def KNode transformItem(Component item, int depth) {
             if (item.isFile) {
-                if (PARSE_FILES.booleanValue) {
+                if (SHOW_FUNCTIONS.booleanValue || SHOW_TYPES.booleanValue) {
                     return item.transformItemFileWithFunctions(depth)
                 } else {
                     return item.transformItemFile(depth)
@@ -639,12 +670,19 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 return item.transformItemDir(depth)
             } else if (item.isFunc) {
                 return item.transformItemFunc(depth)
+            } else if (item.isStruct) {
+                return item.transformItemStruct(depth, false)                
+            } else if (item.isTypedef) {
+                return item.transformItemStruct(depth, true)                
             }
         }
 
         def KNode transformItemFunc(Component item, int depth) {
-            if (item.isReference && !SHOW_REFERENCES.booleanValue) {
-                return null;
+            if (!SHOW_FUNCTIONS.booleanValue) {
+                return null
+            }
+            if (item.isReference && !SHOW_REFERENCES_FUNC.booleanValue) {
+                return null
             }
             val childNode = item.createNode().associateWith(item);
             val childRect = childNode.addRoundedRectangle(4, 4, 2);
@@ -666,6 +704,42 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
             return childNode
         }
+
+
+        def KNode transformItemStruct(Component item, int depth, boolean isTypedef) {
+            if (!SHOW_TYPES.booleanValue) {
+                return null
+            }
+            if (!isTypedef && item.isReference && !SHOW_REFERENCES_TYPE.booleanValue) {
+                return null
+            }
+            val childNode = item.createNode().associateWith(item);
+            val childRect = childNode.addRoundedRectangle(4, 4, 2);
+            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+                KlighdConstants.DEFAULT_FONT_NAME);
+            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+            if (item.reference == null) {
+                childRect.background = "#FFD236".color;
+                childRect.selectionBackground = "#FFD236".color;
+                label.firstText.selectionBackground = "#FFD236".color;
+            } else {
+                childRect.background = "#FFF0BD".color;
+                childRect.selectionBackground = "#FFF0BD".color;
+                label.firstText.selectionBackground = "#FFF0BD".color;
+            }
+            if (isTypedef) {
+                childRect.background = "#FCFF00".color;
+                childRect.selectionBackground = "#FCFF00".color;
+                label.firstText.selectionBackground = "#FCFF00".color;
+            }
+            childRect.addDoubleClickAction(OpenEditorAction.ID);
+            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+
+            return childNode
+        }
+
+
 
         def KNode transformItemFile(Component item, int depth) {
             val childNode = item.createNode().associateWith(item);

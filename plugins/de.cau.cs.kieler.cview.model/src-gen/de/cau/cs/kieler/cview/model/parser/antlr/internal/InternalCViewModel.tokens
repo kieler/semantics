@@ -1,13 +1,12 @@
 ';'=11
 '='=14
-'COMPOUND'=31
 'Component'=12
-'DECL'=30
+'DECL'=32
 'DIR'=27
 'FILE'=28
 'FUNC'=29
-'READER'=32
-'WRITER'=33
+'STRUCT'=31
+'TYPEDEF'=30
 'children'=20
 'color'=26
 'dst'=24
@@ -50,4 +49,3 @@ T__29=29
 T__30=30
 T__31=31
 T__32=32
-T__33=33

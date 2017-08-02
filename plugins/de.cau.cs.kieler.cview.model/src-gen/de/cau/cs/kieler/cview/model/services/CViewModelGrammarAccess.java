@@ -360,20 +360,18 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFILEFILEKeyword_1_0 = (Keyword)cFILEEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cFUNCEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cFUNCFUNCKeyword_2_0 = (Keyword)cFUNCEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cDECLEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cDECLDECLKeyword_3_0 = (Keyword)cDECLEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cCOMPOUNDEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cCOMPOUNDCOMPOUNDKeyword_4_0 = (Keyword)cCOMPOUNDEnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cREADEREnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cREADERREADERKeyword_5_0 = (Keyword)cREADEREnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cWRITEREnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cWRITERWRITERKeyword_6_0 = (Keyword)cWRITEREnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cTYPEDEFEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cTYPEDEFTYPEDEFKeyword_3_0 = (Keyword)cTYPEDEFEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cSTRUCTEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cSTRUCTSTRUCTKeyword_4_0 = (Keyword)cSTRUCTEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cDECLEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cDECLDECLKeyword_5_0 = (Keyword)cDECLEnumLiteralDeclaration_5.eContents().get(0);
 		
 		//enum ComponentType:
-		//	DIR | FILE | FUNC | DECL | COMPOUND | READER | WRITER;
+		//	DIR | FILE | FUNC | TYPEDEF | STRUCT | DECL;
 		public EnumRule getRule() { return rule; }
 		
-		//DIR | FILE | FUNC | DECL | COMPOUND | READER | WRITER
+		//DIR | FILE | FUNC | TYPEDEF | STRUCT | DECL
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//DIR
@@ -394,29 +392,23 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//"FUNC"
 		public Keyword getFUNCFUNCKeyword_2_0() { return cFUNCFUNCKeyword_2_0; }
 		
+		//TYPEDEF
+		public EnumLiteralDeclaration getTYPEDEFEnumLiteralDeclaration_3() { return cTYPEDEFEnumLiteralDeclaration_3; }
+		
+		//"TYPEDEF"
+		public Keyword getTYPEDEFTYPEDEFKeyword_3_0() { return cTYPEDEFTYPEDEFKeyword_3_0; }
+		
+		//STRUCT
+		public EnumLiteralDeclaration getSTRUCTEnumLiteralDeclaration_4() { return cSTRUCTEnumLiteralDeclaration_4; }
+		
+		//"STRUCT"
+		public Keyword getSTRUCTSTRUCTKeyword_4_0() { return cSTRUCTSTRUCTKeyword_4_0; }
+		
 		//DECL
-		public EnumLiteralDeclaration getDECLEnumLiteralDeclaration_3() { return cDECLEnumLiteralDeclaration_3; }
+		public EnumLiteralDeclaration getDECLEnumLiteralDeclaration_5() { return cDECLEnumLiteralDeclaration_5; }
 		
 		//"DECL"
-		public Keyword getDECLDECLKeyword_3_0() { return cDECLDECLKeyword_3_0; }
-		
-		//COMPOUND
-		public EnumLiteralDeclaration getCOMPOUNDEnumLiteralDeclaration_4() { return cCOMPOUNDEnumLiteralDeclaration_4; }
-		
-		//"COMPOUND"
-		public Keyword getCOMPOUNDCOMPOUNDKeyword_4_0() { return cCOMPOUNDCOMPOUNDKeyword_4_0; }
-		
-		//READER
-		public EnumLiteralDeclaration getREADEREnumLiteralDeclaration_5() { return cREADEREnumLiteralDeclaration_5; }
-		
-		//"READER"
-		public Keyword getREADERREADERKeyword_5_0() { return cREADERREADERKeyword_5_0; }
-		
-		//WRITER
-		public EnumLiteralDeclaration getWRITEREnumLiteralDeclaration_6() { return cWRITEREnumLiteralDeclaration_6; }
-		
-		//"WRITER"
-		public Keyword getWRITERWRITERKeyword_6_0() { return cWRITERWRITERKeyword_6_0; }
+		public Keyword getDECLDECLKeyword_5_0() { return cDECLDECLKeyword_5_0; }
 	}
 	
 	private final CViewModelElements pCViewModel;
@@ -511,7 +503,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ComponentType:
-	//	DIR | FILE | FUNC | DECL | COMPOUND | READER | WRITER;
+	//	DIR | FILE | FUNC | TYPEDEF | STRUCT | DECL;
 	public ComponentTypeElements getComponentTypeAccess() {
 		return eComponentType;
 	}

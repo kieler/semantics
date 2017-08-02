@@ -455,10 +455,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     addEEnumLiteral(componentTypeEEnum, ComponentType.DIR);
     addEEnumLiteral(componentTypeEEnum, ComponentType.FILE);
     addEEnumLiteral(componentTypeEEnum, ComponentType.FUNC);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.TYPEDEF);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.STRUCT);
     addEEnumLiteral(componentTypeEEnum, ComponentType.DECL);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.COMPOUND);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.READER);
-    addEEnumLiteral(componentTypeEEnum, ComponentType.WRITER);
 
     // Create resource
     createResource(eNS_URI);

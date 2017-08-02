@@ -286,12 +286,16 @@ class CViewModelExtensions {
         return (CViewModelFactory.eINSTANCE.createComponent.setFunc)
     }
 
-    def Component createReader() {
-        return (CViewModelFactory.eINSTANCE.createComponent.setReader)
+    def Component createStruct() {
+        return (CViewModelFactory.eINSTANCE.createComponent.setStruct)
     }
 
-    def Component createWriter() {
-        return (CViewModelFactory.eINSTANCE.createComponent.setWriter)
+    def Component createTypedef() {
+        return (CViewModelFactory.eINSTANCE.createComponent.setTypedef)
+    }
+
+    def Component createDecl() {
+        return (CViewModelFactory.eINSTANCE.createComponent.setDecl)
     }
 
     // -------------------------------------------------------------------------
@@ -307,12 +311,16 @@ class CViewModelExtensions {
         return (component.type == ComponentType::FUNC)
     }
 
-    def boolean isReader(Component component) {
-        return (component.type == ComponentType::READER)
+    def boolean isStruct(Component component) {
+        return (component.type == ComponentType::STRUCT)
     }
 
-    def boolean isWriter(Component component) {
-        return (component.type == ComponentType::WRITER)
+    def boolean isTypedef(Component component) {
+        return (component.type == ComponentType::TYPEDEF)
+    }
+
+    def boolean isDecl(Component component) {
+        return (component.type == ComponentType::DECL)
     }
 
     // -------------------------------------------------------------------------
@@ -331,13 +339,18 @@ class CViewModelExtensions {
         return component
     }
 
-    def Component setReader(Component component) {
-        component.type = ComponentType::READER
+    def Component setStruct(Component component) {
+        component.type = ComponentType::STRUCT
         return component
     }
 
-    def Component setWriter(Component component) {
-        component.type = ComponentType::WRITER
+    def Component setTypedef(Component component) {
+        component.type = ComponentType::TYPEDEF
+        return component
+    }
+
+    def Component setDecl(Component component) {
+        component.type = ComponentType::DECL
         return component
     }
 

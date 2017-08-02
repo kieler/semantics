@@ -10,10 +10,9 @@
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/DIR"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/FILE"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/FUNC"/>
+      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/TYPEDEF"/>
+      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/STRUCT"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/DECL"/>
-      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/COMPOUND"/>
-      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/READER"/>
-      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/WRITER"/>
     </genEnums>
     <genClasses ecoreClass="CViewModel.ecore#//CViewModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CViewModel.ecore#//CViewModel/components"/>

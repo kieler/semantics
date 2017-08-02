@@ -35,7 +35,7 @@ Connection:
 	
 	
 enum ComponentType:
-    DIR="DIR" | FILE="FILE" | FUNC="FUNC" | DECL="DECL" | COMPOUND="COMPOUND" | READER="READER" | WRITER="WRITER" 
+    DIR="DIR" | FILE="FILE" | FUNC="FUNC" | TYPEDEF = "TYPEDEF" | STRUCT = "STRUCT" | DECL="DECL"  
 ;	
 	
 	
