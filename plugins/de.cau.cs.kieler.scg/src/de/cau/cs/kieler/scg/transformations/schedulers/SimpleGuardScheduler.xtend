@@ -124,17 +124,11 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
     		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
-    		context.compilationResult?.addPostponedWarning(
+    		context?.compilationResult?.addPostponedWarning(
     		    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!")
     		)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")
-    		var sl = "";
-    		for(s : schedule) {
-       		    if (s instanceof Assignment)
-                    sl += (s as Assignment).valuedObject.name + " "
-    		}
-    		SCGPlugin.log(sl, Level.FINE)
     	}
     	
     	scg

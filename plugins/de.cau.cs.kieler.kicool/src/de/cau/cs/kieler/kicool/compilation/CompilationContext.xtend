@@ -164,8 +164,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.ProcessorGroup processorGroup, Environment environment) {
         var Environment environmentPrime = environment
+        var cancel = false
         for(processor : processorGroup.processors) {
-             environmentPrime = processor.compileEntry(environmentPrime)
+             if (!cancel) {
+                 environmentPrime = processor.compileEntry(environmentPrime)
+                 cancel = environmentPrime.getProperty(CANCEL_COMPILATION)
+             }
         }
         environmentPrime
     }

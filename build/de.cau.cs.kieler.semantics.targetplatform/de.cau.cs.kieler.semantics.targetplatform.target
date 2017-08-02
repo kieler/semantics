@@ -39,9 +39,9 @@
       <unit id="org.eclipse.elk.ui.feature.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/elk/updates/releases/0.2.2/"/>
     </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+    <!-- <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.lejos.nxt.ldt.feature.feature.group" version="0.0.0"/>
       <repository location="http://www.lejos.org/tools/eclipse/plugin/nxj/"/>
-    </location>
+    </location> -->
   </locations>
 </target>

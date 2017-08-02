@@ -30,5 +30,5 @@
   <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" enabled="true"/>
   <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-01/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.2.1/" enabled="true"/>
-  <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
+  <!-- <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/> -->
 </site>
