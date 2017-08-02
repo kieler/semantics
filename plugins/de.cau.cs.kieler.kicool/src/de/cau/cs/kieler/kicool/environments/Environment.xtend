@@ -82,6 +82,9 @@ class Environment extends EnvironmentPropertyHolder {
         
     public static val IProperty<Boolean> ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.enabled", true)
+        
+    public static val IProperty<Boolean> SNAPSHOTS_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.snapshotsEnabled", true)
              
     new() {
     }

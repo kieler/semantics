@@ -115,7 +115,10 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * Protected convenient method to trigger a snapshot.
      */
     protected def void snapshot(Object model) {
-        // Retrieve snapshots object.
+        val snapshotsEnabled = environment.getProperty(SNAPSHOTS_ENABLED) 
+        val inplace = environment.getProperty(INPLACE)
+        if (inplace || !snapshotsEnabled) return
+        
         val snapshots = environment.getProperty(SNAPSHOTS)
         
         // Do a copy of the given model.
