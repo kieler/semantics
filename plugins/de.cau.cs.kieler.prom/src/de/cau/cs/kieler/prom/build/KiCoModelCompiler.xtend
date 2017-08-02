@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 
 /**
  * @author aas
@@ -204,10 +205,13 @@ class KiCoModelCompiler extends ModelCompiler {
             val compilationSystemID = compilationSystem.stringValue
             context = Compile.createCompilationContext(compilationSystemID, model)
         }
-        context.startEnvironment.setProperty(Environment.INPLACE, false)
+        context.startEnvironment.setProperty(Environment.INPLACE, true)
         // Add observer to update the progress monitor
         if(monitor != null) {
             context.addObserver(new Observer() {
+                val startTimeMap = <String, Long> newHashMap
+                val durationTimeMap = <String, Long> newHashMap
+                 
                 override update(Observable o, Object arg) {
                     val context = o as CompilationContext
                     if(context != null) {
@@ -217,15 +221,34 @@ class KiCoModelCompiler extends ModelCompiler {
                             val processorCount = context.processorInstancesSequence.size
                             monitor.subTask("Compiling '"+compiledFile.name+"' \n"
                                           + "Starting processor "+(currentProcessorIndex+1)+"/"+processorCount+": "
-                                          + "'"+currentProcessor.name+"'"
-                            )
+                                          + "'"+currentProcessor.name+"'")
+                                          
+                            startTimeMap.put(currentProcessor.name, System.currentTimeMillis)
+                        }
+                        // Check how long the processor took
+                        if(arg instanceof ProcessorFinished) {
+                            val currentProcessor = arg.processorInstance
+                            val currentProcessorIndex = context.processorInstancesSequence.indexOf(currentProcessor)
+                            val processorCount = context.processorInstancesSequence.size
+                            val startTime = startTimeMap.getOrDefault(currentProcessor.name, -1l)
+                            val duration = System.currentTimeMillis - startTime
+                            durationTimeMap.put(currentProcessor.name, duration)
+                            monitor.subTask("Compiling '"+compiledFile.name+"' \n"
+                                          + "Finished processor "+(currentProcessorIndex+1)+"/"+processorCount+": "
+                                          + "'"+currentProcessor.name+"'")
+                            if(startTime > 0) {
+//                                println("'"+currentProcessor.name + "' took " + duration + " ms")
+                            }
                         }
                     }
                 }
             })
         }
         // Compile the model
+        val startTime = System.currentTimeMillis
         context.compile
+        val duration = System.currentTimeMillis - startTime
+//        System.err.println("KiCo compilation took:"+duration)
         return context
     }
     
