@@ -37,6 +37,7 @@ class WalkPathAnimation extends AnimationHandler {
     public val anchorX = new ConfigurableAttribute("anchorX", 0.5)
     public val anchorY = new ConfigurableAttribute("anchorY", 0.5)
     public val appendTransform = new ConfigurableAttribute("appendTransform", false)
+    public val position = new ConfigurableAttribute("position", false)
     
     var String initialTransform
     var SVGPoint lastPoint
@@ -77,7 +78,11 @@ class WalkPathAnimation extends AnimationHandler {
         }
         // Compute position on path
         val totalPathLength = path.getTotalLength
-        val value = variableValue.doubleValue
+        val value = if(position.value == null)
+                        variableValue.doubleValue
+                    else
+                        position.intValue.doubleValue
+                        
         var wrappedValue = value
         // If value is below the path, bring it back to the range
         while(wrappedValue < pathStart.floatValue) {
