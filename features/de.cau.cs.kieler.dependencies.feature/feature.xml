@@ -9,7 +9,9 @@
       The plug-ins and features included in this feature originate from different projects.
    </copyright>
 
-   <includes id="org.lejos.nxt.ldt.feature" version="0.0.0"/>
+   <!-- <includes id="org.lejos.nxt.ldt.feature" version="0.0.0"/> -->
+
+   <plugin id="org.lejos.nxt.ldt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <includes id="org.eclipse.epp.mpc" version="0.0.0"/>
 
