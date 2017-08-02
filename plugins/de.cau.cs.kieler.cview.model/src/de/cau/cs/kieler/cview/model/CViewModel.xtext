@@ -14,6 +14,8 @@ Component:
     'Component' name=ID 
            ('parent' '=' parent=[Component])?
            'type' '=' type=ComponentType
+           'reference' '=' reference=[Component]
+           'referenceUnresolved' '=' referenceUnresolved=STRING
 //           ('referenceFile' '=' referenceFile=[File])?
            'location' '=' location=STRING
            ('referenceLine' '=' referenceLine=INT)?
@@ -33,7 +35,7 @@ Connection:
 	
 	
 enum ComponentType:
-    DIR="DIR" | FILE="FILE" | FUNC="FUNC" | COMPOUND="COMPOUND" | READER="READER" | WRITER="WRITER" 
+    DIR="DIR" | FILE="FILE" | FUNC="FUNC" | DECL="DECL" | COMPOUND="COMPOUND" | READER="READER" | WRITER="WRITER" 
 ;	
 	
 	

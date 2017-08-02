@@ -75,38 +75,50 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEqualsSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cTypeComponentTypeEnumRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
-		private final Keyword cLocationKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Keyword cReferenceKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		private final Keyword cEqualsSignKeyword_7 = (Keyword)cGroup.eContents().get(7);
-		private final Assignment cLocationAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cLocationSTRINGTerminalRuleCall_8_0 = (RuleCall)cLocationAssignment_8.eContents().get(0);
-		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cReferenceLineKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Keyword cEqualsSignKeyword_9_1 = (Keyword)cGroup_9.eContents().get(1);
-		private final Assignment cReferenceLineAssignment_9_2 = (Assignment)cGroup_9.eContents().get(2);
-		private final RuleCall cReferenceLineINTTerminalRuleCall_9_2_0 = (RuleCall)cReferenceLineAssignment_9_2.eContents().get(0);
-		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cChildrenKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Keyword cEqualsSignKeyword_10_1 = (Keyword)cGroup_10.eContents().get(1);
-		private final Assignment cChildrenAssignment_10_2 = (Assignment)cGroup_10.eContents().get(2);
-		private final CrossReference cChildrenComponentCrossReference_10_2_0 = (CrossReference)cChildrenAssignment_10_2.eContents().get(0);
-		private final RuleCall cChildrenComponentIDTerminalRuleCall_10_2_0_1 = (RuleCall)cChildrenComponentCrossReference_10_2_0.eContents().get(1);
-		private final Keyword cTooltipKeyword_11 = (Keyword)cGroup.eContents().get(11);
-		private final Assignment cTooltipAssignment_12 = (Assignment)cGroup.eContents().get(12);
-		private final RuleCall cTooltipSTRINGTerminalRuleCall_12_0 = (RuleCall)cTooltipAssignment_12.eContents().get(0);
-		private final Keyword cRawdataKeyword_13 = (Keyword)cGroup.eContents().get(13);
-		private final Assignment cRawdataAssignment_14 = (Assignment)cGroup.eContents().get(14);
-		private final RuleCall cRawdataSTRINGTerminalRuleCall_14_0 = (RuleCall)cRawdataAssignment_14.eContents().get(0);
+		private final Assignment cReferenceAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final CrossReference cReferenceComponentCrossReference_8_0 = (CrossReference)cReferenceAssignment_8.eContents().get(0);
+		private final RuleCall cReferenceComponentIDTerminalRuleCall_8_0_1 = (RuleCall)cReferenceComponentCrossReference_8_0.eContents().get(1);
+		private final Keyword cReferenceUnresolvedKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Keyword cEqualsSignKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Assignment cReferenceUnresolvedAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final RuleCall cReferenceUnresolvedSTRINGTerminalRuleCall_11_0 = (RuleCall)cReferenceUnresolvedAssignment_11.eContents().get(0);
+		private final Keyword cLocationKeyword_12 = (Keyword)cGroup.eContents().get(12);
+		private final Keyword cEqualsSignKeyword_13 = (Keyword)cGroup.eContents().get(13);
+		private final Assignment cLocationAssignment_14 = (Assignment)cGroup.eContents().get(14);
+		private final RuleCall cLocationSTRINGTerminalRuleCall_14_0 = (RuleCall)cLocationAssignment_14.eContents().get(0);
+		private final Group cGroup_15 = (Group)cGroup.eContents().get(15);
+		private final Keyword cReferenceLineKeyword_15_0 = (Keyword)cGroup_15.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_15_1 = (Keyword)cGroup_15.eContents().get(1);
+		private final Assignment cReferenceLineAssignment_15_2 = (Assignment)cGroup_15.eContents().get(2);
+		private final RuleCall cReferenceLineINTTerminalRuleCall_15_2_0 = (RuleCall)cReferenceLineAssignment_15_2.eContents().get(0);
+		private final Group cGroup_16 = (Group)cGroup.eContents().get(16);
+		private final Keyword cChildrenKeyword_16_0 = (Keyword)cGroup_16.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_16_1 = (Keyword)cGroup_16.eContents().get(1);
+		private final Assignment cChildrenAssignment_16_2 = (Assignment)cGroup_16.eContents().get(2);
+		private final CrossReference cChildrenComponentCrossReference_16_2_0 = (CrossReference)cChildrenAssignment_16_2.eContents().get(0);
+		private final RuleCall cChildrenComponentIDTerminalRuleCall_16_2_0_1 = (RuleCall)cChildrenComponentCrossReference_16_2_0.eContents().get(1);
+		private final Keyword cTooltipKeyword_17 = (Keyword)cGroup.eContents().get(17);
+		private final Assignment cTooltipAssignment_18 = (Assignment)cGroup.eContents().get(18);
+		private final RuleCall cTooltipSTRINGTerminalRuleCall_18_0 = (RuleCall)cTooltipAssignment_18.eContents().get(0);
+		private final Keyword cRawdataKeyword_19 = (Keyword)cGroup.eContents().get(19);
+		private final Assignment cRawdataAssignment_20 = (Assignment)cGroup.eContents().get(20);
+		private final RuleCall cRawdataSTRINGTerminalRuleCall_20_0 = (RuleCall)cRawdataAssignment_20.eContents().get(0);
 		
 		//Component:
 		//	'Component' name=ID ('parent' '=' parent=[Component])?
 		//	'type' '=' type=ComponentType
+		//	'reference' '=' reference=[Component]
+		//	'referenceUnresolved' '=' referenceUnresolved=STRING
 		//	//           ('referenceFile' '=' referenceFile=[File])?
 		//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
 		//	'tooltip' tooltip=STRING
 		//	'rawdata' rawdata=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Component' name=ID ('parent' '=' parent=[Component])? 'type' '=' type=ComponentType //           ('referenceFile' '=' referenceFile=[File])?
+		//'Component' name=ID ('parent' '=' parent=[Component])? 'type' '=' type=ComponentType 'reference' '='
+		//reference=[Component] 'referenceUnresolved' '=' referenceUnresolved=STRING //           ('referenceFile' '=' referenceFile=[File])?
 		//'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
 		//'tooltip' tooltip=STRING 'rawdata' rawdata=STRING
 		public Group getGroup() { return cGroup; }
@@ -150,69 +162,96 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//ComponentType
 		public RuleCall getTypeComponentTypeEnumRuleCall_5_0() { return cTypeComponentTypeEnumRuleCall_5_0; }
 		
-		////           ('referenceFile' '=' referenceFile=[File])?
-		//'location'
-		public Keyword getLocationKeyword_6() { return cLocationKeyword_6; }
+		//'reference'
+		public Keyword getReferenceKeyword_6() { return cReferenceKeyword_6; }
 		
 		//'='
 		public Keyword getEqualsSignKeyword_7() { return cEqualsSignKeyword_7; }
 		
-		//location=STRING
-		public Assignment getLocationAssignment_8() { return cLocationAssignment_8; }
-		
-		//STRING
-		public RuleCall getLocationSTRINGTerminalRuleCall_8_0() { return cLocationSTRINGTerminalRuleCall_8_0; }
-		
-		//('referenceLine' '=' referenceLine=INT)?
-		public Group getGroup_9() { return cGroup_9; }
-		
-		//'referenceLine'
-		public Keyword getReferenceLineKeyword_9_0() { return cReferenceLineKeyword_9_0; }
-		
-		//'='
-		public Keyword getEqualsSignKeyword_9_1() { return cEqualsSignKeyword_9_1; }
-		
-		//referenceLine=INT
-		public Assignment getReferenceLineAssignment_9_2() { return cReferenceLineAssignment_9_2; }
-		
-		//INT
-		public RuleCall getReferenceLineINTTerminalRuleCall_9_2_0() { return cReferenceLineINTTerminalRuleCall_9_2_0; }
-		
-		//('children' '=' children+=[Component]*)?
-		public Group getGroup_10() { return cGroup_10; }
-		
-		//'children'
-		public Keyword getChildrenKeyword_10_0() { return cChildrenKeyword_10_0; }
-		
-		//'='
-		public Keyword getEqualsSignKeyword_10_1() { return cEqualsSignKeyword_10_1; }
-		
-		//children+=[Component]*
-		public Assignment getChildrenAssignment_10_2() { return cChildrenAssignment_10_2; }
+		//reference=[Component]
+		public Assignment getReferenceAssignment_8() { return cReferenceAssignment_8; }
 		
 		//[Component]
-		public CrossReference getChildrenComponentCrossReference_10_2_0() { return cChildrenComponentCrossReference_10_2_0; }
+		public CrossReference getReferenceComponentCrossReference_8_0() { return cReferenceComponentCrossReference_8_0; }
 		
 		//ID
-		public RuleCall getChildrenComponentIDTerminalRuleCall_10_2_0_1() { return cChildrenComponentIDTerminalRuleCall_10_2_0_1; }
+		public RuleCall getReferenceComponentIDTerminalRuleCall_8_0_1() { return cReferenceComponentIDTerminalRuleCall_8_0_1; }
+		
+		//'referenceUnresolved'
+		public Keyword getReferenceUnresolvedKeyword_9() { return cReferenceUnresolvedKeyword_9; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_10() { return cEqualsSignKeyword_10; }
+		
+		//referenceUnresolved=STRING
+		public Assignment getReferenceUnresolvedAssignment_11() { return cReferenceUnresolvedAssignment_11; }
+		
+		//STRING
+		public RuleCall getReferenceUnresolvedSTRINGTerminalRuleCall_11_0() { return cReferenceUnresolvedSTRINGTerminalRuleCall_11_0; }
+		
+		////           ('referenceFile' '=' referenceFile=[File])?
+		//'location'
+		public Keyword getLocationKeyword_12() { return cLocationKeyword_12; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_13() { return cEqualsSignKeyword_13; }
+		
+		//location=STRING
+		public Assignment getLocationAssignment_14() { return cLocationAssignment_14; }
+		
+		//STRING
+		public RuleCall getLocationSTRINGTerminalRuleCall_14_0() { return cLocationSTRINGTerminalRuleCall_14_0; }
+		
+		//('referenceLine' '=' referenceLine=INT)?
+		public Group getGroup_15() { return cGroup_15; }
+		
+		//'referenceLine'
+		public Keyword getReferenceLineKeyword_15_0() { return cReferenceLineKeyword_15_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_15_1() { return cEqualsSignKeyword_15_1; }
+		
+		//referenceLine=INT
+		public Assignment getReferenceLineAssignment_15_2() { return cReferenceLineAssignment_15_2; }
+		
+		//INT
+		public RuleCall getReferenceLineINTTerminalRuleCall_15_2_0() { return cReferenceLineINTTerminalRuleCall_15_2_0; }
+		
+		//('children' '=' children+=[Component]*)?
+		public Group getGroup_16() { return cGroup_16; }
+		
+		//'children'
+		public Keyword getChildrenKeyword_16_0() { return cChildrenKeyword_16_0; }
+		
+		//'='
+		public Keyword getEqualsSignKeyword_16_1() { return cEqualsSignKeyword_16_1; }
+		
+		//children+=[Component]*
+		public Assignment getChildrenAssignment_16_2() { return cChildrenAssignment_16_2; }
+		
+		//[Component]
+		public CrossReference getChildrenComponentCrossReference_16_2_0() { return cChildrenComponentCrossReference_16_2_0; }
+		
+		//ID
+		public RuleCall getChildrenComponentIDTerminalRuleCall_16_2_0_1() { return cChildrenComponentIDTerminalRuleCall_16_2_0_1; }
 		
 		//'tooltip'
-		public Keyword getTooltipKeyword_11() { return cTooltipKeyword_11; }
+		public Keyword getTooltipKeyword_17() { return cTooltipKeyword_17; }
 		
 		//tooltip=STRING
-		public Assignment getTooltipAssignment_12() { return cTooltipAssignment_12; }
+		public Assignment getTooltipAssignment_18() { return cTooltipAssignment_18; }
 		
 		//STRING
-		public RuleCall getTooltipSTRINGTerminalRuleCall_12_0() { return cTooltipSTRINGTerminalRuleCall_12_0; }
+		public RuleCall getTooltipSTRINGTerminalRuleCall_18_0() { return cTooltipSTRINGTerminalRuleCall_18_0; }
 		
 		//'rawdata'
-		public Keyword getRawdataKeyword_13() { return cRawdataKeyword_13; }
+		public Keyword getRawdataKeyword_19() { return cRawdataKeyword_19; }
 		
 		//rawdata=STRING
-		public Assignment getRawdataAssignment_14() { return cRawdataAssignment_14; }
+		public Assignment getRawdataAssignment_20() { return cRawdataAssignment_20; }
 		
 		//STRING
-		public RuleCall getRawdataSTRINGTerminalRuleCall_14_0() { return cRawdataSTRINGTerminalRuleCall_14_0; }
+		public RuleCall getRawdataSTRINGTerminalRuleCall_20_0() { return cRawdataSTRINGTerminalRuleCall_20_0; }
 	}
 	public class ConnectionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.cview.model.CViewModel.Connection");
@@ -321,18 +360,20 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFILEFILEKeyword_1_0 = (Keyword)cFILEEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cFUNCEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cFUNCFUNCKeyword_2_0 = (Keyword)cFUNCEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cCOMPOUNDEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cCOMPOUNDCOMPOUNDKeyword_3_0 = (Keyword)cCOMPOUNDEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cREADEREnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cREADERREADERKeyword_4_0 = (Keyword)cREADEREnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cWRITEREnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cWRITERWRITERKeyword_5_0 = (Keyword)cWRITEREnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cDECLEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cDECLDECLKeyword_3_0 = (Keyword)cDECLEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cCOMPOUNDEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cCOMPOUNDCOMPOUNDKeyword_4_0 = (Keyword)cCOMPOUNDEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cREADEREnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cREADERREADERKeyword_5_0 = (Keyword)cREADEREnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cWRITEREnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cWRITERWRITERKeyword_6_0 = (Keyword)cWRITEREnumLiteralDeclaration_6.eContents().get(0);
 		
 		//enum ComponentType:
-		//	DIR | FILE | FUNC | COMPOUND | READER | WRITER;
+		//	DIR | FILE | FUNC | DECL | COMPOUND | READER | WRITER;
 		public EnumRule getRule() { return rule; }
 		
-		//DIR | FILE | FUNC | COMPOUND | READER | WRITER
+		//DIR | FILE | FUNC | DECL | COMPOUND | READER | WRITER
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//DIR
@@ -353,23 +394,29 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 		//"FUNC"
 		public Keyword getFUNCFUNCKeyword_2_0() { return cFUNCFUNCKeyword_2_0; }
 		
+		//DECL
+		public EnumLiteralDeclaration getDECLEnumLiteralDeclaration_3() { return cDECLEnumLiteralDeclaration_3; }
+		
+		//"DECL"
+		public Keyword getDECLDECLKeyword_3_0() { return cDECLDECLKeyword_3_0; }
+		
 		//COMPOUND
-		public EnumLiteralDeclaration getCOMPOUNDEnumLiteralDeclaration_3() { return cCOMPOUNDEnumLiteralDeclaration_3; }
+		public EnumLiteralDeclaration getCOMPOUNDEnumLiteralDeclaration_4() { return cCOMPOUNDEnumLiteralDeclaration_4; }
 		
 		//"COMPOUND"
-		public Keyword getCOMPOUNDCOMPOUNDKeyword_3_0() { return cCOMPOUNDCOMPOUNDKeyword_3_0; }
+		public Keyword getCOMPOUNDCOMPOUNDKeyword_4_0() { return cCOMPOUNDCOMPOUNDKeyword_4_0; }
 		
 		//READER
-		public EnumLiteralDeclaration getREADEREnumLiteralDeclaration_4() { return cREADEREnumLiteralDeclaration_4; }
+		public EnumLiteralDeclaration getREADEREnumLiteralDeclaration_5() { return cREADEREnumLiteralDeclaration_5; }
 		
 		//"READER"
-		public Keyword getREADERREADERKeyword_4_0() { return cREADERREADERKeyword_4_0; }
+		public Keyword getREADERREADERKeyword_5_0() { return cREADERREADERKeyword_5_0; }
 		
 		//WRITER
-		public EnumLiteralDeclaration getWRITEREnumLiteralDeclaration_5() { return cWRITEREnumLiteralDeclaration_5; }
+		public EnumLiteralDeclaration getWRITEREnumLiteralDeclaration_6() { return cWRITEREnumLiteralDeclaration_6; }
 		
 		//"WRITER"
-		public Keyword getWRITERWRITERKeyword_5_0() { return cWRITERWRITERKeyword_5_0; }
+		public Keyword getWRITERWRITERKeyword_6_0() { return cWRITERWRITERKeyword_6_0; }
 	}
 	
 	private final CViewModelElements pCViewModel;
@@ -434,6 +481,8 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	//Component:
 	//	'Component' name=ID ('parent' '=' parent=[Component])?
 	//	'type' '=' type=ComponentType
+	//	'reference' '=' reference=[Component]
+	//	'referenceUnresolved' '=' referenceUnresolved=STRING
 	//	//           ('referenceFile' '=' referenceFile=[File])?
 	//	'location' '=' location=STRING ('referenceLine' '=' referenceLine=INT)? ('children' '=' children+=[Component]*)?
 	//	'tooltip' tooltip=STRING
@@ -462,7 +511,7 @@ public class CViewModelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ComponentType:
-	//	DIR | FILE | FUNC | COMPOUND | READER | WRITER;
+	//	DIR | FILE | FUNC | DECL | COMPOUND | READER | WRITER;
 	public ComponentTypeElements getComponentTypeAccess() {
 		return eComponentType;
 	}

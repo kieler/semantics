@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceUnresolved <em>Reference Unresolved</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceLine <em>Reference Line</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getChildren <em>Children</em>}</li>
@@ -112,6 +114,58 @@ public interface Component extends EObject
    * @generated
    */
   void setType(ComponentType value);
+
+  /**
+   * Returns the value of the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Reference</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Reference</em>' reference.
+   * @see #setReference(Component)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_Reference()
+   * @model
+   * @generated
+   */
+  Component getReference();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReference <em>Reference</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Reference</em>' reference.
+   * @see #getReference()
+   * @generated
+   */
+  void setReference(Component value);
+
+  /**
+   * Returns the value of the '<em><b>Reference Unresolved</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Reference Unresolved</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Reference Unresolved</em>' attribute.
+   * @see #setReferenceUnresolved(String)
+   * @see de.cau.cs.kieler.cview.model.cViewModel.CViewModelPackage#getComponent_ReferenceUnresolved()
+   * @model
+   * @generated
+   */
+  String getReferenceUnresolved();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceUnresolved <em>Reference Unresolved</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Reference Unresolved</em>' attribute.
+   * @see #getReferenceUnresolved()
+   * @generated
+   */
+  void setReferenceUnresolved(String value);
 
   /**
    * Returns the value of the '<em><b>Location</b></em>' attribute.

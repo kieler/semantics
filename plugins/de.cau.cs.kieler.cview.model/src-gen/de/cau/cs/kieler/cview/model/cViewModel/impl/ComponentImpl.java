@@ -32,6 +32,8 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceUnresolved <em>Reference Unresolved</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getReferenceLine <em>Reference Line</em>}</li>
  *   <li>{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ComponentImpl#getChildren <em>Children</em>}</li>
@@ -92,6 +94,36 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @ordered
    */
   protected ComponentType type = TYPE_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getReference() <em>Reference</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getReference()
+   * @generated
+   * @ordered
+   */
+  protected Component reference;
+
+  /**
+   * The default value of the '{@link #getReferenceUnresolved() <em>Reference Unresolved</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getReferenceUnresolved()
+   * @generated
+   * @ordered
+   */
+  protected static final String REFERENCE_UNRESOLVED_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getReferenceUnresolved() <em>Reference Unresolved</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getReferenceUnresolved()
+   * @generated
+   * @ordered
+   */
+  protected String referenceUnresolved = REFERENCE_UNRESOLVED_EDEFAULT;
 
   /**
    * The default value of the '{@link #getLocation() <em>Location</em>}' attribute.
@@ -298,6 +330,72 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * <!-- end-user-doc -->
    * @generated
    */
+  public Component getReference()
+  {
+    if (reference != null && reference.eIsProxy())
+    {
+      InternalEObject oldReference = (InternalEObject)reference;
+      reference = (Component)eResolveProxy(oldReference);
+      if (reference != oldReference)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CViewModelPackage.COMPONENT__REFERENCE, oldReference, reference));
+      }
+    }
+    return reference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Component basicGetReference()
+  {
+    return reference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setReference(Component newReference)
+  {
+    Component oldReference = reference;
+    reference = newReference;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__REFERENCE, oldReference, reference));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getReferenceUnresolved()
+  {
+    return referenceUnresolved;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setReferenceUnresolved(String newReferenceUnresolved)
+  {
+    String oldReferenceUnresolved = referenceUnresolved;
+    referenceUnresolved = newReferenceUnresolved;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED, oldReferenceUnresolved, referenceUnresolved));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getLocation()
   {
     return location;
@@ -416,6 +514,11 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return basicGetParent();
       case CViewModelPackage.COMPONENT__TYPE:
         return getType();
+      case CViewModelPackage.COMPONENT__REFERENCE:
+        if (resolve) return getReference();
+        return basicGetReference();
+      case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
+        return getReferenceUnresolved();
       case CViewModelPackage.COMPONENT__LOCATION:
         return getLocation();
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
@@ -449,6 +552,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return;
       case CViewModelPackage.COMPONENT__TYPE:
         setType((ComponentType)newValue);
+        return;
+      case CViewModelPackage.COMPONENT__REFERENCE:
+        setReference((Component)newValue);
+        return;
+      case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
+        setReferenceUnresolved((String)newValue);
         return;
       case CViewModelPackage.COMPONENT__LOCATION:
         setLocation((String)newValue);
@@ -489,6 +598,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
       case CViewModelPackage.COMPONENT__TYPE:
         setType(TYPE_EDEFAULT);
         return;
+      case CViewModelPackage.COMPONENT__REFERENCE:
+        setReference((Component)null);
+        return;
+      case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
+        setReferenceUnresolved(REFERENCE_UNRESOLVED_EDEFAULT);
+        return;
       case CViewModelPackage.COMPONENT__LOCATION:
         setLocation(LOCATION_EDEFAULT);
         return;
@@ -524,6 +639,10 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return parent != null;
       case CViewModelPackage.COMPONENT__TYPE:
         return type != TYPE_EDEFAULT;
+      case CViewModelPackage.COMPONENT__REFERENCE:
+        return reference != null;
+      case CViewModelPackage.COMPONENT__REFERENCE_UNRESOLVED:
+        return REFERENCE_UNRESOLVED_EDEFAULT == null ? referenceUnresolved != null : !REFERENCE_UNRESOLVED_EDEFAULT.equals(referenceUnresolved);
       case CViewModelPackage.COMPONENT__LOCATION:
         return LOCATION_EDEFAULT == null ? location != null : !LOCATION_EDEFAULT.equals(location);
       case CViewModelPackage.COMPONENT__REFERENCE_LINE:
@@ -553,6 +672,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     result.append(name);
     result.append(", type: ");
     result.append(type);
+    result.append(", referenceUnresolved: ");
+    result.append(referenceUnresolved);
     result.append(", location: ");
     result.append(location);
     result.append(", referenceLine: ");

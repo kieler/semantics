@@ -21,12 +21,12 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected CViewModelGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q;
+	protected AbstractElementAlias match_Component___ChildrenKeyword_16_0_EqualsSignKeyword_16_1__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CViewModelGrammarAccess) access;
-		match_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getComponentAccess().getChildrenKeyword_10_0()), new TokenAlias(false, false, grammarAccess.getComponentAccess().getEqualsSignKeyword_10_1()));
+		match_Component___ChildrenKeyword_16_0_EqualsSignKeyword_16_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getComponentAccess().getChildrenKeyword_16_0()), new TokenAlias(false, false, grammarAccess.getComponentAccess().getEqualsSignKeyword_16_1()));
 	}
 	
 	@Override
@@ -41,8 +41,8 @@ public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q.equals(syntax))
-				emit_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_Component___ChildrenKeyword_16_0_EqualsSignKeyword_16_1__q.equals(syntax))
+				emit_Component___ChildrenKeyword_16_0_EqualsSignKeyword_16_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -55,7 +55,7 @@ public class CViewModelSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     location=STRING (ambiguity) 'tooltip' tooltip=STRING
 	 *     referenceLine=INT (ambiguity) 'tooltip' tooltip=STRING
 	 */
-	protected void emit_Component___ChildrenKeyword_10_0_EqualsSignKeyword_10_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Component___ChildrenKeyword_16_0_EqualsSignKeyword_16_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

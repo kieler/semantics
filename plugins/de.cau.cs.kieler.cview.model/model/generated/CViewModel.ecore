@@ -12,6 +12,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Component"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ComponentType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="#//Component"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="referenceUnresolved" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referenceLine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" unique="false"
@@ -31,8 +33,9 @@
     <eLiterals name="DIR" literal="DIR"/>
     <eLiterals name="FILE" value="1" literal="FILE"/>
     <eLiterals name="FUNC" value="2" literal="FUNC"/>
-    <eLiterals name="COMPOUND" value="3" literal="COMPOUND"/>
-    <eLiterals name="READER" value="4" literal="READER"/>
-    <eLiterals name="WRITER" value="5" literal="WRITER"/>
+    <eLiterals name="DECL" value="3" literal="DECL"/>
+    <eLiterals name="COMPOUND" value="4" literal="COMPOUND"/>
+    <eLiterals name="READER" value="5" literal="READER"/>
+    <eLiterals name="WRITER" value="6" literal="WRITER"/>
   </eClassifiers>
 </ecore:EPackage>

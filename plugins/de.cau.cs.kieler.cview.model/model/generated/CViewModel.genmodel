@@ -10,6 +10,7 @@
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/DIR"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/FILE"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/FUNC"/>
+      <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/DECL"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/COMPOUND"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/READER"/>
       <genEnumLiterals ecoreEnumLiteral="CViewModel.ecore#//ComponentType/WRITER"/>
@@ -22,6 +23,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/parent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/reference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/referenceUnresolved"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/location"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CViewModel.ecore#//Component/referenceLine"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CViewModel.ecore#//Component/children"/>

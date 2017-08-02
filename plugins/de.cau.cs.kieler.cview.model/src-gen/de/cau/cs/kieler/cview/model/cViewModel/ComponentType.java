@@ -51,6 +51,16 @@ public enum ComponentType implements Enumerator
   FUNC(2, "FUNC", "FUNC"),
 
   /**
+   * The '<em><b>DECL</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #DECL_VALUE
+   * @generated
+   * @ordered
+   */
+  DECL(3, "DECL", "DECL"),
+
+  /**
    * The '<em><b>COMPOUND</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -58,7 +68,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  COMPOUND(3, "COMPOUND", "COMPOUND"),
+  COMPOUND(4, "COMPOUND", "COMPOUND"),
 
   /**
    * The '<em><b>READER</b></em>' literal object.
@@ -68,7 +78,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  READER(4, "READER", "READER"),
+  READER(5, "READER", "READER"),
 
   /**
    * The '<em><b>WRITER</b></em>' literal object.
@@ -78,7 +88,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  WRITER(5, "WRITER", "WRITER");
+  WRITER(6, "WRITER", "WRITER");
 
   /**
    * The '<em><b>DIR</b></em>' literal value.
@@ -126,6 +136,21 @@ public enum ComponentType implements Enumerator
   public static final int FUNC_VALUE = 2;
 
   /**
+   * The '<em><b>DECL</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>DECL</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #DECL
+   * @model
+   * @generated
+   * @ordered
+   */
+  public static final int DECL_VALUE = 3;
+
+  /**
    * The '<em><b>COMPOUND</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <p>
@@ -138,7 +163,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int COMPOUND_VALUE = 3;
+  public static final int COMPOUND_VALUE = 4;
 
   /**
    * The '<em><b>READER</b></em>' literal value.
@@ -153,7 +178,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int READER_VALUE = 4;
+  public static final int READER_VALUE = 5;
 
   /**
    * The '<em><b>WRITER</b></em>' literal value.
@@ -168,7 +193,7 @@ public enum ComponentType implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int WRITER_VALUE = 5;
+  public static final int WRITER_VALUE = 6;
 
   /**
    * An array of all the '<em><b>Component Type</b></em>' enumerators.
@@ -182,6 +207,7 @@ public enum ComponentType implements Enumerator
       DIR,
       FILE,
       FUNC,
+      DECL,
       COMPOUND,
       READER,
       WRITER,
@@ -252,6 +278,7 @@ public enum ComponentType implements Enumerator
       case DIR_VALUE: return DIR;
       case FILE_VALUE: return FILE;
       case FUNC_VALUE: return FUNC;
+      case DECL_VALUE: return DECL;
       case COMPOUND_VALUE: return COMPOUND;
       case READER_VALUE: return READER;
       case WRITER_VALUE: return WRITER;

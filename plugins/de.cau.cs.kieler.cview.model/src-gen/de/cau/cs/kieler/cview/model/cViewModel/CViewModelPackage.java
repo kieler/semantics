@@ -133,13 +133,31 @@ public interface CViewModelPackage extends EPackage
   int COMPONENT__TYPE = 2;
 
   /**
+   * The feature id for the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__REFERENCE = 3;
+
+  /**
+   * The feature id for the '<em><b>Reference Unresolved</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__REFERENCE_UNRESOLVED = 4;
+
+  /**
    * The feature id for the '<em><b>Location</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMPONENT__LOCATION = 3;
+  int COMPONENT__LOCATION = 5;
 
   /**
    * The feature id for the '<em><b>Reference Line</b></em>' attribute.
@@ -148,7 +166,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__REFERENCE_LINE = 4;
+  int COMPONENT__REFERENCE_LINE = 6;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' reference list.
@@ -157,7 +175,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__CHILDREN = 5;
+  int COMPONENT__CHILDREN = 7;
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute.
@@ -166,7 +184,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__TOOLTIP = 6;
+  int COMPONENT__TOOLTIP = 8;
 
   /**
    * The feature id for the '<em><b>Rawdata</b></em>' attribute.
@@ -175,7 +193,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__RAWDATA = 7;
+  int COMPONENT__RAWDATA = 9;
 
   /**
    * The number of structural features of the '<em>Component</em>' class.
@@ -184,7 +202,7 @@ public interface CViewModelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 8;
+  int COMPONENT_FEATURE_COUNT = 10;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.cview.model.cViewModel.impl.ConnectionImpl <em>Connection</em>}' class.
@@ -344,6 +362,28 @@ public interface CViewModelPackage extends EPackage
    * @generated
    */
   EAttribute getComponent_Type();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReference <em>Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Reference</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getReference()
+   * @see #getComponent()
+   * @generated
+   */
+  EReference getComponent_Reference();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceUnresolved <em>Reference Unresolved</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Reference Unresolved</em>'.
+   * @see de.cau.cs.kieler.cview.model.cViewModel.Component#getReferenceUnresolved()
+   * @see #getComponent()
+   * @generated
+   */
+  EAttribute getComponent_ReferenceUnresolved();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.cview.model.cViewModel.Component#getLocation <em>Location</em>}'.
@@ -568,6 +608,22 @@ public interface CViewModelPackage extends EPackage
      * @generated
      */
     EAttribute COMPONENT__TYPE = eINSTANCE.getComponent_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPONENT__REFERENCE = eINSTANCE.getComponent_Reference();
+
+    /**
+     * The meta object literal for the '<em><b>Reference Unresolved</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPONENT__REFERENCE_UNRESOLVED = eINSTANCE.getComponent_ReferenceUnresolved();
 
     /**
      * The meta object literal for the '<em><b>Location</b></em>' attribute feature.

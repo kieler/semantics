@@ -31,6 +31,16 @@ class CViewModelExtensions {
     EObject getParent;
     
     //------------------------------------------------------------------------
+    
+    def boolean isResolved(Component component) {
+        return (component.isReference && component.reference != null)
+    }
+    
+    def boolean isReference(Component component) {
+        return (component.referenceUnresolved != null)    
+    }
+    
+    //------------------------------------------------------------------------
 
     def String removeCommentsAll(String text) {
         return text.removeCommentsComplex.removeCommentsSimple

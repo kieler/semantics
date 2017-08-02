@@ -39,6 +39,9 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPClassType
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration
 import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
+import java.util.HashMap
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPTypedef
+import org.eclipse.cdt.core.dom.ast.ASTNodeProperty
 
 /**
  * @author cmot
@@ -49,6 +52,8 @@ class KLighDController extends AbstractKLighDController {
     @Inject extension CViewModelExtensions
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
+
+    public HashMap<String, Component> referenceMapping = new HashMap
 
     def int countModel(CViewModel model, Object element) {
         var i = 1;
@@ -238,24 +243,39 @@ class KLighDController extends AbstractKLighDController {
                 }
 
                 override int visit(IASTName name) {
+                    val theName = name.toString
+                    CViewPlugin.printlnConsole("[" + theName + "]")
+                    
                     if (name.active) {
                         val binding = name.resolveBinding
+                        if (binding instanceof CPPTypedef) {
+                            // This binding is a typedef,
+                            // fortunately referencing a struct
+                            val type = binding.type
+                            CViewPlugin.printlnConsole("TYPEDEF " + theName + " >>> " + type)
+                        }
                         if (binding instanceof CPPClassType) {
                             val parent = name.parent
                             if (parent instanceof CPPASTCompositeTypeSpecifier) {
                                 val typeSpec = parent as CPPASTCompositeTypeSpecifier
                                 val typeSpecName = typeSpec.name
-                                val IASTDeclaration[] decls = typeSpec.getDeclarations(false)
-                                CViewPlugin.printlnConsole("!!! TypeSpec !!! - " + typeSpec.name)
+                                val IASTDeclaration[] decls = typeSpec.members // getDeclarations(false)
+                                CViewPlugin.printlnConsole("STRUCT " + typeSpec.name +" : ") //[" + typeSpec.rawSignature + "]")
                                 for (decl : decls) {
+                                    val ASTNodeProperty prop = decl.propertyInParent
+                                    val propName = prop.name.toString
                                     if (decl instanceof CPPASTSimpleDeclaration) {
+                                        val declType = decl.getDeclSpecifier
                                         for (declarator : decl.declarators) {
-                                            CViewPlugin.printlnConsole("   o " + declarator.name)
+                                            val declRawSig = decl.rawSignature
+                                            val declName = declarator.name.toString
+                                            CViewPlugin.printlnConsole("   o " + declName + " [" + declType + "]")
                                         }
                                     }
+//                                    CViewPlugin.printlnConsole("   r " + decl.rawSignature)
                                 }
                             }
-                            
+
                         }
                         if (binding instanceof IFunction) {
                             if (name.definition) {
@@ -270,14 +290,20 @@ class KLighDController extends AbstractKLighDController {
 //                                }
                                 val IASTFileLocation loc = name.getFileLocation();
                                 functionComponent.referenceLine = loc.startingLineNumber
-
                                 functionComponent.rawdata = "";
                                 functionComponent.location = fileComponent.location
                                 fileComponent.children.add(functionComponent)
                                 functionComponent.parent = fileComponent
                             // System.out.println("- D " + name.toString() + " ")
                             } else if (name.reference) {
-                                // System.out.println("- R " + name.toString() + " ")
+                                val functionRefComponent = cViewModelExtensions.createFunc
+                                // model.addToModel(functionComponent, monitor, fileComponent)
+                                model.components.add(functionRefComponent)
+                                functionRefComponent.name = "" + name.toString() + "()"
+
+                                // Only put the name of the referenced function as
+                                // this may not resolvable yet, resolve later
+                                functionRefComponent.referenceUnresolved = name.toString()
                             }
                         }
                     }
@@ -298,7 +324,11 @@ class KLighDController extends AbstractKLighDController {
         return i;
     }
 
+    /**
+     *  MAIN ENTRY: CALCULATE THE MODEL
+     */
     override calculateModel(Object[] allselections, IProgressMonitor monitor) {
+
         model = CViewModelFactory.eINSTANCE.createCViewModel();
         for (Object element : allselections) {
             val component = model.addToModel(element, monitor)
@@ -311,6 +341,35 @@ class KLighDController extends AbstractKLighDController {
                 connectionHook.initialize(model);
             }
         }
+
+        // Resolve references
+        referenceMapping.clear
+        // Build list of mappings
+        for (component : model.components) {
+            if (!component.isReference) {
+                val String referenceType = component.type.literal
+                val String referenceId = referenceType + "__@#$__" + component.name
+                referenceMapping.put(referenceId, component)
+                //CViewPlugin.printlnConsole("INFO: Put referenceMapping '" + referenceId + "'")
+            }
+        }
+        // Resolve
+        for (component : model.components) {
+            if (component.isReference && !component.resolved) {
+                val String referenceType = component.type.literal
+                val String referenceId = referenceType + "__@#$__" + component.referenceUnresolved
+                if (referenceMapping.containsKey(referenceId)) {
+                    val Component otherComponent = referenceMapping.get(referenceId)
+                    // Here we set the reference if we have found it
+                    component.reference = otherComponent
+                    //CViewPlugin.printlnConsole("INFO: Resolved reference '" + referenceId + "'")
+                } else {
+                    // Claim that we have not found
+                    //CViewPlugin.printlnConsole("ERRROR: Could not resolve reference '" + referenceId + "'")
+                }
+            }
+        }
+
         // Now call connections extensions
         // println("MODEL: components=" + model.components.size);
         for (Component component : model.components) {

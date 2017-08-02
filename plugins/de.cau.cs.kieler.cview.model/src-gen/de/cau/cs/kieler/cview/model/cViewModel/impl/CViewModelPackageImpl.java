@@ -192,9 +192,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_Location()
+  public EReference getComponent_Reference()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(3);
+    return (EReference)componentEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -202,7 +202,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_ReferenceLine()
+  public EAttribute getComponent_ReferenceUnresolved()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(4);
   }
@@ -212,9 +212,9 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getComponent_Children()
+  public EAttribute getComponent_Location()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -222,7 +222,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_Tooltip()
+  public EAttribute getComponent_ReferenceLine()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(6);
   }
@@ -232,9 +232,29 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getComponent_Children()
+  {
+    return (EReference)componentEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getComponent_Tooltip()
+  {
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getComponent_Rawdata()
   {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(7);
+    return (EAttribute)componentEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -355,6 +375,8 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     createEAttribute(componentEClass, COMPONENT__NAME);
     createEReference(componentEClass, COMPONENT__PARENT);
     createEAttribute(componentEClass, COMPONENT__TYPE);
+    createEReference(componentEClass, COMPONENT__REFERENCE);
+    createEAttribute(componentEClass, COMPONENT__REFERENCE_UNRESOLVED);
     createEAttribute(componentEClass, COMPONENT__LOCATION);
     createEAttribute(componentEClass, COMPONENT__REFERENCE_LINE);
     createEReference(componentEClass, COMPONENT__CHILDREN);
@@ -412,6 +434,8 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Parent(), this.getComponent(), null, "parent", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Type(), this.getComponentType(), "type", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getComponent_Reference(), this.getComponent(), null, "reference", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_ReferenceUnresolved(), ecorePackage.getEString(), "referenceUnresolved", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_Location(), ecorePackage.getEString(), "location", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponent_ReferenceLine(), ecorePackage.getEInt(), "referenceLine", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Children(), this.getComponent(), null, "children", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -431,6 +455,7 @@ public class CViewModelPackageImpl extends EPackageImpl implements CViewModelPac
     addEEnumLiteral(componentTypeEEnum, ComponentType.DIR);
     addEEnumLiteral(componentTypeEEnum, ComponentType.FILE);
     addEEnumLiteral(componentTypeEEnum, ComponentType.FUNC);
+    addEEnumLiteral(componentTypeEEnum, ComponentType.DECL);
     addEEnumLiteral(componentTypeEEnum, ComponentType.COMPOUND);
     addEEnumLiteral(componentTypeEEnum, ComponentType.READER);
     addEEnumLiteral(componentTypeEEnum, ComponentType.WRITER);
