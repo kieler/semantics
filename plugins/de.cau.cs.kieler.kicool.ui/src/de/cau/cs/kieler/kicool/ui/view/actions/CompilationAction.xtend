@@ -63,6 +63,10 @@ class CompilationAction {
         
         val cc = Compile.createCompilationContext(view.activeSystem, model)
         
+        if (view.compileInplaceToggle.checked) {
+            cc.startEnvironment.setProperty(Environment.INPLACE, true)
+        }
+        
         cc.deactiveDisabledProcessors
         
         val updateObserver = new CompilationUpdate(view)

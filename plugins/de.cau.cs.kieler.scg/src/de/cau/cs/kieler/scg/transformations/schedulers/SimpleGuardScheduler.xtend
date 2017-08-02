@@ -129,12 +129,6 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     		)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")
-    		var sl = "";
-    		for(s : schedule) {
-       		    if (s instanceof Assignment)
-                    sl += (s as Assignment).valuedObject.name + " "
-    		}
-    		SCGPlugin.log(sl, Level.FINE)
     	}
     	
     	scg

@@ -124,7 +124,7 @@ class Reference extends SCChartsProcessor {
         
         newState.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
         
-//        snapshot
+        snapshot
     } 
     
     protected def void replaceValuedObjectReferences(Scope scope, Replacements replacements) {
