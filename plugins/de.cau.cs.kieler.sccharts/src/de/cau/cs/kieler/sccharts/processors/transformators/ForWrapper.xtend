@@ -32,7 +32,7 @@ class ForWrapper extends SCChartsProcessor {
     @Inject Injector injector
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.transformators.for"
+        "de.cau.cs.kieler.sccharts.processors.transformators.for.wrapper"
     }
     
     override getName() {

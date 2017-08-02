@@ -28,7 +28,7 @@ class SCTXScopes extends Scopes {
     
 //    public final static val ID_RESOLVER = SimpleAttributeResolver.newResolver(typeof(String), "id")    
     
-    public final static val NAME_WRAPPER = QualifiedName.wrapper(SimpleAttributeResolver.NAME_RESOLVER)
+    public final static val NAME_WRAPPER = QualifiedName.wrapper(EscapedAttributeResolver.NAME_RESOLVER)
 //    public final static val ID_WRAPPER = QualifiedName.wrapper(ID_RESOLVER)
     
     
