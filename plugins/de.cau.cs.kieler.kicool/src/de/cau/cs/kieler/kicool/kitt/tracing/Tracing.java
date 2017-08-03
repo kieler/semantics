@@ -25,6 +25,7 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.model.properties.IProperty;
 import de.cau.cs.kieler.core.model.properties.Property;
+import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping;
 import de.cau.cs.kieler.kicool.kitt.tracingtree.ModelWrapper;
@@ -38,7 +39,7 @@ import de.cau.cs.kieler.kicool.kitt.tracingtree.ModelWrapper;
  * @kieler.rating 2015-02-25 proposed yellow
  * 
  */
-public class Tracing {
+public class Tracing implements IKiCoolCloneable {
     
     /**
      * Activates tracing if set to true in the compiler context.
@@ -226,5 +227,21 @@ public class Tracing {
                 chain.replace(sourceModel, targetModel, tracingMapping);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isMutable() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object cloneObject() {
+        return this;
     }
 }

@@ -52,7 +52,6 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         if (!environment.isTracingActive) return;
         
         environment.setProperty(Tracing.TRACING_DATA, new Tracing)
-        
     }
     
     override void processBefore() {
@@ -61,7 +60,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         val tracing = environment.getProperty(Tracing.TRACING_DATA)
         checkNotNull(Tracing)
         
-        tracing.startTransformationTracing(getModel, getId)
+        tracing.startTransformationTracing(getModel, environment.getProperty(Environment.INPLACE))
     }
     
     override void process() {
@@ -74,7 +73,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
     }
     
     
-    def EObject copy(EObject model) {
+    static def EObject copy(EObject model, Environment environment) {
         if (!environment.isTracingActive) return null
         
         val tracing = environment.getProperty(Tracing.TRACING_DATA)

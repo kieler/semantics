@@ -37,7 +37,9 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
 import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 
 /**
  * @author ssm
@@ -54,6 +56,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     @Accessors Map<ProcessorSystem, CompilationContext> subContexts
     @Accessors CompilationContext parentContext = null
     @Accessors Environment startEnvironment
+    @Accessors Environment result
     
     new() {
         processorMap = new HashMap<ProcessorReference, Processor<?,?>>()
@@ -65,6 +68,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         startEnvironment.setProperty(COMPILATION_CONTEXT, this)
         startEnvironment.setProperty(INPLACE, false)        
         startEnvironment.setProperty(ONGOING_WORKING_COPY, true)
+        
+        result = null
     }
     
     def getProcessorInstances() {
@@ -88,9 +93,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         Compile.asyncronousCompilation(this)
     }
     
-    def void compile() {
+    def Environment compile() {
+        startEnvironment.addTracingProperty
+        
         if (startEnvironment.getProperty(ONGOING_WORKING_COPY) && originalModel instanceof EObject) {
-            startEnvironment.setProperty(MODEL, (originalModel as EObject).copy)
+            val modelCopy = EnvironmentPropertyHolder.tracingCopy((originalModel as EObject), startEnvironment)
+            startEnvironment.setProperty(MODEL, modelCopy)
         } else {
             startEnvironment.setProperty(MODEL, originalModel)
         }
@@ -98,12 +106,15 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         for(intermediateProcessor : getIntermediateProcessors) {
             intermediateProcessor.setEnvironment(startEnvironment, startEnvironment)
             if (intermediateProcessor.validateType) {
-                if (intermediateProcessor instanceof Metric<?,?>) intermediateProcessor.setMetricSourceEntity
-                intermediateProcessor.process
+                if (intermediateProcessor instanceof Metric<?,?>) {
+                    intermediateProcessor.setMetricSourceEntity
+                    intermediateProcessor.process
+                }
             }
         }
         
-        startEnvironment.compile        
+        result = startEnvironment.compile
+        result        
     }
     
     // Protected is important. Should not be accessible from the outside.
@@ -113,7 +124,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         notify(new CompilationStart(this))
         val EPrime = processorEntry.compileEntry(environment)
         notify(new CompilationFinished(this, EPrime))
-              
+
+        result = EPrime              
         EPrime  
     }
     
@@ -236,7 +248,10 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         val processors = system.intermediates.map[ processorMap.get(it) as IntermediateProcessor<?,?> ]
         
         if (startEnvironment.isTracingActive) {
-            processors += tracingIntegrationInstance
+            return <IntermediateProcessor<?,?>> newLinkedList => [
+                    addAll(processors) 
+                    add(tracingIntegrationInstance)
+                ]
         }
         
         processors

@@ -314,7 +314,7 @@ public class TransformationTracing {
     // -----------------
 
     /**
-     * Performs a complete recursive copy of the given model and stoes resulting tracing information
+     * Performs a complete recursive copy of the given model and stores resulting tracing information
      * if necessary.
      * 
      * @param original

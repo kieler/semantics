@@ -113,4 +113,8 @@ class Environment extends EnvironmentPropertyHolder {
         return ProcessorStatus.OK
     }
     
+    def Object getModel() {
+        getProperty(MODEL)
+    } 
+    
 }
