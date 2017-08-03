@@ -67,7 +67,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         startEnvironment.setProperty(ORIGINAL_MODEL, originalModel)
         startEnvironment.setProperty(COMPILATION_CONTEXT, this)
         startEnvironment.setProperty(INPLACE, false)        
-        startEnvironment.setProperty(ONGOING_WORKING_COPY, true)
+        startEnvironment.setProperty(ONGOING_WORKING_COPY, false)
         
         result = null
     }
@@ -150,7 +150,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         notify(new ProcessorStart(this, processorReference, processorInstance))
         
         for(intermediateProcessor : getIntermediateProcessors(processorReference)) {
-            intermediateProcessor.setEnvironment(environmentPrime, environmentPrime)
+            intermediateProcessor.setEnvironment(environment, environmentPrime)
             if (intermediateProcessor.validateType) intermediateProcessor.processBefore
         }
         

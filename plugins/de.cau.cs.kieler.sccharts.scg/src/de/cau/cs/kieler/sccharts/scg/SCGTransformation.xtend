@@ -271,7 +271,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             label = rootState.name; //if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
         ]
 
-        creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
+//        creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
         sCGraph.trace(rootState)
 
         // Handle declarations
