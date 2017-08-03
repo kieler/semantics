@@ -32,6 +32,9 @@ import java.util.Set
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import de.cau.cs.kieler.sccharts.Action
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.annotations.StringPragma
 
 //import org.eclipse.xtext.validation.Check
 
@@ -52,6 +55,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    
+    static val INFOS_PRAGMA = PragmaRegistry.register("infos", StringPragma, "off: Disables infos in editor.")
         
     static val String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     static val String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
@@ -509,14 +514,16 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkActionTriggerEffectsWithLabel(Action action) {
         if (!action.label.nullOrEmpty) {
             if (action.trigger != null) {
-                warning("The trigger of this action is hidden by the label.", 
-                    action, 
-                    SCChartsPackage.eINSTANCE.action_Trigger)
+                if (infosEnabled(action))
+                    info("The trigger of this action is hidden by the label.", 
+                        action, 
+                        SCChartsPackage.eINSTANCE.action_Trigger)
             }
             if (action.effects != null && action.effects.size > 0) {
-                warning("The effects of this action are hidden by the label.", 
-                    action, 
-                    SCChartsPackage.eINSTANCE.action_Effects)
+                if (infosEnabled(action))
+                    info("The effects of this action are hidden by the label.", 
+                        action, 
+                        SCChartsPackage.eINSTANCE.action_Effects)
             }
         }
     }
@@ -539,5 +546,15 @@ class SCTXValidator extends AbstractSCTXValidator {
                 )
             }
         }
+    }
+    
+    
+    private def boolean infosEnabled(EObject eObject) {
+        val scc = eObject.getSCCharts
+        val infoPragma = scc.getStringPragmas(INFOS_PRAGMA).head
+        if (infoPragma != null && infoPragma.values.size > 0 && infoPragma.values.head.equals("off")) {
+            return false
+        }
+        return true
     }
 }

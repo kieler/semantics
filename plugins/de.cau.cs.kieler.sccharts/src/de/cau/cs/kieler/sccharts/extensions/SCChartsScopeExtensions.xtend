@@ -22,7 +22,6 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -51,14 +50,6 @@ class SCChartsScopeExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsStateExtensions
-    
-    def SCCharts getSCCharts(Scope scope) {
-        if (scope.eContainer != null) {
-            return (scope.eContainer as Scope).getSCCharts as SCCharts
-        } else {
-            return scope as SCCharts
-        }
-    }
     
     def Iterator<State> getAllContainedStates(Scope scope) {
         scope.sccAllContainedStates 

@@ -153,6 +153,12 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.reference.core.netlist.simple.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.dependency.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.scg.dependency.kico">
+      </TransformationSystem>
    </extension>
 
 

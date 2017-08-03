@@ -31,7 +31,16 @@ import de.cau.cs.kieler.sccharts.SCChartsFactory
  */
 class SCChartsCoreExtensions {
     
-    public static val GENERATED_PREFIX = "_"    
+    public static val GENERATED_PREFIX = "_"
+    
+    def SCCharts getSCCharts(EObject eObject) {
+        var EObject object = eObject
+        while (object.eContainer != null) {
+            object = object.eContainer
+        }
+        if (object instanceof SCCharts) return object
+        else return null
+    }
     
     def <E> ImmutableList<E> immutableCopy(List<E> list) {
         ImmutableList::copyOf(list) as ImmutableList<E>
