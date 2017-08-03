@@ -321,7 +321,7 @@ class SCGDependencyHook extends SynthesisActionHook {
         val model = state.eContainer as SCCharts
         val cc = Compile.createCompilationContext("de.cau.cs.kieler.scg.dependency", model)
         
-        cc.startEnvironment.setProperty(Environment.INPLACE, false)
+        cc.startEnvironment.setProperty(Environment.INPLACE, true)
         cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
         
         cc.compile

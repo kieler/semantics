@@ -48,7 +48,7 @@ class SCGTransformationWrapper extends Processor<SCCharts, SCGraphs> {
         val model = getModel
         val wrappedTransformation = injector.getInstance(SCGTransformation)
         val scgs = ScgFactory.eINSTANCE.createSCGraphs => [
-//            creationalTransformation(model, it) // Tell KITT that this is not an in-place transformation from here on
+            creationalTransformation(model, it) // Tell KITT that this is not an in-place transformation from here on
             it.trace(model)
             scgs += wrappedTransformation.transform(model, null) 
         ]
