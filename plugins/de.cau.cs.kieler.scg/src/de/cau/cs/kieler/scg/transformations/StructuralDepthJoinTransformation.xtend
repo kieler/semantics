@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.scg.transformations
 
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions

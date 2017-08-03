@@ -25,7 +25,7 @@ Require-Bundle: com.google.guava,
  org.eclipse.ui,
  org.apache.log4j;bundle-version="1.2.15",
  org.apache.commons.logging;bundle-version="1.1.1",
- de.cau.cs.kieler.kitt,
+ de.cau.cs.kieler.kicool,
  org.eclipse.emf.common,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sccharts

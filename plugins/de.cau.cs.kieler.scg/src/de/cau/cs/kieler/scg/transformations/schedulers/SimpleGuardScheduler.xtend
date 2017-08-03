@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.transformations.schedulers
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Dependency

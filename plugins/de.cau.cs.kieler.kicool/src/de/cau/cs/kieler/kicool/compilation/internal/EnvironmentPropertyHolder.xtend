@@ -68,7 +68,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
         }
 
         for(k : source.propertyMap.keySet.immutableCopy) {
-            if (k != MODEL) {
+            if (k != MODEL && k != SOURCE_MODEL) {
                 val v = source.propertyMap.get(k)
                 
                 copyValue(target, k, v)

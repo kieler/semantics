@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
-import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
@@ -181,7 +180,7 @@ class CompilerView extends DiagramViewPart {
     private def void updateDiagram(Object model, KlighdSynthesisProperties properties) {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             val instance = this
-            new UIJob("Init" + KiCoSelectionView.getClass.getName()) {
+            new UIJob("Init" + this.getClass.getName()) {
 
                 @SuppressWarnings("deprecation")
                 @Override

@@ -29,8 +29,8 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
  */
 class Environment extends EnvironmentPropertyHolder {
     
-    public static val IProperty<Object> SOURCE_MODEL = 
-        new Property<Object>("de.cau.cs.kieler.kicool.sourceModel")
+    public static val IProperty<Object> ORIGINAL_MODEL = 
+        new Property<Object>("de.cau.cs.kieler.kicool.originalModel")
         
     public static val IProperty<Boolean> INPLACE = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.inplace", false)
@@ -43,6 +43,9 @@ class Environment extends EnvironmentPropertyHolder {
     
     public static val IProperty<Object> MODEL = 
         new Property<Object>("de.cau.cs.kieler.kicool.model")
+        
+    public static val IProperty<Object> SOURCE_MODEL = 
+        new Property<Object>("de.cau.cs.kieler.kicool.sourceModel")
     
     public static val IProperty<CompilationContext> COMPILATION_CONTEXT = 
         new Property<CompilationContext>("de.cau.cs.kieler.kicool.compilationContext")

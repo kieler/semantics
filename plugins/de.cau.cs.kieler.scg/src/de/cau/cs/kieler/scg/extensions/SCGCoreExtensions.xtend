@@ -26,7 +26,7 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Entry

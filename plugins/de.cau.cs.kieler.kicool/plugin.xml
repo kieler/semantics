@@ -7,6 +7,7 @@
 <plugin>
    <extension-point id="de.cau.cs.kieler.kicool.system" name="KIELER Compiler Transformation System" schema="schema/de.cau.cs.kieler.kicool.system.exsd"/>
    <extension-point id="de.cau.cs.kieler.kicool.processor" name="KIELER Compiler Processor" schema="schema/de.cau.cs.kieler.kicool.processor.exsd"/>
+   <extension-point id="de.cau.cs.kieler.kicool.resource.extension" name="KIELER Compiler Resource Extension Information" schema="schema/de.cau.cs.kieler.kicool.resource.extension.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KiCool -->

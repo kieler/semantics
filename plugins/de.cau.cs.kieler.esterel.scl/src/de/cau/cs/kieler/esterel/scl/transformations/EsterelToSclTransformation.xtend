@@ -76,7 +76,7 @@ import de.cau.cs.kieler.esterel.kexpressions.IVariable
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.features.SCLFeatures
 import de.cau.cs.kieler.scl.scl.Conditional

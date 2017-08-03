@@ -36,9 +36,10 @@ class Compile {
     static def CompilationContext createCompilationContext(System system, Object sourceModel) {
         checkNotNull(system, "System is null")
         checkNotNull(sourceModel, "Source model is null")
-        new CompilationContext => [
+        val context = KiCoolRegistration.getInjector.getInstance(CompilationContext)
+        context => [
             it.system = system
-            it.sourceModel = sourceModel
+            it.originalModel = sourceModel
             it.populateContext
             RuntimeSystems.add(it.getSystem, it)
         ]

@@ -38,7 +38,6 @@ import org.osgi.framework.Bundle;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.circuit.Actor;
-import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
 
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
@@ -544,8 +543,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                 // In case we want to simulate a circuit, first re-compile the model
                 // but just up to SSA-SCG.
                 HashMap<IPath, EObject> map = KiemPlugin.getOpenedModelRootObjects();
-                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
-                    EObject sourceModel = (EObject)map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                // TODO adapt for kicool
+//                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
+//                    EObject sourceModel = (EObject)map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                        EObject sourceModel = null;
                     
                     // Compile to SSA_SCG
                     
@@ -566,7 +567,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     myModel = sourceModel;
                     extendedSCChart = highLeveleCompilationResult.getEObject();
                 }
-            }
+//            }
 
 
             if (isExposeAllVars()) {

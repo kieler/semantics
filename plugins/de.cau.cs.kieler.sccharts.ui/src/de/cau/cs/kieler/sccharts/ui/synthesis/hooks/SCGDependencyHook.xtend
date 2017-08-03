@@ -23,9 +23,9 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
-import de.cau.cs.kieler.kitt.tracing.Tracing
-import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.TracingEdgeNode
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.SynthesisOption
@@ -313,12 +313,14 @@ class SCGDependencyHook extends SynthesisActionHook {
      * Compiles the given SCChart with tracing to get dependencies
      */
     private def CompilationResult compileDependencies(State scc) {
-        val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +
-            ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
-            scc);
-        context.setProperty(Tracing.ACTIVE_TRACING, true);
-        context.advancedSelect = true;
-        return KielerCompiler.compile(context)
+        // TODO: adapt to kicool
+//        val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +
+//            ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
+//            scc);
+//        context.setProperty(Tracing.ACTIVE_TRACING, true);
+//        context.advancedSelect = true;
+//        return KielerCompiler.compile(context)
+        return null
     }
 
 	/** 
@@ -356,7 +358,9 @@ class SCGDependencyHook extends SynthesisActionHook {
 		if (compiledModel instanceof SCGraph) {
 			val scg = compiledModel as SCGraph;
 
-			val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+            // TODO: adapt to kicool
+//			val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+            val Multimap<Object, Object> mapping = null
 			if (mapping !== null) {
 				val filterDiagramPredicate = KLabel.instanceOf.or([
 					return it instanceof KRectangle && !(it as KRectangle).getProperty(StateStyles.IS_LAYOUT_ELEMENT)
@@ -492,8 +496,10 @@ class SCGDependencyHook extends SynthesisActionHook {
         // Take the compiled model as SCG
         val scg = compiledModel as SCGraph;
 
-        // Get the tracing mapping from the dependency scg to the source model 
-        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+        // Get the tracing mapping from the dependency scg to the source model
+        // TODO: adapt to kicool 
+//        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+        val Multimap<Object, Object>mapping = null
         if (mapping === null) {
             return;
         }

@@ -29,12 +29,12 @@ import de.cau.cs.kieler.sccharts.Transition
 import java.util.Iterator
 import java.util.List
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.ControlflowRegionIterator.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil
+import de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions

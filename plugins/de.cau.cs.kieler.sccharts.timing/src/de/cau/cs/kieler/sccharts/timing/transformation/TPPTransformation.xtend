@@ -24,7 +24,7 @@ import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.klighd.util.ModelingUtil
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
@@ -113,7 +113,8 @@ class TPPTransformation extends AbstractProductionTransformation
 
         // get mapping
         compilationResult = context.compilationResult
-        tracings = compilationResult.getAuxiliaryData(Tracing)
+        // TODO: adapt to kicool
+//        tracings = compilationResult.getAuxiliaryData(Tracing)
         if (!tracings.isEmpty())
         {
             tracing = tracings.get(0)
