@@ -29,7 +29,7 @@
           point="org.eclipse.ui.newWizards">
        <wizard
              canFinishEarly="false"
-             category="de.cau.cs.kieler.simulation"
+             category="de.cau.cs.kieler.prom.ui.kielerModelingWizards"
              class="de.cau.cs.kieler.kivis.ui.wizards.KiVisFileWizard"
              finalPerspective="de.cau.cs.kieler.simulation"
              hasPages="true"
