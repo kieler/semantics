@@ -93,7 +93,7 @@ abstract class SimulationCompiler extends Configurable {
         executableFile = getExecutableFile
         
         // Remove markers from old simulation file
-        KiCoBuilder.deleteMarkers(file)
+        KielerModelingBuilder.deleteMarkers(file)
         
         // Create output folder
         if(!outputFolder.stringValue.isNullOrEmpty) {

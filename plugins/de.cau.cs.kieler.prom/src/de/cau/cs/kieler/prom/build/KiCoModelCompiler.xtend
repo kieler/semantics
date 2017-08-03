@@ -104,7 +104,7 @@ class KiCoModelCompiler extends ModelCompiler {
                     fileExt = "."+fileExt
                 }
                 // Flush compilation result to target
-                val targetResource = KiCoBuilder.computeTargetResource(file.projectRelativePath.toOSString,
+                val targetResource = KielerModelingBuilder.computeTargetResource(file.projectRelativePath.toOSString,
                                                                        outputFolder.stringValue,
                                                                        fileExt,
                                                                        file.project)

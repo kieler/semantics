@@ -173,7 +173,7 @@ class DataPoolView extends ViewPart {
         val mgr = getViewSite().getActionBars().getToolBarManager()
         tickInfo = new LabelContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.tickInfo",
                                          "Tick #0000 (-000)",
-                                         "Last fully executed macro tick")
+                                         "Last executed macro tick")
         mgr.add(tickInfo)
         mgr.add(new Separator())
         mgr.add(new SearchFieldContribution("de.cau.cs.kieler.simulation.ui.dataPoolView.searchField"))

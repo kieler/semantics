@@ -52,13 +52,13 @@
       <page
             class="de.cau.cs.kieler.prom.ui.build.PromProjectProperties"
             id="de.cau.cs.kieler.prom.projectProperties"
-            name="KiCo Build">
+            name="KIELER Modeling Builder">
          <enabledWhen>
             <adapt
                   type="org.eclipse.core.resources.IProject">
                <test
                      property="org.eclipse.core.resources.projectNature"
-                     value="de.cau.cs.kieler.prom.KiCoNature">
+                     value="de.cau.cs.kieler.prom.KielerModelingNature">
                </test>
             </adapt>
          </enabledWhen>

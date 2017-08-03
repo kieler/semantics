@@ -23,15 +23,15 @@ import org.eclipse.core.resources.ICommand
  * @author aas
  *
  */
-class KiCoNature implements IProjectNature {
+class KielerModelingNature implements IProjectNature {
 
     // ID of the natures, which consists of Bundle-SymbolicName + ID
-    public static final String NATURE_ID = "de.cau.cs.kieler.prom.KiCoNature";
+    public static final String NATURE_ID = "de.cau.cs.kieler.prom.KielerModelingNature";
     
     private IProject project;
     
     /**
-     * Add the KiCoBuilder to the project
+     * Add the builder to the project
      */
     override void configure() throws CoreException {
         // Add builder to project
@@ -39,7 +39,7 @@ class KiCoNature implements IProjectNature {
         val commands = desc.getBuildSpec();
         // do nothing if builder is already set
         for (var i = 0; i < commands.length; i++) {
-            if (commands.get(i).getBuilderName().equals(KiCoBuilder.BUILDER_ID)) {
+            if (commands.get(i).getBuilderName().equals(KielerModelingBuilder.BUILDER_ID)) {
                 return; 
             }
         }
@@ -49,7 +49,7 @@ class KiCoNature implements IProjectNature {
         System.arraycopy(commands, 0, newCommands, 0, commands.length);
         val command = desc.newCommand();
         // Add builder for this nature
-        command.setBuilderName(KiCoBuilder.BUILDER_ID); 
+        command.setBuilderName(KielerModelingBuilder.BUILDER_ID); 
         newCommands.set(newCommands.length - 1, command);
         desc.setBuildSpec(newCommands);
         // write to .project file
@@ -57,14 +57,14 @@ class KiCoNature implements IProjectNature {
     }
     
     /**
-     * Remove the KiCoBuilder from the project
+     * Remove the builder from the project
      */
     override void deconfigure() throws CoreException {
         // Remove builder
         val desc = project.getDescription();
         val commands = desc.getBuildSpec();
         // Remove KiCo builder
-        val newCommands = commands.filter[!it.builderName.equals(KiCoBuilder.BUILDER_ID)];
+        val newCommands = commands.filter[!it.builderName.equals(KielerModelingBuilder.BUILDER_ID)];
         // Set commands
         desc.setBuildSpec(newCommands);
         // write to .project file

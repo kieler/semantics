@@ -47,7 +47,7 @@ class Trace extends DefaultDataHandler {
     private EObject traceModel
     
     private int traceCount = 0
-    private IFile traceFile
+    private IFile traceFileHandle
     private List<DataPool> currentTrace
     
     private var EsoUtil esoUtil;
@@ -162,9 +162,9 @@ class Trace extends DefaultDataHandler {
     }
     
     private def void loadEsoTrace(IPath path) {
-        traceFile = getFile(path)
-        if(traceFile != null && traceFile.exists) {
-            esoUtil = new EsoUtil(traceFile)
+        traceFileHandle = getFile(path)
+        if(traceFileHandle != null && traceFileHandle.exists) {
+            esoUtil = new EsoUtil(traceFileHandle)
             traceCount = esoUtil.traceCount
             currentTrace = esoUtil.getTraceAsDataPools(currentTraceNumber.intValue)
         } else {
@@ -179,10 +179,10 @@ class Trace extends DefaultDataHandler {
     }
     
     private def void loadDataPoolHistory(IPath path) {
-        traceFile = getFile(path)
+        traceFileHandle = getFile(path)
         currentTrace = newArrayList
-        if(traceFile != null && traceFile.exists) {
-            val lines = Files.readLines(new File(traceFile.location.toOSString), Charsets.UTF_8)
+        if(traceFileHandle != null && traceFileHandle.exists) {
+            val lines = Files.readLines(new File(traceFileHandle.location.toOSString), Charsets.UTF_8)
             var DataPool lastPool
             for(line : lines) {
                 val modelName = "Model"
@@ -206,7 +206,7 @@ class Trace extends DefaultDataHandler {
         val event = new TraceFinishedEvent()
         event.tickNumber = currentTickNumber.intValue
         event.traceNumber = currentTraceNumber.intValue
-        event.traceFile = traceFile
+        event.traceFile = traceFileHandle
         return event
     }
     
@@ -214,7 +214,7 @@ class Trace extends DefaultDataHandler {
         val event = new TraceMismatchEvent()
         event.tickNumber = currentTickNumber.intValue
         event.traceNumber = currentTraceNumber.intValue
-        event.traceFile = traceFile
+        event.traceFile = traceFileHandle
         event.variable = variable
         event.expectedValue = expectedValue
         // The trace number and tick number starts with zero in the data handler.
@@ -223,7 +223,7 @@ class Trace extends DefaultDataHandler {
         event.message = "Mismatch of variable '"+variable.name+"' "
                       + "after tick "+(event.tickNumber+1)+" "
                       + "of trace "+(event.traceNumber+1)+" "
-                      + "from '"+traceFile.projectRelativePath.toOSString+"'\n"
+                      + "from '"+traceFileHandle.projectRelativePath.toOSString+"'\n"
                       + "(trace value: "+expectedValue+", simulation value: "+variable.value+")"
         return event
     }

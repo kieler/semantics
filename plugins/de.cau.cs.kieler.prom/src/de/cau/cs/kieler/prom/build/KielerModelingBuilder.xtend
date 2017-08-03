@@ -48,14 +48,14 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  * 
  */
-class KiCoBuilder extends IncrementalProjectBuilder {
+class KielerModelingBuilder extends IncrementalProjectBuilder {
     
     /**
      * Id of the builder
      */
-    public static val String BUILDER_ID = "de.cau.cs.kieler.prom.KiCoBuilder"; 
+    public static val String BUILDER_ID = "de.cau.cs.kieler.prom.KielerModelingBuilder"; 
     
-    public static val String KICO_PROBLEM_MARKER_TYPE = "kico.problem"
+    public static val String PROBLEM_MARKER_TYPE = "kieler.modeling.builder.problem"
     
     /**
      * The features of the KIELER Compiler that produces finished code.
@@ -119,7 +119,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Creates a marker for a file in the Eclipse workspace.
      */
     private static def IMarker createMarker(IResource res, String message) {
-        val marker = res.createMarker(KICO_PROBLEM_MARKER_TYPE)
+        val marker = res.createMarker(PROBLEM_MARKER_TYPE)
         marker.setAttribute(IMarker.LINE_NUMBER, 1);
         marker.setAttribute(IMarker.MESSAGE, message);
         marker.setAttribute(IMarker.LOCATION, res.projectRelativePath.toOSString);
@@ -400,7 +400,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         val configFilePath = project.getPersistentProperty(PromPlugin.BUILD_CONFIGURATION_QUALIFIER)
         if (configFilePath.isNullOrEmpty) {
             // Add warning marker because no build configuration was found
-            createWarningMarker(project, "No kibuild file has been set in the project properties.\n"
+            createErrorMarker(project, "No kibuild file has been set in the project properties.\n"
                                        + "Use a kibuild file "
                                        + "to define how model files are compiled.")
         } else {
@@ -462,7 +462,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     public static def void deleteMarkers(IResource res) {
         if(res != null && res.exists) {
-            val markers = res.findMarkers(KICO_PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
+            val markers = res.findMarkers(PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
             if(!markers.isNullOrEmpty) {
                 for(m : markers){
                     m.delete()
