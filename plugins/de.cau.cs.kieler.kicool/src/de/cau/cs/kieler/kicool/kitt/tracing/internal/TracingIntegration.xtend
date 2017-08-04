@@ -19,8 +19,10 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 import de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.core.model.Pair
 
 import static extension com.google.common.base.Preconditions.checkNotNull
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 /**
  * This class integrates Tracing into KiCo. It is registered as hook via extension point.
@@ -85,5 +87,18 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         
         return copy
     }
+    
+    static def <T extends EObject> Pair<T, Copier> copyAndReturnCopier(T model, Environment environment) {
+        if (!environment.isTracingActive) return null
+        
+        val tracing = environment.getProperty(Tracing.TRACING_DATA)
+        checkNotNull(Tracing)
+        
+        tracing.startTransformationTracing(model, false)
+        val copy = TransformationTracing.tracedCopyAndReturnCopier(model)
+        tracing.finishTransformationTracing(model, copy.first)
+        
+        return copy
+    }    
 
 }

@@ -17,13 +17,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.elk.core.util.Pair;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
@@ -32,6 +32,7 @@ import com.google.common.collect.Lists;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping;
 import de.cau.cs.kieler.kicool.kitt.KiTTPlugin;
+import de.cau.cs.kieler.core.model.Pair;
 
 /**
  * Tracing API for transformations.
@@ -330,6 +331,27 @@ public class TransformationTracing {
         }
     }
 
+    /**
+     * Performs a complete recursive copy of the given model and stores resulting tracing information
+     * if necessary. It also returns the responsible copier object.
+     * 
+     * @param original
+     *            element
+     * @return copy + copier
+     */
+    @SuppressWarnings("unchecked")
+    public static <T extends EObject> Pair<T, Copier> tracedCopyAndReturnCopier(final T original) {
+        TracingMapping mapping = tracingMappings.get(Thread.currentThread());
+        if (mapping != null) {
+            return mapping.mappedCopyAndReturnCopier(original);
+        } else {
+            Copier copier = new Copier();
+            EObject result = copier.copy(original);
+            copier.copyReferences();
+            return new Pair<T, Copier>((T) result, copier);
+        }
+    }    
+    
     /**
      * Performs {@link trace} recursively on the all contained elements of given eObject.
      * 

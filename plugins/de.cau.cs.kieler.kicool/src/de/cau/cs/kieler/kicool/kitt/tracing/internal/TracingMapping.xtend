@@ -17,7 +17,7 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import java.util.Collection
 import java.util.List
-import org.eclipse.elk.core.util.Pair
+import de.cau.cs.kieler.core.model.Pair
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
@@ -221,6 +221,32 @@ class TracingMapping {
         }
         return copy;
     }
+    
+    /**
+     * Creates a copy of original and saves mapping.
+     * Also return the responsible copier object. 
+     * <p>
+     * Use for transformations based on copies.
+     * <p>
+     * Mapping will include given root elements.
+     * @param original model to copy
+     * @return copy and copier
+     */    
+    def <T extends EObject> Pair<T, Copier> mappedCopyAndReturnCopier(T original) {
+        val copyMapping = HashMultimap.create;
+        val copy = original.mappedCopyAndReturnCopier(copyMapping);
+        if (rmapping.containsKey(original)) { //is brother
+            copyMapping.entries.forEach [ entry |
+                entry.key.origins.forEach[it.put(entry.value)];
+            ];
+        } else {
+            copyMapping.entries.forEach [
+                put(it.key, it.value);
+            ];
+        }
+        return copy;
+    }
+    
 
     /**
      * Creates a copy of original and adds mapping information to given map.
@@ -242,6 +268,28 @@ class TracingMapping {
 
         return result;
     }
+    
+    /**
+     * Creates a copy of original and adds mapping information to given map.
+     * Also return the responsible copier object. 
+     * <p>
+     * Mapping will include given root elements.
+     * @param original model to copy
+     * @param map to store mapping information
+     * @return copy and copier   
+     */    
+    static def <T extends EObject> Pair<T, Copier> mappedCopyAndReturnCopier(EObject original, HashMultimap<Object, Object> map) {
+
+        // This code is taken from ECoreUtil.copy
+        val copier = new Copier();
+        val T result = copier.copy(original) as T;
+        copier.copyReferences();
+
+        //copy mapping from copier to mapping
+        map.putAll(copier.forMap);
+
+        return new Pair<T, Copier>(result, copier)
+    }    
 
     // -------------------------------------------------------------------------
     // Mapping Administration

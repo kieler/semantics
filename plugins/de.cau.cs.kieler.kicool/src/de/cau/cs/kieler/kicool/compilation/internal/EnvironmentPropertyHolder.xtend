@@ -54,12 +54,14 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                 target.propertyMap.put(MODEL, model)
             } else {
                 if (ongoingWorkingCopy && inplaceValid) {
-                    val copyResult = model.tracingCopy(source)
-                    source.propertyMap.put(MODEL, copyResult)
+                    val copyResult = model.tracingCopyAndReturnCopier(source)
+                    modelCopier = copyResult.second
+                    source.propertyMap.put(MODEL, copyResult.first)
                     target.propertyMap.put(MODEL, model)    
                 } else {
-                    val copyResult = model.tracingCopy(source)
-                    target.propertyMap.put(MODEL, copyResult)
+                    val copyResult = model.tracingCopyAndReturnCopier(source)
+                    modelCopier = copyResult.second
+                    target.propertyMap.put(MODEL, copyResult.first)
                 }
             }
         } else {
@@ -154,4 +156,16 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             return eObject.copy
         }
     }
+    
+    static def <T extends EObject> Pair<T, Copier> tracingCopyAndReturnCopier(T eObject, EnvironmentPropertyHolder eph) {
+        if (TracingIntegration.isTracingActive(eph as Environment)) {
+            return TracingIntegration.copyAndReturnCopier(eObject, eph as Environment)
+        } else {
+            val copier = new Copier()
+            val EObject result = copier.copy(eObject)
+            copier.copyReferences
+            return new Pair(result as T, copier)
+        }
+    }
+    
 }

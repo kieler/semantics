@@ -19,7 +19,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  org.eclipse.core.resources,
  de.cau.cs.kieler.core.model;visibility:=reexport,
- de.cau.cs.kieler.klighd.krendering.extensions,
  org.eclipse.emf.compare,
  org.eclipse.emf.compare.rcp
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
