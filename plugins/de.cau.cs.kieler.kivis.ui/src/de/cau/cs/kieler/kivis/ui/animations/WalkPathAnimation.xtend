@@ -37,7 +37,7 @@ class WalkPathAnimation extends AnimationHandler {
     public val anchorX = new ConfigurableAttribute("anchorX", 0.5)
     public val anchorY = new ConfigurableAttribute("anchorY", 0.5)
     public val appendTransform = new ConfigurableAttribute("appendTransform", false)
-    public val position = new ConfigurableAttribute("position", false)
+    public val position = new ConfigurableAttribute("position")
     
     var String initialTransform
     var SVGPoint lastPoint
