@@ -227,7 +227,7 @@ class Reference extends SCChartsProcessor {
     }
 
     protected dispatch def void replaceReferences(Assignment assignment, Replacements replacements) {
-        assignment.expression.replaceReferences(replacements)
+        assignment.expression?.replaceReferences(replacements)
         
         val newRef = replacements.peek(assignment.valuedObject)
         if (newRef != null) {
