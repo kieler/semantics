@@ -61,7 +61,9 @@ class WalkPathAnimation extends AnimationHandler {
         }
         val length = (pathEnd.floatValue - pathStart.floatValue)
         if(length <= 0) {
-            throw new IllegalArgumentException("The length of the path in the "+name+" animation must be greater than 0.")
+            throw new IllegalArgumentException("The length of the path in the "+name+" animation must be greater than 0.\n"
+                                             + "(start is:"+pathStart.floatValue+", end is:"+pathEnd.floatValue+")"
+            )
         }
         
         // Calculate animation
