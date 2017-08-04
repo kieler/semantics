@@ -174,7 +174,7 @@ class Reference extends SCChartsProcessor {
                 }
 
                 // If the binding is an array reference, add the references to the valued object reference.                
-                if (!newRef.indices.empty) {
+                if (!newRef.indices.empty && valuedObjectReference.indices.empty) {
                     valuedObjectReference.indices.clear
                     for (index : newRef.indices) {
                         if (index instanceof Value) {
