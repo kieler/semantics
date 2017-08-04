@@ -484,7 +484,9 @@ class DataPoolView extends ViewPart {
                         dataPoolView.setStatusLineText(e.message)    
                     ]
                 }else if(e.type == SimulationEventType.VARIABLE_CHANGE) {
-                    dataPoolView.viewer.update(e.variable, null)
+                    PromUIPlugin.asyncExecInUI[
+                        dataPoolView.viewer.update(e.variable, null)    
+                    ]
                 } else if(e.type == SimulationEventType.TRACE) {
                     if(e instanceof TraceMismatchEvent) {
                         dataPoolView.registerTraceMismatch(e.variable, e)
