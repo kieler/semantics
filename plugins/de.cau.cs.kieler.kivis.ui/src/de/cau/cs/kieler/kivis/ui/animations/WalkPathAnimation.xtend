@@ -39,6 +39,8 @@ class WalkPathAnimation extends AnimationHandler {
     public val appendTransform = new ConfigurableAttribute("appendTransform", false)
     public val position = new ConfigurableAttribute("position")
     
+    public val wrapAround = new ConfigurableAttribute("wrapAround", false)
+    
     var String initialTransform
     var SVGPoint lastPoint
     
@@ -86,15 +88,20 @@ class WalkPathAnimation extends AnimationHandler {
                         position.intValue.doubleValue
                         
         var wrappedValue = value
-        // If value is below the path, bring it back to the range
-        while(wrappedValue < pathStart.floatValue) {
-            // it holds length >= 0, because we check it above and throw an exception if not
-            wrappedValue += length
-        }
-        // If the value is above the path, bring it back to the range
-        while(wrappedValue > pathEnd.floatValue) {
-            // it holds length >= 0, because we check it above and throw an exception if not
-            wrappedValue -= length
+        if(wrapAround.value != null && wrapAround.boolValue) {
+            // If value is below the path, bring it back to the range
+            // It holds length >= 0, because we check it above and throw an exception if not.
+            // Thus the loops will terminate.
+            while(wrappedValue < pathStart.floatValue) {
+                wrappedValue += length
+            }
+            // If the value is above the path, bring it back to the range
+            while(wrappedValue > pathEnd.floatValue) {
+                wrappedValue -= length
+            }    
+        } else if(value < pathStart.floatValue || value > pathEnd.floatValue) {
+            // The value is below or above the path range, so it will not be positioned on the path. 
+            return;
         }
         val scaledValue = scale(wrappedValue, pathStart.floatValue, pathEnd.floatValue, 0, totalPathLength)
         var pointOnPath = path.getPointAtLength(scaledValue.floatValue)
