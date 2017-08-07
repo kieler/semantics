@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 // Include JSON library and file to be simulated.
 #include "../lib/cJSON.c"
@@ -11,6 +12,8 @@
 // #define WRITE_SIMIN_FILE
 
 cJSON* output = 0;
+
+int tickTime = 0;
 
 void receiveVariables() {
     char buffer[10000];
@@ -30,10 +33,21 @@ void receiveVariables() {
         
 ${inputs}    
 
+    // Add additional variable to data pool
+    // Receive tickTime
+        variable = cJSON_GetArrayItem(variables, i);
+        if(variable != NULL) {
+            cJSON *value_item = cJSON_GetObjectItemCaseSensitive(variable, "value");
+            tickTime = value_item->valueint;
+
+        } else {
+            printf("WARNING: Did not receive variable I\n");
+        }
+        i++;
+
     } else {
         printf("WARNING: Did not receive JSON input\n");
     }
-  
     cJSON_Delete(root);
 }
 
@@ -49,7 +63,17 @@ void sendVariables() {
     cJSON* arrValues = 0;
     
 ${outputs}
-
+    
+    // Add additional variable to data pool
+    // Send tickTime
+        variable = cJSON_CreateObject();
+        cJSON_AddItemToArray(variables, variable);
+        cJSON_AddStringToObject(variable, "name", "tickTime");
+            cJSON_AddItemToObject(variable, "value", cJSON_CreateNumber(tickTime));
+        cJSON_AddStringToObject(variable, "type", "int");
+        cJSON_AddBoolToObject(variable, "in", false);
+        cJSON_AddBoolToObject(variable, "out", true);
+        
     // Get JSON object as string
     char* outString = cJSON_Print(root);
     cJSON_Minify(outString);
@@ -77,9 +101,14 @@ int main(int argc, const char* argv[]) {
     while (1) {
         // Receive variables
         receiveVariables();
-  
+        
+        struct timespec _start, _end;
+        
         // Reaction of model
+        clock_gettime(CLOCK_REALTIME, &_start);
         tick();
+        clock_gettime(CLOCK_REALTIME, &_end);
+        tickTime = (int)_end.tv_nsec - (int)_start.tv_nsec;        
          
         // Send variables
         sendVariables();

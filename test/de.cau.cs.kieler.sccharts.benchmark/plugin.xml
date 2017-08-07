@@ -9,6 +9,9 @@
       <benchmark
             class="de.cau.cs.kieler.sccharts.benchmark.SCChartsTransformationsBenchmark">
       </benchmark>
+      <benchmark
+            class="de.cau.cs.kieler.sccharts.benchmark.SCChartsPriorityBasedCompilationBenchmarkHighlightJitter">
+      </benchmark>
    </extension>
 
 </plugin>

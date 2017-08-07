@@ -146,6 +146,7 @@ class SimulationManager extends Configurable {
     
     val Set<DataHandler> initializedHandlers = newHashSet
     
+    
     /**
      * Constructor
      */

@@ -30,9 +30,13 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
 import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
+import java.util.ArrayList
+import java.util.HashMap
 import java.util.LinkedList
 import java.util.Stack
 import javax.inject.Inject
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import java.util.HashSet
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach
@@ -45,6 +49,8 @@ class SJTransformation extends AbstractProductionTransformation {
      extension AnnotationsExtensions
      @Inject 
      extension SCG2CSerializeHRExtensions
+     @Inject
+     extension SCGThreadExtensions
      
      extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     
@@ -82,6 +88,9 @@ class SJTransformation extends AbstractProductionTransformation {
     
     /** Memorizes the maximum priority */
     private var maxPriority = -1
+    
+    /** Saves all prioIDs of nodes inside a thread (as represented by its Entry node) */
+    private var threadPriorities = new HashMap<Node, ArrayList<Integer>>
     
     
     override getProducedFeatureId() {
@@ -303,6 +312,13 @@ class SJTransformation extends AbstractProductionTransformation {
                 sb.appendInd("prioB(" + prio.value + ", " + newLabel +  ");\n")
                 sb.appendInd("break;\n\n")
                 sb.addCase(newLabel)
+                val entry = node.threadEntry
+                if(entry.hasAnnotation("exitPrio")) {
+                    val exitPrio = (entry.getAnnotation("exitPrio") as IntAnnotation).value
+                    if(exitPrio < prevPrio.value && exitPrio > prio.value) {
+                        threadPriorities.get(entry).add(prevPrio.value)                        
+                    }
+                }
             }
             // If the previous node was an entry node, copy its label to the new node. This reduces states for SCGs 
             // with a cycle directly after entry nodes
@@ -481,7 +497,9 @@ class SJTransformation extends AbstractProductionTransformation {
                                                 as IntAnnotation).value])
 
         val Node joinThread = sortedChildrenByExit.head
-        var joinPrios = <Integer> newLinkedList
+        val minPrio = ((joinThread as Entry).exit.getAnnotation(PriorityAuxiliaryData.
+                                OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
+        var joinPrioSet = <Integer> newHashSet
         var threadInfo = <Pair<String, Integer>> newLinkedList
         
         var forkSB = new StringBuilder
@@ -502,8 +520,12 @@ class SJTransformation extends AbstractProductionTransformation {
         // Translate all children that have neither the highest entry nor the lowest exit priority
         for(child : sortedChildrenByExit.tail) {
             if(!child.equals(forkThread)) {
+                child.annotations += createIntAnnotation => [
+                    name = "exitPrio"
+                    value = minPrio
+                ]
                 var childSB = new StringBuilder
-                child.transformThread(childSB, threadInfo, joinPrios)
+                child.transformThread(childSB, threadInfo, joinPrioSet)
                 childrenStringBuilders.add(childSB)                
             }
         }
@@ -517,20 +539,25 @@ class SJTransformation extends AbstractProductionTransformation {
         // As long as the thread with the highest entry priority and lowest exit priority are not the same, also 
         // translate this thread.
         if(!forkThread.equals(joinThread)) {
+            forkThread.annotations += createIntAnnotation => [
+                    name = "exitPrio"
+                    value = minPrio
+            ]
             forkSB.addCase(forkLabel)
             labeledNodes.put(forkThread, forkLabel)
             forkSB.transformNode(forkThread)
             childrenStringBuilders.add(forkSB)
             // Add its exit priority to the joining priorities
-            val forkThreadExitPrio = ((forkThread as Entry).exit.getAnnotation(PriorityAuxiliaryData.
-                                                    OPTIMIZED_NODE_PRIORITIES_ANNOTATION)as IntAnnotation).value
+//            val forkThreadExitPrio = ((forkThread as Entry).exit.getAnnotation(PriorityAuxiliaryData.
+//                                                    OPTIMIZED_NODE_PRIORITIES_ANNOTATION)as IntAnnotation).value
                                                     
             // Further add the entry priority and the label of the thread with the lowest exit priority to the 
             // labels and priorities to be forked
             val joinThreadPrio = (joinThread.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)
                                                             as IntAnnotation).value
             threadInfo.add(new Pair(joinLabel, joinThreadPrio))
-            joinPrios.add(forkThreadExitPrio)
+//            joinPrios.add(forkThreadExitPrio)
+            joinPrioSet.addAll(threadPriorities.get(forkThread))
         } 
         
         // Create the fork
@@ -546,7 +573,7 @@ class SJTransformation extends AbstractProductionTransformation {
         }
         
         // Create the join
-        sb.transformNode(fork.join, joinPrios)
+        sb.transformNode(fork.join, joinPrioSet)
     }
     
     /**
@@ -557,7 +584,7 @@ class SJTransformation extends AbstractProductionTransformation {
      *  @param ass
      *              The Assignment node from which the code is extracted
      */
-    private def void transformNode(StringBuilder sb, Join join, LinkedList<Integer> joinPrios) {
+    private def void transformNode(StringBuilder sb, Join join, HashSet<Integer> joinPrios) {
         // Perform the join.
         // Create new labels for new states
         var newLabel = ""
@@ -607,6 +634,15 @@ class SJTransformation extends AbstractProductionTransformation {
                                                                                 as IntAnnotation).value
         maxPriority = Math.max(prio, maxPriority)
         
+        var threadPrios = new ArrayList<Integer>
+        if(!entry.incoming.empty && entry.hasAnnotation("exitPrio")) {
+            val exitPrio = (entry.getAnnotation("exitPrio") as IntAnnotation).value
+            if(prio < exitPrio) {
+                threadPrios.add(prio)
+            }
+        }
+        threadPriorities.put(entry, threadPrios)
+        
         sb.transformNode(entry.next.target)
     }
     
@@ -621,6 +657,11 @@ class SJTransformation extends AbstractProductionTransformation {
     private def void transformNode(StringBuilder sb, Exit exit) {
         // Only do something if the exit is the final node of the program. Otherwise
         // the fork/join does this
+        if(exit.next != null) {
+            threadPriorities.get(exit.entry).add((exit.getAnnotation("optPrioIDs") as IntAnnotation).value)
+            threadPriorities.get(exit.next.target.threadEntry).addAll(threadPriorities.get(exit.threadEntry))
+        }
+        
         if(!exit.entry.hasAnnotation("joinThread")) {
             sb.appendInd("termB();\n")
             sb.appendInd("break;\n\n")            
@@ -663,6 +704,11 @@ class SJTransformation extends AbstractProductionTransformation {
             sb.appendInd("break;\n\n")
             sb.addCase(newLabel)
         }
+        
+        if(prio > (sur.threadEntry.getAnnotation("exitPrio") as IntAnnotation).value) {
+            threadPriorities.get(sur.threadEntry).add(prio)
+        }
+        
         val newLabel = "_L_" + labelNr++
         sb.appendInd("pauseB(" + newLabel + ");\n")
         labeledNodes.put(sur.depth, newLabel)
@@ -757,18 +803,19 @@ class SJTransformation extends AbstractProductionTransformation {
      *  @param prios a list of initial priorities
      */
     private def void transformThread(Node node, StringBuilder sb, LinkedList<Pair<String, Integer>> threadInfo,
-                                            LinkedList<Integer> exitPrios) {
+                                            HashSet<Integer> exitPrios) {
         var newLabel = node.getNewRegionName
         var prio = (node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                                                 as IntAnnotation).value
-        var exitPrio = ((node as Entry).exit.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
-                                                                                as IntAnnotation).value
+//        var exitPrio = ((node as Entry).exit.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+//                                                                                as IntAnnotation).value
         
         threadInfo.add(new Pair(newLabel, prio))
-        exitPrios.add(exitPrio)
+//        exitPrios.add(exitPrio)
         labeledNodes.put(node, newLabel)
         sb.addCase(newLabel)
         sb.transformNode(node)
+        exitPrios.addAll(threadPriorities.get(node))
     }
     
 }

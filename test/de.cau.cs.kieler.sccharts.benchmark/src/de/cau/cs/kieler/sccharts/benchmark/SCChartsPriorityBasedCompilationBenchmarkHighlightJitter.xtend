@@ -36,7 +36,7 @@ import org.eclipse.core.resources.IResource
  * @author lpe
  *
  */
-class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchmark<State> {
+class SCChartsPriorityBasedCompilationBenchmarkHighlightJitter extends AbstractXTextModelBenchmark<State> {
     
     @Inject
     extension SCChartsExtension
@@ -90,15 +90,14 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
      * {@inheritDoc}
      */
     override getID() {
-        return "sccharts-priority-based-compilation"
+        return "sccharts-priority-based-compilation-jitter"
     }
     
     /**
      * {@inheritDoc}
      */
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("benchmark") && !modelData.modelProperties.contains("must-fail") && false
-                && !modelData.modelProperties.contains("known-to-fail") && !modelData.modelProperties.contains("not-siasc") && modelData.modelProperties.contains("test")
+        return modelData.modelProperties.contains("jitter")
     }
     
     /**
@@ -138,14 +137,19 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
         
         var averageTickDuration = 0
         var tickDurations = <Integer> newLinkedList
+        var x = false
         val compilationResult = SimulationUtil.compileAndSimulateModel(model)
         for(var i = 0; i < NUMBER_OF_RUNS; i++) {
             SimulationUtil.startSimulationCompilationResult(compilationResult)
             val simMan = SimulationManager.instance
+            simMan.currentPool.getVariable("x").value = x
+            x = !x
+            
             simMan.stepMacroTick
 
             val tickTime = simMan.currentPool.getVariable("tickTime").value as Integer
             simMan.stop
+            
 
             averageTickDuration += tickTime/NUMBER_OF_RUNS
             tickDurations.add(tickTime)
@@ -176,75 +180,28 @@ class SCChartsPriorityBasedCompilationBenchmark extends AbstractXTextModelBenchm
         context.inplace = true // Save intermediate results
         
         var CompilationResult result = null
-        var overallDuration = 0l
-        var averageDownstreamDuration = 0l
-        var downstreamResults = <Long> newLinkedList
         
-        for(var i = 0; i < NUMBER_OF_RUNS; i++) {
-            val startTime = System.nanoTime
-            result = KielerCompiler.compile(context)
+        result = KielerCompiler.compile(context)
             
-            overallDuration += (System.nanoTime - startTime)/NUMBER_OF_RUNS
-            
-            var long duration = 0
-            if(result.postponedErrors.empty) {
-                for (iResult : result.transformationIntermediateResults.filter[it.id == "scg.scgPrio" || it.id == "sclp.sclpTrans"]) {
-                    duration += iResult.duration
-                    downstreamResults.add(iResult.duration)
-                }
-                
-                          
-            } else {
-                result = null;
-                
-//                throw new Exception("Could not compile SCCharts model into Core SCCharts form. Compilation error occurred!
-//                                        At " + modelData.modelPath, result.postponedErrors.head)                
-            }
-            
-            averageDownstreamDuration += duration/NUMBER_OF_RUNS
-                        
-            if(i != NUMBER_OF_RUNS - 1) {
-                result = null                
-            }
-            System.gc
-        }
+        System.gc
+        
+        
         if(result != null) {
             val scg = result.transformationIntermediateResults.findFirst[it.id == "sccharts.scg"].result as SCGraph
             val normalizedSCChart = result.transformationIntermediateResults.findFirst[it.id == "SURFACEDEPTH"].result as State
     
-            downstreamResults.sort
-            val xs = downstreamResults.take((N_BEST + 1) / 2)
-            xs.toList.addAll(downstreamResults.reverse.take(N_BEST / 2))
-            var nBestDownstreamDuration = 0l
-            for(x : xs) {
-                nBestDownstreamDuration += x/(xs.size)
-            }
-            
-            var numberOfVariables = 0
-            for(declarations : scg.declarations) {
-                numberOfVariables += declarations.valuedObjects.size
-            }
             var numberOfDependencies = 0
             for(n : scg.nodes) {
                 numberOfDependencies += n.dependencies.filter[it instanceof DataDependency && (it as DataDependency).isConcurrent
                                 && !(it as DataDependency).isConfluent].size
             }
-            val maxWidth = calculateMaxWidth(scg.nodes.head as Entry)
             val scgNodes = scg.nodes.size
             
             data.put("scgNodes", scgNodes)
             data.put("normSccNodes", normalizedSCChart.allContainedStatesList.size)
-            data.put("duration", overallDuration)
             data.put("unit", "ns")
-            data.put("averageDownstreamDuration", averageDownstreamDuration)   
-            data.put("nBestDownstreamDuration", nBestDownstreamDuration)     
-            data.put("size",(result.object as String).length)    
-            data.put("numberOfVariables", numberOfVariables)
             data.put("threads", scg.nodes.filter[it instanceof Entry].size)
-            data.put("maxParallelThreads", maxWidth)
             data.put("dependencies", numberOfDependencies)
-            // Preliminary "complexity" of a model
-            data.put("complexity", numberOfDependencies * numberOfVariables + maxWidth * scgNodes)
             data.put("executionTime", nBestTickTimes)
             data.put("averageExecutionTime", averageTickDuration)
             data.put("maxJitter", maxJitter)

@@ -394,6 +394,10 @@ class SCGThreadExtensions {
         // Add all incoming control flows to the list an repeat until the list is empty.
         controlFlows += node.allPrevious
         if (node instanceof Depth) controlFlows += (node as Depth).surface.allPrevious
+        if (node instanceof Join) {
+            controlFlows.clear
+            controlFlows += (node as Join).fork.allPrevious    
+        }
         while(!controlFlows.empty) {
             // Check the first control flow and its parent node.
             var prevNode = controlFlows.head.eContainer as Node

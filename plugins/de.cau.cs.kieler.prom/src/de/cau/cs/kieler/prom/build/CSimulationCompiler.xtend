@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.Path
  */
 class CSimulationCompiler extends SimulationCompiler {
     
-    private static val DEFAULT_COMMAND = "gcc -std=c99 -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\""
+    private static val DEFAULT_COMMAND = "gcc -Werror=int-conversion -o \"./${outputFolder}/${executable_name}\""
     
     new() {
         command.value = DEFAULT_COMMAND

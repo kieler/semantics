@@ -139,7 +139,7 @@ typedef int bool;
   initPC(p3, label3); enable(p3); \
   dispatch_;
   
-#define fork4(label0, label1, p1, label2, p2, label3, p3, label4, l4) \
+#define fork4(label0, label1, p1, label2, p2, label3, p3, label4, p4) \
   initPC(_cid, label0); \
   initPC(p1, label1); enable(p1);	\
   initPC(p2, label2); enable(p2);	\

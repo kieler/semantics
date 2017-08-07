@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.scg.priorities.sclp
 
+import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
@@ -28,10 +29,12 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
 import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.HashSet
 import java.util.Stack
 import javax.inject.Inject
 
@@ -48,7 +51,10 @@ class SCLPTransformation extends AbstractProductionTransformation{
      extension AnnotationsExtensions
      @Inject 
      extension SCG2CSerializeHRExtensions
+     @Inject
+     extension SCGThreadExtensions
      
+    extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
      
      
     /** Default indentation of a c file */
@@ -97,6 +103,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
     /** Keeps track of already visited nodes */
     private var visited = new HashMap<Node, Boolean>
     
+    /** Saves all prioIDs of nodes inside a thread (as represented by its Entry node) */
+    private var threadPriorities = new HashMap<Node, ArrayList<Integer>>
     
     override getProducedFeatureId() {
         "sclp.sclpTrans"
@@ -140,7 +148,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         generatedJoins.clear
         previousNode.clear
         regionNames.clear
-        
+        threadPriorities.clear
         
         program.addHeader(scg);
         program.addGlobalHostcodeAnnotations(scg);
@@ -156,7 +164,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
         program.declareVariables(scg)
         program.append(sb)
         
+
         program.toString
+        
     }
     
     
@@ -248,10 +258,14 @@ class SCLPTransformation extends AbstractProductionTransformation{
             + "#define _SC_NO_SIGNALS2VARS\n"
             // + "#define _SC_NOTRACE\n"
             + "#define _SC_ID_MAX " + maxPID + "\n\n" 
-            + "#include \"scl.h\"\n"
-            + "#include \"sc.h\"\n"
-            + "#include \"sc.c\"\n"
-            + "#include \"sc-generic.h\"\n\n"
+//            + "#include \"scl.h\"\n"
+//            + "#include \"sc.h\"\n"
+//            + "#include \"sc.c\"\n"
+//            + "#include \"sc-generic.h\"\n\n" 
+            + "#include \"sim/scl_lib/scl.h\"\n"
+            + "#include \"sim/scl_lib/sc.h\"\n"
+            + "#include \"sim/scl_lib/sc.c\"\n"
+            + "#include \"sim/scl_lib/sc-generic.h\"\n\n"
             + "#define true 1\n"
             + "#define false 0\n\n"
             + "void reset() {}"
@@ -286,6 +300,13 @@ class SCLPTransformation extends AbstractProductionTransformation{
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             if(!(prev instanceof Fork) && prevPrio.value != prio.value) {
                 sb.appendInd("prio(" + prio.value + ");\n")
+                val entry = node.threadEntry
+                if(entry.hasAnnotation("exitPrio")) {
+                    val minThreadExitPrio = (entry.getAnnotation("exitPrio") as IntAnnotation).value
+                    if(prevPrio.value > minThreadExitPrio && prio.value < minThreadExitPrio) {
+                        threadPriorities.get(entry).add(prevPrio.value)     
+                    }                    
+                }
             }
             if(prev instanceof Entry) {
                 labeledNodes.put(node, labeledNodes.get(prev))
@@ -399,6 +420,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         var labelList = <String> newArrayList
         var joinPrioList = <Integer> newArrayList
         var prioList = <Integer> newArrayList
+        var joinPrioSet = new HashSet<Integer>
         var children = fork.next
         var min = Integer.MAX_VALUE
         var Node minNode
@@ -424,9 +446,13 @@ class SCLPTransformation extends AbstractProductionTransformation{
                 minNode = entry
             }
         }
-        
+        val minx = min
         // Translate the nodes and create labels
         for(child : children) {
+            child.target.annotations += createIntAnnotation => [
+                name = "exitPrio"
+                value = minx
+            ]
             var node = child.target
             if(!node.equals(minNode)) {
                 joinPrioList.add(((node as Entry).exit.getAnnotation("OptPrioIDs") as IntAnnotation).value)
@@ -472,6 +498,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
                 
                 // Translate thread
                 forkBody.transformNode(node)
+                
+                joinPrioSet.addAll(threadPriorities.get(node))
                 
                 // Create par-statement between threads
                 currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
@@ -533,8 +561,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
         sb.append(forkBody)
         // Create join
         sb.appendInd("\n")
-        
-        sb.generateJoinn(joinPrioList.size, joinPrioList)
+
+        sb.generateJoinn(joinPrioSet.size, joinPrioSet)
         
         // Joins all the threads together again
         previousNode.push(fork.join)
@@ -567,12 +595,21 @@ class SCLPTransformation extends AbstractProductionTransformation{
      */
     private def void transformNode(StringBuilder sb, Entry entry) {
         // If entry is the root node
-        if(entry.incoming.empty) {
-            if(entry.hasAnnotation("optPrioIDs")) {
-                val p = entry.getAnnotation("optPrioIDs") as IntAnnotation
-                sb.appendInd("tickstart(" + p.value + ");\n")
-            }
+        var threadPrios = new ArrayList<Integer>
+        if(entry.hasAnnotation("optPrioIDs")) {
+            var prio = (entry.getAnnotation("optPrioIDs") as IntAnnotation).value
             
+            if(entry.incoming.empty) {
+                sb.appendInd("tickstart(" + prio + ");\n")                
+            } else {
+                if(entry.hasAnnotation("exitPrio")) {
+                    val minThreadExitPrio = (entry.getAnnotation("exitPrio") as IntAnnotation).value 
+                    if(prio < minThreadExitPrio) {
+                        threadPrios.add(prio)
+                    }                    
+                }
+            }
+            threadPriorities.put(entry, threadPrios)
         }
         
         sb.transformNode(entry.next.target)
@@ -593,6 +630,10 @@ class SCLPTransformation extends AbstractProductionTransformation{
         // Cannot have more than one incoming edge and cannot lower the priority.
         sb.appendInd("\n")
         if(exit.next != null) {
+            val entry = exit.threadEntry
+            val prio = (exit.getAnnotation("optPrioIDs") as IntAnnotation).value
+            threadPriorities.get(entry).add(prio)
+            threadPriorities.get(exit.next.target.threadEntry).addAll(threadPriorities.get(entry))
             sb.transformNode(exit.next.target)
         }
     }
@@ -614,10 +655,14 @@ class SCLPTransformation extends AbstractProductionTransformation{
         val depthPrio = sur.depth.getAnnotation("optPrioIDs") as IntAnnotation
         val prio = sur.getAnnotation("optPrioIDs") as IntAnnotation
         
-        if(depthPrio.value > prio.value) {
+        if(depthPrio.value != prio.value) {
             sb.appendInd("prio(" + depthPrio.value + ");\n")
         }
-
+        if(sur.threadEntry.hasAnnotation("exitPrio")) {
+            if(prio.value > (sur.threadEntry.getAnnotation("exitPrio") as IntAnnotation).value) {
+                threadPriorities.get(sur.threadEntry).add(prio.value)
+            }            
+        }
         sb.appendInd("pause;\n");
         previousNode.push(sur.depth)
         sb.transformNode(sur.depth)
@@ -719,7 +764,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *  @param prioList
      *              The priorities of the threads
      */
-    private def generateJoinn(StringBuilder sb, int n, ArrayList<Integer> prioList) {
+    private def generateJoinn(StringBuilder sb, int n, HashSet<Integer> prioList) {
         sb.appendInd("} join" + n + "(" + prioList.createPrioString + ");\n")
 
         
@@ -769,7 +814,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
      * @param prioList
      *                  The priorities of the threads listed in the join statement
      */
-    def createPrioString(ArrayList<Integer> prioList) {
+    def createPrioString(HashSet<Integer> prioList) {
         
         var s = new StringBuilder()
         

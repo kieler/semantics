@@ -182,7 +182,7 @@ class SimulationUtil {
         startSimulationCompilationResult(result)
     }
     
-    public static def void compileAndSimulateModel(EObject model) {
+    public static def FileGenerationResult compileAndSimulateModel(EObject model) {
         // Create temporary project
         val tmpProject = temporarySimulationProject
         // Create dummy file for the model.
@@ -201,7 +201,9 @@ class SimulationUtil {
         startSimulationCompilationResult(result)
         
         // Delete temporary project
-        tmpProject.delete(true, null)
+//        tmpProject.delete(true, null)
+
+        return result
     }
     
     public static def void compileAndSimulateModelWithTraceFile(EObject model, IFile traceFile) {
@@ -248,7 +250,7 @@ class SimulationUtil {
         return #["eso", "sim"].contains(file.fileExtension)
     }
     
-    private static def IProject getTemporarySimulationProject() {
+    public static def IProject getTemporarySimulationProject() {
         val root = ResourcesPlugin.getWorkspace.getRoot
         val temporaryProjectName = "TEMPORARY_SIM_PROJECT"
         val newProject = root.getProject(temporaryProjectName)
@@ -259,7 +261,7 @@ class SimulationUtil {
         return newProject
     }
     
-    private static def void startSimulationCompilationResult(FileGenerationResult result) {
+    public static def void startSimulationCompilationResult(FileGenerationResult result) {
         if(result != null && !result.createdFiles.isNullOrEmpty) {
             startSimulation(result.createdFiles)
         }
@@ -283,7 +285,7 @@ class SimulationUtil {
         // Create Simulation compiler
         val cCompiler = new CSimulationCompiler
         val modelCompiler = new KiCoModelCompiler
-        modelCompiler.compileChain.value = "T_scp.irgendwas, T_s.c" 
+        modelCompiler.compileChain.value = "T_scg.dependency, T_scg.scgPrio, T_sclp.sclpTrans" 
         // Create simulation template processor
         val simProcessor = new SimulationTemplateProcessor
         simProcessor.template.value = simTemplate.projectRelativePath.toOSString
