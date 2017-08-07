@@ -12,11 +12,10 @@
  */
 package de.cau.cs.kieler.kicool.environments
 
-import java.util.LinkedList
-import de.cau.cs.kieler.kicool.classes.IColorSystem
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
+import java.util.HashMap
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kicool.classes.IColorSystem
 
 /**
  * @author ssm
@@ -24,38 +23,51 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2017-07-11 proposed yellow
  *
  */
-class MessageObjectReferences extends LinkedList<MessageObjectLink> implements IKiCoolCloneable {
+class MessageObjectReferences extends HashMap<Object, MessageObjectList> implements IKiCoolCloneable {
     
     override isMutable() { false }
     override cloneObject() { null }
     override isVolatile() { true }
     
     override resolveCopiedObjects(Copier copier) {
-        for(reference : listIterator.toIterable.filter[ object != null && object instanceof EObject ]) {
-            if (copier.containsKey(reference.object)) {
-                reference.object = copier.get(reference.object)
-            }
-        }
     }    
     
-    def add(String msg) {
-        add(new MessageObjectLink(msg, null, true, null, null))
+    def void add(String msg) {
+        add(null, msg, null, false, null, null)                
     }
     
-    def add(String msg, Object object) {
-        add(new MessageObjectLink(msg, object, true, null, null))
+    def void add(String msg, Object object) {
+        add(null, msg, object, object !== null, null, null)
     }
     
-    def add(String msg, Object object, boolean annotate) {
-        add(new MessageObjectLink(msg, object, annotate, null, null))
+    def void add(String msg, Object object, boolean annotate) {
+        add(null, msg, object, annotate, null, null)
     }
     
-    def add(String msg, Object object, boolean annotate, IColorSystem colorSystem) {
-        add(new MessageObjectLink(msg, object, annotate, colorSystem, null))
+    def void add(String msg, Object object, boolean annotate, IColorSystem colorSystem) {
+        add(null, msg, object, annotate, colorSystem, null)
     }
 
-    def add(Exception exception) {
-        add(new MessageObjectLink(exception.toString, null, true, null, exception))
+    def void add(Exception exception) {
+        add(null, null, null, false, null, exception)
     }
     
+    def void add(Object sourceModelReference, String msg, Object object) {
+        add(sourceModelReference, msg, object, object !== null, null, null)
+    }
+    
+    def void  add(Object sourceModelReference, String msg, Object object, boolean annotate, IColorSystem colorSystem, Exception exception) {
+        var mol = get(sourceModelReference)
+        if (mol === null) {
+            put(sourceModelReference, new MessageObjectList())
+            mol = get(sourceModelReference)
+        } 
+        if (exception !== null) {
+            mol.add(exception)
+        } else {
+            mol.add(msg, object, annotate, colorSystem)
+        }
+    }
+    
+           
 }

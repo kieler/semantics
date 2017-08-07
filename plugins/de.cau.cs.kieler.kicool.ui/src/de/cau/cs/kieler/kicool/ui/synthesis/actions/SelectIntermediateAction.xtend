@@ -48,7 +48,7 @@ class SelectIntermediateAction implements IAction {
         } else if (model instanceof CodeContainer) {
             model = new CodePlaceHolder(editor.title + ".c", model.join("\n")) 
         } else if (model instanceof MessageObjectReferences) {
-            model = new Container<String>(model.join("\n"))
+            model = new Container<String>(model.get(null).join("\n"))
         }
         KiCoModelViewNotifier.notifyCompilationChanged(editor, model)        
         
