@@ -23,7 +23,7 @@ import org.w3c.dom.Element
  */
 class TextAnimation extends AnimationHandler {
     public val text = new ConfigurableAttribute("text")
-    public val fontSize = new ConfigurableAttribute("fontSize", 0)
+    public val fontSize = new ConfigurableAttribute("fontSize")
     public val fontFamily = new ConfigurableAttribute("fontFamily")
     
     new() {
@@ -43,10 +43,10 @@ class TextAnimation extends AnimationHandler {
         if(text != null) {
             elem.setText(text.stringValue)
         }
-        if(fontSize != null && fontSize.floatValue >= 0) {
+        if(fontSize.value != null && fontSize.floatValue >= 0) {
             elem.setAttributeField("style", "font-size", String.valueOf(fontSize.floatValue))                
         }
-        if(fontFamily != null) {
+        if(fontFamily.value != null) {
             elem.setAttributeField("style", "font-family", fontFamily.stringValue)
         }
     }
