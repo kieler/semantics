@@ -13,17 +13,17 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.kicool.environments.MessageObjectReferences
+import de.cau.cs.kieler.kicool.environments.MessageObjectList
 
 /**
  * @author ssm
  * @kieler.design 2017-07-10 proposed
  * @kieler.rating 2017-07-10 proposed yellow  
  */
-class MessageObjectReferencePair extends Pair<MessageObjectReferences, Object> {
-    
-    new(MessageObjectReferences references, Object object) {
-        super(references, object)    
+class MessageObjectListPair extends Pair<MessageObjectList, Object> {
+   
+    new(MessageObjectList list, Object object) {
+        super(list, object)    
     }
     
 }

@@ -34,14 +34,14 @@ import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManag
  * @kieler.rating 2016-10-20 proposed yellow
  */
 @ViewSynthesisShared
-class MessageObjectReferencesSynthesis extends AbstractDiagramSynthesis<MessageObjectReferencePair> {
+class MessageObjectListSynthesis extends AbstractDiagramSynthesis<MessageObjectListPair> {
 
     @Inject extension KNodeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension MessageObjectReferencesManager
     
-    override transform(MessageObjectReferencePair model) {
+    override transform(MessageObjectListPair model) {
         val rootNode = model.createNode
         
         val properties = new KlighdSynthesisProperties

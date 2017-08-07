@@ -72,7 +72,11 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             if (k != MODEL && k != SOURCE_MODEL) {
                 val v = source.propertyMap.get(k)
                 
-                copyValue(target, k, v)
+                if (k == ORIGINAL_MODEL) {
+                    target.propertyMap.put(k, v)
+                } else {
+                    copyValue(target, k, v)
+                }
                 
                 if (modelCopier != null) {
                     if (v instanceof IKiCoolCloneable) {

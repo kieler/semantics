@@ -36,4 +36,5 @@ class MessageObjectLink {
         this.colorSystem = colorSystem
         this.exception = exception
     }
+    
 }
