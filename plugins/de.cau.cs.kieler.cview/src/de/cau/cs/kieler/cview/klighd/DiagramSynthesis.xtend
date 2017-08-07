@@ -113,17 +113,17 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
     public static final SynthesisOption SKIP_FILE_CONTENT = SynthesisOption.createCheckOption("Skip File Content",
         false);
 
-
     public static final SynthesisOption SHOW_FUNCTIONS = SynthesisOption.createCheckOption("Show Functions", false);
-    public static final SynthesisOption SHOW_REFERENCES_FUNC = SynthesisOption.createCheckOption("Show Function References", false);
+    public static final SynthesisOption SHOW_REFERENCES_FUNC = SynthesisOption.createCheckOption(
+        "Show Function References", false);
     public static final SynthesisOption SHOW_TYPES = SynthesisOption.createCheckOption("Show Types", false);
-    public static final SynthesisOption SHOW_REFERENCES_TYPE = SynthesisOption.createCheckOption("Show Type References", false);
+    public static final SynthesisOption SHOW_REFERENCES_TYPE = SynthesisOption.createCheckOption("Show Type References",
+        false);
 
     public static final SynthesisOption INTERLEVEL_CONNECTIONS = SynthesisOption.createCheckOption(
         "Interlevel Connections", false);
 
     public static final SynthesisOption HIDE_CONNECTIONS = SynthesisOption.createCheckOption("Hide Connections", false);
-
 
     public static final SynthesisOption HIDE_UNCONNECTED = SynthesisOption.createCheckOption("Hide Unconnected", false);
 
@@ -276,7 +276,8 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
     override KNode transform(CViewModel model) {
 
-        val newParseFiles = SHOW_FUNCTIONS.booleanValue || SHOW_TYPES.booleanValue || SHOW_REFERENCES_FUNC.booleanValue || SHOW_REFERENCES_TYPE.booleanValue
+        val newParseFiles = SHOW_FUNCTIONS.booleanValue || SHOW_TYPES.booleanValue ||
+            SHOW_REFERENCES_FUNC.booleanValue || SHOW_REFERENCES_TYPE.booleanValue
         if (parseFiles != newParseFiles) {
             parseFiles = newParseFiles
             CViewPlugin.rebuildModelAndrefreshCView(true)
@@ -291,14 +292,26 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         val toBeRemovedAllFunc = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_FUNC)]
         if (!toBeRemovedAllFunc.nullOrEmpty) {
-            for (toBeRemoved : toBeRemovedAllFunc.toList.immutableCopy) {
-                toBeRemoved.remove
+            val toBeRemovedAllFuncList = toBeRemovedAllFunc.toList
+            if (!toBeRemovedAllFuncList.nullOrEmpty) {
+                val toBeRemovedAllFuncListCopy = toBeRemovedAllFuncList.immutableCopy
+                if (!toBeRemovedAllFuncListCopy.nullOrEmpty) {
+                    for (toBeRemoved : toBeRemovedAllFuncListCopy) {
+                        toBeRemoved.remove
+                    }
+                }
             }
         }
         val toBeRemovedAllType = model.connections.filter[e|e.type.equals(CONNECTION_TYPE_REFERENCE_TYPE)]
         if (!toBeRemovedAllType.nullOrEmpty) {
-            for (toBeRemoved : toBeRemovedAllType.toList.immutableCopy) {
-                toBeRemoved.remove
+            val toBeRemovedAllTypeList = toBeRemovedAllType.toList
+            if (!toBeRemovedAllTypeList.nullOrEmpty) {
+                val toBeRemovedAllTypeListCopy = toBeRemovedAllTypeList.immutableCopy
+                if (!toBeRemovedAllTypeListCopy.nullOrEmpty) {
+                    for (toBeRemoved : toBeRemovedAllTypeListCopy) {
+                        toBeRemoved.remove
+                    }
+                }
             }
         }
         if (SHOW_REFERENCES_FUNC.booleanValue) {
@@ -420,14 +433,13 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 }
             }
         }
-        
-        
+
         if (FilterDialog.valueTextFilter.nullOrEmpty) {
-            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)            
+            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE)
         } else {
-            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)            
+            CViewPlugin.setTitle(AbstractKLighDController.CVIEW_KLIGHD_TITLE_FILTERED)
         }
-        
+
         return root;
     }
 
@@ -594,23 +606,19 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 
         def void addSimpleConnection(Connection connection, KNode srcNode, KNode dstNode, boolean usePorts,
             KColor color, boolean addLabel) {
-                
-                
-                //val freeSide = (srcNode.parent == dstNode.parent)
-            
+
+            // val freeSide = (srcNode.parent == dstNode.parent)
 //                if (connection.src.name.equals("cam_outer_t")) {
 //                    println("cam_outer_t")
 //                }
 //                if (connection.src.name.equals("outer_s")) {
 //                    println("cam_outer_t")
 //                }
-
 //            val dbglabel = connection.src.name + "[" + connection.src.parent.name + "] ---> " + connection.dst.name  + "[" + connection.dst.parent.name + "]";
 //            if (dbglabel.startsWith("tla_inner__cam_outer_ref")) { //[tla_inner] ---> cam_outer_t[CAM.h]") {
 //                println(dbglabel)    
 //            }
 //            println(dbglabel)    
-                
             connectedComponents.add(connection.src)
             connectedComponents.add(connection.dst)
             connection.src.addConnectedParents
@@ -624,7 +632,7 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             edge.source = srcNode
             edge.target = dstNode
             // Basic spline
-            //edge.addConnectionSpline();
+            // edge.addConnectionSpline();
             edge.line.foreground = color.copy
             // if (connection.src == null && connection.dst == null) 
             if (addLabel) {
@@ -638,19 +646,17 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                     edge.labels.get(0).setProperty(KlighdProperties::TOOLTIP, tooltipText);
                 }
             }
-            
 
-            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
-            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
-            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-            //connection.src.rootComponent.node.addLayoutParam(CoreOptions::DIRECTION, Direction::LEFT);
+            // connection.src.rootComponent.node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
+            // connection.src.rootComponent.node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+            // connection.src.rootComponent.node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+            // connection.src.rootComponent.node.addLayoutParam(CoreOptions::DIRECTION, Direction::LEFT);
             // connection.src.rootComponent.node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH_TYPE, GreedySwitchType::OFF);
             if (usePorts) {
-                
+
                 // Add the connection
                 var portId = connection.hashCode.toString
-                
-                
+
 //                if (!freeSide) {
 //                   portId = (srcNode.hashCode + dstNode.hashCode).toString
 //                }
@@ -658,12 +664,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //                var KPort srcPort
 //                var KPort dstPort
 //                if (freeSide) {
-                    val KPort srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
-                    var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
-                    // If not level-crossing (eg to parent, or from parent) then
-                    // let the layouter choose the side. Otherwise fix it from EAST to WEST
-                    //srcNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-                    //dstNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+                val KPort srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
+                var KPort dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
+                // If not level-crossing (eg to parent, or from parent) then
+                // let the layouter choose the side. Otherwise fix it from EAST to WEST
+                // srcNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+                // dstNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
 //                } else {
 //                    srcPort = srcNode.addPort(connection, portId, 0, 0, 8, PortSide::EAST, color)
 //                    dstPort = dstNode.addPort(connection, portId, 0, 0, 8, PortSide::WEST, color)
@@ -715,11 +721,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             } else if (item.isFunc) {
                 return item.transformItemFunc(depth)
             } else if (item.isStruct) {
-                return item.transformItemStruct(depth)                
+                return item.transformItemStruct(depth)
             } else if (item.isTypedef) {
-                return item.transformItemStruct(depth)                
+                return item.transformItemStruct(depth)
             } else if (item.isDecl) {
-                return item.transformItemStruct(depth)                
+                return item.transformItemStruct(depth)
             }
         }
 
@@ -751,13 +757,12 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return childNode
         }
 
-
         static final String COLLOR_STRUCT_NOREF = "#FFD236"
         static final String COLLOR_STRUCT = "#FFF0BD"
         static final String COLLOR_TYPEDEF = "#FCFF00"
         static final String COLLOR_DECL = "#FEFFC1"
-        
-        def KColor getStructTypedefColor (Component item) {
+
+        def KColor getStructTypedefColor(Component item) {
             if (item.isTypedef) {
                 return COLLOR_TYPEDEF.color
             } else if (item.isDecl) {
@@ -768,8 +773,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
                 return COLLOR_STRUCT.color
             }
         }
-
-
 
         def KNode transformItemStruct(Component item, int depth) {
             val childNodeOuter = item.createNode().associateWith(item);
@@ -836,7 +839,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             return childNodeOuter
         }
 
-
 //        def KNode transformItemStruct(Component item, int depth, boolean isTypedef) {
 //            if (!SHOW_TYPES.booleanValue) {
 //                return null
@@ -869,9 +871,6 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
 //
 //            return childNode
 //        }
-
-
-
         def KNode transformItemFile(Component item, int depth) {
             val childNode = item.createNode().associateWith(item);
             val childRect = childNode.addRoundedRectangle(4, 4, 2);
