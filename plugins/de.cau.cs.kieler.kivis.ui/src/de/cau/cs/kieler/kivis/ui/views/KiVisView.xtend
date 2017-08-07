@@ -65,6 +65,8 @@ import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
+import de.cau.cs.kieler.simulation.core.Variable
 
 /**
  * @author aas
@@ -483,9 +485,9 @@ class KiVisView extends ViewPart {
             }
             
             // Update svg with data from pool
-            if(pool !== lastPool) {
-                // Make all changes to the svg in the update manager.
-                // Otherwise the svg canvas is not updated properly.
+            // Make all changes to the svg in the update manager.
+            // Otherwise the svg canvas is not updated properly.
+            if(pool != lastPool) {
                 lastPool = pool
                 val runnable = new Runnable() {
                     override run() {
@@ -498,7 +500,7 @@ class KiVisView extends ViewPart {
                                 val handlers = animationHandlers
                                 for (animation : handlers) {
                                     animation.apply(pool)
-                                }    
+                                }
                             } catch (Exception e) {
                                 showError(e)
                             }
@@ -512,6 +514,41 @@ class KiVisView extends ViewPart {
         }
     }
     
+    /**
+     * Updates the image with the loaded configuration.
+     * This method has to be called in the UI thread.
+     */
+    public def void update(Variable variable) {
+        if(variable == null) {
+            return
+        }
+        
+        val runnable = new Runnable() {
+            override run() {
+                // As this is invoked later in another thread,
+                // the pool that should be visualized might already be outdated
+                if(SimulationManager.instance != null) {
+                    val time = System.currentTimeMillis
+                    try {
+                        // Safe reference to animation handlers in case the reference changes concurrently
+                        val handlers = animationHandlers
+                        for (animation : handlers) {
+                            // Apply animations for the changed variable
+                            if(animation.variable == variable) {
+                                animation.apply(SimulationManager.instance.currentPool)
+                            }
+                        }
+                    } catch (Exception e) {
+                        showError(e)
+                    }
+                    val duration = (System.currentTimeMillis-time)
+                    setStatusBarMessage("Update took " + duration + "ms")
+                }
+            }
+        }
+        canvas?.svgCanvas?.updateManager?.updateRunnableQueue?.invokeLater(runnable)
+    }
+    
     private def void setStatusBarMessage(String message) {
         val bars = getViewSite().getActionBars()
         if(bars != null) {
@@ -521,15 +558,17 @@ class KiVisView extends ViewPart {
     }
     
     private def void showError(Exception e) {
-        PromUIPlugin.asyncExecInUI[addMessageComposite(control, e.message)]
+        PromUIPlugin.asyncExecInUI[addMessageComposite(control, e.toString)]
+        e.printStackTrace
     }
     
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
-                if(e.type != SimulationEventType.TRACE
-                && e.type != SimulationEventType.VARIABLE_CHANGE) {
-                    if(KiVisView.instance != null && KiVisView.instance.lastPool !== e.pool) {
+                if(KiVisView.instance != null) {
+                    if(e.type == SimulationEventType.VARIABLE_CHANGE) {
+                        PromUIPlugin.asyncExecInUI[KiVisView.instance?.update(e.variable)]
+                    } else if(e.type != SimulationEventType.TRACE) {
                         // Update the view in the UI thread
                         PromUIPlugin.asyncExecInUI[KiVisView.instance?.update(SimulationManager.instance?.currentPool)]
                     }

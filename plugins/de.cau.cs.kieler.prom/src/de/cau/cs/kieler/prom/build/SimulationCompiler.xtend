@@ -26,12 +26,15 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.io.File
 import com.google.common.io.Files
 import org.eclipse.core.runtime.Path
+import org.eclipse.core.resources.ResourcesPlugin
 
 /**
  * @author aas
  *
  */
 abstract class SimulationCompiler extends Configurable {
+    
+    private static val listeners = <SimulationCompilerListener> newArrayList
     
     public val command = new ConfigurableAttribute("command")
     public val outputFolder = new ConfigurableAttribute("outputFolder", "kieler-gen/sim/bin")
@@ -54,6 +57,16 @@ abstract class SimulationCompiler extends Configurable {
     
     new(IProgressMonitor monitor) {
         this.monitor = monitor
+    }
+    
+    public static def void addListener(SimulationCompilerListener listener) {
+        if(!listeners.contains(listener)) {
+            listeners.add(listener)    
+        }
+    }
+    
+    public static def void removeListener(SimulationCompilerListener listener) {
+        listeners.remove(listener)
     }
     
     public def FileGenerationResult compile(IFile file) {
@@ -91,7 +104,15 @@ abstract class SimulationCompiler extends Configurable {
             monitor.subTask("Compiling simulation:" + file.name)
         }
         executableFile = getExecutableFile
-        
+        // Remove old file
+        if(executableFile.exists) {
+            // Notify listeners that the executable is going to be deleted
+            val listenersCopy =  listeners.clone as List<SimulationCompilerListener>
+            for(listener : listenersCopy) { 
+                listener.preDelete(executableFile)
+            }
+            executableFile.delete(true, null)
+        }
         // Remove markers from old simulation file
         KielerModelingBuilder.deleteMarkers(file)
         

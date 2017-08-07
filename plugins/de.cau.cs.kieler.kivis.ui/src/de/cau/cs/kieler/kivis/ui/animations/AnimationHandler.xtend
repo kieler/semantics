@@ -25,6 +25,8 @@ import java.util.List
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGDocument
 import de.cau.cs.kieler.kivis.animation.IAnimationHandler
+import de.cau.cs.kieler.simulation.core.Variable
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -34,11 +36,14 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     
     public val recursive = new ConfigurableAttribute("recursive", false)
     
-    protected val List<ConfigurableAttribute> attributes = newArrayList
+    @Accessors(PUBLIC_GETTER)
+    protected var Variable variable
+    protected var Object variableValue
     protected var String svgElementId
     protected var Animation animation
-    protected var Object variableValue
     protected var DataPool lastPool
+    
+    protected val List<ConfigurableAttribute> attributes = newArrayList
     
     abstract public def String getName()
     abstract protected def void doApply(DataPool pool, Element element)
@@ -86,13 +91,8 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     }
     
     public override apply(DataPool pool) {
-        // Only update the svg if the pool changed since last time
-        if(pool == lastPool) {
-            return
-        } else {
-            lastPool = pool
-        }
         // Update the svg with the new pool
+        variable = getVariable(animation.variable, pool)
         variableValue = getVariableValue(pool)
         if(isActive(pool)) {
             // Update attributes
@@ -154,7 +154,7 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     }
     
     protected def Object getVariableValue(DataPool pool) {
-        return getVariableValue(animation.variable, pool)
+        return getVariableValue(animation.variable, pool, true)
     }
     
     protected def Object getMappedValue(AttributeMapping attributeMapping, Object value) {

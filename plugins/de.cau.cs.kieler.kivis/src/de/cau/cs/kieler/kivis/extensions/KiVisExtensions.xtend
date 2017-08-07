@@ -30,6 +30,7 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.simulation.core.Variable
 
 /**
  * @author aas
@@ -48,6 +49,21 @@ class KiVisExtensions {
      * potentially appended with the index of an array element.
      */
     private static var Map<String, Object> variableValueCache = newHashMap
+    
+    public static def void clearCache() {
+        updateCache(null)
+    }
+    
+    /** 
+     * Creates a new cache if the pool changes that is processed for the current animation.
+     * 
+     */
+    private static def void updateCache(DataPool pool) {
+        if(cachedPool != pool) {
+            cachedPool = pool
+            variableValueCache = newHashMap
+        }
+    }
     
     new() {
         attributeExtensions = new AttributeExtensions
@@ -75,58 +91,63 @@ class KiVisExtensions {
         }
     }
     
+    public def Variable getVariable(VariableReference ref, DataPool pool) {
+        if(ref == null) {
+            return null
+        }
+        
+        val modelName = ref.model?.name
+        val variableName = ref.name
+        // Get variable in pool
+        val variable = pool.getVariable(modelName, variableName)
+        return variable
+    }
+    
     /**
      * Returns the value of a variable in the data pool.
      */
-    public def Object getVariableValue(VariableReference ref, DataPool pool) {
+    public def Object getVariableValue(VariableReference ref, DataPool pool, boolean userValue) {
         if(ref == null) {
             return null
         }
         // Create a new variable cache if necessary
-        updateCache(pool)
-        val modelName = ref.model?.name
-        val variableName = ref.name
-        val arrayIndex = ref.indices
-        val fullyQualifiedName = getFullyQualifiedVariableName(modelName, variableName, arrayIndex)
-        val cachedValue = variableValueCache.getOrDefault(fullyQualifiedName, null)
-        if(cachedValue != null) {
-//            println("cached value of "+fullyQualifiedName)
-            return cachedValue
-        } else {
+//        updateCache(pool)
+//        val modelName = ref.model?.name
+//        val variableName = ref.name
+//        val arrayIndex = ref.indices
+//        val fullyQualifiedName = getFullyQualifiedVariableName(modelName, variableName, arrayIndex)
+//        val cachedValue = variableValueCache.getOrDefault(fullyQualifiedName, null)
+//        if(cachedValue != null) {
+//            println("using cached value of "+fullyQualifiedName)
+//            return cachedValue
+//        } else {
             // Get variable in pool
-            val variable = pool.getVariable(modelName, variableName)
+//            val variable = pool.getVariable(modelName, variableName)
+            val variable = getVariable(ref, pool)
             if(variable == null) {
                 throw new Exception("Variable '"+ref.name+"' was not found in the data pool.")
             }
             // Get value of variable
-            var Object value
-            if(variable.value instanceof NDimensionalArray) {
-                val array = variable.value as NDimensionalArray
+            var Object value = if (variable.isDirty)
+                                   variable.userValue
+                               else
+                                   variable.value
+            
+            if(value instanceof NDimensionalArray) {
+                val arrayIndex = ref.indices
+                val array = value as NDimensionalArray
                 if(arrayIndex.isNullOrEmpty) {
                     throw new Exception("Trying to access array "+ref.name+" without index.")
                 }
-                value = array.get(ref.indices)
-            } else {
-                value = variable.value
+                value = array.get(arrayIndex, userValue)
             }
             
             if(value != null) {
 //                println("now cached value of "+fullyQualifiedName)
-                variableValueCache.put(fullyQualifiedName, value)
+//                variableValueCache.put(fullyQualifiedName, value)
             }
             return value
-        }
-    }
-    
-    /** 
-     * Creates a new cache if the pool changes that is processed for the current animation.
-     * 
-     */
-    private def void updateCache(DataPool pool) {
-        if(cachedPool != pool) {
-            cachedPool = pool
-            variableValueCache = newHashMap
-        }
+//        }
     }
     
     public def boolean eval(Condition cond, DataPool pool) {
@@ -140,14 +161,14 @@ class KiVisExtensions {
     
     public def boolean eval(Comparison cond, DataPool pool) {
         if(cond != null) {
-            val leftValue = cond.left.getVariableValue(pool)
+            val leftValue = cond.left.getVariableValue(pool, false)
             val right = cond.right
             var Object rightValue
             
             if((right instanceof EObject) && !(right instanceof VariableReference)) {
                 rightValue = right.primitiveValue
             } else if(right instanceof VariableReference) {
-                rightValue = right.getVariableValue(pool)
+                rightValue = right.getVariableValue(pool, false)
             }
             if( leftValue != null && rightValue != null) {
                 try {
@@ -271,6 +292,7 @@ class KiVisExtensions {
                 val newValue = variable.userValue as NDimensionalArray
                 val arrayElement = newValue.getElement(index)
                 arrayElement.setUserValue(primitive)
+                variable.userValue = newValue
             } else {
                 variable.userValue = primitive
             }
