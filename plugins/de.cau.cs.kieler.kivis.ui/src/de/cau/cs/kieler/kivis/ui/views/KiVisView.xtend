@@ -176,7 +176,7 @@ class KiVisView extends ViewPart {
         }
         try {
             // Clear messages
-            disposeMessageComposite
+            PromUIPlugin.asyncExecInUI[disposeMessageComposite]
             // Check if the file is a configuration file
             if (!file.fileExtension.toLowerCase.equals(KIVIS_FILE_EXTENSION)) {
                 throw new IllegalArgumentException("Selection is not a kivis file.")
@@ -573,6 +573,10 @@ class KiVisView extends ViewPart {
                 lastPool = pool
                 val runnable = new Runnable() {
                     override run() {
+                        if(!initialized) {
+                            return
+                        }
+                        
                         // As this is invoked later in another thread,
                         // the pool that should be visualized might already be outdated
                         if(SimulationManager.instance != null && pool == SimulationManager.instance.currentPool) {
