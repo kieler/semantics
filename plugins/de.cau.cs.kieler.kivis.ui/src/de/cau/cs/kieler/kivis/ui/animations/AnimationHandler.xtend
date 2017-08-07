@@ -48,20 +48,11 @@ abstract class AnimationHandler extends Configurable implements IAnimationHandle
     abstract public def String getName()
     abstract protected def void doApply(DataPool pool, Element element)
     
-    @Extension
-    protected AttributeExtensions attributeExtensions
-    
-    @Extension
-    protected KiVisExtensions kivisExtensions
-    
-    @Extension
-    protected SVGExtensions svgExtensions
+    protected static extension AttributeExtensions attributeExtensions = new AttributeExtensions 
+    protected static extension KiVisExtensions kivisExtensions = new KiVisExtensions
+    protected static extension SVGExtensions svgExtensions = new SVGExtensions
     
     public new() {
-        // Initialize extension methods
-        attributeExtensions = new AttributeExtensions
-        kivisExtensions = new KiVisExtensions
-        svgExtensions = new SVGExtensions
     }
     
     public new(String svgElementId, Animation animation) {

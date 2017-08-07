@@ -19,9 +19,7 @@ import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.kivis.ui.views.KiVisView
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.SimulationManager
-import org.w3c.dom.events.EventListener
 import org.w3c.dom.svg.SVGDocument
-import org.w3c.dom.events.Event
 
 /**
  * @author aas
@@ -31,24 +29,16 @@ class InteractionHandler {
     
     protected var Interaction interaction
     
-    @Extension
-    protected KiVisExtensions kivisExtensions
-    
-    @Extension
-    protected SVGExtensions svgExtensions
-    
-    private EventListener eventListener
+    protected static extension KiVisExtensions kivisExtensions = new KiVisExtensions
+    protected static extension SVGExtensions svgExtensions = new SVGExtensions 
     
     new(Interaction interaction){
         this.interaction = interaction
-        // Initialize extension methods
-        kivisExtensions = new KiVisExtensions
-        svgExtensions = new SVGExtensions
         // Initialize listeners
-        initialize
+        initializeListeners
     }
     
-    private def void initialize() {
+    private def void initializeListeners() {
         // Register event if listening for any
         val event = interaction.event 
         if(event != null) {
@@ -69,8 +59,7 @@ class InteractionHandler {
                  }
                  
                  if(eventType != null) {
-                    val listener = getEventListener
-                    elem.addListener(eventType, listener)
+                    KiVisView.instance.createListenerForInteraction(this, elem, event.element, eventType)
                  } else {
                      throw new IllegalArgumentException("Event '"+event.event.getName+"' does not exist.")
                  }
@@ -82,13 +71,12 @@ class InteractionHandler {
     }
     
     public def void apply(DataPool pool) {
-        initialize()
         if(interaction.event == null) {
             performActions
         }
     }
     
-    private def void performActions() {
+    public def void performActions() {
         val pool = SimulationManager.instance?.currentPool
         if(pool != null && isActive(pool)) {
             for(action : interaction.actions) {
@@ -97,7 +85,10 @@ class InteractionHandler {
         }
     }
     
-    protected def boolean isActive(DataPool pool) {
+    public def boolean isActive(DataPool pool) {
+        if(pool == null) {
+            return false
+        }
         if(interaction.condition == null) {
             return true
         } else {
@@ -107,16 +98,5 @@ class InteractionHandler {
     
     private def SVGDocument getSVGDocument() {
          return KiVisView.instance?.canvas?.svgCanvas?.getSVGDocument();
-    }
-    
-    private def EventListener getEventListener() {
-        if(eventListener == null) {
-            eventListener = new EventListener() {
-                override handleEvent(Event evt) {
-                    performActions
-                }
-            }
-        }
-        return eventListener
     }
 }

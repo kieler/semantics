@@ -161,14 +161,14 @@ class KiVisExtensions {
     
     public def boolean eval(Comparison cond, DataPool pool) {
         if(cond != null) {
-            val leftValue = cond.left.getVariableValue(pool, false)
+            val leftValue = cond.left.getVariableValue(pool, true)
             val right = cond.right
             var Object rightValue
             
             if((right instanceof EObject) && !(right instanceof VariableReference)) {
                 rightValue = right.primitiveValue
             } else if(right instanceof VariableReference) {
-                rightValue = right.getVariableValue(pool, false)
+                rightValue = right.getVariableValue(pool, true)
             }
             if( leftValue != null && rightValue != null) {
                 try {

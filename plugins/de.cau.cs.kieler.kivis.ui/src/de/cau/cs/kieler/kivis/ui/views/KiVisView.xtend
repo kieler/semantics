@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kivis.ui.animations.TextAnimation
 import de.cau.cs.kieler.kivis.ui.animations.WalkPathAnimation
 import de.cau.cs.kieler.kivis.ui.interactions.InteractionHandler
 import de.cau.cs.kieler.kivis.ui.svg.KiVisCanvas
+import de.cau.cs.kieler.kivis.ui.svg.SVGExtensions
 import de.cau.cs.kieler.prom.ModelImporter
 import de.cau.cs.kieler.prom.ui.PromUIPlugin
 import de.cau.cs.kieler.prom.ui.views.LabelContribution
@@ -31,6 +32,7 @@ import de.cau.cs.kieler.simulation.core.SimulationEvent
 import de.cau.cs.kieler.simulation.core.SimulationEventType
 import de.cau.cs.kieler.simulation.core.SimulationListener
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.Variable
 import java.awt.event.MouseWheelEvent
 import java.awt.event.MouseWheelListener
 import java.awt.geom.AffineTransform
@@ -65,8 +67,9 @@ import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
-import de.cau.cs.kieler.simulation.core.Variable
+import org.w3c.dom.Element
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.EventListener
 
 /**
  * @author aas
@@ -79,6 +82,8 @@ class KiVisView extends ViewPart {
     public static val KIVIS_FILE_EXTENSION = "kivis"
 
     public static val simulationListener = createSimulationListener
+
+    private static extension SVGExtensions svgExtensions = new SVGExtensions
 
     @Accessors(PUBLIC_GETTER)
     private static var KiVisView instance
@@ -108,6 +113,22 @@ class KiVisView extends ViewPart {
     val CLOSE_ICON = PromUIPlugin.imageDescriptorFromPlugin(KiVisUiModule.PLUGIN_ID, "icons/close.png")
     /** Container for displaying warings and errors. */
     private Composite messageContainer
+    
+    private var interactionsForEvent = <String, List<InteractionHandler>> newHashMap
+    private var listenerForEvent = <String, EventListener> newHashMap
+    
+    /**
+     * Flag to ignore variable change events from the simulation.
+     * Used to batch a lot of events, e.g., when performing actions from interactions.
+     */
+    private var boolean ignoreVariableEvents 
+    
+    /**
+     * Flag to remember if the animations and interactions have been loaded already.
+     * The loading has to be delayed until the first rendering is done.
+     * Otherwise the document may not be loaded completely.
+     */
+    private boolean initialized
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -161,31 +182,34 @@ class KiVisView extends ViewPart {
                 throw new IllegalArgumentException("Selection is not a kivis file.")
             }
             // Load the configuration
+            PromUIPlugin.asyncExecInUI[currentFileLabel.text = "loading " + file.name]
+            val loadConfigStart = System.currentTimeMillis
             val model = ModelImporter.load(file)
-            if (model != null) {
-                if (model instanceof VisualizationConfiguration) {
-                    kivisConfig = model
-                    kivisFile = file
-                    saveUsedKiVisFile(kivisFile)
-                    updateAfterRendering = true
-                    isImageUnchanged = true
-                    lastPool = null
-                    // Load image file relative to the location of the configuration file
-                    val project = file.project
-                    val imagePath = file.parent.projectRelativePath.append(kivisConfig.image)
-                    svgImage = project.getFile(imagePath)
-                    if(!svgImage.exists) {
-                        throw new IllegalArgumentException("The SVG file '"+svgImage.projectRelativePath +"' "
-                                                         + "was not found in the project '"+file.project.name+"'.")
-                    }
-                    canvas.setSVGFile(svgImage)
-                    
-                    // Register resource change listener for the files
-                    registerResourceChangeListener(file, svgImage)
-                    
-                    // Set label of currently loaded file
-                    PromUIPlugin.asyncExecInUI[currentFileLabel.text = kivisFile.name]
+            val loadConfigDuration = System.currentTimeMillis-loadConfigStart
+            
+            if (model != null && model instanceof VisualizationConfiguration) {
+                kivisConfig = model as VisualizationConfiguration
+                kivisFile = file
+                saveUsedKiVisFile(kivisFile)
+                initialized = false
+                updateAfterRendering = true
+                isImageUnchanged = true
+                lastPool = null
+                // Load image file relative to the location of the configuration file
+                val project = file.project
+                val imagePath = file.parent.projectRelativePath.append(kivisConfig.image)
+                svgImage = project.getFile(imagePath)
+                if(!svgImage.exists) {
+                    throw new IllegalArgumentException("The SVG file '"+svgImage.projectRelativePath +"' "
+                                                     + "was not found in the project '"+file.project.name+"'.")
                 }
+                canvas.setSVGFile(svgImage)
+                
+                // Register resource change listener for the files
+                registerResourceChangeListener(file, svgImage)
+                
+                // Set label of currently loaded file
+                PromUIPlugin.asyncExecInUI[currentFileLabel.text = "Loaded '"+kivisFile.name+"' in "+loadConfigDuration+" ms"]
             } else {
                 throw new IllegalArgumentException("Could not load kivis file. Please check if the file contains errors.")
             }
@@ -196,10 +220,58 @@ class KiVisView extends ViewPart {
     
     private def void createInteractionHandlers(VisualizationConfiguration model) {
         interactionHandlers = newArrayList
+        interactionsForEvent = newHashMap
+        listenerForEvent = newHashMap
         for(interaction : model.interactions) {
             val interactionHandler = new InteractionHandler(interaction)
             interactionHandlers.add(interactionHandler)
         }
+    }
+    
+    public def void createListenerForInteraction(InteractionHandler handler, Element elem, String elemId, String eventType) {
+        val eventId = elemId+"."+eventType
+        var interactionsForThisEvent = interactionsForEvent.getOrDefault(eventId, null)
+        if(interactionsForThisEvent.isNullOrEmpty) {
+            interactionsForThisEvent = newArrayList
+        }
+        var listener = listenerForEvent.getOrDefault(eventId, null)
+        if(listener == null) {
+            listener = new EventListener() {
+                override handleEvent(Event evt) {
+                    val pool = lastPool
+                    if(pool == null) {
+                        return
+                    }
+                    try {
+                        // Update all variable changes from the interactions at once when done
+                        ignoreVariableEvents = true
+                        // Perform all actions of active interactions that listen to this event.
+                        var interactionsForThisEvent = interactionsForEvent.getOrDefault(eventId, null)
+                        if(!interactionsForThisEvent.isNullOrEmpty) {
+                            // First get all active interactions, then apply the actions.
+                            // Otherwise the state of the data pool may change because of some interaction,
+                            // which can alter the active state of other interactions
+    
+                            // NOTE: Without the toList at the end,
+                            // the iterator is messed up and iterates over more elements than it should 
+                            val activeInteractionsForThisEvent = interactionsForThisEvent.filter[it.isActive(pool)].toList
+                            for(activeInteraction : activeInteractionsForThisEvent) {
+                                activeInteraction.performActions
+                            }
+                        }
+                    } catch(Exception e) {
+                        showError(e)
+                    } finally {
+                        ignoreVariableEvents = false
+                        update(pool, true)
+                    }
+                }
+            }
+        }
+        elem.addListener(eventType, listener)
+        interactionsForThisEvent.add(handler)
+        interactionsForEvent.put(eventId, interactionsForThisEvent)
+        listenerForEvent.put(eventId, listener)
     }
     
     private def void createAnimationHandlers(VisualizationConfiguration model) {
@@ -313,14 +385,6 @@ class KiVisView extends ViewPart {
             override documentLoadingStarted(SVGDocumentLoaderEvent event) {
             }
             override documentLoadingCompleted(SVGDocumentLoaderEvent event) {
-                // Now that the document is loaded,
-                // we can configure the animation and interactions from the kivis file.
-                try {
-                    createAnimationHandlers(kivisConfig)
-                    createInteractionHandlers(kivisConfig)
-                } catch(Exception ex) {
-                    showError(ex)
-                }
             }
             override documentLoadingFailed(SVGDocumentLoaderEvent event) {
                 // Show an error that the loading failed.
@@ -343,6 +407,11 @@ class KiVisView extends ViewPart {
             }
             
             override gvtRenderingCompleted(GVTTreeRendererEvent e) {
+                // Now that the document is loaded,
+                // we can configure the animations and interactions from the kivis file.
+                initializeHandlers()
+                
+                // update the visualization if needed
                 val duration = (System.currentTimeMillis-time)
                 setStatusBarMessage("Rendering took " + duration + "ms")
                 // Immediately update svg with new data pool after refresh
@@ -352,16 +421,28 @@ class KiVisView extends ViewPart {
                     if(lastRenderingTransform != null) {
                         canvas.svgCanvas.setRenderingTransform(lastRenderingTransform, true)
                     }
-                    // Update visualization
+                    // Update visualization with running simulation
                     if(SimulationManager.instance != null
                         && !SimulationManager.instance.isStopped
                         && SimulationManager.instance.currentPool != null
                         && SimulationManager.instance.currentPool !== lastPool) {
-                        update(SimulationManager.instance.currentPool)
+                        update(SimulationManager.instance.currentPool, false)
                     }
                 }
             }
         })
+    }
+    
+    private def void initializeHandlers() {
+        if(!initialized) {
+            try {
+                createAnimationHandlers(kivisConfig)
+                createInteractionHandlers(kivisConfig)
+                initialized = true
+            } catch(Exception ex) {
+                showError(ex)
+            }
+        }
     }
     
     private def void registerResourceChangeListener(IFile... files) {
@@ -433,7 +514,7 @@ class KiVisView extends ViewPart {
                 linkWithSimulation = !linkWithSimulation
                 firePropertyChange(CHECKED, Boolean.valueOf(!linkWithSimulation), Boolean.valueOf(linkWithSimulation));
                 if(linkWithSimulation && SimulationManager.instance != null) {
-                    update(SimulationManager.instance.currentPool)    
+                    update(SimulationManager.instance?.currentPool, true)    
                 }
             }
         })
@@ -469,7 +550,7 @@ class KiVisView extends ViewPart {
      * Updates the image with the loaded configuration.
      * This method has to be called in the UI thread.
      */
-    public def void update(DataPool pool) {
+    public def void update(DataPool pool, boolean force) {
         if(!linkWithSimulation || kivisFile == null || svgImage == null) {
             return
         }
@@ -487,7 +568,8 @@ class KiVisView extends ViewPart {
             // Update svg with data from pool
             // Make all changes to the svg in the update manager.
             // Otherwise the svg canvas is not updated properly.
-            if(pool != lastPool) {
+            if(pool != lastPool
+                || force) {
                 lastPool = pool
                 val runnable = new Runnable() {
                     override run() {
@@ -565,12 +647,14 @@ class KiVisView extends ViewPart {
     private static def SimulationListener createSimulationListener() {
         val listener = new SimulationListener() {
             override update(SimulationEvent e) {
-                if(KiVisView.instance != null) {
-                    if(e.type == SimulationEventType.VARIABLE_CHANGE) {
-                        PromUIPlugin.asyncExecInUI[KiVisView.instance?.update(e.variable)]
+                val kiVisView = KiVisView.instance 
+                if(kiVisView != null) {
+                    if(e.type == SimulationEventType.VARIABLE_CHANGE
+                        && !kiVisView.ignoreVariableEvents) {
+                        PromUIPlugin.asyncExecInUI[kiVisView.update(e.variable)]
                     } else if(e.type != SimulationEventType.TRACE) {
                         // Update the view in the UI thread
-                        PromUIPlugin.asyncExecInUI[KiVisView.instance?.update(SimulationManager.instance?.currentPool)]
+                        PromUIPlugin.asyncExecInUI[kiVisView.update(SimulationManager.instance?.currentPool, false)]
                     }
                 }
             }
