@@ -284,18 +284,20 @@ class KielerModelingBuilder extends IncrementalProjectBuilder {
         
         monitor.subTask("Processing templates")
         for(templateProcessor : templateProcessors) {
+            val templateFile = project.getFile(templateProcessor.template.stringValue)
             var templateForChangedFile = false
             if(onlyBuildChangedFiles) {
                 // Check if the template of this processor changed
                 for(changedTemplate : files) {
                     // Is this processor for this template?
-                    if(templateProcessor.template.stringValue == changedTemplate.projectRelativePath.toOSString) {
+                    if(templateFile == changedTemplate) {
                         templateForChangedFile = true
                     }
                 }
             }
             // Process the template
             if(!onlyBuildChangedFiles || templateForChangedFile) {
+                monitor.subTask("Processing template '"+templateProcessor.template.stringValue+"'")
                 val result = templateProcessor.process
                 showBuildProblems(result.problems)
                 // Remember to compile simulation code
