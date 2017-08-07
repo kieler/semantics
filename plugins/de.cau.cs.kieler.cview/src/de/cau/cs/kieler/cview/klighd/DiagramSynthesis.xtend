@@ -715,9 +715,11 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
             } else if (item.isFunc) {
                 return item.transformItemFunc(depth)
             } else if (item.isStruct) {
-                return item.transformItemStruct(depth, false)                
+                return item.transformItemStruct(depth)                
             } else if (item.isTypedef) {
-                return item.transformItemStruct(depth, true)                
+                return item.transformItemStruct(depth)                
+            } else if (item.isDecl) {
+                return item.transformItemStruct(depth)                
             }
         }
 
@@ -750,38 +752,123 @@ class DiagramSynthesis extends AbstractDiagramSynthesis<CViewModel> {
         }
 
 
-        def KNode transformItemStruct(Component item, int depth, boolean isTypedef) {
-            if (!SHOW_TYPES.booleanValue) {
-                return null
-            }
-            if (!isTypedef && item.isReference && !SHOW_REFERENCES_TYPE.booleanValue) {
-                return null
-            }
-            val childNode = item.createNode().associateWith(item);
-            val childRect = childNode.addRoundedRectangle(4, 4, 2);
-            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
-                KlighdConstants.DEFAULT_FONT_NAME);
-            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
-                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-            if (item.reference == null) {
-                childRect.background = "#FFD236".color;
-                childRect.selectionBackground = "#FFD236".color;
-                label.firstText.selectionBackground = "#FFD236".color;
+        static final String COLLOR_STRUCT_NOREF = "#FFD236"
+        static final String COLLOR_STRUCT = "#FFF0BD"
+        static final String COLLOR_TYPEDEF = "#FCFF00"
+        static final String COLLOR_DECL = "#FEFFC1"
+        
+        def KColor getStructTypedefColor (Component item) {
+            if (item.isTypedef) {
+                return COLLOR_TYPEDEF.color
+            } else if (item.isDecl) {
+                return COLLOR_DECL.color
+            } else if (item.reference == null) {
+                return COLLOR_STRUCT_NOREF.color
             } else {
-                childRect.background = "#FFF0BD".color;
-                childRect.selectionBackground = "#FFF0BD".color;
-                label.firstText.selectionBackground = "#FFF0BD".color;
+                return COLLOR_STRUCT.color
             }
-            if (isTypedef) {
-                childRect.background = "#FCFF00".color;
-                childRect.selectionBackground = "#FCFF00".color;
-                label.firstText.selectionBackground = "#FCFF00".color;
-            }
-            childRect.addDoubleClickAction(OpenEditorAction.ID);
-            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
-
-            return childNode
         }
+
+
+
+        def KNode transformItemStruct(Component item, int depth) {
+            val childNodeOuter = item.createNode().associateWith(item);
+
+            val rectCol = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectCol.background = item.structTypedefColor
+            rectCol.selectionBackground = item.structTypedefColor
+            rectCol.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
+            rectCol.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // rectCol.addDoubleClickAction(OpenEditorAction.ID);
+            val rectExp = childNodeOuter.addRoundedRectangle(4, 4, 2);
+            rectExp.background = item.structTypedefColor
+            rectExp.selectionBackground = item.structTypedefColor
+            rectExp.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
+            rectExp.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            // rectExp.addDoubleClickAction(OpenEditorAction.ID);
+            childNodeOuter.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+
+            val itemLabel = item.name
+            val label = childNodeOuter.addInsideTopCenteredNodeLabel(itemLabel, KlighdConstants.DEFAULT_FONT_SIZE,
+                KlighdConstants.DEFAULT_FONT_NAME);
+            label.associateWith(item)
+            label.firstText.selectionBackground = item.structTypedefColor
+
+            var String toolTypType = item.type.literal.toString
+            if (toolTypType != null) {
+                rectCol.setProperty(KlighdProperties::TOOLTIP, toolTypType);
+                rectExp.setProperty(KlighdProperties::TOOLTIP, toolTypType);
+                label.firstText.setProperty(KlighdProperties::TOOLTIP, toolTypType);
+            }
+
+            if (item.hieararchical && !FLATTEN_HIERARCHY.booleanValue) {
+                // Hierarchical case
+                label.firstText.addSingleClickAction(CollapseExpandNoDragAction.ID) // KlighdConstants::ACTION_COLLAPSE_EXPAND
+                label.firstText.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                // label.firstText.addDoubleClickAction(OpenEditorAction.ID);
+                val childArea = item.children.createNode().associateWith(item)
+                val childAreaRect = childArea.addRoundedRectangle(1, 1, 1)
+                childAreaRect.background = "WHITE".color;
+                childAreaRect.selectionBackground = "WHITE".color;
+                childAreaRect.foreground = "GRAY".color;
+                label.firstText.setAreaPlacementData().from(LEFT, -2, 0, TOP, -4, 0).to(RIGHT, -2, 0, BOTTOM, -2, 0);
+                childNodeOuter.children.add(childArea)
+                childArea.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+                    EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+
+                val shouldExpand = (EXPANDED_SLIDER.intValue > MAX_EXPANDED_VALUE || EXPANDED_SLIDER.intValue > depth)
+
+                childNodeOuter.setProperty(KlighdProperties.EXPAND, shouldExpand);
+
+                if (!FLATTEN_HIERARCHY.booleanValue) {
+                    for (child : item.children) {
+                        if (child.allowedByFilterComponent) {
+                            val additionalItem = child.transformItem(depth + 1);
+                            if (additionalItem != null) {
+                                childArea.children += additionalItem
+                            }
+                        }
+                    }
+                }
+            }
+
+            return childNodeOuter
+        }
+
+
+//        def KNode transformItemStruct(Component item, int depth, boolean isTypedef) {
+//            if (!SHOW_TYPES.booleanValue) {
+//                return null
+//            }
+//            if (!isTypedef && item.isReference && !SHOW_REFERENCES_TYPE.booleanValue) {
+//                return null
+//            }
+//            val childNode = item.createNode().associateWith(item);
+//            val childRect = childNode.addRoundedRectangle(4, 4, 2);
+//            val label = childNode.addInsideCenteredNodeLabel(item.name, KlighdConstants.DEFAULT_FONT_SIZE,
+//                KlighdConstants.DEFAULT_FONT_NAME);
+//            childNode.addLayoutParam(DiagramLayoutOptions.SIZE_CONSTRAINT,
+//                EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+//            if (item.reference == null) {
+//                childRect.background = "#FFD236".color;
+//                childRect.selectionBackground = "#FFD236".color;
+//                label.firstText.selectionBackground = "#FFD236".color;
+//            } else {
+//                childRect.background = "#FFF0BD".color;
+//                childRect.selectionBackground = "#FFF0BD".color;
+//                label.firstText.selectionBackground = "#FFF0BD".color;
+//            }
+//            if (isTypedef) {
+//                childRect.background = "#FCFF00".color;
+//                childRect.selectionBackground = "#FCFF00".color;
+//                label.firstText.selectionBackground = "#FCFF00".color;
+//            }
+//            childRect.addDoubleClickAction(OpenEditorAction.ID);
+//            label.getFirstText.addDoubleClickAction(OpenEditorAction.ID);
+//
+//            return childNode
+//        }
 
 
 

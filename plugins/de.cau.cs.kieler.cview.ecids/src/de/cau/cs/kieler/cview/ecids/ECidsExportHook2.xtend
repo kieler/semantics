@@ -38,23 +38,41 @@ class ECidsExportHook2 extends AbstractExportHook implements IExportHook {
     @Inject extension CViewModelExtensions
 
     override getName() {
-        return "eCIDS OAL Message Count";
+        return "eCIDS OAL Message Count"
     }
 
     override getId() {
-        return "de.cau.cs.kieler.cview.ecids.count";
+        return "de.cau.cs.kieler.cview.ecids.count"
     }
 
     override export(CViewModel model) {
-        if (model.connections != null) {
-            return model.connections.size + "";
-        } else {
-            return "0";
-        }
+//        var returnValue = ""
+//        for (component : model.components) {
+//            if (component.isDir) {
+//                returnValue += component.location + "\n"
+//            }
+//        }
+//        return returnValue
+'''START { 
+    «
+    FOR component: model.components»
+    «IF component.isPhilipp(component.location)»
+       DIR: "«component.location»" 
+    «ENDIF»
+    «ENDFOR»
+} END'''
+
+
     }
 
     override getFileExtension() {
         return "txt"
     }
+    
+    def isPhilipp(Component c, String string) {
+        
+        (c.dir && string.length > 5)
+    }
+    
 
 }

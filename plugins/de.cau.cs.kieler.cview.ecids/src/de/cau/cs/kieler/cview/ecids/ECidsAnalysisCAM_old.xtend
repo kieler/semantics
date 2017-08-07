@@ -23,6 +23,7 @@ import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import java.util.HashMap
 import java.util.List
 import java.util.HashSet
+import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 
 /**
  * @author cmot
@@ -31,6 +32,8 @@ import java.util.HashSet
 class ECidsAnalysisCAM_old extends AbstractAnalysisHook implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
+
+    @Inject extension CViewAnalysisExtensions
 
     HashMap<String, Component> definedCAMStructs = new HashMap
 

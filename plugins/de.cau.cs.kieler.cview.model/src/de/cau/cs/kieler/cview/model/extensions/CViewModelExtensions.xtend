@@ -40,105 +40,6 @@ class CViewModelExtensions {
         return (component.referenceUnresolved != null)    
     }
     
-    //------------------------------------------------------------------------
-
-    def String removeCommentsAll(String text) {
-        return text.removeCommentsComplex.removeCommentsSimple
-    }
-
-    def String removeCommentsSimple(String text) {
-        if (text == null) {
-            return null
-        }
-        var returnString = ""
-        var found = true
-        var comment = false  // indicates an active comment
-        var startIndex = 0
-        while (found) {
-            found = false
-            val endIndexNoComment = text.indexOf("//", startIndex)
-            val endIndexComment = text.indexOf("\n", startIndex)
-            if (endIndexNoComment > -1 && !comment) {
-                found = true
-                returnString += text.substring(startIndex, endIndexNoComment)
-                comment = true
-                startIndex = endIndexNoComment + 2
-            } else if (endIndexComment > -1 && comment) {
-                found = true
-                comment = false
-                startIndex = endIndexComment + 1
-            }
-            else {
-                // Append the rest
-                returnString += text.substring(startIndex)
-            }
-        } 
-        return returnString 
-    }
-    
-    def String removeCommentsComplex(String text) {
-        if (text == null) {
-            return null
-        }
-        var returnString = ""
-        var found = true
-        var comment = false  // indicates an active comment
-        var startIndex = 0
-        while (found) {
-            found = false
-            val endIndexNoComment = text.indexOf("/*", startIndex)
-            val endIndexComment = text.indexOf("*/", startIndex)
-            if (endIndexNoComment > -1 && !comment) {
-                found = true
-                returnString += text.substring(startIndex, endIndexNoComment)
-                comment = true
-                startIndex = endIndexNoComment + 2
-            } else if (endIndexComment > -1 && comment) {
-                found = true
-                comment = false
-                startIndex = endIndexComment + 2
-            }
-            else {
-                // Append the rest
-                returnString += text.substring(startIndex)
-            }
-        } 
-        return returnString 
-    }
-
-    //------------------------------------------------------------------------
-
-    def List<String> parseByKey(String text, String keyStart, String keyEnd, String[] filterChars, boolean trim) {
-        val ArrayList<String> returnList = new ArrayList
-        if (text == null) {
-            return returnList
-        }
-        
-        val items = text.split(keyStart);
-        
-        if (!items.nullOrEmpty) {
-            for (item : items) {
-                val endIndex = item.indexOf(keyEnd);
-                if (endIndex > -1) {
-                    var itemString = item.substring(0, endIndex);
-                    if (trim) {
-                        itemString = itemString.trim
-                    }
-                    if (!filterChars.nullOrEmpty) {
-                        for (filterChar : filterChars) {
-                            itemString = itemString.replace(filterChar, "");
-                        }
-                    }
-                    returnList.add(itemString);
-                }
-            }
-        }
-        
-        return returnList
-    } 
-
-
-    //------------------------------------------------------------------------
     
     def boolean hasParentContains(Component component, String parentNamePart) {
         if (component.parent == null) {
@@ -187,52 +88,8 @@ class CViewModelExtensions {
         return component
     }
 
-    def Set<Component> findByName(CViewModel model, String searchString) {
-        return model.findName(searchString, true, false, false)
-    }
+    //------------------------------------------------------------------------
 
-    def Set<Component> findName(CViewModel model, String searchString, boolean caseSensitive) {
-        return model.findName(searchString, caseSensitive, false, false)
-    }
-
-    def Set<Component> findByName(CViewModel model, String searchString, boolean startsWith, boolean endsWith) {
-        return model.findName(searchString, true, startsWith, endsWith)
-    }
-
-    def Set<Component> findName(CViewModel model, String searchString, boolean caseSensitive, boolean startsWith,
-        boolean endsWith) {
-        val Set<Component> returnList = newHashSet
-//        if (caseSensitive) {
-//            returnList.addAll(model.components.filter[name.equals(searchString)].toList)
-//        } else {
-//            returnList.addAll(model.components.filter[name.toUpperCase.equals(searchString.toUpperCase)].toList)
-//        }
-        if (!startsWith && !endsWith) {
-            if (caseSensitive) {
-                returnList.addAll(model.components.filter[name.contains(searchString)].toList)
-            } else {
-                returnList.addAll(model.components.filter[name.toUpperCase.contains(searchString.toUpperCase)].toList)
-            }
-        } else {
-            if (startsWith) {
-                if (caseSensitive) {
-                    returnList.addAll(model.components.filter[name.startsWith(searchString)].toList)
-                } else {
-                    returnList.addAll(
-                        model.components.filter[name.toUpperCase.startsWith(searchString.toUpperCase)].toList)
-                }
-            }
-            if (endsWith) {
-                if (caseSensitive) {
-                    returnList.addAll(model.components.filter[name.endsWith(searchString)].toList)
-                } else {
-                    returnList.addAll(
-                        model.components.filter[name.toUpperCase.endsWith(searchString.toUpperCase)].toList)
-                }
-            }
-        }
-        return returnList
-    }
 
     // -------------------------------------------------------------------------
     def boolean hieararchical(Component item) {

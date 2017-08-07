@@ -26,6 +26,7 @@ Import-Package: org.eclipse.cdt.core,
  org.eclipse.cdt.core.dom,
  org.eclipse.cdt.core.parser
 Export-Package: de.cau.cs.kieler.cview,
+ de.cau.cs.kieler.cview.extensions,
  de.cau.cs.kieler.cview.hooks,
  de.cau.cs.kieler.cview.klighd
 Bundle-Vendor: Kiel University

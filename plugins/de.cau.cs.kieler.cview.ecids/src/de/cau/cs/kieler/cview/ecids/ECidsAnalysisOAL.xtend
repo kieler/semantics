@@ -26,6 +26,7 @@ import java.util.ArrayList
 import java.util.HashSet
 import de.cau.cs.kieler.cview.hooks.IAnalysisHook
 import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
+import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 
 /**
  * @author cmot
@@ -34,6 +35,8 @@ import de.cau.cs.kieler.cview.hooks.AbstractAnalysisHook
 class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
 
     @Inject extension CViewModelExtensions
+
+    @Inject extension CViewAnalysisExtensions
 
     val HashMap<String, Set<Component>> readers = new HashMap
 
@@ -59,13 +62,14 @@ class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
                             msgId = sending.substring(iReceiver + 1, iMsgId).trim
                             receiver = sending.substring(0, iReceiver).trim
                             if (msgId.length < 150) {
-                                //println("Send '" + msgId + "' to '" + receiver + "'");
+                                // println("Send '" + msgId + "' to '" + receiver + "'");
                                 val recvComponents = readers.get(msgId);
                                 if (recvComponents != null) {
                                     for (recvComponent : recvComponents) {
                                         val connection = component.connectTo(recvComponent)
                                         connection.label = msgId
-                                        connection.tooltip = "<<< " + msgId + " >>>\n\nfrom " + component.name + " to " + recvComponent.name
+                                        connection.tooltip = "<<< " + msgId + " >>>\n\nfrom " + component.name +
+                                            " to " + recvComponent.name
                                         returnList.add(connection)
                                     }
                                 }
@@ -102,7 +106,7 @@ class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
     override wrapup(CViewModel model) {
         // throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
-    
+
     override getName() {
         return "eCIDS OAL Messages";
     }

@@ -42,6 +42,7 @@ import de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses
 import java.util.HashMap
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPTypedef
 import org.eclipse.cdt.core.dom.ast.ASTNodeProperty
+import de.cau.cs.kieler.cview.extensions.CViewAnalysisExtensions
 
 /**
  * @author cmot
@@ -50,6 +51,7 @@ import org.eclipse.cdt.core.dom.ast.ASTNodeProperty
 class KLighDController extends AbstractKLighDController {
 
     @Inject extension CViewModelExtensions
+    @Inject extension CViewAnalysisExtensions
 
     public static CViewModelExtensions cViewModelExtensions = new CViewModelExtensions();
 
@@ -265,8 +267,8 @@ class KLighDController extends AbstractKLighDController {
                                 if (parent instanceof CPPASTCompositeTypeSpecifier) {
                                     val typeSpec = parent as CPPASTCompositeTypeSpecifier
                                     val typeSpecName = typeSpec.name
-                                    val IASTDeclaration[] decls = typeSpec.members // getDeclarations(false)
-                                    CViewPlugin.printlnConsole("STRUCT " + typeSpec.name +" : ") //[" + typeSpec.rawSignature + "]")
+                                    val IASTDeclaration[] decls = typeSpec.members; // getDeclarations(false)
+                                    ("STRUCT " + typeSpec.name +" : ").printConsole  //[" + typeSpec.rawSignature + "]")
                                     val structComponent = createStruct
                                     model.components.add(structComponent)
                                     structComponent.name = typeSpec.name.toString
