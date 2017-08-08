@@ -79,12 +79,12 @@ class KiCoModelCompiler extends ModelCompiler {
                 val errors = iResult.environment.errors
                 val warnings = iResult.environment.warnings
                 // Add build problems to result
-                if(!errors.isNullOrEmpty) {
+                if(!errors.get(Environment.REPORT_ROOT).isNullOrEmpty) {
                     noIssues = false
                     val errorMessage = "Error in '"+iResult.id+"':"+errors.messages
                     result.addProblem(BuildProblem.createError(file, errorMessage))
                 }
-                if(!warnings.isNullOrEmpty) {
+                if(!warnings.get(Environment.REPORT_ROOT).isNullOrEmpty) {
                     noIssues = false
                     // Add build problem to result
                     val warningMessage = "Warning in '"+iResult.id+"':"+warnings.messages
@@ -177,7 +177,7 @@ class KiCoModelCompiler extends ModelCompiler {
     }
     
     private def String getMessages(MessageObjectReferences messageObjectReferences) {
-        return messageObjectReferences.map[messageObject |
+        return messageObjectReferences.get(Environment.REPORT_ROOT).map[messageObject |
                      if (messageObject.exception != null) {
                          ((new StringWriter) => [messageObject.exception.printStackTrace(new PrintWriter(it))]).toString()
                      } else {

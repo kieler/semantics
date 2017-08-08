@@ -25,6 +25,8 @@ import de.cau.cs.kieler.kicool.classes.IColorSystem
  */
 class MessageObjectReferences extends HashMap<Object, MessageObjectList> implements IKiCoolCloneable {
     
+    public static val ROOT = null
+    
     override isMutable() { false }
     override cloneObject() { null }
     override isVolatile() { true }
