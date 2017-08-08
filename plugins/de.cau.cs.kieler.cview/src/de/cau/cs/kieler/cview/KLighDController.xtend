@@ -357,13 +357,6 @@ class KLighDController extends AbstractKLighDController {
             val component = model.addToModel(element, monitor)
         }
 
-        val connectionHooks = CViewPlugin.getRegisteredAnalysisHooks(false)
-        // Initialize
-        for (connectionHook : connectionHooks) {
-            if (CViewPlugin.isEnabled(connectionHook.id)) {
-                connectionHook.initialize(model);
-            }
-        }
 
         // Resolve references
         referenceMapping.clear
@@ -375,6 +368,7 @@ class KLighDController extends AbstractKLighDController {
             //CViewPlugin.printlnConsole("INFO: Put Ref. '" + referenceId + "'")
         }
         // Resolve
+        CViewPlugin.printlnConsole("-------- RESOLVING START ------------")
         for (component : model.components) {
             if (component.isReference && !component.resolved) {
                 val thisType = component.type.literal
@@ -389,13 +383,24 @@ class KLighDController extends AbstractKLighDController {
                     val Component otherComponent = referenceMapping.get(referenceId)
                     // Here we set the reference if we have found it
                     component.reference = otherComponent
-                    //CViewPlugin.printlnConsole("INFO: Resolved '" + referenceId + "'")
+                    CViewPlugin.printlnConsole("INFO: Resolved '" + referenceId + "'")
                 } else {
                     // Claim that we have not found
                     CViewPlugin.printlnConsole("ERRROR: Could not resolve '" + referenceId + "'")
                 }
             }
         }
+        CViewPlugin.printlnConsole("-------- RESOLVING END ------------")
+        
+        
+        val connectionHooks = CViewPlugin.getRegisteredAnalysisHooks(false)
+        // Initialize
+        for (connectionHook : connectionHooks) {
+            if (CViewPlugin.isEnabled(connectionHook.id)) {
+                connectionHook.initialize(model);
+            }
+        }
+        
 
         // Now call connections extensions
         // println("MODEL: components=" + model.components.size);

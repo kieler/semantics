@@ -40,30 +40,67 @@ class ECidsAnalysisCAM extends AbstractAnalysisHook implements IAnalysisHook {
     HashSet<Component> CAMHeaderFiles = new HashSet
 
     override createConnections(Component component, CViewModel model) {
-        val List<Connection> returnList = newArrayList()
-        if (component.isFile) {
-            if (component.rawdata != null) {
-                for (struct : definedCAMStructs.keySet) {
-                    if (component.rawdata.removeCommentsAll.contains(struct)) {
-                        val otherComponent = definedCAMStructs.get(struct)
-                        if (component != otherComponent) {
-                            val connection = otherComponent.connectTo(component)
-                            connection.label = struct
-                            returnList.add(connection)
-
-                            if (component.name.endsWith(".h")) {
-                                CAMHeaderFiles.add(component)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return returnList
+//        val List<Connection> returnList = newArrayList()
+//        if (component.isFile) {
+//            if (component.rawdata != null) {
+//                for (struct : definedCAMStructs.keySet) {
+//                    if (component.rawdata.removeCommentsAll.contains(struct)) {
+//                        val otherComponent = definedCAMStructs.get(struct)
+//                        if (component != otherComponent) {
+//                            val connection = otherComponent.connectTo(component)
+//                            connection.label = struct
+//                            returnList.add(connection)
+//
+//                            if (component.name.endsWith(".h")) {
+//                                CAMHeaderFiles.add(component)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return returnList
     }
 
     override initialize(CViewModel model) {
-        CViewPlugin.clearConosle
+        
+        
+        val String[] checks = #[
+        "tla_inner__cam_outer_ref", 
+        "tla_inner__cam_outer_reF", 
+        "tla_inner_ref.tla_inner__cam_outer_ref",
+        "tla_inner_ref->tla_inner__cam_outer_ref",
+        "tla_inner_ref.tla_inner__cam_outer_reF",
+        "tla_inner_reF.tla_inner__cam_outer_ref",
+        "tla_inner_ref.tla_inner__cam_outer_ref.cam_outer_middle_ref",
+        "tla_inner_ref->tla_inner__cam_outer_ref.cam_outer_middle_ref",
+        "tla_inner_ref.tla_inner__cam_outer_ref->cam_outer_middle_ref",
+        "tla_inner_ref->tla_inner__cam_outer_ref->cam_outer_middle_ref",
+        "tla_inner_reF.tla_inner__cam_outer_ref.cam_outer_middle_ref",
+        "tla_inner_ref.tla_inner__cam_outer_reF.cam_outer_middle_ref",
+        "tla_inner_ref.tla_inner__cam_outer_ref.cam_outer_middle_reF",
+        "tla_inner__cam_outer_ref.cam_outer_middle_ref",
+        "tla_inner__cam_outer_ref->cam_outer_middle_ref",
+        "tla_inner__cam_outer_reF.cam_outer_middle_ref",
+        "tla_inner__cam_outer_ref.cam_outer_middle_reF",
+        "tla_inner__cam_outer_ref"
+        ]
+        
+        
+        for (check : checks) {
+            val valid = model.isValidType(check)
+            
+            if (valid == CViewAnalysisExtensions.TYPE_VALID_SURE) {
+                CViewPlugin.printlnConsole("check '" + check + "' VALID")
+            } else if (valid == CViewAnalysisExtensions.TYPE_VALID_UNSURE) {
+                CViewPlugin.printlnConsole("check '" + check + "' MAYBE")
+            } else {
+                CViewPlugin.printlnConsole("check '" + check + "' INVALID")
+            }
+        }
+        
+        
+//        CViewPlugin.clearConosle
 //        val camFiles = model.components.filter[e|e.parent != null && e.parent.name.equals("CAM")].toList
 //        for (camFile : camFiles) {
 //            CViewPlugin.printlnConsole(camFile.name);
@@ -73,17 +110,18 @@ class ECidsAnalysisCAM extends AbstractAnalysisHook implements IAnalysisHook {
 //                CViewPlugin.printlnConsole("  - " + camStruct);
 //            }
 //        }
-        definedCAMStructs.clear
 
-        val camFiles = model.components.filter[e|e.parent != null && e.parent.name.equals("CAM")].toList
-        for (camFile : camFiles) {
-            CViewPlugin.printlnConsole(camFile.name);
-            val camStructs = camFile.rawdata.removeCommentsAll.parseByKey("typedef struct", "{", #["\\n"], true)
-            for (camStruct : camStructs) {
-                definedCAMStructs.put(camStruct, camFile)
-                CViewPlugin.printlnConsole("  - " + camStruct);
-            }
-        }
+//        definedCAMStructs.clear
+//
+//        val camFiles = model.components.filter[e|e.parent != null && e.parent.name.equals("CAM")].toList
+//        for (camFile : camFiles) {
+//            CViewPlugin.printlnConsole(camFile.name);
+//            val camStructs = camFile.rawdata.removeCommentsAll.parseByKey("typedef struct", "{", #["\\n"], true)
+//            for (camStruct : camStructs) {
+//                definedCAMStructs.put(camStruct, camFile)
+//                CViewPlugin.printlnConsole("  - " + camStruct);
+//            }
+//        }
 
 
     }

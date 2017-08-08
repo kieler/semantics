@@ -25,6 +25,9 @@ import de.cau.cs.kieler.cview.model.extensions.CViewModelExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.cview.CViewPlugin
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import com.google.common.collect.ImmutableList
+
 /**
  * Basic commonly usable analysis functionality, e.g., (struct) type dependencies.
  * 
@@ -250,4 +253,117 @@ class CViewAnalysisExtensions {
     
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    
+    def List<String> copyList (List<String> list) {
+        val ArrayList<String> returnList = new ArrayList
+        for (element : list) {
+            returnList.add(element)
+        }
+        return returnList
+    }
+    
+    def boolean foundSegmentPath(Component component, List<String> remainingSegments) {
+        if (remainingSegments.nullOrEmpty) {
+            // End of recursion here
+            return true
+        }
+        // Otherwise, a next segment exists => Check it!        
+        var nextRemainingSegments = remainingSegments.copyList;
+        var nextSegment = nextRemainingSegments.remove(0)
+        
+        if (nextSegment.equals(component.name)) {
+            // Remove this and continue
+            nextSegment = nextRemainingSegments.remove(0)
+        }
+        
+        var currentComponent = component
+        // Check all possible
+        if (currentComponent.isDecl) {
+            val typedef = currentComponent.getTypedef
+            if (typedef == null) {
+                    // We are SURE that it does not match
+                    return false
+            }
+           // yes, this is not a pure value but a typedef, find its struct
+           val struct = typedef.getStruct
+          if (struct == null) {
+               // We are SURE that it does not match
+               return false
+           }
+           currentComponent = struct
+//           // check if struct matches nextSegment
+//           if (!struct.name.equals(nextSegment)) {
+//                // We are SURE that it does not match
+//                 return false
+//             }
+//            // Here we know that the struct maches, so continue recusion
+//                return struct.foundSegmentPath(nextRemainingSegments)
+        } 
+        
+        if (currentComponent.isStruct) {
+            // Check all possible children
+//            val struct = currentComponent.getStruct
+//            if (struct == null) {
+//               // We are SURE that it does not match
+//               return false
+//            }
+            // Any of the declarations must match
+            var foundValidDeclaration = false
+            for (decl : currentComponent.declarations) {
+                if (decl.name.equals(nextSegment)) {
+                    foundValidDeclaration = decl.foundSegmentPath(nextRemainingSegments) 
+                }
+            }
+            return foundValidDeclaration;
+        }
+        return false
+    }
+    
+    
+    public static final val int TYPE_VALID_SURE = 1
+    public static final val int TYPE_VALID_UNSURE = -1
+    public static final val int TYPE_VALID_NOT = 0
+
+    def int isValidType(Component anyComponent, String typePath) {
+        val model = anyComponent.cViewModel
+        return model.isValidType(typePath)
+    }
+
+    def int isValidType(CViewModel model, String typePath) {
+       var typePathUnified = typePath.replace("->", ".")
+       if (!typePathUnified.contains(".")) {
+           typePathUnified = typePathUnified + '''.'''
+       }
+       val typePathSegments = typePathUnified.split("\\.")
+       if (!typePathSegments.nullOrEmpty) {
+           val firstSegment = typePathSegments.get(0)
+           val firstSegmentComponents = model.findByName(firstSegment)
+           if (typePathSegments.size > 1) {
+               // Can be sure or not valid
+                   var foundvalidSegment = false
+                   for (segmentComponent : firstSegmentComponents) {
+                       if (!foundvalidSegment && segmentComponent.foundSegmentPath(typePathSegments)) {
+                           foundvalidSegment = true
+                       }
+                   }
+                   if (foundvalidSegment) {
+                       return TYPE_VALID_SURE
+                   } 
+                   return TYPE_VALID_NOT
+           } else {
+               // Can only be unsure or not valid
+               if (!firstSegmentComponents.nullOrEmpty) {
+                   return TYPE_VALID_UNSURE
+               } else {
+                   return TYPE_VALID_NOT
+               }
+           }
+       }
+       return TYPE_VALID_NOT    
+    }
+    
+    
+    // -------------------------------------------------------------------------
+    
 }

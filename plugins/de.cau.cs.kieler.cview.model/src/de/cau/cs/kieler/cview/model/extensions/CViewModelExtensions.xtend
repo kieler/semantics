@@ -88,6 +88,14 @@ class CViewModelExtensions {
         return component
     }
 
+    def CViewModel cViewModel(Component component) {
+        val container = component.eContainer 
+        if (container instanceof CViewModel) {
+            return container 
+        }
+        return null
+    }
+
     //------------------------------------------------------------------------
 
 
