@@ -49,9 +49,46 @@ class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
 
     override createConnections(Component component, CViewModel model) {
         val List<Connection> returnList = newArrayList()
+        
+//        if (component.isFile) {
+//            if (component.rawdata != null) {
+//                val rawNoComments = component.rawdata.removeCommentsAll
+//                   val i = component.rawdata.indexOf("OAL_MsgSendViaName");
+//                   
+//                   if (i > -1) {
+//                       ("i=" + i).printlnConsole
+//                   }
+//                   
+//                   
+//                   val sendings = rawNoComments.parseByKey("OAL_MsgSendViaName", ")", null, false)
+//                   for (sending : sendings) {
+//                       if (sending.startsWith("(") && sending.length < 150) {
+//                           
+//                           val sending2 = sending.substring(1)
+//                           val i1 = sending2.indexOf(",");
+//                           val i2 = sending2.indexOf(",", i1+1)
+//                           
+//                           if (i1 > -1 && i2  > i1) {
+//                               val arg1 = sending2.substring(0, i1).trim()
+//                               val arg2 = sending2.substring(i1+1, i2).trim()
+//
+//                               ("RECEIVER:" + arg1 + ", MSG_ID:" + arg2).printlnConsole
+//                           } else {
+//                              ("i1:" + i1 + ", i2:" + i2).printlnConsole
+//                           }
+//                           
+//                       }
+//                   }
+//                
+//                }
+//            
+//       }
+        
+        
+// OLD        
         if (component.isFile) {
             if (component.rawdata != null) {
-                val sendings = component.rawdata.split("OAL_MsgSendViaName\\(");
+                val sendings = component.rawdata.removeCommentsAll.split("OAL_MsgSendViaName\\(");
                 for (sending : sendings) {
                     val iReceiver = sending.indexOf(",")
                     var String receiver = null
@@ -62,7 +99,7 @@ class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
                             msgId = sending.substring(iReceiver + 1, iMsgId).trim
                             receiver = sending.substring(0, iReceiver).trim
                             if (msgId.length < 150) {
-                                // println("Send '" + msgId + "' to '" + receiver + "'");
+                                ("# Send '" + msgId + "' to '" + receiver + "'").printlnConsole
                                 val recvComponents = readers.get(msgId);
                                 if (recvComponents != null) {
                                     for (recvComponent : recvComponents) {
@@ -83,10 +120,12 @@ class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
     }
 
     override initialize(CViewModel model) {
+
+// OLD
         readers.clear
         for (function : model.components.filter[e|e.isFunc && e.name.endsWith("RecvTask")]) {
             var rawData = function.parent.rawdata;
-            val i = rawData.indexOf(function.name + "(")
+            val i = rawData.removeCommentsAll.indexOf(function.name + "(")
             if (i > 0) {
                 rawData = rawData.substring(i)
                 val msgs = rawData.split("case OAL_");
@@ -94,7 +133,8 @@ class ECidsAnalysisOAL extends AbstractAnalysisHook implements IAnalysisHook {
                     val j = msg.indexOf(':')
                     if (j > -1) {
                         val msgId = "OAL_" + msg.substring(0, j).trim
-                        if (msgId.length < 150) {
+                        if (msgId.length < 50) {
+                            ("# Found MSGID: " + msgId).printlnConsole
                             msgId.appendReader(function)
                         }
                     }
