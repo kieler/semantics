@@ -520,7 +520,8 @@
     </perspectiveExtension>
  </extension>
  <extension
-       id="de.cau.cs.kieler.railsl.ui.RailSLNature"
+       id="RailSLNature"
+       name="RailSLNature"
        point="org.eclipse.core.resources.natures">
     <runtime>
        <run

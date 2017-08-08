@@ -33,7 +33,7 @@ class RailSLNature implements IProjectNature {
     }
     
     override getProject() {
-        
+        return null
     }
     
     override setProject(IProject project) {
