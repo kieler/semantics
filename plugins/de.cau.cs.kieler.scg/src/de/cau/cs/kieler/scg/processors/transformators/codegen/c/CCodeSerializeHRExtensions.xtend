@@ -27,17 +27,25 @@ import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import java.util.List
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.PrintCall
+import com.google.common.collect.Multimap
+import com.google.common.collect.HashMultimap
+import com.google.inject.Singleton
 
 /**
  * @author ssm
  *
  */
+@Singleton
 class CCodeSerializeHRExtensions extends SCGSerializeHRExtensions {
+    
+    public static val INCLUDES = "includes"
     
     @Inject extension KEffectsExtensions    
     
     @Accessors var String valuedObjectPrefix
     @Accessors var String prePrefix 
+    @Accessors val Multimap<String, String> modifications = HashMultimap.create
     
     override dispatch CharSequence serialize(ValueType valueType) {
         if (valueType == ValueType.BOOL) {
@@ -126,6 +134,8 @@ class CCodeSerializeHRExtensions extends SCGSerializeHRExtensions {
         }
         else if (assignment.expression instanceof ReferenceCall) {
             (assignment.expression as ReferenceCall).serializeHR
+        } else if (assignment.expression instanceof PrintCall) {
+            (assignment.expression as PrintCall).serializeHR
         }
     }    
     
@@ -138,6 +148,15 @@ class CCodeSerializeHRExtensions extends SCGSerializeHRExtensions {
         }
         indicesStr
     }     
+
+    override dispatch CharSequence serialize(PrintCall printCall) {
+        var paramStr = printCall.parameters.serializeParameters.toString
+        
+        if (!modifications.containsEntry(INCLUDES, "<stdio.h>"))
+            modifications.put(INCLUDES, "<stdio.h>")
+        
+        return "printf(" + paramStr.substring(1, paramStr.length - 1) + ")"
+    }   
     
     
 }

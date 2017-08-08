@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.PrintCall
 
 /**
  * @author ssm
@@ -33,34 +34,28 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
  */
 class KExpressionsCreateExtensions {
     
-    // Create an Operator Expression.
     def OperatorExpression createOperatorExpression() {
         KExpressionsFactory::eINSTANCE.createOperatorExpression()
     }
 
-    // Create an Operator Expression with type.
     def OperatorExpression createOperatorExpression(OperatorType operatorType) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression() => [
             setOperator(operatorType)
         ]
     }
 
-    // Create an EQ Expression.
     def OperatorExpression createEQExpression() {
         createOperatorExpression(OperatorType::EQ) 
     }
 
-    // Create an LEQ Expression.
     def OperatorExpression createLEQExpression() {
         createOperatorExpression(OperatorType::LEQ) 
     }
 
-    // Create an GEQ Expression.
     def OperatorExpression createGEQExpression() {
         createOperatorExpression(OperatorType::GEQ) 
     }
     
-    // Create an EQ Expression as a sub expression.
     def OperatorExpression createEQSubExpression(OperatorExpression operatorExpression) {
         createEQExpression() => [
             operatorExpression.subExpressions += it
@@ -73,7 +68,7 @@ class KExpressionsCreateExtensions {
         operatorExpression
     }
 
-    // Create an EQ Expression add expressionFirst and expressionSecond as a sub expression.
+    // Create an EQ Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createEQExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createEQExpression() => [
             it.safeAddToSubExpression(firstSubExpression)
@@ -81,7 +76,7 @@ class KExpressionsCreateExtensions {
         ]
     }
 
-    // Create an LEQ Expression add expressionFirst and expressionSecond as a sub expression.
+    // Create an LEQ Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createLEQExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createLEQExpression() => [
             it.safeAddToSubExpression(firstSubExpression)
@@ -89,7 +84,7 @@ class KExpressionsCreateExtensions {
         ]
     }
 
-    // Create an GEQ Expression add expressionFirst and expressionSecond as a sub expression.
+    // Create an GEQ Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createGEQExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createGEQExpression() => [
             it.safeAddToSubExpression(firstSubExpression)
@@ -108,7 +103,7 @@ class KExpressionsCreateExtensions {
         ]
     }
 
-    // Create an AND Expression add expressionFirst and expressionSecond as a sub expression.
+    // Create an AND Expression add expressionFirst and expressionSecond as sub expressions.
     def OperatorExpression createLogicalAndExpression(Expression firstSubExpression, Expression secondSubExpression) {
         createLogicalAndExpression() => [
             it.safeAddToSubExpression(firstSubExpression)
@@ -271,24 +266,26 @@ class KExpressionsCreateExtensions {
         ]
     }
 
-    // Create an empty text expression.
     def TextExpression createTextExpression() {
-        KExpressionsFactory::eINSTANCE.createTextExpression()
+        KExpressionsFactory::eINSTANCE.createTextExpression
     }
     
     def ReferenceCall createReferenceCall() {
-        KExpressionsFactory::eINSTANCE.createReferenceCall()
+        KExpressionsFactory::eINSTANCE.createReferenceCall
     }
 
     def FunctionCall createFunctionCall() {
-        KExpressionsFactory::eINSTANCE.createFunctionCall()
+        KExpressionsFactory::eINSTANCE.createFunctionCall
+    }
+    
+    def PrintCall createPrintCall() {
+        KExpressionsFactory::eINSTANCE.createPrintCall
     }
 
     def Parameter createParameter() {
-        KExpressionsFactory::eINSTANCE.createParameter()
+        KExpressionsFactory::eINSTANCE.createParameter
     }
 
-    // Create a text expression.
     def TextExpression createTextExpression(String text) {
         KExpressionsFactory::eINSTANCE.createTextExpression() => [
             setText("'" + text + "'")

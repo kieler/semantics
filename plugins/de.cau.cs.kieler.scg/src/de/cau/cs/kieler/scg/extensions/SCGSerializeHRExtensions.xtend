@@ -9,6 +9,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExte
 import de.cau.cs.kieler.scg.Assignment
 import java.util.List
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.PrintCall
 
 /**
  * @author ssm
@@ -41,6 +42,8 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             (assignment.expression as TextExpression).text
         } else if (assignment.expression instanceof FunctionCall) {
             serialize(assignment.expression) 
+        } else if (assignment.expression instanceof PrintCall) {
+            (assignment.expression as PrintCall).serialize
         }
     }
     
@@ -56,20 +59,19 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
             if (assignment.expression instanceof TextExpression) {
                 assignmentText = (assignment.expression as TextExpression).text
-            }
+            } 
             var assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
             assignmentStr
         } else if (assignment.expression instanceof TextExpression) {
             (assignment.expression as TextExpression).text
         } else if (assignment.expression instanceof FunctionCall) {
             serialize(assignment.expression) 
-        }
-        else if (assignment.expression instanceof ReferenceCall) {
+        } else if (assignment.expression instanceof ReferenceCall) {
             (assignment.expression as ReferenceCall).serializeHR
+        } else if (assignment.expression instanceof PrintCall) {
+            (assignment.expression as PrintCall).serializeHR
         }
     }
-    
-    
     
     protected def CharSequence serializeIndices(List<Expression> indices) {
         var String indicesStr = ""
