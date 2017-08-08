@@ -80,9 +80,9 @@ class RailSLExtensions {
      */
     def parseDirection(TrackStatement stStatement) {
         if (stStatement.mode.contains("reverse")) {
-            return 1;
+            return 2;
         } else {
-            return 0;
+            return 1;
         }
     }
 

@@ -1,0 +1,2103 @@
+image: "railway.svg"
+
+//------------------------------------------------------------\\
+//--                     TRACK POWER                        --\\
+//------------------------------------------------------------\\
+animate b_IC_JCT_0 {
+  apply color using IC_JCT_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_JCT_0 {
+ 	apply text using IC_JCT_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_LN_0 {
+  apply color using IC_LN_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_LN_0 {
+ 	apply text using IC_LN_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_LN_1 {
+  apply color using IC_LN_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_LN_1 {
+ 	apply text using IC_LN_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_LN_2 {
+  apply color using IC_LN_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_LN_2 {
+ 	apply text using IC_LN_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_LN_3 {
+  apply color using IC_LN_3 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_LN_3 {
+ 	apply text using IC_LN_3 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_LN_4 {
+  apply color using IC_LN_4 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_LN_4 {
+ 	apply text using IC_LN_4 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_LN_5 {
+  apply color using IC_LN_5 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_LN_5 {
+ 	apply text using IC_LN_5 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_ST_0 {
+  apply color using IC_ST_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_ST_0 {
+ 	apply text using IC_ST_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_ST_1 {
+  apply color using IC_ST_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_ST_1 {
+ 	apply text using IC_ST_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_ST_2 {
+  apply color using IC_ST_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_ST_2 {
+ 	apply text using IC_ST_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_ST_3 {
+  apply color using IC_ST_3 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_ST_3 {
+ 	apply text using IC_ST_3 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IC_ST_4 {
+  apply color using IC_ST_4 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IC_ST_4 {
+ 	apply text using IC_ST_4 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IO_LN_0 {
+  apply color using IO_LN_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IO_LN_0 {
+ 	apply text using IO_LN_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IO_LN_1 {
+  apply color using IO_LN_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IO_LN_1 {
+ 	apply text using IO_LN_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_IO_LN_2 {
+  apply color using IO_LN_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_IO_LN_2 {
+ 	apply text using IO_LN_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_JCT_0 {
+  apply color using OC_JCT_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_JCT_0 {
+ 	apply text using OC_JCT_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_LN_0 {
+  apply color using OC_LN_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_LN_0 {
+ 	apply text using OC_LN_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_LN_1 {
+  apply color using OC_LN_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_LN_1 {
+ 	apply text using OC_LN_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_LN_2 {
+  apply color using OC_LN_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_LN_2 {
+ 	apply text using OC_LN_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_LN_3 {
+  apply color using OC_LN_3 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_LN_3 {
+ 	apply text using OC_LN_3 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_LN_4 {
+  apply color using OC_LN_4 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_LN_4 {
+ 	apply text using OC_LN_4 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_LN_5 {
+  apply color using OC_LN_5 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_LN_5 {
+ 	apply text using OC_LN_5 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_ST_0 {
+  apply color using OC_ST_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_ST_0 {
+ 	apply text using OC_ST_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_ST_1 {
+  apply color using OC_ST_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_ST_1 {
+ 	apply text using OC_ST_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_ST_2 {
+  apply color using OC_ST_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_ST_2 {
+ 	apply text using OC_ST_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_ST_3 {
+  apply color using OC_ST_3 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_ST_3 {
+ 	apply text using OC_ST_3 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OC_ST_4 {
+  apply color using OC_ST_4 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OC_ST_4 {
+ 	apply text using OC_ST_4 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OI_LN_0 {
+  apply color using OI_LN_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OI_LN_0 {
+ 	apply text using OI_LN_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OI_LN_1 {
+  apply color using OI_LN_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OI_LN_1 {
+ 	apply text using OI_LN_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_OI_LN_2 {
+  apply color using OI_LN_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_OI_LN_2 {
+ 	apply text using OI_LN_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_0 {
+  apply color using KH_LN_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_0 {
+ 	apply text using KH_LN_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_1 {
+  apply color using KH_LN_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_1 {
+ 	apply text using KH_LN_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_2 {
+  apply color using KH_LN_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_2 {
+ 	apply text using KH_LN_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_3 {
+  apply color using KH_LN_3 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_3 {
+ 	apply text using KH_LN_3 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_4 {
+  apply color using KH_LN_4 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_4 {
+ 	apply text using KH_LN_4 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_5 {
+  apply color using KH_LN_5 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_5 {
+ 	apply text using KH_LN_5 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_6 {
+  apply color using KH_LN_6 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_6 {
+ 	apply text using KH_LN_6 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_7 {
+  apply color using KH_LN_7 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_7 {
+ 	apply text using KH_LN_7 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_LN_8 {
+  apply color using KH_LN_8 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_LN_8 {
+ 	apply text using KH_LN_8 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_ST_0 {
+  apply color using KH_ST_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_ST_0 {
+ 	apply text using KH_ST_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_ST_1 {
+  apply color using KH_ST_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_ST_1 {
+ 	apply text using KH_ST_1 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_ST_2 {
+  apply color using KH_ST_2 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_ST_2 {
+ 	apply text using KH_ST_2 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_ST_3 {
+  apply color using KH_ST_3 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_ST_3 {
+ 	apply text using KH_ST_3 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_ST_4 {
+  apply color using KH_ST_4 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_ST_4 {
+ 	apply text using KH_ST_4 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_ST_5 {
+  apply color using KH_ST_5 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_ST_5 {
+ 	apply text using KH_ST_5 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KH_ST_6 {
+  apply color using KH_ST_6 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KH_ST_6 {
+ 	apply text using KH_ST_6 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KIO_LN_0 {
+  apply color using KIO_LN_0 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KIO_LN_0 {
+ 	apply text using KIO_LN_0 {
+ 		text: ""
+ 	}
+ }
+
+animate b_KIO_LN_1 {
+  apply color using KIO_LN_1 {
+    strokeColor: 0 is "black", 1-50 is "blue", 51-80 is "purple", 81-100 is "yellow", 101-127 is "red"  
+    strokeWidth: 15
+  }
+ }
+ animate t_KIO_LN_1 {
+ 	apply text using KIO_LN_1 {
+ 		text: ""
+ 	}
+ }
+
+//------------------------------------------------------------\\
+//--                         POINTS                         --\\
+//------------------------------------------------------------\\
+// TODO: The point identifiers are on the wrong element in the svg.
+// At the moment the numbers have the id, but the circle must have the id.
+
+animate t_point_0 {
+	apply text using point_0 {
+		text: ""
+	}
+}
+
+animate point_straight_0 {
+	apply color using point_0 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_0 {
+	apply color using point_0 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_1 {
+	apply text using point_1 {
+		text: ""
+	}
+}
+
+animate point_straight_1 {
+	apply color using point_1 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_1 {
+	apply color using point_1 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_2 {
+	apply text using point_2 {
+		text: ""
+	}
+}
+
+animate point_straight_2 {
+	apply color using point_2 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_2 {
+	apply color using point_2 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_3 {
+	apply text using point_3 {
+		text: ""
+	}
+}
+
+animate point_straight_3 {
+	apply color using point_3 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_3 {
+	apply color using point_3 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_4 {
+	apply text using point_4 {
+		text: ""
+	}
+}
+
+animate point_straight_4 {
+	apply color using point_4 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_4 {
+	apply color using point_4 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_5 {
+	apply text using point_5 {
+		text: ""
+	}
+}
+
+animate point_straight_5 {
+	apply color using point_5 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_5 {
+	apply color using point_5 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_6 {
+	apply text using point_6 {
+		text: ""
+	}
+}
+
+animate point_straight_6 {
+	apply color using point_6 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_6 {
+	apply color using point_6 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_7 {
+	apply text using point_7 {
+		text: ""
+	}
+}
+
+animate point_straight_7 {
+	apply color using point_7 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_7 {
+	apply color using point_7 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_8 {
+	apply text using point_8 {
+		text: ""
+	}
+}
+
+animate point_straight_8 {
+	apply color using point_8 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_8 {
+	apply color using point_8 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_9 {
+	apply text using point_9 {
+		text: ""
+	}
+}
+
+animate point_straight_9 {
+	apply color using point_9 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_9 {
+	apply color using point_9 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_10 {
+	apply text using point_10 {
+		text: ""
+	}
+}
+
+animate point_straight_10 {
+	apply color using point_10 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_10 {
+	apply color using point_10 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_11 {
+	apply text using point_11 {
+		text: ""
+	}
+}
+
+animate point_straight_11 {
+	apply color using point_11 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_11 {
+	apply color using point_11 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_12 {
+	apply text using point_12 {
+		text: ""
+	}
+}
+
+animate point_straight_12 {
+	apply color using point_12 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_12 {
+	apply color using point_12 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_13 {
+	apply text using point_13 {
+		text: ""
+	}
+}
+
+animate point_straight_13 {
+	apply color using point_13 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_13 {
+	apply color using point_13 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_14 {
+	apply text using point_14 {
+		text: ""
+	}
+}
+
+animate point_straight_14 {
+	apply color using point_14 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_14 {
+	apply color using point_14 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_15 {
+	apply text using point_15 {
+		text: ""
+	}
+}
+
+animate point_straight_15 {
+	apply color using point_15 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_15 {
+	apply color using point_15 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_16 {
+	apply text using point_16 {
+		text: ""
+	}
+}
+
+animate point_straight_16 {
+	apply color using point_16 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_16 {
+	apply color using point_16 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_17 {
+	apply text using point_17 {
+		text: ""
+	}
+}
+
+animate point_straight_17 {
+	apply color using point_17 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_17 {
+	apply color using point_17 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_18 {
+	apply text using point_18 {
+		text: ""
+	}
+}
+
+animate point_straight_18 {
+	apply color using point_18 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_18 {
+	apply color using point_18 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_19 {
+	apply text using point_19 {
+		text: ""
+	}
+}
+
+animate point_straight_19 {
+	apply color using point_19 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_19 {
+	apply color using point_19 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_20 {
+	apply text using point_20 {
+		text: ""
+	}
+}
+
+animate point_straight_20 {
+	apply color using point_20 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_20 {
+	apply color using point_20 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_21 {
+	apply text using point_21 {
+		text: ""
+	}
+}
+
+animate point_straight_21 {
+	apply color using point_21 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_21 {
+	apply color using point_21 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_22 {
+	apply text using point_22 {
+		text: ""
+	}
+}
+
+animate point_straight_22 {
+	apply color using point_22 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_22 {
+	apply color using point_22 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_23 {
+	apply text using point_23 {
+		text: ""
+	}
+}
+
+animate point_straight_23 {
+	apply color using point_23 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_23 {
+	apply color using point_23 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_24 {
+	apply text using point_24 {
+		text: ""
+	}
+}
+
+animate point_straight_24 {
+	apply color using point_24 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_24 {
+	apply color using point_24 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_25 {
+	apply text using point_25 {
+		text: ""
+	}
+}
+
+animate point_straight_25 {
+	apply color using point_25 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_25 {
+	apply color using point_25 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_26 {
+	apply text using point_26 {
+		text: ""
+	}
+}
+
+animate point_straight_26 {
+	apply color using point_26 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_26 {
+	apply color using point_26 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_27 {
+	apply text using point_27 {
+		text: ""
+	}
+}
+
+animate point_straight_27 {
+	apply color using point_27 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_27 {
+	apply color using point_27 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_28 {
+	apply text using point_28 {
+		text: ""
+	}
+}
+
+animate point_straight_28 {
+	apply color using point_28 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_28 {
+	apply color using point_28 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+animate t_point_29 {
+	apply text using point_29 {
+		text: ""
+	}
+}
+
+animate point_straight_29 {
+	apply color using point_29 {
+		opacity: 0 is 1, 1 is 0
+	}
+}
+
+animate point_turn_29 {
+	apply color using point_29 {
+		opacity: 0 is 0, 1 is 1
+	}
+}
+
+
+
+//------------------------------------------------------------\\
+//--                      TEXT                              --\\
+//------------------------------------------------------------\\
+
+
+
+
+//------------------------------------------------------------\\
+//--             SIGNALS OF UNIDIRECTIONAL TRACKS           --\\
+//------------------------------------------------------------\\
+// TODO: Animate signals using fillColor or opacity?
+// ------> using fillColor required re-creating the signals in the svg file.
+animate R1_IC_LN_0 {
+  apply color using S0_IC_LN_0  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_IC_LN_0 {
+  apply color using S0_IC_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_LN_1 {
+  apply color using S0_IC_LN_1  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_IC_LN_1 {
+  apply color using S0_IC_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_LN_2 {
+  apply color using S0_IC_LN_2  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_IC_LN_2 {
+  apply color using S0_IC_LN_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_LN_3 {
+  apply color using S0_IC_LN_3  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_IC_LN_3 {
+  apply color using S0_IC_LN_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_LN_4 {
+  apply color using S0_IC_LN_4  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_IC_LN_4 {
+  apply color using S0_IC_LN_4 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_IC_LN_4 {
+  apply color using S0_IC_LN_4 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_LN_5 {
+  apply color using S0_IC_LN_5  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_IC_LN_5 {
+  apply color using S0_IC_LN_5 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_IC_LN_5 {
+  apply color using S0_IC_LN_5 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_ST_1 {
+  apply color using S0_IC_ST_1  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_IC_ST_1 {
+  apply color using S0_IC_ST_1 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_IC_ST_1 {
+  apply color using S0_IC_ST_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_ST_2 {
+  apply color using S0_IC_ST_2  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_IC_ST_2 {
+  apply color using S0_IC_ST_2 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_IC_ST_2 {
+  apply color using S0_IC_ST_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IC_ST_3 {
+  apply color using S0_IC_ST_3  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_IC_ST_3 {
+  apply color using S0_IC_ST_3 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_IC_ST_3 {
+  apply color using S0_IC_ST_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IO_LN_0 {
+  apply color using S0_IO_LN_0  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_IO_LN_0 {
+  apply color using S0_IO_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IO_LN_1 {
+  apply color using S0_IO_LN_1  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_IO_LN_1 {
+  apply color using S0_IO_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_IO_LN_2 {
+  apply color using S0_IO_LN_2  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_IO_LN_2 {
+  apply color using S0_IO_LN_2 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_IO_LN_2 {
+  apply color using S0_IO_LN_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_LN_0 {
+  apply color using S0_OC_LN_0  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_OC_LN_0 {
+  apply color using S0_OC_LN_0 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_OC_LN_0 {
+  apply color using S0_OC_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_LN_1 {
+  apply color using S0_OC_LN_1  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_OC_LN_1 {
+  apply color using S0_OC_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_LN_2 {
+  apply color using S0_OC_LN_2  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_OC_LN_2 {
+  apply color using S0_OC_LN_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_LN_3 {
+  apply color using S0_OC_LN_3  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_OC_LN_3 {
+  apply color using S0_OC_LN_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_LN_4 {
+  apply color using S0_OC_LN_4  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_OC_LN_4 {
+  apply color using S0_OC_LN_4 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_LN_5 {
+  apply color using S0_OC_LN_5  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_OC_LN_5 {
+  apply color using S0_OC_LN_5 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_OC_LN_5 {
+  apply color using S0_OC_LN_5 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_ST_1 {
+  apply color using S0_OC_ST_1  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_OC_ST_1 {
+  apply color using S0_OC_ST_1 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_OC_ST_1 {
+  apply color using S0_OC_ST_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_ST_2 {
+  apply color using S0_OC_ST_2  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_OC_ST_2 {
+  apply color using S0_OC_ST_2 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_OC_ST_2 {
+  apply color using S0_OC_ST_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OC_ST_3 {
+  apply color using S0_OC_ST_3  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_OC_ST_3 {
+  apply color using S0_OC_ST_3 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_OC_ST_3 {
+  apply color using S0_OC_ST_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OI_LN_0 {
+  apply color using S0_OI_LN_0  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_OI_LN_0 {
+  apply color using S0_OI_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OI_LN_1 {
+  apply color using S0_OI_LN_1  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate G1_OI_LN_1 {
+  apply color using S0_OI_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+animate R1_OI_LN_2 {
+  apply color using S0_OI_LN_2  {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+} 
+animate Y1_OI_LN_2 {
+  apply color using S0_OI_LN_2 {
+	fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_OI_LN_2 {
+  apply color using S0_OI_LN_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+ 
+//------------------------------------------------------------\\
+//--             SIGNALS OF BIDIRECTIONAL TRACKS            --\\
+//------------------------------------------------------------\\
+animate R0_KH_LN_0 {
+  apply color using S1_KH_LN_0 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_LN_0 {
+  apply color using S1_KH_LN_0 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_LN_0 {
+  apply color using S1_KH_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_0 {
+  apply color using S0_KH_LN_0 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate G1_KH_LN_0 {
+  apply color using S0_KH_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_1 {
+  apply color using S1_KH_LN_1 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate G0_KH_LN_1 {
+  apply color using S1_KH_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_1 {
+  apply color using S0_KH_LN_1 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate G1_KH_LN_1 {
+  apply color using S0_KH_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_2 {
+  apply color using S1_KH_LN_2 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate G0_KH_LN_2 {
+  apply color using S1_KH_LN_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_2 {
+  apply color using S0_KH_LN_2 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_LN_2 {
+  apply color using S0_KH_LN_2 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_LN_2 {
+  apply color using S0_KH_LN_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_3 {
+  apply color using S1_KH_LN_3 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_LN_3 {
+  apply color using S1_KH_LN_3 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_LN_3 {
+  apply color using S1_KH_LN_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_3 {
+  apply color using S0_KH_LN_3 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate G1_KH_LN_3 {
+  apply color using S0_KH_LN_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_4 {
+  apply color using S1_KH_LN_4 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_LN_4 {
+  apply color using S1_KH_LN_4 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_LN_4 {
+  apply color using S1_KH_LN_4 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_4 {
+  apply color using S0_KH_LN_4 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate G1_KH_LN_4 {
+  apply color using S0_KH_LN_4 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_5 {
+  apply color using S1_KH_LN_5 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate G0_KH_LN_5 {
+  apply color using S1_KH_LN_5 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_5 {
+  apply color using S0_KH_LN_5 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_LN_5 {
+  apply color using S0_KH_LN_5 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_LN_5 {
+  apply color using S0_KH_LN_5 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_6 {
+  apply color using S1_KH_LN_6 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate G0_KH_LN_6 {
+  apply color using S1_KH_LN_6 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_6 {
+  apply color using S0_KH_LN_6 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_LN_6 {
+  apply color using S0_KH_LN_6 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_LN_6 {
+  apply color using S0_KH_LN_6 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_7 {
+  apply color using S1_KH_LN_7 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_LN_7 {
+  apply color using S1_KH_LN_7 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_LN_7 {
+  apply color using S1_KH_LN_7 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_7 {
+  apply color using S0_KH_LN_7 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate G1_KH_LN_7 {
+  apply color using S0_KH_LN_7 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_LN_8 {
+  apply color using S1_KH_LN_8 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate G0_KH_LN_8 {
+  apply color using S1_KH_LN_8 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_LN_8 {
+  apply color using S0_KH_LN_8 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_LN_8 {
+  apply color using S0_KH_LN_8 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_LN_8 {
+  apply color using S0_KH_LN_8 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_ST_1 {
+  apply color using S1_KH_ST_1 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_ST_1 {
+  apply color using S1_KH_ST_1 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_ST_1 {
+  apply color using S1_KH_ST_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_ST_1 {
+  apply color using S0_KH_ST_1 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_ST_1 {
+  apply color using S0_KH_ST_1 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_ST_1 {
+  apply color using S0_KH_ST_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_ST_2 {
+  apply color using S1_KH_ST_2 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_ST_2 {
+  apply color using S1_KH_ST_2 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_ST_2 {
+  apply color using S1_KH_ST_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_ST_2 {
+  apply color using S0_KH_ST_2 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_ST_2 {
+  apply color using S0_KH_ST_2 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_ST_2 {
+  apply color using S0_KH_ST_2 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_ST_3 {
+  apply color using S1_KH_ST_3 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_ST_3 {
+  apply color using S1_KH_ST_3 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_ST_3 {
+  apply color using S1_KH_ST_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_ST_3 {
+  apply color using S0_KH_ST_3 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_ST_3 {
+  apply color using S0_KH_ST_3 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_ST_3 {
+  apply color using S0_KH_ST_3 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_ST_4 {
+  apply color using S1_KH_ST_4 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_ST_4 {
+  apply color using S1_KH_ST_4 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_ST_4 {
+  apply color using S1_KH_ST_4 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_ST_4 {
+  apply color using S0_KH_ST_4 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_ST_4 {
+  apply color using S0_KH_ST_4 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_ST_4 {
+  apply color using S0_KH_ST_4 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KH_ST_5 {
+  apply color using S1_KH_ST_5 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KH_ST_5 {
+  apply color using S1_KH_ST_5 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KH_ST_5 {
+  apply color using S1_KH_ST_5 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KH_ST_5 {
+  apply color using S0_KH_ST_5 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KH_ST_5 {
+  apply color using S0_KH_ST_5 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KH_ST_5 {
+  apply color using S0_KH_ST_5 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KIO_LN_0 {
+  apply color using S1_KIO_LN_0 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KIO_LN_0 {
+  apply color using S1_KIO_LN_0 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KIO_LN_0 {
+  apply color using S1_KIO_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KIO_LN_0 {
+  apply color using S0_KIO_LN_0 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KIO_LN_0 {
+  apply color using S0_KIO_LN_0 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KIO_LN_0 {
+  apply color using S0_KIO_LN_0 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R0_KIO_LN_1 {
+  apply color using S1_KIO_LN_1 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+animate Y0_KIO_LN_1 {
+  apply color using S1_KIO_LN_1 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G0_KIO_LN_1 {
+  apply color using S1_KIO_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+
+animate R1_KIO_LN_1 {
+  apply color using S0_KIO_LN_1 {
+    fillColor : 1 - 2 is "white",
+	4 is "red"
+  }
+}
+
+animate Y1_KIO_LN_1 {
+  apply color using S0_KIO_LN_1 {
+    fillColor : 1 is "white",
+		2 is "yellow",
+		4 is "white"
+  }
+}
+animate G1_KIO_LN_1 {
+  apply color using S0_KIO_LN_1 {
+    fillColor : 1 is "green",
+		2 - 4 is "white"
+  }
+}
+

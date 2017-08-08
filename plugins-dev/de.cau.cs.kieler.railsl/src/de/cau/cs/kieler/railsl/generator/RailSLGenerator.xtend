@@ -398,7 +398,16 @@ struct railway_hardware kicking;
      * Generate the static PROM main code snippet 
      */
     def String generateMainSnippet() {
-'/******************************************************************
+'
+<#include "/snippets/crossing.ftl" >
+<#include "/snippets/contacts.ftl">
+<#include "/snippets/lights.ftl">
+<#include "/snippets/points.ftl">
+<#include "/snippets/second.ftl">
+<#include "/snippets/signals.ftl">
+<#include "/snippets/tracks.ftl">
+
+/******************************************************************
  * T E S T   H E A D E R                                          *
  *                                                                *
  * C O O L   S T U F F   H E R E                                  *
@@ -407,14 +416,15 @@ struct railway_hardware kicking;
 #include "kicking.h"
 #include "railway.h"
 #include "time.h"
+#include "kieler-gen/controller.c"
 
 // Basic dimension constants
 #define NUM_OF_TRACKS 48
 #define NUM_OF_POINTS 30
 #define NUM_OF_LIGHTS 24
 
-#define OPEN = 0
-#define CLOSED = 1 
+#define OPEN 0
+#define CLOSED 1 
 
 
 int main(int *argn, char *argv[]) {
@@ -425,7 +435,9 @@ int main(int *argn, char *argv[]) {
     railway_openlinks_udp(railway,"node%02i","/dev/ttyS0");
     railway_startcontrol(railway,0,0);
 
-    reset();
+    TickData *data = (TickData *) malloc(sizeof(TickData));
+
+    reset(data);
     
     // Variable to keep track of the last time second was true
     clock_t lastSecond = clock();
@@ -437,7 +449,7 @@ int main(int *argn, char *argv[]) {
     
 ${inputs}
         
-        tick();
+        tick(data);
         
 ${outputs}
     
@@ -461,7 +473,7 @@ ${outputs}
     <@output>
         // Set the tracks to the appropriate speed
         for (int i = 0; i < NUM_OF_TRACKS; i++) {
-            settrack(railway, i, ${varname}[i][0], ${varname}[i][1]);
+            settrack(railway, i, data->${varname}[i][1], data->${varname}[i][0]);
         }
     </@>
 </#macro>'
@@ -477,9 +489,9 @@ ${outputs}
         // Set all the signals appropriately
         for (int i = 0; i < NUM_OF_TRACKS; i++) {
             if ((i != KH_ST_0) && (i != KH_ST_6) && (i != IC_ST_0) && (i != IC_ST_4) && \\
-                (i != OC_ST_0) && (i != OC_ST_4) && (i != IC_JCT_0) && (i != OC_JCT_0) {
-                setsignal(railway, i, 0, ${varname}[i][0];
-                setsignal(railway, i, 1, ${varname}[i][1];
+                (i != OC_ST_0) && (i != OC_ST_4) && (i != IC_JCT_0) && (i != OC_JCT_0)) {
+                setsignal(railway, i, 0, data->${varname}[i][0]);
+                setsignal(railway, i, 1, data->${varname}[i][1]);
             }
         }
     </@>
@@ -495,7 +507,7 @@ ${outputs}
     <@output>
         // Set all the switch points appropriately
         for (int i = 0; i < NUM_OF_POINTS; i++) {
-            setpoint(railway, i, ${varname}[i]);
+            setpoint(railway, i, data->${varname}[i]);
         }
     </@>
 </#macro>'
@@ -505,12 +517,12 @@ ${outputs}
      * Generate a static PROM code snippet as wrapper for the @code{lights} variable.
      */
     def String generateLightsSnippet() {
-'<#-- L I G H T S// Variable to keep track of the last time second was true -->
+'<#-- L I G H T S -->
 <#macro lights>
     <@output>
         // Set all the lights appropriately
         for (int i = 0; i < NUM_OF_LIGHTS; i++) {
-            setlight(railway, i, ${varname}[i];
+            setlight(railway, i, data->${varname}[i]);
         }
     </@>
 </#macro>'
@@ -524,11 +536,11 @@ ${outputs}
 <#macro contacts>
     <@input>
         // Scan the contacts at the beginning of each tick
-        for (int i = 0; i < NUM_OF_TRACKS, i++) {
+        for (int i = 0; i < NUM_OF_TRACKS; i++) {
             if ((i != KH_ST_0) && (i != KH_ST_6) && (i != IC_ST_0) && (i != IC_ST_4) && \\
                 (i != OC_ST_0) && (i != OC_ST_4) && (i != IC_JCT_0) && (i != OC_JCT_0)) {
-                ${varname}[i][0] = scancontact(railway, i, 0, 1);
-                ${varname}[i][1] = scancontact(railway, i, 1, 1);   
+                data->${varname}[i][0] = getcontact(railway, i, 0, 1);
+                data->${varname}[i][1] = getcontact(railway, i, 1, 1);   
             }
         }
     </@>
@@ -543,13 +555,13 @@ ${outputs}
 <#macro second>
     <@input>
         // Set second to true if at least one second has elapsed since the last time it was true
-        if ((double) (clock() - lastSecond) / CLOCKS_PER_SECOND) >= 1) {
-            ${varname} = 1;
+        if (((double) (clock() - lastSecond) / CLOCKS_PER_SEC) >= 1) {
+            data->${varname} = 1;
             lastSecond = clock();
         }
     </@>
     <@output>
-        ${varname} = false;
+        data->${varname} = false;
     </@>
 </#macro>'   
     }
@@ -562,9 +574,9 @@ ${outputs}
 <#macro crossing>
     <@output>
         // If the crossing\'s state has been updated this tick, set it accordingly
-        if (${varname} != crossing) {
-            setgate(railway, 0, ${varname});
-            setgate(railway, 1, ${varname});
+        if (data->${varname} != crossing) {
+            setgate(railway, 0, data->${varname});
+            setgate(railway, 1, data->${varname});
         }
     </@>
 </#macro>

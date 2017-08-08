@@ -232,6 +232,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                         switch(file.fileExtension.toLowerCase) {
 //                            case "sct",
                             case "sctx",
+                            case "railsl",
                             case "strl": {
                                 changedModels.add(file)    
                             }
@@ -457,6 +458,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
         return PromPlugin.findFiles(membersWithoutBinDirectory, #[//"sct",
                                                                   "sctx",
+                                                                  "railsl",
                                                                   "strl"])
     }
     

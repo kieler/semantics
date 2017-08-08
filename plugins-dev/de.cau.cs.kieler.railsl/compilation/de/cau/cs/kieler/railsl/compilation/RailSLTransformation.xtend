@@ -150,7 +150,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     def State generateSCChart(Block block) {
 
         var chart = createState
-
+        chart.name = "Controller"
         // I N T E R F A C E
         // input bool contacts[48][2];
         val contactsDecl = createBoolDeclaration
@@ -248,7 +248,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void compile(Block block, State chart) {
 
-        var region = chart.createControlflowRegion("Thread " + getRegionID())
+        var region = chart.createControlflowRegion("Thread_" + getRegionID)
         var currentState = region.createInitialState("init")
 
         // For each statement, create a state representing the behaviour of the statement
@@ -256,7 +256,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             var state = statement.compile(region)
             if (currentState != region.initialState) {
                 // Add tick boundary
-                var connectorState = region.createState("");
+                var connectorState = region.createState("tick_" + getStateID)
                 var termTransition = currentState.createTransitionTo(connectorState)
                 connectorState.createTransitionTo(state)
                 termTransition.setTypeTermination
@@ -271,7 +271,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
 
         // Create the last state of the region and connect it to
         // the previous state with a normal termination transition 
-        var state = region.createState("")
+        var state = region.createState("tick_" + stateID)
         var term = currentState.createTransitionTo(state)
         term.setTypeTermination
         currentState = state
@@ -319,7 +319,8 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
 
     def void makeCrossingStatement(State state, CrossingStatement cStatement) {
         state.label = "_" + getStateID() + "_Crossing"
-        val region = state.createControlflowRegion(cStatement.mode + " crossing")
+        state.name = state.label
+        val region = state.createControlflowRegion(cStatement.mode + "_crossing")
         var init = region.createInitialState("init")
         var done = region.createFinalState("done")
         var transition = init.createImmediateTransitionTo(done)
@@ -339,6 +340,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void makeConditionalStatement(State state, ConditionalStatement cStatement) {
         state.label = "_" + getStateID() + "_Conditional"
+        state.name = state.label
         var i = 0;
 
         // Fetch variable contacts from root SCChart
@@ -367,7 +369,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
         // create states for each line and connect them accordingly
         var j = 0
         for (line : cStatement.lines) {
-            var currentState = region.createState("Alternative " + j)
+            var currentState = region.createState("Alternative_" + j)
             line.block.compile(currentState)
             val trans = region.initialState.createImmediateTransitionTo(currentState)
             trans.trigger = expressions.get(j)
@@ -386,8 +388,9 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void makeLightStatement(State state, LightStatement lStatement) {
         state.label = "_" + getStateID() + "_Light"
+        state.name = state.label
 
-        val region = state.createControlflowRegion("Set_lights_to_" + lStatement.state)
+        val region = state.createControlflowRegion("Set_lights")
         val setting = parseLightMode(lStatement)
         var currentState = region.createInitialState("init")
         var i = 0
@@ -417,8 +420,8 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void makePointStatement(State state, PointStatement spStatement) {
         state.label = "_" + getStateID() + "_SetPoint"
-
-        val region = state.createControlflowRegion("Set_points_to_" + spStatement.orientation)
+        state.name = state.label
+        val region = state.createControlflowRegion("Set_points")
         val direction = parsePointSetting(spStatement)
         var currentState = region.createInitialState("init")
         var i = 0
@@ -448,8 +451,9 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void makeTrackStatement(State state, TrackStatement stStatement) {
         state.label = "_" + getStateID() + "_SetTrack"
-
-        val region = state.createControlflowRegion("Set_tracks_to_" + stStatement.mode)
+        state.name = state.label
+        
+        val region = state.createControlflowRegion("Set_tracks")
         val speed = parseSpeed(stStatement)
         val direction = parseDirection(stStatement)
         var currentState = region.createInitialState("init")
@@ -488,9 +492,9 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
             // Set the signals accordingly
             transition.addEffect(signals.createAssignment(createIntValue(signalValue)) => [
                 indices += createIntValue(trackIndex)
-                indices += createIntValue(direction)
+                indices += createIntValue(if(direction != 0) 1 else 0)
             ])
-            transition.addEffect(signals.createAssignment(createIntValue(0)) => [
+            transition.addEffect(signals.createAssignment(createIntValue(1)) => [
                 indices += createIntValue(trackIndex)
                 indices += createIntValue(if(direction == 0) 1 else 0)
             ])
@@ -507,14 +511,15 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void makeContactWaitStatement(State state, ContactWaitStatement cwStatement) {
         state.label = "_" + getStateID() + "_ContactWait"
-
+        state.name = state.label
+        
         // Parse information from statement object 
         val trackIndex = cwStatement.segName.parseTrackSegment
         val contactIndex = cwStatement.parseContactIndex
         val delay = (if(cwStatement.event.equals("Reach")) 1 else 2)
 
         // Create all required states
-        var region = state.createControlflowRegion(cwStatement.event + "_contact_" + contactIndex +
+        var region = state.createControlflowRegion(cwStatement.event + "_contact_" + contactIndex + "_" + 
             cwStatement.segName);
         var init = region.createInitialState("init")
         var done = region.createFinalState("done");
@@ -541,7 +546,9 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void makeTimeWaitStatement(State state, TimeWaitStatement twStatement) {
         state.label = "_" + getStateID + "_TimeWait"
-        var region = state.createControlflowRegion("Wait " + twStatement.time)
+        state.name = state.label
+        
+        var region = state.createControlflowRegion("Wait_" + twStatement.time)
         var init = region.createInitialState("init")
         var done = region.createFinalState("done")
         var transition = init.createImmediateTransitionTo(done)
@@ -561,6 +568,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
      */
     def void makeParallelStatement(State state, ParallelStatement pStatement) {
         state.label = "_" + getStateID + "_Parallel"
+        state.name = state.label
         
         for (block : pStatement.blocks) {
             block.compile(state)

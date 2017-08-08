@@ -257,7 +257,7 @@ class Visualizer {
                     }
 
                 })
-                registeredEditor.document.addDocumentListener(listener)
+                registeredEditor?.document.addDocumentListener(listener)
                 Visualizer.instance.listener = listener
 
             }
