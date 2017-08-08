@@ -57,8 +57,8 @@ public class SCTXResource extends LazyLinkingResource {
      * Starts model consolidation before {@link LazyLinkingResource#doLinking()}.
      */
     override void doLinking() {
-//        consolidateModel();
-        if (importsHaveChanged) updateResourceSet
+//        if (importsHaveChanged) 
+        updateResourceSet
         super.doLinking();
     }
 
@@ -143,6 +143,19 @@ public class SCTXResource extends LazyLinkingResource {
                 System.err.println("Resource " + importPragma.values.head + " not found!")
             }
         }
+        
+//  EXPERIMENTAL RELOAD of parents
+//  TODO this maybe only necessary at save if necessary at all.         
+//        val lastSegment = ownR.URI.lastSegment
+//        val ownName = lastSegment.substring(0, lastSegment.length - 5)
+//        for (r : rSet.resources.filter[ it !== this ].map[ getContents.head ].filter(SCCharts)) {
+//            val rImports = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma).map[ values.head ]
+//            if (rImports.exists[ it.endsWith(ownName) ]) {
+//                if (r.eResource instanceof SCTXResource) {
+//                    (r.eResource as SCTXResource).doLinking
+//                }
+//            }
+//        }
         
     }
     
