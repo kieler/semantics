@@ -80,6 +80,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -808,6 +809,14 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
     def dispatch Expression convertToSCGExpression(StringValue expression) {
         createStringValue(expression.value).trace(expression)
+    }
+    
+    def dispatch Expression convertToSCGExpression(VectorValue expression) {
+        createVectorValue.trace(expression) => [
+            for (value : expression.values) {
+                it.values += value.convertToSCGExpression
+            }
+        ]
     }
 
     // Apply conversion to textual host code 

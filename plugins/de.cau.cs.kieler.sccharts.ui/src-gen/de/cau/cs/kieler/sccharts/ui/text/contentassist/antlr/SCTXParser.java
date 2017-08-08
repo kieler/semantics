@@ -252,7 +252,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getGroup_1_2(), "rule__ModExpression__Group_1_2__0");
 					put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
-					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_3(), "rule__AtomicValuedExpression__Group_3__0");
+					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 					put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
@@ -268,6 +268,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getGroup_1(), "rule__FunctionCall__Group_1__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_1_2_0(), "rule__FunctionCall__Group_1_2_0__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_1_2_0_2(), "rule__FunctionCall__Group_1_2_0_2__0");
+					put(grammarAccess.getVectorValueAccess().getGroup(), "rule__VectorValue__Group__0");
+					put(grammarAccess.getVectorValueAccess().getGroup_2(), "rule__VectorValue__Group_2__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
 					put(grammarAccess.getPragmaTagAccess().getGroup(), "rule__PragmaTag__Group__0");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
@@ -554,6 +556,8 @@ public class SCTXParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
 					put(grammarAccess.getBoolValueAccess().getValueAssignment(), "rule__BoolValue__ValueAssignment");
 					put(grammarAccess.getStringValueAccess().getValueAssignment(), "rule__StringValue__ValueAssignment");
+					put(grammarAccess.getVectorValueAccess().getValuesAssignment_1(), "rule__VectorValue__ValuesAssignment_1");
+					put(grammarAccess.getVectorValueAccess().getValuesAssignment_2_1(), "rule__VectorValue__ValuesAssignment_2_1");
 					put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 					put(grammarAccess.getCommentAnnotatonSLAccess().getValuesAssignment(), "rule__CommentAnnotatonSL__ValuesAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");

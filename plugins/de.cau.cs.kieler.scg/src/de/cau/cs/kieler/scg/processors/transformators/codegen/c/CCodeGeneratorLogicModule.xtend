@@ -29,6 +29,15 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.scg.ControlFlow
 import java.util.Deque
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import java.util.LinkedList
 
 /**
  * C Code Generator Logic Module
@@ -42,6 +51,8 @@ import java.util.Deque
  */
 class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension CCodeSerializeHRExtensions
     
     static val LOGIC_NAME = "logic"
@@ -110,11 +121,17 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }
         
         // Add the assignment.
-        indent(conditionalStack.size + 1)
         valuedObjectPrefix = struct.getVariableName + "->"
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
-//        println("Serializing " + assignment.serializeHR)
-        code.append(assignment.serializeHR).append(";\n")
+        if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
+            for (asgn : assignment.splitAssignment) {
+                indent(conditionalStack.size + 1)
+                code.append(asgn.serializeHR).append(";\n")    
+            }
+        } else {
+            indent(conditionalStack.size + 1)
+            code.append(assignment.serializeHR).append(";\n")
+        }
         
         // Handle pre variable if necessary.
         if (assignment.expression != null && assignment.expression instanceof OperatorExpression &&
@@ -125,7 +142,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         // If a new statement follows, add it to the node list.
         if (assignment.next != null) nodes.push(assignment.next.target)
     }
-    
+        
     protected def dispatch void generate(Conditional conditional, Deque<Node> nodes) {
         valuedObjectPrefix = struct.getVariableName + "->"
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
@@ -191,6 +208,34 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         tick.code.append(indentation)
         tick.code.append(struct.getVariableName).append("->").append(name).append(" = ")
         tick.code.append(struct.getVariableName).append("->").append(operatorExpression.serializeHR).append(";\n")
+    }
+    
+    protected def List<Assignment> splitAssignment(Assignment assignment) {
+        var vector = assignment.expression as VectorValue
+        vector.splitAssignmentHelper(assignment.valuedObject, <Integer> newLinkedList, <Assignment> newLinkedList)
+    }
+    
+    protected def List<Assignment> splitAssignmentHelper(VectorValue vector, ValuedObject vo, Deque<Integer> indexStack, List<Assignment> assignments) {
+        var index = 0
+        for (v : vector.values) {
+            if (v instanceof VectorValue) {
+                indexStack.push(index)     
+                v.splitAssignmentHelper(vo, indexStack, assignments)
+                indexStack.pop           
+            } else {
+                val newAssignment = ScgFactory.eINSTANCE.createAssignment
+                newAssignment.valuedObject = vo
+                for (is : indexStack) {
+                    newAssignment.indices.add(createIntValue(is))
+                }
+                newAssignment.indices.add(createIntValue(index))
+                newAssignment.expression = v.copy
+                
+                assignments += newAssignment
+            }
+            index++
+        }         
+        assignments        
     }
     
 }

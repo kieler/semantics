@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * Serialization of KExpressions.
@@ -297,6 +298,14 @@ class KExpressionsSerializeExtensions {
 
     def dispatch CharSequence serialize(StringValue expression) {
         "\"" + expression.value + "\""
+    }
+    
+    def dispatch CharSequence serialize(VectorValue expression) {
+        var s = "(" 
+        for (value : expression.values) {
+            s = s + value.serialize + ", "
+        }
+        return s.substring(0, s.length - 2) + ")"
     }
 
     // Expand a boolean expression value (true or false).

@@ -228,6 +228,7 @@ AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue 
     | StringValue
+    | VectorValue
     | '(' ValuedExpression ')'
     | AtomicExpression;
 
@@ -311,6 +312,9 @@ BoolValue returns BoolValue:
 // String Value Rule	
 StringValue returns StringValue:
     value=STRING;
+    
+VectorValue returns VectorValue:
+    '(' values+=Expression (',' values+=Expression)* ')';
 
 // Any Type Rule
 // Data type rule allowing any kind of value to be accepted,

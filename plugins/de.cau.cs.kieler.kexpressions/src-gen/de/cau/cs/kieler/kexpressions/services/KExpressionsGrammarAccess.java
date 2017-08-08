@@ -961,11 +961,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cStringValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final RuleCall cValuedExpressionParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
-		private final RuleCall cAtomicExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cVectorValueParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Keyword cLeftParenthesisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final RuleCall cAtomicExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//// Atomic Valued Expression Rule
 		//// An atomic valued expression is either a simple int float or string literal, another valued expression
@@ -975,11 +976,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	IntValue
 		//	| FloatValue
 		//	| StringValue
+		//	| VectorValue
 		//	| '(' ValuedExpression ')'
 		//	| AtomicExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//IntValue | FloatValue | StringValue | '(' ValuedExpression ')' | AtomicExpression
+		//IntValue | FloatValue | StringValue | VectorValue | '(' ValuedExpression ')' | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IntValue
@@ -991,20 +993,23 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//StringValue
 		public RuleCall getStringValueParserRuleCall_2() { return cStringValueParserRuleCall_2; }
 
+		//VectorValue
+		public RuleCall getVectorValueParserRuleCall_3() { return cVectorValueParserRuleCall_3; }
+
 		//'(' ValuedExpression ')'
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_4() { return cGroup_4; }
 
 		//'('
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		public Keyword getLeftParenthesisKeyword_4_0() { return cLeftParenthesisKeyword_4_0; }
 
 		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_3_1() { return cValuedExpressionParserRuleCall_3_1; }
+		public RuleCall getValuedExpressionParserRuleCall_4_1() { return cValuedExpressionParserRuleCall_4_1; }
 
 		//')'
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
+		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
 
 		//AtomicExpression
-		public RuleCall getAtomicExpressionParserRuleCall_4() { return cAtomicExpressionParserRuleCall_4; }
+		public RuleCall getAtomicExpressionParserRuleCall_5() { return cAtomicExpressionParserRuleCall_5; }
 	}
 
 	public class ValuedObjectTestExpressionElements extends AbstractParserRuleElementFinder {
@@ -1529,6 +1534,50 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getValueSTRINGTerminalRuleCall_0() { return cValueSTRINGTerminalRuleCall_0; }
+	}
+
+	public class VectorValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.VectorValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cValuesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValuesExpressionParserRuleCall_1_0 = (RuleCall)cValuesAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cValuesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cValuesExpressionParserRuleCall_2_1_0 = (RuleCall)cValuesAssignment_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//VectorValue:
+		//	'(' values+=Expression (',' values+=Expression)* ')';
+		@Override public ParserRule getRule() { return rule; }
+
+		//'(' values+=Expression (',' values+=Expression)* ')'
+		public Group getGroup() { return cGroup; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
+
+		//values+=Expression
+		public Assignment getValuesAssignment_1() { return cValuesAssignment_1; }
+
+		//Expression
+		public RuleCall getValuesExpressionParserRuleCall_1_0() { return cValuesExpressionParserRuleCall_1_0; }
+
+		//(',' values+=Expression)*
+		public Group getGroup_2() { return cGroup_2; }
+
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+
+		//values+=Expression
+		public Assignment getValuesAssignment_2_1() { return cValuesAssignment_2_1; }
+
+		//Expression
+		public RuleCall getValuesExpressionParserRuleCall_2_1_0() { return cValuesExpressionParserRuleCall_2_1_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
 	public class AnyTypeElements extends AbstractParserRuleElementFinder {
@@ -2073,6 +2122,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final FloatValueElements pFloatValue;
 	private final BoolValueElements pBoolValue;
 	private final StringValueElements pStringValue;
+	private final VectorValueElements pVectorValue;
 	private final AnyTypeElements pAnyType;
 	private final AnyValueElements pAnyValue;
 	private final CompareOperatorElements eCompareOperator;
@@ -2139,6 +2189,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pFloatValue = new FloatValueElements();
 		this.pBoolValue = new BoolValueElements();
 		this.pStringValue = new StringValueElements();
+		this.pVectorValue = new VectorValueElements();
 		this.pAnyType = new AnyTypeElements();
 		this.pAnyValue = new AnyValueElements();
 		this.eCompareOperator = new CompareOperatorElements();
@@ -2494,6 +2545,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	IntValue
 	//	| FloatValue
 	//	| StringValue
+	//	| VectorValue
 	//	| '(' ValuedExpression ')'
 	//	| AtomicExpression
 	public AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
@@ -2652,6 +2704,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
+	}
+
+	//VectorValue:
+	//	'(' values+=Expression (',' values+=Expression)* ')';
+	public VectorValueElements getVectorValueAccess() {
+		return pVectorValue;
+	}
+	
+	public ParserRule getVectorValueRule() {
+		return getVectorValueAccess().getRule();
 	}
 
 	//// Any Type Rule

@@ -142,6 +142,15 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.VECTOR_VALUE: {
+                VectorValue vectorValue = (VectorValue)theEObject;
+                T result = caseVectorValue(vectorValue);
+                if (result == null) result = caseValue(vectorValue);
+                if (result == null) result = caseExpression(vectorValue);
+                if (result == null) result = caseSchedulable(vectorValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KExpressionsPackage.OPERATOR_EXPRESSION: {
                 OperatorExpression operatorExpression = (OperatorExpression)theEObject;
                 T result = caseOperatorExpression(operatorExpression);
@@ -589,6 +598,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseStringValue(StringValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Vector Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Vector Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseVectorValue(VectorValue object) {
         return null;
     }
 

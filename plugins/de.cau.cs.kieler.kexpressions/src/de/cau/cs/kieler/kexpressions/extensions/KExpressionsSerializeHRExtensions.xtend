@@ -11,6 +11,7 @@ import java.util.List
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -375,7 +376,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             
         return result
     }   
-    	
+    
+    def dispatch CharSequence serializeHR(VectorValue expression) {
+        var s = "(" 
+        for (value : expression.values) {
+            s = s + value.serializeHR + ", "
+        }
+        return s.substring(0, s.length - 2) + ")"
+    }    	
 	
 
     dispatch def CharSequence serializeHR(Expression expression) {

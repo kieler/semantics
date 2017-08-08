@@ -106,6 +106,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createStringValueAdapter();
             }
             @Override
+            public Adapter caseVectorValue(VectorValue object) {
+                return createVectorValueAdapter();
+            }
+            @Override
             public Adapter caseOperatorExpression(OperatorExpression object) {
                 return createOperatorExpressionAdapter();
             }
@@ -498,6 +502,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createStringValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.VectorValue <em>Vector Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.VectorValue
+     * @generated
+     */
+    public Adapter createVectorValueAdapter() {
         return null;
     }
 

@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * @author ssm
@@ -264,6 +265,10 @@ class KExpressionsCreateExtensions {
         KExpressionsFactory::eINSTANCE.createStringValue() => [
             setValue(value)
         ]
+    }
+    
+    def VectorValue createVectorValue() {
+        KExpressionsFactory::eINSTANCE.createVectorValue
     }
 
     def TextExpression createTextExpression() {

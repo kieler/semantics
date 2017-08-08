@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.VectorValue;
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -466,6 +467,44 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.VECTOR_VALUE:
+				if (rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()) {
+					sequence_Expression_VectorValue(context, (VectorValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueRule()) {
+					sequence_VectorValue(context, (VectorValue) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -752,6 +791,19 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? schedule+=ScheduleObjectReference*)
 	 */
 	protected void sequence_Expression_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Root returns VectorValue
+	 *     Expression returns VectorValue
+	 *
+	 * Constraint:
+	 *     (values+=Expression values+=Expression* schedule+=ScheduleObjectReference*)
+	 */
+	protected void sequence_Expression_VectorValue(ISerializationContext context, VectorValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1098,6 +1150,45 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
 	 */
 	protected void sequence_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BoolExpression returns VectorValue
+	 *     LogicalOrExpression returns VectorValue
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns VectorValue
+	 *     LogicalAndExpression returns VectorValue
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns VectorValue
+	 *     BitwiseOrExpression returns VectorValue
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns VectorValue
+	 *     BitwiseAndExpression returns VectorValue
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns VectorValue
+	 *     CompareOperation returns VectorValue
+	 *     CompareOperation.OperatorExpression_1_0 returns VectorValue
+	 *     NotOrValuedExpression returns VectorValue
+	 *     NotExpression returns VectorValue
+	 *     ValuedExpression returns VectorValue
+	 *     AddExpression returns VectorValue
+	 *     AddExpression.OperatorExpression_1_0 returns VectorValue
+	 *     SubExpression returns VectorValue
+	 *     SubExpression.OperatorExpression_1_0 returns VectorValue
+	 *     MultExpression returns VectorValue
+	 *     MultExpression.OperatorExpression_1_0 returns VectorValue
+	 *     DivExpression returns VectorValue
+	 *     DivExpression.OperatorExpression_1_0 returns VectorValue
+	 *     ModExpression returns VectorValue
+	 *     ModExpression.OperatorExpression_1_0 returns VectorValue
+	 *     NegExpression returns VectorValue
+	 *     AtomicExpression returns VectorValue
+	 *     AtomicValuedExpression returns VectorValue
+	 *     VectorValue returns VectorValue
+	 *
+	 * Constraint:
+	 *     (values+=Expression values+=Expression*)
+	 */
+	protected void sequence_VectorValue(ISerializationContext context, VectorValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
