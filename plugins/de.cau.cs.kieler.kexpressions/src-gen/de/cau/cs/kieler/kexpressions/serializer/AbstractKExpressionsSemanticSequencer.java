@@ -738,10 +738,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     VectorValueMember returns FunctionCall
 	 *
 	 * Constraint:
-	 *     (
-	 *         ((functionName=ID (parameters+=Parameter parameters+=Parameter*)?) | (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)) 
-	 *         schedule+=ScheduleObjectReference*
-	 *     )
+	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)? schedule+=ScheduleObjectReference*)
 	 */
 	protected void sequence_Expression_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -910,7 +907,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     FunctionCall returns FunctionCall
 	 *
 	 * Constraint:
-	 *     ((functionName=ID (parameters+=Parameter parameters+=Parameter*)?) | (functionName=ID (parameters+=Parameter parameters+=Parameter*)?))
+	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

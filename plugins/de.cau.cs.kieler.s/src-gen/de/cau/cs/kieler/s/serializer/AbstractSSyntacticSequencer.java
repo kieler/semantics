@@ -77,7 +77,6 @@ public abstract class AbstractSSyntacticSequencer extends AbstractSyntacticSeque
 	 *     ('(' '('*)*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '<' functionName=ID
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -121,7 +120,6 @@ public abstract class AbstractSSyntacticSequencer extends AbstractSyntacticSeque
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) '<' functionName=ID
 	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) operator=PreOperator

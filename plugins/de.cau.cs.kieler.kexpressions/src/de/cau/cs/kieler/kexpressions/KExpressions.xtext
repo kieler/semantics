@@ -275,12 +275,12 @@ FunctionCall returns FunctionCall:
             (',' parameters += Parameter)* ')'
         ) | '()')
     )
-    |
-    ('<' functionName = ID 
-        (('(' parameters += Parameter 
-            (',' parameters += Parameter)* ')'
-        ) | '()')
-    '>')
+//    |
+//    ('<' functionName = ID 
+//        (('(' parameters += Parameter 
+//            (',' parameters += Parameter)* ')'
+//        ) | '()')
+//    '>')
     ;    
 
 // Parameter Rule

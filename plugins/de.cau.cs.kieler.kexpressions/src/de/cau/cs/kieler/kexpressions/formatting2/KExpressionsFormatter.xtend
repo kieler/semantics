@@ -77,14 +77,9 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 	def dispatch void format(FunctionCall functioncall, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		
-        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_0_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_1_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        functioncall.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_0_2_0_3)?.prepend[ noSpace ]
-        functioncall.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_1_2_0_3)?.prepend[ noSpace ]
-        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_0_2_1)?.prepend[ noSpace ]
-        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_1_2_1)?.prepend[ noSpace ]
-        functioncall.regionFor.keyword(functionCallAccess.lessThanSignKeyword_1_0)?.prepend[ noSpace ].append[ noSpace ]
-        functioncall.regionFor.keyword(functionCallAccess.greaterThanSignKeyword_1_3)?.prepend[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisKeyword_2_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.rightParenthesisKeyword_2_0_3)?.prepend[ noSpace ]
+        functioncall.regionFor.keyword(functionCallAccess.leftParenthesisRightParenthesisKeyword_2_1)?.prepend[ noSpace ]
         		
 		for (Parameter parameters : functioncall.getParameters()) {
 			format(parameters, document);
