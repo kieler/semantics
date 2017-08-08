@@ -311,7 +311,7 @@
     <extension
           point="de.cau.cs.kieler.klighd.ui.view.editor">
       <editor
-            controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
+            controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.kicool.KiCool">
       </editor>          
     </extension>
@@ -328,6 +328,22 @@
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencesSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.MessageObjectReferencesSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.kitt.synthesis.TracingTreeDiagramSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.kitt.syntheses.TracingTreeDiagramSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChainSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.ModelChainSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolderSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolderSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.klighd.internal.model.XtextSerializationSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.XtextSerializationSynthesis">
       </diagramSynthesis>
    </extension>
        <extension
@@ -350,5 +366,15 @@
                 class="de.cau.cs.kieler.kicool.ui.synthesis.actions.ToggleProcessorOnOffAction"
                 id="de.cau.cs.kieler.kicool.ui.synthesis.actions.toggleProcessorOnOffAction">
           </action>
+          <updateStrategy
+                class="de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy"
+                id="de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy">
+          </updateStrategy>
+       </extension>
+       <extension
+             point="de.cau.cs.kieler.klighd.ui.view.controller">
+          <controller
+                class="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController">
+          </controller>
        </extension>
 </plugin>

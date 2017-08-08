@@ -21,7 +21,7 @@ import java.util.List
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.KExpressionsFactory
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.Expression
 import com.google.common.collect.ImmutableList
 

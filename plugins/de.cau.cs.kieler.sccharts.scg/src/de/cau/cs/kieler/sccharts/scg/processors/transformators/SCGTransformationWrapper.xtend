@@ -21,6 +21,8 @@ import de.cau.cs.kieler.sccharts.scg.SCGTransformation
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+
 /**
  * It would be nice to use generics here, but this is not possible, because the old transform methods are invoked by
  * reflection. Hence, {@code extends AbstractExpansionTransformation} as generic super class is unfortunately useless here.
@@ -43,9 +45,12 @@ class SCGTransformationWrapper extends Processor<SCCharts, SCGraphs> {
     }
     
     override process() {
+        val model = getModel
         val wrappedTransformation = injector.getInstance(SCGTransformation)
         val scgs = ScgFactory.eINSTANCE.createSCGraphs => [
-            scgs += wrappedTransformation.transform(getModel, null) 
+            creationalTransformation(model, it) // Tell KITT that this is not an in-place transformation from here on
+            it.trace(model)
+            scgs += wrappedTransformation.transform(model, null) 
         ]
         setModel(scgs)
     }

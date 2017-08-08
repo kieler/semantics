@@ -122,19 +122,27 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<SCCharts> {
             for(rootState : scc.rootStates) {
                 hooks.invokeStart(rootState, rootNode)
                 rootNode.children += stateSynthesis.transform(rootState)
+                
+                // Add tracking adapter to allow access to source model associations
+                val trackingAdapter = new SourceModelTrackingAdapter();
+                rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
+                // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
+                rootNode.children.forEach[eAdapters.add(trackingAdapter)]
+                
                 hooks.invokeFinish(rootState, rootNode)
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)
             rootNode.children += stateSynthesis.transform(scc.rootStates.head)
+            
+            // Add tracking adapter to allow access to source model associations
+            val trackingAdapter = new SourceModelTrackingAdapter();
+            rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
+            // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
+            rootNode.children.forEach[eAdapters.add(trackingAdapter)]
+            
             hooks.invokeFinish(scc.rootStates.head, rootNode) 
         }
-        
-        // Add tracking adapter to allow access to source model associations
-        val trackingAdapter = new SourceModelTrackingAdapter();
-        rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
-        // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
-        rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
         val pragmaFont = scc.getStringPragmas(PRAGMA_FONT).last
         if (pragmaFont != null) {

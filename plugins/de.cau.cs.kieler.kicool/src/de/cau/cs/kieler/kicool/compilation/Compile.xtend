@@ -36,11 +36,12 @@ class Compile {
     static def CompilationContext createCompilationContext(System system, Object sourceModel) {
         checkNotNull(system, "System is null")
         checkNotNull(sourceModel, "Source model is null")
-        new CompilationContext => [
+        val context = KiCoolRegistration.getInjector.getInstance(CompilationContext)
+        context => [
             it.system = system
-            it.sourceModel = sourceModel
+            it.originalModel = sourceModel
             it.populateContext
-            RuntimeSystems.add(it.getSystem, it)
+//            RuntimeSystems.add(it.getSystem, it)
         ]
     }
     
@@ -56,5 +57,13 @@ class Compile {
      */
     static def asyncronousCompilation(CompilationContext compilationContext) {
         AsynchronousCompilation.compile(compilationContext)
+    }
+    
+    static def addToRuntimeSystems(CompilationContext context) {
+        RuntimeSystems.add(context.getSystem, context)        
+    }
+    
+    static def removeFromRuntimeSystems(CompilationContext context) {
+        RuntimeSystems.remove(context.getSystem)
     }
 }

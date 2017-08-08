@@ -23,9 +23,9 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
-import de.cau.cs.kieler.kitt.tracing.Tracing
-import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.kicool.ui.kitt.tracing.internal.TracingEdgeNode
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.SynthesisOption
@@ -87,6 +87,11 @@ import org.eclipse.ui.progress.UIJob
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.scg.SCGraphs
 
 /**
  * Adds the SCG dependencies into the SCChart.
@@ -312,13 +317,16 @@ class SCGDependencyHook extends SynthesisActionHook {
     /**
      * Compiles the given SCChart with tracing to get dependencies
      */
-    private def CompilationResult compileDependencies(State scc) {
-        val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +
-            ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
-            scc);
-        context.setProperty(Tracing.ACTIVE_TRACING, true);
-        context.advancedSelect = true;
-        return KielerCompiler.compile(context)
+    private def CompilationContext compileDependencies(State state) {
+        val model = state.eContainer as SCCharts
+        val cc = Compile.createCompilationContext("de.cau.cs.kieler.scg.dependency", model)
+        
+        cc.startEnvironment.setProperty(Environment.INPLACE, true)
+        cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
+        
+        cc.compile
+
+        return cc
     }
 
 	/** 
@@ -327,8 +335,8 @@ class SCGDependencyHook extends SynthesisActionHook {
 	private def calculateSCGDependencyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking,
 		KNode attachNode) {
 
-		val result = compileDependencies(scc);
-		val compiledModel = result.object;
+		val context = compileDependencies(scc);
+		val compiledModel = context.result.getModel
 
 		// Calculate equivalence classes for diagram elements
 		val equivalenceClasses = new TracingMapping(null);
@@ -356,7 +364,8 @@ class SCGDependencyHook extends SynthesisActionHook {
 		if (compiledModel instanceof SCGraph) {
 			val scg = compiledModel as SCGraph;
 
-			val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+//			val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+            val mapping = context.startEnvironment.getProperty(Tracing.TRACING_DATA).getMapping(scg, scc)      
 			if (mapping !== null) {
 				val filterDiagramPredicate = KLabel.instanceOf.or([
 					return it instanceof KRectangle && !(it as KRectangle).getProperty(StateStyles.IS_LAYOUT_ELEMENT)
@@ -481,19 +490,23 @@ class SCGDependencyHook extends SynthesisActionHook {
     private def addDataflowDependencyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
         // PHASE 1: Yodeling Yeti (Preparation)
         // Compile the SCChart with Tracing up until dependency analysis
-        val result = compileDependencies(scc);
-        val compiledModel = result.object;
+        val context = compileDependencies(scc)
+        val compiledModel = context.result.getModel
 
         // Ensure that the compilation returned an SCG
-        if (!(compiledModel instanceof SCGraph)) {
-            return;
+        if (!(compiledModel instanceof SCGraphs)) {
+            return
         }
 
         // Take the compiled model as SCG
-        val scg = compiledModel as SCGraph;
+        val scg = (compiledModel as SCGraphs).scgs.head
 
-        // Get the tracing mapping from the dependency scg to the source model 
-        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+        // Get the tracing mapping from the dependency scg to the source model
+//        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+        val sccContainer = scc.eContainer
+        val scgContainer = scg.eContainer
+        val tracing = context.startEnvironment.getProperty(Tracing.TRACING_DATA)
+        val mapping = tracing.getMapping(scgContainer, sccContainer)      
         if (mapping === null) {
             return;
         }

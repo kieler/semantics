@@ -42,7 +42,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.HashMap
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.Value
 
 class CopyPropagation extends AbstractProductionTransformation {

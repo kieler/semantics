@@ -147,12 +147,20 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     
     
     def Source getModel() {
-        try {
+//        try {
             val model = environment.getProperty(MODEL) as Source
             return model
-        } catch (ClassCastException e) {
-            return null
-        }
+//        } catch (ClassCastException e) {
+//            return null
+//        }
+    }
+    
+    def Source getSourceModel() {
+       environment.getProperty(SOURCE_MODEL) as Source
+    }
+    
+    def Target getTargetModel() {
+       environment.getProperty(MODEL) as Target
     }
     
     def Target setModel(Target model) {

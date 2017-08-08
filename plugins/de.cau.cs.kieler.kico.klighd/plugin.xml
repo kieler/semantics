@@ -2,35 +2,14 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.klighd.diagramSyntheses">
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.model.ModelChainSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.internal.model.ModelChainSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolderSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolderSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.model.XtextSerializationSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.internal.model.XtextSerializationSynthesis">
-      </diagramSynthesis>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction"
-            id="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction">
+            class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction"
+            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.OpenCodeInEditorAction">
       </action>
       <action
-            class="de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction"
-            id="de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction">
+            class="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction"
+            id="de.cau.cs.kieler.kicool.ui.klighd.internal.model.action.RemovedCollapsedDiagramsAction">
       </action>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.klighd.ui.view.controller">
-      <controller
-            class="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController">
-      </controller>
    </extension>
 </plugin>

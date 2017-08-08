@@ -78,12 +78,13 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                     return null;
                 } else {
                     val lines = value.split("\n")
-                    for (i : 1..lines.length - 1) {
-                        val newLine = " * " + lines.get(i)
+                    if (lines.length > 1) for (i : 1..lines.length - 1) {
+                        var newLine = lines.get(i).replaceFirst("\\s+\\*", " *")
+                        if (!newLine.startsWith(" *") && !newLine.startsWith("/**")) newLine = " * " + newLine
                         lines.set(i, newLine)
                     }                   
                     
-                    return "/** " + lines.join("\n") + " */";
+                    return "/**\n " + lines.join("\n") + "\n */";
                 }
             }
         };

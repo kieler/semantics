@@ -150,7 +150,7 @@ class ProcessorDataManager {
             sourceNode.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(processorUnit, 
                     compilationNotification.compilationContext, 
-                    compilationNotification.compilationContext.sourceModel, view
+                    compilationNotification.compilationContext.originalModel, view
                 ))
         }
     }

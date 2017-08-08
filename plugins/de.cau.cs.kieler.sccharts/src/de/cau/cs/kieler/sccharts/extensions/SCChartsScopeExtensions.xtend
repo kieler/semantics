@@ -22,19 +22,18 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.Iterator
 import java.util.List
 
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension de.cau.cs.kieler.sccharts.iterators.ControlflowRegionIterator.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil
+import de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
@@ -51,14 +50,6 @@ class SCChartsScopeExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsStateExtensions
-    
-    def SCCharts getSCCharts(Scope scope) {
-        if (scope.eContainer != null) {
-            return (scope.eContainer as Scope).getSCCharts as SCCharts
-        } else {
-            return scope as SCCharts
-        }
-    }
     
     def Iterator<State> getAllContainedStates(Scope scope) {
         scope.sccAllContainedStates 

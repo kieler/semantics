@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Compiler KLighD Model View
-Bundle-SymbolicName: de.cau.cs.kieler.kico.klighd;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.kicool.ui.klighd;singleton:=true
 Bundle-Version: 0.12.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin
+Bundle-Activator: de.cau.cs.kieler.kicool.ui.klighd.KiCoKlighdPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.xtext.ui,
@@ -18,11 +18,8 @@ Require-Bundle: org.eclipse.ui.ide,
  de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.kitt.klighd,
  de.cau.cs.kieler.kitt,
- de.cau.cs.kieler.klighd.krendering.extensions
+ de.cau.cs.kieler.klighd.krendering.extensions,
+ de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.kicool.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.kico.klighd,
- de.cau.cs.kieler.kico.klighd.internal,
- de.cau.cs.kieler.kico.klighd.internal.model,
- de.cau.cs.kieler.kico.klighd.internal.model.action,
- de.cau.cs.kieler.kico.klighd.internal.model.editor

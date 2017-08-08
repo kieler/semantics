@@ -33,6 +33,13 @@ import de.cau.cs.kieler.kicool.ProcessorSystem
 import java.util.List
 import java.util.ArrayList
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.isTracingActive
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration.addTracingProperty
+import com.google.inject.Inject
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 
 /**
  * @author ssm
@@ -43,12 +50,13 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
     
     // Minimal requirements for compilation
     @Accessors System system
-    @Accessors Object sourceModel
+    @Accessors Object originalModel
     @Accessors Map<ProcessorReference, Processor<?,?>> processorMap
     @Accessors List<Processor<?,?>> processorInstancesSequence 
     @Accessors Map<ProcessorSystem, CompilationContext> subContexts
     @Accessors CompilationContext parentContext = null
     @Accessors Environment startEnvironment
+    @Accessors Environment result
     
     new() {
         processorMap = new HashMap<ProcessorReference, Processor<?,?>>()
@@ -56,10 +64,12 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         subContexts = new HashMap<ProcessorSystem, CompilationContext>()
         
         startEnvironment = new Environment
-        startEnvironment.setProperty(SOURCE_MODEL, sourceModel)
+        startEnvironment.setProperty(ORIGINAL_MODEL, originalModel)
         startEnvironment.setProperty(COMPILATION_CONTEXT, this)
         startEnvironment.setProperty(INPLACE, false)        
-        startEnvironment.setProperty(ONGOING_WORKING_COPY, true)
+        startEnvironment.setProperty(ONGOING_WORKING_COPY, false)
+        
+        result = null
     }
     
     def getProcessorInstances() {
@@ -83,22 +93,28 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         Compile.asyncronousCompilation(this)
     }
     
-    def void compile() {
-        if (startEnvironment.getProperty(ONGOING_WORKING_COPY) && sourceModel instanceof EObject) {
-            startEnvironment.setProperty(MODEL, (sourceModel as EObject).copy)
+    def Environment compile() {
+        startEnvironment.addTracingProperty
+        
+        if (startEnvironment.getProperty(ONGOING_WORKING_COPY) && originalModel instanceof EObject) {
+            val modelCopy = EnvironmentPropertyHolder.tracingCopy((originalModel as EObject), startEnvironment)
+            startEnvironment.setProperty(MODEL, modelCopy)
         } else {
-            startEnvironment.setProperty(MODEL, sourceModel)
+            startEnvironment.setProperty(MODEL, originalModel)
         }
         
         for(intermediateProcessor : getIntermediateProcessors) {
             intermediateProcessor.setEnvironment(startEnvironment, startEnvironment)
             if (intermediateProcessor.validateType) {
-                if (intermediateProcessor instanceof Metric<?,?>) intermediateProcessor.setMetricSourceEntity
-                intermediateProcessor.process
+                if (intermediateProcessor instanceof Metric<?,?>) {
+                    intermediateProcessor.setMetricSourceEntity
+                    intermediateProcessor.process
+                }
             }
         }
         
-        startEnvironment.compile        
+        result = startEnvironment.compile
+        result        
     }
     
     // Protected is important. Should not be accessible from the outside.
@@ -108,7 +124,8 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         notify(new CompilationStart(this))
         val EPrime = processorEntry.compileEntry(environment)
         notify(new CompilationFinished(this, EPrime))
-              
+
+        result = EPrime              
         EPrime  
     }
     
@@ -124,12 +141,19 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         environment.setProperty(INPLACE_VALID, processorInstance.validateInplaceType)
         val environmentPrime = environment.preparePrimeEnvironment
+        environmentPrime.setProperty(SOURCE_MODEL, environmentPrime.getProperty(MODEL))
         
         processorInstance.setEnvironment(environment, environmentPrime)
         
         environment.processEnvironmentSetter(processorReference.presets)
         
         notify(new ProcessorStart(this, processorReference, processorInstance))
+        
+        for(intermediateProcessor : getIntermediateProcessors(processorReference)) {
+            intermediateProcessor.setEnvironment(environment, environmentPrime)
+            if (intermediateProcessor.validateType) intermediateProcessor.processBefore
+        }
+        
         val startTimestamp = java.lang.System.nanoTime
         environmentPrime.setProperty(START_TIMESTAMP, startTimestamp)
         try {
@@ -218,15 +242,26 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         else return parentContext.getRootContext
     }
     
-    protected def getIntermediateProcessors() {
-        system.intermediates.map[ processorMap.get(it) ]
+    @Inject TracingIntegration tracingIntegrationInstance
+    
+    protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors() {
+        val processors = system.intermediates.map[ processorMap.get(it) as IntermediateProcessor<?,?> ]
+        
+        if (startEnvironment.isTracingActive) {
+            return <IntermediateProcessor<?,?>> newLinkedList => [
+                    addAll(processors) 
+                    add(tracingIntegrationInstance)
+                ]
+        }
+        
+        processors
     }
     
-    protected def getIntermediateProcessors(ProcessorReference processorReference) {
+    protected def List<IntermediateProcessor<?,?>> getIntermediateProcessors(ProcessorReference processorReference) {
         if (processorReference.metric != null) {
             return (system.intermediates.filter[ !(processorMap.get(it) instanceof Metric<?,?>) ].toList => [
                 it += processorReference.metric
-            ]).map[ processorMap.get(it) ]    
+            ]).map[ processorMap.get(it) as IntermediateProcessor<?,?> ]    
         } 
         return getIntermediateProcessors        
     }

@@ -52,7 +52,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kitt.tracing.Tracing;
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.krendering.KRectangle;
@@ -193,7 +193,8 @@ public class TimingAnalysis extends Job {
                 "*T_ABORT, *T_INITIALIZATION, *T_scg.basicblock.sc, *T_s.c, "
                 + "*T_sccharts.scg, *T_NOSIMULATIONVISUALIZATION, *T_scg.guards, "
                 + "*T_scg.scheduling, T_scg.tpp", scchart);
-		context.setProperty(Tracing.ACTIVE_TRACING, true);
+        // TODO: adapt to kicool
+//		context.setProperty(Tracing.ACTIVE_TRACING, true);
 		context.setProperty(SCGTransformation.ENABLE_SFR, true);
 		context.setAdvancedSelect(true);
 		CompilationResult compilationResult = KielerCompiler.compile(context);

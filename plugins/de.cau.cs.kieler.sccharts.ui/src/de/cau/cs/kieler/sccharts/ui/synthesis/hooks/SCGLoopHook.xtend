@@ -15,8 +15,8 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.tracing.Tracing
-import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.progress.UIJob
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook.*
+import com.google.common.collect.Multimap
 
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
@@ -158,17 +159,21 @@ class SCGLoopHook extends SynthesisActionHook {
         SourceModelTrackingAdapter tracking) {
 
         // TODO This transformation selection should be sensitive to the user selection in KiCoSelectionView regarding its editor
-        val context = new KielerCompilerContext(SCGFeatures.GUARD_EXPRESSIONS_ID +
-            ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
-            scc);
-        context.setProperty(Tracing.ACTIVE_TRACING, true);
-        context.advancedSelect = true;
-        val result = KielerCompiler.compile(context);
-        val compiledModel = result.object;
-        val scg = compiledModel as SCGraph;
+        // TODO adapt to kicool
+//        val context = new KielerCompilerContext(SCGFeatures.GUARD_EXPRESSIONS_ID +
+//            ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
+//            scc);
+//        context.setProperty(Tracing.ACTIVE_TRACING, true);
+//        context.advancedSelect = true;
+//        val result = KielerCompiler.compile(context);
+//        val compiledModel = result.object;
+//        val scg = compiledModel as SCGraph;
+//
+//        val loops = result.getAuxiliaryData(PotentialInstantaneousLoopResult)
+//        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
 
-        val loops = result.getAuxiliaryData(PotentialInstantaneousLoopResult)
-        val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
+        val List<PotentialInstantaneousLoopResult> loops = null
+        val Multimap<Object, Object> mapping = null
 
         // Calculate equivalence classes for diagram elements
         val equivalenceClasses = new TracingMapping(null);

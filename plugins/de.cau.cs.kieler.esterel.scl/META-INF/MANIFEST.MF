@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.scl,
- de.cau.cs.kieler.kitt
+ de.cau.cs.kieler.kicool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.core.model.handlers,

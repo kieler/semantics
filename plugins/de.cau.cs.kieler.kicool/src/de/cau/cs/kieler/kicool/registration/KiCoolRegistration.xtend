@@ -54,6 +54,10 @@ class KiCoolRegistration {
     private static val List<Class<? extends Processor>> processorList = loadRegisteredProcessors
     
     
+    static def getInjector() {
+        injector
+    }
+    
     static def getInstance(Class<?> clazz) {
         injector.getInstance(clazz);
     }

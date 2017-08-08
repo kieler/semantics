@@ -19,7 +19,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.SCGAnnotations

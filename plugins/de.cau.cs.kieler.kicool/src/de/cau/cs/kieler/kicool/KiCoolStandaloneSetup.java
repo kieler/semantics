@@ -3,9 +3,7 @@
  */
 package de.cau.cs.kieler.kicool;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensionsPlugin;
 
 /**
  * Initialization support for running Xtext languages 
@@ -17,9 +15,5 @@ public class KiCoolStandaloneSetup extends KiCoolStandaloneSetupGenerated{
 		return new KiCoolStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 	
-    public Injector createInjector() {
-        return Guice.createInjector(new de.cau.cs.kieler.kicool.KiCoolRuntimeModule(),
-                KRenderingExtensionsPlugin.createNoScopeBindingModule());
-    }	
 }
 

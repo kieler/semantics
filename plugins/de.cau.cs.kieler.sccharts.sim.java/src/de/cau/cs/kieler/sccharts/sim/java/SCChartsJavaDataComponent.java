@@ -60,7 +60,6 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
-import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCG;
@@ -576,9 +575,11 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 // In case we want to simulate a circuit, first re-compile the model
                 // but just up to SSA-SCG.
                 HashMap<IPath, EObject> map = KiemPlugin.getOpenedModelRootObjects();
-                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
-                    EObject sourceModel =
-                            (EObject) map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                // TODO adapt to kicool
+//                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
+//                    EObject sourceModel =
+//                            (EObject) map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                    EObject sourceModel = null;
 
                     // Compile to SSA_SCG
 
@@ -599,7 +600,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                     myModel = sourceModel;
                     extendedSCChart = highLeveleCompilationResult.getEObject();
                 }
-            }
+//            }
 
             
             if (isExposeAllVars()) {

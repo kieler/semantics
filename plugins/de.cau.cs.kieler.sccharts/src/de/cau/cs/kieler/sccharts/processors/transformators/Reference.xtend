@@ -174,7 +174,7 @@ class Reference extends SCChartsProcessor {
                 }
 
                 // If the binding is an array reference, add the references to the valued object reference.                
-                if (!newRef.indices.empty) {
+                if (!newRef.indices.empty && valuedObjectReference.indices.empty) {
                     valuedObjectReference.indices.clear
                     for (index : newRef.indices) {
                         if (index instanceof Value) {
@@ -227,7 +227,7 @@ class Reference extends SCChartsProcessor {
     }
 
     protected dispatch def void replaceReferences(Assignment assignment, Replacements replacements) {
-        assignment.expression.replaceReferences(replacements)
+        assignment.expression?.replaceReferences(replacements)
         
         val newRef = replacements.peek(assignment.valuedObject)
         if (newRef != null) {

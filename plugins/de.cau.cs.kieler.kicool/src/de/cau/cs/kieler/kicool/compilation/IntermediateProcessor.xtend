@@ -26,7 +26,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-abstract class IntermediateProcessor<Source> extends Processor<Source, Source> {
+abstract class IntermediateProcessor<Source, Target> extends Processor<Source, Target> {
     
     /**
      * Override to environment setter to be able to set the processor environments
@@ -35,5 +35,10 @@ abstract class IntermediateProcessor<Source> extends Processor<Source, Source> {
     override setEnvironment(Environment environment, Environment environmentPrime) {
         this.environments = new EnvironmentPair(environment, environmentPrime)
     }    
+    
+    /** 
+     * The process method. It is called whenever the processor is invoked.
+     */    
+    public def void processBefore() {}    
     
 }

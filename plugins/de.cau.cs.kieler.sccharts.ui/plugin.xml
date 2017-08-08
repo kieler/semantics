@@ -495,7 +495,7 @@
          point="de.cau.cs.kieler.klighd.ui.view.editor">
       <editor
            
-controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
+controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.sccharts.text.SCTX">
       </editor>
    </extension>

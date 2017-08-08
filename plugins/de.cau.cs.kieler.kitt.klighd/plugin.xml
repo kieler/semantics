@@ -22,18 +22,4 @@
             contributorClass="de.cau.cs.kieler.kitt.klighd.editor.TracingTreeActionBarContributor">
       </editor>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.klighd.diagramSyntheses">
-   <diagramSynthesis
-         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kitt.klighd.synthesis.TracingTreeDiagramSynthesis"
-         id="de.cau.cs.kieler.kitt.klighd.syntheses.TracingTreeDiagramSynthesis">
-   </diagramSynthesis>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.klighd.extensions">
-      <updateStrategy
-            class="de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy"
-            id="de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy">
-      </updateStrategy>
-   </extension>
 </plugin>

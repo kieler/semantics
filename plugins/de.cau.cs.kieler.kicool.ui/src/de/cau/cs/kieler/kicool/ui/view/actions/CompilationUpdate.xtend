@@ -27,9 +27,9 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 
-import de.cau.cs.kieler.kico.klighd.KiCoModelViewNotifier
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewNotifier
 import de.cau.cs.kieler.kicool.ui.synthesis.Container
-import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder
+import de.cau.cs.kieler.kicool.ui.klighd.internal.model.CodePlaceHolder
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
