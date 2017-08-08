@@ -519,4 +519,13 @@
        </view>
     </perspectiveExtension>
  </extension>
+ <extension
+       id="de.cau.cs.kieler.railsl.ui.RailSLNature"
+       point="org.eclipse.core.resources.natures">
+    <runtime>
+       <run
+             class="de.cau.cs.kieler.railsl.ui.natures.RailSLNature">
+       </run>
+    </runtime>
+ </extension>
 </plugin>

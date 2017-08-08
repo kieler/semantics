@@ -17,6 +17,12 @@ import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage
+import java.net.URI
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.runtime.CoreException
+import de.cau.cs.kieler.railsl.ui.natures.RailSLNature
+import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.resources.ResourcesPlugin
 
 /**
  * @author stu121235
@@ -35,6 +41,13 @@ class NewRailSLProjectWizard extends Wizard implements INewWizard {
     }
     
     override performFinish() {
+        var URI location = null
+        if (!page.useDefaults) {
+            location = page.locationURI
+        }
+        
+        createProject(page.projectName, location)
+        
         true
     }
     
@@ -48,7 +61,64 @@ class NewRailSLProjectWizard extends Wizard implements INewWizard {
         page.setTitle(PAGE_TITLE);
         page.setDescription(PAGE_DESCRIPTION);
  
-    addPage(page);
-}
+        addPage(page);
+    }
+    
+    def IProject createProject(String projectName, URI location) {
+        var IProject project = createBaseProject(projectName, location)
+        
+        try {
+            addNature(project)
+            
+            // TODO add files and folders here 
+            
+        } catch (CoreException e) {
+            e.printStackTrace
+            project = null
+        }
+        
+        return project
+    }
+    
+    static def IProject createBaseProject(String projectName, URI location) {
+        var IProject newProject = ResourcesPlugin.workspace.root.getProject(projectName)
+        var projectLocation = location
+        
+        if (!newProject.exists) {
+            val description = newProject.workspace.newProjectDescription(projectName)
+            if (location != null && newProject.workspace.root.locationURI.equals(projectLocation)) {
+                projectLocation = null
+            }
+            description.locationURI = projectLocation
+            try {
+                newProject.create(description, null)
+                if (!newProject.isOpen) {
+                    newProject.open(null)
+                }
+            } catch (CoreException e) {
+                e.printStackTrace
+            }
+        }
+        
+        newProject
+    }
+    
+    def void addNature(IProject project) {
+        if (!project.hasNature(RailSLNature::NATURE_ID)) {
+            val description = project.description
+            val prevNatures = description.natureIds
+            val numOfNatures = prevNatures.length
+            
+            val String[] newNatures = ArrayLiterals.newArrayOfSize(numOfNatures + 1)
+            
+            System.arraycopy(prevNatures, 0, newNatures, 0, numOfNatures)
+            newNatures.set(numOfNatures, RailSLNature::NATURE_ID)
+            description.natureIds = newNatures
+            
+            var IProgressMonitor monitor = null;
+            
+            project.setDescription(description, monitor)
+        }
+    }
     
 }
